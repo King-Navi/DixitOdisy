@@ -51,6 +51,7 @@
     <Compile Include="Manegador\RegistrarUsuario.cs" />
     <Compile Include="Modelo\ChatMensaje.cs" />
     <Compile Include="Modelo\ChatUsuario.cs" />
+    <Compile Include="Modelo\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

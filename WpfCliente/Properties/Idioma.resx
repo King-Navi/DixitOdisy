@@ -123,11 +123,15 @@
   <data name="botonIniciarSesion" xml:space="preserve">
     <value>Login</value>
   </data>
-  <data name="labelContraseña" xml:space="preserve">
+  <data name="labelContrasenia" xml:space="preserve">
     <value>Password</value>
   </data>
   <data name="labelUsuario" xml:space="preserve">
     <value>User</value>
     <comment>Es solo para decir "Usuario"</comment>
+  </data>
+  <data name="labelInicioSesion" xml:space="preserve">
+    <value>Login</value>
+    <comment>Titulo para decir iniciar sesion</comment>
   </data>
 </root>

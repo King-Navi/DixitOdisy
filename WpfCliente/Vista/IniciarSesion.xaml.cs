@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 using UtilidadesLibreria;
 
 namespace WpfCliente.Vista
@@ -33,8 +34,10 @@ namespace WpfCliente.Vista
 
         private void ActualizarRecursosUI()
         {
-            labelIniciarSesion.Content = Properties.Idioma.labelUsuario;
-
+            labelTitulo.Content = Properties.Idioma.tituloBienvenida;
+            labelIniciarSesion.Content = Properties.Idioma.labelInicioSesion;
+            labelUsuario.Content = Properties.Idioma.labelUsuario;
+            labelContrasenia.Content = Properties.Idioma.labelContrasenia;
         }
         private void GuardarConfiguracionIdioma()
         {
@@ -60,6 +63,15 @@ namespace WpfCliente.Vista
         private void EnCierre(object sender, EventArgs e)
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var fadeAniamtion = new DoubleAnimation();
+            fadeAniamtion.From = 0;
+            fadeAniamtion.To = 0.8f;
+            fadeAniamtion.AutoReverse = true;
+            botonAnimacion.BeginAnimation(Button.OpacityProperty, fadeAniamtion );
         }
     }
 }

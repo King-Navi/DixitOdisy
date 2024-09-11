@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,6 +52,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Recursos\Animales\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WcfServicioLibreria\WcfServicioLibreria.csproj">
+      <Project>{a07aeff5-b5e9-44c4-87c5-9af85933de44}</Project>
+      <Name>WcfServicioLibreria</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -13,7 +13,7 @@ namespace WcfServicioLibreria.Contratos
         [OperationContract]
         public void RegistrarUsuario(String usuario, String contrasenia)
         {
-
+            
         }
     }
 }

@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfCliente
+namespace WpfCliente.IniciarSesionVista
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml CMABIO
+    /// Interaction logic for RestablecerContrasenia.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class RestablecerContrasenia : Page
     {
-        public MainWindow()
+        public RestablecerContrasenia()
         {
             InitializeComponent();
         }

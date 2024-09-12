@@ -120,7 +120,7 @@
   <data name="tituloBienvenida" xml:space="preserve">
     <value>Welcome to Describelo</value>
   </data>
-  <data name="botonIniciarSesion" xml:space="preserve">
+  <data name="buttonIniciarSesion" xml:space="preserve">
     <value>Log in</value>
   </data>
   <data name="labelContrasenia" xml:space="preserve">
@@ -131,5 +131,119 @@
   </data>
   <data name="labelInicioSesion" xml:space="preserve">
     <value>Login</value>
+  </data>
+  <data name="buttonSeleccionarIdioma" xml:space="preserve">
+    <value>Select language</value>
+  </data>
+  <data name="buttonOlvidarContrasenia" xml:space="preserve">
+    <value>I forgot my password</value>
+  </data>
+  <data name="buttonJugarComoInvitado" xml:space="preserve">
+    <value>Play as a guest</value>
+  </data>
+  <data name="buttonRegistrarse" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="buttonAceptar" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="buttonCancelar" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="buttonRegresar" xml:space="preserve">
+    <value>Return</value>
+  </data>
+  <data name="labelNuevoEnElJuego" xml:space="preserve">
+    <value>New to the game?</value>
+  </data>
+  <data name="labelSalaDeEspera" xml:space="preserve">
+    <value>Lobby</value>
+  </data>
+  <data name="labelAmigosConectados" xml:space="preserve">
+    <value>Friends online</value>
+  </data>
+  <data name="buttonUnirseSalaDeEspera" xml:space="preserve">
+    <value>Join lobby</value>
+  </data>
+  <data name="buttonConfigurarPartida" xml:space="preserve">
+    <value>Set up game</value>
+  </data>
+  <data name="buttonEmpezarPartida" xml:space="preserve">
+    <value>Start game</value>
+  </data>
+  <data name="labelUsuarioContraseniaIncorrectos" xml:space="preserve">
+    <value>Incorrect username and/or password</value>
+  </data>
+  <data name="labelCamposVacios" xml:space="preserve">
+    <value>Fields cannot be left empty</value>
+  </data>
+  <data name="labelServidorSobrecargado" xml:space="preserve">
+    <value>The server is unable to process requests at this time</value>
+  </data>
+  <data name="labelServidorNoDisponible" xml:space="preserve">
+    <value>The server is not available</value>
+  </data>
+  <data name="labelSeleccionarFotoPerfil" xml:space="preserve">
+    <value>Select a profile picture</value>
+  </data>
+  <data name="labelConfirmarContrasenia" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
+  <data name="labelUsuarioRegistradoConExito" xml:space="preserve">
+    <value>User registered successfully</value>
+  </data>
+  <data name="labelContraseniasNoCoinciden" xml:space="preserve">
+    <value>Passwords must match to continue</value>
+  </data>
+  <data name="labelNoHayFotoDePerfil" xml:space="preserve">
+    <value>You can't register without a profile picture</value>
+  </data>
+  <data name="labelContraseniaInsegura" xml:space="preserve">
+    <value>You can't use that password, use  a stronger one</value>
+  </data>
+  <data name="buttonEditarUsuario" xml:space="preserve">
+    <value>Edit user</value>
+  </data>
+  <data name="buttonCambiarContrasenia" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="buttonCerrarSesion" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="buttonConfirmarEdicion" xml:space="preserve">
+    <value>Confirm edition</value>
+  </data>
+  <data name="labelContraseniaAnterior" xml:space="preserve">
+    <value>Old password</value>
+  </data>
+  <data name="labelNuevaContrasenia" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="labelContraseniaEditadaConExito" xml:space="preserve">
+    <value>Password edited successfully</value>
+  </data>
+  <data name="labelUsuarioEditadoConExito" xml:space="preserve">
+    <value>User edited successfully</value>
+  </data>
+  <data name="labelConfiguracionPartida" xml:space="preserve">
+    <value>Game setup</value>
+  </data>
+  <data name="labelTematica" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="labelMixta" xml:space="preserve">
+    <value>Mixed</value>
+  </data>
+  <data name="labelAnimales" xml:space="preserve">
+    <value>Animals</value>
+  </data>
+  <data name="labelPaises" xml:space="preserve">
+    <value>Countries</value>
+  </data>
+  <data name="labelMitologia" xml:space="preserve">
+    <value>Mythology</value>
+  </data>
+  <data name="labelCondicionDeVictoria" xml:space="preserve">
+    <value>Win condition</value>
   </data>
 </root>

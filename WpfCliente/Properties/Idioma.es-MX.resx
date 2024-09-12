@@ -120,8 +120,8 @@
   <data name="tituloBienvenida" xml:space="preserve">
     <value>Bienvenido a Describelo</value>
   </data>
-  <data name="botonIniciarSesion" xml:space="preserve">
-    <value>Inciar Sesión</value>
+  <data name="buttonIniciarSesion" xml:space="preserve">
+    <value>Inciar sesión</value>
   </data>
   <data name="labelContrasenia" xml:space="preserve">
     <value>Contraseña</value>
@@ -131,5 +131,119 @@
   </data>
   <data name="labelInicioSesion" xml:space="preserve">
     <value>Iniciar sesión</value>
+  </data>
+  <data name="buttonSeleccionarIdioma" xml:space="preserve">
+    <value>Seleccionar idioma</value>
+  </data>
+  <data name="buttonOlvidarContrasenia" xml:space="preserve">
+    <value>Olvidé mi contraseña</value>
+  </data>
+  <data name="buttonJugarComoInvitado" xml:space="preserve">
+    <value>Jugar como invitado</value>
+  </data>
+  <data name="buttonRegistrarse" xml:space="preserve">
+    <value>Registrarse</value>
+  </data>
+  <data name="buttonAceptar" xml:space="preserve">
+    <value>Aceptar</value>
+  </data>
+  <data name="buttonCancelar" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="buttonRegresar" xml:space="preserve">
+    <value>Regresar</value>
+  </data>
+  <data name="labelNuevoEnElJuego" xml:space="preserve">
+    <value>¿Nuevo en el juego?</value>
+  </data>
+  <data name="labelSalaDeEspera" xml:space="preserve">
+    <value>Sala de espera</value>
+  </data>
+  <data name="labelAmigosConectados" xml:space="preserve">
+    <value>Amigos conectados</value>
+  </data>
+  <data name="buttonUnirseSalaDeEspera" xml:space="preserve">
+    <value>Unirse a sala de espera</value>
+  </data>
+  <data name="buttonConfigurarPartida" xml:space="preserve">
+    <value>Configurar partida</value>
+  </data>
+  <data name="buttonEmpezarPartida" xml:space="preserve">
+    <value>Empezar partida</value>
+  </data>
+  <data name="labelUsuarioContraseniaIncorrectos" xml:space="preserve">
+    <value>Usuario y/o contraseña incorrectos</value>
+  </data>
+  <data name="labelCamposVacios" xml:space="preserve">
+    <value>No se pueden dejar campos vacíos</value>
+  </data>
+  <data name="labelServidorSobrecargado" xml:space="preserve">
+    <value>El servidor no puede procesar solicitudes en este momento</value>
+  </data>
+  <data name="labelServidorNoDisponible" xml:space="preserve">
+    <value>El servidor no se encuentra disponible</value>
+  </data>
+  <data name="labelSeleccionarFotoPerfil" xml:space="preserve">
+    <value>Selecciona una foto de perfil</value>
+  </data>
+  <data name="labelConfirmarContrasenia" xml:space="preserve">
+    <value>Confirmar contraseña</value>
+  </data>
+  <data name="labelUsuarioRegistradoConExito" xml:space="preserve">
+    <value>Usuario registrado con éxito</value>
+  </data>
+  <data name="labelContraseniasNoCoinciden" xml:space="preserve">
+    <value>Las contraseñas deben coincidir para continuar</value>
+  </data>
+  <data name="labelNoHayFotoDePerfil" xml:space="preserve">
+    <value>No puedes registrarte sin foto de perfil</value>
+  </data>
+  <data name="labelContraseniaInsegura" xml:space="preserve">
+    <value>No puedes usar esa contraseña, usa una más segura</value>
+  </data>
+  <data name="buttonEditarUsuario" xml:space="preserve">
+    <value>Editar usuario</value>
+  </data>
+  <data name="buttonCambiarContrasenia" xml:space="preserve">
+    <value>Cambiar contraseña</value>
+  </data>
+  <data name="buttonCerrarSesion" xml:space="preserve">
+    <value>Cerrar sesión</value>
+  </data>
+  <data name="buttonConfirmarEdicion" xml:space="preserve">
+    <value>Confirmar edición</value>
+  </data>
+  <data name="labelContraseniaAnterior" xml:space="preserve">
+    <value>Contraseña anterior</value>
+  </data>
+  <data name="labelNuevaContrasenia" xml:space="preserve">
+    <value>Nueva contraseña</value>
+  </data>
+  <data name="labelContraseniaEditadaConExito" xml:space="preserve">
+    <value>Contraseña editada con éxito</value>
+  </data>
+  <data name="labelUsuarioEditadoConExito" xml:space="preserve">
+    <value>Usuario editado con éxito</value>
+  </data>
+  <data name="labelConfiguracionPartida" xml:space="preserve">
+    <value>Configuración de la partida</value>
+  </data>
+  <data name="labelTematica" xml:space="preserve">
+    <value>Temática</value>
+  </data>
+  <data name="labelMixta" xml:space="preserve">
+    <value>Mixta</value>
+  </data>
+  <data name="labelAnimales" xml:space="preserve">
+    <value>Animales</value>
+  </data>
+  <data name="labelPaises" xml:space="preserve">
+    <value>Países</value>
+  </data>
+  <data name="labelMitologia" xml:space="preserve">
+    <value>Mitología</value>
+  </data>
+  <data name="labelCondicionDeVictoria" xml:space="preserve">
+    <value>Condición de victoria</value>
   </data>
 </root>

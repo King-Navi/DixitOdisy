@@ -231,19 +231,52 @@
   <data name="labelTematica" xml:space="preserve">
     <value>Theme</value>
   </data>
-  <data name="labelMixta" xml:space="preserve">
+  <data name="buttonMixta" xml:space="preserve">
     <value>Mixed</value>
   </data>
-  <data name="labelAnimales" xml:space="preserve">
+  <data name="buttonAnimales" xml:space="preserve">
     <value>Animals</value>
   </data>
-  <data name="labelPaises" xml:space="preserve">
+  <data name="buttonPaises" xml:space="preserve">
     <value>Countries</value>
   </data>
-  <data name="labelMitologia" xml:space="preserve">
+  <data name="buttonMitologia" xml:space="preserve">
     <value>Mythology</value>
   </data>
   <data name="labelCondicionDeVictoria" xml:space="preserve">
     <value>Win condition</value>
+  </data>
+  <data name="labelCambiosAplicadosExito" xml:space="preserve">
+    <value>Changes applied successfully</value>
+  </data>
+  <data name="buttonExpulsar" xml:space="preserve">
+    <value>Kick</value>
+  </data>
+  <data name="labelConfirmacionExpulsion" xml:space="preserve">
+    <value>Are you sure you want to kick the player?</value>
+  </data>
+  <data name="tituloSalaEspera" xml:space="preserve">
+    <value>Lobby</value>
+  </data>
+  <data name="tituloInicioSesion" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="tituloRegistroUsuario" xml:space="preserve">
+    <value>Register user</value>
+  </data>
+  <data name="tituloRegistrarInvitado" xml:space="preserve">
+    <value>Register guest</value>
+  </data>
+  <data name="labelJugadorSaleDeSala" xml:space="preserve">
+    <value>The player has already left the room</value>
+  </data>
+  <data name="labelRonda" xml:space="preserve">
+    <value>Round</value>
+  </data>
+  <data name="labelCartasEnMesa" xml:space="preserve">
+    <value>Cards on the table</value>
+  </data>
+  <data name="labelTuMazo" xml:space="preserve">
+    <value>Your deck</value>
   </data>
 </root>

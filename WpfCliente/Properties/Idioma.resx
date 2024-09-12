@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="tituloBienvenida" xml:space="preserve">
-    <value>Welcome</value>
+    <value>Bienvenido a Describelo</value>
   </data>
   <data name="buttonIniciarSesion" xml:space="preserve">
     <value>Login</value>
@@ -127,7 +127,7 @@
     <value>Password</value>
   </data>
   <data name="labelUsuario" xml:space="preserve">
-    <value>User</value>
+    <value>Usuario</value>
   </data>
   <data name="labelInicioSesion" xml:space="preserve">
     <value>Iniciar sesión</value>
@@ -231,28 +231,52 @@
   <data name="labelTematica" xml:space="preserve">
     <value>Temática</value>
   </data>
-  <data name="labelMixta" xml:space="preserve">
+  <data name="buttonMixta" xml:space="preserve">
     <value>Mixta</value>
   </data>
-  <data name="labelAnimales" xml:space="preserve">
+  <data name="buttonAnimales" xml:space="preserve">
     <value>Animales</value>
   </data>
-  <data name="labelPaises" xml:space="preserve">
+  <data name="buttonPaises" xml:space="preserve">
     <value>Países</value>
   </data>
-  <data name="labelMitologia" xml:space="preserve">
+  <data name="buttonMitologia" xml:space="preserve">
     <value>MItología</value>
   </data>
   <data name="labelCondicionDeVictoria" xml:space="preserve">
     <value>Condición de victoria</value>
   </data>
-  <data name="labelSelecionarUsuario" xml:space="preserve">
-    <value>Select a profile</value>
+  <data name="labelCambiosAplicadosExito" xml:space="preserve">
+    <value>Cambios aplicados con éxito</value>
   </data>
-  <data name="gobalRegistrarUsuario" xml:space="preserve">
-    <value>Sign Up</value>
+  <data name="buttonExpulsar" xml:space="preserve">
+    <value>Expulsar</value>
   </data>
-  <data name="labelContrasenia" xml:space="preserve">
-    <value>Password</value>
+  <data name="labelConfirmacionExpulsion" xml:space="preserve">
+    <value>¿Está seguro que desea expulsar al jugador?</value>
+  </data>
+  <data name="tituloSalaEspera" xml:space="preserve">
+    <value>Sala de espera</value>
+  </data>
+  <data name="tituloInicioSesion" xml:space="preserve">
+    <value>Inicio de sesión</value>
+  </data>
+  <data name="tituloRegistroUsuario" xml:space="preserve">
+    <value>Registrar usuario</value>
+  </data>
+  <data name="tituloRegistrarInvitado" xml:space="preserve">
+    <value>Registrar invitado</value>
+  </data>
+  <data name="labelJugadorSaleDeSala" xml:space="preserve">
+    <value>El jugador ya ha salido de la sala</value>
+  </data>
+  <data name="labelRonda" xml:space="preserve">
+    <value>Ronda</value>
+  </data>
+  <data name="labelCartasEnMesa" xml:space="preserve">
+    <value>Cartas en la mesa</value>
+  </data>
+  <data name="labelTuMazo" xml:space="preserve">
+    <value>Tu mazo</value>
   </data>
 </root>

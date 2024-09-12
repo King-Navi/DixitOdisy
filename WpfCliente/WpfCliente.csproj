@@ -74,25 +74,31 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CambiarIdioma.cs" />
-    <Compile Include="IdiomaGuardo.cs" />
+    <Compile Include="GUI\ConfigurarPartidaPage.xaml.cs">
+      <DependentUpon>ConfigurarPartidaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\SalaEsperaWindow.xaml.cs">
+      <DependentUpon>SalaEsperaWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pesistencia\CambiarIdioma.cs" />
+    <Compile Include="Pesistencia\IActualizacionUI.cs" />
+    <Compile Include="Pesistencia\IdiomaGuardo.cs" />
     <Compile Include="Properties\Idioma.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Idioma.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resgistro.cs" />
-    <Compile Include="UsuarioControl\CambiarIdiomaMenuDesplegable.xaml.cs">
-      <DependentUpon>CambiarIdiomaMenuDesplegable.xaml</DependentUpon>
+    <Compile Include="GUI\CambiarIdiomaUserControl.xaml.cs">
+      <DependentUpon>CambiarIdiomaUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vista\IniciarSesion.xaml.cs">
-      <DependentUpon>IniciarSesion.xaml</DependentUpon>
+    <Compile Include="GUI\RegistrarUsuarioUserControl.xaml.cs">
+      <DependentUpon>RegistrarUsuarioUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\IniciarSesionWindow.xaml.cs">
+      <DependentUpon>IniciarSesionWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Vista\RestablecerContrasenia.xaml.cs">
-      <DependentUpon>RestablecerContrasenia.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -128,18 +134,29 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="UsuarioControl\CambiarIdiomaMenuDesplegable.xaml">
+    <Page Include="GUI\CambiarIdiomaUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Vista\IniciarSesion.xaml">
+    <Page Include="GUI\ConfigurarPartidaPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Vista\RestablecerContrasenia.xaml">
+    <Page Include="GUI\RegistrarUsuarioUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\IniciarSesionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\SalaEsperaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\logoIdioma.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

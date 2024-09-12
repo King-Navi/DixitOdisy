@@ -19,7 +19,7 @@ namespace UtilidadesLibreria.UsuarioControl
     /// <summary>
     /// Interaction logic for CambiarIdiomaMenuDesplegable.xaml
     /// </summary>
-    public partial class CambiarIdiomaMenuDesplegable : UserControl
+    public partial class CambiarIdiomaMenuDesplegable : UserControl , IActualizacionUI
     {
 
         public CambiarIdiomaMenuDesplegable()
@@ -29,28 +29,48 @@ namespace UtilidadesLibreria.UsuarioControl
 
         }
 
-        private void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         private void SelecionarIdioma(object sender, SelectionChangedEventArgs e)
         {
             if (cambiarIdiomaMenuDesplegable.SelectedItem is ComboBoxItem itemSeleccionado)
             {
                 string lenguajeSelecionado = itemSeleccionado.Tag.ToString();
                 IdiomaGuardo.SeleccionarIdioma(lenguajeSelecionado);
-                ActualizarRecursosUI();
+                ActualizarUI();
                 CambiarIdioma.EnCambioIdioma();
-                //GuardarConfiguracionIdioma();
+                GuardarConfiguracionIdioma();
             }
         }
-        private void ActualizarRecursosUI()
-        {
-            throw new NotImplementedException();
 
+        private void GuardarConfiguracionIdioma()
+        {
+            //FIXME No es correcta la implementacion trata de ocupar el tag del combobox en vez de su index (selecionarIdiomaMenuDesplegable)
+            int seleccion = cambiarIdiomaMenuDesplegable.SelectedIndex;
+            switch (seleccion)
+            {
+                case 0:
+                    IdiomaGuardo.GuardarEspañolMX();
+                    break;
+                case 1:
+                    IdiomaGuardo.GuardarInglesUS();
+                    break;
+                default:
+                    //TODO manejar el default
+                    IdiomaGuardo.GuardarInglesUS();
+                    MessageBox.Show("Selección de idioma inválida. Se ha configurado el idioma predeterminado.", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    break;
+            }
+            WpfCliente.Properties.Settings.Default.Save();
         }
-        
+
+        public void ActualizarUI()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
+        {
+            ActualizarUI();
+        }
     }
     
 }

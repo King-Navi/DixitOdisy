@@ -3,15 +3,19 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using UtilidadesLibreria;
+using WpfCliente.UsuarioControl;
 
 namespace WpfCliente.Vista
 {
-    public partial class IniciarSesion : Window
+    public partial class IniciarSesion : Window, IActualizacionUI
     {
         public IniciarSesion()
         {
+
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
+            //stackPaneEncabezado.Children.Add(new CambiarIdioma());
+            ActualizarUI();
         }
 
         private void SelecionarIdioma(object sender, SelectionChangedEventArgs e)
@@ -20,19 +24,19 @@ namespace WpfCliente.Vista
             {
                 string lenguajeSelecionado = itemSeleccionado.Tag.ToString();
                 IdiomaGuardo.SeleccionarIdioma(lenguajeSelecionado);
-                ActualizarRecursosUI();
+                ActualizarUI();
                 CambiarIdioma.EnCambioIdioma();
                 GuardarConfiguracionIdioma();
             }
 
         }
 
-        private void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
+        public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
         {
-            ActualizarRecursosUI();
+            ActualizarUI();
         }
 
-        private void ActualizarRecursosUI()
+        public void ActualizarUI()
         {
             labelTitulo.Content = Properties.Idioma.tituloBienvenida;
             labelIniciarSesion.Content = Properties.Idioma.labelInicioSesion;
@@ -76,6 +80,13 @@ namespace WpfCliente.Vista
             Console.WriteLine(textBoxUsuario.Text);
             Console.WriteLine(textBoxContrasenia.Password);
 
+        }
+
+        private void BotonClicRegistrar(object sender, RoutedEventArgs e)
+        {
+            stackPanePrincipal.Children.Clear();
+            //Esta es la que no es como ivnitado if invitado colocar bool true
+            stackPanePrincipal.Children.Add(new RegistrarUsuario());
         }
     }
 }

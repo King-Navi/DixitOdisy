@@ -134,4 +134,13 @@
     <value>Login</value>
     <comment>Titulo para decir iniciar sesion</comment>
   </data>
+  <data name="labelSelecionarUsuario" xml:space="preserve">
+    <value>Select a profile</value>
+  </data>
+  <data name="botonRegistrarUsuario" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
 </root>

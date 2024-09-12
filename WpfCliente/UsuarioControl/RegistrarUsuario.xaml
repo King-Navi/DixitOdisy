@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="WpfCliente.UsuarioControl.RegistrarUsuario"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfCliente.UsuarioControl"
+             xmlns:lang ="clr-namespace:WpfCliente.Properties"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="400">
+    <StackPanel Orientation="Horizontal" Background="#FFFC8AE9" >
+        <StackPanel Background="Aqua">
+            <Label Content="\{Ingresa tu nombre y contraseña}"/>
+            <Label Content="\{Ingresa tu nombre de usuario}"/>
+            <TextBox TextWrapping="Wrap" Text="TextBox" Width="120"/>
+            <Label Content="\{Inregsa tu contraseña}"/>
+            <TextBox TextWrapping="Wrap" Text="TextBox" Width="120"/>
+            
+        </StackPanel>
+        <StackPanel Margin="20,0,0,0">
+            <Label Content="\labelSelecionarUsuario}"/>
+
+
+        </StackPanel>
+    </StackPanel>
+    
+</UserControl>

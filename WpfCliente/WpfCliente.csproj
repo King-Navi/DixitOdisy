@@ -75,6 +75,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CambiarIdioma.cs" />
+    <Compile Include="IActualizacionUI.cs" />
     <Compile Include="IdiomaGuardo.cs" />
     <Compile Include="Properties\Idioma.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -84,6 +85,9 @@
     <Compile Include="Resgistro.cs" />
     <Compile Include="UsuarioControl\CambiarIdiomaMenuDesplegable.xaml.cs">
       <DependentUpon>CambiarIdiomaMenuDesplegable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UsuarioControl\RegistrarUsuario.xaml.cs">
+      <DependentUpon>RegistrarUsuario.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vista\IniciarSesion.xaml.cs">
       <DependentUpon>IniciarSesion.xaml</DependentUpon>
@@ -132,6 +136,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UsuarioControl\RegistrarUsuario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Vista\IniciarSesion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -141,6 +149,12 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Recursos\logoIdioma.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GUI\" />
+    <Folder Include="Pesistencia\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

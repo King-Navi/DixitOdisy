@@ -4,15 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UtilidadesLibreria.UsuarioControl"
-             mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d" Height="253" Width="730">
 
-    <Grid>
-        <Label x:Name="cambiarIdiomaLabel" Content="Cambiar idioma" HorizontalAlignment="Left" Margin="272,214,0,0" VerticalAlignment="Top" Foreground="White" Background="Black" Width="97"/>
-        <ComboBox x:Name="cambiarIdiomaMenuDesplegable" HorizontalAlignment="Left" Margin="369,214,0,0" VerticalAlignment="Top" Width="151" Height="26" Text="Seleccionar idioma" SelectionChanged="SelecionarIdioma">
+    <Grid Margin="0,26,115,155">
+        <Label x:Name="cambiarIdiomaLabel" Content="Cambiar idioma" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White" Background="Black" Width="97"/>
+        <ComboBox x:Name="cambiarIdiomaMenuDesplegable" HorizontalAlignment="Left" Margin="100,0,0,0" VerticalAlignment="Top" Width="150"  Text="Seleccionar idioma" SelectionChanged="SelecionarIdioma">
             <ComboBoxItem Content="Español" Tag="{StaticResource EspañolTag}"/>
             <ComboBoxItem Content="English" Tag="{StaticResource EnglishTag}"/>
         </ComboBox>
+        <Image HorizontalAlignment="Left" Height="66" VerticalAlignment="Top" Width="74" Margin="280,0,0,0" Source="/Recursos/logoIdioma.png"/>
 
     </Grid>
 </UserControl>

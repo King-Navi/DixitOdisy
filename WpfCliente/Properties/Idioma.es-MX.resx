@@ -132,4 +132,10 @@
   <data name="labelInicioSesion" xml:space="preserve">
     <value>Iniciar sesión</value>
   </data>
+  <data name="labelSelecionarUsuario" xml:space="preserve">
+    <value>Selecione un usuario</value>
+  </data>
+  <data name="botonRegistrarUsuario" xml:space="preserve">
+    <value>Registrarse</value>
+  </data>
 </root>

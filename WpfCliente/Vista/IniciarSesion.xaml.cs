@@ -71,7 +71,11 @@ namespace WpfCliente.Vista
             fadeAniamtion.From = 0;
             fadeAniamtion.To = 0.8f;
             fadeAniamtion.AutoReverse = true;
-            botonAnimacion.BeginAnimation(Button.OpacityProperty, fadeAniamtion );
+            botonAnimacion.BeginAnimation(Button.OpacityProperty, fadeAniamtion);
+            Console.WriteLine("Usted ingreso los siguientes datos:");
+            Console.WriteLine(textBoxUsuario.Text);
+            Console.WriteLine(textBoxContrasenia.Password);
+
         }
     }
 }

@@ -9,7 +9,7 @@ using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Manegador
 {
-    public partial class Managador : IServicioRegistro
+    public partial class ManagadorPrincipal : IServicioRegistro
     {
 
         public void RegistrarNuevoUsuario(string nombreUsuario, string contrasenia) 

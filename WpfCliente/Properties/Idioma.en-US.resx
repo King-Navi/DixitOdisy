@@ -123,7 +123,7 @@
   <data name="botonIniciarSesion" xml:space="preserve">
     <value>Log in</value>
   </data>
-  <data name="labelContraseña" xml:space="preserve">
+  <data name="labelContrasenia" xml:space="preserve">
     <value>Password</value>
   </data>
   <data name="labelUsuario" xml:space="preserve">

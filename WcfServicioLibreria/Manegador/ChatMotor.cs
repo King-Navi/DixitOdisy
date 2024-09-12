@@ -10,7 +10,7 @@ using WcfServicioLibreria.Modelo;
 namespace WcfServicioLibreria.Manegador
 {
     [ServiceBehavior(InstanceContextMode =InstanceContextMode.Single)]
-    public partial class Managador : IServicioChat
+    public partial class ManagadorPrincipal : IServicioChat
     {
         /// <summary>
         /// Alamacena los usuarios conectados

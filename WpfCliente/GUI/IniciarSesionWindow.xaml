@@ -30,10 +30,10 @@
                     <Label x:Name="labelTitulo" Content="" HorizontalAlignment="Center"  VerticalAlignment="Top" Height="32" Width="156" HorizontalContentAlignment="Center"/>
                     <Label x:Name="labelUsuario" Content="" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="26" Width="50"/>
                     <TextBox x:Name="textBoxUsuario" HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="308" Height="23"/>
-                    <Label x:Name="labelContrasenia" Content="{x:Static p:Idioma.labelContrasenia}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="114"/>
+                    <Label x:Name="labelContrasenia" Content="{x:Static p:Idioma.gobalContrasenia}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="114"/>
                     <PasswordBox x:Name="textBoxContrasenia" HorizontalAlignment="Center" VerticalAlignment="Top" Width="308" Height="21"/>
-                    <Button x:Name="botonAnimacion" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click"/>
-                    <Button Content="" Click="BotonClicRegistrar"/>
+                    <Button x:Name="buttonIniciarSesion" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click"/>
+                    <Button x:Name="buttonRegistrar" Content="" Click="BotonClicRegistrar"/>
                 </StackPanel>
             </StackPanel>
             <!--Footer-->

@@ -120,10 +120,10 @@
   <data name="tituloBienvenida" xml:space="preserve">
     <value>Bienvenido a Describelo</value>
   </data>
-  <data name="botonIniciarSesion" xml:space="preserve">
+  <data name="gobalIniciarSesion" xml:space="preserve">
     <value>Inciar Sesión</value>
   </data>
-  <data name="labelContrasenia" xml:space="preserve">
+  <data name="gobalContrasenia" xml:space="preserve">
     <value>Contraseña</value>
   </data>
   <data name="labelUsuario" xml:space="preserve">
@@ -135,7 +135,10 @@
   <data name="labelSelecionarUsuario" xml:space="preserve">
     <value>Selecione un usuario</value>
   </data>
-  <data name="botonRegistrarUsuario" xml:space="preserve">
+  <data name="gobalRegistrarUsuario" xml:space="preserve">
     <value>Registrarse</value>
+  </data>
+  <data name="labelContrasenia" xml:space="preserve">
+    <value>Contraseña</value>
   </data>
 </root>

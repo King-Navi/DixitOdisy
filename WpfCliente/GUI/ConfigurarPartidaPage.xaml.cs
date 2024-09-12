@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfCliente.IniciarSesionVista
+namespace WpfCliente.GUI
 {
     /// <summary>
-    /// Interaction logic for RestablecerContrasenia.xaml
+    /// Lógica de interacción para ConfigurarPartidaPage.xaml
     /// </summary>
-    public partial class RestablecerContrasenia : Page
+    public partial class ConfigurarPartidaPage : Page
     {
-        public RestablecerContrasenia()
+        public ConfigurarPartidaPage()
         {
             InitializeComponent();
         }

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UtilidadesLibreria;
 
 namespace WpfCliente.UsuarioControl
 {
@@ -23,21 +24,29 @@ namespace WpfCliente.UsuarioControl
         private Boolean esInivtado;
         public RegistrarUsuario()
         {
+
             InitializeComponent();
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
+            ActualizarUI();
         }public RegistrarUsuario(bool esInvitado)
         {
             this.esInivtado = esInvitado;
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             InitializeComponent();
+            ActualizarUI();
         }
 
         public void ActualizarUI()
         {
-            throw new NotImplementedException();
+            labelSelecionUsuario.Content = WpfCliente.Properties.Idioma.labelSelecionarUsuario; 
+            labelContrania.Content = WpfCliente.Properties.Idioma.gobalContrasenia; 
+            labelUsuario.Content = WpfCliente.Properties.Idioma.labelUsuario;
+            labelRegistro.Content = WpfCliente.Properties.Idioma.gobalRegistrarUsuario;
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            ActualizarUI();
         }
     }
 }

@@ -1,0 +1,42 @@
+﻿<Window x:Class="WpfCliente.GUI.SalaEspera"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfCliente.GUI"
+        mc:Ignorable="d"
+        Title="SalaEspera" MinWidth="800" MinHeight="450" VerticalAlignment="Center">
+    <StackPanel>
+        <!--Encabezado-->
+        <StackPanel Orientation="Horizontal" Background="Aqua" HorizontalAlignment="Right">
+            <Label Content="coNFIG"/> 
+            <Label Content="uSUARIO FOTO"/> 
+        </StackPanel>
+        <!--Middler-->
+        <StackPanel Orientation="Horizontal" Background="AntiqueWhite" HorizontalAlignment="Center">
+            <!--Amigos conectado lista-->
+            <StackPanel Orientation="Vertical">
+                <Label Content="Amigos"/>
+                <Label Content="Perosna"/>
+                <Label Content="Perosna"/>
+                <Label Content="Perosna"/>
+                <Label Content="Perosna"/>
+            </StackPanel>
+            <!--Usuario en la sala de espera-->
+
+            <StackPanel>
+                <Label Content="Usuarios en el lobby"/>
+                <Label Content="hOLA"/>
+                <Label Content="Unaay"/>
+                <Label Content="Messi"/>
+            </StackPanel>
+        </StackPanel>
+        
+        <!--Pie de pagina-->
+        <StackPanel  Orientation="Horizontal" Background="Coral" HorizontalAlignment="Center">
+            <Button Content="Unirse a sala de espera"></Button>
+            <Button Content="Configurar partida"></Button>
+            <Button Content="Empezar partida"></Button>
+        </StackPanel>
+    </StackPanel>
+</Window>

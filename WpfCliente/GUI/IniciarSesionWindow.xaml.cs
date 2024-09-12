@@ -41,7 +41,8 @@ namespace WpfCliente.Vista
             labelTitulo.Content = Properties.Idioma.tituloBienvenida;
             labelIniciarSesion.Content = Properties.Idioma.labelInicioSesion;
             labelUsuario.Content = Properties.Idioma.labelUsuario;
-            labelContrasenia.Content = Properties.Idioma.labelContrasenia;
+            labelContrasenia.Content = Properties.Idioma.gobalContrasenia;
+
         }
         private void GuardarConfiguracionIdioma()
         {
@@ -75,7 +76,7 @@ namespace WpfCliente.Vista
             fadeAniamtion.From = 0;
             fadeAniamtion.To = 0.8f;
             fadeAniamtion.AutoReverse = true;
-            botonAnimacion.BeginAnimation(Button.OpacityProperty, fadeAniamtion);
+            buttonIniciarSesion.BeginAnimation(Button.OpacityProperty, fadeAniamtion);
             Console.WriteLine("Usted ingreso los siguientes datos:");
             Console.WriteLine(textBoxUsuario.Text);
             Console.WriteLine(textBoxContrasenia.Password);

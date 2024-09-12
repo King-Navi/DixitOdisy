@@ -61,20 +61,29 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Password.
+        /// </summary>
+        public static string gobalContrasenia {
+            get {
+                return ResourceManager.GetString("gobalContrasenia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Login.
         /// </summary>
-        public static string botonIniciarSesion {
+        public static string gobalIniciarSesion {
             get {
-                return ResourceManager.GetString("botonIniciarSesion", resourceCulture);
+                return ResourceManager.GetString("gobalIniciarSesion", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Busca una cadena traducida similar a Sign Up.
         /// </summary>
-        public static string botonRegistrarUsuario {
+        public static string gobalRegistrarUsuario {
             get {
-                return ResourceManager.GetString("botonRegistrarUsuario", resourceCulture);
+                return ResourceManager.GetString("gobalRegistrarUsuario", resourceCulture);
             }
         }
         
@@ -111,15 +120,6 @@ namespace WpfCliente.Properties {
         public static string labelUsuario {
             get {
                 return ResourceManager.GetString("labelUsuario", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a .
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         

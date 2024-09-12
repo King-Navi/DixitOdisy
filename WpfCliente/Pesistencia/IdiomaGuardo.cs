@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace WpfCliente
 {
-    public class IdiomaGuardo
+    public sealed class IdiomaGuardo
     {
         /// <summary>
         /// Guarda el idioma de la aplicación en español (mexico)

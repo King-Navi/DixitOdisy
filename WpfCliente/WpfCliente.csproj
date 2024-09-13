@@ -97,6 +97,7 @@
     <Compile Include="GUI\IniciarSesionWindow.xaml.cs">
       <DependentUpon>IniciarSesionWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Sigleton.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -158,6 +159,8 @@
   <ItemGroup>
     <Resource Include="Recursos\logoIdioma.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

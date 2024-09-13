@@ -279,4 +279,19 @@
   <data name="labelTuMazo" xml:space="preserve">
     <value>Tu mazo</value>
   </data>
+  <data name="labelIngresarCodigoInvitacion" xml:space="preserve">
+    <value>Ingrese el código de invitación</value>
+  </data>
+  <data name="labelLobbyNoDisponible" xml:space="preserve">
+    <value>Lobby no disponible</value>
+  </data>
+  <data name="buttonEnviar" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
+  <data name="tituloCambiarContrasenia" xml:space="preserve">
+    <value>Cambiar contraseña</value>
+  </data>
+  <data name="tituloEditarUsuario" xml:space="preserve">
+    <value>Editar usuario</value>
+  </data>
 </root>

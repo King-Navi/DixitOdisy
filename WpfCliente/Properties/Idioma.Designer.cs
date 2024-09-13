@@ -142,6 +142,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Enviar.
+        /// </summary>
+        public static string buttonEnviar {
+            get {
+                return ResourceManager.GetString("buttonEnviar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Expulsar.
         /// </summary>
         public static string buttonExpulsar {
@@ -358,6 +367,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese el código de invitación.
+        /// </summary>
+        public static string labelIngresarCodigoInvitacion {
+            get {
+                return ResourceManager.GetString("labelIngresarCodigoInvitacion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Iniciar sesión.
         /// </summary>
         public static string labelInicioSesion {
@@ -372,6 +390,15 @@ namespace WpfCliente.Properties {
         public static string labelJugadorSaleDeSala {
             get {
                 return ResourceManager.GetString("labelJugadorSaleDeSala", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Lobby no disponible.
+        /// </summary>
+        public static string labelLobbyNoDisponible {
+            get {
+                return ResourceManager.GetString("labelLobbyNoDisponible", resourceCulture);
             }
         }
         
@@ -507,6 +534,24 @@ namespace WpfCliente.Properties {
         public static string tituloBienvenida {
             get {
                 return ResourceManager.GetString("tituloBienvenida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cambiar contraseña.
+        /// </summary>
+        public static string tituloCambiarContrasenia {
+            get {
+                return ResourceManager.GetString("tituloCambiarContrasenia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Editar usuario.
+        /// </summary>
+        public static string tituloEditarUsuario {
+            get {
+                return ResourceManager.GetString("tituloEditarUsuario", resourceCulture);
             }
         }
         

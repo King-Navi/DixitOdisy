@@ -47,8 +47,8 @@
     <Compile Include="Contratos\IImagen.cs" />
     <Compile Include="Contratos\IServicioChat.cs" />
     <Compile Include="Contratos\IServicioRegistro.cs" />
-    <Compile Include="Manegador\ChatMotor.cs" />
-    <Compile Include="Manegador\RegistrarUsuario.cs" />
+    <Compile Include="Manejador\ChatMotor.cs" />
+    <Compile Include="Manejador\RegistrarUsuario.cs" />
     <Compile Include="Modelo\ChatMensaje.cs" />
     <Compile Include="Modelo\ChatUsuario.cs" />
     <Compile Include="Modelo\Usuario.cs" />

@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
 
-namespace WcfServicioLibreria.Manegador
+namespace WcfServicioLibreria.Manejador
 {
-    [ServiceBehavior(InstanceContextMode =InstanceContextMode.Single)]
-    public partial class ManagadorPrincipal : IServicioChat
+    [ServiceBehavior(InstanceContextMode =InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Reentrant)]
+    public partial class ManejadorPrincipal : IServicioChat
     {
         /// <summary>
         /// Alamacena los usuarios conectados

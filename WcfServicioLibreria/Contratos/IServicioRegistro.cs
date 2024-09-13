@@ -8,12 +8,9 @@ using System.Threading.Tasks;
 namespace WcfServicioLibreria.Contratos
 {
     [ServiceContract]
-    public class IServicioRegistro
+    public interface IServicioRegistro
     {
         [OperationContract]
-        public void RegistrarUsuario(String usuario, String contrasenia)
-        {
-            
-        }
+        void RegistrarUsuario(String usuario, String contrasenia);
     }
 }

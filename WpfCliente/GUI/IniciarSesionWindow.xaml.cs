@@ -41,7 +41,7 @@ namespace WpfCliente.Vista
             labelTitulo.Content = Properties.Idioma.tituloBienvenida;
             labelIniciarSesion.Content = Properties.Idioma.labelInicioSesion;
             labelUsuario.Content = Properties.Idioma.labelUsuario;
-            labelContrasenia.Content = Properties.Idioma.gobalContrasenia;
+            labelContrasenia.Content = Properties.Idioma.labelContrasenia;
 
         }
         private void GuardarConfiguracionIdioma()

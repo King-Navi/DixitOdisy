@@ -38,10 +38,10 @@ namespace WpfCliente.UsuarioControl
 
         public void ActualizarUI()
         {
-            labelSelecionUsuario.Content = WpfCliente.Properties.Idioma.labelSelecionarUsuario; 
-            labelContrania.Content = WpfCliente.Properties.Idioma.gobalContrasenia; 
+            //labelSelecionUsuario.Content = WpfCliente.Properties.Idioma.labe; 
+            labelContrania.Content = WpfCliente.Properties.Idioma.labelContrasenia; 
             labelUsuario.Content = WpfCliente.Properties.Idioma.labelUsuario;
-            labelRegistro.Content = WpfCliente.Properties.Idioma.gobalRegistrarUsuario;
+            //labelRegistro.Content = WpfCliente.Properties.Idioma.label;
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)

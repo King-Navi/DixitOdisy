@@ -9,7 +9,7 @@ using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Manejador
 {
-    [ServiceBehavior(InstanceContextMode =InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Reentrant)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public partial class ManejadorPrincipal : IServicioChat
     {
         /// <summary>

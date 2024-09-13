@@ -16,7 +16,7 @@ namespace WcfServidor
         }
         private void IniciarServidor()
         {
-            using (ServiceHost host = new ServiceHost(typeof(WcfServicioLibreria.Manegador.ManejadorPrincipal)))
+            using (ServiceHost host = new ServiceHost(typeof(WcfServicioLibreria.Manejador.ManejadorPrincipal)))
             {
                 host.Open();
                 Console.WriteLine("Servidor corriedo");

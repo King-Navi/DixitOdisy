@@ -70,6 +70,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Animales.
+        /// </summary>
+        public static string buttonAnimales {
+            get {
+                return ResourceManager.GetString("buttonAnimales", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cambiar contraseña.
         /// </summary>
         public static string buttonCambiarContrasenia {
@@ -115,6 +124,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Crear sala de espera.
+        /// </summary>
+        public static string buttonCrearSalaEspera {
+            get {
+                return ResourceManager.GetString("buttonCrearSalaEspera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Editar usuario.
         /// </summary>
         public static string buttonEditarUsuario {
@@ -129,6 +147,24 @@ namespace WpfCliente.Properties {
         public static string buttonEmpezarPartida {
             get {
                 return ResourceManager.GetString("buttonEmpezarPartida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Enviar.
+        /// </summary>
+        public static string buttonEnviar {
+            get {
+                return ResourceManager.GetString("buttonEnviar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Expulsar.
+        /// </summary>
+        public static string buttonExpulsar {
+            get {
+                return ResourceManager.GetString("buttonExpulsar", resourceCulture);
             }
         }
         
@@ -151,11 +187,38 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Mitología.
+        /// </summary>
+        public static string buttonMitologia {
+            get {
+                return ResourceManager.GetString("buttonMitologia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Mixta.
+        /// </summary>
+        public static string buttonMixta {
+            get {
+                return ResourceManager.GetString("buttonMixta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Olvidé mi contraseña.
         /// </summary>
         public static string buttonOlvidarContrasenia {
             get {
                 return ResourceManager.GetString("buttonOlvidarContrasenia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Países.
+        /// </summary>
+        public static string buttonPaises {
+            get {
+                return ResourceManager.GetString("buttonPaises", resourceCulture);
             }
         }
         
@@ -205,20 +268,11 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Animales.
+        ///   Busca una cadena traducida similar a Cartas en la mesa.
         /// </summary>
-        public static string labelAnimales {
+        public static string labelCartasEnMesa {
             get {
-                return ResourceManager.GetString("labelAnimales", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a No se pueden dejar campos vacíos.
-        /// </summary>
-        public static string labelCamposVacios {
-            get {
-                return ResourceManager.GetString("labelCamposVacios", resourceCulture);
+                return ResourceManager.GetString("labelCartasEnMesa", resourceCulture);
             }
         }
         
@@ -250,7 +304,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Password.
+        ///   Busca una cadena traducida similar a Contraseña.
         /// </summary>
         public static string labelContrasenia {
             get {
@@ -268,29 +322,11 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Contraseña editada con éxito.
+        ///   Busca una cadena traducida similar a Ingrese el código de invitación.
         /// </summary>
-        public static string labelContraseniaEditadaConExito {
+        public static string labelIngresarCodigoInvitacion {
             get {
-                return ResourceManager.GetString("labelContraseniaEditadaConExito", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a No puedes usar esa contraseña, usa una más segura.
-        /// </summary>
-        public static string labelContraseniaInsegura {
-            get {
-                return ResourceManager.GetString("labelContraseniaInsegura", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a Las contraseñas deben coincidir para continuar.
-        /// </summary>
-        public static string labelContraseniasNoCoinciden {
-            get {
-                return ResourceManager.GetString("labelContraseniasNoCoinciden", resourceCulture);
+                return ResourceManager.GetString("labelIngresarCodigoInvitacion", resourceCulture);
             }
         }
         
@@ -300,33 +336,6 @@ namespace WpfCliente.Properties {
         public static string labelInicioSesion {
             get {
                 return ResourceManager.GetString("labelInicioSesion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a MItología.
-        /// </summary>
-        public static string labelMitologia {
-            get {
-                return ResourceManager.GetString("labelMitologia", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a Mixta.
-        /// </summary>
-        public static string labelMixta {
-            get {
-                return ResourceManager.GetString("labelMixta", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a No puedes registrarte sin foto de perfil.
-        /// </summary>
-        public static string labelNoHayFotoDePerfil {
-            get {
-                return ResourceManager.GetString("labelNoHayFotoDePerfil", resourceCulture);
             }
         }
         
@@ -349,11 +358,11 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Países.
+        ///   Busca una cadena traducida similar a Ronda.
         /// </summary>
-        public static string labelPaises {
+        public static string labelRonda {
             get {
-                return ResourceManager.GetString("labelPaises", resourceCulture);
+                return ResourceManager.GetString("labelRonda", resourceCulture);
             }
         }
         
@@ -376,24 +385,6 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El servidor no se encuentra disponible.
-        /// </summary>
-        public static string labelServidorNoDisponible {
-            get {
-                return ResourceManager.GetString("labelServidorNoDisponible", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a El servidor no puede procesar solicitudes en este momento.
-        /// </summary>
-        public static string labelServidorSobrecargado {
-            get {
-                return ResourceManager.GetString("labelServidorSobrecargado", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a Temática.
         /// </summary>
         public static string labelTematica {
@@ -403,7 +394,16 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a User.
+        ///   Busca una cadena traducida similar a Tu mazo.
+        /// </summary>
+        public static string labelTuMazo {
+            get {
+                return ResourceManager.GetString("labelTuMazo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Usuario.
         /// </summary>
         public static string labelUsuario {
             get {
@@ -412,38 +412,200 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cambios aplicados con éxito.
+        /// </summary>
+        public static string mensajeCambiosAplicadosExito {
+            get {
+                return ResourceManager.GetString("mensajeCambiosAplicadosExito", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se pueden dejar campos vacíos.
+        /// </summary>
+        public static string mensajeCamposVacios {
+            get {
+                return ResourceManager.GetString("mensajeCamposVacios", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a ¿Está seguro que desea expulsar al jugador?.
+        /// </summary>
+        public static string mensajeConfirmacionExpulsion {
+            get {
+                return ResourceManager.GetString("mensajeConfirmacionExpulsion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Contraseña editada con éxito.
+        /// </summary>
+        public static string mensajeContraseniaEditadaConExito {
+            get {
+                return ResourceManager.GetString("mensajeContraseniaEditadaConExito", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No puedes usar esa contraseña, usa una más segura.
+        /// </summary>
+        public static string mensajeContraseniaInsegura {
+            get {
+                return ResourceManager.GetString("mensajeContraseniaInsegura", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Las contraseñas deben coincidir para continuar.
+        /// </summary>
+        public static string mensajeContraseniasNoCoinciden {
+            get {
+                return ResourceManager.GetString("mensajeContraseniasNoCoinciden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El jugador ya ha salido de la sala.
+        /// </summary>
+        public static string mensajeJugadorSaleDeSala {
+            get {
+                return ResourceManager.GetString("mensajeJugadorSaleDeSala", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Lobby no disponible.
+        /// </summary>
+        public static string mensajeLobbyNoDisponible {
+            get {
+                return ResourceManager.GetString("mensajeLobbyNoDisponible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No puedes registrarte sin foto de perfil.
+        /// </summary>
+        public static string mensajeNoHayFotoDePerfil {
+            get {
+                return ResourceManager.GetString("mensajeNoHayFotoDePerfil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El servidor no se encuentra disponible.
+        /// </summary>
+        public static string mensajeServidorNoDisponible {
+            get {
+                return ResourceManager.GetString("mensajeServidorNoDisponible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El servidor no puede procesar solicitudes en este momento.
+        /// </summary>
+        public static string mensajeServidorSobrecargado {
+            get {
+                return ResourceManager.GetString("mensajeServidorSobrecargado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Usuario y/o contraseña incorrectos.
         /// </summary>
-        public static string labelUsuarioContraseniaIncorrectos {
+        public static string mensajeUsuarioContraseniaIncorrectos {
             get {
-                return ResourceManager.GetString("labelUsuarioContraseniaIncorrectos", resourceCulture);
+                return ResourceManager.GetString("mensajeUsuarioContraseniaIncorrectos", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Busca una cadena traducida similar a Usuario editado con éxito.
         /// </summary>
-        public static string labelUsuarioEditadoConExito {
+        public static string mensajeUsuarioEditadoConExito {
             get {
-                return ResourceManager.GetString("labelUsuarioEditadoConExito", resourceCulture);
+                return ResourceManager.GetString("mensajeUsuarioEditadoConExito", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Busca una cadena traducida similar a Usuario registrado con éxito.
         /// </summary>
-        public static string labelUsuarioRegistradoConExito {
+        public static string mensajeUsuarioRegistradoConExito {
             get {
-                return ResourceManager.GetString("labelUsuarioRegistradoConExito", resourceCulture);
+                return ResourceManager.GetString("mensajeUsuarioRegistradoConExito", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Welcome.
+        ///   Busca una cadena traducida similar a Bienvenido a Describelo.
         /// </summary>
         public static string tituloBienvenida {
             get {
                 return ResourceManager.GetString("tituloBienvenida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cambiar contraseña.
+        /// </summary>
+        public static string tituloCambiarContrasenia {
+            get {
+                return ResourceManager.GetString("tituloCambiarContrasenia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Editar usuario.
+        /// </summary>
+        public static string tituloEditarUsuario {
+            get {
+                return ResourceManager.GetString("tituloEditarUsuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Inicio de sesión.
+        /// </summary>
+        public static string tituloInicioSesion {
+            get {
+                return ResourceManager.GetString("tituloInicioSesion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Recuperar contraseña.
+        /// </summary>
+        public static string tituloRecuperarContrasenia {
+            get {
+                return ResourceManager.GetString("tituloRecuperarContrasenia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Registrar invitado.
+        /// </summary>
+        public static string tituloRegistrarInvitado {
+            get {
+                return ResourceManager.GetString("tituloRegistrarInvitado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Registrar usuario.
+        /// </summary>
+        public static string tituloRegistroUsuario {
+            get {
+                return ResourceManager.GetString("tituloRegistroUsuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Sala de espera.
+        /// </summary>
+        public static string tituloSalaEspera {
+            get {
+                return ResourceManager.GetString("tituloSalaEspera", resourceCulture);
             }
         }
     }

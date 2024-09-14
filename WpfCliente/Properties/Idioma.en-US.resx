@@ -123,7 +123,7 @@
   <data name="buttonIniciarSesion" xml:space="preserve">
     <value>Log in</value>
   </data>
-  <data name="gobalContrasenia" xml:space="preserve">
+  <data name="labelContrasenia" xml:space="preserve">
     <value>Password</value>
   </data>
   <data name="labelUsuario" xml:space="preserve">
@@ -171,16 +171,16 @@
   <data name="buttonEmpezarPartida" xml:space="preserve">
     <value>Start game</value>
   </data>
-  <data name="labelUsuarioContraseniaIncorrectos" xml:space="preserve">
+  <data name="mensajeUsuarioContraseniaIncorrectos" xml:space="preserve">
     <value>Incorrect username and/or password</value>
   </data>
-  <data name="labelCamposVacios" xml:space="preserve">
+  <data name="mensajeCamposVacios" xml:space="preserve">
     <value>Fields cannot be left empty</value>
   </data>
-  <data name="labelServidorSobrecargado" xml:space="preserve">
+  <data name="mensajeServidorSobrecargado" xml:space="preserve">
     <value>The server is unable to process requests at this time</value>
   </data>
-  <data name="labelServidorNoDisponible" xml:space="preserve">
+  <data name="mensajeServidorNoDisponible" xml:space="preserve">
     <value>The server is not available</value>
   </data>
   <data name="labelSeleccionarFotoPerfil" xml:space="preserve">
@@ -189,16 +189,16 @@
   <data name="labelConfirmarContrasenia" xml:space="preserve">
     <value>Confirm password</value>
   </data>
-  <data name="labelUsuarioRegistradoConExito" xml:space="preserve">
+  <data name="mensajeUsuarioRegistradoConExito" xml:space="preserve">
     <value>User registered successfully</value>
   </data>
-  <data name="labelContraseniasNoCoinciden" xml:space="preserve">
+  <data name="mensajeContraseniasNoCoinciden" xml:space="preserve">
     <value>Passwords must match to continue</value>
   </data>
-  <data name="labelNoHayFotoDePerfil" xml:space="preserve">
+  <data name="mensajeNoHayFotoDePerfil" xml:space="preserve">
     <value>You can't register without a profile picture</value>
   </data>
-  <data name="labelContraseniaInsegura" xml:space="preserve">
+  <data name="mensajeContraseniaInsegura" xml:space="preserve">
     <value>You can't use that password, use  a stronger one</value>
   </data>
   <data name="buttonEditarUsuario" xml:space="preserve">
@@ -219,10 +219,10 @@
   <data name="labelNuevaContrasenia" xml:space="preserve">
     <value>New password</value>
   </data>
-  <data name="labelContraseniaEditadaConExito" xml:space="preserve">
+  <data name="mensajeContraseniaEditadaConExito" xml:space="preserve">
     <value>Password edited successfully</value>
   </data>
-  <data name="labelUsuarioEditadoConExito" xml:space="preserve">
+  <data name="mensajeUsuarioEditadoConExito" xml:space="preserve">
     <value>User edited successfully</value>
   </data>
   <data name="labelConfiguracionPartida" xml:space="preserve">
@@ -231,19 +231,73 @@
   <data name="labelTematica" xml:space="preserve">
     <value>Theme</value>
   </data>
-  <data name="labelMixta" xml:space="preserve">
+  <data name="buttonMixta" xml:space="preserve">
     <value>Mixed</value>
   </data>
-  <data name="labelAnimales" xml:space="preserve">
+  <data name="buttonAnimales" xml:space="preserve">
     <value>Animals</value>
   </data>
-  <data name="labelPaises" xml:space="preserve">
+  <data name="buttonPaises" xml:space="preserve">
     <value>Countries</value>
   </data>
-  <data name="labelMitologia" xml:space="preserve">
+  <data name="buttonMitologia" xml:space="preserve">
     <value>Mythology</value>
   </data>
   <data name="labelCondicionDeVictoria" xml:space="preserve">
     <value>Win condition</value>
+  </data>
+  <data name="mensajeCambiosAplicadosExito" xml:space="preserve">
+    <value>Changes applied successfully</value>
+  </data>
+  <data name="buttonExpulsar" xml:space="preserve">
+    <value>Kick</value>
+  </data>
+  <data name="mensajeConfirmacionExpulsion" xml:space="preserve">
+    <value>Are you sure you want to kick the player?</value>
+  </data>
+  <data name="tituloSalaEspera" xml:space="preserve">
+    <value>Lobby</value>
+  </data>
+  <data name="tituloInicioSesion" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="tituloRegistroUsuario" xml:space="preserve">
+    <value>Register user</value>
+  </data>
+  <data name="tituloRegistrarInvitado" xml:space="preserve">
+    <value>Register guest</value>
+  </data>
+  <data name="mensajeJugadorSaleDeSala" xml:space="preserve">
+    <value>The player has already left the room</value>
+  </data>
+  <data name="labelRonda" xml:space="preserve">
+    <value>Round</value>
+  </data>
+  <data name="labelCartasEnMesa" xml:space="preserve">
+    <value>Cards on the table</value>
+  </data>
+  <data name="labelTuMazo" xml:space="preserve">
+    <value>Your deck</value>
+  </data>
+  <data name="labelIngresarCodigoInvitacion" xml:space="preserve">
+    <value>Enter the invitation code</value>
+  </data>
+  <data name="mensajeLobbyNoDisponible" xml:space="preserve">
+    <value>Lobby not available</value>
+  </data>
+  <data name="buttonEnviar" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="tituloCambiarContrasenia" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="tituloEditarUsuario" xml:space="preserve">
+    <value>Edit user</value>
+  </data>
+  <data name="tituloRecuperarContrasenia" xml:space="preserve">
+    <value>Recover password</value>
+  </data>
+  <data name="buttonCrearSalaEspera" xml:space="preserve">
+    <value>Create lobby</value>
   </data>
 </root>

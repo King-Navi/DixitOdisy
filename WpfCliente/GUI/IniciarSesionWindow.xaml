@@ -32,8 +32,8 @@
                     <TextBox x:Name="textBoxUsuario" HorizontalAlignment="Center"  TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="308" Height="23"/>
                     <Label x:Name="labelContrasenia" Content="[Contraseña]" HorizontalAlignment="Left" VerticalAlignment="Top" Width="114"/>
                     <PasswordBox x:Name="textBoxContrasenia" HorizontalAlignment="Center" VerticalAlignment="Top" Width="308" Height="21"/>
-                    <Button x:Name="buttonIniciarSesion" Content="[Iniciar Sesion]" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Button_Click"/>
-                    <Button x:Name="buttonRegistrar" Content="[Registrarse]" Click="BotonClicRegistrar"/>
+                    <Button x:Name="buttonIniciarSesion" Content="[Iniciar Sesion]" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ButtonClicIniciarSesion"/>
+                    <Button x:Name="buttonRegistrar" Content="[Registrarse]" Click="ButtonClicRegistrar"/>
                 </StackPanel>
             </StackPanel>
             <!--Footer-->

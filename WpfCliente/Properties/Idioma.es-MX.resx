@@ -300,4 +300,10 @@
   <data name="buttonCrearSalaEspera" xml:space="preserve">
     <value>Crear sala de espera</value>
   </data>
+  <data name="labelRepitaContraseña" xml:space="preserve">
+    <value>Repita la contraseña</value>
+  </data>
+  <data name="labelCorreoE" xml:space="preserve">
+    <value>Correo electronico</value>
+  </data>
 </root>

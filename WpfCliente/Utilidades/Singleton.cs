@@ -4,21 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfCliente
+namespace WpfCliente.Utilidad
 {
-    public sealed class Sigleton
+    public sealed class Singleton
     {
-        private static Sigleton _instance;
-        public static Sigleton Instance
+        private static Singleton _instance;
+        public static Singleton Instance
         {
             get
             {
                 if (_instance == null)
                 {
-                    _instance = new Sigleton();
+                    _instance = new Singleton();
                 }
                 return _instance;
             }
         }
+        public string usuario { get; set; }
     }
 }

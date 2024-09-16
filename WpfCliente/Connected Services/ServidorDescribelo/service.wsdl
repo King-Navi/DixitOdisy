@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="ManejadorPrincipal" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IServicioRegistro_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
+        </msb:BinaryEncoding>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256>
+                </sp:Basic256>
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict>
+                </sp:Strict>
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing>
+        </wsaw:UsingAddressing>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_IServicioChat_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
+        </msb:BinaryEncoding>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256>
+                </sp:Basic256>
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict>
+                </sp:Strict>
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing>
+        </wsaw:UsingAddressing>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IServicioRegistro_RegistrarUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:RegistrarUsuario" />
+  </wsdl:message>
+  <wsdl:message name="IServicioRegistro_RegistrarUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegistrarUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChat_ConectarUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConectarUsuario" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChat_ConectarUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConectarUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChat_ObtenerUsuariosConectados_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerUsuariosConectados" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChat_ObtenerUsuariosConectados_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerUsuariosConectadosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChat_EnviarMensaje_InputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarMensaje" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChat_EnviarMensaje_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarMensajeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChat_GetMensajeNuevo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMensajeNuevo" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChat_GetMensajeNuevo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMensajeNuevoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChat_DesconectarUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:DesconectarUsuario" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChat_DesconectarUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DesconectarUsuarioResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IServicioRegistro">
+    <wsdl:operation name="RegistrarUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioRegistro/RegistrarUsuario" message="tns:IServicioRegistro_RegistrarUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioRegistro/RegistrarUsuarioResponse" message="tns:IServicioRegistro_RegistrarUsuario_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IServicioChat">
+    <wsdl:operation name="ConectarUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChat/ConectarUsuario" message="tns:IServicioChat_ConectarUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChat/ConectarUsuarioResponse" message="tns:IServicioChat_ConectarUsuario_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUsuariosConectados">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChat/ObtenerUsuariosConectados" message="tns:IServicioChat_ObtenerUsuariosConectados_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChat/ObtenerUsuariosConectadosResponse" message="tns:IServicioChat_ObtenerUsuariosConectados_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EnviarMensaje">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChat/EnviarMensaje" message="tns:IServicioChat_EnviarMensaje_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChat/EnviarMensajeResponse" message="tns:IServicioChat_EnviarMensaje_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMensajeNuevo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChat/GetMensajeNuevo" message="tns:IServicioChat_GetMensajeNuevo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChat/GetMensajeNuevoResponse" message="tns:IServicioChat_GetMensajeNuevo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DesconectarUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChat/DesconectarUsuario" message="tns:IServicioChat_DesconectarUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChat/DesconectarUsuarioResponse" message="tns:IServicioChat_DesconectarUsuario_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IServicioRegistro" type="tns:IServicioRegistro">
+    <wsp:PolicyReference URI="#NetTcpBinding_IServicioRegistro_policy">
+    </wsp:PolicyReference>
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="RegistrarUsuario">
+      <soap12:operation soapAction="http://tempuri.org/IServicioRegistro/RegistrarUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="NetTcpBinding_IServicioChat" type="tns:IServicioChat">
+    <wsp:PolicyReference URI="#NetTcpBinding_IServicioChat_policy">
+    </wsp:PolicyReference>
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="ConectarUsuario">
+      <soap12:operation soapAction="http://tempuri.org/IServicioChat/ConectarUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerUsuariosConectados">
+      <soap12:operation soapAction="http://tempuri.org/IServicioChat/ObtenerUsuariosConectados" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnviarMensaje">
+      <soap12:operation soapAction="http://tempuri.org/IServicioChat/EnviarMensaje" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMensajeNuevo">
+      <soap12:operation soapAction="http://tempuri.org/IServicioChat/GetMensajeNuevo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DesconectarUsuario">
+      <soap12:operation soapAction="http://tempuri.org/IServicioChat/DesconectarUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ManejadorPrincipal">
+    <wsdl:port name="NetTcpBinding_IServicioRegistro" binding="tns:NetTcpBinding_IServicioRegistro">
+      <soap12:address location="net.tcp://localhost:6969/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IServicioChat" binding="tns:NetTcpBinding_IServicioChat">
+      <soap12:address location="net.tcp://localhost:6969/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

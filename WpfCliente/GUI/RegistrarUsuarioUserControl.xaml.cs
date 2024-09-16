@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -38,15 +39,29 @@ namespace WpfCliente.UsuarioControl
 
         public void ActualizarUI()
         {
-            //labelSelecionUsuario.Content = WpfCliente.Properties.Idioma.labe; 
-            labelContrania.Content = WpfCliente.Properties.Idioma.labelContrasenia; 
-            labelUsuario.Content = WpfCliente.Properties.Idioma.labelUsuario;
-            //labelRegistro.Content = WpfCliente.Properties.Idioma.label;
+            labelSelecionUsuario.Content = WpfCliente.Properties.Idioma.labelSeleccionarFotoPerfil;
+            labelRepitaContrasenia.Content = Properties.Idioma.labelRepitaContraseña;
+            labelContrasenia.Content = Properties.Idioma.labelContrasenia; 
+            labelUsuario.Content = Properties.Idioma.labelUsuario;
+            labelCorreo.Content = Properties.Idioma.labelCorreoE;
+            labelRegistro.Content = WpfCliente.Properties.Idioma.tituloRegistroUsuario;
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
         {
             ActualizarUI();
+        }
+
+        private void buttonClicRegistrarUsuario(object sender, RoutedEventArgs e)
+        {
+            ServidorDescribelo.IServicioRegistro servicio = new ServidorDescribelo.ServicioRegistroClient();
+            string contraseniaHash = BitConverter.ToString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(passwordBoxContrasenia.Password))).Replace("-", "");
+            int resultado=
+            servicio.RegistrarUsuario(textBoxUsuario.Text, contraseniaHash);
+            if (resultado < 1)
+            {
+                Console.WriteLine("error");
+            }
         }
     }
 }

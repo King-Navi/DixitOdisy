@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Security.Cryptography;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WcfServicioLibreria.Contratos
 {
@@ -11,6 +10,6 @@ namespace WcfServicioLibreria.Contratos
     public interface IServicioRegistro
     {
         [OperationContract]
-        void RegistrarUsuario(String usuario, String contrasenia);
+        int RegistrarUsuario(string usuario, string contrasenia);
     }
 }

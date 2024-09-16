@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using UtilidadesLibreria;
 using WpfCliente.UsuarioControl;
+using WpfCliente.Utilidad;
 
 namespace WpfCliente.Vista
 {
@@ -42,6 +43,8 @@ namespace WpfCliente.Vista
             labelIniciarSesion.Content = Properties.Idioma.labelInicioSesion;
             labelUsuario.Content = Properties.Idioma.labelUsuario;
             labelContrasenia.Content = Properties.Idioma.labelContrasenia;
+            buttonIniciarSesion.Content = Properties.Idioma.buttonIniciarSesion;
+            buttonRegistrar.Content = Properties.Idioma.buttonRegistrarse;
 
         }
         private void GuardarConfiguracionIdioma()
@@ -69,21 +72,13 @@ namespace WpfCliente.Vista
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ButtonClicIniciarSesion(object sender, RoutedEventArgs e)
         {
-            var fadeAniamtion = new DoubleAnimation();
-            fadeAniamtion.From = 0;
-            fadeAniamtion.To = 0.8f;
-            fadeAniamtion.AutoReverse = true;
-            buttonIniciarSesion.BeginAnimation(Button.OpacityProperty, fadeAniamtion);
-            Console.WriteLine("Usted ingreso los siguientes datos:");
-            Console.WriteLine(textBoxUsuario.Text);
-            Console.WriteLine(textBoxContrasenia.Password);
-
+            //Este metodo es de prueba
+            Singleton.Instance.usuario = textBoxUsuario.Text;
         }
 
-        private void BotonClicRegistrar(object sender, RoutedEventArgs e)
+        private void ButtonClicRegistrar(object sender, RoutedEventArgs e)
         {
             stackPanePrincipal.Children.Clear();
             //Esta es la que no es como ivnitado if invitado colocar bool true

@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 namespace WcfServicioLibreria.Contratos
 {
     [ServiceContract]
-    public interface IServicioChat
+    public interface IServicioSala
     {
         [OperationContract]
-        bool CrearChat(string idChat);
+        string CrearSala(string nombreUsuarioAnfitrion);
         [OperationContract]
-        bool EliminarChat();
-
+        bool BorrarSala(string idSala);
+        [OperationContract]
+        bool ValidarSala(string idSala);
     }
 }

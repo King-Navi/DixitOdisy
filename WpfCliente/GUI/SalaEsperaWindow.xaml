@@ -5,38 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfCliente.GUI"
         mc:Ignorable="d"
-        Title="SalaEspera" MinWidth="800" MinHeight="450" VerticalAlignment="Center">
-    <StackPanel>
-        <!--Encabezado-->
-        <StackPanel Orientation="Horizontal" Background="Aqua" HorizontalAlignment="Right">
-            <Label Content="coNFIG"/> 
-            <Label Content="uSUARIO FOTO"/> 
-        </StackPanel>
-        <!--Middler-->
-        <StackPanel Orientation="Horizontal" Background="AntiqueWhite" HorizontalAlignment="Center">
+        Title="SalaEspera" MinWidth="800" MinHeight="450" VerticalAlignment="Center" Closing="CerrandoVentana">
+    <Grid>
+
+        <DockPanel LastChildFill="True">
+            <!--Encabezado-->
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Background="Aqua" HorizontalAlignment="Right">
+                <Label Content="coNFIG"/>
+                <Label Content="uSUARIO FOTO"/>
+            </StackPanel>
+
+
+            <!--Pie de pagina-->
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Background="Coral" HorizontalAlignment="Center">
+                <Button Content="Unirse a sala de espera"></Button>
+                <Button Content="Configurar partida"></Button>
+                <Button Content="Empezar partida"></Button>
+            </StackPanel>
             <!--Amigos conectado lista-->
-            <StackPanel Orientation="Vertical">
+            <StackPanel DockPanel.Dock="Left" Background="DarkGray" Orientation="Vertical">
                 <Label Content="Amigos"/>
                 <Label Content="Perosna"/>
                 <Label Content="Perosna"/>
                 <Label Content="Perosna"/>
                 <Label Content="Perosna"/>
             </StackPanel>
-            <!--Usuario en la sala de espera-->
-
-            <StackPanel>
-                <Label Content="Usuarios en el lobby"/>
-                <Label Content="hOLA"/>
-                <Label Content="Unaay"/>
-                <Label Content="Messi"/>
+            <!--Middler-->
+            <StackPanel Orientation="Vertical"  Background="AntiqueWhite" HorizontalAlignment="Center">
+                <Label x:Name="labelCodigoSala" Content="/CodigoSala/"></Label>
+                <!--Usuario en la sala de espera-->
+                <StackPanel Orientation="Vertical">
+                    <Label Content="Usuarios en el lobby"/>
+                    <Label Content="hOLA"/>
+                    <Label Content="Unaay"/>
+                    <Label Content="Messi"/>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
-        
-        <!--Pie de pagina-->
-        <StackPanel  Orientation="Horizontal" Background="Coral" HorizontalAlignment="Center">
-            <Button Content="Unirse a sala de espera"></Button>
-            <Button Content="Configurar partida"></Button>
-            <Button Content="Empezar partida"></Button>
-        </StackPanel>
-    </StackPanel>
+        </DockPanel>
+        <!-- UserControl superpuesto -->
+        <local:ChatUserControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"></local:ChatUserControl>
+    </Grid>
+
 </Window>

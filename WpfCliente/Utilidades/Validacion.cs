@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UtilidadesLibreria;
+using WpfCliente.ServidorDescribelo;
 namespace WpfCliente
 {
     public class Validacion
@@ -39,6 +40,12 @@ namespace WpfCliente
             //TODO Unaay debe colcoar una internalizacion para este mensaje
             resultado.Add(Llaves.LLAVE_MENSAJE, "La contraseña es válida.");
             return resultado;
+        }
+
+        public static bool ExisteSala(string codigoSala)
+        {
+            IServicioSala servicioSala = new ServicioSalaClient();
+            return servicioSala.ValidarSala(codigoSala);
         }
     }
 }

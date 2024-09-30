@@ -7,10 +7,18 @@ using System.Threading.Tasks;
 
 namespace WcfServicioLibreria.Contratos
 {
-    [ServiceContract]
-    public interface IImagen
+    [ServiceContract(CallbackContract=typeof(IUsuarioCallBack))]
+    public interface  IServicioUsuario
     {
-        [OperationContract]
-         Byte[] PedirImagen(int ususarioID);
+       
     }
+
+    [ServiceContract]
+    public interface IUsuarioCallBack
+    {
+        
+
+    }
+
+
 }

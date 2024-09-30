@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfCliente.ServidorDescribelo;
 
 namespace WpfCliente.Utilidad
 {
@@ -20,6 +21,11 @@ namespace WpfCliente.Utilidad
                 return _instance;
             }
         }
-        public string usuario { get; set; }
+        public string nombreUsuario { get; set; }
+        public ServicioUsuarioSesionClient ServicioUsuarioSesionCliente { get; set; }
+        public ServicioSalaJugadorClient ServicioSalaJugadorCliente { get; set; }
+        public string idSala {  get; set; }
+        public string idChat { get; set; }
+
     }
 }

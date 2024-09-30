@@ -81,14 +81,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="GUI\ChatUserControl.xaml.cs">
+      <DependentUpon>ChatUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\ConfigurarPartidaPage.xaml.cs">
       <DependentUpon>ConfigurarPartidaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\MenuWindow.xaml.cs">
+      <DependentUpon>MenuWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\SalaEsperaWindow.xaml.cs">
       <DependentUpon>SalaEsperaWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pesistencia\CambiarIdioma.cs" />
-    <Compile Include="Pesistencia\IActualizacionUI.cs" />
+    <Compile Include="GUI\UniserSalaModalWindow.xaml.cs">
+      <DependentUpon>UniserSalaModalWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utilidades\CambiarIdioma.cs" />
+    <Compile Include="Interfaz\IActualizacionUI.cs" />
     <Compile Include="Pesistencia\IdiomaGuardo.cs" />
     <Compile Include="Properties\Idioma.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -122,6 +131,9 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Idioma.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Connected Services\ServidorDescribelo\Arrays.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\ServidorDescribelo\service.wsdl" />
     <None Include="Connected Services\ServidorDescribelo\service.xsd">
       <SubType>Designer</SubType>
@@ -129,13 +141,13 @@
     <None Include="Connected Services\ServidorDescribelo\service1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\ServidorDescribelo\System.Security.Cryptography.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Modelo.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ServidorDescribelo\WpfCliente.ServidorDescribelo.ChatMensaje.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\ServidorDescribelo\WpfCliente.ServidorDescribelo.ChatUsuario.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">
@@ -163,7 +175,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="GUI\ChatUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\ConfigurarPartidaPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\MenuWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -179,9 +199,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\UniserSalaModalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Recursos\logoIdioma.png" />
+    <Resource Include="Recursos\logoIdioma.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
@@ -206,6 +232,11 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\imgButtonChat.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

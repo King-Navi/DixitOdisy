@@ -8,17 +8,35 @@ using System.Threading.Tasks;
 
 namespace WcfServicioLibreria.Modelo
 {
+    /// <summary>
+    /// Esta clase hace referncia al modelo de usurio en nuestro caso va a ser el de base de datos
+    /// </summary>
     [DataContract]
-    public class Usuario
+    public class Usuario : UsuarioContexto
     {
-        int idUsuario;
-        String nombre;
-        SHA256 contraseniaHASH;
+        #region Campos
+        private int idUsuarioCuenta;
+        private String nombre;
+        private SHA256 contraseniaHASH;
+        private String correo;
+        private Enumerador.EstadoJugador estadoJugador;
+
+        #endregion Campos
+
+        #region Propiedades
         [DataMember]
         public string Nombre { get => nombre; set => nombre = value; }
         [DataMember]
-        public int IdUsuario { get => idUsuario; set => idUsuario = value; }
+        public int IdUsuario { get => idUsuarioCuenta; set => idUsuarioCuenta = value; }
         [DataMember]
         public SHA256 ContraseniaHASH { get => contraseniaHASH; set => contraseniaHASH = value; }
+        #endregion Propiedades
+
+        #region Metodos
+        public override string ToString()
+        {
+            return Nombre;
+        }
+        #endregion Metodos
     }
 }

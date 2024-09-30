@@ -1,8 +1,10 @@
 ﻿using System;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using UtilidadesLibreria;
+using WpfCliente.GUI;
 using WpfCliente.UsuarioControl;
 using WpfCliente.Utilidad;
 
@@ -75,7 +77,17 @@ namespace WpfCliente.Vista
         private void ButtonClicIniciarSesion(object sender, RoutedEventArgs e)
         {
             //Este metodo es de prueba
-            Singleton.Instance.usuario = textBoxUsuario.Text;
+            Singleton.Instance.nombreUsuario = textBoxUsuario.Text;
+
+            //TODO: antes de abrir la nueva ventana se tiene que hacer la logica de inicio de sesion con validacion y respuesta del servidor
+
+            AbrirVentanaMenu();
+        }
+        private void AbrirVentanaMenu() 
+        {
+            MenuWindow nuevaVentana = new MenuWindow();
+            nuevaVentana.Show();
+            this.Close();
         }
 
         private void ButtonClicRegistrar(object sender, RoutedEventArgs e)

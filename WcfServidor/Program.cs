@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UtilidadesLibreria;
 using WcfServicioLibreria;
+using WcfServicioLibreria.Manejador;
 
 namespace WcfServidor
 {
@@ -15,7 +16,7 @@ namespace WcfServidor
         {
             Dictionary<string, Object> respuesta = InicializadorConfiguracion.IniciarConexion();
             respuesta.TryGetValue(Llaves.LLAVE_MENSAJE, out object valor);
-            Console.WriteLine((string) valor);
+            Console.WriteLine((string)valor);
             Program programa = new Program();
             programa.IniciarServidor();
         }
@@ -25,9 +26,32 @@ namespace WcfServidor
             {
                 host.Open();
                 Console.WriteLine("Servidor corriedo");
-                Console.WriteLine("Presiona cualquier tecla para atraparlo...");
-                Console.ReadLine();
+                Console.WriteLine("Presiona 9 tecla para atraparlo...");
+                Menu();
                 host.Close();
+            }
+        }
+        private void Menu()
+        {
+            bool condicionSalida = true;
+
+            while (condicionSalida)
+            {
+                Console.WriteLine("Digite un numero");
+                Console.WriteLine("1.- Ver usuarios conectados");
+                Console.WriteLine("9.- Salir");
+                string respuesta = Console.ReadLine();
+                switch (respuesta)
+                {
+                    case "1":
+                        
+                        break;
+                    case "9":
+                        condicionSalida = false;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }

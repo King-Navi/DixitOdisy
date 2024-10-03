@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
 
@@ -12,24 +7,46 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioUsuario
     {
-
-        private void DesconectarJugador(int idJugador)
+        /// <summary>
+        /// Metodo que desconecta a un jugador y lo elimna de memoria. 
+        ///  Despues de ejecutar este metodo el usario ya no existe en memoria acausa del dispose()
+        /// </summary>
+        /// <param name="idJugador"></param>
+        public void DesconectarUsuario(int idJugador)
         {
             try
             {
-                if (jugadoresConetcadosDiccionario.ContainsKey(idJugador))
+                if (jugadoresConectadosDiccionario.ContainsKey(idJugador))
                 {
-                    jugadoresConetcadosDiccionario.TryRemove(idJugador, out UsuarioContexto usuario);
-                    if (usuario != null)
+                    jugadoresConectadosDiccionario.TryRemove(idJugador, out UsuarioContexto usuario);
+                    lock (usuario)
                     {
-                        usuario.Dispose();
+                        if (usuario != null)
+                        {
+                            usuario.EnDesconexion();
+                            usuario.Desechar();
+                        }
                     }
+
                 }
             }
-            catch (CommunicationException ex)
+            catch (CommunicationException excepcion)
             {
                    //TODO : Manejar el error
             }
+        }
+
+        public bool Ping()
+        {
+            return true;
+        }
+
+        public bool YaIniciadoSesion(string nombreUsuario)
+        {
+            //TODO: Hacer una consulta para obtener 
+            //ObtenerIdPorNombre();
+            //TODO: No dejar el 1 y cambiar por el resultado de la consulta
+            return jugadoresConectadosDiccionario.ContainsKey(1);
         }
     }
 }

@@ -15,91 +15,6 @@ namespace WpfCliente.ServidorDescribelo {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UsuarioContexto", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
-    [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(WpfCliente.ServidorDescribelo.Usuario))]
-    public partial class UsuarioContexto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Usuario", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
-    [System.SerializableAttribute()]
-    public partial class Usuario : WpfCliente.ServidorDescribelo.UsuarioContexto {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Security.Cryptography.SHA256 ContraseniaHASHField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdUsuarioField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NombreField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Security.Cryptography.SHA256 ContraseniaHASH {
-            get {
-                return this.ContraseniaHASHField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ContraseniaHASHField, value) != true)) {
-                    this.ContraseniaHASHField = value;
-                    this.RaisePropertyChanged("ContraseniaHASH");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int IdUsuario {
-            get {
-                return this.IdUsuarioField;
-            }
-            set {
-                if ((this.IdUsuarioField.Equals(value) != true)) {
-                    this.IdUsuarioField = value;
-                    this.RaisePropertyChanged("IdUsuario");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Nombre {
-            get {
-                return this.NombreField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NombreField, value) != true)) {
-                    this.NombreField = value;
-                    this.RaisePropertyChanged("Nombre");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="UsuarioDuplicadoFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
     [System.SerializableAttribute()]
     public partial class UsuarioDuplicadoFalla : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -220,6 +135,397 @@ namespace WpfCliente.ServidorDescribelo {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Amigo", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
+    [System.SerializableAttribute()]
+    public partial class Amigo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EstadoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.IO.Stream FotoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NombreField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Estado {
+            get {
+                return this.EstadoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EstadoField, value) != true)) {
+                    this.EstadoField = value;
+                    this.RaisePropertyChanged("Estado");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.IO.Stream Foto {
+            get {
+                return this.FotoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FotoField, value) != true)) {
+                    this.FotoField = value;
+                    this.RaisePropertyChanged("Foto");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Nombre {
+            get {
+                return this.NombreField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NombreField, value) != true)) {
+                    this.NombreField = value;
+                    this.RaisePropertyChanged("Nombre");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UsuarioContexto", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(WpfCliente.ServidorDescribelo.Usuario))]
+    public partial class UsuarioContexto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdUsuarioField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NombreField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int IdUsuario {
+            get {
+                return this.IdUsuarioField;
+            }
+            set {
+                if ((this.IdUsuarioField.Equals(value) != true)) {
+                    this.IdUsuarioField = value;
+                    this.RaisePropertyChanged("IdUsuario");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Nombre {
+            get {
+                return this.NombreField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NombreField, value) != true)) {
+                    this.NombreField = value;
+                    this.RaisePropertyChanged("Nombre");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Usuario", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
+    [System.SerializableAttribute()]
+    public partial class Usuario : WpfCliente.ServidorDescribelo.UsuarioContexto {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Security.Cryptography.SHA256 ContraseniaHASHField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Security.Cryptography.SHA256 ContraseniaHASH {
+            get {
+                return this.ContraseniaHASHField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContraseniaHASHField, value) != true)) {
+                    this.ContraseniaHASHField = value;
+                    this.RaisePropertyChanged("ContraseniaHASH");
+                }
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioChat")]
+    public interface IServicioChat {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChat/CrearChat", ReplyAction="http://tempuri.org/IServicioChat/CrearChatResponse")]
+        bool CrearChat(string idChat);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChat/CrearChat", ReplyAction="http://tempuri.org/IServicioChat/CrearChatResponse")]
+        System.Threading.Tasks.Task<bool> CrearChatAsync(string idChat);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChat/EliminarChat", ReplyAction="http://tempuri.org/IServicioChat/EliminarChatResponse")]
+        bool EliminarChat();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChat/EliminarChat", ReplyAction="http://tempuri.org/IServicioChat/EliminarChatResponse")]
+        System.Threading.Tasks.Task<bool> EliminarChatAsync();
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IServicioChatChannel : WpfCliente.ServidorDescribelo.IServicioChat, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class ServicioChatClient : System.ServiceModel.ClientBase<WpfCliente.ServidorDescribelo.IServicioChat>, WpfCliente.ServidorDescribelo.IServicioChat {
+        
+        public ServicioChatClient() {
+        }
+        
+        public ServicioChatClient(string endpointConfigurationName) : 
+                base(endpointConfigurationName) {
+        }
+        
+        public ServicioChatClient(string endpointConfigurationName, string remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ServicioChatClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ServicioChatClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(binding, remoteAddress) {
+        }
+        
+        public bool CrearChat(string idChat) {
+            return base.Channel.CrearChat(idChat);
+        }
+        
+        public System.Threading.Tasks.Task<bool> CrearChatAsync(string idChat) {
+            return base.Channel.CrearChatAsync(idChat);
+        }
+        
+        public bool EliminarChat() {
+            return base.Channel.EliminarChat();
+        }
+        
+        public System.Threading.Tasks.Task<bool> EliminarChatAsync() {
+            return base.Channel.EliminarChatAsync();
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioChatMotor", CallbackContract=typeof(WpfCliente.ServidorDescribelo.IServicioChatMotorCallback))]
+    public interface IServicioChatMotor {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChat", ReplyAction="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(WpfCliente.ServidorDescribelo.UsuarioDuplicadoFalla), Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatUsuarioDuplicadoFallaFaul" +
+            "t", Name="UsuarioDuplicadoFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
+        bool AgregarUsuarioChat(string idChat, string nombreUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChat", ReplyAction="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatResponse")]
+        System.Threading.Tasks.Task<bool> AgregarUsuarioChatAsync(string idChat, string nombreUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChatMotor/DesconectarUsuarioChat", ReplyAction="http://tempuri.org/IServicioChatMotor/DesconectarUsuarioChatResponse")]
+        bool DesconectarUsuarioChat(string nombreUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChatMotor/DesconectarUsuarioChat", ReplyAction="http://tempuri.org/IServicioChatMotor/DesconectarUsuarioChatResponse")]
+        System.Threading.Tasks.Task<bool> DesconectarUsuarioChatAsync(string nombreUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChatMotor/EstadoJugador", ReplyAction="http://tempuri.org/IServicioChatMotor/EstadoJugadorResponse")]
+        bool EstadoJugador(string nombreUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChatMotor/EstadoJugador", ReplyAction="http://tempuri.org/IServicioChatMotor/EstadoJugadorResponse")]
+        System.Threading.Tasks.Task<bool> EstadoJugadorAsync(string nombreUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChatMotor/EnviarMensaje", ReplyAction="http://tempuri.org/IServicioChatMotor/EnviarMensajeResponse")]
+        void EnviarMensaje(string idChat, WpfCliente.ServidorDescribelo.ChatMensaje mensaje);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChatMotor/EnviarMensaje", ReplyAction="http://tempuri.org/IServicioChatMotor/EnviarMensajeResponse")]
+        System.Threading.Tasks.Task EnviarMensajeAsync(string idChat, WpfCliente.ServidorDescribelo.ChatMensaje mensaje);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChatMotor/GetMessageHistory", ReplyAction="http://tempuri.org/IServicioChatMotor/GetMessageHistoryResponse")]
+        WpfCliente.ServidorDescribelo.ChatMensaje[] GetMessageHistory();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChatMotor/GetMessageHistory", ReplyAction="http://tempuri.org/IServicioChatMotor/GetMessageHistoryResponse")]
+        System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.ChatMensaje[]> GetMessageHistoryAsync();
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IServicioChatMotorCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioChatMotor/RecibirMensajeCliente")]
+        void RecibirMensajeCliente(WpfCliente.ServidorDescribelo.ChatMensaje mensaje);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IServicioChatMotorChannel : WpfCliente.ServidorDescribelo.IServicioChatMotor, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class ServicioChatMotorClient : System.ServiceModel.DuplexClientBase<WpfCliente.ServidorDescribelo.IServicioChatMotor>, WpfCliente.ServidorDescribelo.IServicioChatMotor {
+        
+        public ServicioChatMotorClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
+        }
+        
+        public ServicioChatMotorClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
+        }
+        
+        public ServicioChatMotorClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ServicioChatMotorClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ServicioChatMotorClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public bool AgregarUsuarioChat(string idChat, string nombreUsuario) {
+            return base.Channel.AgregarUsuarioChat(idChat, nombreUsuario);
+        }
+        
+        public System.Threading.Tasks.Task<bool> AgregarUsuarioChatAsync(string idChat, string nombreUsuario) {
+            return base.Channel.AgregarUsuarioChatAsync(idChat, nombreUsuario);
+        }
+        
+        public bool DesconectarUsuarioChat(string nombreUsuario) {
+            return base.Channel.DesconectarUsuarioChat(nombreUsuario);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DesconectarUsuarioChatAsync(string nombreUsuario) {
+            return base.Channel.DesconectarUsuarioChatAsync(nombreUsuario);
+        }
+        
+        public bool EstadoJugador(string nombreUsuario) {
+            return base.Channel.EstadoJugador(nombreUsuario);
+        }
+        
+        public System.Threading.Tasks.Task<bool> EstadoJugadorAsync(string nombreUsuario) {
+            return base.Channel.EstadoJugadorAsync(nombreUsuario);
+        }
+        
+        public void EnviarMensaje(string idChat, WpfCliente.ServidorDescribelo.ChatMensaje mensaje) {
+            base.Channel.EnviarMensaje(idChat, mensaje);
+        }
+        
+        public System.Threading.Tasks.Task EnviarMensajeAsync(string idChat, WpfCliente.ServidorDescribelo.ChatMensaje mensaje) {
+            return base.Channel.EnviarMensajeAsync(idChat, mensaje);
+        }
+        
+        public WpfCliente.ServidorDescribelo.ChatMensaje[] GetMessageHistory() {
+            return base.Channel.GetMessageHistory();
+        }
+        
+        public System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.ChatMensaje[]> GetMessageHistoryAsync() {
+            return base.Channel.GetMessageHistoryAsync();
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioPeticionAmistad", CallbackContract=typeof(WpfCliente.ServidorDescribelo.IServicioPeticionAmistadCallback))]
+    public interface IServicioPeticionAmistad {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioPeticionAmistad/GetFriendRequest")]
+        void GetFriendRequest(string nombreUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioPeticionAmistad/GetFriendRequest")]
+        System.Threading.Tasks.Task GetFriendRequestAsync(string nombreUsuario);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IServicioPeticionAmistadCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioPeticionAmistad/GetFriendRequestCallback", ReplyAction="http://tempuri.org/IServicioPeticionAmistad/GetFriendRequestCallbackResponse")]
+        void GetFriendRequestCallback(WpfCliente.ServidorDescribelo.Amigo[] amigos);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IServicioPeticionAmistadChannel : WpfCliente.ServidorDescribelo.IServicioPeticionAmistad, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class ServicioPeticionAmistadClient : System.ServiceModel.DuplexClientBase<WpfCliente.ServidorDescribelo.IServicioPeticionAmistad>, WpfCliente.ServidorDescribelo.IServicioPeticionAmistad {
+        
+        public ServicioPeticionAmistadClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
+        }
+        
+        public ServicioPeticionAmistadClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
+        }
+        
+        public ServicioPeticionAmistadClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ServicioPeticionAmistadClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ServicioPeticionAmistadClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public void GetFriendRequest(string nombreUsuario) {
+            base.Channel.GetFriendRequest(nombreUsuario);
+        }
+        
+        public System.Threading.Tasks.Task GetFriendRequestAsync(string nombreUsuario) {
+            return base.Channel.GetFriendRequestAsync(nombreUsuario);
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioRegistro")]
     public interface IServicioRegistro {
@@ -264,110 +570,6 @@ namespace WpfCliente.ServidorDescribelo {
         
         public System.Threading.Tasks.Task<int> RegistrarUsuarioAsync(string usuario, string contrasenia) {
             return base.Channel.RegistrarUsuarioAsync(usuario, contrasenia);
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioChat")]
-    public interface IServicioChat {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChat/AgregarUsuarioChat", ReplyAction="http://tempuri.org/IServicioChat/AgregarUsuarioChatResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(WpfCliente.ServidorDescribelo.UsuarioDuplicadoFalla), Action="http://tempuri.org/IServicioChat/AgregarUsuarioChatUsuarioDuplicadoFallaFault", Name="UsuarioDuplicadoFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
-        bool AgregarUsuarioChat(WpfCliente.ServidorDescribelo.Usuario usuario);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChat/AgregarUsuarioChat", ReplyAction="http://tempuri.org/IServicioChat/AgregarUsuarioChatResponse")]
-        System.Threading.Tasks.Task<bool> AgregarUsuarioChatAsync(WpfCliente.ServidorDescribelo.Usuario usuario);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChat/DesconectarUsuarioChat", ReplyAction="http://tempuri.org/IServicioChat/DesconectarUsuarioChatResponse")]
-        bool DesconectarUsuarioChat(WpfCliente.ServidorDescribelo.Usuario usuario);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChat/DesconectarUsuarioChat", ReplyAction="http://tempuri.org/IServicioChat/DesconectarUsuarioChatResponse")]
-        System.Threading.Tasks.Task<bool> DesconectarUsuarioChatAsync(WpfCliente.ServidorDescribelo.Usuario usuario);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChat/EstadoJugador", ReplyAction="http://tempuri.org/IServicioChat/EstadoJugadorResponse")]
-        bool EstadoJugador(WpfCliente.ServidorDescribelo.Usuario usuario);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChat/EstadoJugador", ReplyAction="http://tempuri.org/IServicioChat/EstadoJugadorResponse")]
-        System.Threading.Tasks.Task<bool> EstadoJugadorAsync(WpfCliente.ServidorDescribelo.Usuario usuario);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChat/EnviarMensaje", ReplyAction="http://tempuri.org/IServicioChat/EnviarMensajeResponse")]
-        void EnviarMensaje(WpfCliente.ServidorDescribelo.Usuario usuario, string mensaje);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChat/EnviarMensaje", ReplyAction="http://tempuri.org/IServicioChat/EnviarMensajeResponse")]
-        System.Threading.Tasks.Task EnviarMensajeAsync(WpfCliente.ServidorDescribelo.Usuario usuario, string mensaje);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChat/GetMessageHistory", ReplyAction="http://tempuri.org/IServicioChat/GetMessageHistoryResponse")]
-        WpfCliente.ServidorDescribelo.ChatMensaje[] GetMessageHistory();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChat/GetMessageHistory", ReplyAction="http://tempuri.org/IServicioChat/GetMessageHistoryResponse")]
-        System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.ChatMensaje[]> GetMessageHistoryAsync();
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IServicioChatChannel : WpfCliente.ServidorDescribelo.IServicioChat, System.ServiceModel.IClientChannel {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ServicioChatClient : System.ServiceModel.ClientBase<WpfCliente.ServidorDescribelo.IServicioChat>, WpfCliente.ServidorDescribelo.IServicioChat {
-        
-        public ServicioChatClient() {
-        }
-        
-        public ServicioChatClient(string endpointConfigurationName) : 
-                base(endpointConfigurationName) {
-        }
-        
-        public ServicioChatClient(string endpointConfigurationName, string remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
-        }
-        
-        public ServicioChatClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(endpointConfigurationName, remoteAddress) {
-        }
-        
-        public ServicioChatClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(binding, remoteAddress) {
-        }
-        
-        public bool AgregarUsuarioChat(WpfCliente.ServidorDescribelo.Usuario usuario) {
-            return base.Channel.AgregarUsuarioChat(usuario);
-        }
-        
-        public System.Threading.Tasks.Task<bool> AgregarUsuarioChatAsync(WpfCliente.ServidorDescribelo.Usuario usuario) {
-            return base.Channel.AgregarUsuarioChatAsync(usuario);
-        }
-        
-        public bool DesconectarUsuarioChat(WpfCliente.ServidorDescribelo.Usuario usuario) {
-            return base.Channel.DesconectarUsuarioChat(usuario);
-        }
-        
-        public System.Threading.Tasks.Task<bool> DesconectarUsuarioChatAsync(WpfCliente.ServidorDescribelo.Usuario usuario) {
-            return base.Channel.DesconectarUsuarioChatAsync(usuario);
-        }
-        
-        public bool EstadoJugador(WpfCliente.ServidorDescribelo.Usuario usuario) {
-            return base.Channel.EstadoJugador(usuario);
-        }
-        
-        public System.Threading.Tasks.Task<bool> EstadoJugadorAsync(WpfCliente.ServidorDescribelo.Usuario usuario) {
-            return base.Channel.EstadoJugadorAsync(usuario);
-        }
-        
-        public void EnviarMensaje(WpfCliente.ServidorDescribelo.Usuario usuario, string mensaje) {
-            base.Channel.EnviarMensaje(usuario, mensaje);
-        }
-        
-        public System.Threading.Tasks.Task EnviarMensajeAsync(WpfCliente.ServidorDescribelo.Usuario usuario, string mensaje) {
-            return base.Channel.EnviarMensajeAsync(usuario, mensaje);
-        }
-        
-        public WpfCliente.ServidorDescribelo.ChatMensaje[] GetMessageHistory() {
-            return base.Channel.GetMessageHistory();
-        }
-        
-        public System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.ChatMensaje[]> GetMessageHistoryAsync() {
-            return base.Channel.GetMessageHistoryAsync();
         }
     }
     
@@ -451,6 +653,8 @@ namespace WpfCliente.ServidorDescribelo {
     public interface IServicioSalaJugador {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSala", ReplyAction="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(WpfCliente.ServidorDescribelo.UsuarioDuplicadoFalla), Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaUsuarioDuplicadoFallaFa" +
+            "ult", Name="UsuarioDuplicadoFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
         bool AgregarJugadorSala(string gamertag, string idSala);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSala", ReplyAction="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaResponse")]
@@ -560,6 +764,53 @@ namespace WpfCliente.ServidorDescribelo {
         
         public System.Threading.Tasks.Task AsignarColorAsync(string idSala) {
             return base.Channel.AsignarColorAsync(idSala);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioUsuario")]
+    public interface IServicioUsuario {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/Ping", ReplyAction="http://tempuri.org/IServicioUsuario/PingResponse")]
+        bool Ping();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/Ping", ReplyAction="http://tempuri.org/IServicioUsuario/PingResponse")]
+        System.Threading.Tasks.Task<bool> PingAsync();
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IServicioUsuarioChannel : WpfCliente.ServidorDescribelo.IServicioUsuario, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class ServicioUsuarioClient : System.ServiceModel.ClientBase<WpfCliente.ServidorDescribelo.IServicioUsuario>, WpfCliente.ServidorDescribelo.IServicioUsuario {
+        
+        public ServicioUsuarioClient() {
+        }
+        
+        public ServicioUsuarioClient(string endpointConfigurationName) : 
+                base(endpointConfigurationName) {
+        }
+        
+        public ServicioUsuarioClient(string endpointConfigurationName, string remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ServicioUsuarioClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ServicioUsuarioClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(binding, remoteAddress) {
+        }
+        
+        public bool Ping() {
+            return base.Channel.Ping();
+        }
+        
+        public System.Threading.Tasks.Task<bool> PingAsync() {
+            return base.Channel.PingAsync();
         }
     }
     

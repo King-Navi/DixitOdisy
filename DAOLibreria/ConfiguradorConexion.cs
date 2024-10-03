@@ -1,8 +1,6 @@
-﻿using DAOLibreria.ModeloBD;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.Entity.Core.EntityClient;
 using System.Data.SqlClient;
 using System.Security;
 using UtilidadesLibreria;
@@ -29,7 +27,6 @@ namespace DAOLibreria
         /// <returns>Un diccionario con los resultados de la operación, incluyendo un mensaje y un indicador de éxito o error.</returns>
         public static Dictionary<string, Object> ConfigurarCadenaConexion()
         {
-            Dictionary<string, Object> resultado = new Dictionary<string, Object>();
             Console.WriteLine("Ingrese el nombre del servidor:");
             string servidor = Console.ReadLine();
             Console.WriteLine("Ingrese el nombre de la base de datos:");
@@ -41,8 +38,7 @@ namespace DAOLibreria
             string nuevaCadenaConexion = $"metadata=res://*/{carpeta}.{nombreArchivo}.csdl|res://*/{carpeta}.{nombreArchivo}.ssdl|res://*/{carpeta}.{nombreArchivo}.msl;" +
                                          $"provider=System.Data.SqlClient;provider connection string=\"Server={servidor};Database={nombreBD};User Id={usuario};Password={contrasena};MultipleActiveResultSets=True;App=EntityFramework\";";
             ActualizarCadenaConexionEnAppConfig("bd1Entities", nuevaCadenaConexion);
-            resultado = ProbarConexion(servidor, nombreBD, usuario, contrasena);
-            return resultado;
+            return ProbarConexion(servidor, nombreBD, usuario, contrasena);
         }
         /// <summary>
         /// Configura la cadena de conexión utilizando una variable de entorno que contiene el servidor, nombre de la base de datos, nombre del usuario y contraseña del usuario;

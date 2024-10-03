@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfCliente.GUI"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Unloaded="CerrarControl">
     <Grid >
         <!-- Chat-->
         <Grid x:Name="gridChat" Background="#AA000000" Margin="295,132,0,0"  Visibility="Collapsed">
@@ -15,7 +15,7 @@
             </Grid.RowDefinitions>
 
             <!-- Área de mensajes -->
-            <TextBox x:Name="ChatMessages"
+            <TextBox x:Name="textBoxReceptorMensaje"
                  Grid.Row="0"
                  IsReadOnly="True"
                  AcceptsReturn="True"
@@ -25,14 +25,13 @@
 
             <!-- Input y botón de enviar -->
             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
-                <TextBox x:Name="textBoxMensaje"
-                     Width="600"
+                <TextBox x:Name="textBoxEnviarMensaje"
                      Height="30"
-                     Margin="0,0,10,0"/>
+                     Margin="0,0,10,0" MinWidth="380"/>
                 <Button Content="/ENVIAR"
                     Width="80"
                     Height="30"
-                    Click="clicButtonEnviar"/>
+                    Click="ClicButtonEnviar"/>
             </StackPanel>
 
             <!-- Botón para cerrar el chat -->
@@ -44,7 +43,7 @@
                 Foreground="White"
                 BorderBrush="Transparent"
                 FontWeight="Bold"
-                Click="clicButtonCerrarChar"/>
+                Click="ClicButtonCerrarChar"/>
         </Grid>
         <!--Boton para abrir el chat-->
         <Button x:Name="buttonAbrirChat" Width="120" Height="120" Click="ClicButtonAbrirChat" VerticalAlignment="Bottom" HorizontalAlignment="Right" >

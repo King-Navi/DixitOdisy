@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
-using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Manejador
@@ -16,54 +11,57 @@ namespace WcfServicioLibreria.Manejador
         /// <summary>
         /// Metodo que al iniciar sesion 
         /// </summary>
-        /// <param name="idUsuario"></param>
         public void ObtenerSessionJugador(Usuario usuario)
         {
-            try
+            bool sesionAbierta = jugadoresConectadosDiccionario.ContainsKey(usuario.IdUsuario);
+            if (!sesionAbierta)
             {
-                IUsuarioSesionCallback contexto = OperationContext.Current.GetCallbackChannel<IUsuarioSesionCallback>();
-                usuario.UsuarioSesionCallBack = contexto;
-                bool sesionAbierta = jugadoresConetcadosDiccionario.ContainsKey(usuario.IdUsuario);
-                if (!sesionAbierta)
+                try
                 {
+                    IUsuarioSesionCallback contexto = OperationContext.Current.GetCallbackChannel<IUsuarioSesionCallback>();
+                    usuario.UsuarioSesionCallBack = contexto;
+
                     ICommunicationObject comunicacionObjecto = (ICommunicationObject)contexto;
                     usuario.CerrandoEvento = (emisor, e) =>
                     {
                         Console.WriteLine(usuario.Nombre + " se está yendo. Clase" + emisor);
                         comunicacionObjecto.Closing -= usuario.CerrandoEvento;
                     };
-                    usuario.CerradoEvento= (emisor, e) =>
+                    usuario.CerradoEvento = (emisor, e) =>
                     {
-                        DesconectarJugador(usuario.IdUsuario);
                         Console.WriteLine(usuario.Nombre + " se ha ido. Clase" + emisor);
                         comunicacionObjecto.Closed -= usuario.CerradoEvento;
+                        //Despues de este metodo el usario ya no existe porque se ocupa dispose
+                        DesconectarUsuario(usuario.IdUsuario);
                     };
-                    usuario.FalloEvento= (emisor, e) =>
+                    usuario.FalloEvento = (emisor, e) =>
                     {
-                        DesconectarJugador(usuario.IdUsuario);
                         Console.WriteLine(usuario.Nombre + " ha fallado. Clase" + emisor);
                         comunicacionObjecto.Faulted -= usuario.FalloEvento;
+                        //Despues de este metodo el usario ya no existe porque se ocupa dispose
+                        DesconectarUsuario(usuario.IdUsuario);
                     };
-                    // Suscribirse a los eventos
                     comunicacionObjecto.Closing += usuario.CerrandoEvento;
                     comunicacionObjecto.Closed += usuario.CerradoEvento;
                     comunicacionObjecto.Faulted += usuario.FalloEvento;
-                    jugadoresConetcadosDiccionario.TryAdd(usuario.IdUsuario, usuario);
+                    contexto.ObtenerSessionJugadorCallback(sesionAbierta);
+                    jugadoresConectadosDiccionario.TryAdd(usuario.IdUsuario, usuario);
 
                 }
-                else
+                catch (CommunicationException excepcion)
                 {
-                    UsuarioDuplicadoFalla fault = new UsuarioDuplicadoFalla()
-                    { Motivo = "User '" + usuario.Nombre + "' already logged in!" };
-                    throw new FaultException<UsuarioDuplicadoFalla>(fault);
+                    //TODO: Manejar el error
                 }
-                contexto.ObtenerSessionJugadorCallback(sesionAbierta);
 
             }
-            catch (CommunicationException ex)
+            else
             {
-                //TODO: Manejar el error
+                UsuarioDuplicadoFalla fault = new UsuarioDuplicadoFalla()
+                { Motivo = "User '" + usuario.Nombre + "' already logged in!" };
+                throw new FaultException<UsuarioDuplicadoFalla>(fault);
             }
+
         }
     }
 }
+

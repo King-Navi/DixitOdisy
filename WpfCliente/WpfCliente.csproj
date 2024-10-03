@@ -81,11 +81,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="GUIModelo\IniciarSesion.cs" />
+    <Compile Include="GUI\AmigoUserControl.xaml.cs">
+      <DependentUpon>AmigoUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\ChatUserControl.xaml.cs">
       <DependentUpon>ChatUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\ConfigurarPartidaPage.xaml.cs">
       <DependentUpon>ConfigurarPartidaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ErrorConexionModalWindow.xaml.cs">
+      <DependentUpon>ErrorConexionModalWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ListaAmigosUserControl.xaml.cs">
+      <DependentUpon>ListaAmigosUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\MenuWindow.xaml.cs">
       <DependentUpon>MenuWindow.xaml</DependentUpon>
@@ -96,7 +106,8 @@
     <Compile Include="GUI\UniserSalaModalWindow.xaml.cs">
       <DependentUpon>UniserSalaModalWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utilidades\CambiarIdioma.cs" />
+    <Compile Include="Modelo\Conexion.cs" />
+    <Compile Include="Utilidad\CambiarIdioma.cs" />
     <Compile Include="Interfaz\IActualizacionUI.cs" />
     <Compile Include="Pesistencia\IdiomaGuardo.cs" />
     <Compile Include="Properties\Idioma.Designer.cs">
@@ -113,8 +124,8 @@
     <Compile Include="GUI\IniciarSesionWindow.xaml.cs">
       <DependentUpon>IniciarSesionWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utilidades\Validacion.cs" />
-    <Compile Include="Utilidades\Singleton.cs" />
+    <Compile Include="Utilidad\Validacion.cs" />
+    <Compile Include="Utilidad\Singleton.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -141,7 +152,13 @@
     <None Include="Connected Services\ServidorDescribelo\service1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\ServidorDescribelo\System.IO.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\ServidorDescribelo\System.Security.Cryptography.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorDescribelo\System.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Modelo.xsd">
@@ -171,6 +188,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="GUI\AmigoUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\CambiarIdiomaUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -180,6 +201,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\ConfigurarPartidaPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ErrorConexionModalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ListaAmigosUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -238,5 +267,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,14 +1,13 @@
 ﻿using System;
-using System.ServiceModel;
+using System.Net.NetworkInformation;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Animation;
 using UtilidadesLibreria;
-using WpfCliente.GUI;
-using WpfCliente.UsuarioControl;
+using WpfCliente.Interfaz;
 using WpfCliente.Utilidad;
 
-namespace WpfCliente.Vista
+namespace WpfCliente.GUI
 {
     public partial class IniciarSesion : Window, IActualizacionUI
     {
@@ -74,15 +73,38 @@ namespace WpfCliente.Vista
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
         }
-        private void ButtonClicIniciarSesion(object sender, RoutedEventArgs e)
+        private async void ButtonClicIniciarSesion(object sender, RoutedEventArgs e)
         {
-            //Este metodo es de prueba
-            Singleton.Instance.nombreUsuario = textBoxUsuario.Text;
+            Task<bool> verificarConexion = Validacion.ValidarConexion();
+            HabilitarBotones(false);
+            gridCarga.Visibility = Visibility.Visible;
+            if (! await verificarConexion)
+            {
+                ErrorConexionModalWindow ventanaModal = new ErrorConexionModalWindow();
+                ventanaModal.Owner = this;
+                ventanaModal.ShowDialog();
+                gridCarga.Visibility = Visibility.Collapsed;
+                HabilitarBotones(true);
+                return;
+            }
+            gridCarga.Visibility = Visibility.Collapsed;
+
+            //TODO: Validar el textbox y el passwordbox
+            Singleton.Instance.NombreUsuario = textBoxUsuario.Text;
 
             //TODO: antes de abrir la nueva ventana se tiene que hacer la logica de inicio de sesion con validacion y respuesta del servidor
 
             AbrirVentanaMenu();
         }
+
+        private void HabilitarBotones(bool esValido)
+        {
+            textBoxUsuario.IsEnabled = esValido;
+            textBoxContrasenia.IsEnabled = esValido;
+            buttonIniciarSesion.IsEnabled = esValido;
+            buttonRegistrar.IsEnabled = esValido;
+        }
+
         private void AbrirVentanaMenu() 
         {
             MenuWindow nuevaVentana = new MenuWindow();
@@ -93,7 +115,7 @@ namespace WpfCliente.Vista
         private void ButtonClicRegistrar(object sender, RoutedEventArgs e)
         {
             stackPanePrincipal.Children.Clear();
-            //Esta es la que no es como ivnitado if invitado colocar bool true
+            //Esta es la que no es como invitado, si es un invitado colocar bool true
             stackPanePrincipal.Children.Add(new RegistrarUsuario());
         }
     }

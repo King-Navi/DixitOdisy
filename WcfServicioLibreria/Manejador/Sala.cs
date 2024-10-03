@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.ServiceModel;
 using System.Text;
-using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 
 namespace WcfServicioLibreria.Manejador
@@ -22,30 +19,35 @@ namespace WcfServicioLibreria.Manejador
         /// <returns></returns>
         public string CrearSala(string nombreUsuarioAnfitrion)
         {
-            string resultado = null;
+            string idSala = null;
             try
             {
-                string idSala;
                 do
                 {
                     idSala = GenerarIdUnico();
                 } while (salasDiccionario.ContainsKey(idSala));
 
                 bool existeSala = salasDiccionario.TryAdd(idSala, new Modelo.Sala(idSala, nombreUsuarioAnfitrion));
-                if (!existeSala)
+                if (existeSala)
                 {
-                    resultado = null;
+                    //TODO:Existe la sala manejar
                 }
                 else
                 {
-                    resultado = idSala;
+                    //TODO:Error no Existe la sala manejar
+
+                    throw new Exception("No se creo la sala");
                 }
             }
             catch (CommunicationException excepcion)
             {
                 //TODO: Manejar el error
             }
-            return resultado;
+            catch (Exception excepcion)
+            {
+                //TODO: Manejar el error
+            }
+            return idSala;
         }
         /// <summary>
         /// metodo que genera un id alfanumerico de 6 caracteres que no este en uso para una sala
@@ -71,7 +73,7 @@ namespace WcfServicioLibreria.Manejador
                     resultado.Append(CARACTERES[indice]);
                 }
             }
-            catch (CommunicationException ex)
+            catch (CommunicationException excepcion)
             {
                 //TODO: Manejar el error
             }
@@ -89,7 +91,7 @@ namespace WcfServicioLibreria.Manejador
             {
                 result = salasDiccionario.ContainsKey(idSala);
             }
-            catch (CommunicationException ex)
+            catch (CommunicationException excepcion)
             {
                    //TODO manejar el error
             }

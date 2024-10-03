@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UtilidadesLibreria
+namespace WpfCliente.Utilidad
 {
     /// <summary>
     /// La clase CambiarIdioma se encarga de manejar los eventos relacionados con el cambio de idioma en la aplicación.

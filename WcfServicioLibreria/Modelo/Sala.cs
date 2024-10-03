@@ -2,11 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 
 namespace WcfServicioLibreria.Modelo
@@ -78,7 +74,7 @@ namespace WcfServicioLibreria.Modelo
 
         bool ISala.DelegarRolAnfitrion(string nuevoAnfitrionNombre)
         {
-            bool existeJugador = jugadoresSala.TryGetValue(nuevoAnfitrionNombre, out ISalaJugadorCallback contexto);
+            bool existeJugador = jugadoresSala.TryGetValue(nuevoAnfitrionNombre, out _);
             if (!existeJugador)
             {
                 return false;

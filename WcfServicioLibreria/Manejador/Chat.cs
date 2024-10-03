@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
 
@@ -19,9 +15,9 @@ namespace WcfServicioLibreria.Manejador
                 bool existeSala = chatDiccionario.TryGetValue(idChat,out Chat chat);
                 if (existeSala)
                 {
-                    BroadCastChat chatBroadCart = (BroadCastChat)chat;
+                    MultiChat multiChat = (MultiChat)chat;
                     IChatCallback contexto = OperationContext.Current.GetCallbackChannel<IChatCallback>();
-                     return chatBroadCart.AgregarJugadorChat(nombreUsuario, contexto);
+                     return multiChat.AgregarJugadorChat(nombreUsuario, contexto);
                 }
                 
             }
@@ -37,10 +33,9 @@ namespace WcfServicioLibreria.Manejador
             bool resultado = false;
             try
             {
-                bool existeSala = chatDiccionario.TryAdd(idChat, new BroadCastChat(idChat));
+                bool existeSala = chatDiccionario.TryAdd(idChat, new MultiChat(idChat));
                 if (!existeSala)
                 {
-                    resultado = false;
                 }
                 else
                 {
@@ -64,11 +59,23 @@ namespace WcfServicioLibreria.Manejador
             throw new NotImplementedException();
         }
 
-        void IServicioChatMotor.EnviarMensaje(string nombreUsuario, string mensaje)
+        void IServicioChatMotor.EnviarMensaje(string idChat, ChatMensaje mensaje)
         {
-            throw new NotImplementedException();
+            try
+            {
+                ///Problema de concurrencia granular y revisar riesgo de deadlock
+                chatDiccionario.TryGetValue(idChat, out Chat chat);
+                lock (chat)
+                {
+                    MultiChat multiChat = (MultiChat)chat;
+                    multiChat.EnviarMensajeTodos(mensaje);
+                }
+            }
+            catch (CommunicationException excepcion)
+            {
+                //TODO: Manejar el error
+            }
         }
-
         bool IServicioChatMotor.EstadoJugador(string nombreUsuario)
         {
             throw new NotImplementedException();

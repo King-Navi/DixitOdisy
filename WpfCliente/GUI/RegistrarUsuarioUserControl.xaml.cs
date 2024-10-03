@@ -1,21 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
+using System.ServiceModel;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using UtilidadesLibreria;
+using WpfCliente.Interfaz;
+using WpfCliente.Utilidad;
 
-namespace WpfCliente.UsuarioControl
+namespace WpfCliente.GUI
 {
     /// <summary>
     /// Lógica de interacción para RegistrarUsuario.xaml
@@ -39,12 +32,12 @@ namespace WpfCliente.UsuarioControl
 
         public void ActualizarUI()
         {
-            labelSelecionUsuario.Content = WpfCliente.Properties.Idioma.labelSeleccionarFotoPerfil;
+            labelSelecionUsuario.Content = Properties.Idioma.labelSeleccionarFotoPerfil;
             labelRepitaContrasenia.Content = Properties.Idioma.labelRepitaContraseña;
             labelContrasenia.Content = Properties.Idioma.labelContrasenia; 
             labelUsuario.Content = Properties.Idioma.labelUsuario;
             labelCorreo.Content = Properties.Idioma.labelCorreoE;
-            labelRegistro.Content = WpfCliente.Properties.Idioma.tituloRegistroUsuario;
+            labelRegistro.Content = Properties.Idioma.tituloRegistroUsuario;
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
@@ -52,15 +45,29 @@ namespace WpfCliente.UsuarioControl
             ActualizarUI();
         }
 
-        private void buttonClicRegistrarUsuario(object sender, RoutedEventArgs e)
+        private void ButtonClicRegistrarUsuario(object sender, RoutedEventArgs e)
         {
+            //TODO: Realizar caso en el que no hay conexion
             ServidorDescribelo.IServicioRegistro servicio = new ServidorDescribelo.ServicioRegistroClient();
-            string contraseniaHash = BitConverter.ToString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(passwordBoxContrasenia.Password))).Replace("-", "");
-            int resultado=
-            servicio.RegistrarUsuario(textBoxUsuario.Text, contraseniaHash);
-            if (resultado < 1)
+            try
             {
-                Console.WriteLine("error");
+                string contraseniaHash = BitConverter.ToString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(passwordBoxContrasenia.Password))).Replace("-", "");
+                int resultado = servicio.RegistrarUsuario(textBoxUsuario.Text, contraseniaHash);
+                if (resultado < 1)
+                {
+                    //TODO: Manejar el error
+                    Console.WriteLine("error");
+                }
+            }
+            catch (Exception)
+            {
+                //TODO: Manejar error
+            }finally
+            {
+                if (servicio != null)
+                {
+                    ((ICommunicationObject)servicio).Close();
+                }
             }
         }
     }

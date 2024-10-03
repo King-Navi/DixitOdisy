@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using DAOLibreria;
-using DAOLibreria.ModeloBD;
 using UtilidadesLibreria;
 namespace WcfServicioLibreria
 {
@@ -12,7 +11,6 @@ namespace WcfServicioLibreria
         {
             bool salir = false;
             Dictionary<String, Object> resultado = new Dictionary<String, Object>();
-            object fueExitoso;
             while (!salir)
             {
                 Console.WriteLine("---- Bienvenido al iniciador de conexión ----");
@@ -30,12 +28,19 @@ namespace WcfServicioLibreria
                         resultado = ConfiguradorConexion.ConfigurarCadenaConexion();
                         resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje);
                         Console.WriteLine((string)mensaje);
-                        resultado.TryGetValue(Llaves.LLAVE_ERROR, out fueExitoso);
-
-                        if (!(bool)fueExitoso)
+                        resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
+                        try
                         {
-                            salir = true;
+                            if (!(bool)fueExitoso)
+                            {
+                                salir = true;
+                            }
                         }
+                        catch (NullReferenceException excepcion)
+                        {
+                            //TODO:Manejar el error
+                        }
+
                         break;
 
                     case "2":
@@ -45,9 +50,16 @@ namespace WcfServicioLibreria
                         resultado.TryGetValue(Llaves.LLAVE_ERROR, out  fueExitoso);
                         resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out mensaje);
                         Console.WriteLine((string)mensaje);
-                        if (!(bool)fueExitoso)
+                        try
                         {
-                            salir = true;
+                            if (!(bool)fueExitoso)
+                            {
+                                salir = true;
+                            }
+                        }
+                        catch (NullReferenceException excepcion)
+                        {
+                            //TODO:Manejar el error
                         }
                         break;
                     case "3":

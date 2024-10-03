@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 
 namespace WcfServicioLibreria.Modelo
 {
-    public class BroadCastChat : Chat
+    public class MultiChat : Chat
     {
         #region Atributos
         private ConcurrentDictionary<string, IChatCallback> jugadores = new ConcurrentDictionary<string, IChatCallback>();
@@ -18,7 +15,7 @@ namespace WcfServicioLibreria.Modelo
 
         #endregion Propiedades
         #region Contructor
-        public BroadCastChat(string _idChat) : base(_idChat)
+        public MultiChat(string _idChat) : base(_idChat)
         {
 
         }
@@ -31,6 +28,14 @@ namespace WcfServicioLibreria.Modelo
         public override bool EliminarChat()
         {
             throw new NotImplementedException();
+        }
+        public void EnviarMensajeTodos(ChatMensaje mensaje)
+        {
+            ICollection<string> nombresUsuarios =  jugadores.Keys;
+            foreach (string nombreUsuario in nombresUsuarios)
+            {
+                jugadores[nombreUsuario].RecibirMensajeCliente(mensaje);
+            }
         }
         #endregion Metodos
 

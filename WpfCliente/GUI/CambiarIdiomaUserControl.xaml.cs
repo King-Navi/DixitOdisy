@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using UtilidadesLibreria;
-using WpfCliente;
-namespace UtilidadesLibreria.UsuarioControl
+using WpfCliente.Interfaz;
+using WpfCliente.Utilidad;
+
+namespace WpfCliente.GUI
 {
     /// <summary>
     /// Interaction logic for CambiarIdiomaMenuDesplegable.xaml
@@ -64,12 +54,17 @@ namespace UtilidadesLibreria.UsuarioControl
 
         public void ActualizarUI()
         {
-            //throw new NotImplementedException();
+            //TODO: Pedirle a unaay los .resx
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
         {
             ActualizarUI();
+        }
+
+        private void CerrarControl(object sender, RoutedEventArgs e)
+        {
+            CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
         }
     }
     

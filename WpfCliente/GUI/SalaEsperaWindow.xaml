@@ -43,7 +43,7 @@
             </StackPanel>
         </DockPanel>
         <!-- UserControl superpuesto -->
-        <local:ChatUserControl HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"></local:ChatUserControl>
+        <local:ChatUserControl x:Name="chatUserControl" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"></local:ChatUserControl>
     </Grid>
 
 </Window>

@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
-using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Manejador
 {
@@ -27,26 +21,30 @@ namespace WcfServicioLibreria.Manejador
             {
                 ISalaJugadorCallback contexto = OperationContext.Current.GetCallbackChannel<ISalaJugadorCallback>();
                 salasDiccionario.TryGetValue(idSala, out ISala sala);
-                sala.AgregarJugadorSala(gamertag, contexto);
-
-                ICommunicationObject comunicacionObjecto = (ICommunicationObject)contexto;
-                comunicacionObjecto.Closing += (emisor, e) =>
+                lock (sala)
                 {
-                    Console.WriteLine(emisor + "Se esta llendo de la sala");////
-                };
-                comunicacionObjecto.Closed += (emisor, e) =>
-                {
-                    Console.WriteLine(emisor + "Se ha ido de la sala"); ///
+                    sala.AgregarJugadorSala(gamertag, contexto);
 
-                };
+                    ICommunicationObject comunicacionObjecto = (ICommunicationObject)contexto;
+                    comunicacionObjecto.Closing += (emisor, e) =>
+                    {
+                        Console.WriteLine(emisor + "Se esta llendo de la sala");////
+                    };
+                    comunicacionObjecto.Closed += (emisor, e) =>
+                    {
+                        Console.WriteLine(emisor + "Se ha ido de la sala"); ///
 
-                comunicacionObjecto.Faulted += (emisor, e) =>
-                {
-                    Console.WriteLine(emisor + "Ha fallado de la sala"); ////
+                    };
 
-                };
+                    comunicacionObjecto.Faulted += (emisor, e) =>
+                    {
+                        Console.WriteLine(emisor + "Ha fallado de la sala"); ////
+
+                    };
+                }
+
             }
-            catch (Exception ex)
+            catch (Exception excepcion)
             {
                 //TODO: Manejar el error
             }

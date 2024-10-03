@@ -1,19 +1,8 @@
-﻿using DAOLibreria;
-using DAOLibreria.DAO;
-using DAOLibreria.ModeloBD;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Security.Cryptography;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
+using DAOLibreria.DAO;
 using UtilidadesLibreria;
 using WcfServicioLibreria.Contratos;
-using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Manejador
 {
@@ -24,8 +13,8 @@ namespace WcfServicioLibreria.Manejador
         {
             int resultado;
             Dictionary<string, object> consulta = 
-                DAOLibreria.DAO.UsuarioDAO.CrearUsuario(usuario, contrasenia);
-            if (!(bool)consulta.TryGetValue(Llaves.LLAVE_ERROR, out object error))
+                UsuarioDAO.CrearUsuario(usuario, contrasenia);
+            if (!consulta.TryGetValue(Llaves.LLAVE_ERROR, out _))
             {
                 Console.WriteLine(usuario + "fallo al registralo");
                 consulta.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje);

@@ -56,24 +56,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contratos\ISala.cs" />
+    <Compile Include="Contratos\IServicioAmistad.cs" />
     <Compile Include="Contratos\IServicioChat.cs" />
     <Compile Include="Contratos\IServicioChatMotor.cs" />
+    <Compile Include="Contratos\IServicioPeticionAmistad.cs" />
     <Compile Include="Contratos\IServicioUsuario.cs" />
     <Compile Include="Contratos\IServicioUsuarioSesion.cs" />
     <Compile Include="Contratos\IServicioRegistro.cs" />
     <Compile Include="Contratos\IServicioSala.cs" />
     <Compile Include="Contratos\IServicioSalaJugador.cs" />
     <Compile Include="Enumerador\EstadoJugador.cs" />
-    <Compile Include="Evento\UsuarioConectadoEventArgs.cs" />
+    <Compile Include="Evento\UsuarioDesconectadoEventArgs.cs" />
     <Compile Include="InicializadorConfiguracion.cs" />
     <Compile Include="Manejador\Atributos.cs" />
+    <Compile Include="Manejador\PeticionAmistad.cs" />
     <Compile Include="Manejador\UsuarioSesion.cs" />
     <Compile Include="Manejador\Registro.cs" />
     <Compile Include="Manejador\Sala.cs" />
     <Compile Include="Manejador\SalaJugador.cs" />
     <Compile Include="Manejador\Chat.cs" />
     <Compile Include="Manejador\Usuario.cs" />
-    <Compile Include="Modelo\BroadCastChat.cs" />
+    <Compile Include="Modelo\Amigo.cs" />
+    <Compile Include="Modelo\MultiChat.cs" />
     <Compile Include="Modelo\Chat.cs" />
     <Compile Include="Modelo\ChatMensaje.cs" />
     <Compile Include="Modelo\UsuarioContexto.cs" />

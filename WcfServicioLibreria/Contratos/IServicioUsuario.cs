@@ -1,22 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Net.NetworkInformation;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WcfServicioLibreria.Contratos
 {
-    [ServiceContract(CallbackContract=typeof(IUsuarioCallBack))]
+    [ServiceContract]
     public interface  IServicioUsuario
     {
-       
-    }
-
-    [ServiceContract]
-    public interface IUsuarioCallBack
-    {
-        
+        //TODO: Colcocar lo que le corresponde a la logica del usuario
+        void DesconectarUsuario(int idUsuario);
+        bool YaIniciadoSesion(string nombreUsuario);
+        [OperationContract]
+        bool Ping();
 
     }
 

@@ -1,34 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/System.IO" />
   <xs:import namespace="http://schemas.datacontract.org/2004/07/System.Security.Cryptography" />
-  <xs:complexType name="Usuario">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:UsuarioContexto">
-        <xs:sequence>
-          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System.Security.Cryptography" minOccurs="0" name="ContraseniaHASH" nillable="true" type="q1:SHA256" />
-          <xs:element minOccurs="0" name="IdUsuario" type="xs:int" />
-          <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="Usuario" nillable="true" type="tns:Usuario" />
-  <xs:complexType name="UsuarioContexto">
-    <xs:sequence />
-  </xs:complexType>
-  <xs:element name="UsuarioContexto" nillable="true" type="tns:UsuarioContexto" />
   <xs:complexType name="UsuarioDuplicadoFalla">
     <xs:sequence>
       <xs:element minOccurs="0" name="Motivo" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="UsuarioDuplicadoFalla" nillable="true" type="tns:UsuarioDuplicadoFalla" />
-  <xs:complexType name="ArrayOfChatMensaje">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="ChatMensaje" nillable="true" type="tns:ChatMensaje" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfChatMensaje" nillable="true" type="tns:ArrayOfChatMensaje" />
   <xs:complexType name="ChatMensaje">
     <xs:sequence>
       <xs:element minOccurs="0" name="HoraFecha" type="xs:dateTime" />
@@ -37,4 +16,41 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ChatMensaje" nillable="true" type="tns:ChatMensaje" />
+  <xs:complexType name="ArrayOfChatMensaje">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ChatMensaje" nillable="true" type="tns:ChatMensaje" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfChatMensaje" nillable="true" type="tns:ArrayOfChatMensaje" />
+  <xs:complexType name="ArrayOfAmigo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Amigo" nillable="true" type="tns:Amigo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAmigo" nillable="true" type="tns:ArrayOfAmigo" />
+  <xs:complexType name="Amigo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Estado" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="Foto" nillable="true" type="q1:Stream" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Amigo" nillable="true" type="tns:Amigo" />
+  <xs:complexType name="Usuario">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:UsuarioContexto">
+        <xs:sequence>
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/System.Security.Cryptography" minOccurs="0" name="ContraseniaHASH" nillable="true" type="q2:SHA256" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Usuario" nillable="true" type="tns:Usuario" />
+  <xs:complexType name="UsuarioContexto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IdUsuario" type="xs:int" />
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UsuarioContexto" nillable="true" type="tns:UsuarioContexto" />
 </xs:schema>

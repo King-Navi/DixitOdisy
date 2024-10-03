@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Contratos
@@ -18,7 +14,7 @@ namespace WcfServicioLibreria.Contratos
         /// <summary>
         /// Intenta agregar un nuevo usuario al chat.
         /// </summary>
-        /// <param name="usuario">Datos del usuario a agregar.</param>
+        /// <param name="nombreUsuario">Datos del usuario a agregar.</param>
         /// <returns>Verdadero si el usuario es agregado exitosamente; de lo contrario, falso.</returns>
         /// <exception cref="UsuarioDuplicadoFalla">Se lanza si el usuario ya existe en el sistema.</exception>
         [OperationContract]
@@ -45,7 +41,7 @@ namespace WcfServicioLibreria.Contratos
         /// <param name="mensaje">El contenido del mensaje a enviar.</param>
 
         [OperationContract(IsOneWay = false)]
-        void EnviarMensaje(string nombreUsuario, string mensaje);
+        void EnviarMensaje(string idChat, ChatMensaje mensaje);
         /// <summary>
         /// Obtiene el historial de mensajes del chat.
         /// </summary>

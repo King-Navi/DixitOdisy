@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="ManejadorPrincipal" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-  <wsp:Policy wsu:Id="NetTcpBinding_IServicioRegistro_policy">
+  <wsp:Policy wsu:Id="NetTcpBinding_IServicioChat_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
@@ -39,7 +39,85 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="NetTcpBinding_IServicioChat_policy">
+  <wsp:Policy wsu:Id="NetTcpBinding_IServicioChatMotor_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
+          <wsrm:InactivityTimeout Milliseconds="600000">
+          </wsrm:InactivityTimeout>
+          <wsrm:AcknowledgementInterval Milliseconds="200">
+          </wsrm:AcknowledgementInterval>
+        </wsrm:RMAssertion>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
+        </msb:BinaryEncoding>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256>
+                </sp:Basic256>
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict>
+                </sp:Strict>
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing>
+        </wsaw:UsingAddressing>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_IServicioPeticionAmistad_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
+          <wsrm:InactivityTimeout Milliseconds="600000">
+          </wsrm:InactivityTimeout>
+          <wsrm:AcknowledgementInterval Milliseconds="200">
+          </wsrm:AcknowledgementInterval>
+        </wsrm:RMAssertion>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
+        </msb:BinaryEncoding>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256>
+                </sp:Basic256>
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict>
+                </sp:Strict>
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing>
+        </wsaw:UsingAddressing>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_IServicioRegistro_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
@@ -156,6 +234,45 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_IServicioUsuario_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
+          <wsrm:InactivityTimeout Milliseconds="600000">
+          </wsrm:InactivityTimeout>
+          <wsrm:AcknowledgementInterval Milliseconds="200">
+          </wsrm:AcknowledgementInterval>
+        </wsrm:RMAssertion>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
+        </msb:BinaryEncoding>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256>
+                </sp:Basic256>
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict>
+                </sp:Strict>
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing>
+        </wsaw:UsingAddressing>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="NetTcpBinding_IServicioUsuarioSesion_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -200,48 +317,74 @@
       <xsd:import namespace="http://tempuri.org/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" />
-      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Security.Cryptography" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.IO" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Security.Cryptography" />
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="IServicioChat_CrearChat_InputMessage">
+    <wsdl:part name="parameters" element="tns:CrearChat" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChat_CrearChat_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CrearChatResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChat_EliminarChat_InputMessage">
+    <wsdl:part name="parameters" element="tns:EliminarChat" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChat_EliminarChat_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EliminarChatResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChatMotor_AgregarUsuarioChat_InputMessage">
+    <wsdl:part name="parameters" element="tns:AgregarUsuarioChat" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChatMotor_AgregarUsuarioChat_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AgregarUsuarioChatResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChatMotor_AgregarUsuarioChat_UsuarioDuplicadoFallaFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q1:UsuarioDuplicadoFalla" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChatMotor_DesconectarUsuarioChat_InputMessage">
+    <wsdl:part name="parameters" element="tns:DesconectarUsuarioChat" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChatMotor_DesconectarUsuarioChat_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DesconectarUsuarioChatResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChatMotor_EstadoJugador_InputMessage">
+    <wsdl:part name="parameters" element="tns:EstadoJugador" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChatMotor_EstadoJugador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EstadoJugadorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChatMotor_EnviarMensaje_InputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarMensaje" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChatMotor_EnviarMensaje_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarMensajeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChatMotor_GetMessageHistory_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMessageHistory" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChatMotor_GetMessageHistory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMessageHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioChatMotor_RecibirMensajeCliente_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:RecibirMensajeCliente" />
+  </wsdl:message>
+  <wsdl:message name="IServicioPeticionAmistad_GetFriendRequest_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFriendRequest" />
+  </wsdl:message>
+  <wsdl:message name="IServicioPeticionAmistad_GetFriendRequestCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:GetFriendRequestCallback" />
+  </wsdl:message>
+  <wsdl:message name="IServicioPeticionAmistad_GetFriendRequestCallback_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:GetFriendRequestCallbackResponse" />
+  </wsdl:message>
   <wsdl:message name="IServicioRegistro_RegistrarUsuario_InputMessage">
     <wsdl:part name="parameters" element="tns:RegistrarUsuario" />
   </wsdl:message>
   <wsdl:message name="IServicioRegistro_RegistrarUsuario_OutputMessage">
     <wsdl:part name="parameters" element="tns:RegistrarUsuarioResponse" />
-  </wsdl:message>
-  <wsdl:message name="IServicioChat_AgregarUsuarioChat_InputMessage">
-    <wsdl:part name="parameters" element="tns:AgregarUsuarioChat" />
-  </wsdl:message>
-  <wsdl:message name="IServicioChat_AgregarUsuarioChat_OutputMessage">
-    <wsdl:part name="parameters" element="tns:AgregarUsuarioChatResponse" />
-  </wsdl:message>
-  <wsdl:message name="IServicioChat_AgregarUsuarioChat_UsuarioDuplicadoFallaFault_FaultMessage">
-    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q1:UsuarioDuplicadoFalla" />
-  </wsdl:message>
-  <wsdl:message name="IServicioChat_DesconectarUsuarioChat_InputMessage">
-    <wsdl:part name="parameters" element="tns:DesconectarUsuarioChat" />
-  </wsdl:message>
-  <wsdl:message name="IServicioChat_DesconectarUsuarioChat_OutputMessage">
-    <wsdl:part name="parameters" element="tns:DesconectarUsuarioChatResponse" />
-  </wsdl:message>
-  <wsdl:message name="IServicioChat_EstadoJugador_InputMessage">
-    <wsdl:part name="parameters" element="tns:EstadoJugador" />
-  </wsdl:message>
-  <wsdl:message name="IServicioChat_EstadoJugador_OutputMessage">
-    <wsdl:part name="parameters" element="tns:EstadoJugadorResponse" />
-  </wsdl:message>
-  <wsdl:message name="IServicioChat_EnviarMensaje_InputMessage">
-    <wsdl:part name="parameters" element="tns:EnviarMensaje" />
-  </wsdl:message>
-  <wsdl:message name="IServicioChat_EnviarMensaje_OutputMessage">
-    <wsdl:part name="parameters" element="tns:EnviarMensajeResponse" />
-  </wsdl:message>
-  <wsdl:message name="IServicioChat_GetMessageHistory_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetMessageHistory" />
-  </wsdl:message>
-  <wsdl:message name="IServicioChat_GetMessageHistory_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetMessageHistoryResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioSala_CrearSala_InputMessage">
     <wsdl:part name="parameters" element="tns:CrearSala" />
@@ -266,6 +409,9 @@
   </wsdl:message>
   <wsdl:message name="IServicioSalaJugador_AgregarJugadorSala_OutputMessage">
     <wsdl:part name="parameters" element="tns:AgregarJugadorSalaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioSalaJugador_AgregarJugadorSala_UsuarioDuplicadoFallaFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q2:UsuarioDuplicadoFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioSalaJugador_RemoverJugadorSala_InputMessage">
     <wsdl:part name="parameters" element="tns:RemoverJugadorSala" />
@@ -300,6 +446,12 @@
   <wsdl:message name="IServicioSalaJugador_AsignarColorCallback_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:AsignarColorCallbackResponse" />
   </wsdl:message>
+  <wsdl:message name="IServicioUsuario_Ping_InputMessage">
+    <wsdl:part name="parameters" element="tns:Ping" />
+  </wsdl:message>
+  <wsdl:message name="IServicioUsuario_Ping_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PingResponse" />
+  </wsdl:message>
   <wsdl:message name="IServicioUsuarioSesion_ObtenerSessionJugador_InputMessage">
     <wsdl:part name="parameters" element="tns:ObtenerSessionJugador" />
   </wsdl:message>
@@ -309,33 +461,55 @@
   <wsdl:message name="IServicioUsuarioSesion_ObtenerSessionJugadorCallback_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ObtenerSessionJugadorCallbackResponse" />
   </wsdl:message>
+  <wsdl:portType name="IServicioChat">
+    <wsdl:operation name="CrearChat">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChat/CrearChat" message="tns:IServicioChat_CrearChat_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChat/CrearChatResponse" message="tns:IServicioChat_CrearChat_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EliminarChat">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChat/EliminarChat" message="tns:IServicioChat_EliminarChat_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChat/EliminarChatResponse" message="tns:IServicioChat_EliminarChat_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IServicioChatMotor">
+    <wsdl:operation name="AgregarUsuarioChat">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChat" message="tns:IServicioChatMotor_AgregarUsuarioChat_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatResponse" message="tns:IServicioChatMotor_AgregarUsuarioChat_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatUsuarioDuplicadoFallaFault" name="UsuarioDuplicadoFallaFault" message="tns:IServicioChatMotor_AgregarUsuarioChat_UsuarioDuplicadoFallaFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DesconectarUsuarioChat">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChatMotor/DesconectarUsuarioChat" message="tns:IServicioChatMotor_DesconectarUsuarioChat_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChatMotor/DesconectarUsuarioChatResponse" message="tns:IServicioChatMotor_DesconectarUsuarioChat_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EstadoJugador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChatMotor/EstadoJugador" message="tns:IServicioChatMotor_EstadoJugador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChatMotor/EstadoJugadorResponse" message="tns:IServicioChatMotor_EstadoJugador_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EnviarMensaje">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChatMotor/EnviarMensaje" message="tns:IServicioChatMotor_EnviarMensaje_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChatMotor/EnviarMensajeResponse" message="tns:IServicioChatMotor_EnviarMensaje_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMessageHistory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChatMotor/GetMessageHistory" message="tns:IServicioChatMotor_GetMessageHistory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChatMotor/GetMessageHistoryResponse" message="tns:IServicioChatMotor_GetMessageHistory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecibirMensajeCliente">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChatMotor/RecibirMensajeCliente" message="tns:IServicioChatMotor_RecibirMensajeCliente_OutputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IServicioPeticionAmistad">
+    <wsdl:operation name="GetFriendRequest">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/GetFriendRequest" message="tns:IServicioPeticionAmistad_GetFriendRequest_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFriendRequestCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/GetFriendRequestCallback" message="tns:IServicioPeticionAmistad_GetFriendRequestCallback_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/GetFriendRequestCallbackResponse" message="tns:IServicioPeticionAmistad_GetFriendRequestCallback_InputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
   <wsdl:portType name="IServicioRegistro">
     <wsdl:operation name="RegistrarUsuario">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioRegistro/RegistrarUsuario" message="tns:IServicioRegistro_RegistrarUsuario_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioRegistro/RegistrarUsuarioResponse" message="tns:IServicioRegistro_RegistrarUsuario_OutputMessage" />
-    </wsdl:operation>
-  </wsdl:portType>
-  <wsdl:portType name="IServicioChat">
-    <wsdl:operation name="AgregarUsuarioChat">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChat/AgregarUsuarioChat" message="tns:IServicioChat_AgregarUsuarioChat_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChat/AgregarUsuarioChatResponse" message="tns:IServicioChat_AgregarUsuarioChat_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioChat/AgregarUsuarioChatUsuarioDuplicadoFallaFault" name="UsuarioDuplicadoFallaFault" message="tns:IServicioChat_AgregarUsuarioChat_UsuarioDuplicadoFallaFault_FaultMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="DesconectarUsuarioChat">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChat/DesconectarUsuarioChat" message="tns:IServicioChat_DesconectarUsuarioChat_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChat/DesconectarUsuarioChatResponse" message="tns:IServicioChat_DesconectarUsuarioChat_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="EstadoJugador">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChat/EstadoJugador" message="tns:IServicioChat_EstadoJugador_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChat/EstadoJugadorResponse" message="tns:IServicioChat_EstadoJugador_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="EnviarMensaje">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChat/EnviarMensaje" message="tns:IServicioChat_EnviarMensaje_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChat/EnviarMensajeResponse" message="tns:IServicioChat_EnviarMensaje_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetMessageHistory">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChat/GetMessageHistory" message="tns:IServicioChat_GetMessageHistory_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChat/GetMessageHistoryResponse" message="tns:IServicioChat_GetMessageHistory_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioSala">
@@ -356,6 +530,7 @@
     <wsdl:operation name="AgregarJugadorSala">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSala" message="tns:IServicioSalaJugador_AgregarJugadorSala_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaResponse" message="tns:IServicioSalaJugador_AgregarJugadorSala_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaUsuarioDuplicadoFallaFault" name="UsuarioDuplicadoFallaFault" message="tns:IServicioSalaJugador_AgregarJugadorSala_UsuarioDuplicadoFallaFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RemoverJugadorSala">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioSalaJugador/RemoverJugadorSala" message="tns:IServicioSalaJugador_RemoverJugadorSala_InputMessage" />
@@ -383,6 +558,12 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioSalaJugador/AsignarColorCallbackResponse" message="tns:IServicioSalaJugador_AsignarColorCallback_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
+  <wsdl:portType name="IServicioUsuario">
+    <wsdl:operation name="Ping">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuario/Ping" message="tns:IServicioUsuario_Ping_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioUsuario/PingResponse" message="tns:IServicioUsuario_Ping_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
   <wsdl:portType name="IServicioUsuarioSesion">
     <wsdl:operation name="ObtenerSessionJugador">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuarioSesion/ObtenerSessionJugador" message="tns:IServicioUsuarioSesion_ObtenerSessionJugador_InputMessage" />
@@ -392,12 +573,21 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuarioSesion/ObtenerSessionJugadorCallbackResponse" message="tns:IServicioUsuarioSesion_ObtenerSessionJugadorCallback_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="NetTcpBinding_IServicioRegistro" type="tns:IServicioRegistro">
-    <wsp:PolicyReference URI="#NetTcpBinding_IServicioRegistro_policy">
+  <wsdl:binding name="NetTcpBinding_IServicioChat" type="tns:IServicioChat">
+    <wsp:PolicyReference URI="#NetTcpBinding_IServicioChat_policy">
     </wsp:PolicyReference>
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="RegistrarUsuario">
-      <soap12:operation soapAction="http://tempuri.org/IServicioRegistro/RegistrarUsuario" style="document" />
+    <wsdl:operation name="CrearChat">
+      <soap12:operation soapAction="http://tempuri.org/IServicioChat/CrearChat" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EliminarChat">
+      <soap12:operation soapAction="http://tempuri.org/IServicioChat/EliminarChat" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -406,12 +596,12 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:binding name="NetTcpBinding_IServicioChat" type="tns:IServicioChat">
-    <wsp:PolicyReference URI="#NetTcpBinding_IServicioChat_policy">
+  <wsdl:binding name="NetTcpBinding_IServicioChatMotor" type="tns:IServicioChatMotor">
+    <wsp:PolicyReference URI="#NetTcpBinding_IServicioChatMotor_policy">
     </wsp:PolicyReference>
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
     <wsdl:operation name="AgregarUsuarioChat">
-      <soap12:operation soapAction="http://tempuri.org/IServicioChat/AgregarUsuarioChat" style="document" />
+      <soap12:operation soapAction="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChat" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -423,7 +613,7 @@
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="DesconectarUsuarioChat">
-      <soap12:operation soapAction="http://tempuri.org/IServicioChat/DesconectarUsuarioChat" style="document" />
+      <soap12:operation soapAction="http://tempuri.org/IServicioChatMotor/DesconectarUsuarioChat" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -432,7 +622,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="EstadoJugador">
-      <soap12:operation soapAction="http://tempuri.org/IServicioChat/EstadoJugador" style="document" />
+      <soap12:operation soapAction="http://tempuri.org/IServicioChatMotor/EstadoJugador" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -441,7 +631,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="EnviarMensaje">
-      <soap12:operation soapAction="http://tempuri.org/IServicioChat/EnviarMensaje" style="document" />
+      <soap12:operation soapAction="http://tempuri.org/IServicioChatMotor/EnviarMensaje" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -450,7 +640,47 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetMessageHistory">
-      <soap12:operation soapAction="http://tempuri.org/IServicioChat/GetMessageHistory" style="document" />
+      <soap12:operation soapAction="http://tempuri.org/IServicioChatMotor/GetMessageHistory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecibirMensajeCliente">
+      <soap12:operation soapAction="http://tempuri.org/IServicioChatMotor/RecibirMensajeCliente" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="NetTcpBinding_IServicioPeticionAmistad" type="tns:IServicioPeticionAmistad">
+    <wsp:PolicyReference URI="#NetTcpBinding_IServicioPeticionAmistad_policy">
+    </wsp:PolicyReference>
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="GetFriendRequest">
+      <soap12:operation soapAction="http://tempuri.org/IServicioPeticionAmistad/GetFriendRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="GetFriendRequestCallback">
+      <soap12:operation soapAction="http://tempuri.org/IServicioPeticionAmistad/GetFriendRequestCallback" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="NetTcpBinding_IServicioRegistro" type="tns:IServicioRegistro">
+    <wsp:PolicyReference URI="#NetTcpBinding_IServicioRegistro_policy">
+    </wsp:PolicyReference>
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="RegistrarUsuario">
+      <soap12:operation soapAction="http://tempuri.org/IServicioRegistro/RegistrarUsuario" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -503,6 +733,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="UsuarioDuplicadoFallaFault">
+        <soap12:fault use="literal" name="UsuarioDuplicadoFallaFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="RemoverJugadorSala">
       <soap12:operation soapAction="http://tempuri.org/IServicioSalaJugador/RemoverJugadorSala" style="document" />
@@ -559,6 +792,20 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
+  <wsdl:binding name="NetTcpBinding_IServicioUsuario" type="tns:IServicioUsuario">
+    <wsp:PolicyReference URI="#NetTcpBinding_IServicioUsuario_policy">
+    </wsp:PolicyReference>
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Ping">
+      <soap12:operation soapAction="http://tempuri.org/IServicioUsuario/Ping" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
   <wsdl:binding name="NetTcpBinding_IServicioUsuarioSesion" type="tns:IServicioUsuarioSesion">
     <wsp:PolicyReference URI="#NetTcpBinding_IServicioUsuarioSesion_policy">
     </wsp:PolicyReference>
@@ -580,7 +827,7 @@
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="ManejadorPrincipal">
-    <wsdl:port name="NetTcpBinding_IServicioRegistro" binding="tns:NetTcpBinding_IServicioRegistro">
+    <wsdl:port name="NetTcpBinding_IServicioChat" binding="tns:NetTcpBinding_IServicioChat">
       <soap12:address location="net.tcp://localhost:6969/" />
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
@@ -589,7 +836,25 @@
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
-    <wsdl:port name="NetTcpBinding_IServicioChat" binding="tns:NetTcpBinding_IServicioChat">
+    <wsdl:port name="NetTcpBinding_IServicioChatMotor" binding="tns:NetTcpBinding_IServicioChatMotor">
+      <soap12:address location="net.tcp://localhost:6969/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IServicioPeticionAmistad" binding="tns:NetTcpBinding_IServicioPeticionAmistad">
+      <soap12:address location="net.tcp://localhost:6969/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IServicioRegistro" binding="tns:NetTcpBinding_IServicioRegistro">
       <soap12:address location="net.tcp://localhost:6969/" />
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
@@ -608,6 +873,15 @@
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IServicioSalaJugador" binding="tns:NetTcpBinding_IServicioSalaJugador">
+      <soap12:address location="net.tcp://localhost:6969/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IServicioUsuario" binding="tns:NetTcpBinding_IServicioUsuario">
       <soap12:address location="net.tcp://localhost:6969/" />
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>

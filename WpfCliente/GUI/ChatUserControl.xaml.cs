@@ -1,28 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using WpfCliente.Interfaz;
 using WpfCliente.ServidorDescribelo;
+using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
     /// <summary>
     /// Interaction logic for ChatUserControl.xaml
     /// </summary>
-    public partial class ChatUserControl : UserControl 
+    public partial class ChatUserControl : UserControl , IServicioChatMotorCallback , IActualizacionUI
     {
         public ChatUserControl()
         {
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
+            ActualizarUI();
             InitializeComponent();
         }
 
@@ -33,15 +26,49 @@ namespace WpfCliente.GUI
 
         }
 
-        private void clicButtonEnviar(object sender, RoutedEventArgs e)
+        private async void ClicButtonEnviar(object sender, RoutedEventArgs e)
         {
 
+            try
+            {
+                await Singleton.Instance.ServicioChatCliente.EnviarMensajeAsync(Singleton.Instance.IdChat, new ChatMensaje
+                {
+                    Mensaje = textBoxEnviarMensaje.Text,
+                    HoraFecha = DateTime.Now,
+                    Nombre = Singleton.Instance.NombreUsuario
+                });
+            }
+            catch (Exception excepcion)
+            {
+                //TODO:Manejar execpcion
+            }
         }
 
-        private void clicButtonCerrarChar(object sender, RoutedEventArgs e)
+        private void ClicButtonCerrarChar(object sender, RoutedEventArgs e)
         {
             gridChat.Visibility = Visibility.Collapsed;
             buttonAbrirChat.Visibility = Visibility.Visible;
+        }
+
+        public void RecibirMensajeCliente(ChatMensaje mensaje)
+        {
+            //TODO: Realizar el diseño grafico del chat, si es que tiene colores logica para colocarlos
+            textBoxReceptorMensaje.Text += mensaje.HoraFecha +" | " + mensaje.Nombre + " dice: " +mensaje.Mensaje;
+        }
+
+        public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
+        {
+            ActualizarUI();
+        }
+
+        public void ActualizarUI()
+        {
+            //TODO: Pedirle a unaay los .resx
+        }
+
+        private void CerrarControl(object sender, RoutedEventArgs e)
+        {
+            CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
         }
     }
 }

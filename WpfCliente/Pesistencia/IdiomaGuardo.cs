@@ -11,8 +11,8 @@ namespace WpfCliente
         /// </summary>
         public static void GuardarEspañolMX()
         { 
-            var españolTag = Application.Current.Resources["EspañolTag"] as string;
-            Properties.Settings.Default.codigoLenguaje = españolTag;
+            var espanolTag = Application.Current.Resources["EspañolTag"] as string;
+            Properties.Settings.Default.codigoLenguaje = espanolTag;
         }
         /// <summary>
         /// Guarda el idioma de la aplicación en ingles (EE.UU.)
@@ -35,13 +35,13 @@ namespace WpfCliente
         /// </summary>
         public static void CargarIdiomaGuardado()
         {
-            string codigoLenguaje = WpfCliente.Properties.Settings.Default.codigoLenguaje;
+            string codigoLenguaje = Properties.Settings.Default.codigoLenguaje;
 
             if (string.IsNullOrEmpty(codigoLenguaje))
             {
                 var englishTag = Application.Current.Resources["EnglishTag"] as string;
-                WpfCliente.Properties.Settings.Default.codigoLenguaje = englishTag;
-                WpfCliente.Properties.Settings.Default.Save();
+                Properties.Settings.Default.codigoLenguaje = englishTag;
+                Properties.Settings.Default.Save();
             }
             try
             {
@@ -67,9 +67,8 @@ namespace WpfCliente
             }
             catch (CultureNotFoundException ex)
             {
-                //TODO manejar el error
+                //TODO manejar el error e I18n
                 MessageBox.Show($"Error al cambiar el idioma: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
             }
         }
     }

@@ -16,22 +16,9 @@ namespace WpfCliente.GUI
 
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
-            //stackPaneEncabezado.Children.Add(new CambiarIdioma());
             ActualizarUI();
         }
 
-        private void SelecionarIdioma(object sender, SelectionChangedEventArgs e)
-        {
-            if (selecionarIdiomaMenuDesplegable.SelectedItem is ComboBoxItem itemSeleccionado)
-            {
-                string lenguajeSelecionado = itemSeleccionado.Tag.ToString();
-                IdiomaGuardo.SeleccionarIdioma(lenguajeSelecionado);
-                ActualizarUI();
-                CambiarIdioma.EnCambioIdioma();
-                GuardarConfiguracionIdioma();
-            }
-
-        }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
         {
@@ -48,26 +35,7 @@ namespace WpfCliente.GUI
             buttonRegistrar.Content = Properties.Idioma.buttonRegistrarse;
 
         }
-        private void GuardarConfiguracionIdioma()
-        {
-            //FIXME No es correcta la implementacion trata de ocupar el tag del combobox en vez de su index (selecionarIdiomaMenuDesplegable)
-            int seleccion = selecionarIdiomaMenuDesplegable.SelectedIndex;
-            switch (seleccion)
-            {
-                case 0:
-                    IdiomaGuardo.GuardarEspañolMX();
-                    break;
-                case 1:
-                    IdiomaGuardo.GuardarInglesUS();
-                    break;
-                default:
-                    //TODO manejar el default
-                    IdiomaGuardo.GuardarInglesUS();
-                    MessageBox.Show("Selección de idioma inválida. Se ha configurado el idioma predeterminado.", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    break;
-            }
-            Properties.Settings.Default.Save();
-        }
+     
 
         private void EnCierre(object sender, EventArgs e)
         {

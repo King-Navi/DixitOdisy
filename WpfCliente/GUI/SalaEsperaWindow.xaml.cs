@@ -33,12 +33,17 @@ namespace WpfCliente.GUI
         {
             if (!Validacion.ExisteSala(idSala))
             {
+                //No existe la sala ¿¿??
                 this.Close();
                 return;
             }
-            Singleton.Instance.ServicioSalaJugadorCliente = new ServidorDescribelo.ServicioSalaJugadorClient(new InstanceContext(this));
-            ServidorDescribelo.IServicioSalaJugador contextoSala = Singleton.Instance.ServicioSalaJugadorCliente;
-            contextoSala.AgregarJugadorSala(Singleton.Instance.NombreUsuario, idSala);
+            if (!Conexion.AbrirConexionSalaJugadorClienteCallback(this))
+            {
+                //NoHayConexion()
+                this.Close();
+                return;
+            }
+            Conexion.SalaJugadorCliente.AgregarJugadorSala(Singleton.Instance.NombreUsuario, idSala);
             labelCodigoSala.Content += idSala;
             UnirseChat();
 
@@ -46,42 +51,55 @@ namespace WpfCliente.GUI
 
         private void UnirseChat()
         {
-            Singleton.Instance.ServicioChatCliente = new ServicioChatMotorClient(new InstanceContext(chatUserControl));
-            Singleton.Instance.ServicioChatCliente.AgregarUsuarioChat(Singleton.Instance.IdChat, Singleton.Instance.NombreUsuario);
+            Conexion.AbrirConexionChatMotorCallback(chatUserControl);
+            Conexion.ChatMotorCliente.AgregarUsuarioChat(Singleton.Instance.IdChat, Singleton.Instance.NombreUsuario);
+            
         }
 
         private void GenerarSalaComoAnfitrion()
         {
-            //TODO: evaluar si es mejor dispose()
-            //Si no hay conexion saltara una excepcion
-            ServidorDescribelo.IServicioSala nuevaSala = new ServidorDescribelo.ServicioSalaClient();
             try
             {
-                Singleton.Instance.IdSala = nuevaSala.CrearSala(Singleton.Instance.NombreUsuario);
+                var manejadorServicio = new ServicioManejador<ServicioSalaClient>();
+                Singleton.Instance.IdSala = manejadorServicio.EjecutarServicio(proxy =>
+                 {
+                     return proxy.CrearSala(Singleton.Instance.NombreUsuario);
+                 });
                 Singleton.Instance.IdChat = Singleton.Instance.IdSala;
-                CrearChat();
-                UnirseSala(Singleton.Instance.IdSala);
-            }catch (Exception exceçion)
-            {
-                //TODO: Manejo de otras excepciones
 
             }
-            finally
+            catch (Exception excepcion)
             {
-                if (nuevaSala != null)
-                {
-                    ((ICommunicationObject)nuevaSala).Close();
-                }
+                //TODO: Manejo de otras excepciones
+                NoHayConexion();
             }
+            CrearChat();
+            UnirseSala(Singleton.Instance.IdSala);
+
         }
 
         private void CrearChat()
         {
             //TODO: Agregar caso en el que no hay conexion
-            ServidorDescribelo.IServicioChat contexto = new ServicioChatClient();
-            contexto.CrearChat(Singleton.Instance.IdChat);
-        }
+            try
+            {
+                var manajadorServicio = new ServicioManejador<ServicioChatClient>();
+                bool resultado = manajadorServicio.EjecutarServicio(proxy =>
+                {
+                    return proxy.CrearChat(Singleton.Instance.IdChat);
+                });
+            }
+            catch (Exception)
+            {
+                //TODO: Manejo de otras excepciones
+                NoHayConexion();
+            }
 
+        }
+        private void NoHayConexion()
+        {
+            throw new NotImplementedException();
+        }
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
         {
             ActualizarUI();
@@ -112,15 +130,15 @@ namespace WpfCliente.GUI
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
             try
             {
-                if (Singleton.Instance.ServicioChatCliente != null)
+                if (Conexion.ChatMotorCliente != null)
                 {
-                    Singleton.Instance.ServicioChatCliente.Close();
-                    Singleton.Instance.ServicioChatCliente = null;
+                    Conexion.ChatMotorCliente.Close();
+                    Conexion.ChatMotorCliente = null;
                 }
-                if (Singleton.Instance.ServicioSalaJugadorCliente != null)
+                if (Conexion.SalaJugadorCliente != null)
                 {
-                    Singleton.Instance.ServicioSalaJugadorCliente.Close();
-                    Singleton.Instance.ServicioSalaJugadorCliente = null;
+                    Conexion.SalaJugadorCliente.Close();
+                    Conexion.SalaJugadorCliente = null;
 
                 }
             }

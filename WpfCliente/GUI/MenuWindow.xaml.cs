@@ -17,9 +17,9 @@ namespace WpfCliente.GUI
         {
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
-            Singleton.Instance.ServicioUsuarioSesionCliente = new ServidorDescribelo.ServicioUsuarioSesionClient(new InstanceContext(this));
+            Conexion.UsuarioSesionCliente = new ServidorDescribelo.ServicioUsuarioSesionClient(new InstanceContext(this));
             ///TODO: Este debe ser el id de usuario (esto esta hecho para pruebas cambiar a una variable en despliegue)
-            Singleton.Instance.ServicioUsuarioSesionCliente.ObtenerSessionJugador(new ServidorDescribelo.Usuario { Nombre = Singleton.Instance.NombreUsuario,IdUsuario = 1, });
+            Conexion.UsuarioSesionCliente.ObtenerSessionJugador(new ServidorDescribelo.Usuario { Nombre = Singleton.Instance.NombreUsuario,IdUsuario = 1, });
         }
 
         private void ClicBotonCrearSala(object sender, RoutedEventArgs e)
@@ -33,7 +33,7 @@ namespace WpfCliente.GUI
             this.Hide();
             ventanaSala.Show();
             ventanaSala.Closed += (s, args) => {
-                if (Validacion.CerrarConexionesServiciosSala())
+                if (!Conexion.CerrarConexionesServiciosSalaCallback())
                 {
                     MessageBox.Show("Error al tratar de conectarse con el servidor");
                     this.Close();   
@@ -75,8 +75,12 @@ namespace WpfCliente.GUI
             {
                 valorObtenido = ventanaModal.ValorIngresado;
             }
-            //TODO: I18N
-            MessageBox.Show("No se ingresó ningún valor.");
+            else
+            {
+                //TODO: I18N
+                MessageBox.Show("No se ingresó ningún valor.");
+            }
+
 
             return valorObtenido;
         }
@@ -86,12 +90,12 @@ namespace WpfCliente.GUI
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
             try
             {
-                if (Singleton.Instance.ServicioUsuarioSesionCliente != null)
+                if (Conexion.UsuarioSesionCliente != null)
                 {
-                    Singleton.Instance.ServicioUsuarioSesionCliente.Close();
-                    Singleton.Instance.ServicioUsuarioSesionCliente = null;
+                    Conexion.UsuarioSesionCliente.Close();
+                    Conexion.UsuarioSesionCliente = null;
                 }
-                Validacion.CerrarConexionesServiciosSala();
+                Conexion.CerrarConexionesServiciosSalaCallback();
             }
             catch (Exception excepcion)
             {

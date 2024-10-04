@@ -23,15 +23,13 @@ namespace WpfCliente.GUI
         {
             gridChat.Visibility = Visibility.Visible;
             buttonAbrirChat.Visibility = Visibility.Collapsed;
-
         }
 
         private async void ClicButtonEnviar(object sender, RoutedEventArgs e)
         {
-
             try
             {
-                await Singleton.Instance.ServicioChatCliente.EnviarMensajeAsync(Singleton.Instance.IdChat, new ChatMensaje
+                await Conexion.ChatMotorCliente.EnviarMensajeAsync(Singleton.Instance.IdChat, new ChatMensaje
                 {
                     Mensaje = textBoxEnviarMensaje.Text,
                     HoraFecha = DateTime.Now,

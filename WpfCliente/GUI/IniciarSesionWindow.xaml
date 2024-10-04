@@ -14,12 +14,8 @@
 
         <DockPanel LastChildFill="True" Background="Transparent">
             <!--Header-->
-            <StackPanel DockPanel.Dock="Top" x:Name="stackPaneEncabezado" Orientation="Horizontal">
-                <Label Content="COLOCAR SIMBOLO DE IDIOMA&#xD;&#xA;" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="423,0,0,0"/>
-                <ComboBox x:Name="selecionarIdiomaMenuDesplegable" VerticalAlignment="Top" SelectionChanged="SelecionarIdioma" Width="100" >
-                    <ComboBoxItem Content="Español" Tag="es-MX"/>
-                    <ComboBoxItem Content="English" Tag="en-US"/>
-                </ComboBox>
+            <StackPanel DockPanel.Dock="Top" x:Name="stackPaneEncabezado" Orientation="Horizontal" HorizontalAlignment="Right">
+                <local:CambiarIdiomaMenuDesplegable></local:CambiarIdiomaMenuDesplegable>
             </StackPanel>
 
             

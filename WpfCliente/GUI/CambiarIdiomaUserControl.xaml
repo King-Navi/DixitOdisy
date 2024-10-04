@@ -4,16 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfCliente.GUI"
-             mc:Ignorable="d" Height="253" Width="730" Unloaded="CerrarControl">
+             mc:Ignorable="d" d:Height="259" d:Width="730" Unloaded="CerrarControl">
 
-    <Grid Margin="0,26,115,155">
-        <Label x:Name="cambiarIdiomaLabel" Content="Cambiar idioma" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Foreground="White" Background="Black" Width="97"/>
-        <ComboBox x:Name="cambiarIdiomaMenuDesplegable" HorizontalAlignment="Left" Margin="100,0,0,0" VerticalAlignment="Top" Width="150"  Text="Seleccionar idioma" SelectionChanged="SelecionarIdioma">
+    <Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+        <Label x:Name="cambiarIdiomaLabel" Content="Cambiar idioma"   VerticalAlignment="Top" Foreground="White" Background="Black" Width="97"/>
+        <ComboBox x:Name="cambiarIdiomaMenuDesplegable"  VerticalAlignment="Top" Width="150"  Text="Seleccionar idioma" SelectionChanged="SelecionarIdioma">
             <ComboBoxItem Content="Español" Tag="{StaticResource EspañolTag}"/>
             <ComboBoxItem Content="English" Tag="{StaticResource EnglishTag}"/>
         </ComboBox>
-        <Image HorizontalAlignment="Left" Height="66" VerticalAlignment="Top" Width="74" Margin="280,0,0,0" Source="/Recursos/logoIdioma.png"/>
-
+            <Image  Height="50" VerticalAlignment="Top"  Source="pack://application:,,,/WpfCliente;component/Recursos/logoIdioma.png"/>
+        </StackPanel>
     </Grid>
 </UserControl>
 

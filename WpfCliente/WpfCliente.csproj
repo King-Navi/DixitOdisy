@@ -106,7 +106,7 @@
     <Compile Include="GUI\UniserSalaModalWindow.xaml.cs">
       <DependentUpon>UniserSalaModalWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modelo\Conexion.cs" />
+    <Compile Include="Utilidad\Conexion.cs" />
     <Compile Include="Utilidad\CambiarIdioma.cs" />
     <Compile Include="Interfaz\IActualizacionUI.cs" />
     <Compile Include="Pesistencia\IdiomaGuardo.cs" />
@@ -124,6 +124,9 @@
     <Compile Include="GUI\IniciarSesionWindow.xaml.cs">
       <DependentUpon>IniciarSesionWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilidad\Desechar.cs" />
+    <Compile Include="Utilidad\ReleComado.cs" />
+    <Compile Include="Utilidad\ServicioManejador.cs" />
     <Compile Include="Utilidad\Validacion.cs" />
     <Compile Include="Utilidad\Singleton.cs" />
   </ItemGroup>

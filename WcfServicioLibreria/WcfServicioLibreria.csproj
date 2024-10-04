@@ -65,9 +65,11 @@
     <Compile Include="Contratos\IServicioRegistro.cs" />
     <Compile Include="Contratos\IServicioSala.cs" />
     <Compile Include="Contratos\IServicioSalaJugador.cs" />
+    <Compile Include="Contratos\IUsuarioAmistad.cs" />
     <Compile Include="Enumerador\EstadoJugador.cs" />
     <Compile Include="Evento\UsuarioDesconectadoEventArgs.cs" />
     <Compile Include="InicializadorConfiguracion.cs" />
+    <Compile Include="Manejador\Amistad.cs" />
     <Compile Include="Manejador\Atributos.cs" />
     <Compile Include="Manejador\PeticionAmistad.cs" />
     <Compile Include="Manejador\UsuarioSesion.cs" />
@@ -77,14 +79,17 @@
     <Compile Include="Manejador\Chat.cs" />
     <Compile Include="Manejador\Usuario.cs" />
     <Compile Include="Modelo\Amigo.cs" />
+    <Compile Include="Modelo\AmistadFalla.cs" />
     <Compile Include="Modelo\MultiChat.cs" />
     <Compile Include="Modelo\Chat.cs" />
     <Compile Include="Modelo\ChatMensaje.cs" />
+    <Compile Include="Modelo\SolicitudAmistad.cs" />
     <Compile Include="Modelo\UsuarioContexto.cs" />
     <Compile Include="Modelo\Partida.cs" />
     <Compile Include="Modelo\Sala.cs" />
     <Compile Include="Modelo\Usuario.cs" />
     <Compile Include="Modelo\UsuarioDuplicadoFalla.cs" />
+    <Compile Include="Modelo\UsuarioNoExisteConectadoFalla.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

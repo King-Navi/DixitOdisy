@@ -12,12 +12,11 @@ namespace WcfServicioLibreria.Contratos
     public interface IServicioAmistad
     {
         [OperationContract]
-        int AgregarAmigo(Amigo amigo);
+        [FaultContract(typeof(AmistadFalla))]
+        void AgregarAmigo(Usuario remitente, string destinatario);
         [OperationContract]
         int ActualizarAmigo(string nombreRemitente, string nombreDestinatario, string peticionEstado);
         [OperationContract]
         int BorrarAmigo(Amigo amigo);
-        [OperationContract]
-        int ValidarPeticionAmistad(string nombreRemitente, string nombreDestinatario, string peticionEstado);
     }
 }

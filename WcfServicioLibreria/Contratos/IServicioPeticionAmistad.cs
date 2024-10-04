@@ -12,12 +12,15 @@ namespace WcfServicioLibreria.Contratos
     public interface IServicioPeticionAmistad
     {
         [OperationContract(IsOneWay = true)]
-        void GetFriendRequest(string nombreUsuario);
+        void ObtenerPeticionAmistad(string nombreUsuario);
+        [OperationContract]
+        [FaultContract(typeof(UsuarioNoExisteConectadoFalla))]
+        void AbrirCanalParaPeticiones(Usuario usuario);
     }
     [ServiceContract]
     public interface IServicioPeticionAmistadCallBack
     {
         [OperationContract]
-        void GetFriendRequestCallback(List<Amigo> amigos);
+        Task<bool> ObtenerPeticionAmistadCallback(SolicitudAmistad nuevaSolicitudAmistad);
     }
 }

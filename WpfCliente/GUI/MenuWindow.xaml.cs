@@ -3,6 +3,7 @@ using System.ServiceModel;
 using System.Windows;
 using UtilidadesLibreria;
 using WpfCliente.Interfaz;
+using WpfCliente.Modelo;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
@@ -33,7 +34,7 @@ namespace WpfCliente.GUI
             this.Hide();
             ventanaSala.Show();
             ventanaSala.Closed += (s, args) => {
-                if (Validacion.CerrarConexionesServiciosSala())
+                if (Conexion.CerrarConexionesServiciosSala())
                 {
                     MessageBox.Show("Error al tratar de conectarse con el servidor");
                     this.Close();   
@@ -91,7 +92,7 @@ namespace WpfCliente.GUI
                     Singleton.Instance.ServicioUsuarioSesionCliente.Close();
                     Singleton.Instance.ServicioUsuarioSesionCliente = null;
                 }
-                Validacion.CerrarConexionesServiciosSala();
+                Conexion.CerrarConexionesServiciosSala();
             }
             catch (Exception excepcion)
             {

@@ -12,12 +12,13 @@ namespace WcfServicioLibreria.Modelo
     /// <ref>https://learn.microsoft.com/en-us/dotnet/api/system.idisposable?view=net-7.0</ref>
     /// <ref>https://learn.microsoft.com/en-us/dotnet/fundamentals/runtime-libraries/system-idisposable</ref>
     [DataContract]
-    public abstract class UsuarioContexto
+    public abstract class UsuarioContexto : IUsuarioAmistad
     {
         protected int idUsuarioCuenta;
         protected String nombre;
         private bool desechado = false;
         public IUsuarioSesionCallback UsuarioSesionCallBack { get; set; }
+
         public EventHandler CerrandoEvento { get; set; }
         public EventHandler CerradoEvento { get; set; }
         public EventHandler FalloEvento { get; set; }
@@ -26,6 +27,9 @@ namespace WcfServicioLibreria.Modelo
         public string Nombre { get => nombre; set => nombre = value; }
         [DataMember]
         public int IdUsuario { get => idUsuarioCuenta; set => idUsuarioCuenta = value; }
+        IServicioPeticionAmistadCallBack IUsuarioAmistad.PeticionAmistadCallBack { get; set; }
+        EventHandler IUsuarioAmistad.RecibioSolicitud { get; set; }
+
         /// <summary>
         /// Avisa a todos los sucriptores que se esta desconectando
         /// </summary>

@@ -33,7 +33,7 @@ namespace WcfServicioLibreria.Manejador
 
 
         #endregion Chat
-        
+
 
     }
 }

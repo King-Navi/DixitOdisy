@@ -15,19 +15,19 @@ namespace WcfServicioLibreria.Manejador
         {
             throw new NotImplementedException();
         }
-        public void AbrirCanalParaPeticiones(Usuario usuario) //FIXME: NO cubre todos los casos (1.- No hay conexion a SQLServer,2.- No existe conexion con los usuario)
+        public bool AbrirCanalParaPeticiones(Usuario usuario) //FIXME: NO cubre todos los casos (1.- No hay conexion a SQLServer,2.- No existe conexion con los usuario)
         {
             bool existeJugador = jugadoresConectadosDiccionario.TryGetValue(usuario.IdUsuario , out UsuarioContexto usuarioActual);
             if (existeJugador)
             {
-                throw new FaultException<UsuarioNoExisteConectadoFalla>(new UsuarioNoExisteConectadoFalla());
+                throw new FaultException<UsuarioFalla>(new UsuarioFalla() { ExisteUsuario = false });
             }
             lock (usuarioActual)
             {
                 ((IUsuarioAmistad)usuarioActual).PeticionAmistadCallBack = OperationContext.Current.GetCallbackChannel<IServicioPeticionAmistadCallBack>();
                 //TODO: SI hya mas cosas que hacer despues de abrir el canal poenr aqui
             }
-
+            return existeJugador;
         }
     }
 }

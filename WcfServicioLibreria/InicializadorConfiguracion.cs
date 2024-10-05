@@ -17,7 +17,8 @@ namespace WcfServicioLibreria
                 Console.WriteLine("¿Qué desea hacer?");
                 Console.WriteLine("1.- Comenzar configuración sin variable de entorno");
                 Console.WriteLine("2.- Comenzar configuración con variable de entorno");
-                Console.WriteLine("3.- Salir del iniciador");
+                Console.WriteLine("3.- Con archivo");
+                Console.WriteLine("4.- Salir del iniciador");
                 Console.Write("Seleccione una opción: ");
 
                 string opcion = Console.ReadLine();
@@ -63,6 +64,24 @@ namespace WcfServicioLibreria
                         }
                         break;
                     case "3":
+                        Console.WriteLine("Buscando archivo...");
+                        resultado = ConfiguradorConexion.ConfigurarCadenaConexionRuta();
+                        resultado.TryGetValue(Llaves.LLAVE_ERROR, out  fueExitoso);
+                        resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out mensaje);
+                        Console.WriteLine((string)mensaje);
+                        try
+                        {
+                            if (!(bool)fueExitoso)
+                            {
+                                salir = true;
+                            }
+                        }
+                        catch (NullReferenceException excepcion)
+                        {
+                            //TODO:Manejar el error
+                        }
+                        break;
+                    case "4":
                         Console.WriteLine("Saliendo del programa...");
                         Environment.Exit(0);
                         break;

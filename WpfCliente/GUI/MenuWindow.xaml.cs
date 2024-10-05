@@ -3,7 +3,6 @@ using System.ServiceModel;
 using System.Windows;
 using UtilidadesLibreria;
 using WpfCliente.Interfaz;
-using WpfCliente.Modelo;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 

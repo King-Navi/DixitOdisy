@@ -10,9 +10,9 @@ namespace WcfServidor
     {
         static void Main(string[] args)
         {
-            //Dictionary<string, Object> respuesta = InicializadorConfiguracion.IniciarConexion();
-            //respuesta.TryGetValue(Llaves.LLAVE_MENSAJE, out object valor);
-            //Console.WriteLine((string)valor);
+            Dictionary<string, Object> respuesta = InicializadorConfiguracion.IniciarConexion();
+            respuesta.TryGetValue(Llaves.LLAVE_MENSAJE, out object valor);
+            Console.WriteLine((string)valor);
             Program programa = new Program();
             programa.IniciarServidor();
         }

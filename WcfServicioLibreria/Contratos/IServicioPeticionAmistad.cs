@@ -14,8 +14,8 @@ namespace WcfServicioLibreria.Contratos
         [OperationContract(IsOneWay = true)]
         void ObtenerPeticionAmistad(string nombreUsuario);
         [OperationContract]
-        [FaultContract(typeof(UsuarioNoExisteConectadoFalla))]
-        void AbrirCanalParaPeticiones(Usuario usuario);
+        [FaultContract(typeof(UsuarioFalla))]
+        bool AbrirCanalParaPeticiones(Usuario usuario);
     }
     [ServiceContract]
     public interface IServicioPeticionAmistadCallBack

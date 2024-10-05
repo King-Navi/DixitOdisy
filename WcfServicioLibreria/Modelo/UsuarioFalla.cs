@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 namespace WcfServicioLibreria.Modelo
 {
     [DataContract]
-    public class UsuarioNoExisteConectadoFalla
+    public class UsuarioFalla
     {
         [DataMember]
-        public bool Existe { get; set; }
+        public bool EstaConectado { get; set; }
+        [DataMember]
+        public bool ExisteUsuario { get; set; }
     }
 }

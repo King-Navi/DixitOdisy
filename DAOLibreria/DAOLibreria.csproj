@@ -56,49 +56,65 @@
   <ItemGroup>
     <Compile Include="ConfiguradorConexion.cs" />
     <Compile Include="DAO\UsuarioDAO.cs" />
-    <Compile Include="ModeloBD\ModeloBaseDatos.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModeloBaseDatos.Context.tt</DependentUpon>
+    <Compile Include="ModeloBD\Amigo.cs">
+      <DependentUpon>DescribeloTestBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModeloBD\ModeloBaseDatos.cs">
+    <Compile Include="ModeloBD\DescribeloTestBD.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
+      <DependentUpon>DescribeloTestBD.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModeloBD\ModeloBaseDatos.Designer.cs">
+    <Compile Include="ModeloBD\DescribeloTestBD.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ModeloBaseDatos.edmx</DependentUpon>
+      <DependentUpon>DescribeloTestBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloBD\DescribeloTestBD.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DescribeloTestBD.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloBD\Estadistica.cs">
+      <DependentUpon>DescribeloTestBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloBD\Expulsion.cs">
+      <DependentUpon>DescribeloTestBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloBD\PeticionAmistad.cs">
+      <DependentUpon>DescribeloTestBD.tt</DependentUpon>
     </Compile>
     <Compile Include="ModeloBD\usuario.cs">
-      <DependentUpon>ModeloBaseDatos.tt</DependentUpon>
+      <DependentUpon>DescribeloTestBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloBD\UsuarioCuenta.cs">
+      <DependentUpon>DescribeloTestBD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModeloBD\Veto.cs">
+      <DependentUpon>DescribeloTestBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="ModeloBD\ModeloBaseDatos.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ModeloBaseDatos.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.Config" />
-    <None Include="ModeloBD\ModeloBaseDatos.edmx.diagram">
-      <DependentUpon>ModeloBaseDatos.edmx</DependentUpon>
+    <EntityDeploy Include="ModeloBD\DescribeloTestBD.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DescribeloTestBD.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ModeloBD\DescribeloTestBD.edmx.diagram">
+      <DependentUpon>DescribeloTestBD.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ModeloBD\ModeloBaseDatos.Context.tt">
+    <Content Include="ModeloBD\DescribeloTestBD.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ModeloBaseDatos.Context.cs</LastGenOutput>
-      <DependentUpon>ModeloBaseDatos.edmx</DependentUpon>
+      <DependentUpon>DescribeloTestBD.edmx</DependentUpon>
+      <LastGenOutput>DescribeloTestBD.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="ModeloBD\ModeloBaseDatos.tt">
+    <Content Include="ModeloBD\DescribeloTestBD.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModeloBaseDatos.edmx</DependentUpon>
-      <LastGenOutput>ModeloBaseDatos.cs</LastGenOutput>
+      <DependentUpon>DescribeloTestBD.edmx</DependentUpon>
+      <LastGenOutput>DescribeloTestBD.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

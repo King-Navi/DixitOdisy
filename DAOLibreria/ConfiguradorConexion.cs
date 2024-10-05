@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.IO;
 using System.Security;
 using UtilidadesLibreria;
 
@@ -12,6 +13,7 @@ namespace DAOLibreria
     /// </summary>
     public static class ConfiguradorConexion
     {
+        private static string nombreBaseDatos = "DescribeloTestEntities";
         /// <summary>
         /// Este es el nombre de la carpeta que contiene la base de datos
         /// </summary>
@@ -19,7 +21,7 @@ namespace DAOLibreria
         /// <summary>
         /// Esta es el nombre del archivo de la base de datos (el que se genera con .edmx)
         /// </summary>
-        private static string nombreArchivo = "ModeloBaseDatos";
+        private static string nombreArchivo = "DescribeloTestBD";
         /// <summary>
         /// Configura la cadena de conexión solicitando al usuario los parámetros de conexión (servidor, base de datos, usuario y contraseña),
         /// actualiza la cadena de conexión en el archivo App.config y prueba la conexión.
@@ -37,7 +39,7 @@ namespace DAOLibreria
             string contrasena = Console.ReadLine();
             string nuevaCadenaConexion = $"metadata=res://*/{carpeta}.{nombreArchivo}.csdl|res://*/{carpeta}.{nombreArchivo}.ssdl|res://*/{carpeta}.{nombreArchivo}.msl;" +
                                          $"provider=System.Data.SqlClient;provider connection string=\"Server={servidor};Database={nombreBD};User Id={usuario};Password={contrasena};MultipleActiveResultSets=True;App=EntityFramework\";";
-            ActualizarCadenaConexionEnAppConfig("bd1Entities", nuevaCadenaConexion);
+            ActualizarCadenaConexionEnAppConfig(nombreBaseDatos, nuevaCadenaConexion);
             return ProbarConexion(servidor, nombreBD, usuario, contrasena);
         }
         /// <summary>
@@ -72,7 +74,7 @@ namespace DAOLibreria
                 string nuevaCadenaConexion = $"metadata=res://*/{carpeta}.{nombreArchivo}.csdl|res://*/{carpeta}.{nombreArchivo}.ssdl|res://*/{carpeta}.{nombreArchivo}.msl;" +
                                              $"provider=System.Data.SqlClient;provider connection string=\"Server={servidor};Database={nombreBD};User Id={usuario};Password={contrasena};MultipleActiveResultSets=True;App=EntityFramework\";";
 
-                ActualizarCadenaConexionEnAppConfig("bd1Entities", nuevaCadenaConexion);
+                ActualizarCadenaConexionEnAppConfig(nombreBaseDatos, nuevaCadenaConexion);
 
                 resultado = ProbarConexion(valoresLista[0], valoresLista[1], valoresLista[2], valoresLista[3]);
             }
@@ -95,6 +97,41 @@ namespace DAOLibreria
                 resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexion(1)) [Exception].  {ex.Message}");
             }
             return resultado;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ruta"></param>
+        /// <returns></returns>
+        public static Dictionary<string, Object> ConfigurarCadenaConexionRuta() 
+        {
+            Dictionary<string, Object> resultado = new Dictionary<string, Object>();
+            try
+            {
+                Console.WriteLine("Ingrese la ruta absoluta del archivo:");
+                string ruta = Console.ReadLine();
+                //string ruta = "E:\\config.txt";
+                if (File.Exists(ruta))
+                {
+                    string contenidoArchivo = File.ReadAllText(ruta);
+
+
+                    ActualizarCadenaConexionEnAppConfig(nombreBaseDatos, contenidoArchivo);
+                    resultado = ProbarConexion("localhost", "DescribeloTest", "devDescribelo", "UnaayIvan2025@-");
+                }
+                else
+                {
+                    resultado.Add(Llaves.LLAVE_ERROR, true);
+                    resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexionruta()) [Exception]. {ruta}");
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado.Add(Llaves.LLAVE_ERROR, true);
+                resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexionRuta()) [Exception].");
+            }
+            return resultado;
+
         }
         /// <summary>
         /// Actualiza la cadena de conexión en el archivo App.config.

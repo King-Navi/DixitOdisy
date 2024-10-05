@@ -12,10 +12,31 @@ namespace DAOLibreria.ModeloBD
     using System;
     using System.Collections.Generic;
     
-    public partial class usuario
+    public partial class Usuario
     {
-        public int idusuario { get; set; }
-        public string nombre { get; set; }
-        public string contraseniaHash { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Usuario()
+        {
+            this.Amigoes = new HashSet<Amigo>();
+            this.Amigoes1 = new HashSet<Amigo>();
+            this.PeticionAmistads = new HashSet<PeticionAmistad>();
+            this.PeticionAmistads1 = new HashSet<PeticionAmistad>();
+        }
+    
+        public int idUsuario { get; set; }
+        public string gamertag { get; set; }
+        public byte[] fotoPerfil { get; set; }
+        public Nullable<System.DateTime> ultimaConexion { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Amigo> Amigoes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Amigo> Amigoes1 { get; set; }
+        public virtual Estadistica Estadistica { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PeticionAmistad> PeticionAmistads { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PeticionAmistad> PeticionAmistads1 { get; set; }
+        public virtual UsuarioCuenta UsuarioCuenta { get; set; }
     }
 }

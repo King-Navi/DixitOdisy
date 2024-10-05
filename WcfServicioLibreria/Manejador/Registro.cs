@@ -12,8 +12,8 @@ namespace WcfServicioLibreria.Manejador
         public int RegistrarUsuario(string usuario, string contrasenia)
         {
             int resultado;
-            Dictionary<string, object> consulta = 
-                UsuarioDAO.CrearUsuario(usuario, contrasenia);
+            Dictionary<string, object> consulta = new Dictionary<string, object>(); //TODO: llamada a la base de datos
+
             if (!consulta.TryGetValue(Llaves.LLAVE_ERROR, out _))
             {
                 Console.WriteLine(usuario + "fallo al registralo");

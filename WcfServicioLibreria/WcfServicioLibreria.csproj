@@ -89,7 +89,7 @@
     <Compile Include="Modelo\Sala.cs" />
     <Compile Include="Modelo\Usuario.cs" />
     <Compile Include="Modelo\UsuarioDuplicadoFalla.cs" />
-    <Compile Include="Modelo\UsuarioNoExisteConectadoFalla.cs" />
+    <Compile Include="Modelo\UsuarioFalla.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

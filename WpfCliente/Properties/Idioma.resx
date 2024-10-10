@@ -306,4 +306,7 @@
   <data name="labelCorreoE" xml:space="preserve">
     <value>Correo electronico</value>
   </data>
+  <data name="buttonJugar" xml:space="preserve">
+    <value>Jugar</value>
+  </data>
 </root>

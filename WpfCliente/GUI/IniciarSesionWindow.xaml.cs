@@ -27,20 +27,21 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
-            labelTitulo.Content = Properties.Idioma.tituloBienvenida;
+            /*labelTitulo.Content = Properties.Idioma.tituloBienvenida;
             labelIniciarSesion.Content = Properties.Idioma.labelInicioSesion;
             labelUsuario.Content = Properties.Idioma.labelUsuario;
             labelContrasenia.Content = Properties.Idioma.labelContrasenia;
             buttonIniciarSesion.Content = Properties.Idioma.buttonIniciarSesion;
-            buttonRegistrar.Content = Properties.Idioma.buttonRegistrarse;
+            buttonRegistrar.Content = Properties.Idioma.buttonRegistrarse;*/
 
         }
      
-
+        /*
         private void EnCierre(object sender, EventArgs e)
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
         }
+
         private async void ButtonClicIniciarSesion(object sender, RoutedEventArgs e)
         {
             Task<bool> verificarConexion = Validacion.ValidarConexion();
@@ -86,5 +87,5 @@ namespace WpfCliente.GUI
             //Esta es la que no es como invitado, si es un invitado colocar bool true
             stackPanePrincipal.Children.Add(new RegistrarUsuario());
         }
-    }
+    }*/
 }

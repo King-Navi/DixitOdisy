@@ -273,5 +273,14 @@
   <ItemGroup>
     <Resource Include="Recursos\backgroundGame.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\cajaLogin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\fondoLogin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\mesaJuego.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,15 +1,18 @@
-﻿<Page x:Class="WpfCliente.GUI.IniciarSesion"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:p="clr-namespace:WpfCliente.Properties"
-      xmlns:local="clr-namespace:WpfCliente.GUI"
-      mc:Ignorable="d" 
-      d:DesignHeight="770" d:DesignWidth="1200" Background="#005EE8"
-      Title="XAMLLogin">
+﻿<Window x:Class="WpfCliente.GUI.IniciarSesion"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:p="clr-namespace:WpfCliente.Properties"
+        xmlns:local="clr-namespace:WpfCliente.GUI"
+        mc:Ignorable="d" 
+        Title="XAMLLogin"
+        Height="770" Width="1200"
+        WindowStartupLocation="CenterScreen"
+        Background="Gray"
+        ResizeMode="NoResize">
 
-    <Page.Resources>
+    <Window.Resources>
         <Style TargetType="{x:Type TextBox}" >
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
@@ -41,7 +44,7 @@
             <Setter Property="Background" Value="White"/>
             <Setter Property="Foreground" Value="#CDCDCD" />
             <Setter Property="FontFamily" Value="Titan One"/>
-            <Setter Property="Tag" Value="aa" />
+            <Setter Property="Tag" Value="UserName" />
         </Style>
 
         <Style TargetType="{x:Type TextBox}" x:Key="ErrorTextBoxStyle">
@@ -54,11 +57,10 @@
             <Setter Property="Background" Value="#FFE57E7E"/>
             <Setter Property="FontFamily" Value="Titan One"/>
             <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="Tag" Value="ab" />
+            <Setter Property="Tag" Value="UserName" />
         </Style>
 
-    </Page.Resources>
-
+    </Window.Resources>
     <Viewbox Stretch="Fill">
 
         <Grid Height="770" Width="1200">
@@ -67,54 +69,65 @@
                 <RowDefinition Height="79*"/>
             </Grid.RowDefinitions>
             <Grid.Background>
-                <ImageBrush ImageSource="/Recursos/backgroundGame.png"/>
+                <ImageBrush ImageSource="/Recursos/fondoLogin.png"/>
             </Grid.Background>
 
-            <Image Source="/Recursos/backgroundGame.png" HorizontalAlignment="Left" VerticalAlignment="Top"  Stretch="Fill" Height="524" Width="511" Margin="337,71,0,0" Grid.RowSpan="2"/>
-            <Image Source="/Recursos/backgroundGame.png" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="338,390,0,0" Height="116" Width="511" Grid.Row="1"/>
-            <Label FontFamily="Times New Roman Bold Italic"  HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="68" Foreground="White" Margin="0,87,0,0" >Describelo</Label>
+            <Image Source="/Recursos/cajaLogin.png" HorizontalAlignment="Left" Stretch="Fill" Height="100" Margin="306,392,0,0" Grid.Row="1" VerticalAlignment="Top" Width="576"/>
 
-            <Label x:Name="labelUsuario" FontFamily="Titan One" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="24" Foreground="White" 
-            Content="Usuario" Margin="416,0,0,527" Grid.RowSpan="2"></Label>
+            <Image Source="/Recursos/mesaJuego.png" HorizontalAlignment="Left" VerticalAlignment="Top"  Stretch="Fill" Height="524" Width="511" Margin="337,71,0,0" Grid.RowSpan="2"/>
+            <Image Source="/Recursos/cajaLogin.png" HorizontalAlignment="Left" VerticalAlignment="Top"  Stretch="Fill" Height="524" Width="511" Margin="337,71,0,0" Grid.RowSpan="2"/>
 
-            <TextBox x:Name="tbxUsername" Text="juanito84394" FontFamily="Titan One" FontSize="22" Foreground="#CDCDCD"
-            VerticalContentAlignment="Center" Margin="416,24,410,482" Grid.Row="1" GotFocus="TbxUsername_GotFocus" LostFocus="TbxUsername_LostFocus" />
+            <Label FontFamily="Lucida Sans Unicode Bold Itallic"  HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="68" Foreground="Black" Margin="0,87,0,0" Content="Describelo" />
 
-            <Label FontFamily="Titan One" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="24" Foreground="White" 
-            Content="Contraseña" Margin="416,0,0,421" Grid.Row="1"></Label>
+            <Label x:Name="labelUsuario" FontFamily="Times New Roman" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="24" Foreground="Black" 
+            Content="Usuario" Margin="416,0,0,527" Grid.RowSpan="2"/>
+
+
+
+            <TextBox x:Name="tbxUsername" Text="juanito84394" FontFamily="Times New Roman" FontSize="22" Foreground="#CDCDCD"
+            VerticalContentAlignment="Center" Margin="416,24,410,482" Grid.Row="1"
+            GotFocus="TbxUsername_GotFocus" LostFocus="TbxUsername_LostFocus"
+            BorderBrush="Gray" BorderThickness="2" Background="White" TextChanged="tbxUsername_TextChanged" />
+
+            <Label FontFamily="Times New Roman" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="24" Foreground="Black" 
+            Content="Contraseña" Margin="416,0,0,421" Grid.Row="1"/>
 
             <TextBox x:Name="pwBxPasswordMask" FontFamily="Titan One" FontSize="22" Foreground="#CDCDCD"
-            VerticalContentAlignment="Center" Margin="416,130,410,377" Grid.Row="1" Focusable="False"/>
-            
-            <Border CornerRadius="10" BorderThickness="1" BorderBrush="Transparent" Margin="416,130,410,377" Grid.Row="1">
+         VerticalContentAlignment="Center" Margin="416,130,410,377" Grid.Row="1"
+         Focusable="False" BorderBrush="Gray" BorderThickness="2" Background="White"/>
+
+
+            <Border CornerRadius="10" BorderThickness="1" BorderBrush="Transparent" Margin="416,130,410,377" Grid.Row="1" >
                 <PasswordBox x:Name="pwBxPassword" Password="*********" Tag="IDK ///TODO" FontSize="22" FontFamily="Titan One" 
                              Foreground="#CDCDCD" VerticalContentAlignment="Center" BorderBrush="Transparent" 
                              Background="Transparent" GotFocus="PwBxPassword_GotFocus" LostFocus="PwBxPassword_LostFocus"/>
             </Border>
-            
-            <Label  FontFamily="Inter" FontSize="14" VerticalAlignment="Top"
-            Foreground="#1CDBD4" Cursor="Hand" Content="Olvidé mi contraseña" Margin="413,181,631,0" Grid.Row="1"></Label>
-            <Button Margin="413,181,631,351" Grid.Row="1" Background="Transparent" BorderThickness="0" Click="BtnForgottenPassword_Click"></Button>
 
-            <Button Background="#7F92F6" Foreground="White" BorderThickness="0"
-            FontFamily="Titan One" FontSize="24" Content="Iniciar sesión" Click="BtnLogin_Click" Margin="416,246,410,260" Grid.Row="1" Cursor="Hand"></Button>
+            <Label  FontFamily="Times New Roman" FontSize="14" VerticalAlignment="Top"
+            Foreground="#8dadb6" Cursor="Hand" Content="Olvidé mi contraseña" Margin="413,181,631,0" Grid.Row="1"/>
+            <Button Margin="413,181,631,351" Grid.Row="1" Background="Transparent" BorderThickness="0" Click="BtnForgottenPassword_Click"/>
 
-            <Button     Background="Transparent" Foreground="#1CDBD4" BorderThickness="0"
-            FontFamily="Titan One" FontSize="18" Content="¿Nuevo en el juego? Registrarse" Click="BtnCreateAccount_Click" Margin="416,298,410,208" Grid.Row="1" Cursor="Hand"></Button>
+            <Button Background="#E0DCC7" Foreground="Black" BorderBrush="Gray" BorderThickness="2"
+            FontFamily="Times New Roman" FontSize="24" Content="Iniciar sesión" Click="BtnLogin_Click" 
+            Margin="416,246,410,260" Grid.Row="1" Cursor="Hand"/>
 
-            <Label FontFamily="Inter" Foreground="White" HorizontalAlignment="Left" 
-            VerticalAlignment="Top" FontSize="18" Content="Jugar como invitado" Margin="338,421,0,0" Width="206" HorizontalContentAlignment="Center" Grid.Row="1"></Label>
-            
+            <Button Background="Transparent" Foreground="#8dadb6" BorderThickness="0"
+            FontFamily="Times New Roman" FontSize="18" Content="¿Nuevo en el juego? Registrarse" Click="BtnCreateAccount_Click" Margin="416,298,410,208" Grid.Row="1" Cursor="Hand"/>
+
+            <Label FontFamily="Inter" Foreground="#8dadb6" HorizontalAlignment="Left" 
+            VerticalAlignment="Top" FontSize="18" Content="Jugar como invitado" Margin="337,420,0,0" Width="181" HorizontalContentAlignment="Center" Grid.Row="1"/>
+
             <TextBox x:Name="tbxJoinByCode" Text="Gamertag" FontFamily="Titan One" FontSize="22" Foreground="#CDCDCD" VerticalContentAlignment="Center" Margin="544,415,465,96" Grid.Row="1"
                      Tag="IDK//TODO" GotFocus="TbxJoinByCode_GotFocus" LostFocus="TbxJoinByCode_LostFocus"/>
-            
-            <Button Background="#7F92F6" Foreground="White" BorderThickness="0" Click="BtnJoin_Click"
-            FontFamily="Titan One" FontSize="18" Content="Jugar" Margin="740,415,360,96" Grid.Row="1" Cursor="Hand" ></Button>
-            
+
+            <Button Background="#E0DCC7" Foreground="Black" BorderBrush="Gray" BorderThickness="2" 
+                Click="BtnJoin_Click" FontFamily="Titan One" FontSize="18" 
+                Content="Jugar" Margin="740,415,360,96" Grid.Row="1" Cursor="Hand" />
+
             <Image x:Name="imgUsaFlag" Visibility="Hidden" Source="/Recursos/backgroundGame.png" HorizontalAlignment="Left" VerticalAlignment="Top" Height="57" Width="80" Margin="1077,404,0,0" Grid.Row="1"/>
-            
+
             <Label x:Name="lbIncorrectCredentials" Content="g" Visibility="Collapsed" HorizontalAlignment="Left" Margin="416,208,0,0" Grid.Row="1" VerticalAlignment="Top" Width="374" FontFamily="Inter" FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="#FFFF5959"/>
         </Grid>
     </Viewbox>
 
-</Page>
+</Window>

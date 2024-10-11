@@ -35,7 +35,7 @@ namespace WpfCliente.GUI
             buttonRegistrar.Content = Properties.Idioma.buttonRegistrarse;*/
 
         }
-     
+
         /*
         private void EnCierre(object sender, EventArgs e)
         {
@@ -86,6 +86,6 @@ namespace WpfCliente.GUI
             stackPanePrincipal.Children.Clear();
             //Esta es la que no es como invitado, si es un invitado colocar bool true
             stackPanePrincipal.Children.Add(new RegistrarUsuario());
-        }
-    }*/
+        }*/
+    }
 }

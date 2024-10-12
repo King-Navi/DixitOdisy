@@ -6,6 +6,6 @@ namespace WcfServicioLibreria.Contratos
     public interface IServicioRegistro
     {
         [OperationContract]
-        int RegistrarUsuario(string usuario, string contrasenia);
+        bool RegistrarUsuario(Modelo.Usuario usuario);
     }
 }

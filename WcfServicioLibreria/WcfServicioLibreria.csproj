@@ -91,6 +91,7 @@
     <Compile Include="Modelo\UsuarioDuplicadoFalla.cs" />
     <Compile Include="Modelo\UsuarioFalla.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilidades\Utilidad.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

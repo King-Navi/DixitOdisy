@@ -121,7 +121,7 @@
             <Image Source="/Recursos/cajaLogin.png" Stretch="Fill" HorizontalAlignment="Left" Height="80" Margin="853,13,0,0" VerticalAlignment="Top" Width="334"/>
 
             <!-- TODO: agregar el menu desplegable-->
-            <!-- <local:CambiarIdiomaMenuDesplegable Grid.Row="1" Margin="10,10,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"/> -->
+            <local:CambiarIdiomaMenuDesplegable Margin="0,28,32,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
         </Grid>
     </Viewbox>
 

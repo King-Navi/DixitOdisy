@@ -82,65 +82,53 @@
     <Compile Include="ConfiguradorConexion.cs" />
     <Compile Include="DAO\UsuarioDAO.cs" />
     <Compile Include="ModeloBD\Amigo.cs">
-      <DependentUpon>DescribeloTestBD.tt</DependentUpon>
+      <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModeloBD\DescribeloTestBD.Context.cs">
+    <Compile Include="ModeloBD\DescribeloBD.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DescribeloTestBD.Context.tt</DependentUpon>
+      <DependentUpon>DescribeloBD.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModeloBD\DescribeloTestBD.cs">
+    <Compile Include="ModeloBD\DescribeloBD.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DescribeloTestBD.tt</DependentUpon>
+      <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModeloBD\DescribeloTestBD.Designer.cs">
+    <Compile Include="ModeloBD\DescribeloBD.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DescribeloTestBD.edmx</DependentUpon>
+      <DependentUpon>DescribeloBD.edmx</DependentUpon>
     </Compile>
-    <Compile Include="ModeloBD\Estadistica.cs">
-      <DependentUpon>DescribeloTestBD.tt</DependentUpon>
+    <Compile Include="ModeloBD\Estadisticas.cs">
+      <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
     <Compile Include="ModeloBD\Expulsion.cs">
-      <DependentUpon>DescribeloTestBD.tt</DependentUpon>
+      <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
     <Compile Include="ModeloBD\PeticionAmistad.cs">
-      <DependentUpon>DescribeloTestBD.tt</DependentUpon>
+      <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModeloBD\usuario.cs">
-      <DependentUpon>DescribeloTestBD.tt</DependentUpon>
+    <Compile Include="ModeloBD\Usuario.cs">
+      <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
     <Compile Include="ModeloBD\UsuarioCuenta.cs">
-      <DependentUpon>DescribeloTestBD.tt</DependentUpon>
+      <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
     <Compile Include="ModeloBD\Veto.cs">
-      <DependentUpon>DescribeloTestBD.tt</DependentUpon>
+      <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <EntityDeploy Include="ModeloBD\DescribeloTestBD.edmx">
+    <EntityDeploy Include="ModeloBD\DescribeloBD.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DescribeloTestBD.Designer.cs</LastGenOutput>
+      <LastGenOutput>DescribeloBD.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="ModeloBD\DescribeloTestBD.edmx.diagram">
-      <DependentUpon>DescribeloTestBD.edmx</DependentUpon>
+    <None Include="ModeloBD\DescribeloBD.edmx.diagram">
+      <DependentUpon>DescribeloBD.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ModeloBD\DescribeloTestBD.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DescribeloTestBD.edmx</DependentUpon>
-      <LastGenOutput>DescribeloTestBD.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="ModeloBD\DescribeloTestBD.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DescribeloTestBD.edmx</DependentUpon>
-      <LastGenOutput>DescribeloTestBD.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -151,6 +139,18 @@
       <Project>{12bc6483-0b89-46f6-9a42-272d0e225764}</Project>
       <Name>UtilidadesLibreria</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ModeloBD\DescribeloBD.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DescribeloBD.edmx</DependentUpon>
+      <LastGenOutput>DescribeloBD.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ModeloBD\DescribeloBD.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DescribeloBD.edmx</DependentUpon>
+      <LastGenOutput>DescribeloBD.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

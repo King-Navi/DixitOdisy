@@ -1,31 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using DAOLibreria.DAO;
+using DAOLibreria.ModeloBD;
 using UtilidadesLibreria;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioRegistro
     {
 
-        public int RegistrarUsuario(string usuario, string contrasenia)
+        public bool RegistrarUsuario(Modelo.Usuario _usuario)
         {
-            int resultado;
-            Dictionary<string, object> consulta = new Dictionary<string, object>(); //TODO: llamada a la base de datos
-
-            if (!consulta.TryGetValue(Llaves.LLAVE_ERROR, out _))
+            bool resultado = false;
+            try
             {
-                Console.WriteLine(usuario + "fallo al registralo");
-                consulta.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje);
-                Console.WriteLine(mensaje);
-                resultado = -1;
+                var usuarioCuenta = new UsuarioCuenta
+                {
+                    gamertag = _usuario.Nombre,
+                    hashContrasenia = _usuario.ContraseniaHASH.ToString(),
+                    correo = _usuario.Correo
+                };
+                var usuario = new Usuario
+                {
+                    gamertag = _usuario.Nombre,
+                    fotoPerfil = Utilidad.StreamABytes(_usuario.FotoUsuario),
+                };
+                resultado = DAOLibreria.DAO.UsuarioDAO.RegistrarNuevoUsuaro(usuario, usuarioCuenta);
             }
-            else 
+            catch (Exception excepcion)
             {
-                Console.WriteLine(usuario + "Se registro");
-                resultado = 1;
-
+                //TODO: Manejar el error
+                Console.WriteLine(excepcion);
+                Console.WriteLine(excepcion.StackTrace);
             }
 
             return resultado;

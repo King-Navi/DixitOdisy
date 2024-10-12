@@ -28,26 +28,26 @@ namespace WcfServicioLibreria.Modelo
         public virtual void Desechar()
         {
             DesuscribirseDeEventos();
-            UsuarioSesionCallBack = null;
-            desechado = true;
+
         }
         private void DesuscribirseDeEventos()
         {
-            foreach (var communicationObject in objetosComunicacion)
-            {
-                DesuscribirEvento(communicationObject);
-            }
-            objetosComunicacion.Clear();
+            throw new NotImplementedException();
+            //foreach (var communicationObject in objetosComunicacion)
+            //{
+            //    DesuscribirEvento(communicationObject);
+            //}
+            //objetosComunicacion.Clear();
         }
 
-        //public DesconectorEventoManejador(ICommunicationObject communicationObject, IObservadorSala _observador, string _clavePropietario)
-        //{
-        //    observador = _observador;
-        //    clavePropietario = _clavePropietario;
-        //    communicationObject.Closed += Cerrado;
-        //    communicationObject.Faulted += EnFalla;
-        //    objetosComunicacion.Add(communicationObject);
-        //}
+        public DesconectorEventoManejador(ICommunicationObject communicationObject, IObservadorSala _observador, string _clavePropietario)
+        {
+            observador = _observador;
+            clavePropietario = _clavePropietario;
+            //communicationObject.Closed += Cerrado;
+            //communicationObject.Faulted += EnFalla;
+            objetosComunicacion.Add(communicationObject);
+        }
         //private void Cerrado(object sender, EventArgs e)
         //{
         //    Console.WriteLine(" se ha ido de la sala (Closed).");

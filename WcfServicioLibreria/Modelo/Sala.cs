@@ -74,7 +74,7 @@ namespace WcfServicioLibreria.Modelo
         {
             bool seElimino = jugadoresSala.TryRemove(nombreJugador, out ISalaJugadorCallback jugadorEliminado);
             eventosCommunication.TryGetValue(nombreJugador, out DesconectorEventoManejador eventosJugador);
-            eventosJugador.DesuscribirTodos();
+            //eventosJugador.DesuscribirTodos();
             if (ContarJugadores() == 0)
             {
                 EliminarSala();

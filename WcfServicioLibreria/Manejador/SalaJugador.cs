@@ -20,27 +20,11 @@ namespace WcfServicioLibreria.Manejador
             try
             {
                 ISalaJugadorCallback contexto = OperationContext.Current.GetCallbackChannel<ISalaJugadorCallback>();
-                salasDiccionario.TryGetValue(idSala, out ISala sala);
+                salasDiccionario.TryGetValue(idSala, out Modelo.Sala sala);
                 lock (sala)
                 {
+                    //FIXME
                     sala.AgregarJugadorSala(gamertag, contexto);
-
-                    ICommunicationObject comunicacionObjecto = (ICommunicationObject)contexto;
-                    comunicacionObjecto.Closing += (emisor, e) =>
-                    {
-                        Console.WriteLine(emisor + "Se esta llendo de la sala");////
-                    };
-                    comunicacionObjecto.Closed += (emisor, e) =>
-                    {
-                        Console.WriteLine(emisor + "Se ha ido de la sala"); ///
-
-                    };
-
-                    comunicacionObjecto.Faulted += (emisor, e) =>
-                    {
-                        Console.WriteLine(emisor + "Ha fallado de la sala"); ////
-
-                    };
                 }
 
             }

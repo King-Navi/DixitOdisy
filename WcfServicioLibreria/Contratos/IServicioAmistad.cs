@@ -18,5 +18,7 @@ namespace WcfServicioLibreria.Contratos
         int ActualizarAmigo(string nombreRemitente, string nombreDestinatario, string peticionEstado);
         [OperationContract]
         int BorrarAmigo(Amigo amigo);
+        [OperationContract]
+        Amigo[] ObtenerListaAmigos(string usuario);
     }
 }

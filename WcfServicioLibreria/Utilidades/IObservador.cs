@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfCliente.GUIModelo
+namespace WcfServicioLibreria.Utilidades
 {
-    internal class IniciarSesion
+    public interface IObservadorSala
     {
+        void Desconectar(string clave);
     }
 }

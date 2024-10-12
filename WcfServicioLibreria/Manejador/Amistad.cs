@@ -64,5 +64,10 @@ namespace WcfServicioLibreria.Manejador
         {
             throw new NotImplementedException();
         }
+
+        public Amigo[] ObtenerListaAmigos(string usuario)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

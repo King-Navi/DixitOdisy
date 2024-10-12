@@ -14,9 +14,9 @@ namespace DAOLibreria.ModeloBD
     
     public partial class Amigo
     {
-        public int id_usuario1 { get; set; }
-        public int id_usuario2 { get; set; }
-        public Nullable<System.DateTime> fechaAmistad { get; set; }
+        public int idMayor_usuario { get; set; }
+        public int idMenor_usuario { get; set; }
+        public Nullable<System.DateTime> fechaInicioAmistad { get; set; }
     
         public virtual Usuario Usuario { get; set; }
         public virtual Usuario Usuario1 { get; set; }

@@ -26,10 +26,10 @@
     <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="5803ccf3-6601-4593-ab4b-3a4e800aa1a7" SourceId="1" SourceUrl="net.tcp://localhost:6969/mex" />
     <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="a7cb9101-9565-46f2-99e7-fd5ba1165ec6" SourceId="1" SourceUrl="net.tcp://localhost:6969/mex" />
     <MetadataFile FileName="WcfServicioLibreria.Modelo.xsd" MetadataType="Schema" ID="6033b141-479a-40e9-92a1-6be3a1fa85b1" SourceId="1" SourceUrl="net.tcp://localhost:6969/mex" />
-    <MetadataFile FileName="System.IO.xsd" MetadataType="Schema" ID="25994c8b-002b-46b4-ace9-c07a54988623" SourceId="1" SourceUrl="net.tcp://localhost:6969/mex" />
-    <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="15de6a06-bcfb-4468-884c-039b5c16b39e" SourceId="1" SourceUrl="net.tcp://localhost:6969/mex" />
-    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="25c38097-7459-4080-aa91-60ebf386c794" SourceId="1" SourceUrl="net.tcp://localhost:6969/mex" />
     <MetadataFile FileName="System.Security.Cryptography.xsd" MetadataType="Schema" ID="8d23006a-fd5b-4497-b179-5faa3cedb16d" SourceId="1" SourceUrl="net.tcp://localhost:6969/mex" />
+    <MetadataFile FileName="System.IO.xsd" MetadataType="Schema" ID="5ae42ba1-6817-416f-8eba-6fe597e13904" SourceId="1" SourceUrl="net.tcp://localhost:6969/mex" />
+    <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="9d8641f9-faa5-4f4e-9dd1-9558ef72a4b1" SourceId="1" SourceUrl="net.tcp://localhost:6969/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="25c38097-7459-4080-aa91-60ebf386c794" SourceId="1" SourceUrl="net.tcp://localhost:6969/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

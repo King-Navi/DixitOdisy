@@ -2,10 +2,12 @@
 using System.Security.Cryptography;
 using System.ServiceModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using UtilidadesLibreria;
 using WpfCliente.Interfaz;
+using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
@@ -45,29 +47,22 @@ namespace WpfCliente.GUI
             ActualizarUI();
         }
 
-        private void ButtonClicRegistrarUsuario(object sender, RoutedEventArgs e)
+        private async void ButtonClicRegistrarUsuario(object sender, RoutedEventArgs e)
         {
-            //TODO: Realizar caso en el que no hay conexion
-            ServidorDescribelo.IServicioRegistro servicio = new ServidorDescribelo.ServicioRegistroClient();
-            try
+            //TODO: Validar campos no vacios
+            string contraseniaHash = BitConverter.ToString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(passwordBoxContrasenia.Password))).Replace("-", "");
+            var manejadorConexion = new ServicioManejador<ServicioRegistroClient>();
+            Task<bool> resultado = manejadorConexion.EjecutarServicioAsync(async servicio =>
             {
-                string contraseniaHash = BitConverter.ToString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(passwordBoxContrasenia.Password))).Replace("-", "");
-                int resultado = servicio.RegistrarUsuario(textBoxUsuario.Text, contraseniaHash);
-                if (resultado < 1)
-                {
-                    //TODO: Manejar el error
-                    Console.WriteLine("error");
-                }
-            }
-            catch (Exception)
+                return await servicio.RegistrarUsuarioAsync(Singleton.Instance.NombreUsuario, contraseniaHash);
+            });
+            if (await resultado)
             {
-                //TODO: Manejar error
-            }finally
+                MessageBox.Show("Exito en la prueba");
+            }else
             {
-                if (servicio != null)
-                {
-                    ((ICommunicationObject)servicio).Close();
-                }
+                MessageBox.Show("Fallo la prueba");
+
             }
         }
     }

@@ -1,5 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <wsdl:definitions xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="ManejadorPrincipal" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_IServicioAmistad_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
+          <wsrm:InactivityTimeout Milliseconds="600000">
+          </wsrm:InactivityTimeout>
+          <wsrm:AcknowledgementInterval Milliseconds="200">
+          </wsrm:AcknowledgementInterval>
+        </wsrm:RMAssertion>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
+        </msb:BinaryEncoding>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <msf:WindowsTransportSecurity xmlns:msf="http://schemas.microsoft.com/ws/2006/05/framing/policy">
+                  <msf:ProtectionLevel>EncryptAndSign</msf:ProtectionLevel>
+                </msf:WindowsTransportSecurity>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256>
+                </sp:Basic256>
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict>
+                </sp:Strict>
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+        <wsaw:UsingAddressing>
+        </wsaw:UsingAddressing>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsp:Policy wsu:Id="NetTcpBinding_IServicioChat_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -315,14 +354,41 @@
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import namespace="http://tempuri.org/" />
-      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Security.Cryptography" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.IO" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Security.Cryptography" />
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="IServicioAmistad_AgregarAmigo_InputMessage">
+    <wsdl:part name="parameters" element="tns:AgregarAmigo" />
+  </wsdl:message>
+  <wsdl:message name="IServicioAmistad_AgregarAmigo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AgregarAmigoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioAmistad_AgregarAmigo_AmistadFallaFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q1:AmistadFalla" />
+  </wsdl:message>
+  <wsdl:message name="IServicioAmistad_ActualizarAmigo_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarAmigo" />
+  </wsdl:message>
+  <wsdl:message name="IServicioAmistad_ActualizarAmigo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActualizarAmigoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioAmistad_BorrarAmigo_InputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarAmigo" />
+  </wsdl:message>
+  <wsdl:message name="IServicioAmistad_BorrarAmigo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BorrarAmigoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioAmistad_ObtenerListaAmigos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerListaAmigos" />
+  </wsdl:message>
+  <wsdl:message name="IServicioAmistad_ObtenerListaAmigos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerListaAmigosResponse" />
+  </wsdl:message>
   <wsdl:message name="IServicioChat_CrearChat_InputMessage">
     <wsdl:part name="parameters" element="tns:CrearChat" />
   </wsdl:message>
@@ -342,7 +408,7 @@
     <wsdl:part name="parameters" element="tns:AgregarUsuarioChatResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioChatMotor_AgregarUsuarioChat_UsuarioDuplicadoFallaFault_FaultMessage">
-    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q1:UsuarioDuplicadoFalla" />
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q2:UsuarioDuplicadoFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioChatMotor_DesconectarUsuarioChat_InputMessage">
     <wsdl:part name="parameters" element="tns:DesconectarUsuarioChat" />
@@ -371,14 +437,23 @@
   <wsdl:message name="IServicioChatMotor_RecibirMensajeCliente_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:RecibirMensajeCliente" />
   </wsdl:message>
-  <wsdl:message name="IServicioPeticionAmistad_GetFriendRequest_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetFriendRequest" />
+  <wsdl:message name="IServicioPeticionAmistad_ObtenerPeticionAmistad_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPeticionAmistad" />
   </wsdl:message>
-  <wsdl:message name="IServicioPeticionAmistad_GetFriendRequestCallback_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:GetFriendRequestCallback" />
+  <wsdl:message name="IServicioPeticionAmistad_AbrirCanalParaPeticiones_InputMessage">
+    <wsdl:part name="parameters" element="tns:AbrirCanalParaPeticiones" />
   </wsdl:message>
-  <wsdl:message name="IServicioPeticionAmistad_GetFriendRequestCallback_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:GetFriendRequestCallbackResponse" />
+  <wsdl:message name="IServicioPeticionAmistad_AbrirCanalParaPeticiones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AbrirCanalParaPeticionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioPeticionAmistad_AbrirCanalParaPeticiones_UsuarioFallaFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q3:UsuarioFalla" />
+  </wsdl:message>
+  <wsdl:message name="IServicioPeticionAmistad_ObtenerPeticionAmistadCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPeticionAmistadCallback" />
+  </wsdl:message>
+  <wsdl:message name="IServicioPeticionAmistad_ObtenerPeticionAmistadCallback_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPeticionAmistadCallbackResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioRegistro_RegistrarUsuario_InputMessage">
     <wsdl:part name="parameters" element="tns:RegistrarUsuario" />
@@ -411,7 +486,7 @@
     <wsdl:part name="parameters" element="tns:AgregarJugadorSalaResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioSalaJugador_AgregarJugadorSala_UsuarioDuplicadoFallaFault_FaultMessage">
-    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q2:UsuarioDuplicadoFalla" />
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q4:UsuarioDuplicadoFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioSalaJugador_RemoverJugadorSala_InputMessage">
     <wsdl:part name="parameters" element="tns:RemoverJugadorSala" />
@@ -461,6 +536,25 @@
   <wsdl:message name="IServicioUsuarioSesion_ObtenerSessionJugadorCallback_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ObtenerSessionJugadorCallbackResponse" />
   </wsdl:message>
+  <wsdl:portType name="IServicioAmistad">
+    <wsdl:operation name="AgregarAmigo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/AgregarAmigo" message="tns:IServicioAmistad_AgregarAmigo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/AgregarAmigoResponse" message="tns:IServicioAmistad_AgregarAmigo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioAmistad/AgregarAmigoAmistadFallaFault" name="AmistadFallaFault" message="tns:IServicioAmistad_AgregarAmigo_AmistadFallaFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarAmigo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/ActualizarAmigo" message="tns:IServicioAmistad_ActualizarAmigo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/ActualizarAmigoResponse" message="tns:IServicioAmistad_ActualizarAmigo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BorrarAmigo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/BorrarAmigo" message="tns:IServicioAmistad_BorrarAmigo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/BorrarAmigoResponse" message="tns:IServicioAmistad_BorrarAmigo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerListaAmigos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/ObtenerListaAmigos" message="tns:IServicioAmistad_ObtenerListaAmigos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/ObtenerListaAmigosResponse" message="tns:IServicioAmistad_ObtenerListaAmigos_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
   <wsdl:portType name="IServicioChat">
     <wsdl:operation name="CrearChat">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioChat/CrearChat" message="tns:IServicioChat_CrearChat_InputMessage" />
@@ -498,12 +592,17 @@
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioPeticionAmistad">
-    <wsdl:operation name="GetFriendRequest">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/GetFriendRequest" message="tns:IServicioPeticionAmistad_GetFriendRequest_InputMessage" />
+    <wsdl:operation name="ObtenerPeticionAmistad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/ObtenerPeticionAmistad" message="tns:IServicioPeticionAmistad_ObtenerPeticionAmistad_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetFriendRequestCallback">
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/GetFriendRequestCallback" message="tns:IServicioPeticionAmistad_GetFriendRequestCallback_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/GetFriendRequestCallbackResponse" message="tns:IServicioPeticionAmistad_GetFriendRequestCallback_InputCallbackMessage" />
+    <wsdl:operation name="AbrirCanalParaPeticiones">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/AbrirCanalParaPeticiones" message="tns:IServicioPeticionAmistad_AbrirCanalParaPeticiones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/AbrirCanalParaPeticionesResponse" message="tns:IServicioPeticionAmistad_AbrirCanalParaPeticiones_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/AbrirCanalParaPeticionesUsuarioFallaFault" name="UsuarioFallaFault" message="tns:IServicioPeticionAmistad_AbrirCanalParaPeticiones_UsuarioFallaFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPeticionAmistadCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/ObtenerPeticionAmistadCallback" message="tns:IServicioPeticionAmistad_ObtenerPeticionAmistadCallback_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/ObtenerPeticionAmistadCallbackResponse" message="tns:IServicioPeticionAmistad_ObtenerPeticionAmistadCallback_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioRegistro">
@@ -573,6 +672,50 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuarioSesion/ObtenerSessionJugadorCallbackResponse" message="tns:IServicioUsuarioSesion_ObtenerSessionJugadorCallback_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_IServicioAmistad" type="tns:IServicioAmistad">
+    <wsp:PolicyReference URI="#NetTcpBinding_IServicioAmistad_policy">
+    </wsp:PolicyReference>
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="AgregarAmigo">
+      <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/AgregarAmigo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="AmistadFallaFault">
+        <soap12:fault use="literal" name="AmistadFallaFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarAmigo">
+      <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/ActualizarAmigo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BorrarAmigo">
+      <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/BorrarAmigo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerListaAmigos">
+      <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/ObtenerListaAmigos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
   <wsdl:binding name="NetTcpBinding_IServicioChat" type="tns:IServicioChat">
     <wsp:PolicyReference URI="#NetTcpBinding_IServicioChat_policy">
     </wsp:PolicyReference>
@@ -659,14 +802,26 @@
     <wsp:PolicyReference URI="#NetTcpBinding_IServicioPeticionAmistad_policy">
     </wsp:PolicyReference>
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="GetFriendRequest">
-      <soap12:operation soapAction="http://tempuri.org/IServicioPeticionAmistad/GetFriendRequest" style="document" />
+    <wsdl:operation name="ObtenerPeticionAmistad">
+      <soap12:operation soapAction="http://tempuri.org/IServicioPeticionAmistad/ObtenerPeticionAmistad" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
-    <wsdl:operation name="GetFriendRequestCallback">
-      <soap12:operation soapAction="http://tempuri.org/IServicioPeticionAmistad/GetFriendRequestCallback" style="document" />
+    <wsdl:operation name="AbrirCanalParaPeticiones">
+      <soap12:operation soapAction="http://tempuri.org/IServicioPeticionAmistad/AbrirCanalParaPeticiones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UsuarioFallaFault">
+        <soap12:fault use="literal" name="UsuarioFallaFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPeticionAmistadCallback">
+      <soap12:operation soapAction="http://tempuri.org/IServicioPeticionAmistad/ObtenerPeticionAmistadCallback" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -827,6 +982,15 @@
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="ManejadorPrincipal">
+    <wsdl:port name="NetTcpBinding_IServicioAmistad" binding="tns:NetTcpBinding_IServicioAmistad">
+      <soap12:address location="net.tcp://localhost:6969/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
     <wsdl:port name="NetTcpBinding_IServicioChat" binding="tns:NetTcpBinding_IServicioChat">
       <soap12:address location="net.tcp://localhost:6969/" />
       <wsa10:EndpointReference>

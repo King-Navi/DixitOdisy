@@ -13,7 +13,7 @@ namespace DAOLibreria
     /// </summary>
     public static class ConfiguradorConexion
     {
-        private static string nombreBaseDatos = "DescribeloTestEntities";
+        private static string nombreArchivoContext = "DescribeloEntities";
         /// <summary>
         /// Este es el nombre de la carpeta que contiene la base de datos
         /// </summary>
@@ -21,7 +21,7 @@ namespace DAOLibreria
         /// <summary>
         /// Esta es el nombre del archivo de la base de datos (el que se genera con .edmx)
         /// </summary>
-        private static string nombreArchivo = "DescribeloTestBD";
+        private static string nombreArchivo = "DescribeloBD";
         /// <summary>
         /// Configura la cadena de conexión solicitando al usuario los parámetros de conexión (servidor, base de datos, usuario y contraseña),
         /// actualiza la cadena de conexión en el archivo App.config y prueba la conexión.
@@ -39,7 +39,7 @@ namespace DAOLibreria
             string contrasena = Console.ReadLine();
             string nuevaCadenaConexion = $"metadata=res://*/{carpeta}.{nombreArchivo}.csdl|res://*/{carpeta}.{nombreArchivo}.ssdl|res://*/{carpeta}.{nombreArchivo}.msl;" +
                                          $"provider=System.Data.SqlClient;provider connection string=\"Server={servidor};Database={nombreBD};User Id={usuario};Password={contrasena};MultipleActiveResultSets=True;App=EntityFramework\";";
-            ActualizarCadenaConexionEnAppConfig(nombreBaseDatos, nuevaCadenaConexion);
+            ActualizarCadenaConexionEnAppConfig(nombreArchivoContext, nuevaCadenaConexion);
             return ProbarConexion(servidor, nombreBD, usuario, contrasena);
         }
         /// <summary>
@@ -74,7 +74,7 @@ namespace DAOLibreria
                 string nuevaCadenaConexion = $"metadata=res://*/{carpeta}.{nombreArchivo}.csdl|res://*/{carpeta}.{nombreArchivo}.ssdl|res://*/{carpeta}.{nombreArchivo}.msl;" +
                                              $"provider=System.Data.SqlClient;provider connection string=\"Server={servidor};Database={nombreBD};User Id={usuario};Password={contrasena};MultipleActiveResultSets=True;App=EntityFramework\";";
 
-                ActualizarCadenaConexionEnAppConfig(nombreBaseDatos, nuevaCadenaConexion);
+                ActualizarCadenaConexionEnAppConfig(nombreArchivoContext, nuevaCadenaConexion);
 
                 resultado = ProbarConexion(valoresLista[0], valoresLista[1], valoresLista[2], valoresLista[3]);
             }
@@ -116,8 +116,8 @@ namespace DAOLibreria
                     string contenidoArchivo = File.ReadAllText(ruta);
 
 
-                    ActualizarCadenaConexionEnAppConfig(nombreBaseDatos, contenidoArchivo);
-                    resultado = ProbarConexion("localhost", "DescribeloTest", "devDescribelo", "UnaayIvan2025@-");
+                    ActualizarCadenaConexionEnAppConfig(nombreArchivoContext, contenidoArchivo);
+                    resultado = ProbarConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-"); //FIXME
                 }
                 else
                 {

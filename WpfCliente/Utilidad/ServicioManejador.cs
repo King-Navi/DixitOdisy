@@ -54,6 +54,42 @@ namespace WpfCliente.Utilidad
                 throw; 
             }
         }
+        /// <summary>
+        /// Método para ejecutar acciones asíncronas que no devuelven resultado
+        /// </summary>
+        public async Task EjecutarServicioAsync(Func<T, Task> action)
+        {
+            T cliente = new T();
+            try
+            {
+                await action(cliente);
+                cliente.Close();
+            }
+            catch
+            {
+                cliente.Abort();
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Método para ejecutar acciones asíncronas que devuelven un resultado
+        /// </summary>
+        public async Task<TResult> EjecutarServicioAsync<TResult>(Func<T, Task<TResult>> action)
+        {
+            T cliente = new T();
+            try
+            {
+                TResult resultado = await action(cliente);
+                cliente.Close();
+                return resultado;
+            }
+            catch
+            {
+                cliente.Abort();
+                throw;
+            }
+        }
     }
 
 }

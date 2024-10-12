@@ -15,9 +15,10 @@ namespace DAOLibreria.ModeloBD
     public partial class Veto
     {
         public int idVeto { get; set; }
-        public Nullable<System.DateTime> fechaInicio { get; set; }
+        public System.DateTime fechaInicio { get; set; }
         public Nullable<System.DateTime> fechaFin { get; set; }
-        public Nullable<bool> esPermanente { get; set; }
+        public bool esPermanente { get; set; }
+        public int idUsuarioCuenta { get; set; }
     
         public virtual UsuarioCuenta UsuarioCuenta { get; set; }
     }

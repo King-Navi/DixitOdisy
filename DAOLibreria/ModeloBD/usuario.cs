@@ -17,26 +17,29 @@ namespace DAOLibreria.ModeloBD
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Usuario()
         {
-            this.Amigoes = new HashSet<Amigo>();
-            this.Amigoes1 = new HashSet<Amigo>();
-            this.PeticionAmistads = new HashSet<PeticionAmistad>();
-            this.PeticionAmistads1 = new HashSet<PeticionAmistad>();
+            this.Amigo = new HashSet<Amigo>();
+            this.Amigo1 = new HashSet<Amigo>();
+            this.Estadisticas = new HashSet<Estadisticas>();
+            this.PeticionAmistad = new HashSet<PeticionAmistad>();
+            this.PeticionAmistad1 = new HashSet<PeticionAmistad>();
         }
     
         public int idUsuario { get; set; }
         public string gamertag { get; set; }
         public byte[] fotoPerfil { get; set; }
         public Nullable<System.DateTime> ultimaConexion { get; set; }
+        public int idUsuarioCuenta { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Amigo> Amigoes { get; set; }
+        public virtual ICollection<Amigo> Amigo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Amigo> Amigoes1 { get; set; }
-        public virtual Estadistica Estadistica { get; set; }
+        public virtual ICollection<Amigo> Amigo1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PeticionAmistad> PeticionAmistads { get; set; }
+        public virtual ICollection<Estadisticas> Estadisticas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PeticionAmistad> PeticionAmistads1 { get; set; }
+        public virtual ICollection<PeticionAmistad> PeticionAmistad { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PeticionAmistad> PeticionAmistad1 { get; set; }
         public virtual UsuarioCuenta UsuarioCuenta { get; set; }
     }
 }

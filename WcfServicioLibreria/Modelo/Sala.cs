@@ -3,29 +3,27 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Manejador;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Modelo
 {
     [DataContract]
-    public class Sala : ISala
+    public class Sala : IObservadorSala
     {
         #region Campos
         private string idCodigoSala;
         private string anfitrion;
         private const int cantidadMinimaJugadores = 3;
         private const int cantidadMaximaJugadores = 12;
-        private ConcurrentDictionary<string, ISalaJugadorCallback> jugadoresSala = new ConcurrentDictionary<string, ISalaJugadorCallback>();
+        private readonly ConcurrentDictionary<string, ISalaJugadorCallback> jugadoresSala = new ConcurrentDictionary<string, ISalaJugadorCallback>();
+        private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
         #endregion Campos
         #region Propiedades
         public static int CantidadMaximaJugadores => cantidadMaximaJugadores;
-
         public static int CantidadMinimaJugadores => cantidadMinimaJugadores;
-
-        string ISala.IdCodigoSala => throw new NotImplementedException();
-
-        string ISala.Anfitrion => throw new NotImplementedException();
-
         #endregion Propiedades
 
         #region Contructores
@@ -44,35 +42,51 @@ namespace WcfServicioLibreria.Modelo
             return jugadoresSala.Count;
         }
 
-        bool ISala.EsVacia()
+        bool EsVacia()
         {
             return jugadoresSala.IsEmpty;
         }
 
-        IReadOnlyCollection<string> ISala.ObtenerNombresJugadoresSala()
+        IReadOnlyCollection<string> ObtenerNombresJugadoresSala()
         {
             return jugadoresSala.Keys.ToList().AsReadOnly();
         }
 
-        bool ISala.AgregarJugadorSala(string nombreJugador, ISalaJugadorCallback nuevoContexto)
+        public bool AgregarJugadorSala(string nombreJugador, ISalaJugadorCallback nuevoContexto)
         {
-            jugadoresSala.AddOrUpdate(nombreJugador, nuevoContexto, (key, oldValue) => nuevoContexto);
-            if (jugadoresSala.TryGetValue(nombreJugador, out ISalaJugadorCallback contextoCambiado))
+            bool resultado = false;
+            if (ContarJugadores() < cantidadMaximaJugadores)
             {
-                if (ReferenceEquals(nuevoContexto, contextoCambiado))
+                jugadoresSala.AddOrUpdate(nombreJugador, nuevoContexto, (key, oldValue) => nuevoContexto);
+                if (jugadoresSala.TryGetValue(nombreJugador, out ISalaJugadorCallback contextoCambiado))
                 {
-                    return true;
+                    if (ReferenceEquals(nuevoContexto, contextoCambiado))
+                    {
+                        eventosCommunication.TryAdd(nombreJugador, new DesconectorEventoManejador((ICommunicationObject)contextoCambiado, this, nombreJugador));
+                        resultado = true;
+                    }
                 }
             }
-            return false;
+            return resultado;
         }
 
-        bool ISala.RemoverJugadorSala(string nombreJugador)
+        bool RemoverJugadorSala(string nombreJugador)
         {
-            throw new NotImplementedException();
+            bool seElimino = jugadoresSala.TryRemove(nombreJugador, out ISalaJugadorCallback jugadorEliminado);
+            eventosCommunication.TryGetValue(nombreJugador, out DesconectorEventoManejador eventosJugador);
+            eventosJugador.DesuscribirTodos();
+            if (ContarJugadores() == 0)
+            {
+                EliminarSala();
+            }
+            return seElimino;
+        }
+        private void EliminarSala() 
+        { 
+            
         }
 
-        bool ISala.DelegarRolAnfitrion(string nuevoAnfitrionNombre)
+        bool DelegarRolAnfitrion(string nuevoAnfitrionNombre)
         {
             bool existeJugador = jugadoresSala.TryGetValue(nuevoAnfitrionNombre, out _);
             if (!existeJugador)
@@ -81,6 +95,11 @@ namespace WcfServicioLibreria.Modelo
             }
             anfitrion = nuevoAnfitrionNombre;
             return anfitrion == nuevoAnfitrionNombre;
+        }
+
+        void IObservadorSala.Desconectar(string clave)
+        {
+            RemoverJugadorSala(clave);
         }
         #endregion Metodos
     }

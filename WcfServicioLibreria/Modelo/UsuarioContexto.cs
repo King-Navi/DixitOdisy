@@ -35,7 +35,7 @@ namespace WcfServicioLibreria.Modelo
         /// </summary>
         public void EnDesconexion()
         {
-            DesconexionManejadorEvento?.Invoke(null, new UsuarioDesconectadoEventArgs(nombre, DateTime.Now));
+            DesconexionManejadorEvento?.Invoke(null, new UsuarioDesconectadoEventArgs(nombre, DateTime.Now, idUsuarioCuenta));
         }
         /// <summary>
         /// Libera recursos que de otra manera no serian liberados

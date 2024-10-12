@@ -14,13 +14,24 @@ namespace DAOLibreria.ModeloBD
     
     public partial class UsuarioCuenta
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public UsuarioCuenta()
+        {
+            this.Expulsion = new HashSet<Expulsion>();
+            this.Usuario = new HashSet<Usuario>();
+            this.Veto = new HashSet<Veto>();
+        }
+    
         public int idUsuarioCuenta { get; set; }
         public string gamertag { get; set; }
         public string hashContrasenia { get; set; }
         public string correo { get; set; }
     
-        public virtual Expulsion Expulsion { get; set; }
-        public virtual Usuario Usuario { get; set; }
-        public virtual Veto Veto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Expulsion> Expulsion { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Usuario> Usuario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Veto> Veto { get; set; }
     }
 }

@@ -16,8 +16,9 @@ namespace DAOLibreria.ModeloBD
     {
         public int idExpulsion { get; set; }
         public string motivo { get; set; }
-        public Nullable<bool> fuePenalizado { get; set; }
-        public Nullable<bool> esHacker { get; set; }
+        public bool fuePenalizado { get; set; }
+        public bool esHacker { get; set; }
+        public int idUsuarioCuenta { get; set; }
     
         public virtual UsuarioCuenta UsuarioCuenta { get; set; }
     }

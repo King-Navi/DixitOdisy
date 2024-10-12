@@ -81,7 +81,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="GUIModelo\IniciarSesion.cs" />
     <Compile Include="GUI\AmigoUserControl.xaml.cs">
       <DependentUpon>AmigoUserControl.xaml</DependentUpon>
     </Compile>
@@ -166,6 +165,9 @@
     </None>
     <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Modelo.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorDescribelo\WpfCliente.ServidorDescribelo.Amigo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\ServidorDescribelo\WpfCliente.ServidorDescribelo.ChatMensaje.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>

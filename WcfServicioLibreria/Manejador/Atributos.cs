@@ -13,7 +13,7 @@ namespace WcfServicioLibreria.Manejador
         /// <summary>
         /// Diccionarion con el idSala, ademas de la sala.
         /// </summary>
-        private static readonly ConcurrentDictionary<string, ISala> salasDiccionario = new ConcurrentDictionary<string, ISala>();
+        private static readonly ConcurrentDictionary<string, Sala> salasDiccionario = new ConcurrentDictionary<string, Sala>();
         #endregion Sala
 
         #region JugadorSesion

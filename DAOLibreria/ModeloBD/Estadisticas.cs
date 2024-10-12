@@ -12,7 +12,7 @@ namespace DAOLibreria.ModeloBD
     using System;
     using System.Collections.Generic;
     
-    public partial class Estadistica
+    public partial class Estadisticas
     {
         public int idEstadisticas { get; set; }
         public Nullable<int> partidasJugadas { get; set; }
@@ -22,6 +22,7 @@ namespace DAOLibreria.ModeloBD
         public Nullable<int> vecesTematicaPaises { get; set; }
         public Nullable<int> vecesTematicaMitologia { get; set; }
         public Nullable<int> vecesTematicaEspacio { get; set; }
+        public int idUsuario { get; set; }
     
         public virtual Usuario Usuario { get; set; }
     }

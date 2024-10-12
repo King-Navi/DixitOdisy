@@ -1,4 +1,5 @@
 ﻿using DAOLibreria.ModeloBD;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
@@ -8,41 +9,71 @@ namespace DAOLibreria.DAO
 {
     public static class UsuarioDAO
     {
-        //public static Dictionary<string, object> CrearUsuario(string usuario, string contrasenia)
-        //{
-        //    Dictionary<string, object> resultado = new Dictionary<string, object>();
+        /// <summary>
+        /// Registra un nuevo usuario en el sistema junto con su cuenta asociada y estadísticas iniciales.
+        /// Asegura la coherencia entre el gamertag del usuario y el de la cuenta.
+        /// </summary>
+        /// <param name="_usuario">El objeto Usuario que contiene la información del usuario, incluido el gamertag y foto de perfil.</param>
+        /// <param name="_usuarioCuenta">El objeto UsuarioCuenta que contiene detalles de la cuenta del usuario como el gamertag, el hash de la contraseña y el correo electrónico.</param>
+        /// <returns>True si el registro fue exitoso; False si los gamertags no coinciden o si ocurre un error durante la operación de la base de datos.</returns>
+        /// <exception cref="Exception">Lanza una excepción si ocurre un error durante la transacción de la base de datos.</exception>
+        /// <remarks>
+        /// Este método realiza las siguientes operaciones:
+        /// 1. Verifica que los gamertags de Usuario y UsuarioCuenta coincidan.
+        /// 2. Si ocurre un error durante la transacción, la misma se revierte y el error se maneja lanzando una excepción.
+        /// </remarks>
+        public static bool RegistrarNuevoUsuaro(Usuario _usuario, UsuarioCuenta _usuarioCuenta)
+        {
+            bool resultado = false;
+            if (_usuario.gamertag != _usuarioCuenta.gamertag)
+            {
+                return resultado;
+            }
+            using (var context = new DescribeloEntities()) 
+            {
+                using (var transaction = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var usuarioCuenta = new UsuarioCuenta
+                        {
+                            gamertag = _usuarioCuenta.gamertag,
+                            hashContrasenia =_usuarioCuenta.hashContrasenia,
+                            correo = _usuarioCuenta.correo
+                        };
+                        context.UsuarioCuenta.Add(usuarioCuenta);
+                        context.SaveChanges();
+                        var usuario = new Usuario
+                        {
+                            gamertag = _usuario.gamertag,
+                            fotoPerfil = _usuario.fotoPerfil,
+                            ultimaConexion = null,
+                            idUsuarioCuenta = usuarioCuenta.idUsuarioCuenta
+                        };
+                        context.Usuario.Add(usuario);
+                        context.SaveChanges(); 
+                        var estadisticas = new Estadisticas
+                        {
+                           idUsuario = usuario.idUsuario
+                        };
+                        context.Estadisticas.Add(estadisticas);
+                        context.SaveChanges();
+                        transaction.Commit();
+                        resultado = true;
+                    }
+                    catch (Exception excepcion)
+                    {
+                        transaction.Rollback();
 
-        //    DAOLibreria.ModeloBD. usuarioNuevo = new DAOLibreria.ModeloBD.usuario()
-        //    {
-        //        nombre = usuario,
-        //        contraseniaHash = contrasenia
-        //    };
-        //    try
-        //    {
-        //        using (var context = new DescribeloTestEntities())
-        //        using (var transaction = context.Database.BeginTransaction())
-        //        {
-        //            context.usuario.Add(usuarioNuevo);
-        //            context.SaveChanges();
-        //            transaction.Commit();
-        //            resultado.Add(Llaves.LLAVE_ERROR, false);
-        //            resultado.Add(Llaves.LLAVE_MENSAJE, "Usuario creado con éxito.");
-        //        }
-        //    }
-        //    catch (DbUpdateException ex)
-        //    {
-        //        //TODO Manejar excepciones de actualización de la base de datos
-        //        resultado.Add(Llaves.LLAVE_ERROR, true);
-        //        resultado.Add(Llaves.LLAVE_MENSAJE, "Error al crear el usuario. Verifique los datos." + ex);
-        //    }
-        //    catch (EntityException ex)
-        //    {
-        //        //TODO Manejar excepciones relacionadas con Entity Framework
-        //        resultado.Add(Llaves.LLAVE_ERROR, true);
-        //        resultado.Add(Llaves.LLAVE_MENSAJE, "Error de conexión con la base de datos." + ex);
-        //    }
+                        //TODO: Manejar el error
+                        Console.WriteLine(excepcion);
+                        Console.WriteLine( excepcion.StackTrace);
+                        throw;
+                    }
+                }
 
-        //    return resultado;
-        //}
+                return resultado;
+            }
+        }
     }
 }

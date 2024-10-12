@@ -40,10 +40,10 @@ namespace WpfCliente.GUI
                 new Amigo { Nombre = "Carlos", Foto = null}
             };
             DataContext = this;
-
+            
         }
 
-        public void GetFriendRequestCallback(Amigo[] amigos)
+        bool IServicioPeticionAmistadCallback.ObtenerPeticionAmistadCallback(SolicitudAmistad nuevaSolicitudAmistad)
         {
             throw new NotImplementedException();
         }

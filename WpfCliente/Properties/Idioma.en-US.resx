@@ -309,4 +309,7 @@
   <data name="buttonJugar" xml:space="preserve">
     <value>Play</value>
   </data>
+  <data name="tituloJuego" xml:space="preserve">
+    <value>Descríbelo</value>
+  </data>
 </root>

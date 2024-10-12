@@ -13,7 +13,7 @@
             <ComboBoxItem Content="Español" Tag="{StaticResource EspañolTag}"/>
             <ComboBoxItem Content="English" Tag="{StaticResource EnglishTag}"/>
         </ComboBox>
-            <Image  Height="50" VerticalAlignment="Top"  Source="pack://application:,,,/WpfCliente;component/Recursos/logoIdioma.png"/>
+            <Image  Height="50" VerticalAlignment="Top"  Source="/Recursos/logoIdioma.png"/>
         </StackPanel>
     </Grid>
 </UserControl>

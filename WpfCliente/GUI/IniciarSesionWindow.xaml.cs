@@ -3,6 +3,7 @@ using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using UtilidadesLibreria;
 using WpfCliente.Interfaz;
 using WpfCliente.Utilidad;
@@ -27,21 +28,22 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
-            /*labelTitulo.Content = Properties.Idioma.tituloBienvenida;
-            labelIniciarSesion.Content = Properties.Idioma.labelInicioSesion;
+            labelTitulo.Content = Properties.Idioma.tituloJuego;
             labelUsuario.Content = Properties.Idioma.labelUsuario;
             labelContrasenia.Content = Properties.Idioma.labelContrasenia;
+            buttonOlvidarContrasenia.Content = Properties.Idioma.buttonOlvidarContrasenia;
             buttonIniciarSesion.Content = Properties.Idioma.buttonIniciarSesion;
-            buttonRegistrar.Content = Properties.Idioma.buttonRegistrarse;*/
-
+            buttonRegistrar.Content = Properties.Idioma.buttonRegistrarse;
+            buttonJugarComoInvitado.Content = Properties.Idioma.buttonJugarComoInvitado;
         }
 
-        /*
+        
         private void EnCierre(object sender, EventArgs e)
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
         }
 
+        /*
         private async void ButtonClicIniciarSesion(object sender, RoutedEventArgs e)
         {
             Task<bool> verificarConexion = Validacion.ValidarConexion();
@@ -65,7 +67,7 @@ namespace WpfCliente.GUI
 
             AbrirVentanaMenu();
         }
-
+        */
         private void HabilitarBotones(bool esValido)
         {
             textBoxUsuario.IsEnabled = esValido;
@@ -80,12 +82,47 @@ namespace WpfCliente.GUI
             nuevaVentana.Show();
             this.Close();
         }
-
+        /*
         private void ButtonClicRegistrar(object sender, RoutedEventArgs e)
         {
             stackPanePrincipal.Children.Clear();
             //Esta es la que no es como invitado, si es un invitado colocar bool true
             stackPanePrincipal.Children.Add(new RegistrarUsuario());
         }*/
+
+        private void textBoxUsario_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (textBoxUsuario.Text == (string)textBoxUsuario.Tag)
+            {
+                textBoxUsuario.Text = string.Empty;
+                textBoxUsuario.Foreground = Brushes.Black;
+                textBoxUsuario.FontWeight = FontWeights.Bold;
+            }
+        }
+
+        private void textBoxUsuario_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(textBoxUsuario.Text))
+            {
+                textBoxUsuario.Text = (string)textBoxUsuario.Tag;
+            }
+        }
+
+        private void textBoxContrasenia_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (textBoxContrasenia.Password == (string)textBoxContrasenia.Tag)
+            {
+                textBoxContrasenia.Password = string.Empty;
+                textBoxContrasenia.Foreground = Brushes.Black;
+            }
+        }
+
+        private void textBoxContrasenia_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(textBoxContrasenia.Password))
+            {
+                textBoxContrasenia.Password = (string)textBoxContrasenia.Tag;
+            }
+        }
     }
 }

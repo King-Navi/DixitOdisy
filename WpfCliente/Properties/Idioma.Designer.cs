@@ -572,6 +572,7 @@ namespace WpfCliente.Properties {
                 return ResourceManager.GetString("tituloBienvenida", resourceCulture);
             }
         }
+
         
         /// <summary>
         ///   Busca una cadena traducida similar a Cambiar contraseña.
@@ -597,6 +598,15 @@ namespace WpfCliente.Properties {
         public static string tituloInicioSesion {
             get {
                 return ResourceManager.GetString("tituloInicioSesion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Descríbelo.
+        /// </summary>
+        public static string tituloJuego {
+            get {
+                return ResourceManager.GetString("tituloJuego", resourceCulture);
             }
         }
         

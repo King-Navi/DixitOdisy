@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace WcfServicioLibreria.Utilidades
 {
-    public interface IObservadorSala
+    public interface IObservador
     {
-        void Desconectar(string clave);
+        void DesconectarUsuario(string clave);
     }
 }

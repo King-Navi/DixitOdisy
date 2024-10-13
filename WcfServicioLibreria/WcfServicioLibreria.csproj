@@ -64,8 +64,10 @@
     <Compile Include="Contratos\IServicioRegistro.cs" />
     <Compile Include="Contratos\IServicioSala.cs" />
     <Compile Include="Contratos\IServicioSalaJugador.cs" />
-    <Compile Include="Contratos\IUsuarioAmistad.cs" />
+    <Compile Include="Utilidades\IUsuarioAmistad.cs" />
     <Compile Include="Enumerador\EstadoJugador.cs" />
+    <Compile Include="Evento\MultiChatVacioEventArgs.cs" />
+    <Compile Include="Evento\SalaVaciaEventArgs.cs" />
     <Compile Include="Evento\UsuarioDesconectadoEventArgs.cs" />
     <Compile Include="InicializadorConfiguracion.cs" />
     <Compile Include="Manejador\Amistad.cs" />
@@ -79,7 +81,7 @@
     <Compile Include="Manejador\Usuario.cs" />
     <Compile Include="Modelo\Amigo.cs" />
     <Compile Include="Modelo\AmistadFalla.cs" />
-    <Compile Include="Modelo\DesconectorEventoManejador.cs" />
+    <Compile Include="Evento\DesconectorEventoManejador.cs" />
     <Compile Include="Modelo\MultiChat.cs" />
     <Compile Include="Modelo\Chat.cs" />
     <Compile Include="Modelo\ChatMensaje.cs" />

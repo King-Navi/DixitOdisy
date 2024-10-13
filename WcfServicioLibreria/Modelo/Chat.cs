@@ -6,18 +6,19 @@ namespace WcfServicioLibreria.Modelo
     public abstract class Chat
     {
         #region Atributos
-        private string idChat;
+        protected string idChat;
         #endregion Atributos
         #region Propiedades
+        public string IdChat { get; private set; }
         #endregion Propiedades
         #region Constructor
         public Chat(string _idChat)
         { 
-            this.idChat = _idChat;
+            IdChat = _idChat;
         }
         #endregion Constructor
         #region Metodos
-        public abstract bool EliminarChat();
+        protected abstract void EliminarChat();
         #endregion Metodos
     }
 }

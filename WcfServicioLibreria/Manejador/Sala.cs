@@ -3,20 +3,33 @@ using System.Security.Cryptography;
 using System.ServiceModel;
 using System.Text;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Evento;
+using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioSala
     {
-        public bool BorrarSala(string idSala)
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
-        /// Metodo que genera una sala
+        /// Elimina una sala cuando ya no tiene usuarios.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="sender">La sala que desencadena el evento de ser eliminada.</param>
+        /// <param name="e">Argumentos del evento, que contienen detalles específicos de la sala vacía.</param>
+        public void BorrarSala(object sender, EventArgs e)
+        {
+            if (sender is Sala sala)
+            {
+                SalaVaciaEventArgs evento = e as SalaVaciaEventArgs;
+                sala.salaVaciaManejadorEvento -= BorrarSala;
+                salasDiccionario.TryRemove(evento.Sala.IdCodigoSala, out _);
+                Console.WriteLine($"La sala con ID {evento.Sala.IdCodigoSala} está vacía y será eliminada.");
+            }
+        }
+        /// <summary>
+        /// Crea una nueva sala con un identificador único y la agrega al diccionario de salas activas.
+        /// </summary>
+        /// <param name="nombreUsuarioAnfitrion">El nombre del usuario que será el anfitrión de la sala.</param>
+        /// <returns>El identificador único de la sala recién creada.</returns>
         public string CrearSala(string nombreUsuarioAnfitrion)
         {
             string idSala = null;
@@ -26,16 +39,14 @@ namespace WcfServicioLibreria.Manejador
                 {
                     idSala = GenerarIdUnico();
                 } while (salasDiccionario.ContainsKey(idSala));
-
-                bool existeSala = salasDiccionario.TryAdd(idSala, new Modelo.Sala(idSala, nombreUsuarioAnfitrion));
+                Sala salaNueva = new Sala(idSala, nombreUsuarioAnfitrion);
+                bool existeSala = salasDiccionario.TryAdd(idSala, salaNueva);
                 if (existeSala)
                 {
-                    //TODO:Existe la sala manejar
+                    salaNueva.salaVaciaManejadorEvento += BorrarSala;
                 }
                 else
                 {
-                    //TODO:Error no Existe la sala manejar
-
                     throw new Exception("No se creo la sala");
                 }
             }
@@ -50,9 +61,9 @@ namespace WcfServicioLibreria.Manejador
             return idSala;
         }
         /// <summary>
-        /// metodo que genera un id alfanumerico de 6 caracteres que no este en uso para una sala
+        /// Genera un identificador único de 6 caracteres alfanuméricos para las salas.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Un identificador de sala único.</returns>
         public string GenerarIdUnico()
         {
             const string CARACTERES = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -80,10 +91,10 @@ namespace WcfServicioLibreria.Manejador
             return resultado.ToString();
         }
         /// <summary>
-        /// Valida si existe una sala con ese idSala
+        /// Valida si una sala con un identificador específico ya existe.
         /// </summary>
-        /// <param name="idSala"></param>
-        /// <returns></returns>
+        /// <param name="idSala">El identificador de la sala a validar.</param>
+        /// <returns>True si la sala existe, False en caso contrario.</returns>
         public bool ValidarSala(string idSala)
         {
             bool result = false;

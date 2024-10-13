@@ -2,8 +2,8 @@
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Utilidades;
 using WcfServicioLibreria.Evento;
-
 namespace WcfServicioLibreria.Modelo
 {
     /// <summary>
@@ -29,13 +29,12 @@ namespace WcfServicioLibreria.Modelo
         public int IdUsuario { get => idUsuarioCuenta; set => idUsuarioCuenta = value; }
         IServicioPeticionAmistadCallBack IUsuarioAmistad.PeticionAmistadCallBack { get; set; }
         EventHandler IUsuarioAmistad.RecibioSolicitud { get; set; }
-
         /// <summary>
         /// Avisa a todos los sucriptores que se esta desconectando
         /// </summary>
         public void EnDesconexion()
         {
-            DesconexionManejadorEvento?.Invoke(null, new UsuarioDesconectadoEventArgs(nombre, DateTime.Now, idUsuarioCuenta));
+            DesconexionManejadorEvento?.Invoke(idUsuarioCuenta, new UsuarioDesconectadoEventArgs(nombre, DateTime.Now, idUsuarioCuenta));
         }
         /// <summary>
         /// Libera recursos que de otra manera no serian liberados

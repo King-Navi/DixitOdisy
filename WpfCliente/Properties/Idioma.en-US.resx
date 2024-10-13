@@ -304,12 +304,30 @@
     <value>Repeat password</value>
   </data>
   <data name="labelCorreoE" xml:space="preserve">
-    <value>EMail</value>
+    <value>E-Mail</value>
   </data>
   <data name="buttonJugar" xml:space="preserve">
     <value>Play</value>
   </data>
   <data name="tituloJuego" xml:space="preserve">
     <value>Descríbelo</value>
+  </data>
+  <data name="labelContraseniaInstruccion" xml:space="preserve">
+    <value>The password must contain:</value>
+  </data>
+  <data name="labelContraseniaMinimo" xml:space="preserve">
+    <value>At least 5 characters</value>
+  </data>
+  <data name="buttonCambiarFotoPerfil" xml:space="preserve">
+    <value>Change photo</value>
+  </data>
+  <data name="labelContraseniaMaximo" xml:space="preserve">
+    <value>No more than 20 characters</value>
+  </data>
+  <data name="labelContraseniaSimbolos" xml:space="preserve">
+    <value>At least 1 symbol (eg. !,#.@.$,%,&amp;)</value>
+  </data>
+  <data name="labelCamposObligatorios" xml:space="preserve">
+    <value>Required fields</value>
   </data>
 </root>

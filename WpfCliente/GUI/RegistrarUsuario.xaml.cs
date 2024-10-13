@@ -50,12 +50,24 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
-            /*labelSelecionUsuario.Content = Properties.Idioma.labelSeleccionarFotoPerfil;
-            labelRepitaContrasenia.Content = Properties.Idioma.labelRepitaContraseña;
+            labelRegistro.Content = Properties.Idioma.tituloRegistroUsuario;
+            labelFotoPerfil.Content = Properties.Idioma.labelSeleccionarFotoPerfil;
+            labelRepetirContrasenia.Content = Properties.Idioma.labelRepitaContraseña;
             labelContrasenia.Content = Properties.Idioma.labelContrasenia;
-            labelUsuario.Content = Properties.Idioma.labelUsuario;
+            labelGamertag.Content = Properties.Idioma.labelUsuario;
             labelCorreo.Content = Properties.Idioma.labelCorreoE;
-            labelRegistro.Content = Properties.Idioma.tituloRegistroUsuario;*/
+            labelFotoPerfil.Content = Properties.Idioma.labelSeleccionarFotoPerfil; 
+
+            labelCamposObligatorios.Inlines.Clear();
+            labelCamposObligatorios.Inlines.Add(new Run("*") { Foreground = Brushes.Red });
+            labelCamposObligatorios.Inlines.Add(new Run(Properties.Idioma.labelCamposObligatorios) { Foreground = Brushes.White });
+
+            labelContraseniaInstruccion.Content = Properties.Idioma.labelContraseniaInstruccion;
+            labelContraseniaMinimo.Content = Properties.Idioma.labelContraseniaMinimo;
+            labelContraseniaMaximo.Content = Properties.Idioma.labelContraseniaMaximo;
+            labelContraseniaSimbolos.Content = Properties.Idioma.labelContraseniaSimbolos;
+            buttonCrearCuenta.Content = Properties.Idioma.buttonRegistrarse;
+            buttonCambiarFoto.Content = Properties.Idioma.buttonCambiarFotoPerfil;
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
@@ -65,12 +77,12 @@ namespace WpfCliente.GUI
 
         private void ButtonClicRegistrarUsuario(object sender, RoutedEventArgs e)
         {
-            /*TODO: Realizar caso en el que no hay conexion
+            //TODO: Realizar caso en el que no hay conexion
             ServidorDescribelo.IServicioRegistro servicio = new ServidorDescribelo.ServicioRegistroClient();
             try
             {
-                string contraseniaHash = BitConverter.ToString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(passwordBoxContrasenia.Password))).Replace("-", "");
-                int resultado = servicio.RegistrarUsuario(textBoxUsuario.Text, contraseniaHash);
+                string contraseniaHash = BitConverter.ToString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(textBoxContrasenia.Password))).Replace("-", "");
+                int resultado = servicio.RegistrarUsuario(textBoxGamertag.Text, contraseniaHash);
                 if (resultado < 1)
                 {
                     //TODO: Manejar el error
@@ -87,7 +99,7 @@ namespace WpfCliente.GUI
                 {
                     ((ICommunicationObject)servicio).Close();
                 }
-            }*/
+            }
         }
 
         private void BtnCreateAccount_Click(object sender, RoutedEventArgs e)
@@ -99,6 +111,13 @@ namespace WpfCliente.GUI
         {
             contadorImagen = (contadorImagen + 1) % imagenesPerfil.Length;
             imgPerfil.Source = new BitmapImage(new Uri(imagenesPerfil[contadorImagen], UriKind.Relative));
+        }
+
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            IniciarSesion iniciarSesionWindow = new IniciarSesion();
+            iniciarSesionWindow.Show();
+            this.Close();
         }
     }
 }

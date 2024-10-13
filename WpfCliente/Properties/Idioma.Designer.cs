@@ -88,6 +88,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cambiar foto.
+        /// </summary>
+        public static string buttonCambiarFotoPerfil {
+            get {
+                return ResourceManager.GetString("buttonCambiarFotoPerfil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cancelar.
         /// </summary>
         public static string buttonCancelar {
@@ -277,6 +286,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Campos obligatorios.
+        /// </summary>
+        public static string labelCamposObligatorios {
+            get {
+                return ResourceManager.GetString("labelCamposObligatorios", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cartas en la mesa.
         /// </summary>
         public static string labelCartasEnMesa {
@@ -327,6 +345,42 @@ namespace WpfCliente.Properties {
         public static string labelContraseniaAnterior {
             get {
                 return ResourceManager.GetString("labelContraseniaAnterior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La contraseña debe contener:.
+        /// </summary>
+        public static string labelContraseniaInstruccion {
+            get {
+                return ResourceManager.GetString("labelContraseniaInstruccion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No más de 20 caracteres.
+        /// </summary>
+        public static string labelContraseniaMaximo {
+            get {
+                return ResourceManager.GetString("labelContraseniaMaximo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Al menos 5 caracteres.
+        /// </summary>
+        public static string labelContraseniaMinimo {
+            get {
+                return ResourceManager.GetString("labelContraseniaMinimo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Al menos 1 símbolo (ej. !,#.@.$,%,&amp;).
+        /// </summary>
+        public static string labelContraseniaSimbolos {
+            get {
+                return ResourceManager.GetString("labelContraseniaSimbolos", resourceCulture);
             }
         }
         
@@ -572,7 +626,6 @@ namespace WpfCliente.Properties {
                 return ResourceManager.GetString("tituloBienvenida", resourceCulture);
             }
         }
-
         
         /// <summary>
         ///   Busca una cadena traducida similar a Cambiar contraseña.

@@ -128,6 +128,9 @@
     <Compile Include="GUI\MenuWindow.xaml.cs">
       <DependentUpon>MenuWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\RegistrarUsuario.xaml.cs">
+      <DependentUpon>RegistrarUsuario.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\SalaEsperaWindow.xaml.cs">
       <DependentUpon>SalaEsperaWindow.xaml</DependentUpon>
     </Compile>
@@ -145,9 +148,6 @@
     </Compile>
     <Compile Include="GUI\CambiarIdiomaUserControl.xaml.cs">
       <DependentUpon>CambiarIdiomaUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\RegistrarUsuarioUserControl.xaml.cs">
-      <DependentUpon>RegistrarUsuarioUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\IniciarSesionWindow.xaml.cs">
       <DependentUpon>IniciarSesionWindow.xaml</DependentUpon>
@@ -251,7 +251,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\RegistrarUsuarioUserControl.xaml">
+    <Page Include="GUI\RegistrarUsuario.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -313,6 +313,28 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Recursos\mesaJuego.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\fondoJuego.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\leonRegistro.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\flechaAtras.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\pfp1.png" />
+    <Resource Include="Recursos\pfp2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\pfp3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\pfp4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\pfp5.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

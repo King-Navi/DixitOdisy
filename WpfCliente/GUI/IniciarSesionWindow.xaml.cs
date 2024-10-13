@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Navigation;
 using UtilidadesLibreria;
 using WpfCliente.Interfaz;
 using WpfCliente.Utilidad;
@@ -12,6 +13,8 @@ namespace WpfCliente.GUI
 {
     public partial class IniciarSesion : Window, IActualizacionUI
     {
+        private const string FUENTE_SECUNDARIA = "Arial";
+
         public IniciarSesion()
         {
 
@@ -35,6 +38,7 @@ namespace WpfCliente.GUI
             buttonIniciarSesion.Content = Properties.Idioma.buttonIniciarSesion;
             buttonRegistrar.Content = Properties.Idioma.buttonRegistrarse;
             buttonJugarComoInvitado.Content = Properties.Idioma.buttonJugarComoInvitado;
+            this.Title = Properties.Idioma.tituloInicioSesion;
         }
 
         
@@ -43,31 +47,6 @@ namespace WpfCliente.GUI
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
         }
 
-        /*
-        private async void ButtonClicIniciarSesion(object sender, RoutedEventArgs e)
-        {
-            Task<bool> verificarConexion = Validacion.ValidarConexion();
-            HabilitarBotones(false);
-            gridCarga.Visibility = Visibility.Visible;
-            if (! await verificarConexion)
-            {
-                ErrorConexionModalWindow ventanaModal = new ErrorConexionModalWindow();
-                ventanaModal.Owner = this;
-                ventanaModal.ShowDialog();
-                gridCarga.Visibility = Visibility.Collapsed;
-                HabilitarBotones(true);
-                return;
-            }
-            gridCarga.Visibility = Visibility.Collapsed;
-
-            //TODO: Validar el textbox y el passwordbox
-            Singleton.Instance.NombreUsuario = textBoxUsuario.Text;
-
-            //TODO: antes de abrir la nueva ventana se tiene que hacer la logica de inicio de sesion con validacion y respuesta del servidor
-
-            AbrirVentanaMenu();
-        }
-        */
         private void HabilitarBotones(bool esValido)
         {
             textBoxUsuario.IsEnabled = esValido;
@@ -82,47 +61,33 @@ namespace WpfCliente.GUI
             nuevaVentana.Show();
             this.Close();
         }
-        /*
-        private void ButtonClicRegistrar(object sender, RoutedEventArgs e)
-        {
-            stackPanePrincipal.Children.Clear();
-            //Esta es la que no es como invitado, si es un invitado colocar bool true
-            stackPanePrincipal.Children.Add(new RegistrarUsuario());
-        }*/
 
-        private void textBoxUsario_GotFocus(object sender, RoutedEventArgs e)
+        private void buttonRegistrar_Click(object sender, RoutedEventArgs e)
         {
-            if (textBoxUsuario.Text == (string)textBoxUsuario.Tag)
-            {
-                textBoxUsuario.Text = string.Empty;
-                textBoxUsuario.Foreground = Brushes.Black;
-                textBoxUsuario.FontWeight = FontWeights.Bold;
-            }
+            RegistrarUsuario registrarWindow = new RegistrarUsuario();
+            registrarWindow.Show();
+            this.Close();
         }
 
-        private void textBoxUsuario_LostFocus(object sender, RoutedEventArgs e)
+        private async void buttonIniciarSesion_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(textBoxUsuario.Text))
+            Task<bool> verificarConexion = Validacion.ValidarConexion();
+            HabilitarBotones(false);
+            if (!await verificarConexion)
             {
-                textBoxUsuario.Text = (string)textBoxUsuario.Tag;
+                ErrorConexionModalWindow ventanaModal = new ErrorConexionModalWindow();
+                ventanaModal.Owner = this;
+                ventanaModal.ShowDialog();
+                HabilitarBotones(true);
+                return;
             }
-        }
 
-        private void textBoxContrasenia_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (textBoxContrasenia.Password == (string)textBoxContrasenia.Tag)
-            {
-                textBoxContrasenia.Password = string.Empty;
-                textBoxContrasenia.Foreground = Brushes.Black;
-            }
-        }
+            //TODO: Validar el textbox y el passwordbox
+            Singleton.Instance.NombreUsuario = textBoxUsuario.Text;
 
-        private void textBoxContrasenia_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(textBoxContrasenia.Password))
-            {
-                textBoxContrasenia.Password = (string)textBoxContrasenia.Tag;
-            }
+            //TODO: antes de abrir la nueva ventana se tiene que hacer la logica de inicio de sesion con validacion y respuesta del servidor
+
+            AbrirVentanaMenu();
         }
     }
 }

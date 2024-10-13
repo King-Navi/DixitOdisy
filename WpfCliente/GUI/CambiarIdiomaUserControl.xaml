@@ -8,12 +8,11 @@
 
     <Grid>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-        <Label x:Name="cambiarIdiomaLabel" Content="Cambiar idioma"   VerticalAlignment="Top" Foreground="White" Background="Black" Width="97"/>
-        <ComboBox x:Name="cambiarIdiomaMenuDesplegable"  VerticalAlignment="Top" Width="150"  Text="Seleccionar idioma" SelectionChanged="SelecionarIdioma">
-            <ComboBoxItem Content="Español" Tag="{StaticResource EspañolTag}"/>
-            <ComboBoxItem Content="English" Tag="{StaticResource EnglishTag}"/>
-        </ComboBox>
-            <Image  Height="50" VerticalAlignment="Top"  Source="pack://application:,,,/WpfCliente;component/Recursos/logoIdioma.png"/>
+            <ComboBox x:Name="cambiarIdiomaMenuDesplegable"  VerticalAlignment="Top" Width="150"  Text="Seleccionar idioma" SelectionChanged="SelecionarIdioma">
+                <ComboBoxItem Content="Español" Tag="{StaticResource EspañolTag}"/>
+                <ComboBoxItem Content="English" Tag="{StaticResource EnglishTag}"/>
+            </ComboBox>
+            <Image  Height="33" VerticalAlignment="Top"  ToolTip="Haz clic aquí para cambiar el idioma" Source="pack://application:,,,/WpfCliente;component/Recursos/logoIdioma.png" Width="43" MouseLeftButtonDown="Imagen_Click"/>
         </StackPanel>
     </Grid>
 </UserControl>

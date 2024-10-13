@@ -4,8 +4,9 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using WcfServicioLibreria.Contratos;
 
-namespace WcfServicioLibreria.Contratos
+namespace WcfServicioLibreria.Utilidades
 {
     public interface IUsuarioAmistad
     {

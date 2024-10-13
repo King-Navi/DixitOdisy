@@ -1,17 +1,18 @@
-﻿using System;
+﻿using DAOLibreria.ModeloBD;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Manejador;
 using WcfServicioLibreria.Utilidades;
-
 namespace WcfServicioLibreria.Modelo
 {
     [DataContract]
-    public class Sala : IObservadorSala
+    public class Sala : IObservador
     {
         #region Campos
         private string idCodigoSala;
@@ -20,16 +21,19 @@ namespace WcfServicioLibreria.Modelo
         private const int cantidadMaximaJugadores = 12;
         private readonly ConcurrentDictionary<string, ISalaJugadorCallback> jugadoresSala = new ConcurrentDictionary<string, ISalaJugadorCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
+        public EventHandler salaVaciaManejadorEvento;
         #endregion Campos
         #region Propiedades
         public static int CantidadMaximaJugadores => cantidadMaximaJugadores;
         public static int CantidadMinimaJugadores => cantidadMinimaJugadores;
+
+        public string IdCodigoSala { get => idCodigoSala; internal set => idCodigoSala = value; }
         #endregion Propiedades
 
         #region Contructores
         public Sala(string _idCodigoSala, string nombreUsuario)
         {
-            this.idCodigoSala = _idCodigoSala;
+            this.IdCodigoSala = _idCodigoSala;
             this.anfitrion = nombreUsuario;
             jugadoresSala.TryAdd(nombreUsuario, null);
         }
@@ -37,6 +41,10 @@ namespace WcfServicioLibreria.Modelo
         #endregion Contructores
 
         #region Metodos
+        private void EnSalaVacia()
+        {
+            salaVaciaManejadorEvento?.Invoke(this, new SalaVaciaEventArgs(DateTime.Now, this));
+        }
         private int ContarJugadores()
         {
             return jugadoresSala.Count;
@@ -74,7 +82,7 @@ namespace WcfServicioLibreria.Modelo
         {
             bool seElimino = jugadoresSala.TryRemove(nombreJugador, out ISalaJugadorCallback jugadorEliminado);
             eventosCommunication.TryGetValue(nombreJugador, out DesconectorEventoManejador eventosJugador);
-            //eventosJugador.DesuscribirTodos();
+            eventosJugador.Desechar();
             if (ContarJugadores() == 0)
             {
                 EliminarSala();
@@ -82,8 +90,27 @@ namespace WcfServicioLibreria.Modelo
             return seElimino;
         }
         private void EliminarSala() 
-        { 
-            
+        {
+            IReadOnlyCollection<string> claveEventos = ObtenerNombresJugadoresSala();
+            foreach (var clave in claveEventos)
+            {
+                if (eventosCommunication.ContainsKey(clave))
+                {
+                    eventosCommunication[clave].Desechar();
+                }
+            }
+            eventosCommunication.Clear();
+            IReadOnlyCollection<string> claveJugadores = ObtenerNombresJugadoresSala();
+            foreach (var clave in claveJugadores)
+            {
+                if (jugadoresSala.ContainsKey(clave))
+                {
+                    ((ICommunicationObject)jugadoresSala[clave]).Close();
+                }
+            }
+            jugadoresSala.Clear();
+            EnSalaVacia();
+
         }
 
         bool DelegarRolAnfitrion(string nuevoAnfitrionNombre)
@@ -97,7 +124,7 @@ namespace WcfServicioLibreria.Modelo
             return anfitrion == nuevoAnfitrionNombre;
         }
 
-        void IObservadorSala.Desconectar(string clave)
+        void IObservador.DesconectarUsuario(string clave)
         {
             RemoverJugadorSala(clave);
         }

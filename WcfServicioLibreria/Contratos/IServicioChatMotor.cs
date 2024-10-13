@@ -32,22 +32,8 @@ namespace WcfServicioLibreria.Contratos
         /// </summary>
         /// <param name="usuario">El usuario cuyo estado se está consultando.</param>
         /// <returns>Verdadero si el jugador está activo; de lo contrario, falso.</returns>
-        [OperationContract]
-        bool EstadoJugador(string nombreUsuario);
-        /// <summary>
-        /// Envia un mensaje de chat desde un usuario.
-        /// </summary>
-        /// <param name="usuario">El usuario que envía el mensaje.</param>
-        /// <param name="mensaje">El contenido del mensaje a enviar.</param>
-
         [OperationContract(IsOneWay = false)]
         void EnviarMensaje(string idChat, ChatMensaje mensaje);
-        /// <summary>
-        /// Obtiene el historial de mensajes del chat.
-        /// </summary>
-        /// <returns>Una lista de mensajes de chat.</returns>
-        [OperationContract]
-        List<ChatMensaje> GetMessageHistory();
 
     }
     /// <summary>

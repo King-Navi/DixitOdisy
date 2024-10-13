@@ -1,4 +1,7 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
+using WcfServicioLibreria.Evento;
+using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Contratos
 {
@@ -7,8 +10,7 @@ namespace WcfServicioLibreria.Contratos
     {
         [OperationContract]
         string CrearSala(string nombreUsuarioAnfitrion);
-        [OperationContract]
-        bool BorrarSala(string idSala);
+        void BorrarSala(object sender, EventArgs e);
         [OperationContract]
         bool ValidarSala(string idSala);
     }

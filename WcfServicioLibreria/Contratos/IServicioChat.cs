@@ -1,4 +1,7 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
+using WcfServicioLibreria.Evento;
+using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Contratos
 {
@@ -7,8 +10,6 @@ namespace WcfServicioLibreria.Contratos
     {
         [OperationContract]
         bool CrearChat(string idChat);
-        [OperationContract]
-        bool EliminarChat();
-
+        void BorrarChat(object sender, EventArgs e);
     }
 }

@@ -66,6 +66,12 @@ namespace WpfCliente.GUI
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
         }
+
+        private void Imagen_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            // Abre el ComboBox cuando se haga clic en la imagen
+            cambiarIdiomaMenuDesplegable.IsDropDownOpen = true;
+        }
     }
     
 }

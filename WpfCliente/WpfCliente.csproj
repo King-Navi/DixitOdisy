@@ -90,6 +90,9 @@
     <Compile Include="GUI\ConfigurarPartidaPage.xaml.cs">
       <DependentUpon>ConfigurarPartidaPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\EditarPerfilWindow.xaml.cs">
+      <DependentUpon>EditarPerfilWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\ErrorConexionModalWindow.xaml.cs">
       <DependentUpon>ErrorConexionModalWindow.xaml</DependentUpon>
     </Compile>
@@ -98,6 +101,9 @@
     </Compile>
     <Compile Include="GUI\MenuWindow.xaml.cs">
       <DependentUpon>MenuWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\PerfilMenuDesplegableUserControl.xaml.cs">
+      <DependentUpon>PerfilMenuDesplegableUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\SalaEsperaWindow.xaml.cs">
       <DependentUpon>SalaEsperaWindow.xaml</DependentUpon>
@@ -193,6 +199,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Estilos\GeneralEstilo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\AmigoUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -209,6 +219,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\EditarPerfilWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\ErrorConexionModalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -218,6 +232,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\MenuWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\PerfilMenuDesplegableUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -269,6 +287,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Recursos\imgButtonChat.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\profile.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

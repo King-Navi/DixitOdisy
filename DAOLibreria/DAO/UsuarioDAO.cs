@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
+using System.Linq;
 using UtilidadesLibreria;
 
 namespace DAOLibreria.DAO
@@ -22,7 +23,7 @@ namespace DAOLibreria.DAO
         /// 1. Verifica que los gamertags de Usuario y UsuarioCuenta coincidan.
         /// 2. Si ocurre un error durante la transacción, la misma se revierte y el error se maneja lanzando una excepción.
         /// </remarks>
-        public static bool RegistrarNuevoUsuaro(Usuario _usuario, UsuarioCuenta _usuarioCuenta)
+        public static bool RegistrarNuevoUsuario(Usuario _usuario, UsuarioCuenta _usuarioCuenta)
         {
             bool resultado = false;
             if (_usuario.gamertag != _usuarioCuenta.gamertag)
@@ -68,6 +69,37 @@ namespace DAOLibreria.DAO
                         //TODO: Manejar el error
                         Console.WriteLine(excepcion);
                         Console.WriteLine( excepcion.StackTrace);
+                        throw;
+                    }
+                }
+
+                return resultado;
+            }
+        }
+        public static bool EditarUsuario(Usuario _usuario, UsuarioCuenta _usuarioCuenta)
+        {
+            bool resultado = false;
+            if (_usuario.gamertag != _usuarioCuenta.gamertag)
+            {
+                return resultado;
+            }
+            using (var context = new DescribeloEntities())
+            {
+                using (var transaction = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var usuario = context.Usuario.Single(b => b.idUsuario == _usuario.idUsuario);
+                        //TODO: Cambiar las cosas que digas con unaay
+                        transaction.Commit();
+                        resultado = true;
+                    }
+                    catch (Exception excepcion)
+                    {
+                        transaction.Rollback();
+                        //TODO: Manejar el error
+                        Console.WriteLine(excepcion);
+                        Console.WriteLine(excepcion.StackTrace);
                         throw;
                     }
                 }

@@ -16,13 +16,13 @@ namespace WcfServicioLibreria.Modelo
         private String correo;
         private Enumerador.EstadoJugador estadoJugador;
         private Stream fotoUsuario;
-        private int idUsuario;
+        protected int idUsuario;
 
         #endregion Campos
 
         #region Propiedades
         [DataMember]
-        public int IdUsuario1 { get => idUsuario; set => idUsuario = value; }
+        public int IdUsuario { get => idUsuario; set => idUsuario = value; }
         [DataMember]
         public SHA256 ContraseniaHASH { get => contraseniaHASH; set => contraseniaHASH = value; }
         [DataMember]

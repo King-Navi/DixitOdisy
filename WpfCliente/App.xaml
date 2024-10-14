@@ -8,6 +8,10 @@
         <ResourceDictionary>
             <sys:String x:Key="EspañolTag">es-MX</sys:String>
             <sys:String x:Key="EnglishTag">en-US</sys:String>
+            <!-- Enlazar el Resource Dictionary -->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Estilos/GeneralEstilo.xaml" />
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

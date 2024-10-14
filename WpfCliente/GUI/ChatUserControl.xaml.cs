@@ -17,6 +17,7 @@ namespace WpfCliente.GUI
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             ActualizarUI();
             InitializeComponent();
+            gridChat.Visibility = Visibility.Collapsed;
         }
 
         private void ClicButtonAbrirChat(object sender, RoutedEventArgs e)

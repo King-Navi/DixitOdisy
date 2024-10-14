@@ -18,15 +18,12 @@ namespace WcfServicioLibreria.Modelo
         protected String nombre;
         private bool desechado = false;
         public IUsuarioSesionCallback UsuarioSesionCallBack { get; set; }
-
         public EventHandler CerrandoEvento { get; set; }
         public EventHandler CerradoEvento { get; set; }
         public EventHandler FalloEvento { get; set; }
         public EventHandler DesconexionManejadorEvento;
         [DataMember]
         public string Nombre { get => nombre; set => nombre = value; }
-        [DataMember]
-        public int IdUsuario { get => idUsuarioCuenta; set => idUsuarioCuenta = value; }
         IServicioPeticionAmistadCallBack IUsuarioAmistad.PeticionAmistadCallBack { get; set; }
         EventHandler IUsuarioAmistad.RecibioSolicitud { get; set; }
         /// <summary>

@@ -36,6 +36,21 @@ namespace WcfServicioLibreria.Manejador
             }
         }
 
+        public bool EditarUsuario(Usuario usuario)
+        {
+            bool resultado = false;
+            try
+            {
+
+                resultado = true;
+            }
+            catch (CommunicationException excepcion)
+            {
+                //TODO:manejar error
+            }
+            return resultado;
+        }
+
         public bool Ping()
         {
             return true;

@@ -11,8 +11,7 @@
         <StackPanel DockPanel.Dock="Top" x:Name="stackPaneEncabezado" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Red">
             <Button Content="/Button de amigos"></Button>
             <Button Content="/Button de configuracion"></Button>
-            <Button Content="/Button de perfil"></Button>
-
+            <local:PerfilMenuDesplegableUserControl></local:PerfilMenuDesplegableUserControl>
         </StackPanel>
         <!--Footer-->
         <StackPanel DockPanel.Dock="Bottom" Background="#FF43FF02" VerticalAlignment="Bottom" HorizontalAlignment="Center">

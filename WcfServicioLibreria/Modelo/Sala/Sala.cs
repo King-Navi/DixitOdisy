@@ -1,5 +1,4 @@
-﻿using DAOLibreria.ModeloBD;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +6,6 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Evento;
-using WcfServicioLibreria.Manejador;
 using WcfServicioLibreria.Utilidades;
 namespace WcfServicioLibreria.Modelo
 {

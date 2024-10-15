@@ -12,7 +12,7 @@ namespace WcfServicioLibreria.Modelo
     public class Usuario : UsuarioContexto
     {
         #region Campos
-        private SHA256 contraseniaHASH;
+        private string contraseniaHASH;
         private String correo;
         private Enumerador.EstadoJugador estadoJugador;
         private Stream fotoUsuario;
@@ -24,7 +24,7 @@ namespace WcfServicioLibreria.Modelo
         [DataMember]
         public int IdUsuario { get => idUsuario; set => idUsuario = value; }
         [DataMember]
-        public SHA256 ContraseniaHASH { get => contraseniaHASH; set => contraseniaHASH = value; }
+        public string ContraseniaHASH { get => contraseniaHASH; set => contraseniaHASH = value; }
         [DataMember]
         public string Correo { get => correo; set => correo = value; }
         [DataMember]

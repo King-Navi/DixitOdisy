@@ -7,6 +7,9 @@
       <xs:extension base="tns:UsuarioContexto">
         <xs:sequence>
           <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System.Security.Cryptography" minOccurs="0" name="ContraseniaHASH" nillable="true" type="q1:SHA256" />
+          <xs:element minOccurs="0" name="Correo" nillable="true" type="xs:string" />
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="FotoUsuario" nillable="true" type="q2:Stream" />
+          <xs:element minOccurs="0" name="IdUsuario" type="xs:int" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -14,7 +17,6 @@
   <xs:element name="Usuario" nillable="true" type="tns:Usuario" />
   <xs:complexType name="UsuarioContexto">
     <xs:sequence>
-      <xs:element minOccurs="0" name="IdUsuario" type="xs:int" />
       <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
@@ -29,7 +31,7 @@
   <xs:complexType name="Amigo">
     <xs:sequence>
       <xs:element minOccurs="0" name="Estado" nillable="true" type="xs:string" />
-      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="Foto" nillable="true" type="q2:Stream" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="Foto" nillable="true" type="q3:Stream" />
       <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
@@ -54,12 +56,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ChatMensaje" nillable="true" type="tns:ChatMensaje" />
-  <xs:complexType name="ArrayOfChatMensaje">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="ChatMensaje" nillable="true" type="tns:ChatMensaje" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfChatMensaje" nillable="true" type="tns:ArrayOfChatMensaje" />
   <xs:complexType name="UsuarioFalla">
     <xs:sequence>
       <xs:element minOccurs="0" name="EstaConectado" type="xs:boolean" />

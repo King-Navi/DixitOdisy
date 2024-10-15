@@ -395,12 +395,6 @@
   <wsdl:message name="IServicioChat_CrearChat_OutputMessage">
     <wsdl:part name="parameters" element="tns:CrearChatResponse" />
   </wsdl:message>
-  <wsdl:message name="IServicioChat_EliminarChat_InputMessage">
-    <wsdl:part name="parameters" element="tns:EliminarChat" />
-  </wsdl:message>
-  <wsdl:message name="IServicioChat_EliminarChat_OutputMessage">
-    <wsdl:part name="parameters" element="tns:EliminarChatResponse" />
-  </wsdl:message>
   <wsdl:message name="IServicioChatMotor_AgregarUsuarioChat_InputMessage">
     <wsdl:part name="parameters" element="tns:AgregarUsuarioChat" />
   </wsdl:message>
@@ -416,23 +410,11 @@
   <wsdl:message name="IServicioChatMotor_DesconectarUsuarioChat_OutputMessage">
     <wsdl:part name="parameters" element="tns:DesconectarUsuarioChatResponse" />
   </wsdl:message>
-  <wsdl:message name="IServicioChatMotor_EstadoJugador_InputMessage">
-    <wsdl:part name="parameters" element="tns:EstadoJugador" />
-  </wsdl:message>
-  <wsdl:message name="IServicioChatMotor_EstadoJugador_OutputMessage">
-    <wsdl:part name="parameters" element="tns:EstadoJugadorResponse" />
-  </wsdl:message>
   <wsdl:message name="IServicioChatMotor_EnviarMensaje_InputMessage">
     <wsdl:part name="parameters" element="tns:EnviarMensaje" />
   </wsdl:message>
   <wsdl:message name="IServicioChatMotor_EnviarMensaje_OutputMessage">
     <wsdl:part name="parameters" element="tns:EnviarMensajeResponse" />
-  </wsdl:message>
-  <wsdl:message name="IServicioChatMotor_GetMessageHistory_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetMessageHistory" />
-  </wsdl:message>
-  <wsdl:message name="IServicioChatMotor_GetMessageHistory_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetMessageHistoryResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioChatMotor_RecibirMensajeCliente_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:RecibirMensajeCliente" />
@@ -466,12 +448,6 @@
   </wsdl:message>
   <wsdl:message name="IServicioSala_CrearSala_OutputMessage">
     <wsdl:part name="parameters" element="tns:CrearSalaResponse" />
-  </wsdl:message>
-  <wsdl:message name="IServicioSala_BorrarSala_InputMessage">
-    <wsdl:part name="parameters" element="tns:BorrarSala" />
-  </wsdl:message>
-  <wsdl:message name="IServicioSala_BorrarSala_OutputMessage">
-    <wsdl:part name="parameters" element="tns:BorrarSalaResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioSala_ValidarSala_InputMessage">
     <wsdl:part name="parameters" element="tns:ValidarSala" />
@@ -521,6 +497,12 @@
   <wsdl:message name="IServicioSalaJugador_AsignarColorCallback_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:AsignarColorCallbackResponse" />
   </wsdl:message>
+  <wsdl:message name="IServicioUsuario_EditarUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditarUsuario" />
+  </wsdl:message>
+  <wsdl:message name="IServicioUsuario_EditarUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditarUsuarioResponse" />
+  </wsdl:message>
   <wsdl:message name="IServicioUsuario_Ping_InputMessage">
     <wsdl:part name="parameters" element="tns:Ping" />
   </wsdl:message>
@@ -560,10 +542,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioChat/CrearChat" message="tns:IServicioChat_CrearChat_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioChat/CrearChatResponse" message="tns:IServicioChat_CrearChat_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="EliminarChat">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChat/EliminarChat" message="tns:IServicioChat_EliminarChat_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChat/EliminarChatResponse" message="tns:IServicioChat_EliminarChat_OutputMessage" />
-    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioChatMotor">
     <wsdl:operation name="AgregarUsuarioChat">
@@ -575,17 +553,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioChatMotor/DesconectarUsuarioChat" message="tns:IServicioChatMotor_DesconectarUsuarioChat_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioChatMotor/DesconectarUsuarioChatResponse" message="tns:IServicioChatMotor_DesconectarUsuarioChat_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="EstadoJugador">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChatMotor/EstadoJugador" message="tns:IServicioChatMotor_EstadoJugador_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChatMotor/EstadoJugadorResponse" message="tns:IServicioChatMotor_EstadoJugador_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="EnviarMensaje">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioChatMotor/EnviarMensaje" message="tns:IServicioChatMotor_EnviarMensaje_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioChatMotor/EnviarMensajeResponse" message="tns:IServicioChatMotor_EnviarMensaje_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetMessageHistory">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChatMotor/GetMessageHistory" message="tns:IServicioChatMotor_GetMessageHistory_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChatMotor/GetMessageHistoryResponse" message="tns:IServicioChatMotor_GetMessageHistory_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="RecibirMensajeCliente">
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioChatMotor/RecibirMensajeCliente" message="tns:IServicioChatMotor_RecibirMensajeCliente_OutputCallbackMessage" />
@@ -615,10 +585,6 @@
     <wsdl:operation name="CrearSala">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioSala/CrearSala" message="tns:IServicioSala_CrearSala_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioSala/CrearSalaResponse" message="tns:IServicioSala_CrearSala_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="BorrarSala">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioSala/BorrarSala" message="tns:IServicioSala_BorrarSala_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioSala/BorrarSalaResponse" message="tns:IServicioSala_BorrarSala_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="ValidarSala">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioSala/ValidarSala" message="tns:IServicioSala_ValidarSala_InputMessage" />
@@ -658,6 +624,10 @@
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioUsuario">
+    <wsdl:operation name="EditarUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuario/EditarUsuario" message="tns:IServicioUsuario_EditarUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioUsuario/EditarUsuarioResponse" message="tns:IServicioUsuario_EditarUsuario_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="Ping">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuario/Ping" message="tns:IServicioUsuario_Ping_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioUsuario/PingResponse" message="tns:IServicioUsuario_Ping_OutputMessage" />
@@ -729,15 +699,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="EliminarChat">
-      <soap12:operation soapAction="http://tempuri.org/IServicioChat/EliminarChat" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="NetTcpBinding_IServicioChatMotor" type="tns:IServicioChatMotor">
     <wsp:PolicyReference URI="#NetTcpBinding_IServicioChatMotor_policy">
@@ -764,26 +725,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="EstadoJugador">
-      <soap12:operation soapAction="http://tempuri.org/IServicioChatMotor/EstadoJugador" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="EnviarMensaje">
       <soap12:operation soapAction="http://tempuri.org/IServicioChatMotor/EnviarMensaje" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetMessageHistory">
-      <soap12:operation soapAction="http://tempuri.org/IServicioChatMotor/GetMessageHistory" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -850,15 +793,6 @@
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
     <wsdl:operation name="CrearSala">
       <soap12:operation soapAction="http://tempuri.org/IServicioSala/CrearSala" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="BorrarSala">
-      <soap12:operation soapAction="http://tempuri.org/IServicioSala/BorrarSala" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -951,6 +885,15 @@
     <wsp:PolicyReference URI="#NetTcpBinding_IServicioUsuario_policy">
     </wsp:PolicyReference>
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="EditarUsuario">
+      <soap12:operation soapAction="http://tempuri.org/IServicioUsuario/EditarUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="Ping">
       <soap12:operation soapAction="http://tempuri.org/IServicioUsuario/Ping" style="document" />
       <wsdl:input>

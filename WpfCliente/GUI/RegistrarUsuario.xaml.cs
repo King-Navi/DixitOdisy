@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WpfCliente.Interfaz;
+using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
@@ -81,17 +82,20 @@ namespace WpfCliente.GUI
             ServidorDescribelo.IServicioRegistro servicio = new ServidorDescribelo.ServicioRegistroClient();
             try
             {
-                string contraseniaHash = BitConverter.ToString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(textBoxContrasenia.Password))).Replace("-", "");
-                bool resultado = servicio.RegistrarUsuario(textBoxGamertag.Text, contraseniaHash);
-                if (resultado == false)
-                {
-                    //TODO: Manejar el error
-                    Console.WriteLine("error");
-                }
+                //    string contraseniaHash = BitConverter.ToString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(textBoxContrasenia.Password))).Replace("-", "");
+                //    var servicioManejador = new ServicioManejador<ServicioRegistroClient>();
+                //    bool resultado = servicioManejador.EjecutarServicio(proxy => { return proxy.RegistrarUsuario(/*AQUI LE PASO LAS CREDENCIA*/)});
+                //    bool resultado = servicio.RegistrarUsuario(textBoxGamertag.Text, contraseniaHash);
+                //    if (resultado == false)
+                //    {
+                //        //TODO: Manejar el error
+                //        Console.WriteLine("error");
+                //    }
             }
             catch (Exception)
             {
                 //TODO: Manejar error
+                MessageBox.Show("");
             }
             finally
             {

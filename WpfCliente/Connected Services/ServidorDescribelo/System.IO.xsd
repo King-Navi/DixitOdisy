@@ -9,4 +9,30 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="Stream" nillable="true" type="tns:Stream" />
+  <xs:complexType name="FileStream">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Stream">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FileStream" nillable="true" type="tns:FileStream" />
+  <xs:complexType name="MemoryStream">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Stream">
+        <xs:sequence>
+          <xs:element name="_buffer" nillable="true" type="xs:base64Binary" />
+          <xs:element name="_capacity" type="xs:int" />
+          <xs:element name="_expandable" type="xs:boolean" />
+          <xs:element name="_exposable" type="xs:boolean" />
+          <xs:element name="_isOpen" type="xs:boolean" />
+          <xs:element name="_length" type="xs:int" />
+          <xs:element name="_origin" type="xs:int" />
+          <xs:element name="_position" type="xs:int" />
+          <xs:element name="_writable" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MemoryStream" nillable="true" type="tns:MemoryStream" />
 </xs:schema>

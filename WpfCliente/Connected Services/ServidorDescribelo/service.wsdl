@@ -3,12 +3,6 @@
   <wsp:Policy wsu:Id="NetTcpBinding_IServicioChat_policy">
     <wsp:ExactlyOne>
       <wsp:All>
-        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="600000">
-          </wsrm:InactivityTimeout>
-          <wsrm:AcknowledgementInterval Milliseconds="200">
-          </wsrm:AcknowledgementInterval>
-        </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
         <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -42,12 +36,6 @@
   <wsp:Policy wsu:Id="NetTcpBinding_IServicioChatMotor_policy">
     <wsp:ExactlyOne>
       <wsp:All>
-        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="600000">
-          </wsrm:InactivityTimeout>
-          <wsrm:AcknowledgementInterval Milliseconds="200">
-          </wsrm:AcknowledgementInterval>
-        </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
         <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -81,12 +69,6 @@
   <wsp:Policy wsu:Id="NetTcpBinding_IServicioPeticionAmistad_policy">
     <wsp:ExactlyOne>
       <wsp:All>
-        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="600000">
-          </wsrm:InactivityTimeout>
-          <wsrm:AcknowledgementInterval Milliseconds="200">
-          </wsrm:AcknowledgementInterval>
-        </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
         <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -120,12 +102,6 @@
   <wsp:Policy wsu:Id="NetTcpBinding_IServicioRegistro_policy">
     <wsp:ExactlyOne>
       <wsp:All>
-        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="600000">
-          </wsrm:InactivityTimeout>
-          <wsrm:AcknowledgementInterval Milliseconds="200">
-          </wsrm:AcknowledgementInterval>
-        </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
         <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -159,12 +135,6 @@
   <wsp:Policy wsu:Id="NetTcpBinding_IServicioSala_policy">
     <wsp:ExactlyOne>
       <wsp:All>
-        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="600000">
-          </wsrm:InactivityTimeout>
-          <wsrm:AcknowledgementInterval Milliseconds="200">
-          </wsrm:AcknowledgementInterval>
-        </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
         <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -198,12 +168,6 @@
   <wsp:Policy wsu:Id="NetTcpBinding_IServicioSalaJugador_policy">
     <wsp:ExactlyOne>
       <wsp:All>
-        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="600000">
-          </wsrm:InactivityTimeout>
-          <wsrm:AcknowledgementInterval Milliseconds="200">
-          </wsrm:AcknowledgementInterval>
-        </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
         <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -237,12 +201,6 @@
   <wsp:Policy wsu:Id="NetTcpBinding_IServicioUsuario_policy">
     <wsp:ExactlyOne>
       <wsp:All>
-        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="600000">
-          </wsrm:InactivityTimeout>
-          <wsrm:AcknowledgementInterval Milliseconds="200">
-          </wsrm:AcknowledgementInterval>
-        </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
         <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -276,12 +234,6 @@
   <wsp:Policy wsu:Id="NetTcpBinding_IServicioUsuarioSesion_policy">
     <wsp:ExactlyOne>
       <wsp:All>
-        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="600000">
-          </wsrm:InactivityTimeout>
-          <wsrm:AcknowledgementInterval Milliseconds="200">
-          </wsrm:AcknowledgementInterval>
-        </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
         <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">

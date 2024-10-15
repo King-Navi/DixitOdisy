@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Security.Cryptography;
 using System.Security.Principal;
 using System.ServiceModel;
@@ -38,10 +40,10 @@ namespace WpfCliente.GUI
             "/Recursos/pfp5.png"
         };
         private int contadorImagen = 0;
-
+        private string rutaAbsolutaImagen;
         public RegistrarUsuarioWindow()
         {
-
+            rutaAbsolutaImagen = null;
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             ActualizarUI();
@@ -83,15 +85,38 @@ namespace WpfCliente.GUI
 
         private void ButtonClicRegistrarUsuario(object sender, RoutedEventArgs e)
         {
+            if (rutaAbsolutaImagen == null)
+            {
+                return;
+            }
             CrearCuenta();
         }
 
 
         private void buttonCambiarFoto_Click(object sender, RoutedEventArgs e)
         {
-            contadorImagen = (contadorImagen + 1) % imagenesPerfil.Length;
-            imgPerfil.Source = new BitmapImage(new Uri(imagenesPerfil[contadorImagen], UriKind.Relative));
+            string rutaImagen = AbrirDialogoSeleccionImagen();
+            if (!string.IsNullOrEmpty(rutaImagen))
+            {
+                if (EsImagenValida(rutaImagen))
+                {
+                    rutaAbsolutaImagen = rutaImagen;
+                    CargarImagen(rutaImagen);
+
+                }
+                else
+                {
+                    MessageBox.Show("El archivo seleccionado no es una imagen válida. Por favor selecciona una imagen.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("No se seleccionó ninguna imagen.");
+            }
+            //contadorImagen = (contadorImagen + 1) % imagenesPerfil.Length;
+            //imgPerfil.Source = new BitmapImage(new Uri(imagenesPerfil[contadorImagen], UriKind.Relative));
         }
+
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -109,40 +134,47 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void RegistrarUsuario()
+        private  void RegistrarUsuario()
         {
             //TODO: Realizar caso en el que no hay conexion
             ServidorDescribelo.IServicioRegistro servicio = new ServidorDescribelo.ServicioRegistroClient();
             try
             {
                 string contraseniaHash = BitConverter.ToString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(textBoxContrasenia.Password))).Replace("-", "");
-                
-
-
-                MemoryStream streamFalso = new MemoryStream();
-
-                // Si necesitas un contenido falso, puedes escribir bytes en el stream
-                byte[] datosFalsos = System.Text.Encoding.UTF8.GetBytes("Este es un stream falso de prueba.");
-                streamFalso.Write(datosFalsos, 0, datosFalsos.Length);
-
-                // Establecer la posición del stream al inicio, para que pueda ser leído desde el principio
-                streamFalso.Position = 0;
-
-                bool resultado = servicio.RegistrarUsuario(new Usuario() { ContraseniaHASH = contraseniaHash , 
-                                                                            Correo = textBoxCorreo.Text, 
-                                                                           Nombre = textBoxGamertag.Text, FotoUsuario = streamFalso});
-                if (resultado)
+                //TODO:Preguntar por el path de la imagen
+                using (FileStream fileStream = new FileStream(@"C:\Users\USER\Downloads\profile.jpg", FileMode.Open, FileAccess.Read))
                 {
-                    //TODO: Manejar el error
-                    MessageBox.Show("Acierto");
-                    this.Close();
-                    IniciarSesion iniciarSesion = new IniciarSesion();
-                    iniciarSesion.Show();
+                    using (MemoryStream memoryStream = new MemoryStream())
+                    {
+                        // Copiar el contenido del FileStream al MemoryStream
+                        fileStream.CopyTo(memoryStream);
+                        memoryStream.Position = 0; // Restablecer la posición al inicio del MemoryStream
+
+                        // Llamar al servicio con el MemoryStream
+                        bool resultado = servicio.RegistrarUsuario(new Usuario()
+                        {
+                            ContraseniaHASH = contraseniaHash,
+                            Correo = textBoxCorreo.Text,
+                            Nombre = textBoxGamertag.Text,
+                            FotoUsuario = memoryStream
+                        });
+                        if (resultado)
+                        {
+                            //TODO: Manejar el error
+                            MessageBox.Show("Acierto");
+                            this.Close();
+                            IniciarSesion iniciarSesion = new IniciarSesion();
+                            iniciarSesion.Show();
+                        }
+                        else
+                        {
+                            MessageBox.Show("error");
+                        }
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("error");
-                }
+
+
+
             }
             catch (Exception)
             {
@@ -221,14 +253,54 @@ namespace WpfCliente.GUI
             }
         }
 
-        public Stream ConvertirPngAStream(string rutaImagenPng)
+        private string AbrirDialogoSeleccionImagen()
         {
-            if (!File.Exists(rutaImagenPng))
+            OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                throw new FileNotFoundException("El archivo no existe.");
+                Title = "Seleccionar una imagen",
+                Filter = "Archivos de imagen (*.jpg; *.jpeg; *.png)|*.jpg;*.jpeg;*.png"
+            };
+
+            return openFileDialog.ShowDialog() == true ? openFileDialog.FileName : null;
+        }
+
+        private bool EsImagenValida(string rutaImagen)
+        {
+            try
+            {
+                BitmapImage bitmap = new BitmapImage();
+                using (FileStream stream = new FileStream(rutaImagen, FileMode.Open, FileAccess.Read))
+                {
+                    bitmap.BeginInit();
+                    bitmap.StreamSource = stream;
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+                }
+                return true;
             }
-            FileStream fileStream = new FileStream(rutaImagenPng, FileMode.Open, FileAccess.Read);
-            return fileStream;
+            catch
+            {
+                return false;
+            }
+        }
+        private void CargarImagen(string ruta)
+        {
+            try
+            {
+                // Crear un BitmapImage con la ruta proporcionada
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(ruta, UriKind.Absolute); // UriKind.Absolute si la ruta es completa
+                bitmap.CacheOption = BitmapCacheOption.OnLoad; // Cargar la imagen en el momento
+                bitmap.EndInit();
+
+                // Asignar la imagen cargada al control Image
+                imgPerfil.Source = bitmap;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
+            }
         }
     }
 

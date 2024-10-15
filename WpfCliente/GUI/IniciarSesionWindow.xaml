@@ -108,7 +108,7 @@
 
             <Button x:Name="buttonJugarComoInvitado" Background="#E0DCC7" Foreground="Black" BorderBrush="Gray" BorderThickness="2" 
                 FontFamily="Lucida Sans Unicode" FontSize="18" 
-                Content="Jugar como invitado" Margin="360,366,643,145" Grid.Row="1" Cursor="Hand"  />
+                Content="Jugar como invitado" Margin="360,366,643,145" Grid.Row="1" Cursor="Hand" Click="buttonJugarComoInvitado_Click"  />
 
             <Image x:Name="imgUsaFlag" Visibility="Hidden" Source="/Recursos/backgroundGame.png" HorizontalAlignment="Left" VerticalAlignment="Top" Height="57" Width="80" Margin="1077,404,0,0" Grid.Row="2"/>
 
@@ -117,6 +117,8 @@
             <Image Source="/Recursos/cajaLogin.png" Stretch="Fill" HorizontalAlignment="Left" Height="66" Margin="953,13,0,0" VerticalAlignment="Top" Width="234"/>
 
             <local:CambiarIdiomaMenuDesplegable Margin="0,28,32,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+
+            
         </Grid>
     </Viewbox>
 

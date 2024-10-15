@@ -320,7 +320,6 @@
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.IO" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Security.Cryptography" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IServicioChat_CrearChat_InputMessage">
@@ -371,14 +370,23 @@
   <wsdl:message name="IServicioChatMotor_RecibirMensajeCliente_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:RecibirMensajeCliente" />
   </wsdl:message>
-  <wsdl:message name="IServicioPeticionAmistad_GetFriendRequest_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetFriendRequest" />
+  <wsdl:message name="IServicioPeticionAmistad_ObtenerPeticionAmistad_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPeticionAmistad" />
   </wsdl:message>
-  <wsdl:message name="IServicioPeticionAmistad_GetFriendRequestCallback_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:GetFriendRequestCallback" />
+  <wsdl:message name="IServicioPeticionAmistad_AbrirCanalParaPeticiones_InputMessage">
+    <wsdl:part name="parameters" element="tns:AbrirCanalParaPeticiones" />
   </wsdl:message>
-  <wsdl:message name="IServicioPeticionAmistad_GetFriendRequestCallback_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:GetFriendRequestCallbackResponse" />
+  <wsdl:message name="IServicioPeticionAmistad_AbrirCanalParaPeticiones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AbrirCanalParaPeticionesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioPeticionAmistad_AbrirCanalParaPeticiones_UsuarioFallaFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q2:UsuarioFalla" />
+  </wsdl:message>
+  <wsdl:message name="IServicioPeticionAmistad_ObtenerPeticionAmistadCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPeticionAmistadCallback" />
+  </wsdl:message>
+  <wsdl:message name="IServicioPeticionAmistad_ObtenerPeticionAmistadCallback_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerPeticionAmistadCallbackResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioRegistro_RegistrarUsuario_InputMessage">
     <wsdl:part name="parameters" element="tns:RegistrarUsuario" />
@@ -411,7 +419,7 @@
     <wsdl:part name="parameters" element="tns:AgregarJugadorSalaResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioSalaJugador_AgregarJugadorSala_UsuarioDuplicadoFallaFault_FaultMessage">
-    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q2:UsuarioDuplicadoFalla" />
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q3:UsuarioDuplicadoFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioSalaJugador_RemoverJugadorSala_InputMessage">
     <wsdl:part name="parameters" element="tns:RemoverJugadorSala" />
@@ -498,12 +506,17 @@
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioPeticionAmistad">
-    <wsdl:operation name="GetFriendRequest">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/GetFriendRequest" message="tns:IServicioPeticionAmistad_GetFriendRequest_InputMessage" />
+    <wsdl:operation name="ObtenerPeticionAmistad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/ObtenerPeticionAmistad" message="tns:IServicioPeticionAmistad_ObtenerPeticionAmistad_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetFriendRequestCallback">
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/GetFriendRequestCallback" message="tns:IServicioPeticionAmistad_GetFriendRequestCallback_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/GetFriendRequestCallbackResponse" message="tns:IServicioPeticionAmistad_GetFriendRequestCallback_InputCallbackMessage" />
+    <wsdl:operation name="AbrirCanalParaPeticiones">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/AbrirCanalParaPeticiones" message="tns:IServicioPeticionAmistad_AbrirCanalParaPeticiones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/AbrirCanalParaPeticionesResponse" message="tns:IServicioPeticionAmistad_AbrirCanalParaPeticiones_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/AbrirCanalParaPeticionesUsuarioFallaFault" name="UsuarioFallaFault" message="tns:IServicioPeticionAmistad_AbrirCanalParaPeticiones_UsuarioFallaFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPeticionAmistadCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/ObtenerPeticionAmistadCallback" message="tns:IServicioPeticionAmistad_ObtenerPeticionAmistadCallback_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPeticionAmistad/ObtenerPeticionAmistadCallbackResponse" message="tns:IServicioPeticionAmistad_ObtenerPeticionAmistadCallback_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioRegistro">
@@ -659,14 +672,26 @@
     <wsp:PolicyReference URI="#NetTcpBinding_IServicioPeticionAmistad_policy">
     </wsp:PolicyReference>
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="GetFriendRequest">
-      <soap12:operation soapAction="http://tempuri.org/IServicioPeticionAmistad/GetFriendRequest" style="document" />
+    <wsdl:operation name="ObtenerPeticionAmistad">
+      <soap12:operation soapAction="http://tempuri.org/IServicioPeticionAmistad/ObtenerPeticionAmistad" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
-    <wsdl:operation name="GetFriendRequestCallback">
-      <soap12:operation soapAction="http://tempuri.org/IServicioPeticionAmistad/GetFriendRequestCallback" style="document" />
+    <wsdl:operation name="AbrirCanalParaPeticiones">
+      <soap12:operation soapAction="http://tempuri.org/IServicioPeticionAmistad/AbrirCanalParaPeticiones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UsuarioFallaFault">
+        <soap12:fault use="literal" name="UsuarioFallaFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerPeticionAmistadCallback">
+      <soap12:operation soapAction="http://tempuri.org/IServicioPeticionAmistad/ObtenerPeticionAmistadCallback" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

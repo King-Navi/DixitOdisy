@@ -17,7 +17,6 @@ namespace WpfCliente.GUI
 
         public IniciarSesion()
         {
-
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             ActualizarUI();
@@ -64,7 +63,7 @@ namespace WpfCliente.GUI
 
         private void buttonRegistrar_Click(object sender, RoutedEventArgs e)
         {
-            RegistrarUsuario registrarWindow = new RegistrarUsuario();
+            RegistrarUsuarioWindow registrarWindow = new RegistrarUsuarioWindow();
             registrarWindow.Show();
             this.Close();
         }
@@ -87,7 +86,36 @@ namespace WpfCliente.GUI
 
             //TODO: antes de abrir la nueva ventana se tiene que hacer la logica de inicio de sesion con validacion y respuesta del servidor
 
-            AbrirVentanaMenu();
+            if (ValidarCampos())
+            {
+                AbrirVentanaMenu();
+            }
+            else
+            {
+                //mostrar errores en labels
+            }
+        }
+
+        private bool ValidarCampos()
+        {
+            
+            return true;
+        }
+
+        private void buttonJugarComoInvitado_Click(object sender, RoutedEventArgs e)
+        {
+            // Crear una instancia de la ventana modal
+            UnirseSalaModalWindow modalWindow = new UnirseSalaModalWindow();
+
+            // Mostrar la ventana modal como diálogo
+            bool? result = modalWindow.ShowDialog();
+
+            // Si el usuario presiona "Aceptar", puedes hacer algo con el resultado
+            if (result == true)
+            {
+                string codigoSala = modalWindow.textBoxCodigoSala.Text;
+                // Procesar el código de la sala
+            }
         }
     }
 }

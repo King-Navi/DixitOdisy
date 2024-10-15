@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UtilidadesPruebas.cs" />
     <Compile Include="ValidarContraseniaPruebas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -279,8 +279,8 @@
   <data name="labelTuMazo" xml:space="preserve">
     <value>Tu mazo</value>
   </data>
-  <data name="labelIngresarCodigoInvitacion" xml:space="preserve">
-    <value>Ingrese el código de invitación</value>
+  <data name="labelIngresarCodigoSala" xml:space="preserve">
+    <value>Ingrese el código de sala</value>
   </data>
   <data name="mensajeLobbyNoDisponible" xml:space="preserve">
     <value>Lobby no disponible</value>
@@ -325,9 +325,12 @@
     <value>No más de 20 caracteres</value>
   </data>
   <data name="labelContraseniaSimbolos" xml:space="preserve">
-    <value>Al menos 1 símbolo (ej. !,#.@.$,%,&amp;)</value>
+    <value>Al menos 1 símbolo (!@#$%^&amp;*())</value>
   </data>
   <data name="labelCamposObligatorios" xml:space="preserve">
     <value>Campos obligatorios</value>
+  </data>
+  <data name="tituloIngresarCodigoSala" xml:space="preserve">
+    <value>Ingresa el código de la sala</value>
   </data>
 </root>

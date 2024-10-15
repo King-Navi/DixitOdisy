@@ -9,7 +9,7 @@ namespace DAOLibreria.DAO
 {
     public static class UsuarioDAO
     {
-        public static bool RegistrarNuevoUsuaro(Usuario _usuario, UsuarioCuenta _usuarioCuenta)
+        public static bool RegistrarNuevoUsuario(Usuario _usuario, UsuarioCuenta _usuarioCuenta)
         {
             bool resultado = false;
             if (_usuario.gamertag != _usuarioCuenta.gamertag)

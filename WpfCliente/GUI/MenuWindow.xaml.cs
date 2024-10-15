@@ -17,9 +17,9 @@ namespace WpfCliente.GUI
         {
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
-            Conexion.UsuarioSesionCliente = new ServidorDescribelo.ServicioUsuarioSesionClient(new InstanceContext(this));
+            //Conexion.UsuarioSesionCliente = new ServidorDescribelo.ServicioUsuarioSesionClient(new InstanceContext(this));
             ///TODO: Este debe ser el id de usuario (esto esta hecho para pruebas cambiar a una variable en despliegue)
-            Conexion.UsuarioSesionCliente.ObtenerSessionJugador(new ServidorDescribelo.Usuario { Nombre = Singleton.Instance.NombreUsuario,IdUsuario = 1, });
+            //Conexion.UsuarioSesionCliente.ObtenerSessionJugador(new ServidorDescribelo.Usuario { Nombre = Singleton.Instance.NombreUsuario,IdUsuario = 1, });
         }
 
         private void ClicBotonCrearSala(object sender, RoutedEventArgs e)
@@ -67,7 +67,7 @@ namespace WpfCliente.GUI
         private string AbrirVentanaModal()
         {
             string valorObtenido = null;
-            UniserSalaModalWindow ventanaModal = new UniserSalaModalWindow();
+            UnirseSalaModalWindow ventanaModal = new UnirseSalaModalWindow();
             ventanaModal.Owner = this;
             bool? resultado = ventanaModal.ShowDialog();
 

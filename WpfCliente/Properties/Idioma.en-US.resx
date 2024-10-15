@@ -279,8 +279,8 @@
   <data name="labelTuMazo" xml:space="preserve">
     <value>Your deck</value>
   </data>
-  <data name="labelIngresarCodigoInvitacion" xml:space="preserve">
-    <value>Enter the invitation code</value>
+  <data name="labelIngresarCodigoSala" xml:space="preserve">
+    <value>Enter the lobby code</value>
   </data>
   <data name="mensajeLobbyNoDisponible" xml:space="preserve">
     <value>Lobby not available</value>
@@ -325,9 +325,12 @@
     <value>No more than 20 characters</value>
   </data>
   <data name="labelContraseniaSimbolos" xml:space="preserve">
-    <value>At least 1 symbol (eg. !,#.@.$,%,&amp;)</value>
+    <value>At least 1 symbol (!@#$%^&amp;*())</value>
   </data>
   <data name="labelCamposObligatorios" xml:space="preserve">
     <value>Required fields</value>
+  </data>
+  <data name="tituloIngresarCodigoSala" xml:space="preserve">
+    <value>Enter the lobby code</value>
   </data>
 </root>

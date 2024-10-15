@@ -376,7 +376,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Al menos 1 símbolo (ej. !,#.@.$,%,&amp;).
+        ///   Busca una cadena traducida similar a Al menos 1 símbolo (!@#$%^&amp;*()).
         /// </summary>
         public static string labelContraseniaSimbolos {
             get {
@@ -394,11 +394,11 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Ingrese el código de invitación.
+        ///   Busca una cadena traducida similar a Ingrese el código de sala.
         /// </summary>
-        public static string labelIngresarCodigoInvitacion {
+        public static string labelIngresarCodigoSala {
             get {
-                return ResourceManager.GetString("labelIngresarCodigoInvitacion", resourceCulture);
+                return ResourceManager.GetString("labelIngresarCodigoSala", resourceCulture);
             }
         }
         
@@ -642,6 +642,15 @@ namespace WpfCliente.Properties {
         public static string tituloEditarUsuario {
             get {
                 return ResourceManager.GetString("tituloEditarUsuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingresa el código de la sala.
+        /// </summary>
+        public static string tituloIngresarCodigoSala {
+            get {
+                return ResourceManager.GetString("tituloIngresarCodigoSala", resourceCulture);
             }
         }
         

@@ -103,37 +103,52 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetFriendRequest">
+  <xs:element name="ObtenerPeticionAmistad">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetFriendRequestCallback">
+  <xs:element name="AbrirCanalParaPeticiones">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="amigos" nillable="true" type="q4:ArrayOfAmigo" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q4:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetFriendRequestCallbackResponse">
+  <xs:element name="AbrirCanalParaPeticionesResponse">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AbrirCanalParaPeticionesResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerPeticionAmistadCallback">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="nuevaSolicitudAmistad" nillable="true" type="q5:SolicitudAmistad" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerPeticionAmistadCallbackResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ObtenerPeticionAmistadCallbackResult" type="xs:boolean" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RegistrarUsuario">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="usuario" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="contrasenia" nillable="true" type="xs:string" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q6:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RegistrarUsuarioResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="RegistrarUsuarioResult" type="xs:int" />
+        <xs:element minOccurs="0" name="RegistrarUsuarioResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -232,7 +247,7 @@
   <xs:element name="ObtenerJugadoresSalaCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="jugardoresEnSala" nillable="true" type="q5:ArrayOfstring" />
+        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="jugardoresEnSala" nillable="true" type="q7:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -254,7 +269,7 @@
   <xs:element name="AsignarColorCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="jugadoresColores" nillable="true" type="q6:ArrayOfKeyValueOfstringchar" />
+        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="jugadoresColores" nillable="true" type="q8:ArrayOfKeyValueOfstringchar" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -278,7 +293,7 @@
   <xs:element name="ObtenerSessionJugador">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q7:Usuario" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q9:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

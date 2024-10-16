@@ -25,6 +25,7 @@ namespace WcfServicioLibreria.Manejador
                 {
                     //FIXME
                     sala.AgregarJugadorSala(gamertag, contexto);
+
                 }
 
             }
@@ -47,7 +48,27 @@ namespace WcfServicioLibreria.Manejador
 
         public void ObtenerJugadoresSala(string gamertag, string idSala)
         {
-            throw new NotImplementedException();
+            if (!ValidarSala(idSala))
+            {
+                return;
+            }
+            try
+            {
+                ISalaJugadorCallback contexto = OperationContext.Current.GetCallbackChannel<ISalaJugadorCallback>();
+                salasDiccionario.TryGetValue(idSala, out Modelo.Sala sala);
+                lock (sala)
+                {
+                    //FIXME
+
+                    sala.ObtenerNombresJugadoresSala();
+
+                }
+
+            }
+            catch (Exception excepcion)
+            {
+                //TODO: Manejar el error
+            }
         }
 
         public void RemoverJugadorSala(string gamertag, string ididSalaRoom)

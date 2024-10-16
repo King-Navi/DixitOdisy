@@ -12,9 +12,9 @@ namespace WcfServicioLibreria.Modelo
     /// <ref>https://learn.microsoft.com/en-us/dotnet/api/system.idisposable?view=net-7.0</ref>
     /// <ref>https://learn.microsoft.com/en-us/dotnet/fundamentals/runtime-libraries/system-idisposable</ref>
     [DataContract]
-    public abstract class UsuarioContexto : IUsuarioAmistad
+    public abstract class UsuarioContexto
     {
-        protected int idUsuarioCuenta;
+        protected int idUsuario;
         protected String nombre;
         private bool desechado = false;
         public IUsuarioSesionCallback UsuarioSesionCallBack { get; set; }
@@ -22,16 +22,12 @@ namespace WcfServicioLibreria.Modelo
         public EventHandler CerradoEvento { get; set; }
         public EventHandler FalloEvento { get; set; }
         public EventHandler DesconexionManejadorEvento;
-        [DataMember]
-        public string Nombre { get => nombre; set => nombre = value; }
-        IServicioPeticionAmistadCallBack IUsuarioAmistad.PeticionAmistadCallBack { get; set; }
-        EventHandler IUsuarioAmistad.RecibioSolicitud { get; set; }
         /// <summary>
         /// Avisa a todos los sucriptores que se esta desconectando
         /// </summary>
         public void EnDesconexion()
         {
-            DesconexionManejadorEvento?.Invoke(idUsuarioCuenta, new UsuarioDesconectadoEventArgs(nombre, DateTime.Now, idUsuarioCuenta));
+            DesconexionManejadorEvento?.Invoke(idUsuario, new UsuarioDesconectadoEventArgs(nombre, DateTime.Now, idUsuario));
         }
         /// <summary>
         /// Libera recursos que de otra manera no serian liberados

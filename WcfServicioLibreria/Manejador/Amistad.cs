@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAOLibreria.DAO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Contexts;
@@ -51,24 +52,37 @@ namespace WcfServicioLibreria.Manejador
             jugadoresConectadosDiccionario.TryGetValue(idDestinatario, out UsuarioContexto destinatarioConectado);
             lock (destinatarioConectado)
             {
-                ((IUsuarioAmistad)destinatarioConectado).PeticionAmistadCallBack.ObtenerPeticionAmistadCallback(
-                    new SolicitudAmistad()
-                    {
-                        Remitente = remitente
-                    }
-                );
+                //((IUsuarioAmistad)destinatarioConectado).PeticionAmistadCallBack.ObtenerPeticionAmistadCallback(
+                new SolicitudAmistad()
+                {
+                    Remitente = remitente
+                };
             }
         }
 
 
-        public int BorrarAmigo(Amigo amigo)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Amigo[] ObtenerListaAmigos(string usuario)
+        public void AbrirCanalParaPeticiones(Usuario _usuario)
         {
-            throw new NotImplementedException();
+            try
+            {
+                IServicioAmistadCallBack contexto = OperationContext.Current.GetCallbackChannel<IServicioAmistadCallBack>();
+                List<DAOLibreria.ModeloBD.Usuario> usuarios = AmistadDAO.RecuperarListaAmigos(_usuario.IdUsuario);
+                List<Amigo> amigos = new List<Amigo>();
+                foreach (DAOLibreria.ModeloBD.Usuario usuario in usuarios)
+                {
+                    //FIXME ver que valores lleva un amigio
+                    amigos.Add(new Amigo() {
+                        Nombre = usuario.gamertag
+                    });
+                }
+                contexto.ObtenerListaAmigoCallback(amigos);
+            }
+            catch (CommunicationException excepcion)
+            { 
+            
+            }
+
         }
     }
 }

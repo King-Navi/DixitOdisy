@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
 using System.Windows;
-using UtilidadesLibreria;
 using WpfCliente.Interfaz;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
@@ -17,9 +16,27 @@ namespace WpfCliente.GUI
         {
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
-            Conexion.UsuarioSesionCliente = new ServidorDescribelo.ServicioUsuarioSesionClient(new InstanceContext(this));
-            ///TODO: Este debe ser el id de usuario (esto esta hecho para pruebas cambiar a una variable en despliegue)
-            Conexion.UsuarioSesionCliente.ObtenerSessionJugador(new ServidorDescribelo.Usuario { Nombre = Singleton.Instance.NombreUsuario,IdUsuario = 1, });
+            AbrirConexiones();
+        }
+
+        private void AbrirConexiones()
+        {
+            try
+            {
+                Conexion.AbrirConexionUsuarioSesionCallback(this);
+                Conexion.AbrirConexionAmigosCallback(amigosUserControl);
+
+                ///TODO: Este debe ser el id de usuario (esto esta hecho para pruebas cambiar a una variable en despliegue)
+                Usuario user = new Usuario();
+                user.IdUsuario = 1;
+                user.Nombre = "NaviKing";//new Usuario { Nombre = Singleton.Instance.NombreUsuario,IdUsuario = 1, }
+                Conexion.UsuarioSesion.ObtenerSessionJugador(user);
+                Conexion.Amigos.AbrirCanalParaPeticiones(user);
+            }
+            catch (Exception excepcion)
+            {
+                this.Close();
+            }
         }
 
         private void ClicBotonCrearSala(object sender, RoutedEventArgs e)
@@ -33,7 +50,7 @@ namespace WpfCliente.GUI
             this.Hide();
             ventanaSala.Show();
             ventanaSala.Closed += (s, args) => {
-                if (!Conexion.CerrarConexionesServiciosSalaCallback())
+                if (!Conexion.CerrarConexionesSalaConChat())
                 {
                     MessageBox.Show("Error al tratar de conectarse con el servidor");
                     this.Close();   
@@ -90,12 +107,8 @@ namespace WpfCliente.GUI
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
             try
             {
-                if (Conexion.UsuarioSesionCliente != null)
-                {
-                    Conexion.UsuarioSesionCliente.Close();
-                    Conexion.UsuarioSesionCliente = null;
-                }
-                Conexion.CerrarConexionesServiciosSalaCallback();
+                Conexion.CerrarUsuarioSesion();
+                Conexion.CerrarConexionesSalaConChat();
             }
             catch (Exception excepcion)
             {

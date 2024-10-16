@@ -53,7 +53,7 @@ namespace WcfServicioLibreria.Modelo
             return jugadoresSala.IsEmpty;
         }
 
-        IReadOnlyCollection<string> ObtenerNombresJugadoresSala()
+        public IReadOnlyCollection<string> ObtenerNombresJugadoresSala()
         {
             return jugadoresSala.Keys.ToList().AsReadOnly();
         }

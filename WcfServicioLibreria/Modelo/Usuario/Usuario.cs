@@ -16,11 +16,12 @@ namespace WcfServicioLibreria.Modelo
         private String correo;
         private Enumerador.EstadoJugador estadoJugador;
         private Stream fotoUsuario;
-        protected int idUsuario;
 
         #endregion Campos
 
         #region Propiedades
+        [DataMember]
+        public string Nombre { get => nombre; set => nombre = value; }
         [DataMember]
         public int IdUsuario { get => idUsuario; set => idUsuario = value; }
         [DataMember]

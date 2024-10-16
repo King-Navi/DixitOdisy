@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using UtilidadesLibreria;
 
@@ -76,6 +77,7 @@ namespace DAOLibreria.DAO
                 return resultado;
             }
         }
+        //FIXME
         public static bool EditarUsuario(Usuario _usuario, UsuarioCuenta _usuarioCuenta)
         {
             bool resultado = false;
@@ -107,5 +109,6 @@ namespace DAOLibreria.DAO
                 return resultado;
             }
         }
+
     }
 }

@@ -37,13 +37,13 @@ namespace WpfCliente.GUI
                 this.Close();
                 return;
             }
-            if (!Conexion.AbrirConexionSalaJugadorClienteCallback(this))
+            if (!Conexion.AbrirConexionSalaJugadorCallback(this))
             {
                 //NoHayConexion()
                 this.Close();
                 return;
             }
-            Conexion.SalaJugadorCliente.AgregarJugadorSala(Singleton.Instance.NombreUsuario, idSala);
+            Conexion.SalaJugador.AgregarJugadorSala(Singleton.Instance.NombreUsuario, idSala);
             labelCodigoSala.Content += idSala;
             UnirseChat();
 
@@ -52,7 +52,7 @@ namespace WpfCliente.GUI
         private void UnirseChat()
         {
             Conexion.AbrirConexionChatMotorCallback(chatUserControl);
-            Conexion.ChatMotorCliente.AgregarUsuarioChat(Singleton.Instance.IdChat, Singleton.Instance.NombreUsuario);
+            Conexion.ChatMotor.AgregarUsuarioChat(Singleton.Instance.IdChat, Singleton.Instance.NombreUsuario);
             
         }
 
@@ -130,17 +130,8 @@ namespace WpfCliente.GUI
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
             try
             {
-                if (Conexion.ChatMotorCliente != null)
-                {
-                    Conexion.ChatMotorCliente.Close();
-                    Conexion.ChatMotorCliente = null;
-                }
-                if (Conexion.SalaJugadorCliente != null)
-                {
-                    Conexion.SalaJugadorCliente.Close();
-                    Conexion.SalaJugadorCliente = null;
-
-                }
+                Conexion.CerrarChatMotor();
+                Conexion.CerrarSalaJugador();
             }
             catch (Exception excepcion)
             {

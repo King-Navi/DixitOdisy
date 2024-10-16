@@ -8,9 +8,6 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioUsuarioSesion
     {
-        /// <summary>
-        /// Metodo que al iniciar sesion 
-        /// </summary>
         public void ObtenerSessionJugador(Usuario usuario)
         {
             bool sesionAbierta = jugadoresConectadosDiccionario.ContainsKey(usuario.IdUsuario);
@@ -20,16 +17,15 @@ namespace WcfServicioLibreria.Manejador
                 {
                     IUsuarioSesionCallback contexto = OperationContext.Current.GetCallbackChannel<IUsuarioSesionCallback>();
                     usuario.UsuarioSesionCallBack = contexto;
-
                     ICommunicationObject comunicacionObjecto = (ICommunicationObject)contexto;
                     usuario.CerrandoEvento = (emisor, e) =>
                     {
-                        Console.WriteLine(usuario.Nombre + " se está yendo. Clase" + emisor);
+                        Console.WriteLine(usuario.Nombre + " | "+ usuario.IdUsuario + " se está yendo. Clase" + emisor);
                         comunicacionObjecto.Closing -= usuario.CerrandoEvento;
                     };
                     usuario.CerradoEvento = (emisor, e) =>
                     {
-                        Console.WriteLine(usuario.Nombre + " se ha ido. Clase" + emisor);
+                        Console.WriteLine(usuario.Nombre + " | " + usuario.IdUsuario + " se ha ido. Clase" + emisor);
                         comunicacionObjecto.Closed -= usuario.CerradoEvento;
                         //Despues de este metodo el usario ya no existe porque se ocupa dispose
                         DesconectarUsuario(usuario.IdUsuario);

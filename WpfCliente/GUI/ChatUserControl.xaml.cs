@@ -30,7 +30,7 @@ namespace WpfCliente.GUI
         {
             try
             {
-                await Conexion.ChatMotorCliente.EnviarMensajeAsync(Singleton.Instance.IdChat, new ChatMensaje
+                await Conexion.ChatMotor.EnviarMensajeAsync(Singleton.Instance.IdChat, new ChatMensaje
                 {
                     Mensaje = textBoxEnviarMensaje.Text,
                     HoraFecha = DateTime.Now,

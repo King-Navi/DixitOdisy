@@ -65,7 +65,7 @@
     <Compile Include="Contratos\IServicioSala.cs" />
     <Compile Include="Contratos\IServicioSalaJugador.cs" />
     <Compile Include="Modelo\Amistad\AmistadesBroker.cs" />
-    <Compile Include="Modelo\Evento\UsuarioConectadoEventArgs.cs" />
+    <Compile Include="Modelo\Evento\ActualizarAmgioEventArgs.cs" />
     <Compile Include="Enumerador\EstadoJugador.cs" />
     <Compile Include="Modelo\Evento\MultiChatVacioEventArgs.cs" />
     <Compile Include="Modelo\Evento\SalaVaciaEventArgs.cs" />

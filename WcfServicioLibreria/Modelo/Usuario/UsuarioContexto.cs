@@ -4,6 +4,7 @@ using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Utilidades;
 using WcfServicioLibreria.Evento;
+using DAOLibreria.ModeloBD;
 namespace WcfServicioLibreria.Modelo
 {
     /// <summary>
@@ -22,12 +23,25 @@ namespace WcfServicioLibreria.Modelo
         public EventHandler CerradoEvento { get; set; }
         public EventHandler FalloEvento { get; set; }
         public EventHandler DesconexionManejadorEvento;
+        public EventHandler ActulizarAmigoManejadorEvento;
         /// <summary>
         /// Avisa a todos los sucriptores que se esta desconectando
         /// </summary>
         public void EnDesconexion()
         {
             DesconexionManejadorEvento?.Invoke(idUsuario, new UsuarioDesconectadoEventArgs(nombre, DateTime.Now, idUsuario));
+        }
+        /// <summary>
+        /// Este metodo es para indicarle que el usuario activo se aca1
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void ActualizarAmigo(object sender, EventArgs e)
+        {
+            if (e is ActualizarAmgioEventArgs && sender is Amigo amigo)
+            {
+                ActulizarAmigoManejadorEvento?.Invoke(this, new ActualizarAmgioEventArgs(amigo, DateTime.Now));
+            }
         }
         /// <summary>
         /// Libera recursos que de otra manera no serian liberados

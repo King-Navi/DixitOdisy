@@ -7,6 +7,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Enumerador;
 using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Utilidades;
 
@@ -14,10 +15,6 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioAmistad
     {
-        public int ActualizarAmigo(string nombreRemitente, string nombreDestinatario, string peticionEstado)
-        {
-            throw new NotImplementedException();
-        }
 
         public void AgregarAmigo(Usuario remitente, string destinatario) //FIXME
         {
@@ -71,9 +68,19 @@ namespace WcfServicioLibreria.Manejador
                 List<Amigo> amigos = new List<Amigo>();
                 foreach (DAOLibreria.ModeloBD.Usuario usuario in usuarios)
                 {
-                    //FIXME ver que valores lleva un amigio
-                    amigos.Add(new Amigo() {
-                        Nombre = usuario.gamertag
+                    EstadoJugador estadoJugador;
+                    if (jugadoresConectadosDiccionario.ContainsKey(usuario.idUsuario))
+                    {
+                        estadoJugador = EstadoJugador.Conectado;
+                    }
+                    else 
+                    {
+                        estadoJugador = EstadoJugador.Desconectado;
+                    }
+                    amigos.Add(new Amigo()
+                    {
+                        Nombre = usuario.gamertag,
+                        Estado = estadoJugador.ToString()
                     });
                 }
                 contexto.ObtenerListaAmigoCallback(amigos);

@@ -63,19 +63,6 @@
             <Setter Property="Background" Value="#FFFFFF"/>
         </Style>
 
-        <Style TargetType="{x:Type DatePicker}" x:Key="ErrorDatePickerStyle">
-            <Setter Property="BorderBrush" Value="Red"/>
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="Background" Value="#FFE57E7E"/>
-
-        </Style>
-
-        <Style TargetType="{x:Type DatePicker}" x:Key="NormalDatePickerStyle">
-            <Setter Property="BorderBrush" Value="#FFFFFF"/>
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="Background" Value="#FFFFFF"/>
-        </Style>
-
     </Window.Resources>
 
     <Viewbox Stretch="Fill">
@@ -119,15 +106,8 @@
 
             <Image   Source="/Recursos/flechaAtras.png" Margin="10,2,1094,657" Cursor="Hand" MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
 
-            <TextBlock x:Name="labelCamposObligatorios" HorizontalAlignment="Right" Margin="0,430,430,0" 
-           VerticalAlignment="Top" FontSize="15" Width="152" Height="32" TextWrapping="Wrap">
-                <TextBlock.Inlines>
-                    <!-- Asterisco rojo -->
-                    <Run Text="*" Foreground="Red"/>
-                    <!-- Texto blanco -->
-                    <Run Text="Campos obligatorios" Foreground="White"/>
-                </TextBlock.Inlines>
-            </TextBlock>
+            <TextBlock x:Name="labelCamposObligatorios" HorizontalAlignment="Right" Margin="0,416,408,0" 
+           VerticalAlignment="Top" FontSize="15" Width="152" Height="32" TextWrapping="Wrap"><!-- Asterisco rojo --><Run Text="*" Foreground="Red"/><Run Text=" "/><!-- Texto blanco --><Run Text="Campos obligatorios" Foreground="White"/></TextBlock>
 
 
             <Image   x:Name = "imgPerfil" Source="/Recursos/pfp1.png" Margin="379,581,704,71"/>
@@ -138,6 +118,7 @@
             <Image Source="/Recursos/cajaLogin.png" Stretch="Fill" HorizontalAlignment="Left" Height="66" Margin="953,13,0,0" VerticalAlignment="Top" Width="234"/>
 
             <local:CambiarIdiomaMenuDesplegable Margin="0,28,32,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <Label x:Name="labelContraseniasNoCoinciden" Content="Las contraseñas no coinciden" HorizontalAlignment="Left" Margin="316,414,0,0" VerticalAlignment="Top" Foreground="#FFF40000" Height="28" Visibility="Collapsed" RenderTransformOrigin="0.426,0.32" Width="212" FontSize="14" FontWeight="Bold" FontFamily="Arial"/>
 
 
 

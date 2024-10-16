@@ -85,10 +85,6 @@ namespace WpfCliente.GUI
 
         private void ButtonClicRegistrarUsuario(object sender, RoutedEventArgs e)
         {
-            if (rutaAbsolutaImagen == null)
-            {
-                return;
-            }
             CrearCuenta();
         }
 
@@ -128,7 +124,7 @@ namespace WpfCliente.GUI
 
         private void CrearCuenta()
         {
-            if (ValidarCampos())
+            if (ValidarCampos() || rutaAbsolutaImagen != null)
             {
                 RegistrarUsuario();
             }
@@ -142,7 +138,7 @@ namespace WpfCliente.GUI
             {
                 string contraseniaHash = BitConverter.ToString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(textBoxContrasenia.Password))).Replace("-", "");
                 //TODO:Preguntar por el path de la imagen
-                using (FileStream fileStream = new FileStream(@"C:\Users\USER\Downloads\profile.jpg", FileMode.Open, FileAccess.Read))
+                using (FileStream fileStream = new FileStream(rutaAbsolutaImagen, FileMode.Open, FileAccess.Read))
                 {
                     using (MemoryStream memoryStream = new MemoryStream())
                     {
@@ -168,7 +164,7 @@ namespace WpfCliente.GUI
                         }
                         else
                         {
-                            MessageBox.Show("error");
+                            MessageBox.Show("Error");
                         }
                     }
                 }
@@ -250,6 +246,15 @@ namespace WpfCliente.GUI
             if (ValidacionesString.IsValidSymbol(textBoxContrasenia.Password))
             {
                 labelContraseniaSimbolos.Foreground = Brushes.Green;
+            }
+
+            if (textBoxContrasenia.Password != textBoxRepetirContrasenia.Password)
+            {
+                labelContraseniasNoCoinciden.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                labelContraseniasNoCoinciden.Visibility = Visibility.Collapsed;
             }
         }
 

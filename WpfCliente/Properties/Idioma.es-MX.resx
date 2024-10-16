@@ -333,4 +333,22 @@
   <data name="tituloIngresarCodigoSala" xml:space="preserve">
     <value>Ingresa el código de la sala</value>
   </data>
+  <data name="tituloErrorBaseDatos" xml:space="preserve">
+    <value>Error con la base de datos</value>
+  </data>
+  <data name="mensajeErrorBaseDatos" xml:space="preserve">
+    <value>Hubo un error al conectarse con la base de datos</value>
+  </data>
+  <data name="tituloErrorInesperado" xml:space="preserve">
+    <value>Error inesperado</value>
+  </data>
+  <data name="mensajeErrorInesperado" xml:space="preserve">
+    <value>Ha ocurrido un error inesperado, intente de nuevo más tarde</value>
+  </data>
+  <data name="tituloLobbyNoEncontrado" xml:space="preserve">
+    <value>Lobby no encontrado</value>
+  </data>
+  <data name="mensajeLobbyNoEncontrado" xml:space="preserve">
+    <value>El código de sala ingresado no se encontró</value>
+  </data>
 </root>

@@ -9,7 +9,6 @@ namespace WpfCliente.Utilidad
 {
     public class VentanasEmergentes
     {
-        //TODO faltan añadir recursos de los errores
         public static void CrearVentanaEmergente(string tituloVentanaEmergente, string descripcionVentanaEmergente)
         {
             VentanaEmergente ventanaEmergente = new VentanaEmergente(
@@ -23,7 +22,7 @@ namespace WpfCliente.Utilidad
         public static void CrearVentanaEmergenteErrorBD()
         {
             string tituloVentanaEmergente = Properties.Idioma.tituloErrorBaseDatos;
-            string descripcionVentanaEmergente = Properties.Idioma.errorBaseDatos;
+            string descripcionVentanaEmergente = Properties.Idioma.mensajeErrorBaseDatos;
 
             VentanaEmergente ventanaEmergente = new VentanaEmergente(
                 tituloVentanaEmergente,
@@ -37,7 +36,7 @@ namespace WpfCliente.Utilidad
         public static void CrearVentanaEmergenteErrorInesperado()
         {
             string tituloVentanaEmergente = Properties.Idioma.tituloErrorInesperado;
-            string descripcionVentanaEmergente = Properties.Idioma.errorInesperado;
+            string descripcionVentanaEmergente = Properties.Idioma.mensajeErrorInesperado;
 
             VentanaEmergente ventanaEmergente = new VentanaEmergente(
                 tituloVentanaEmergente,
@@ -49,8 +48,8 @@ namespace WpfCliente.Utilidad
 
         public static void CrearVentanaEmergenteLobbyNoEncontrado()
         {
-            string tituloVentanaEmergente = Properties.Idioma.tituloErrorLobbyNoEncontrado;
-            string descripcionVentanaEmergente = Properties.Idioma.errorLobbyNoEncontrado;
+            string tituloVentanaEmergente = Properties.Idioma.tituloLobbyNoEncontrado;
+            string descripcionVentanaEmergente = Properties.Idioma.mensajeLobbyNoEncontrado;
 
             VentanaEmergente ventanaEmergente = new VentanaEmergente(
                 tituloVentanaEmergente,

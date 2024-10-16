@@ -333,4 +333,22 @@
   <data name="tituloIngresarCodigoSala" xml:space="preserve">
     <value>Enter the lobby code</value>
   </data>
+  <data name="tituloErrorBaseDatos" xml:space="preserve">
+    <value>Database error</value>
+  </data>
+  <data name="mensajeErrorBaseDatos" xml:space="preserve">
+    <value>There was an error connecting to the database</value>
+  </data>
+  <data name="tituloErrorInesperado" xml:space="preserve">
+    <value>Inexpected error</value>
+  </data>
+  <data name="mensajeErrorInesperado" xml:space="preserve">
+    <value>An unexpected error has occurred, please try again later</value>
+  </data>
+  <data name="tituloLobbyNoEncontrado" xml:space="preserve">
+    <value>Lobby not found</value>
+  </data>
+  <data name="mensajeLobbyNoEncontrado" xml:space="preserve">
+    <value>The room code entered was not found</value>
+  </data>
 </root>

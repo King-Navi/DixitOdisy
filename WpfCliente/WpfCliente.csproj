@@ -140,6 +140,7 @@
     <Compile Include="GUI\VentanaEmergente.xaml.cs">
       <DependentUpon>VentanaEmergente.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilidad\ChatMensaje.cs" />
     <Compile Include="Utilidad\Conexion.cs" />
     <Compile Include="Utilidad\CambiarIdioma.cs" />
     <Compile Include="Interfaz\IActualizacionUI.cs" />

@@ -51,7 +51,7 @@ namespace WpfCliente.GUI
         public void RecibirMensajeCliente(ChatMensaje mensaje)
         {
             //TODO: Realizar el diseño grafico del chat, si es que tiene colores logica para colocarlos
-            textBoxReceptorMensaje.Text += mensaje.HoraFecha +" | " + mensaje.Nombre + " dice: " +mensaje.Mensaje;
+            textBoxReceptorMensaje.Text += $"{Environment.NewLine} {mensaje.ToString()}";
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)

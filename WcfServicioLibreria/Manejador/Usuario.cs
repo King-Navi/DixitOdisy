@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DAOLibreria.DAO;
+using DAOLibreria.ModeloBD;
+using System;
+using System.Security.Principal;
 using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
@@ -36,7 +39,7 @@ namespace WcfServicioLibreria.Manejador
             }
         }
 
-        public bool EditarUsuario(Usuario usuario)
+        public bool EditarUsuario(Modelo.Usuario usuario)
         {
             bool resultado = false;
             try
@@ -56,6 +59,28 @@ namespace WcfServicioLibreria.Manejador
             return true;
         }
 
+        public WcfServicioLibreria.Modelo.Usuario ValidarCredenciales(string gamertag, string contrasenia)
+        {
+            WcfServicioLibreria.Modelo.Usuario usuario = new Modelo.Usuario();
+
+            try
+            {
+                DAOLibreria.ModeloBD.Usuario usuarioConsulta = DAOLibreria.DAO.UsuarioDAO.ValidarCredenciales(gamertag, contrasenia);
+                usuario.FotoUsuario = null; //FIXME
+                usuario.Nombre = usuarioConsulta.gamertag;
+                usuario.Correo = null; //FIXME
+                usuario.ContraseniaHASH = contrasenia;
+                usuario.IdUsuario = usuarioConsulta.idUsuario;
+
+            }
+            catch (Exception ex)
+            {
+                //TODO manejar la excepcion
+            }
+
+            return usuario;
+        }
+
         public bool YaIniciadoSesion(string nombreUsuario)
         {
             //TODO: Hacer una consulta para obtener 
@@ -63,5 +88,6 @@ namespace WcfServicioLibreria.Manejador
             //TODO: No dejar el 1 y cambiar por el resultado de la consulta
             return jugadoresConectadosDiccionario.ContainsKey(1);
         }
+
     }
 }

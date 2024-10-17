@@ -19,6 +19,7 @@ namespace WpfCliente.Utilidad
         private Singleton() { }
 
         public string NombreUsuario { get; set; }
+        public int IdUsuario { get; set; }
         public string IdSala {  get; set; }
         public string IdChat { get; set; }
     }

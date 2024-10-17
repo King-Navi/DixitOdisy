@@ -14,6 +14,6 @@
             </ComboBox>
             <Image  Height="33" VerticalAlignment="Top"  ToolTip="Haz clic aquí para cambiar el idioma" Source="pack://application:,,,/WpfCliente;component/Recursos/logoIdioma.png" Width="43" MouseLeftButtonDown="Imagen_Click"/>
         </StackPanel>
-    </Grid>
+    </Grid> 
 </UserControl>
 

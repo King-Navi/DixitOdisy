@@ -5,6 +5,8 @@ using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.Linq;
+using System.Data.SqlClient;
+using System.Linq;
 using UtilidadesLibreria;
 
 namespace DAOLibreria.DAO
@@ -108,6 +110,57 @@ namespace DAOLibreria.DAO
 
                 return resultado;
             }
+        }
+
+        public static Usuario ValidarCredenciales(string gamertag, string contrasenia)
+        {
+            UsuarioCuenta datosUsuarioCuenta = null;
+            Usuario usuario = null;
+
+            try
+            {
+                using (var context = new DescribeloEntities())
+                {
+                    datosUsuarioCuenta = context.UsuarioCuenta.Include("Usuario").SingleOrDefault(cuenta => cuenta.gamertag == gamertag);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                //TODO manejar excepcion
+            }
+
+            if (datosUsuarioCuenta != null)
+            {
+                var contraseniaCuenta = datosUsuarioCuenta.hashContrasenia.ToUpper();
+
+                if (contrasenia == contraseniaCuenta)
+                {
+                    usuario = GetUsuarioById(datosUsuarioCuenta.idUsuarioCuenta);
+                }
+            }
+
+            return usuario;
+        }
+
+        public static Usuario GetUsuarioById(int id)
+        {
+            Usuario usuario = null;
+
+            try
+            {
+                using (var context = new DescribeloEntities())
+                {
+                    usuario = context.Usuario
+                                   .SingleOrDefault(user => user.idUsuario == id);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                //TODO manejar excepcion
+            }
+            return usuario;
         }
 
     }

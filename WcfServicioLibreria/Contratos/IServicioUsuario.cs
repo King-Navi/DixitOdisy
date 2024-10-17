@@ -14,6 +14,8 @@ namespace WcfServicioLibreria.Contratos
         [OperationContract]
         bool Ping();
 
+        [OperationContract]
+        Usuario ValidarCredenciales(string gamertag, string contrasenia);
     }
 
 

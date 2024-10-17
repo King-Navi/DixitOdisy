@@ -28,15 +28,15 @@ namespace WpfCliente.GUI
 
                 ///TODO: Este debe ser el id de usuario (esto esta hecho para pruebas cambiar a una variable en despliegue)
                 Usuario user = new Usuario();
-                user.IdUsuario = 1;
-                user.Nombre = "NaviKing";//new Usuario { Nombre = Singleton.Instance.NombreUsuario,IdUsuario = 1, }
+                user.IdUsuario = Singleton.Instance.IdUsuario;
+                user.Nombre = Singleton.Instance.NombreUsuario;
                 Conexion.UsuarioSesion.ObtenerSessionJugador(user);
                 Conexion.Amigos.AbrirCanalParaPeticiones(user);
             }
             catch (Exception excepcion)
             {
                 this.Close();
-            }
+            };
         }
 
         private void ClicBotonCrearSala(object sender, RoutedEventArgs e)
@@ -47,8 +47,8 @@ namespace WpfCliente.GUI
         private void AbrirVentanaSala(string idSala)
         {
             SalaEspera ventanaSala = new SalaEspera(idSala);
-            this.Hide();
             ventanaSala.Show();
+            this.Hide();
             ventanaSala.Closed += (s, args) => {
                 if (!Conexion.CerrarConexionesSalaConChat())
                 {
@@ -84,7 +84,7 @@ namespace WpfCliente.GUI
         private string AbrirVentanaModal()
         {
             string valorObtenido = null;
-            UniserSalaModalWindow ventanaModal = new UniserSalaModalWindow();
+            UnirseSalaModalWindow ventanaModal = new UnirseSalaModalWindow();
             ventanaModal.Owner = this;
             bool? resultado = ventanaModal.ShowDialog();
 

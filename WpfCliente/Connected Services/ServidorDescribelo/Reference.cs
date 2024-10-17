@@ -47,6 +47,8 @@ namespace WpfCliente.ServidorDescribelo {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Usuario", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
     [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.IO.FileStream))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.IO.MemoryStream))]
     public partial class Usuario : WpfCliente.ServidorDescribelo.UsuarioContexto {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -151,6 +153,8 @@ namespace WpfCliente.ServidorDescribelo {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Amigo", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
     [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.IO.FileStream))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.IO.MemoryStream))]
     public partial class Amigo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -330,9 +334,6 @@ namespace WpfCliente.ServidorDescribelo {
         private string MensajeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MensajeFormateadoField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NombreField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -367,19 +368,6 @@ namespace WpfCliente.ServidorDescribelo {
                 if ((object.ReferenceEquals(this.MensajeField, value) != true)) {
                     this.MensajeField = value;
                     this.RaisePropertyChanged("Mensaje");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MensajeFormateado {
-            get {
-                return this.MensajeFormateadoField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MensajeFormateadoField, value) != true)) {
-                    this.MensajeFormateadoField = value;
-                    this.RaisePropertyChanged("MensajeFormateado");
                 }
             }
         }
@@ -839,6 +827,12 @@ namespace WpfCliente.ServidorDescribelo {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/Ping", ReplyAction="http://tempuri.org/IServicioUsuario/PingResponse")]
         System.Threading.Tasks.Task<bool> PingAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/ValidarCredenciales", ReplyAction="http://tempuri.org/IServicioUsuario/ValidarCredencialesResponse")]
+        WpfCliente.ServidorDescribelo.Usuario ValidarCredenciales(string gamertag, string contrasenia);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/ValidarCredenciales", ReplyAction="http://tempuri.org/IServicioUsuario/ValidarCredencialesResponse")]
+        System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.Usuario> ValidarCredencialesAsync(string gamertag, string contrasenia);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -882,6 +876,14 @@ namespace WpfCliente.ServidorDescribelo {
         
         public System.Threading.Tasks.Task<bool> PingAsync() {
             return base.Channel.PingAsync();
+        }
+        
+        public WpfCliente.ServidorDescribelo.Usuario ValidarCredenciales(string gamertag, string contrasenia) {
+            return base.Channel.ValidarCredenciales(gamertag, contrasenia);
+        }
+        
+        public System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.Usuario> ValidarCredencialesAsync(string gamertag, string contrasenia) {
+            return base.Channel.ValidarCredencialesAsync(gamertag, contrasenia);
         }
     }
     

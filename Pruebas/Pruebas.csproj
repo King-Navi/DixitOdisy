@@ -119,10 +119,6 @@
       <Project>{12bc6483-0b89-46f6-9a42-272d0e225764}</Project>
       <Name>UtilidadesLibreria</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WpfCliente\WpfCliente.csproj">
-      <Project>{4a2f6eb4-e94a-4ea1-84f7-6ae172082c40}</Project>
-      <Name>WpfCliente</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Servidor\" />

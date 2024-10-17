@@ -376,7 +376,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Al menos 1 símbolo (ej. !,#.@.$,%,&amp;).
+        ///   Busca una cadena traducida similar a Al menos 1 símbolo (!@#$%^&amp;*()).
         /// </summary>
         public static string labelContraseniaSimbolos {
             get {
@@ -394,11 +394,11 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Ingrese el código de invitación.
+        ///   Busca una cadena traducida similar a Ingrese el código de sala.
         /// </summary>
-        public static string labelIngresarCodigoInvitacion {
+        public static string labelIngresarCodigoSala {
             get {
-                return ResourceManager.GetString("labelIngresarCodigoInvitacion", resourceCulture);
+                return ResourceManager.GetString("labelIngresarCodigoSala", resourceCulture);
             }
         }
         
@@ -547,6 +547,24 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Hubo un error al conectarse con la base de datos.
+        /// </summary>
+        public static string mensajeErrorBaseDatos {
+            get {
+                return ResourceManager.GetString("mensajeErrorBaseDatos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ha ocurrido un error inesperado, intente de nuevo más tarde.
+        /// </summary>
+        public static string mensajeErrorInesperado {
+            get {
+                return ResourceManager.GetString("mensajeErrorInesperado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El jugador ya ha salido de la sala.
         /// </summary>
         public static string mensajeJugadorSaleDeSala {
@@ -561,6 +579,15 @@ namespace WpfCliente.Properties {
         public static string mensajeLobbyNoDisponible {
             get {
                 return ResourceManager.GetString("mensajeLobbyNoDisponible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El código de sala ingresado no se encontró.
+        /// </summary>
+        public static string mensajeLobbyNoEncontrado {
+            get {
+                return ResourceManager.GetString("mensajeLobbyNoEncontrado", resourceCulture);
             }
         }
         
@@ -646,6 +673,33 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Error con la base de datos.
+        /// </summary>
+        public static string tituloErrorBaseDatos {
+            get {
+                return ResourceManager.GetString("tituloErrorBaseDatos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error inesperado.
+        /// </summary>
+        public static string tituloErrorInesperado {
+            get {
+                return ResourceManager.GetString("tituloErrorInesperado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingresa el código de la sala.
+        /// </summary>
+        public static string tituloIngresarCodigoSala {
+            get {
+                return ResourceManager.GetString("tituloIngresarCodigoSala", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Inicio de sesión.
         /// </summary>
         public static string tituloInicioSesion {
@@ -660,6 +714,15 @@ namespace WpfCliente.Properties {
         public static string tituloJuego {
             get {
                 return ResourceManager.GetString("tituloJuego", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Lobby no encontrado.
+        /// </summary>
+        public static string tituloLobbyNoEncontrado {
+            get {
+                return ResourceManager.GetString("tituloLobbyNoEncontrado", resourceCulture);
             }
         }
         

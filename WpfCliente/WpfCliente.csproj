@@ -133,14 +133,17 @@
     <Compile Include="GUI\PerfilMenuDesplegableUserControl.xaml.cs">
       <DependentUpon>PerfilMenuDesplegableUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\RegistrarUsuario.xaml.cs">
-      <DependentUpon>RegistrarUsuario.xaml</DependentUpon>
+    <Compile Include="GUI\RegistrarUsuarioWindow.xaml.cs">
+      <DependentUpon>RegistrarUsuarioWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\SalaEsperaWindow.xaml.cs">
       <DependentUpon>SalaEsperaWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\UniserSalaModalWindow.xaml.cs">
-      <DependentUpon>UniserSalaModalWindow.xaml</DependentUpon>
+    <Compile Include="GUI\UnirseSalaModalWindow.xaml.cs">
+      <DependentUpon>UnirseSalaModalWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\VentanaEmergente.xaml.cs">
+      <DependentUpon>VentanaEmergente.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilidad\ChatMensaje.cs" />
     <Compile Include="Utilidad\Conexion.cs" />
@@ -166,6 +169,8 @@
     <Compile Include="Utilidad\ServicioManejador.cs" />
     <Compile Include="Utilidad\Validacion.cs" />
     <Compile Include="Utilidad\Singleton.cs" />
+    <Compile Include="Utilidad\ValidacionesString.cs" />
+    <Compile Include="Utilidad\VentanasEmergentes.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -198,11 +203,17 @@
     <None Include="Connected Services\ServidorDescribelo\System.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Enumerador.xsd">
+    <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Enumerador1.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Modelo.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorDescribelo\WpfCliente.ServidorDescribelo.ChatMensaje.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\ServidorDescribelo\WpfCliente.ServidorDescribelo.Usuario.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -263,11 +274,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\PerfilMenuDesplegableUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\RegistrarUsuario.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="GUI\RegistrarUsuarioWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\IniciarSesionWindow.xaml">
@@ -278,7 +288,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\UniserSalaModalWindow.xaml">
+    <Page Include="GUI\UnirseSalaModalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\VentanaEmergente.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -292,6 +306,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DAOLibreria\DAOLibreria.csproj">
+      <Project>{14E9F882-4CC6-4331-A0AC-B31206796294}</Project>
+      <Name>DAOLibreria</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UtilidadesLibreria\UtilidadesLibreria.csproj">
       <Project>{12bc6483-0b89-46f6-9a42-272d0e225764}</Project>
       <Name>UtilidadesLibreria</Name>

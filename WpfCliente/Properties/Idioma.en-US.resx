@@ -279,8 +279,8 @@
   <data name="labelTuMazo" xml:space="preserve">
     <value>Your deck</value>
   </data>
-  <data name="labelIngresarCodigoInvitacion" xml:space="preserve">
-    <value>Enter the invitation code</value>
+  <data name="labelIngresarCodigoSala" xml:space="preserve">
+    <value>Enter the lobby code</value>
   </data>
   <data name="mensajeLobbyNoDisponible" xml:space="preserve">
     <value>Lobby not available</value>
@@ -325,9 +325,30 @@
     <value>No more than 20 characters</value>
   </data>
   <data name="labelContraseniaSimbolos" xml:space="preserve">
-    <value>At least 1 symbol (eg. !,#.@.$,%,&amp;)</value>
+    <value>At least 1 symbol (!@#$%^&amp;*())</value>
   </data>
   <data name="labelCamposObligatorios" xml:space="preserve">
     <value>Required fields</value>
+  </data>
+  <data name="tituloIngresarCodigoSala" xml:space="preserve">
+    <value>Enter the lobby code</value>
+  </data>
+  <data name="tituloErrorBaseDatos" xml:space="preserve">
+    <value>Database error</value>
+  </data>
+  <data name="mensajeErrorBaseDatos" xml:space="preserve">
+    <value>There was an error connecting to the database</value>
+  </data>
+  <data name="tituloErrorInesperado" xml:space="preserve">
+    <value>Inexpected error</value>
+  </data>
+  <data name="mensajeErrorInesperado" xml:space="preserve">
+    <value>An unexpected error has occurred, please try again later</value>
+  </data>
+  <data name="tituloLobbyNoEncontrado" xml:space="preserve">
+    <value>Lobby not found</value>
+  </data>
+  <data name="mensajeLobbyNoEncontrado" xml:space="preserve">
+    <value>The room code entered was not found</value>
   </data>
 </root>

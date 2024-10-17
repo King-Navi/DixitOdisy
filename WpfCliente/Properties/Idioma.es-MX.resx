@@ -121,7 +121,7 @@
     <value>Bienvenido a Describelo</value>
   </data>
   <data name="buttonIniciarSesion" xml:space="preserve">
-    <value>Inciar sesión</value>
+    <value>Iniciar sesión</value>
   </data>
   <data name="labelContrasenia" xml:space="preserve">
     <value>Contraseña</value>

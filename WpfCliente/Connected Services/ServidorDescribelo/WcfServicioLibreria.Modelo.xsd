@@ -28,17 +28,15 @@
           <xs:element minOccurs="0" name="ContraseniaHASH" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Correo" nillable="true" type="xs:string" />
           <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="FotoUsuario" nillable="true" type="q1:Stream" />
-          <xs:element minOccurs="0" name="IdUsuario1" type="xs:int" />
+          <xs:element minOccurs="0" name="IdUsuario" type="xs:int" />
+          <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="Usuario" nillable="true" type="tns:Usuario" />
   <xs:complexType name="UsuarioContexto">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="IdUsuario" type="xs:int" />
-      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
-    </xs:sequence>
+    <xs:sequence />
   </xs:complexType>
   <xs:element name="UsuarioContexto" nillable="true" type="tns:UsuarioContexto" />
   <xs:complexType name="UsuarioFalla">

@@ -1,5 +1,6 @@
 ﻿using System.Net.NetworkInformation;
 using System.ServiceModel;
+using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Contratos
 {
@@ -12,6 +13,8 @@ namespace WcfServicioLibreria.Contratos
         [OperationContract]
         bool Ping();
 
+        [OperationContract]
+        Usuario ValidarCredenciales(string gamertag, string contrasenia);
     }
 
 

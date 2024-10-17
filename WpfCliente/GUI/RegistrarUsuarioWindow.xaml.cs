@@ -39,7 +39,6 @@ namespace WpfCliente.GUI
             "/Recursos/pfp4.png",
             "/Recursos/pfp5.png"
         };
-        private int contadorImagen = 0;
         private string rutaAbsolutaImagen;
         public RegistrarUsuarioWindow()
         {
@@ -158,9 +157,9 @@ namespace WpfCliente.GUI
                         {
                             //TODO: Manejar el error
                             MessageBox.Show("Acierto");
-                            this.Close();
                             IniciarSesion iniciarSesion = new IniciarSesion();
                             iniciarSesion.Show();
+                            this.Close();
                         }
                         else
                         {
@@ -187,7 +186,6 @@ namespace WpfCliente.GUI
 
         public bool ValidarCampos()
         {
-            CultureInfo cultureInfo = CultureInfo.CurrentCulture;
             bool isValid = true;
             string errorTextBoxStyle = "ErrorTextBoxStyle";
 

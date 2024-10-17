@@ -203,6 +203,9 @@
     <None Include="Connected Services\ServidorDescribelo\WpfCliente.ServidorDescribelo.ChatMensaje.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\ServidorDescribelo\WpfCliente.ServidorDescribelo.Usuario.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
@@ -283,6 +286,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DAOLibreria\DAOLibreria.csproj">
+      <Project>{14E9F882-4CC6-4331-A0AC-B31206796294}</Project>
+      <Name>DAOLibreria</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UtilidadesLibreria\UtilidadesLibreria.csproj">
       <Project>{12bc6483-0b89-46f6-9a42-272d0e225764}</Project>
       <Name>UtilidadesLibreria</Name>

@@ -26,9 +26,11 @@ namespace WcfServicioLibreria.Modelo
 
         #region Propiedades
         [DataMember]
-        public int IdUsuario1 { get => idUsuario; set => idUsuario = value; }
+        public string Nombre { get => nombre; set => nombre = value; }
         [DataMember]
-        public String ContraseniaHASH { get => contraseniaHASH; set => contraseniaHASH = value; }
+        public int IdUsuario { get => idUsuario; set => idUsuario = value; }
+        [DataMember]
+        public string ContraseniaHASH { get => contraseniaHASH; set => contraseniaHASH = value; }
         [DataMember]
         public string Correo { get => correo; set => correo = value; }
         [DataMember]

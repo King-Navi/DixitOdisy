@@ -30,8 +30,8 @@ namespace WpfCliente.GUI
         private void AbrirVentanaSala(string idSala)
         {
             SalaEspera ventanaSala = new SalaEspera(idSala);
-            this.Hide();
             ventanaSala.Show();
+            this.Hide();
             ventanaSala.Closed += (s, args) => {
                 if (!Conexion.CerrarConexionesServiciosSalaCallback())
                 {

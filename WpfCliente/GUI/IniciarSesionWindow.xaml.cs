@@ -1,5 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Net.NetworkInformation;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,13 +10,13 @@ using System.Windows.Media;
 using System.Windows.Navigation;
 using UtilidadesLibreria;
 using WpfCliente.Interfaz;
+using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
     public partial class IniciarSesion : Window, IActualizacionUI
     {
-        private const string FUENTE_SECUNDARIA = "Arial";
 
         public IniciarSesion()
         {
@@ -54,13 +57,6 @@ namespace WpfCliente.GUI
             buttonRegistrar.IsEnabled = esValido;
         }
 
-        private void AbrirVentanaMenu() 
-        {
-            MenuWindow nuevaVentana = new MenuWindow();
-            nuevaVentana.Show();
-            this.Close();
-        }
-
         private void buttonRegistrar_Click(object sender, RoutedEventArgs e)
         {
             RegistrarUsuarioWindow registrarWindow = new RegistrarUsuarioWindow();
@@ -81,26 +77,51 @@ namespace WpfCliente.GUI
                 return;
             }
 
-            //TODO: Validar el textbox y el passwordbox
-            Singleton.Instance.NombreUsuario = textBoxUsuario.Text;
-
-            //TODO: antes de abrir la nueva ventana se tiene que hacer la logica de inicio de sesion con validacion y respuesta del servidor
 
             if (ValidarCampos())
             {
-                AbrirVentanaMenu();
+                TryIniciarSesion();
+
             }
             else
             {
-                //mostrar errores en labels
+                labelCredencialesIncorrectas.Visibility = Visibility.Visible;
             }
         }
 
         private bool ValidarCampos()
         {
-            
-            return true;
+            bool camposValidos = true;
+
+            if (string.IsNullOrWhiteSpace(textBoxUsuario.Text))
+            {
+                textBoxUsuario.Style = (Style)FindResource("ErrorTextBoxStyle");
+                camposValidos = false;
+            }
+
+            if (string.IsNullOrWhiteSpace(textBoxContrasenia.Password))
+            {
+                pwBxPasswordMask.Style = (Style)FindResource("ErrorTextBoxStyle");
+                camposValidos = false;
+            }
+            return camposValidos;
         }
+
+        private bool TryIniciarSesion() {
+            bool exito = false;
+            ServidorDescribelo.IServicioUsuario servicio = new ServidorDescribelo.ServicioUsuarioClient();
+            string contraseniaHash = BitConverter.ToString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(textBoxContrasenia.Password))).Replace("-", "");
+            Usuario resultado = servicio.ValidarCredenciales(textBoxUsuario.Text, contraseniaHash);
+            if (resultado != null)
+            {
+                exito = true;
+                Singleton.Instance.NombreUsuario = textBoxUsuario.Text;
+                Singleton.Instance.IdUsuario = resultado.IdUsuario;
+                AbrirVentanaMenu();
+            }
+            return exito;
+        }
+
 
         private void buttonJugarComoInvitado_Click(object sender, RoutedEventArgs e)
         {
@@ -111,6 +132,13 @@ namespace WpfCliente.GUI
             {
                 string codigoSala = modalWindow.textBoxCodigoSala.Text;
             }
+        }
+
+        private void AbrirVentanaMenu()
+        {
+            MenuWindow nuevaVentana = new MenuWindow();
+            nuevaVentana.Show();
+            this.Close();
         }
     }
 }

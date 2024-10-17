@@ -72,21 +72,21 @@
             <Label x:Name="labelUsuario" FontFamily="Lucida Sans Unicode" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="24" Foreground="Black" 
             Content="Usuario" Margin="416,0,0,534" Grid.RowSpan="2" Height="38" Width="106"/>
 
-            <TextBox x:Name="textBoxUsuario"   FontFamily="Lucida Sans Unicode" FontSize="22" Foreground="#CDCDCD"
+            <TextBox x:Name="textBoxUsuario" MaxLength="20"  FontFamily="Lucida Sans Unicode Bold" FontSize="22" Foreground="Black"
             VerticalContentAlignment="Center" Margin="416,24,410,482" Grid.Row="2"
             BorderBrush="Gray" BorderThickness="2" Background="White" />
 
             <Label x:Name="labelContrasenia" FontFamily="Lucida Sans Unicode" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="24" Foreground="Black" 
             Content="Contraseña" Margin="416,0,0,428" Grid.Row="1" Height="38" Width="153"/>
 
-            <TextBox x:Name="pwBxPasswordMask" FontFamily="Lucida Sans Unicode" FontSize="22" Foreground="#CDCDCD"
+            <TextBox x:Name="pwBxPasswordMask" MaxLength="20" FontFamily="Lucida Sans Unicode Bold" FontSize="22" Foreground="Black"
             VerticalContentAlignment="Center" Margin="416,130,410,377" Grid.Row="2"
             Focusable="False" BorderBrush="Gray" BorderThickness="2" Background="White"/>
 
 
             <Border CornerRadius="10" BorderThickness="1" BorderBrush="Transparent" Margin="416,130,410,377" Grid.Row="2" >
-                <PasswordBox x:Name="textBoxContrasenia"   FontSize="22" FontFamily="Lucida Sans Unicode" 
-                             Foreground="#CDCDCD" VerticalContentAlignment="Center" BorderBrush="Transparent" 
+                <PasswordBox x:Name="textBoxContrasenia" MaxLength="20"  FontSize="22" FontFamily="Lucida Sans Unicode Bold" 
+                             Foreground="Black" VerticalContentAlignment="Center" BorderBrush="Transparent" 
                              Background="Transparent"  />
             </Border>
 
@@ -103,13 +103,13 @@
                 FontFamily="Lucida Sans Unicode" FontSize="18" 
                 Content="Jugar como invitado" Margin="360,366,643,145" Grid.Row="1" Cursor="Hand" Click="buttonJugarComoInvitado_Click"  />
 
-            <Label x:Name="lbIncorrectCredentials" Content="g" Visibility="Collapsed" HorizontalAlignment="Left" Margin="416,208,0,0" Grid.Row="2" VerticalAlignment="Top" Width="374" FontFamily="Inter" FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="#FFFF5959" Height="0"/>
+            <Label x:Name="labelCredencialesIncorrectas" Content="Credenciales incorrectas" Visibility="Collapsed" HorizontalAlignment="Left" Margin="416,208,0,0" Grid.Row="1" VerticalAlignment="Top" Width="374" FontFamily="Lucida Sans Unicode Bold" FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="#FFFF5959" Height="33"/>
 
             <Image Source="/Recursos/cajaLogin.png" Stretch="Fill" HorizontalAlignment="Left" Height="66" Margin="953,13,0,0" VerticalAlignment="Top" Width="234"/>
 
             <local:CambiarIdiomaMenuDesplegable Margin="0,28,32,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
 
-            
+
         </Grid>
     </Viewbox>
 

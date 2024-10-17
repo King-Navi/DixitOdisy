@@ -203,14 +203,11 @@
     <None Include="Connected Services\ServidorDescribelo\System.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Enumerador1.xsd">
+    <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Enumerador.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Modelo.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ServidorDescribelo\WpfCliente.ServidorDescribelo.ChatMensaje.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\ServidorDescribelo\WpfCliente.ServidorDescribelo.Usuario.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -316,21 +313,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\ServidorDescribelo\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ServidorDescribelo\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ServidorDescribelo\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ServidorDescribelo\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Recursos\imgButtonChat.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -374,6 +356,20 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\ServidorDescribelo\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServidorDescribelo\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServidorDescribelo\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServidorDescribelo\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

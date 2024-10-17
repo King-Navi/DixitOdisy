@@ -82,12 +82,17 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="DAO\UsuarioDAO_Prueba.cs" />
+    <Compile Include="DAO\Utilidades\Utilidad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servidor\ServicioIniciarSesionPruebas.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
     <None Include="Connected Services\ServidorDescribeloPrueba\Arrays.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorDescribeloPrueba\Pruebas.ServidorDescribeloPrueba.Usuario.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\ServidorDescribeloPrueba\service.wsdl" />
     <None Include="Connected Services\ServidorDescribeloPrueba\service.xsd">
@@ -119,10 +124,12 @@
       <Project>{12bc6483-0b89-46f6-9a42-272d0e225764}</Project>
       <Name>UtilidadesLibreria</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WcfServicioLibreria\WcfServicioLibreria.csproj">
+      <Project>{a07aeff5-b5e9-44c4-87c5-9af85933de44}</Project>
+      <Name>WcfServicioLibreria</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Servidor\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>

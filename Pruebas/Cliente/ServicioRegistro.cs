@@ -21,7 +21,7 @@ namespace Pruebas.Cliente
             //Pre-Condicion tiene que estar corriendo el servicio
             IServicioRegistro servicio = new ServicioRegistroClient();
 
-            WpfCliente.ServidorDescribelo.Usuario usuario = new WpfCliente.ServidorDescribelo.Usuario()
+            ServidorDescribeloPrueba.Usuario usuario = new ServidorDescribeloPrueba.Usuario()
             {
                 Nombre = null
             };

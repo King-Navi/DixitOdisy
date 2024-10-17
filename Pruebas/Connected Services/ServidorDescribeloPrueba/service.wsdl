@@ -3,12 +3,6 @@
   <wsp:Policy wsu:Id="NetTcpBinding_IServicioAmistad_policy">
     <wsp:ExactlyOne>
       <wsp:All>
-        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="600000">
-          </wsrm:InactivityTimeout>
-          <wsrm:AcknowledgementInterval Milliseconds="200">
-          </wsrm:AcknowledgementInterval>
-        </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
         <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -42,12 +36,6 @@
   <wsp:Policy wsu:Id="NetTcpBinding_IServicioChat_policy">
     <wsp:ExactlyOne>
       <wsp:All>
-        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="600000">
-          </wsrm:InactivityTimeout>
-          <wsrm:AcknowledgementInterval Milliseconds="200">
-          </wsrm:AcknowledgementInterval>
-        </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
         <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -81,12 +69,6 @@
   <wsp:Policy wsu:Id="NetTcpBinding_IServicioChatMotor_policy">
     <wsp:ExactlyOne>
       <wsp:All>
-        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="600000">
-          </wsrm:InactivityTimeout>
-          <wsrm:AcknowledgementInterval Milliseconds="200">
-          </wsrm:AcknowledgementInterval>
-        </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
         <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -120,12 +102,6 @@
   <wsp:Policy wsu:Id="NetTcpBinding_IServicioRegistro_policy">
     <wsp:ExactlyOne>
       <wsp:All>
-        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="600000">
-          </wsrm:InactivityTimeout>
-          <wsrm:AcknowledgementInterval Milliseconds="200">
-          </wsrm:AcknowledgementInterval>
-        </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
         <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -159,12 +135,6 @@
   <wsp:Policy wsu:Id="NetTcpBinding_IServicioSala_policy">
     <wsp:ExactlyOne>
       <wsp:All>
-        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="600000">
-          </wsrm:InactivityTimeout>
-          <wsrm:AcknowledgementInterval Milliseconds="200">
-          </wsrm:AcknowledgementInterval>
-        </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
         <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -198,12 +168,6 @@
   <wsp:Policy wsu:Id="NetTcpBinding_IServicioSalaJugador_policy">
     <wsp:ExactlyOne>
       <wsp:All>
-        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="600000">
-          </wsrm:InactivityTimeout>
-          <wsrm:AcknowledgementInterval Milliseconds="200">
-          </wsrm:AcknowledgementInterval>
-        </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
         <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -237,12 +201,6 @@
   <wsp:Policy wsu:Id="NetTcpBinding_IServicioUsuario_policy">
     <wsp:ExactlyOne>
       <wsp:All>
-        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="600000">
-          </wsrm:InactivityTimeout>
-          <wsrm:AcknowledgementInterval Milliseconds="200">
-          </wsrm:AcknowledgementInterval>
-        </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
         <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -276,12 +234,6 @@
   <wsp:Policy wsu:Id="NetTcpBinding_IServicioUsuarioSesion_policy">
     <wsp:ExactlyOne>
       <wsp:All>
-        <wsrm:RMAssertion xmlns:wsrm="http://schemas.xmlsoap.org/ws/2005/02/rm/policy">
-          <wsrm:InactivityTimeout Milliseconds="600000">
-          </wsrm:InactivityTimeout>
-          <wsrm:AcknowledgementInterval Milliseconds="200">
-          </wsrm:AcknowledgementInterval>
-        </wsrm:RMAssertion>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
         </msb:BinaryEncoding>
         <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
@@ -440,6 +392,12 @@
   <wsdl:message name="IServicioUsuario_Ping_OutputMessage">
     <wsdl:part name="parameters" element="tns:PingResponse" />
   </wsdl:message>
+  <wsdl:message name="IServicioUsuario_ValidarCredenciales_InputMessage">
+    <wsdl:part name="parameters" element="tns:ValidarCredenciales" />
+  </wsdl:message>
+  <wsdl:message name="IServicioUsuario_ValidarCredenciales_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ValidarCredencialesResponse" />
+  </wsdl:message>
   <wsdl:message name="IServicioUsuarioSesion_ObtenerSessionJugador_InputMessage">
     <wsdl:part name="parameters" element="tns:ObtenerSessionJugador" />
   </wsdl:message>
@@ -542,6 +500,10 @@
     <wsdl:operation name="Ping">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuario/Ping" message="tns:IServicioUsuario_Ping_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioUsuario/PingResponse" message="tns:IServicioUsuario_Ping_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidarCredenciales">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuario/ValidarCredenciales" message="tns:IServicioUsuario_ValidarCredenciales_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioUsuario/ValidarCredencialesResponse" message="tns:IServicioUsuario_ValidarCredenciales_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioUsuarioSesion">
@@ -760,6 +722,15 @@
     </wsdl:operation>
     <wsdl:operation name="Ping">
       <soap12:operation soapAction="http://tempuri.org/IServicioUsuario/Ping" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidarCredenciales">
+      <soap12:operation soapAction="http://tempuri.org/IServicioUsuario/ValidarCredenciales" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -26,17 +26,30 @@ namespace Pruebas.DAO
                 Assert.Fail("La BD no esta configurada.");
             }
 
+            // Generar un gamertag aleatorio
+            string gamertagAleatorio = "Jugador" + new Random().Next(1000, 9999);
+
+            // Generar una contraseña aleatoria y su hash SHA256
+            string contraseniaAleatoria = "Contraseña" + new Random().Next(1000, 9999);
+            string hashContrasenia = Utilidad.ObtenerSHA256Hash(contraseniaAleatoria);
+
+            // Generar un correo electrónico aleatorio
+            string correoAleatorio = $"{gamertagAleatorio.ToLower()}@ejemplo.com";
+
+            // Generar un arreglo de bytes aleatorio para la foto de perfil
+            byte[] fotoPerfilAleatoria = Utilidad.GenerarBytesAleatorios(256); // 256 bytes aleatorios
+
             var usuario = new DAOLibreria.ModeloBD.Usuario
             {
-                gamertag = "Jugador123",
-                fotoPerfil = File.ReadAllBytes("C:\\Users\\USER\\Downloads\\profile.jpg")
+                gamertag = gamertagAleatorio,
+                fotoPerfil = fotoPerfilAleatoria
             };
 
             var usuarioCuenta = new DAOLibreria.ModeloBD.UsuarioCuenta
             {
-                gamertag = "Jugador123",
-                hashContrasenia = "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
-                correo = "jugador123@ejemplo.com"
+                gamertag = gamertagAleatorio,
+                hashContrasenia = hashContrasenia,
+                correo = correoAleatorio
             };
 
             // Act

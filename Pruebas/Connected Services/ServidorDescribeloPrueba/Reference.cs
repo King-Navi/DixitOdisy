@@ -8,407 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WpfCliente.ServidorDescribelo {
-    using System.Runtime.Serialization;
-    using System;
+namespace Pruebas.ServidorDescribeloPrueba {
     
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UsuarioContexto", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
-    [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(WpfCliente.ServidorDescribelo.Usuario))]
-    public partial class UsuarioContexto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Usuario", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
-    [System.SerializableAttribute()]
-    public partial class Usuario : WpfCliente.ServidorDescribelo.UsuarioContexto {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ContraseniaHASHField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CorreoField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.IO.Stream FotoUsuarioField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdUsuarioField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NombreField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ContraseniaHASH {
-            get {
-                return this.ContraseniaHASHField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ContraseniaHASHField, value) != true)) {
-                    this.ContraseniaHASHField = value;
-                    this.RaisePropertyChanged("ContraseniaHASH");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Correo {
-            get {
-                return this.CorreoField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CorreoField, value) != true)) {
-                    this.CorreoField = value;
-                    this.RaisePropertyChanged("Correo");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.IO.Stream FotoUsuario {
-            get {
-                return this.FotoUsuarioField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FotoUsuarioField, value) != true)) {
-                    this.FotoUsuarioField = value;
-                    this.RaisePropertyChanged("FotoUsuario");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int IdUsuario {
-            get {
-                return this.IdUsuarioField;
-            }
-            set {
-                if ((this.IdUsuarioField.Equals(value) != true)) {
-                    this.IdUsuarioField = value;
-                    this.RaisePropertyChanged("IdUsuario");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Nombre {
-            get {
-                return this.NombreField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NombreField, value) != true)) {
-                    this.NombreField = value;
-                    this.RaisePropertyChanged("Nombre");
-                }
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="EstadoAmigo", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Enumerador")]
-    public enum EstadoAmigo : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Conectado = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Desconectado = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Solicitud = 2,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        ActualizarEstado = 3,
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Amigo", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
-    [System.SerializableAttribute()]
-    public partial class Amigo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private WpfCliente.ServidorDescribelo.EstadoAmigo EstadoField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.IO.Stream FotoField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NombreField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public WpfCliente.ServidorDescribelo.EstadoAmigo Estado {
-            get {
-                return this.EstadoField;
-            }
-            set {
-                if ((this.EstadoField.Equals(value) != true)) {
-                    this.EstadoField = value;
-                    this.RaisePropertyChanged("Estado");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.IO.Stream Foto {
-            get {
-                return this.FotoField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FotoField, value) != true)) {
-                    this.FotoField = value;
-                    this.RaisePropertyChanged("Foto");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Nombre {
-            get {
-                return this.NombreField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NombreField, value) != true)) {
-                    this.NombreField = value;
-                    this.RaisePropertyChanged("Nombre");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SolicitudAmistad", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
-    [System.SerializableAttribute()]
-    public partial class SolicitudAmistad : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private WpfCliente.ServidorDescribelo.Usuario RemitenteField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public WpfCliente.ServidorDescribelo.Usuario Remitente {
-            get {
-                return this.RemitenteField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RemitenteField, value) != true)) {
-                    this.RemitenteField = value;
-                    this.RaisePropertyChanged("Remitente");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UsuarioDuplicadoFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
-    [System.SerializableAttribute()]
-    public partial class UsuarioDuplicadoFalla : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MotivoField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Motivo {
-            get {
-                return this.MotivoField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MotivoField, value) != true)) {
-                    this.MotivoField = value;
-                    this.RaisePropertyChanged("Motivo");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ChatMensaje", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
-    [System.SerializableAttribute()]
-    public partial class ChatMensaje : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.DateTime HoraFechaField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MensajeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MensajeFormateadoField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NombreField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime HoraFecha {
-            get {
-                return this.HoraFechaField;
-            }
-            set {
-                if ((this.HoraFechaField.Equals(value) != true)) {
-                    this.HoraFechaField = value;
-                    this.RaisePropertyChanged("HoraFecha");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Mensaje {
-            get {
-                return this.MensajeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MensajeField, value) != true)) {
-                    this.MensajeField = value;
-                    this.RaisePropertyChanged("Mensaje");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MensajeFormateado {
-            get {
-                return this.MensajeFormateadoField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MensajeFormateadoField, value) != true)) {
-                    this.MensajeFormateadoField = value;
-                    this.RaisePropertyChanged("MensajeFormateado");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Nombre {
-            get {
-                return this.NombreField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NombreField, value) != true)) {
-                    this.NombreField = value;
-                    this.RaisePropertyChanged("Nombre");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioAmistad", CallbackContract=typeof(WpfCliente.ServidorDescribelo.IServicioAmistadCallback))]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribeloPrueba.IServicioAmistad", CallbackContract=typeof(Pruebas.ServidorDescribeloPrueba.IServicioAmistadCallback))]
     public interface IServicioAmistad {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticiones")]
@@ -429,12 +33,12 @@ namespace WpfCliente.ServidorDescribelo {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IServicioAmistadChannel : WpfCliente.ServidorDescribelo.IServicioAmistad, System.ServiceModel.IClientChannel {
+    public interface IServicioAmistadChannel : Pruebas.ServidorDescribeloPrueba.IServicioAmistad, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ServicioAmistadClient : System.ServiceModel.DuplexClientBase<WpfCliente.ServidorDescribelo.IServicioAmistad>, WpfCliente.ServidorDescribelo.IServicioAmistad {
+    public partial class ServicioAmistadClient : System.ServiceModel.DuplexClientBase<Pruebas.ServidorDescribeloPrueba.IServicioAmistad>, Pruebas.ServidorDescribeloPrueba.IServicioAmistad {
         
         public ServicioAmistadClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {
@@ -466,7 +70,7 @@ namespace WpfCliente.ServidorDescribelo {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioChat")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribeloPrueba.IServicioChat")]
     public interface IServicioChat {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChat/CrearChat", ReplyAction="http://tempuri.org/IServicioChat/CrearChatResponse")]
@@ -477,12 +81,12 @@ namespace WpfCliente.ServidorDescribelo {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IServicioChatChannel : WpfCliente.ServidorDescribelo.IServicioChat, System.ServiceModel.IClientChannel {
+    public interface IServicioChatChannel : Pruebas.ServidorDescribeloPrueba.IServicioChat, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ServicioChatClient : System.ServiceModel.ClientBase<WpfCliente.ServidorDescribelo.IServicioChat>, WpfCliente.ServidorDescribelo.IServicioChat {
+    public partial class ServicioChatClient : System.ServiceModel.ClientBase<Pruebas.ServidorDescribeloPrueba.IServicioChat>, Pruebas.ServidorDescribeloPrueba.IServicioChat {
         
         public ServicioChatClient() {
         }
@@ -513,7 +117,7 @@ namespace WpfCliente.ServidorDescribelo {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioChatMotor", CallbackContract=typeof(WpfCliente.ServidorDescribelo.IServicioChatMotorCallback))]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribeloPrueba.IServicioChatMotor", CallbackContract=typeof(Pruebas.ServidorDescribeloPrueba.IServicioChatMotorCallback))]
     public interface IServicioChatMotor {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChat", ReplyAction="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatResponse")]
@@ -545,12 +149,12 @@ namespace WpfCliente.ServidorDescribelo {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IServicioChatMotorChannel : WpfCliente.ServidorDescribelo.IServicioChatMotor, System.ServiceModel.IClientChannel {
+    public interface IServicioChatMotorChannel : Pruebas.ServidorDescribeloPrueba.IServicioChatMotor, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ServicioChatMotorClient : System.ServiceModel.DuplexClientBase<WpfCliente.ServidorDescribelo.IServicioChatMotor>, WpfCliente.ServidorDescribelo.IServicioChatMotor {
+    public partial class ServicioChatMotorClient : System.ServiceModel.DuplexClientBase<Pruebas.ServidorDescribeloPrueba.IServicioChatMotor>, Pruebas.ServidorDescribeloPrueba.IServicioChatMotor {
         
         public ServicioChatMotorClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {
@@ -598,7 +202,7 @@ namespace WpfCliente.ServidorDescribelo {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioRegistro")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribeloPrueba.IServicioRegistro")]
     public interface IServicioRegistro {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioRegistro/RegistrarUsuario", ReplyAction="http://tempuri.org/IServicioRegistro/RegistrarUsuarioResponse")]
@@ -609,12 +213,12 @@ namespace WpfCliente.ServidorDescribelo {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IServicioRegistroChannel : WpfCliente.ServidorDescribelo.IServicioRegistro, System.ServiceModel.IClientChannel {
+    public interface IServicioRegistroChannel : Pruebas.ServidorDescribeloPrueba.IServicioRegistro, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ServicioRegistroClient : System.ServiceModel.ClientBase<WpfCliente.ServidorDescribelo.IServicioRegistro>, WpfCliente.ServidorDescribelo.IServicioRegistro {
+    public partial class ServicioRegistroClient : System.ServiceModel.ClientBase<Pruebas.ServidorDescribeloPrueba.IServicioRegistro>, Pruebas.ServidorDescribeloPrueba.IServicioRegistro {
         
         public ServicioRegistroClient() {
         }
@@ -645,7 +249,7 @@ namespace WpfCliente.ServidorDescribelo {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioSala")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribeloPrueba.IServicioSala")]
     public interface IServicioSala {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSala/CrearSala", ReplyAction="http://tempuri.org/IServicioSala/CrearSalaResponse")]
@@ -662,12 +266,12 @@ namespace WpfCliente.ServidorDescribelo {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IServicioSalaChannel : WpfCliente.ServidorDescribelo.IServicioSala, System.ServiceModel.IClientChannel {
+    public interface IServicioSalaChannel : Pruebas.ServidorDescribeloPrueba.IServicioSala, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ServicioSalaClient : System.ServiceModel.ClientBase<WpfCliente.ServidorDescribelo.IServicioSala>, WpfCliente.ServidorDescribelo.IServicioSala {
+    public partial class ServicioSalaClient : System.ServiceModel.ClientBase<Pruebas.ServidorDescribeloPrueba.IServicioSala>, Pruebas.ServidorDescribeloPrueba.IServicioSala {
         
         public ServicioSalaClient() {
         }
@@ -706,7 +310,7 @@ namespace WpfCliente.ServidorDescribelo {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioSalaJugador", CallbackContract=typeof(WpfCliente.ServidorDescribelo.IServicioSalaJugadorCallback))]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribeloPrueba.IServicioSalaJugador", CallbackContract=typeof(Pruebas.ServidorDescribeloPrueba.IServicioSalaJugadorCallback))]
     public interface IServicioSalaJugador {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSala", ReplyAction="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaResponse")]
@@ -756,12 +360,12 @@ namespace WpfCliente.ServidorDescribelo {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IServicioSalaJugadorChannel : WpfCliente.ServidorDescribelo.IServicioSalaJugador, System.ServiceModel.IClientChannel {
+    public interface IServicioSalaJugadorChannel : Pruebas.ServidorDescribeloPrueba.IServicioSalaJugador, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ServicioSalaJugadorClient : System.ServiceModel.DuplexClientBase<WpfCliente.ServidorDescribelo.IServicioSalaJugador>, WpfCliente.ServidorDescribelo.IServicioSalaJugador {
+    public partial class ServicioSalaJugadorClient : System.ServiceModel.DuplexClientBase<Pruebas.ServidorDescribeloPrueba.IServicioSalaJugador>, Pruebas.ServidorDescribeloPrueba.IServicioSalaJugador {
         
         public ServicioSalaJugadorClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {
@@ -825,7 +429,7 @@ namespace WpfCliente.ServidorDescribelo {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioUsuario")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribeloPrueba.IServicioUsuario")]
     public interface IServicioUsuario {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/EditarUsuario", ReplyAction="http://tempuri.org/IServicioUsuario/EditarUsuarioResponse")]
@@ -842,12 +446,12 @@ namespace WpfCliente.ServidorDescribelo {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IServicioUsuarioChannel : WpfCliente.ServidorDescribelo.IServicioUsuario, System.ServiceModel.IClientChannel {
+    public interface IServicioUsuarioChannel : Pruebas.ServidorDescribeloPrueba.IServicioUsuario, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ServicioUsuarioClient : System.ServiceModel.ClientBase<WpfCliente.ServidorDescribelo.IServicioUsuario>, WpfCliente.ServidorDescribelo.IServicioUsuario {
+    public partial class ServicioUsuarioClient : System.ServiceModel.ClientBase<Pruebas.ServidorDescribeloPrueba.IServicioUsuario>, Pruebas.ServidorDescribeloPrueba.IServicioUsuario {
         
         public ServicioUsuarioClient() {
         }
@@ -886,7 +490,7 @@ namespace WpfCliente.ServidorDescribelo {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioUsuarioSesion", CallbackContract=typeof(WpfCliente.ServidorDescribelo.IServicioUsuarioSesionCallback))]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribeloPrueba.IServicioUsuarioSesion", CallbackContract=typeof(Pruebas.ServidorDescribeloPrueba.IServicioUsuarioSesionCallback))]
     public interface IServicioUsuarioSesion {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioUsuarioSesion/ObtenerSessionJugador")]
@@ -904,12 +508,12 @@ namespace WpfCliente.ServidorDescribelo {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IServicioUsuarioSesionChannel : WpfCliente.ServidorDescribelo.IServicioUsuarioSesion, System.ServiceModel.IClientChannel {
+    public interface IServicioUsuarioSesionChannel : Pruebas.ServidorDescribeloPrueba.IServicioUsuarioSesion, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ServicioUsuarioSesionClient : System.ServiceModel.DuplexClientBase<WpfCliente.ServidorDescribelo.IServicioUsuarioSesion>, WpfCliente.ServidorDescribelo.IServicioUsuarioSesion {
+    public partial class ServicioUsuarioSesionClient : System.ServiceModel.DuplexClientBase<Pruebas.ServidorDescribeloPrueba.IServicioUsuarioSesion>, Pruebas.ServidorDescribeloPrueba.IServicioUsuarioSesion {
         
         public ServicioUsuarioSesionClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {

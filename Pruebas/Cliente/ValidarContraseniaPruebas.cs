@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UtilidadesLibreria;
 
-namespace PruebasUnitariasCliente
+namespace Pruebas.Cliente
 {
     [TestClass]
     public class ValidarContraseniaPruebas

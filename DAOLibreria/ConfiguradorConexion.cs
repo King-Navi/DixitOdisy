@@ -14,29 +14,15 @@ namespace DAOLibreria
     public static class ConfiguradorConexion
     {
         private static string nombreArchivoContext = "DescribeloEntities";
-        /// <summary>
-        /// Este es el nombre de la carpeta que contiene la base de datos
-        /// </summary>
         private static string carpeta = "ModeloBD";
-        /// <summary>
-        /// Esta es el nombre del archivo de la base de datos (el que se genera con .edmx)
-        /// </summary>
         private static string nombreArchivo = "DescribeloBD";
         /// <summary>
         /// Configura la cadena de conexión solicitando al usuario los parámetros de conexión (servidor, base de datos, usuario y contraseña),
         /// actualiza la cadena de conexión en el archivo App.config y prueba la conexión.
         /// </summary>
         /// <returns>Un diccionario con los resultados de la operación, incluyendo un mensaje y un indicador de éxito o error.</returns>
-        public static Dictionary<string, Object> ConfigurarCadenaConexion()
+        public static Dictionary<string, Object> ConfigurarCadenaConexion(string servidor, string nombreBD, string usuario, string contrasena)
         {
-            Console.WriteLine("Ingrese el nombre del servidor:");
-            string servidor = Console.ReadLine();
-            Console.WriteLine("Ingrese el nombre de la base de datos:");
-            string nombreBD = Console.ReadLine();
-            Console.WriteLine("Ingrese el nombre de usuario:");
-            string usuario = Console.ReadLine();
-            Console.WriteLine("Ingrese la contraseña:");
-            string contrasena = Console.ReadLine();
             string nuevaCadenaConexion = $"metadata=res://*/{carpeta}.{nombreArchivo}.csdl|res://*/{carpeta}.{nombreArchivo}.ssdl|res://*/{carpeta}.{nombreArchivo}.msl;" +
                                          $"provider=System.Data.SqlClient;provider connection string=\"Server={servidor};Database={nombreBD};User Id={usuario};Password={contrasena};MultipleActiveResultSets=True;App=EntityFramework\";";
             ActualizarCadenaConexionEnAppConfig(nombreArchivoContext, nuevaCadenaConexion);

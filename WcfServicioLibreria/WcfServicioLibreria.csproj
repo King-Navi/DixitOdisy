@@ -53,6 +53,7 @@
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contratos\IServicioAmistad.cs" />
@@ -64,7 +65,6 @@
     <Compile Include="Contratos\IServicioRegistro.cs" />
     <Compile Include="Contratos\IServicioSala.cs" />
     <Compile Include="Contratos\IServicioSalaJugador.cs" />
-    <Compile Include="Modelo\Amistad\AmistadesBroker.cs" />
     <Compile Include="Modelo\Evento\ActualizarAmgioEventArgs.cs" />
     <Compile Include="Enumerador\EstadoJugador.cs" />
     <Compile Include="Modelo\Evento\MultiChatVacioEventArgs.cs" />

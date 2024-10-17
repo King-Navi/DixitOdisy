@@ -31,15 +31,17 @@ namespace WcfServicioLibreria.Modelo
         {
             DesconexionManejadorEvento?.Invoke(idUsuario, new UsuarioDesconectadoEventArgs(nombre, DateTime.Now, idUsuario));
         }
-        /// <summary>
-        /// Este metodo es para indicarle que el usuario activo se aca1
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        //FIXME
         public void ActualizarAmigo(object sender, EventArgs e)
         {
-            if (e is ActualizarAmgioEventArgs && sender is Amigo amigo)
+            var desconectadoArgs = e as UsuarioDesconectadoEventArgs;
+            if (desconectadoArgs != null)
             {
+                Amigo amigo = new Amigo
+                {
+                    Nombre = desconectadoArgs.NombreUsuario,
+                    Estado = desconectadoArgs.EstadoAmigo
+                };
                 ActulizarAmigoManejadorEvento?.Invoke(this, new ActualizarAmgioEventArgs(amigo, DateTime.Now));
             }
         }

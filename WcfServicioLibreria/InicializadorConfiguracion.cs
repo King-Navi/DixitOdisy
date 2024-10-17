@@ -26,7 +26,15 @@ namespace WcfServicioLibreria
                 switch (opcion)
                 {
                     case "1":
-                        resultado = ConfiguradorConexion.ConfigurarCadenaConexion();
+                        Console.WriteLine("Ingrese el nombre del servidor:");
+                        string servidor = Console.ReadLine();
+                        Console.WriteLine("Ingrese el nombre de la base de datos:");
+                        string nombreBD = Console.ReadLine();
+                        Console.WriteLine("Ingrese el nombre de usuario:");
+                        string usuario = Console.ReadLine();
+                        Console.WriteLine("Ingrese la contraseña:");
+                        string contrasena = Console.ReadLine();
+                        resultado = ConfiguradorConexion.ConfigurarCadenaConexion(servidor, nombreBD, usuario, contrasena);
                         resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje);
                         Console.WriteLine((string)mensaje);
                         resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);

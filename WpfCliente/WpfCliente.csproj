@@ -142,6 +142,7 @@
     <Compile Include="GUI\UniserSalaModalWindow.xaml.cs">
       <DependentUpon>UniserSalaModalWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilidad\ChatMensaje.cs" />
     <Compile Include="Utilidad\Conexion.cs" />
     <Compile Include="Utilidad\CambiarIdioma.cs" />
     <Compile Include="Interfaz\IActualizacionUI.cs" />
@@ -195,6 +196,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ServidorDescribelo\System.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Enumerador.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Modelo.xsd">

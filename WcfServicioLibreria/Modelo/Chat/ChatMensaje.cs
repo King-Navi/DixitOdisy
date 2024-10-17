@@ -28,7 +28,6 @@ namespace WcfServicioLibreria.Modelo
         }
         #endregion Constructores
         #region Metodos
-
         public override string ToString()
         {
             return $"{HoraFecha.ToLocalTime()} {Nombre} : {Mensaje}";

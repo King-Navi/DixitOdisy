@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization;
+using WcfServicioLibreria.Enumerador;
 namespace WcfServicioLibreria.Modelo
 {
     [DataContract]
@@ -11,6 +12,22 @@ namespace WcfServicioLibreria.Modelo
         [DataMember]
         public string Nombre { get; set; }
         [DataMember]
-        public string Estado { get; set; }
+        public Enumerador.EstadoAmigo Estado { get; set; }
+
+
+        public Amigo() { }
+
+        public Amigo(Stream foto, string nombre, EstadoAmigo estado)
+        {
+            Foto = foto;
+            Nombre = nombre;
+            Estado = estado;
+        }
+
+        public Amigo(string nombre, EstadoAmigo estado)
+        {
+            Nombre = nombre;
+            Estado = estado;
+        }
     }
 }

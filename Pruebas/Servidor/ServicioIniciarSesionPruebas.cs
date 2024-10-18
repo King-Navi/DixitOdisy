@@ -11,10 +11,6 @@ namespace Pruebas.Servidor
     [TestClass]
     public class ServicioIniciarSesionPruebas
     {
-        [TestMethod]
-        public void probas()
-        {
-            ManejadorPrincipal manejadorPrincipal = new ManejadorPrincipal();
-        }
+
     }
 }

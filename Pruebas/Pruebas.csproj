@@ -74,6 +74,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cliente\Utilidades\CallbackImplementado.cs" />
+    <Compile Include="Cliente\Utilidades\Conexion.cs" />
+    <Compile Include="Cliente\Utilidades\ServicioManejador.cs" />
+    <Compile Include="Cliente\Utilidades\Utilidad.cs" />
+    <Compile Include="Servidor\ServicioObtenerSesion.cs" />
     <Compile Include="Cliente\ServicioRegistro.cs" />
     <Compile Include="Cliente\ValidarContraseniaPruebas.cs" />
     <Compile Include="Connected Services\ServidorDescribeloPrueba\Reference.cs">
@@ -90,9 +95,6 @@
     <None Include="App.Config" />
     <None Include="Connected Services\ServidorDescribeloPrueba\Arrays.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ServidorDescribeloPrueba\Pruebas.ServidorDescribeloPrueba.Usuario.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\ServidorDescribeloPrueba\service.wsdl" />
     <None Include="Connected Services\ServidorDescribeloPrueba\service.xsd">
@@ -114,6 +116,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\WcfServicioLibreria.Modelo.Usuario.datasource" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAOLibreria\DAOLibreria.csproj">

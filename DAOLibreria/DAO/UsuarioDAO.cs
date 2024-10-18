@@ -29,6 +29,10 @@ namespace DAOLibreria.DAO
         public static bool RegistrarNuevoUsuario(Usuario _usuario, UsuarioCuenta _usuarioCuenta)
         {
             bool resultado = false;
+            if (_usuario == null || _usuarioCuenta == null)
+            {
+                return resultado;
+            }
             if (_usuario.gamertag != _usuarioCuenta.gamertag)
             {
                 return resultado;
@@ -42,7 +46,7 @@ namespace DAOLibreria.DAO
                         var usuarioCuenta = new UsuarioCuenta
                         {
                             gamertag = _usuarioCuenta.gamertag,
-                            hashContrasenia =_usuarioCuenta.hashContrasenia,
+                            hashContrasenia =_usuarioCuenta.hashContrasenia.ToUpper(),
                             correo = _usuarioCuenta.correo
                         };
                         context.UsuarioCuenta.Add(usuarioCuenta);
@@ -68,11 +72,9 @@ namespace DAOLibreria.DAO
                     catch (Exception excepcion)
                     {
                         transaction.Rollback();
+                        resultado = false;
 
                         //TODO: Manejar el error
-                        Console.WriteLine(excepcion);
-                        Console.WriteLine( excepcion.StackTrace);
-                        throw;
                     }
                 }
 
@@ -83,6 +85,10 @@ namespace DAOLibreria.DAO
         public static bool EditarUsuario(Usuario _usuario, UsuarioCuenta _usuarioCuenta)
         {
             bool resultado = false;
+            if (_usuario == null || _usuarioCuenta == null)
+            {
+                return resultado;
+            }
             if (_usuario.gamertag != _usuarioCuenta.gamertag)
             {
                 return resultado;
@@ -116,7 +122,6 @@ namespace DAOLibreria.DAO
         {
             UsuarioCuenta datosUsuarioCuenta = null;
             Usuario usuario = null;
-
             try
             {
                 using (var context = new DescribeloEntities())
@@ -124,22 +129,19 @@ namespace DAOLibreria.DAO
                     datosUsuarioCuenta = context.UsuarioCuenta.Include("Usuario").SingleOrDefault(cuenta => cuenta.gamertag == gamertag);
                 }
             }
-
             catch (Exception ex)
             {
                 //TODO manejar excepcion
             }
-
             if (datosUsuarioCuenta != null)
             {
                 var contraseniaCuenta = datosUsuarioCuenta.hashContrasenia.ToUpper();
 
-                if (contrasenia == contraseniaCuenta)
+                if (contrasenia.Equals(contraseniaCuenta, StringComparison.OrdinalIgnoreCase))
                 {
                     usuario = GetUsuarioById(datosUsuarioCuenta.idUsuarioCuenta);
                 }
             }
-
             return usuario;
         }
 

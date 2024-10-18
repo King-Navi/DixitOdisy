@@ -40,6 +40,7 @@ namespace WcfServicioLibreria.Manejador
                     comunicacionObjecto.Closing += usuario.CerrandoEvento;
                     comunicacionObjecto.Closed += usuario.CerradoEvento;
                     comunicacionObjecto.Faulted += usuario.FalloEvento;
+                    sesionAbierta = true;
                     contexto.ObtenerSessionJugadorCallback(sesionAbierta);
                     jugadoresConectadosDiccionario.TryAdd(usuario.IdUsuario, usuario);
 

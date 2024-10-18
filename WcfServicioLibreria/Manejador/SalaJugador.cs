@@ -19,7 +19,7 @@ namespace WcfServicioLibreria.Manejador
             }
             try
             {
-                ISalaJugadorCallback contexto = OperationContext.Current.GetCallbackChannel<ISalaJugadorCallback>();
+                ISalaJugadorCallback contexto = contextoOperacion.GetCallbackChannel<ISalaJugadorCallback>();
                 salasDiccionario.TryGetValue(idSala, out Modelo.Sala sala);
                 lock (sala)
                 {
@@ -54,7 +54,7 @@ namespace WcfServicioLibreria.Manejador
             }
             try
             {
-                ISalaJugadorCallback contexto = OperationContext.Current.GetCallbackChannel<ISalaJugadorCallback>();
+                ISalaJugadorCallback contexto = contextoOperacion.GetCallbackChannel<ISalaJugadorCallback>();
                 salasDiccionario.TryGetValue(idSala, out Modelo.Sala sala);
                 lock (sala)
                 {

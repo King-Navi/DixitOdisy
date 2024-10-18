@@ -66,7 +66,7 @@ namespace WcfServicioLibreria.Manejador
         {
             try
             {
-                IServicioAmistadCallBack contexto = OperationContext.Current.GetCallbackChannel<IServicioAmistadCallBack>();
+                IServicioAmistadCallBack contexto =contextoOperacion.GetCallbackChannel<IServicioAmistadCallBack>();
                 List<DAOLibreria.ModeloBD.Usuario> usuarios = AmistadDAO.RecuperarListaAmigos(_usuario.IdUsuario);
                 List<Amigo> amigos = new List<Amigo>();
                 foreach (DAOLibreria.ModeloBD.Usuario usuario in usuarios)

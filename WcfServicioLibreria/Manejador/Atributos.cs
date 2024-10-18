@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
@@ -34,6 +36,18 @@ namespace WcfServicioLibreria.Manejador
 
         #endregion Chat
 
+        #region Inyeccion de depdendencias
+        private readonly IContextoOperacion contextoOperacion;
 
+        // Inyección de dependencias 
+        public ManejadorPrincipal(IContextoOperacion _contextoOperacion)
+        {
+            this.contextoOperacion = _contextoOperacion;
+        }   
+        public ManejadorPrincipal()
+        {
+            contextoOperacion = new ContextoOperacion();
+        }
+        #endregion
     }
 }

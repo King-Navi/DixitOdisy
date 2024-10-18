@@ -10,12 +10,16 @@ namespace WcfServicioLibreria.Manejador
     {
         public void ObtenerSessionJugador(Usuario usuario)
         {
+            if (usuario == null)
+            {
+               return;
+            }
             bool sesionAbierta = jugadoresConectadosDiccionario.ContainsKey(usuario.IdUsuario);
             if (!sesionAbierta)
             {
                 try
                 {
-                    IUsuarioSesionCallback contexto = OperationContext.Current.GetCallbackChannel<IUsuarioSesionCallback>();
+                    IUsuarioSesionCallback contexto = contextoOperacion.GetCallbackChannel<IUsuarioSesionCallback>();
                     usuario.UsuarioSesionCallBack = contexto;
                     ICommunicationObject comunicacionObjecto = (ICommunicationObject)contexto;
                     usuario.CerrandoEvento = (emisor, e) =>
@@ -53,9 +57,11 @@ namespace WcfServicioLibreria.Manejador
             }
             else
             {
-                UsuarioDuplicadoFalla fault = new UsuarioDuplicadoFalla()
-                { Motivo = "User '" + usuario.Nombre + "' already logged in!" };
-                throw new FaultException<UsuarioDuplicadoFalla>(fault);
+                UsuarioFalla excepcion = new UsuarioFalla()
+                {
+                    EstaConectado = true
+                };
+                throw new FaultException<UsuarioFalla>(excepcion, new FaultReason("El usuario ya está conectado"));
             }
 
         }

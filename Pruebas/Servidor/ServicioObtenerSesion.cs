@@ -1,7 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Pruebas.Servidor.Utilidades;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -9,85 +11,116 @@ using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Manejador;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Utilidades;
 
 namespace Pruebas.Servidor
 {
+
     [TestClass]
-    public class ServicioObtenerSesion
+    public class ServicioUsuarioSesion
     {
-        [TestClass]
-        public class ManejadorPrincipalTests
+        private Mock<IContextoOperacion> mockContextoProvedor;
+        private ManejadorPrincipal manejador;
+
+        [TestInitialize]
+        public void PruebaConfiguracion()
         {
-            [TestMethod]
-            public void ObtenerSessionJugador_CuandoSesionNoExiste_DeberiaRegistrarSesionCorrectamente()
-            {
-                // Arrange
-                var baseAddress = new Uri("net.pipe://localhost/ServicioUsuarioSesion");
-                var binding = new NetNamedPipeBinding();
-                var host = new ServiceHost(typeof(ServicioUsuarioSesionPrueba), baseAddress);
-                host.AddServiceEndpoint(typeof(IServicioUsuarioSesion), binding, baseAddress);
-                host.Open();
-
-                var callbackInstance = new InstanceContext(new UsuarioSesionCallbackPrueba());
-                var factory = new DuplexChannelFactory<IServicioUsuarioSesion>(callbackInstance, binding, new EndpointAddress(baseAddress));
-                var proxy = factory.CreateChannel();
-
-                var manejador = new ManejadorPrincipal();
-                var usuario = new Usuario
-                {
-                    IdUsuario = 1,
-                    Nombre = "UsuarioPrueba"
-                };
-
-                // Usar OperationContextScope para establecer el contexto
-                using (new OperationContextScope((IContextChannel)proxy))
-                {
-                    // Act
-                    manejador.ObtenerSessionJugador(usuario);
-
-                    // Assert: verificr si el usuario fue agregado correctamente
-                    Assert.IsTrue(manejador.YaIniciadoSesion(usuario.Nombre));
-
-                    // verificamos si la sesión fue registrada correctamente a través del callback
-                    var callback = (UsuarioSesionCallbackPrueba)callbackInstance.GetServiceInstance();
-                    Assert.IsFalse(callback.SesionObtenida);
-                }
-
-                // Limpiar el entorno de prueba
-                ((IClientChannel)proxy).Close();
-                host.Close();
-            }
+            mockContextoProvedor = new Mock<IContextoOperacion>();
+            manejador = new ManejadorPrincipal(mockContextoProvedor.Object);
         }
-        //FIXME Nada de esto sirve 
-        // Clase para agregar un callback simulado en el contexto
-        public class CallbackContextExtension<T> : IExtension<OperationContext>
+        [TestMethod]
+        public void ObtenerSessionJugadorCallback_SeAbreElCanal_DeberiaRetornarTrue()
         {
-            public T CallbackInstance { get; }
+            // Arrange
 
-            public CallbackContextExtension(T callbackInstance)
-            {
-                CallbackInstance = callbackInstance;
-            }
+            var implementacionCallback = new UsuarioSesionCallbackImpl();
 
-            public void Attach(OperationContext owner) { }
+            mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IUsuarioSesionCallback>())
+                               .Returns(implementacionCallback);
 
-            public void Detach(OperationContext owner) { }
+            var usuario = new Usuario { IdUsuario = 1, Nombre = "PruebaUsuario" };
+
+            // Act
+            manejador.ObtenerSessionJugador(usuario);
+
+            // Assert
+            Assert.IsTrue(implementacionCallback.SesionAbierta, "El callback debería haber sido llamado y la sesión debería estar activa.");
+            Assert.AreEqual(CommunicationState.Opened, ((ICommunicationObject)implementacionCallback).State, "El canal debería estar en estado abierto.");
+            Assert.IsTrue(manejador.YaIniciadoSesion(usuario.Nombre), "El canal debería estar en estado abierto.");
+
+            implementacionCallback.Close();
+
         }
-        public class ServicioUsuarioSesionPrueba : IServicioUsuarioSesion
+        [TestMethod]
+        public void ObtenerSessionJugadorCallback_YaHaIniciadoSesion_DeberiaRetornarFalse()
         {
-            public void ObtenerSessionJugador(Usuario usuario)
-            {
-                // Este método estará vacío, ya que solo lo necesitamos como stub para crear el canal de proxy.
-            }
-        }
-        public class UsuarioSesionCallbackPrueba : IUsuarioSesionCallback
-        {
-            public bool SesionObtenida { get; private set; }
+            // Arrange
 
-            public void ObtenerSessionJugadorCallback(bool sesionAbierta)
+            var implementacionCallback = new UsuarioSesionCallbackImpl();
+
+            mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IUsuarioSesionCallback>())
+                               .Returns(implementacionCallback);
+
+            var usuario = new Usuario { IdUsuario = 1, Nombre = "PruebaUsuario" };
+            var usuarioRepetido = new Usuario { IdUsuario = 1, Nombre = "PruebaUsuario" };
+
+            // Act: 
+            manejador.ObtenerSessionJugador(usuario);
+
+            //Assert
+            var excepcion = Assert.ThrowsException<FaultException<UsuarioFalla>>(() => manejador.ObtenerSessionJugador(usuarioRepetido));
+            Assert.IsTrue(excepcion.Detail.EstaConectado, "La excepción debería indicar que el usuario ya está conectado.");
+            implementacionCallback.Close();
+        }
+
+        [TestMethod]
+        public void ObtenerSessionJugadorCallback_EnDesconeccion_DeberiaRetornarFalse()
+        {
+            // Arrange
+
+            var implementacionCallback = new UsuarioSesionCallbackImpl();
+
+            mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IUsuarioSesionCallback>())
+                               .Returns(implementacionCallback);
+
+            var usuario = new Usuario { IdUsuario = 1, Nombre = "PruebaUsuario" };
+
+            // Act: Llamar a ObtenerSessionJugador una vez para establecer la sesión
+            manejador.ObtenerSessionJugador(usuario);
+            implementacionCallback.Abort();
+
+            //Assert
+            Assert.IsFalse(manejador.YaIniciadoSesion(usuario.Nombre), "No deberia estar iniciado.");
+            if (implementacionCallback != null)
             {
-                SesionObtenida = sesionAbierta;
+                implementacionCallback.Abort();
             }
+
+        }
+        [TestMethod]
+        public void ObtenerSessionJugadorCallback_EsNulo_DeberiaRetornarFalse()
+        {
+            // Arrange
+
+            var implementacionCallback = new UsuarioSesionCallbackImpl();
+
+            mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IUsuarioSesionCallback>())
+                               .Returns(implementacionCallback);
+
+            Usuario usuario = null;
+
+            // Act: Llamar a ObtenerSessionJugador una vez para establecer la sesión
+            manejador.ObtenerSessionJugador(usuario);
+
+            //Assert
+            Assert.IsFalse(implementacionCallback.SesionAbierta, "El callback no debería haber sido llamado");
+            if (implementacionCallback != null)
+            {
+                implementacionCallback.Abort();
+            }
+
         }
     }
+
 }
+

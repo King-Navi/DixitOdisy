@@ -74,12 +74,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cliente\Utilidades\CallbackImplementado.cs" />
+    <Compile Include="Servidor\Utilidades\CallbackImplementado.cs" />
     <Compile Include="Cliente\Utilidades\Conexion.cs" />
     <Compile Include="Cliente\Utilidades\ServicioManejador.cs" />
     <Compile Include="Cliente\Utilidades\Utilidad.cs" />
     <Compile Include="Servidor\ServicioObtenerSesion.cs" />
-    <Compile Include="Cliente\ServicioRegistro.cs" />
+    <Compile Include="Servidor\ServicioRegistro.cs" />
     <Compile Include="Cliente\ValidarContraseniaPruebas.cs" />
     <Compile Include="Connected Services\ServidorDescribeloPrueba\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -90,6 +90,7 @@
     <Compile Include="DAO\Utilidades\Utilidad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Servidor\ServicioIniciarSesionPruebas.cs" />
+    <Compile Include="Servidor\Utilidades\GeneradorAleatorio.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

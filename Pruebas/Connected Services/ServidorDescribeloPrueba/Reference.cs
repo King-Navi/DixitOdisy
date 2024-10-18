@@ -125,8 +125,7 @@ namespace Pruebas.ServidorDescribeloPrueba {
     public interface IServicioChatMotor {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChat", ReplyAction="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(WcfServicioLibreria.Modelo.UsuarioDuplicadoFalla), Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatUsuarioDuplicadoFallaFaul" +
-            "t", Name="UsuarioDuplicadoFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
+        [System.ServiceModel.FaultContractAttribute(typeof(WcfServicioLibreria.Modelo.UsuarioFalla), Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatUsuarioFallaFault", Name="UsuarioFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
         bool AgregarUsuarioChat(string idChat, string nombreUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChat", ReplyAction="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatResponse")]
@@ -320,8 +319,7 @@ namespace Pruebas.ServidorDescribeloPrueba {
     public interface IServicioSalaJugador {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSala", ReplyAction="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(WcfServicioLibreria.Modelo.UsuarioDuplicadoFalla), Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaUsuarioDuplicadoFallaFa" +
-            "ult", Name="UsuarioDuplicadoFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
+        [System.ServiceModel.FaultContractAttribute(typeof(WcfServicioLibreria.Modelo.UsuarioFalla), Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaUsuarioFallaFault", Name="UsuarioFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
         bool AgregarJugadorSala(string gamertag, string idSala);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSala", ReplyAction="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaResponse")]

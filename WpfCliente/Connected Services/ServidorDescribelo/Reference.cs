@@ -275,15 +275,18 @@ namespace WpfCliente.ServidorDescribelo {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UsuarioDuplicadoFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UsuarioFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
     [System.SerializableAttribute()]
-    public partial class UsuarioDuplicadoFalla : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class UsuarioFalla : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MotivoField;
+        private bool EstaConectadoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ExisteUsuarioField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -296,14 +299,27 @@ namespace WpfCliente.ServidorDescribelo {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Motivo {
+        public bool EstaConectado {
             get {
-                return this.MotivoField;
+                return this.EstaConectadoField;
             }
             set {
-                if ((object.ReferenceEquals(this.MotivoField, value) != true)) {
-                    this.MotivoField = value;
-                    this.RaisePropertyChanged("Motivo");
+                if ((this.EstaConectadoField.Equals(value) != true)) {
+                    this.EstaConectadoField = value;
+                    this.RaisePropertyChanged("EstaConectado");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ExisteUsuario {
+            get {
+                return this.ExisteUsuarioField;
+            }
+            set {
+                if ((this.ExisteUsuarioField.Equals(value) != true)) {
+                    this.ExisteUsuarioField = value;
+                    this.RaisePropertyChanged("ExisteUsuario");
                 }
             }
         }
@@ -505,8 +521,7 @@ namespace WpfCliente.ServidorDescribelo {
     public interface IServicioChatMotor {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChat", ReplyAction="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(WpfCliente.ServidorDescribelo.UsuarioDuplicadoFalla), Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatUsuarioDuplicadoFallaFaul" +
-            "t", Name="UsuarioDuplicadoFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
+        [System.ServiceModel.FaultContractAttribute(typeof(WpfCliente.ServidorDescribelo.UsuarioFalla), Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatUsuarioFallaFault", Name="UsuarioFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
         bool AgregarUsuarioChat(string idChat, string nombreUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChat", ReplyAction="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatResponse")]
@@ -698,8 +713,7 @@ namespace WpfCliente.ServidorDescribelo {
     public interface IServicioSalaJugador {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSala", ReplyAction="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(WpfCliente.ServidorDescribelo.UsuarioDuplicadoFalla), Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaUsuarioDuplicadoFallaFa" +
-            "ult", Name="UsuarioDuplicadoFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
+        [System.ServiceModel.FaultContractAttribute(typeof(WpfCliente.ServidorDescribelo.UsuarioFalla), Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaUsuarioFallaFault", Name="UsuarioFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
         bool AgregarJugadorSala(string gamertag, string idSala);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSala", ReplyAction="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaResponse")]

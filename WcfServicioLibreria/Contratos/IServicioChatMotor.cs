@@ -16,9 +16,9 @@ namespace WcfServicioLibreria.Contratos
         /// </summary>
         /// <param name="nombreUsuario">Datos del usuario a agregar.</param>
         /// <returns>Verdadero si el usuario es agregado exitosamente; de lo contrario, falso.</returns>
-        /// <exception cref="UsuarioDuplicadoFalla">Se lanza si el usuario ya existe en el sistema.</exception>
+        /// <exception cref="UsuarioDuplicado">Se lanza si el usuario ya existe en el sistema.</exception>
         [OperationContract]
-        [FaultContract(typeof(UsuarioDuplicadoFalla))]
+        [FaultContract(typeof(UsuarioFalla))]
         bool AgregarUsuarioChat(string idChat, string nombreUsuario);
         /// <summary>
         /// Desconecta a un usuario del chat.

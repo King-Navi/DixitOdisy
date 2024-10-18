@@ -17,7 +17,7 @@ namespace WcfServicioLibreria.Manejador
                 if (existeSala)
                 {
                     MultiChat multiChat = (MultiChat)chat;
-                    IChatCallback contexto = OperationContext.Current.GetCallbackChannel<IChatCallback>();
+                    IChatCallback contexto = contextoOperacion.GetCallbackChannel<IChatCallback>();
                     return multiChat.AgregarJugadorChat(nombreUsuario, contexto);
                 }
 

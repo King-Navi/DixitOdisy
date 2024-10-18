@@ -14,5 +14,6 @@ namespace WcfServicioLibreria.Modelo
         public bool EstaConectado { get; set; }
         [DataMember]
         public bool ExisteUsuario { get; set; }
+
     }
 }

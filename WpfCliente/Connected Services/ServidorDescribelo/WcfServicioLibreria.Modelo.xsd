@@ -40,12 +40,13 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="SolicitudAmistad" nillable="true" type="tns:SolicitudAmistad" />
-  <xs:complexType name="UsuarioDuplicadoFalla">
+  <xs:complexType name="UsuarioFalla">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Motivo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EstaConectado" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ExisteUsuario" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="UsuarioDuplicadoFalla" nillable="true" type="tns:UsuarioDuplicadoFalla" />
+  <xs:element name="UsuarioFalla" nillable="true" type="tns:UsuarioFalla" />
   <xs:complexType name="ChatMensaje">
     <xs:sequence>
       <xs:element minOccurs="0" name="HoraFecha" type="xs:dateTime" />

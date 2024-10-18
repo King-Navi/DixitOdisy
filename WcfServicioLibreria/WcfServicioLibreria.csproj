@@ -90,9 +90,10 @@
     <Compile Include="Modelo\Partida\Partida.cs" />
     <Compile Include="Modelo\Sala\Sala.cs" />
     <Compile Include="Modelo\Usuario\Usuario.cs" />
-    <Compile Include="Modelo\Excepciones\UsuarioDuplicadoFalla.cs" />
     <Compile Include="Modelo\Excepciones\UsuarioFalla.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilidades\ContextoOperacion.cs" />
+    <Compile Include="Utilidades\IContextoOperacion.cs" />
     <Compile Include="Utilidades\IObservador.cs" />
     <Compile Include="Utilidades\Utilidad.cs" />
   </ItemGroup>

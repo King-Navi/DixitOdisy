@@ -104,6 +104,11 @@ namespace WcfServicioLibreria
         }
 
         //FIXME: Esto es solo para pruebas
+        public static void IniciarConexionRapidaPruebas()
+        {
+            ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnnayIvan2025@-");
 
+        }
+        //-------------------------------------------------------
     }
 }

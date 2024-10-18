@@ -8,7 +8,7 @@ namespace WcfServicioLibreria.Contratos
     public interface IServicioSalaJugador
     {
         [OperationContract]
-        [FaultContract(typeof(UsuarioDuplicadoFalla))]
+        [FaultContract(typeof(UsuarioFalla))]
         bool AgregarJugadorSala(string gamertag, string idSala);
         [OperationContract]
         void RemoverJugadorSala(string gamertag, string ididSalaRoom);

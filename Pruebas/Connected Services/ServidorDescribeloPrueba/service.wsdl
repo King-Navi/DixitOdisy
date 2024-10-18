@@ -302,8 +302,8 @@
   <wsdl:message name="IServicioChatMotor_AgregarUsuarioChat_OutputMessage">
     <wsdl:part name="parameters" element="tns:AgregarUsuarioChatResponse" />
   </wsdl:message>
-  <wsdl:message name="IServicioChatMotor_AgregarUsuarioChat_UsuarioDuplicadoFallaFault_FaultMessage">
-    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q1:UsuarioDuplicadoFalla" />
+  <wsdl:message name="IServicioChatMotor_AgregarUsuarioChat_UsuarioFallaFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q1:UsuarioFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioChatMotor_DesconectarUsuarioChat_InputMessage">
     <wsdl:part name="parameters" element="tns:DesconectarUsuarioChat" />
@@ -344,8 +344,8 @@
   <wsdl:message name="IServicioSalaJugador_AgregarJugadorSala_OutputMessage">
     <wsdl:part name="parameters" element="tns:AgregarJugadorSalaResponse" />
   </wsdl:message>
-  <wsdl:message name="IServicioSalaJugador_AgregarJugadorSala_UsuarioDuplicadoFallaFault_FaultMessage">
-    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q2:UsuarioDuplicadoFalla" />
+  <wsdl:message name="IServicioSalaJugador_AgregarJugadorSala_UsuarioFallaFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q2:UsuarioFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioSalaJugador_RemoverJugadorSala_InputMessage">
     <wsdl:part name="parameters" element="tns:RemoverJugadorSala" />
@@ -430,7 +430,7 @@
     <wsdl:operation name="AgregarUsuarioChat">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChat" message="tns:IServicioChatMotor_AgregarUsuarioChat_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatResponse" message="tns:IServicioChatMotor_AgregarUsuarioChat_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatUsuarioDuplicadoFallaFault" name="UsuarioDuplicadoFallaFault" message="tns:IServicioChatMotor_AgregarUsuarioChat_UsuarioDuplicadoFallaFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatUsuarioFallaFault" name="UsuarioFallaFault" message="tns:IServicioChatMotor_AgregarUsuarioChat_UsuarioFallaFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="DesconectarUsuarioChat">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioChatMotor/DesconectarUsuarioChat" message="tns:IServicioChatMotor_DesconectarUsuarioChat_InputMessage" />
@@ -464,7 +464,7 @@
     <wsdl:operation name="AgregarJugadorSala">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSala" message="tns:IServicioSalaJugador_AgregarJugadorSala_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaResponse" message="tns:IServicioSalaJugador_AgregarJugadorSala_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaUsuarioDuplicadoFallaFault" name="UsuarioDuplicadoFallaFault" message="tns:IServicioSalaJugador_AgregarJugadorSala_UsuarioDuplicadoFallaFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaUsuarioFallaFault" name="UsuarioFallaFault" message="tns:IServicioSalaJugador_AgregarJugadorSala_UsuarioFallaFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RemoverJugadorSala">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioSalaJugador/RemoverJugadorSala" message="tns:IServicioSalaJugador_RemoverJugadorSala_InputMessage" />
@@ -570,8 +570,8 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="UsuarioDuplicadoFallaFault">
-        <soap12:fault use="literal" name="UsuarioDuplicadoFallaFault" namespace="" />
+      <wsdl:fault name="UsuarioFallaFault">
+        <soap12:fault use="literal" name="UsuarioFallaFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="DesconectarUsuarioChat">
@@ -648,8 +648,8 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="UsuarioDuplicadoFallaFault">
-        <soap12:fault use="literal" name="UsuarioDuplicadoFallaFault" namespace="" />
+      <wsdl:fault name="UsuarioFallaFault">
+        <soap12:fault use="literal" name="UsuarioFallaFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="RemoverJugadorSala">

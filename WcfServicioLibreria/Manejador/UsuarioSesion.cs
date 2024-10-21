@@ -8,28 +8,28 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioUsuarioSesion
     {
-        /// <summary>
-        /// Metodo que al iniciar sesion 
-        /// </summary>
         public void ObtenerSessionJugador(Usuario usuario)
         {
+            if (usuario == null)
+            {
+               return;
+            }
             bool sesionAbierta = jugadoresConectadosDiccionario.ContainsKey(usuario.IdUsuario);
             if (!sesionAbierta)
             {
                 try
                 {
-                    IUsuarioSesionCallback contexto = OperationContext.Current.GetCallbackChannel<IUsuarioSesionCallback>();
+                    IUsuarioSesionCallback contexto = contextoOperacion.GetCallbackChannel<IUsuarioSesionCallback>();
                     usuario.UsuarioSesionCallBack = contexto;
-
                     ICommunicationObject comunicacionObjecto = (ICommunicationObject)contexto;
                     usuario.CerrandoEvento = (emisor, e) =>
                     {
-                        Console.WriteLine(usuario.Nombre + " se está yendo. Clase" + emisor);
+                        Console.WriteLine(usuario.Nombre + " | "+ usuario.IdUsuario + " se está yendo. Clase" + emisor);
                         comunicacionObjecto.Closing -= usuario.CerrandoEvento;
                     };
                     usuario.CerradoEvento = (emisor, e) =>
                     {
-                        Console.WriteLine(usuario.Nombre + " se ha ido. Clase" + emisor);
+                        Console.WriteLine(usuario.Nombre + " | " + usuario.IdUsuario + " se ha ido. Clase" + emisor);
                         comunicacionObjecto.Closed -= usuario.CerradoEvento;
                         //Despues de este metodo el usario ya no existe porque se ocupa dispose
                         DesconectarUsuario(usuario.IdUsuario);
@@ -44,6 +44,7 @@ namespace WcfServicioLibreria.Manejador
                     comunicacionObjecto.Closing += usuario.CerrandoEvento;
                     comunicacionObjecto.Closed += usuario.CerradoEvento;
                     comunicacionObjecto.Faulted += usuario.FalloEvento;
+                    sesionAbierta = true;
                     contexto.ObtenerSessionJugadorCallback(sesionAbierta);
                     jugadoresConectadosDiccionario.TryAdd(usuario.IdUsuario, usuario);
 
@@ -56,9 +57,11 @@ namespace WcfServicioLibreria.Manejador
             }
             else
             {
-                UsuarioDuplicadoFalla fault = new UsuarioDuplicadoFalla()
-                { Motivo = "User '" + usuario.Nombre + "' already logged in!" };
-                throw new FaultException<UsuarioDuplicadoFalla>(fault);
+                UsuarioFalla excepcion = new UsuarioFalla()
+                {
+                    EstaConectado = true
+                };
+                throw new FaultException<UsuarioFalla>(excepcion, new FaultReason("El usuario ya está conectado"));
             }
 
         }

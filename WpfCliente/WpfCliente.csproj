@@ -109,7 +109,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="GUIModelo\IniciarSesion.cs" />
     <Compile Include="GUI\AmigoUserControl.xaml.cs">
       <DependentUpon>AmigoUserControl.xaml</DependentUpon>
     </Compile>
@@ -119,6 +118,9 @@
     <Compile Include="GUI\ConfigurarPartidaPage.xaml.cs">
       <DependentUpon>ConfigurarPartidaPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\EditarPerfilWindow.xaml.cs">
+      <DependentUpon>EditarPerfilWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\ErrorConexionModalWindow.xaml.cs">
       <DependentUpon>ErrorConexionModalWindow.xaml</DependentUpon>
     </Compile>
@@ -127,6 +129,9 @@
     </Compile>
     <Compile Include="GUI\MenuWindow.xaml.cs">
       <DependentUpon>MenuWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\PerfilMenuDesplegableUserControl.xaml.cs">
+      <DependentUpon>PerfilMenuDesplegableUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\RegistrarUsuarioWindow.xaml.cs">
       <DependentUpon>RegistrarUsuarioWindow.xaml</DependentUpon>
@@ -198,6 +203,9 @@
     <None Include="Connected Services\ServidorDescribelo\System.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Enumerador1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Modelo.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -229,6 +237,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Estilos\GeneralEstilo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\AmigoUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -245,6 +257,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\EditarPerfilWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\ErrorConexionModalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -257,9 +273,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\PerfilMenuDesplegableUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="GUI\RegistrarUsuarioWindow.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\IniciarSesionWindow.xaml">
       <SubType>Designer</SubType>
@@ -350,5 +369,11 @@
   <ItemGroup>
     <Resource Include="Recursos\pfp5.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\profile.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

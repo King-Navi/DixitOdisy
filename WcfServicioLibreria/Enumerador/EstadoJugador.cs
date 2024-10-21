@@ -1,15 +1,31 @@
-﻿namespace WcfServicioLibreria.Enumerador
+﻿using System.Runtime.Serialization;
+
+namespace WcfServicioLibreria.Enumerador
 {
+    [DataContract]
     public enum EstadoJugador
     {
-        Desconectado = 0,
-
-        Conectado = 1,
-
-        Disponible = 2,
-
-        EnSala = 3,
-
-        EnPartida = 4,
+        [EnumMember]
+        Desconectado,
+        [EnumMember]
+        Conectado,
+        [EnumMember]
+        Disponible,
+        [EnumMember]
+        EnSala,
+        [EnumMember]
+        EnPartida,
+    }
+    [DataContract]
+    public enum EstadoAmigo
+    {
+        [EnumMember]
+        Conectado,
+        [EnumMember]
+        Desconectado,
+        [EnumMember]
+        Solicitud,
+        [EnumMember]
+        ActualizarEstado
     }
 }

@@ -6,38 +6,31 @@
              xmlns:local="clr-namespace:WpfCliente.GUI"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="260">
-    <Grid Width="260" Height="500" >
+    <Grid Width="220" Height="400" >
         <DockPanel LastChildFill="True">
             <!--Header-->
-            <StackPanel Background="Aqua" DockPanel.Dock="Top">
-                <Label Content="/Lista de amgios"></Label>
+            <StackPanel d:Background="Aqua" DockPanel.Dock="Top">
+                <Label d:Content="Lista de amgios"></Label>
             </StackPanel>
             <!--Footer-->
             <StackPanel Background="Beige" DockPanel.Dock="Bottom">
-                <Label Content="Son las 18:17"></Label>
+                <Label x:Name="labelHora" d:Content="Son las 18:17" Unloaded="Cerrado"/>
             </StackPanel>
             <!--Contenido-->
-            <StackPanel Background="Chocolate" DockPanel.Dock="Bottom">
+            <Grid>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ItemsControl Background="DarkGray" ItemsSource="{Binding Amigos}">
-                        <!-- Define cómo se visualiza cada elemento en la lista -->
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <!-- Aquí se muestra el AmigoUserControl -->
-                                <local:AmigoUserControl DataContext="{Binding}" />
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <!-- Define cómo se organiza la disposición de los elementos -->
+                    <ItemsControl x:Name="itemsControlAmigos" Background="DarkGray">
+                        <!-- El ItemsPanel organiza los elementos -->
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <!-- StackPanel organiza los UserControl B en vertical -->
-                                <StackPanel Orientation="Vertical" />
+                                
+                                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
+                        <d:Grid Height="80" Width="190" d:Background="Azure"></d:Grid>
                     </ItemsControl>
                 </ScrollViewer>
-
-            </StackPanel>
+            </Grid>
         </DockPanel>
     </Grid>
 </UserControl>

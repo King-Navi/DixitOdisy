@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAOLibreria", "DAOLibreria\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtilidadesLibreria", "UtilidadesLibreria\UtilidadesLibreria.csproj", "{12BC6483-0B89-46F6-9A42-272D0E225764}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pruebas", "Pruebas\Pruebas.csproj", "{7E26BEBC-B34F-4A9E-964E-EDE2D697C5CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{12BC6483-0B89-46F6-9A42-272D0E225764}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12BC6483-0B89-46F6-9A42-272D0E225764}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12BC6483-0B89-46F6-9A42-272D0E225764}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E26BEBC-B34F-4A9E-964E-EDE2D697C5CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E26BEBC-B34F-4A9E-964E-EDE2D697C5CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E26BEBC-B34F-4A9E-964E-EDE2D697C5CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E26BEBC-B34F-4A9E-964E-EDE2D697C5CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

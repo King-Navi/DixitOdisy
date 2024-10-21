@@ -19,28 +19,13 @@ namespace WcfServicioLibreria.Manejador
             }
             try
             {
-                ISalaJugadorCallback contexto = OperationContext.Current.GetCallbackChannel<ISalaJugadorCallback>();
-                salasDiccionario.TryGetValue(idSala, out ISala sala);
+                ISalaJugadorCallback contexto = contextoOperacion.GetCallbackChannel<ISalaJugadorCallback>();
+                salasDiccionario.TryGetValue(idSala, out Modelo.Sala sala);
                 lock (sala)
                 {
+                    //FIXME
                     sala.AgregarJugadorSala(gamertag, contexto);
 
-                    ICommunicationObject comunicacionObjecto = (ICommunicationObject)contexto;
-                    comunicacionObjecto.Closing += (emisor, e) =>
-                    {
-                        Console.WriteLine(emisor + "Se esta llendo de la sala");////
-                    };
-                    comunicacionObjecto.Closed += (emisor, e) =>
-                    {
-                        Console.WriteLine(emisor + "Se ha ido de la sala"); ///
-
-                    };
-
-                    comunicacionObjecto.Faulted += (emisor, e) =>
-                    {
-                        Console.WriteLine(emisor + "Ha fallado de la sala"); ////
-
-                    };
                 }
 
             }
@@ -63,7 +48,27 @@ namespace WcfServicioLibreria.Manejador
 
         public void ObtenerJugadoresSala(string gamertag, string idSala)
         {
-            throw new NotImplementedException();
+            if (!ValidarSala(idSala))
+            {
+                return;
+            }
+            try
+            {
+                ISalaJugadorCallback contexto = contextoOperacion.GetCallbackChannel<ISalaJugadorCallback>();
+                salasDiccionario.TryGetValue(idSala, out Modelo.Sala sala);
+                lock (sala)
+                {
+                    //FIXME
+
+                    sala.ObtenerNombresJugadoresSala();
+
+                }
+
+            }
+            catch (Exception excepcion)
+            {
+                //TODO: Manejar el error
+            }
         }
 
         public void RemoverJugadorSala(string gamertag, string ididSalaRoom)

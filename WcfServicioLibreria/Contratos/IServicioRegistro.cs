@@ -1,4 +1,5 @@
 ﻿using System.ServiceModel;
+using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Contratos
 {
@@ -6,6 +7,6 @@ namespace WcfServicioLibreria.Contratos
     public interface IServicioRegistro
     {
         [OperationContract]
-        bool RegistrarUsuario(Modelo.Usuario usuario);
+        bool RegistrarUsuario(Modelo.Usuario usuario );
     }
 }

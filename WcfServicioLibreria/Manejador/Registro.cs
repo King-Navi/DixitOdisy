@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using DAOLibreria.DAO;
 using DAOLibreria.ModeloBD;
 using UtilidadesLibreria;
@@ -16,18 +17,22 @@ namespace WcfServicioLibreria.Manejador
             bool resultado = false;
             try
             {
-                var usuarioCuenta = new UsuarioCuenta
+
+                if (EsSha256Valido(_usuario.ContraseniaHASH))
                 {
-                    gamertag = _usuario.Nombre,
-                    hashContrasenia = _usuario.ContraseniaHASH.ToString(),
-                    correo = _usuario.Correo
-                };
-                var usuario = new Usuario
-                {
-                    gamertag = _usuario.Nombre,
-                    fotoPerfil = Utilidad.StreamABytes(_usuario.FotoUsuario),
-                };
-                resultado = DAOLibreria.DAO.UsuarioDAO.RegistrarNuevoUsuario(usuario, usuarioCuenta);
+                    var usuarioCuenta = new UsuarioCuenta
+                    {
+                        gamertag = _usuario.Nombre,
+                        hashContrasenia = _usuario.ContraseniaHASH.ToString(),
+                        correo = _usuario.Correo
+                    };
+                    var usuario = new Usuario
+                    {
+                        gamertag = _usuario.Nombre,
+                        fotoPerfil = Utilidad.StreamABytes(_usuario.FotoUsuario),
+                    };
+                    resultado = DAOLibreria.DAO.UsuarioDAO.RegistrarNuevoUsuario(usuario, usuarioCuenta);
+                }
             }
             catch (Exception excepcion)
             {
@@ -39,5 +44,9 @@ namespace WcfServicioLibreria.Manejador
             return resultado;
         }
 
+        public bool EsSha256Valido(string hash)
+        {
+            return hash.Length == 64 && Regex.IsMatch(hash, @"\A\b[0-9a-fA-F]+\b\Z");
+        }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
@@ -13,7 +15,7 @@ namespace WcfServicioLibreria.Manejador
         /// <summary>
         /// Diccionarion con el idSala, ademas de la sala.
         /// </summary>
-        private static readonly ConcurrentDictionary<string, ISala> salasDiccionario = new ConcurrentDictionary<string, ISala>();
+        private static readonly ConcurrentDictionary<string, Sala> salasDiccionario = new ConcurrentDictionary<string, Sala>();
         #endregion Sala
 
         #region JugadorSesion
@@ -34,6 +36,18 @@ namespace WcfServicioLibreria.Manejador
 
         #endregion Chat
 
+        #region Inyeccion de depdendencias
+        private readonly IContextoOperacion contextoOperacion;
 
+        // Inyección de dependencias 
+        public ManejadorPrincipal(IContextoOperacion _contextoOperacion)
+        {
+            this.contextoOperacion = _contextoOperacion;
+        }   
+        public ManejadorPrincipal()
+        {
+            contextoOperacion = new ContextoOperacion();
+        }
+        #endregion
     }
 }

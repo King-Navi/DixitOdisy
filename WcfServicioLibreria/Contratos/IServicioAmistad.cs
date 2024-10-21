@@ -1,22 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
-using System.Text;
 using System.Threading.Tasks;
+using WcfServicioLibreria.Enumerador;
 using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Contratos
 {
-    [ServiceContract]
+    [ServiceContract(CallbackContract = typeof(IServicioAmistadCallBack))]
     public interface IServicioAmistad
     {
+        [OperationContract(IsOneWay = true)]
+        [ServiceKnownType(typeof(EstadoAmigo))]
+        [ServiceKnownType(typeof(List<Amigo>))]
+        void AbrirCanalParaPeticiones(Usuario usuario);
+    }
+    [ServiceContract]
+    public interface IServicioAmistadCallBack
+    {
         [OperationContract]
-        [FaultContract(typeof(AmistadFalla))]
-        void AgregarAmigo(Usuario remitente, string destinatario);
+        [ServiceKnownType(typeof(EstadoAmigo))]
+        [ServiceKnownType(typeof(List<Amigo>))]
+        void ObtenerListaAmigoCallback(List<Amigo> amigos);
         [OperationContract]
-        int ActualizarAmigo(string nombreRemitente, string nombreDestinatario, string peticionEstado);
-        [OperationContract]
-        int BorrarAmigo(Amigo amigo);
+        void ObtenerPeticionAmistadCallback(SolicitudAmistad nuevaSolicitudAmistad);
     }
 }

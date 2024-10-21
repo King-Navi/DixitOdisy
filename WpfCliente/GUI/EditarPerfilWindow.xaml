@@ -1,0 +1,41 @@
+﻿<Window x:Class="WpfCliente.GUI.EditarPerfilWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfCliente.GUI"
+        mc:Ignorable="d"
+        Title="EditarPerfilWindow" Height="450" Width="800">
+    <Grid>
+
+        <DockPanel LastChildFill="True">
+            <!--Encabezado-->
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Background="Aqua" HorizontalAlignment="Right">
+
+            </StackPanel>
+
+
+            <!--Pie de pagina-->
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Background="Coral" HorizontalAlignment="Center">
+
+            </StackPanel>
+            <!--Amigos conectado lista-->
+            <StackPanel DockPanel.Dock="Left" Background="DarkGray" Orientation="Vertical">
+
+            </StackPanel>
+            <!--Middler-->
+            <StackPanel Orientation="Vertical"  Background="AntiqueWhite" HorizontalAlignment="Center">
+                <Label Content=""></Label>
+                <TextBox></TextBox>
+                <Border d:BorderBrush="Red" d:BorderThickness="10">
+                    <Image d:OpacityMask="Red" Width="100" Height="100" ></Image>
+                </Border>
+                <Button d:Content="Cambiar foto" Click="ClicButtonCambiarImagen"></Button>
+            </StackPanel>
+        </DockPanel>
+        <!--Superposicion en pantalla-->
+        <Grid>
+            
+        </Grid>
+    </Grid>
+</Window>

@@ -32,13 +32,6 @@ namespace WpfCliente.GUI
     public partial class RegistrarUsuarioWindow : Window, IActualizacionUI
     {
         private Boolean esInivtado;
-        private string[] imagenesPerfil = {
-            "/Recursos/pfp1.png",
-            "/Recursos/pfp2.png",
-            "/Recursos/pfp3.png",
-            "/Recursos/pfp4.png",
-            "/Recursos/pfp5.png"
-        };
         private string rutaAbsolutaImagen;
         public RegistrarUsuarioWindow()
         {

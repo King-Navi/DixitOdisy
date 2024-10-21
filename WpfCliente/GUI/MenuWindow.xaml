@@ -6,27 +6,29 @@
         xmlns:local="clr-namespace:WpfCliente.GUI"
         mc:Ignorable="d"
         Title="MenuWindow" Height="450" Width="800" Closing="CerrandoVentana">
-    <DockPanel LastChildFill="True">
-        <!--Header-->
-        <StackPanel DockPanel.Dock="Top" x:Name="stackPaneEncabezado" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Red">
-            <Button Content="/Button de amigos"></Button>
-            <Button Content="/Button de configuracion"></Button>
-            <Button Content="/Button de perfil"></Button>
-
-        </StackPanel>
-        <!--Footer-->
-        <StackPanel DockPanel.Dock="Bottom" Background="#FF43FF02" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-            <Label Content="Copiright 2024 Empresa ficticia S.A. de C.V."></Label>
-        </StackPanel>
-        <!--Middle-->
-        <StackPanel x:Name="stackPanePrincipal"  Orientation="Horizontal" HorizontalAlignment="Center">
-            <StackPanel Orientation="Vertical" Background="#FFFFA6ED" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label Content="/Describelo" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36"></Label>
-                <Button Content="/Crear Sala de espera" Click="ClicBotonCrearSala"></Button>
-                <Button Content="/Unirse a Sala de espera" Click="ClicButtonUnirseSala"></Button>
-                <Button Content="/Salir"></Button>
+    <Grid>
+        <DockPanel LastChildFill="True">
+            <!--Header-->
+            <StackPanel DockPanel.Dock="Top" x:Name="stackPaneEncabezado" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Red">
+                <Button Content="/Button de amigos"></Button>
+                <Button Content="/Button de configuracion"></Button>
+                <local:PerfilMenuDesplegableUserControl></local:PerfilMenuDesplegableUserControl>
             </StackPanel>
-        </StackPanel>
-        
-    </DockPanel>
+            <!--Footer-->
+            <StackPanel DockPanel.Dock="Bottom" Background="#FF43FF02" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                <Label Content="Copiright 2024 Empresa ficticia S.A. de C.V."></Label>
+            </StackPanel>
+            <!--Middle-->
+            <StackPanel x:Name="stackPanePrincipal"  Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel Orientation="Vertical" Background="#FFFFA6ED" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Label Content="/Describelo" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36"></Label>
+                    <Button Content="/Crear Sala de espera" Click="ClicBotonCrearSala"></Button>
+                    <Button Content="/Unirse a Sala de espera" Click="ClicButtonUnirseSala"></Button>
+                    <Button Content="/Salir"></Button>
+                </StackPanel>
+            </StackPanel>
+
+        </DockPanel>
+        <local:ListaAmigosUserControl x:Name="amigosUserControl" HorizontalAlignment="Left" ></local:ListaAmigosUserControl>
+    </Grid>
 </Window>

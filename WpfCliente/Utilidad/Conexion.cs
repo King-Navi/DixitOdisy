@@ -10,13 +10,14 @@ namespace WpfCliente.Utilidad
 {
     public static class Conexion
     {
-        public static ServicioUsuarioSesionClient UsuarioSesionCliente { get; internal set; }
-        public static ServicioSalaJugadorClient SalaJugadorCliente { get; internal set; }
-        public static ServicioChatMotorClient ChatMotorCliente { get; internal set; }
-        public static bool AbrirConexionUsuarioSesionClienteCallback(IServicioUsuarioSesionCallback callback)
+        public static ServicioUsuarioSesionClient UsuarioSesion { get; private set; }
+        public static ServicioSalaJugadorClient SalaJugador { get; private set; }
+        public static ServicioChatMotorClient ChatMotor{ get; private set; }
+        public static ServicioAmistadClient Amigos { get; private set; }
+        public static bool AbrirConexionUsuarioSesionCallback(IServicioUsuarioSesionCallback callback)
         {
             bool resultado = false;
-            if (UsuarioSesionCliente != null)
+            if (UsuarioSesion != null)
             {
                 resultado = true;
             }
@@ -24,7 +25,7 @@ namespace WpfCliente.Utilidad
             {
                 try
                 {
-                    UsuarioSesionCliente = new ServicioUsuarioSesionClient(new System.ServiceModel.InstanceContext(callback));
+                    UsuarioSesion = new ServicioUsuarioSesionClient(new System.ServiceModel.InstanceContext(callback));
                     resultado = true;
                 }
                 catch (Exception)
@@ -34,10 +35,10 @@ namespace WpfCliente.Utilidad
             }
             return resultado;
         }
-        public static bool AbrirConexionSalaJugadorClienteCallback(IServicioSalaJugadorCallback callback)
+        public static bool AbrirConexionSalaJugadorCallback(IServicioSalaJugadorCallback callback)
         {
             bool resultado = false;
-            if (SalaJugadorCliente != null)
+            if (SalaJugador != null)
             {
                 resultado = true;
             }
@@ -45,7 +46,7 @@ namespace WpfCliente.Utilidad
             {
                 try
                 {
-                    SalaJugadorCliente = new ServicioSalaJugadorClient(new System.ServiceModel.InstanceContext(callback));
+                    SalaJugador = new ServicioSalaJugadorClient(new System.ServiceModel.InstanceContext(callback));
                     resultado = true;
                 }
                 catch (Exception)
@@ -58,7 +59,7 @@ namespace WpfCliente.Utilidad
         public static bool AbrirConexionChatMotorCallback(IServicioChatMotorCallback callback)
         {
             bool resultado = false;
-            if (ChatMotorCliente != null)
+            if (ChatMotor != null)
             {
                 resultado = true;
             }
@@ -66,7 +67,7 @@ namespace WpfCliente.Utilidad
             {
                 try
                 {
-                    ChatMotorCliente = new ServicioChatMotorClient(new System.ServiceModel.InstanceContext(callback));
+                    ChatMotor = new ServicioChatMotorClient(new System.ServiceModel.InstanceContext(callback));
                     resultado = true;
                 }
                 catch (Exception)
@@ -76,19 +77,109 @@ namespace WpfCliente.Utilidad
             }
             return resultado;
         }
-        public static bool CerrarConexionesServiciosSalaCallback()
+        public static bool AbrirConexionAmigosCallback(IServicioAmistadCallback callback)
+        {
+            bool resultado = false;
+            if (Amigos != null)
+            {
+                resultado = true;
+            }
+            else
+            {
+                try
+                {
+                    Amigos = new ServicioAmistadClient(new System.ServiceModel.InstanceContext(callback));
+                    resultado = true;
+                }
+                catch (Exception)
+                {
+                    //TODO: Manejar el error
+                }
+            }
+            return resultado;
+        }
+        public static bool CerrarUsuarioSesion()
         {
             try
             {
-                if (ChatMotorCliente != null)
+                if (UsuarioSesion != null)
                 {
-                    ChatMotorCliente.Close();
-                    ChatMotorCliente = null;
+                    UsuarioSesion.Close();
+                    UsuarioSesion = null;
                 }
-                if (SalaJugadorCliente != null)
+
+            }
+            catch (Exception excepcion)
+            {
+                //TODO Manejar el error
+                return false;
+            }
+            return true;
+        } public static bool CerrarSalaJugador()
+        {
+            try
+            {
+                if (SalaJugador != null)
                 {
-                    SalaJugadorCliente.Close();
-                    SalaJugadorCliente = null;
+                    SalaJugador.Close();
+                    SalaJugador = null;
+                }
+
+            }
+            catch (Exception excepcion)
+            {
+                //TODO Manejar el error
+                return false;
+            }
+            return true;
+        } public static bool CerrarChatMotor()
+        {
+            try
+            {
+                if (ChatMotor != null)
+                {
+                    ChatMotor.Close();
+                    ChatMotor = null;
+                }
+
+            }
+            catch (Exception excepcion)
+            {
+                //TODO Manejar el error
+                return false;
+            }
+            return true;
+        } public static bool CerrarAmigos()
+        {
+            try
+            {
+                if (Amigos != null)
+                {
+                    Amigos.Close();
+                    Amigos = null;
+                }
+
+            }
+            catch (Exception excepcion)
+            {
+                //TODO Manejar el error
+                return false;
+            }
+            return true;
+        }
+        public static bool CerrarConexionesSalaConChat()
+        {
+            try
+            {
+                if (ChatMotor != null)
+                {
+                    ChatMotor.Close();
+                    ChatMotor = null;
+                }
+                if (SalaJugador != null)
+                {
+                    SalaJugador.Close();
+                    SalaJugador = null;
                 }
             }
             catch (Exception excepcion)

@@ -76,6 +76,7 @@ namespace WpfCliente.GUI
                 HabilitarBotones(true);
                 return;
             }
+            HabilitarBotones(true);
 
 
             if (ValidarCampos())

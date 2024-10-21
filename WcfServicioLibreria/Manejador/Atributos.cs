@@ -36,6 +36,11 @@ namespace WcfServicioLibreria.Manejador
 
         #endregion Chat
 
+        #region Partida
+        private static readonly ConcurrentDictionary<string, Partida> partidasdDiccionario = new ConcurrentDictionary<string, Partida>();
+
+        #endregion Partida
+
         #region Inyeccion de depdendencias
         private readonly IContextoOperacion contextoOperacion;
 

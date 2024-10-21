@@ -18,7 +18,7 @@ namespace WcfServicioLibreria.Modelo
         #region Campos
         private string contraseniaHASH;
         private String correo;
-        private Enumerador.EstadoJugador estadoJugador;
+        private Enumerador.EstadoUsuario estadoJugador;
         private Stream fotoUsuario;
 
         #endregion Campos

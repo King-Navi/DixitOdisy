@@ -43,7 +43,7 @@ namespace WcfServicioLibreria.Evento
         /// <param name="e"></param>
         private void Cerrado(object sender, EventArgs e)
         {
-            Console.WriteLine(" se ha ido de la sala (Closed).");
+            Console.WriteLine(" se ha ido de la "+ sender.ToString()+ " (Closed).");
             DesuscribirEventos((ICommunicationObject)sender);
             observador.DesconectarUsuario(clavePropietario);
         }
@@ -54,7 +54,7 @@ namespace WcfServicioLibreria.Evento
         /// <param name="e"></param>
         private void EnFalla(object sender, EventArgs e)
         {
-            Console.WriteLine(" ha fallado de la sala (Faulted).");
+            Console.WriteLine(" ha fallado de la" + sender.ToString() + " (Faulted).");
             DesuscribirEventos((ICommunicationObject)sender);
             observador.DesconectarUsuario(clavePropietario);
         }

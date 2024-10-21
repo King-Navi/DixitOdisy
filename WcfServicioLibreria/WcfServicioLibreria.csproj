@@ -56,6 +56,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contratos\IServicioPartida.cs" />
     <Compile Include="Contratos\IServicioAmistad.cs" />
     <Compile Include="Contratos\IServicioChat.cs" />
     <Compile Include="Contratos\IServicioChatMotor.cs" />
@@ -65,8 +66,9 @@
     <Compile Include="Contratos\IServicioRegistro.cs" />
     <Compile Include="Contratos\IServicioSala.cs" />
     <Compile Include="Contratos\IServicioSalaJugador.cs" />
+    <Compile Include="Manejador\Partida.cs" />
     <Compile Include="Modelo\Evento\ActualizarAmgioEventArgs.cs" />
-    <Compile Include="Enumerador\EstadoJugador.cs" />
+    <Compile Include="Enumerador\Enumerador.cs" />
     <Compile Include="Modelo\Evento\MultiChatVacioEventArgs.cs" />
     <Compile Include="Modelo\Evento\SalaVaciaEventArgs.cs" />
     <Compile Include="Modelo\Evento\UsuarioDesconectadoEventArgs.cs" />
@@ -86,6 +88,10 @@
     <Compile Include="Modelo\Chat\Chat.cs" />
     <Compile Include="Modelo\Chat\ChatMensaje.cs" />
     <Compile Include="Modelo\Amistad\SolicitudAmistad.cs" />
+    <Compile Include="Modelo\Partida\CondicionVictoriaPorRondas.cs" />
+    <Compile Include="Modelo\Partida\CondicionVictoriaCartasAgotadas .cs" />
+    <Compile Include="Modelo\Partida\ConfiguracionPartida.cs" />
+    <Compile Include="Modelo\Partida\ICondicionVictoria.cs" />
     <Compile Include="Modelo\Usuario\UsuarioContexto.cs" />
     <Compile Include="Modelo\Partida\Partida.cs" />
     <Compile Include="Modelo\Sala\Sala.cs" />

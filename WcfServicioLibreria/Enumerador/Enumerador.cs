@@ -1,9 +1,10 @@
-﻿using System.Runtime.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace WcfServicioLibreria.Enumerador
 {
     [DataContract]
-    public enum EstadoJugador
+    public enum EstadoUsuario
     {
         [EnumMember]
         Desconectado,
@@ -27,5 +28,25 @@ namespace WcfServicioLibreria.Enumerador
         Solicitud,
         [EnumMember]
         ActualizarEstado
+    }
+    [DataContract]
+    public enum CondicionVictoriaPartida
+    {
+        [EnumMember]
+        PorCartasAgotadas,
+        [EnumMember]
+        PorCantidadRondas
+    }
+    [DataContract]
+    public enum TematicaPartida
+    {
+        [EnumMember]
+        Mixta,
+        [EnumMember]
+        Aniamles,
+        [EnumMember]
+        Paises,
+        [EnumMember]
+        Mitologia
     }
 }

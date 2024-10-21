@@ -1,26 +1,16 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Security.Cryptography;
-using System.Security.Principal;
 using System.ServiceModel;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Linq;
 using WpfCliente.Interfaz;
+using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
@@ -29,7 +19,7 @@ namespace WpfCliente.GUI
     /// <summary>
     /// Lógica de interacción para RegistrarUsuario.xaml
     /// </summary>
-    public partial class RegistrarUsuarioWindow : Window, IActualizacionUI
+    public partial class RegistrarUsuarioWindow : IActualizacionUI
     {
         private Boolean esInivtado;
         private string rutaAbsolutaImagen;
@@ -101,8 +91,6 @@ namespace WpfCliente.GUI
             {
                 MessageBox.Show("No se seleccionó ninguna imagen.");
             }
-            //contadorImagen = (contadorImagen + 1) % imagenesPerfil.Length;
-            //imgPerfil.Source = new BitmapImage(new Uri(imagenesPerfil[contadorImagen], UriKind.Relative));
         }
 
 
@@ -149,14 +137,14 @@ namespace WpfCliente.GUI
                         if (resultado)
                         {
                             //TODO: Manejar el error
-                            MessageBox.Show("Acierto");
+                            VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloRegistroUsuario, Idioma.mensajeUsuarioRegistradoConExito);
                             IniciarSesion iniciarSesion = new IniciarSesion();
                             iniciarSesion.Show();
                             this.Close();
                         }
                         else
                         {
-                            MessageBox.Show("Error");
+                            VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloErrorInesperado, Idioma.mensajeErrorInesperado);
                         }
                     }
                 }
@@ -299,5 +287,4 @@ namespace WpfCliente.GUI
             }
         }
     }
-
 }

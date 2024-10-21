@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ServiceModel;
 using System.Windows;
-using UtilidadesLibreria;
 using WpfCliente.Interfaz;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
@@ -135,8 +133,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-
-                throw;
+                //TODO Manejar excepcion
             }
 
         }

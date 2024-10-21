@@ -1,14 +1,8 @@
 ﻿using System;
-using System.IO;
-using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Navigation;
-using UtilidadesLibreria;
 using WpfCliente.Interfaz;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
@@ -120,6 +114,7 @@ namespace WpfCliente.GUI
                 Singleton.Instance.IdUsuario = resultado.IdUsuario;
                 AbrirVentanaMenu();
             }
+            labelCredencialesIncorrectas.Visibility = Visibility.Visible;
             return exito;
         }
 
@@ -132,6 +127,7 @@ namespace WpfCliente.GUI
             if (result == true)
             {
                 string codigoSala = modalWindow.textBoxCodigoSala.Text;
+                SalaEspera salaEspera = new SalaEspera(codigoSala);
             }
         }
 

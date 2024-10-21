@@ -1,9 +1,5 @@
 ﻿using System;
 using Serilog;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Navigation;
 using WpfCliente.GUI;
 

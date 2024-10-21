@@ -8,7 +8,7 @@ namespace WpfCliente.GUI
     /// <summary>
     /// Interaction logic for UniserSalaModalWindow.xaml
     /// </summary>
-    public partial class UnirseSalaModalWindow : Window, IActualizacionUI
+    public partial class UnirseSalaModalWindow : IActualizacionUI
     {
         public string ValorIngresado { get; private set; }
 

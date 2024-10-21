@@ -61,17 +61,20 @@ namespace WcfServicioLibreria.Manejador
 
         public WcfServicioLibreria.Modelo.Usuario ValidarCredenciales(string gamertag, string contrasenia)
         {
-            WcfServicioLibreria.Modelo.Usuario usuario = new Modelo.Usuario();
+            WcfServicioLibreria.Modelo.Usuario usuario = null;
 
             try
             {
                 DAOLibreria.ModeloBD.Usuario usuarioConsulta = DAOLibreria.DAO.UsuarioDAO.ValidarCredenciales(gamertag, contrasenia);
-                usuario.FotoUsuario = null; //FIXME
-                usuario.Nombre = usuarioConsulta.gamertag;
-                usuario.Correo = null; //FIXME
-                usuario.ContraseniaHASH = contrasenia;
-                usuario.IdUsuario = usuarioConsulta.idUsuario;
-
+                if (usuarioConsulta != null)
+                {
+                    usuario = new WcfServicioLibreria.Modelo.Usuario(); // Instanciamos el objeto si usuarioConsulta es válido
+                    usuario.FotoUsuario = null; //FIXME
+                    usuario.Nombre = usuarioConsulta.gamertag;
+                    usuario.Correo = null; //FIXME
+                    usuario.ContraseniaHASH = contrasenia;
+                    usuario.IdUsuario = usuarioConsulta.idUsuario;
+                }
             }
             catch (Exception ex)
             {

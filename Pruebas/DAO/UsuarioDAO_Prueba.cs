@@ -127,8 +127,8 @@ namespace Pruebas.DAO
                 Assert.Fail("La BD no está configurada.");
             }
             //Debe ser un UsuarioCuenta existente en base de datos
-            string gamertagValido = "NaviKing";
-            string contraseniaValida = "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b";
+            string gamertagValido = "unaay";
+            string contraseniaValida = "b7a88e8d61d649a44848a48c8de0e6bd48d2fd4d7a61cb733301634d5eac5080";
             // Act
             Usuario usuario = DAOLibreria.DAO.UsuarioDAO.ValidarCredenciales(gamertagValido, contraseniaValida);
             // Assert

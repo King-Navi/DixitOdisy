@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using WpfCliente.Persistencia;
 
 namespace WpfCliente
 {

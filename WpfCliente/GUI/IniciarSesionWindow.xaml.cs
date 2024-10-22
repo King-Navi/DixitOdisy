@@ -1,14 +1,8 @@
 ﻿using System;
-using System.IO;
-using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Navigation;
-using UtilidadesLibreria;
 using WpfCliente.Interfaz;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
@@ -112,12 +106,16 @@ namespace WpfCliente.GUI
             bool exito = false;
             ServidorDescribelo.IServicioUsuario servicio = new ServidorDescribelo.ServicioUsuarioClient();
             string contraseniaHash = BitConverter.ToString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(textBoxContrasenia.Password))).Replace("-", "");
-            Usuario resultado = servicio.ValidarCredenciales(textBoxUsuario.Text, contraseniaHash);
-            if (resultado != null)
+            Usuario resultadoUsuario = servicio.ValidarCredenciales(textBoxUsuario.Text, contraseniaHash);
+            if (resultadoUsuario != null)
             {
                 exito = true;
                 Singleton.Instance.NombreUsuario = textBoxUsuario.Text;
-                Singleton.Instance.IdUsuario = resultado.IdUsuario;
+                Singleton.Instance.IdUsuario = resultadoUsuario.IdUsuario;
+                Singleton.Instance.FotoJugador = Imagen.ConvertirStreamABitmapImagen(resultadoUsuario.FotoUsuario);
+                Singleton.Instance.NombreUsuario = resultadoUsuario.Nombre;
+                Singleton.Instance.Correo = resultadoUsuario.Correo;
+                Singleton.Instance.ContraniaHash = resultadoUsuario.ContraseniaHASH;
                 AbrirVentanaMenu();
             }
             return exito;

@@ -8,7 +8,7 @@ namespace WcfServicioLibreria.Contratos
     public interface  IServicioUsuario
     {
         [OperationContract]
-        bool EditarUsuario(Usuario usuario);
+        bool EditarUsuario(Usuario usuarioEditado);
         void DesconectarUsuario(int idUsuario);
         bool YaIniciadoSesion(string nombreUsuario);
         [OperationContract]

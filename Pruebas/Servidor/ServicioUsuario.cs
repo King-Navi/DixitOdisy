@@ -56,9 +56,7 @@ namespace Pruebas.Servidor
             var resultado = manejador.ValidarCredenciales(gamertagInvalido, contraseniaInvalida);
 
             // Assert
-            Assert.IsNotNull(resultado, "El método debería devolver un objeto usuario, incluso si es vacío.");
-            Assert.IsNull(resultado.Nombre, "El nombre del usuario debería ser nulo o vacío.");
-            Assert.AreEqual(0, resultado.IdUsuario, "El ID del usuario debería ser 0 o un valor predeterminado.");
+            Assert.IsNull(resultado, "El método debería devolver un nulo");
         }
     }
 }

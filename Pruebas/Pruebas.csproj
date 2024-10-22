@@ -118,7 +118,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\WcfServicioLibreria.Modelo.Usuario.datasource" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAOLibreria\DAOLibreria.csproj">

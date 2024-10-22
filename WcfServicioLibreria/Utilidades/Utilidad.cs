@@ -13,6 +13,10 @@ namespace WcfServicioLibreria.Utilidades
         {
             using (MemoryStream memoriaStream = new MemoryStream())
             {
+                if (stream == null)
+                {
+                    return null;
+                }
                 stream.CopyTo(memoriaStream);
                 return memoriaStream.ToArray();
             }

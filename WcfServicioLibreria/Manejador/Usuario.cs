@@ -1,10 +1,12 @@
 ﻿using DAOLibreria.DAO;
 using DAOLibreria.ModeloBD;
 using System;
+using System.IO;
 using System.Security.Principal;
 using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
@@ -35,17 +37,39 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (CommunicationException excepcion)
             {
-                   //TODO : Manejar el error
+                //TODO : Manejar el error
             }
         }
 
-        public bool EditarUsuario(Modelo.Usuario usuario)
+        public bool EditarUsuario(Modelo.Usuario usuarioEditado)
         {
             bool resultado = false;
             try
             {
+                DAOLibreria.ModeloBD.UsuarioPerfilDTO usuarioPerfilDTO = new UsuarioPerfilDTO()
+                {
+                    IdUsuario = usuarioEditado.IdUsuario,
+                    NombreUsuario = usuarioEditado.Nombre,
+                    Correo = usuarioEditado.Correo ?? null,
+                    FotoPerfil = usuarioEditado.FotoUsuario != null ? Utilidad.StreamABytes(usuarioEditado.FotoUsuario) : null,
+                    HashContrasenia = usuarioEditado.ContraseniaHASH ?? null,
+                };
+                bool consulta = DAOLibreria.DAO.UsuarioDAO.EditarUsuario(usuarioPerfilDTO);
+                if (consulta)
+                {
+                    //jugadoresConectadosDiccionario.TryGetValue(usuarioEditado.IdUsuario, out UsuarioContexto usuario );
 
-                resultado = true;
+                    //if (usuarioEditado.Correo != null)
+                    //    ((Modelo.Usuario)usuario).Correo = usuarioEditado.Correo;
+
+                    //if (usuarioEditado.FotoPerfil != null)
+                    //    ((Modelo.Usuario)usuario).fo = usuarioEditado.FotoPerfil;
+
+                    //if (usuarioEditado.HashContrasenia != null)
+                    //    ((Modelo.Usuario)usuario).ContraseniaHASH = usuarioEditado.HashContrasenia;
+
+                    resultado = true;
+                }
             }
             catch (CommunicationException excepcion)
             {
@@ -61,17 +85,23 @@ namespace WcfServicioLibreria.Manejador
 
         public WcfServicioLibreria.Modelo.Usuario ValidarCredenciales(string gamertag, string contrasenia)
         {
-            WcfServicioLibreria.Modelo.Usuario usuario = new Modelo.Usuario();
-
+            WcfServicioLibreria.Modelo.Usuario usuario = null;
             try
             {
-                DAOLibreria.ModeloBD.Usuario usuarioConsulta = DAOLibreria.DAO.UsuarioDAO.ValidarCredenciales(gamertag, contrasenia);
-                usuario.FotoUsuario = null; //FIXME
-                usuario.Nombre = usuarioConsulta.gamertag;
-                usuario.Correo = null; //FIXME
-                usuario.ContraseniaHASH = contrasenia;
-                usuario.IdUsuario = usuarioConsulta.idUsuario;
+                DAOLibreria.ModeloBD.UsuarioPerfilDTO usuarioConsulta = DAOLibreria.DAO.UsuarioDAO.ValidarCredenciales(gamertag, contrasenia);
+                if (usuarioConsulta != null)
+                {
+                    usuario = new WcfServicioLibreria.Modelo.Usuario();
+                    if (usuarioConsulta.FotoPerfil != null && usuarioConsulta.FotoPerfil.Length > 0)
+                    {
+                        usuario.FotoUsuario = new MemoryStream(usuarioConsulta.FotoPerfil, writable: false);
+                    }
 
+                    usuario.Nombre = usuarioConsulta.NombreUsuario;
+                    usuario.Correo =usuarioConsulta.Correo; 
+                    usuario.ContraseniaHASH = usuarioConsulta.HashContrasenia;
+                    usuario.IdUsuario = usuarioConsulta.IdUsuario;
+                }
             }
             catch (Exception ex)
             {
@@ -80,6 +110,7 @@ namespace WcfServicioLibreria.Manejador
 
             return usuario;
         }
+
 
         public bool YaIniciadoSesion(string nombreUsuario)
         {

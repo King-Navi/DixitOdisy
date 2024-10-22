@@ -13,14 +13,27 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfCliente.Interfaz;
+using WpfCliente.ServidorDescribelo;
+using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class EditarPerfilWindow : Window
+    public partial class EditarPerfilWindow : Window , IActualizacionUI
     {
+        private bool cambioImagen = false;
         public EditarPerfilWindow()
         {
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             InitializeComponent();
+            CargarDatos();
+            ActualizarUI();
+        }
+
+        private void CargarDatos()
+        {
+            textBoxCorreo.Text = Singleton.Instance.Correo;
+            CargarImagen();
         }
 
         private void ClicButtonCambiarImagen(object sender, RoutedEventArgs e)
@@ -76,11 +89,89 @@ namespace WpfCliente.GUI
         {
             MessageBox.Show($"Imagen válida seleccionada: {rutaImagen}");
             // Aquí puedes asignar la imagen a un control de imagen o hacer más procesamiento
+            cambioImagen = true;
         }
         private void MostrarError(string mensaje)
         {
             //TODO: Podemos hacer una windows de advertencia o ocupar la de error
             MessageBox.Show(mensaje, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private void CargarImagen()
+        {
+            try
+            {
+                BitmapImage bitmap = Singleton.Instance.FotoJugador;
+                imageFotoJugador.Source = bitmap;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
+            }
+        }
+
+        public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
+        {
+            ActualizarUI();
+        }
+
+        public void ActualizarUI()
+        {
+            labelNombreJugador.Content = Singleton.Instance.NombreUsuario;
+        }
+
+        private void clicButtonCancelar(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void clicButtonAceptar(object sender, RoutedEventArgs e)
+        {
+            bool realizoCambios = false;
+            Usuario usuarioEditado = new Usuario();
+            if (cambioImagen)
+            {
+                usuarioEditado.FotoUsuario = Imagen.ConvertirBitmapImageAMemoryStream(imageFotoJugador.Source as BitmapImage);
+                realizoCambios = true;
+            }
+            if (!string.IsNullOrWhiteSpace(textBoxCorreo.Text)
+                || !textBoxCorreo.Text.Contains(" ")
+                || textBoxCorreo.Text != Singleton.Instance.Correo)
+            {
+                usuarioEditado.Correo = textBoxCorreo.Text;
+                realizoCambios = true;
+
+            }
+            if (textBoxContrania.Text == textBoxConfirmacionContrania.Text
+                || textBoxContrania.Text != Singleton.Instance.ContraniaHash)
+            {
+                realizoCambios = true;
+            }
+            if (realizoCambios)
+            {
+                usuarioEditado.IdUsuario = Singleton.Instance.IdUsuario;
+                var manejadorServicio = new ServicioManejador<ServicioUsuarioClient>();
+                bool  resultado = manejadorServicio.EjecutarServicio(proxy =>
+                {
+                    return proxy.EditarUsuario(usuarioEditado);
+                });
+                if (resultado)
+                {
+                    MessageBox.Show("Exito");
+
+                }
+                else
+                {
+                    MessageBox.Show("Fallo en la llamada al servidor para editar tus datos");
+
+                }
+            }
+            else 
+            {
+                MessageBox.Show("No hiciste nada");
+            
+            }
+    
         }
     }
 }

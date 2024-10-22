@@ -115,6 +115,7 @@
     <Compile Include="ModeloBD\UsuarioCuenta.cs">
       <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModeloBD\UsuarioPerfilDTO.cs" />
     <Compile Include="ModeloBD\Veto.cs">
       <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>

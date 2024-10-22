@@ -168,13 +168,7 @@ namespace WpfCliente.GUI
             {
                 //TODO: Manejar error
             }
-            finally
-            {
-                if (servicio != null)
-                {
-                    ((ICommunicationObject)servicio).Close();
-                }
-            }
+        
         }
 
         public bool ValidarCampos()

@@ -130,10 +130,10 @@ namespace Pruebas.DAO
             string gamertagValido = "NaviKing";
             string contraseniaValida = "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b";
             // Act
-            Usuario usuario = DAOLibreria.DAO.UsuarioDAO.ValidarCredenciales(gamertagValido, contraseniaValida);
+            UsuarioPerfilDTO usuario = DAOLibreria.DAO.UsuarioDAO.ValidarCredenciales(gamertagValido, contraseniaValida);
             // Assert
             Assert.IsNotNull(usuario, "El usuario debería ser retornado cuando las credenciales son válidas.");
-            Assert.AreEqual(gamertagValido, usuario.gamertag, "El gamertag del usuario retornado debería coincidir con el gamertag proporcionado.");
+            Assert.AreEqual(gamertagValido, usuario.NombreUsuario, "El gamertag del usuario retornado debería coincidir con el gamertag proporcionado.");
         }
 
         [TestMethod]
@@ -154,7 +154,7 @@ namespace Pruebas.DAO
             string contraseniaInvalida = "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4a";
 
             // Act
-            Usuario usuario = DAOLibreria.DAO.UsuarioDAO.ValidarCredenciales(gamertagValido, contraseniaInvalida);
+            UsuarioPerfilDTO usuario = DAOLibreria.DAO.UsuarioDAO.ValidarCredenciales(gamertagValido, contraseniaInvalida);
 
             // Assert
             Assert.IsNull(usuario, "No se debería retornar un usuario cuando la contraseña es incorrecta.");
@@ -176,7 +176,7 @@ namespace Pruebas.DAO
             string contrasenia = null; // No importa el hash porque el gamertag no existe.
 
             // Act
-            Usuario usuario = DAOLibreria.DAO.UsuarioDAO.ValidarCredenciales(gamertagInvalido, contrasenia);
+            UsuarioPerfilDTO usuario = DAOLibreria.DAO.UsuarioDAO.ValidarCredenciales(gamertagInvalido, contrasenia);
 
             // Assert
             Assert.IsNull(usuario, "No se debería retornar un usuario cuando el gamertag no existe en la base de datos.");

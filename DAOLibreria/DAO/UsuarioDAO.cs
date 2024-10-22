@@ -82,14 +82,10 @@ namespace DAOLibreria.DAO
             }
         }
         //FIXME
-        public static bool EditarUsuario(Usuario _usuario, UsuarioCuenta _usuarioCuenta)
+        public static bool EditarUsuario(UsuarioPerfilDTO usuarioEditado)
         {
             bool resultado = false;
-            if (_usuario == null || _usuarioCuenta == null)
-            {
-                return resultado;
-            }
-            if (_usuario.gamertag != _usuarioCuenta.gamertag)
+            if (usuarioEditado == null)
             {
                 return resultado;
             }
@@ -99,8 +95,19 @@ namespace DAOLibreria.DAO
                 {
                     try
                     {
-                        var usuario = context.Usuario.Single(b => b.idUsuario == _usuario.idUsuario);
-                        //TODO: Cambiar las cosas que digas con unaay
+                        var usuario = context.Usuario.Single(b => b.idUsuario == usuarioEditado.IdUsuario);
+                        var usuarioCuenta = context.UsuarioCuenta.Single(b => b.gamertag == usuarioEditado.NombreUsuario);
+
+                        if (usuarioEditado.Correo != null)
+                            usuario.UsuarioCuenta.correo = usuarioEditado.Correo;
+
+                        if (usuarioEditado.FotoPerfil != null)
+                            usuario.fotoPerfil = usuarioEditado.FotoPerfil;
+
+                        if (usuarioEditado.HashContrasenia != null)
+                            usuario.UsuarioCuenta.hashContrasenia = usuarioEditado.HashContrasenia;
+
+                        context.SaveChanges();
                         transaction.Commit();
                         resultado = true;
                     }
@@ -118,31 +125,36 @@ namespace DAOLibreria.DAO
             }
         }
 
-        public static Usuario ValidarCredenciales(string gamertag, string contrasenia)
+        public static UsuarioPerfilDTO ValidarCredenciales(string gamertag, string contrasenia)
         {
             UsuarioCuenta datosUsuarioCuenta = null;
             Usuario usuario = null;
+            UsuarioPerfilDTO  resultado= null;
             try
             {
                 using (var context = new DescribeloEntities())
                 {
-                    datosUsuarioCuenta = context.UsuarioCuenta.Include("Usuario").SingleOrDefault(cuenta => cuenta.gamertag == gamertag);
+                    datosUsuarioCuenta = context.UsuarioCuenta
+                                                 .Include("Usuario")
+                                                 .SingleOrDefault(cuenta => cuenta.gamertag == gamertag ); //&& contrasenia.Equals(cuenta.hashContrasenia, StringComparison.OrdinalIgnoreCase) 
+                    if (datosUsuarioCuenta != null)
+                    {
+                        var contraseniaCuenta = datosUsuarioCuenta.hashContrasenia.ToUpper();
+
+                        if (contrasenia.Equals(contraseniaCuenta, StringComparison.OrdinalIgnoreCase))
+                        {
+                            usuario = datosUsuarioCuenta.Usuario.FirstOrDefault();
+                            resultado = new UsuarioPerfilDTO(usuario, datosUsuarioCuenta);
+                        }
+                    }
                 }
             }
             catch (Exception ex)
             {
                 //TODO manejar excepcion
             }
-            if (datosUsuarioCuenta != null)
-            {
-                var contraseniaCuenta = datosUsuarioCuenta.hashContrasenia.ToUpper();
 
-                if (contrasenia.Equals(contraseniaCuenta, StringComparison.OrdinalIgnoreCase))
-                {
-                    usuario = GetUsuarioById(datosUsuarioCuenta.idUsuarioCuenta);
-                }
-            }
-            return usuario;
+            return resultado;
         }
 
         public static Usuario GetUsuarioById(int id)

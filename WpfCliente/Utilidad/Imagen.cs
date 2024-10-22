@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,11 +14,19 @@ namespace WpfCliente.Utilidad
         public static BitmapImage ConvertirStreamABitmapImagen(Stream stream)
         {
             BitmapImage bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.CacheOption = BitmapCacheOption.OnLoad;
-            bitmap.StreamSource = stream;
-            bitmap.EndInit();
-            bitmap.Freeze(); 
+            try
+            {
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.StreamSource = stream;
+                bitmap.EndInit();
+                bitmap.Freeze();
+            }
+            catch (Exception)
+            {
+
+                bitmap = null;
+            }
             return bitmap;
         }
 
@@ -39,6 +48,37 @@ namespace WpfCliente.Utilidad
             encoder.Save(memoryStream);
             memoryStream.Position = 0;
             return memoryStream;
+        }
+
+        internal static bool EsImagenValida(string rutaImagen)
+        {
+            try
+            {
+                BitmapImage bitmap = new BitmapImage();
+                using (FileStream stream = new FileStream(rutaImagen, FileMode.Open, FileAccess.Read))
+                {
+                    bitmap.BeginInit();
+                    bitmap.StreamSource = stream;
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            };
+        }
+
+        internal static string SelecionarRutaImagen()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Title = "Seleccionar una imagen",
+                Filter = "Archivos de imagen (*.jpg; *.jpeg; *.png)|*.jpg;*.jpeg;*.png"
+            };
+
+            return openFileDialog.ShowDialog() == true ? openFileDialog.FileName : null;
         }
     }
 }

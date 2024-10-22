@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using WpfCliente.Interfaz;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
@@ -105,14 +107,20 @@ namespace WpfCliente.GUI
         private bool TryIniciarSesion() {
             bool exito = false;
             ServidorDescribelo.IServicioUsuario servicio = new ServidorDescribelo.ServicioUsuarioClient();
-            string contraseniaHash = BitConverter.ToString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(textBoxContrasenia.Password))).Replace("-", "");
+            string contraseniaHash = Encriptacion.OcuparSHA256(textBoxContrasenia.Password);
             Usuario resultadoUsuario = servicio.ValidarCredenciales(textBoxUsuario.Text, contraseniaHash);
             if (resultadoUsuario != null)
             {
                 exito = true;
                 Singleton.Instance.NombreUsuario = textBoxUsuario.Text;
                 Singleton.Instance.IdUsuario = resultadoUsuario.IdUsuario;
-                Singleton.Instance.FotoJugador = Imagen.ConvertirStreamABitmapImagen(resultadoUsuario.FotoUsuario);
+                BitmapImage imagenUsuario=Imagen.ConvertirStreamABitmapImagen(resultadoUsuario.FotoUsuario);
+                if (imagenUsuario  == null)
+                {
+                    MessageBox.Show("Error al cargar su imagen poravor cambiela");
+                    this.Close();
+                }
+                Singleton.Instance.FotoJugador = imagenUsuario;
                 Singleton.Instance.NombreUsuario = resultadoUsuario.Nombre;
                 Singleton.Instance.Correo = resultadoUsuario.Correo;
                 Singleton.Instance.ContraniaHash = resultadoUsuario.ContraseniaHASH;

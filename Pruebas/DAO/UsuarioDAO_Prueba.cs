@@ -6,6 +6,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,20 +18,24 @@ namespace Pruebas.DAO
     [TestClass]
     public class UsuarioDAO_Prueba
     {
-        #region RegistrarNuevoUsuario
-        [TestMethod]
-        public void RegistrarNuevoUsuario_CuandoLosGamertagsCoinciden_DeberiaRegistrar()
+        [TestInitialize]
+        public void ConfigurarPruebas()
         {
-            // Arrange
             Dictionary<string, object> resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-");
             resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje);
             Console.WriteLine((string)mensaje);
             resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
             if ((bool)fueExitoso)
             {
-                Assert.Fail("La BD no esta configurada.");
+                Assert.Fail("La BD no está configurada.");
             }
-            var usuario = Utilidad.GenerarUsuarioDePrueba();
+        }
+        #region RegistrarNuevoUsuario
+        [TestMethod]
+        public void RegistrarNuevoUsuario_CuandoLosGamertagsCoinciden_DeberiaRegistrar()
+        {
+            // Arrange
+           var usuario = Utilidad.GenerarUsuarioDePrueba();
             var usuarioCuenta = Utilidad.GenerarUsuarioCuentaDePrueba(usuario.gamertag);
             // Act
             bool resultadoPrueba = DAOLibreria.DAO.UsuarioDAO.RegistrarNuevoUsuario(usuario, usuarioCuenta);
@@ -41,14 +46,6 @@ namespace Pruebas.DAO
         public void RegistrarNuevoUsuario_CuandoLosGamertagsNoCoinciden_DeberiaFallar()
         {
             // Arrange
-            Dictionary<string, object> resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-");
-            resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje);
-            Console.WriteLine((string)mensaje);
-            resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
-            if ((bool)fueExitoso)
-            {
-                Assert.Fail("La BD no está configurada.");
-            }
             var usuario = Utilidad.GenerarUsuarioDePrueba();
             var numeroAleatorio = new Random((int)DateTime.Now.Ticks);
             var usuarioCuenta = Utilidad.GenerarUsuarioCuentaDePrueba("JugadorPrueba" + numeroAleatorio);
@@ -61,15 +58,6 @@ namespace Pruebas.DAO
         public void RegistrarNuevoUsuario_CuandoUsuarioEsNulo_DeberiaFallar()
         {
             // Arrange
-            Dictionary<string, object> resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-");
-            resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje);
-            Console.WriteLine((string)mensaje);
-            resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
-            if ((bool)fueExitoso)
-            {
-                Assert.Fail("La BD no está configurada.");
-            }
-
             Usuario usuario = null;
             var numeroAleatorio = new Random((int)DateTime.Now.Ticks);
             var usuarioCuenta = Utilidad.GenerarUsuarioCuentaDePrueba("JugadorPrueba" + numeroAleatorio);
@@ -118,14 +106,7 @@ namespace Pruebas.DAO
         public void ValidarCredenciales_CuandoCredencialesSonValidas_DeberiaRetornarUsuario()
         {
             // Arrange
-            Dictionary<string, object> resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-");
-            resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje);
-            Console.WriteLine((string)mensaje);
-            resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
-            if ((bool)fueExitoso)
-            {
-                Assert.Fail("La BD no está configurada.");
-            }
+            
             //Debe ser un UsuarioCuenta existente en base de datos
             string gamertagValido = "NaviKing";
             string contraseniaValida = "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b";
@@ -140,14 +121,7 @@ namespace Pruebas.DAO
         public void ValidarCredenciales_CuandoContraseniaEsIncorrecta_DeberiaRetornarNull()
         {
             // Arrange
-            Dictionary<string, object> resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-");
-            resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje);
-            Console.WriteLine((string)mensaje);
-            resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
-            if ((bool)fueExitoso)
-            {
-                Assert.Fail("La BD no está configurada.");
-            }
+            
 
             //Debe ser un UsuarioCuenta NO existente en base de datos
             string gamertagValido = "NaviKing";
@@ -163,15 +137,6 @@ namespace Pruebas.DAO
         public void ValidarCredenciales_CuandoEsNulo_DeberiaRetornarNull()
         {
             // Arrange
-            Dictionary<string, object> resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-");
-            resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje);
-            Console.WriteLine((string)mensaje);
-            resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
-            if ((bool)fueExitoso)
-            {
-                Assert.Fail("La BD no está configurada.");
-            }
-
             string gamertagInvalido= null;
             string contrasenia = null; // No importa el hash porque el gamertag no existe.
 
@@ -188,16 +153,8 @@ namespace Pruebas.DAO
         public void GetUsuarioById_CuandoIdExiste_DeberiaRetornarUsuario()
         {
             // Arrange
-            Dictionary<string, object> resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-");
-            resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje);
-            Console.WriteLine((string)mensaje);
-            resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
-            if ((bool)fueExitoso)
-            {
-                Assert.Fail("La BD no está configurada.");
-            }
 
-            // Supongamos que el ID 1 corresponde a un usuario existente en la base de datos.
+            //PRE-CONDICION ID 1 corresponde a un usuario existente en la base de datos.
             int idExistente = 1;
 
             // Act
@@ -206,6 +163,137 @@ namespace Pruebas.DAO
             // Assert
             Assert.IsNotNull(usuario, "El método debería retornar un usuario cuando el ID existe.");
             Assert.AreEqual(idExistente, usuario.idUsuario, "El ID del usuario retornado debería coincidir con el ID proporcionado.");
+        }
+        #endregion
+
+        #region  
+        [TestMethod]
+        public void EditarUsuario_CuandoDatosValidos_DeberiaActualizarUsuario()
+        {
+            // Arrange
+            //Pre condicion el usuario debe existir
+            string correoAleatorio = $"unaay{new Random().Next(1000, 9999)}@ejemplo.com";
+            var usuarioEditado = new UsuarioPerfilDTO
+            {
+                IdUsuario = 4, // Un ID existente en el contexto simulado o BD de prueba
+                NombreUsuario = "unaay", //Un nombre existente en BD
+                Correo = correoAleatorio,
+                FotoPerfil = new byte[] { 0x20, 0x21, 0x22, 0x23 }, // Ejemplo de bytes para la nueva foto
+                HashContrasenia = "3E203FE617527077E6B2A2ABFF345FAC15CA2E7338A2D30BF75AD3E5F49504C1"
+            };
+
+            // Act
+            bool resultado = UsuarioDAO.EditarUsuario(usuarioEditado);
+
+            // Assert
+            Assert.IsTrue(resultado, "El método debería retornar true al actualizar el usuario con datos válidos.");
+
+            // Verificar que los cambios se aplicaron correctamente
+            using (var context = new DescribeloEntities())
+            {
+                var usuario = context.Usuario.Single(u => u.idUsuario == usuarioEditado.IdUsuario);
+                var usuarioCuenta = context.UsuarioCuenta.Single(uc => uc.gamertag == usuarioEditado.NombreUsuario);
+
+                Assert.AreEqual(usuarioEditado.Correo, usuarioCuenta.correo, "El correo del usuario debería haberse actualizado.");
+                CollectionAssert.AreEqual(usuarioEditado.FotoPerfil, usuario.fotoPerfil, "La foto de perfil debería haberse actualizado.");
+                Assert.AreEqual(usuarioEditado.HashContrasenia, usuarioCuenta.hashContrasenia, "El hash de la contraseña debería haberse actualizado.");
+            }
+        }
+        [TestMethod]
+        public void EditarUsuario_ModificacionIgual_DeberiaActualizarUsuario()
+        {
+            // Arrange
+            //Pre condicion el usuario debe existir
+            var usuarioEditado = new UsuarioPerfilDTO
+            {
+                IdUsuario = 1, // Un ID existente en el contexto simulado o BD de prueba
+                NombreUsuario = "NaviKing", //Un nombre existente en BD
+                Correo = "NaviKing24@gmail.com",
+                HashContrasenia = null,
+                FotoPerfil = null
+            };
+            string correoAnterior ;
+            byte[] fotoAnterior;
+            string gamertagUsuario;
+            string gamertagUsuarioCuenta;
+            string contraseniaAnteriror ;
+            using (var context = new DescribeloEntities())
+            {
+                var usuario = context.Usuario.Single(u => u.idUsuario == usuarioEditado.IdUsuario);
+                var usuarioCuenta = context.UsuarioCuenta.Single(uc => uc.gamertag == usuarioEditado.NombreUsuario);
+                correoAnterior = usuarioCuenta.correo;
+                fotoAnterior = usuario.fotoPerfil;
+                gamertagUsuario = usuario.gamertag;
+                gamertagUsuarioCuenta = usuarioCuenta.gamertag;
+                contraseniaAnteriror = usuarioCuenta.hashContrasenia;
+            }
+
+            // Act
+            bool resultado = UsuarioDAO.EditarUsuario(usuarioEditado);
+
+            // Assert
+            Assert.IsTrue(resultado, "El método debería retornar true al no actulizar nada.");
+
+            // Verificar que los cambios se aplicaron correctamente
+            using (var context = new DescribeloEntities())
+            {
+                var usuario = context.Usuario.Single(u => u.idUsuario == usuarioEditado.IdUsuario);
+                var usuarioCuenta = context.UsuarioCuenta.Single(uc => uc.gamertag == usuarioEditado.NombreUsuario);
+
+                Assert.AreEqual(usuarioEditado.Correo, usuarioCuenta.correo, "El correo del usuario debería haberse actualizado.");
+                CollectionAssert.AreEqual(fotoAnterior, usuario.fotoPerfil, "La foto de perfil debería ser la misma.");
+                Assert.AreEqual(contraseniaAnteriror, usuarioCuenta.hashContrasenia, "El hash de la contraseña debería ser el mismo.");
+                Assert.AreEqual(gamertagUsuario, usuario.gamertag, "El gamertag deberia ser el mismo.");
+                Assert.AreEqual(gamertagUsuarioCuenta, usuarioCuenta.gamertag, "El gamertag deberia ser el mismo.");
+            }
+        }
+        [TestMethod]
+        public void EditarUsuario_NoModificoNada_RetornaFalse()
+        {
+            // Arrange
+            //Pre condicion el usuario debe existir
+            var usuarioEditado = new UsuarioPerfilDTO
+            {
+                IdUsuario = 1, // Un ID existente en el contexto simulado o BD de prueba
+                NombreUsuario = "NaviKing", //Un nombre existente en BD
+                Correo = null,
+                HashContrasenia = null,
+                FotoPerfil = null
+            };
+            string correoAnterior ;
+            byte[] fotoAnterior;
+            string gamertagUsuario;
+            string gamertagUsuarioCuenta;
+            string contraseniaAnteriror ;
+            using (var context = new DescribeloEntities())
+            {
+                var usuario = context.Usuario.Single(u => u.idUsuario == usuarioEditado.IdUsuario);
+                var usuarioCuenta = context.UsuarioCuenta.Single(uc => uc.gamertag == usuarioEditado.NombreUsuario);
+                correoAnterior = usuarioCuenta.correo;
+                fotoAnterior = usuario.fotoPerfil;
+                gamertagUsuario = usuario.gamertag;
+                gamertagUsuarioCuenta = usuarioCuenta.gamertag;
+                contraseniaAnteriror = usuarioCuenta.hashContrasenia;
+            }
+
+            // Act
+            bool resultado = UsuarioDAO.EditarUsuario(usuarioEditado);
+
+            // Assert
+            Assert.IsFalse(resultado, "El método debería retornar true al no actulizar nada.");
+
+            // Verificar que los cambios se aplicaron correctamente
+            using (var context = new DescribeloEntities())
+            {
+                var usuario = context.Usuario.Single(u => u.idUsuario == usuarioEditado.IdUsuario);
+                var usuarioCuenta = context.UsuarioCuenta.Single(uc => uc.gamertag == usuarioEditado.NombreUsuario);
+
+                Assert.AreEqual(correoAnterior, usuarioCuenta.correo, "El correo del usuario debería ser el mismp.");
+                CollectionAssert.AreEqual(fotoAnterior, usuario.fotoPerfil, "La foto de perfil debería ser la misma.");
+                Assert.AreEqual(contraseniaAnteriror, usuarioCuenta.hashContrasenia, "El hash de la contraseña debería ser el mismo.");
+                Assert.AreEqual(gamertagUsuario, usuario.gamertag, "El gamertag deberia ser el mismo.");
+                Assert.AreEqual(gamertagUsuarioCuenta, usuarioCuenta.gamertag, "El gamertag deberia ser el mismo.");
+            }
         }
         #endregion
     }

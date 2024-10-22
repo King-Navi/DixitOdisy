@@ -38,7 +38,14 @@ namespace WpfCliente.GUI
             if (MenuVentana != null)
             {
                 editarPerfilVentana.Closed += (s, args) => {
-                    MenuVentana.Show();
+                    try
+                    {
+                        MenuVentana.Show();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                 };
                 MenuVentana.Hide();
             }

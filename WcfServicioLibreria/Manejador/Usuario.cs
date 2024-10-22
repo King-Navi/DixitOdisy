@@ -44,6 +44,17 @@ namespace WcfServicioLibreria.Manejador
         public bool EditarUsuario(Modelo.Usuario usuarioEditado)
         {
             bool resultado = false;
+            if (usuarioEditado == null
+                || usuarioEditado.IdUsuario < 0
+                || usuarioEditado.Nombre == null)
+            {
+                return resultado;
+            }
+            if (usuarioEditado.ContraseniaHASH != null)
+            {
+                if (!EsSha256Valido(usuarioEditado.ContraseniaHASH))
+                    return resultado;
+            }
             try
             {
                 DAOLibreria.ModeloBD.UsuarioPerfilDTO usuarioPerfilDTO = new UsuarioPerfilDTO()
@@ -57,6 +68,8 @@ namespace WcfServicioLibreria.Manejador
                 bool consulta = DAOLibreria.DAO.UsuarioDAO.EditarUsuario(usuarioPerfilDTO);
                 if (consulta)
                 {
+                    //TOOD: Si en memoria cargamso anteriormente valores del usuario cambiarlos por los nuevo
+                    //en teoria bo deberiamos cargar esos datos.
                     //jugadoresConectadosDiccionario.TryGetValue(usuarioEditado.IdUsuario, out UsuarioContexto usuario );
 
                     //if (usuarioEditado.Correo != null)

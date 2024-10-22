@@ -149,6 +149,7 @@
     <Compile Include="Utilidad\Conexion.cs" />
     <Compile Include="Utilidad\CambiarIdioma.cs" />
     <Compile Include="Interfaz\IActualizacionUI.cs" />
+    <Compile Include="Utilidad\Encriptacion.cs" />
     <Compile Include="Utilidad\IdiomaGuardo.cs" />
     <Compile Include="Properties\Idioma.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -161,12 +162,10 @@
     <Compile Include="GUI\IniciarSesionWindow.xaml.cs">
       <DependentUpon>IniciarSesionWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utilidad\Desechar.cs" />
     <Compile Include="Utilidad\Imagen.cs" />
     <Compile Include="Utilidad\LoggerManager.cs" />
     <Compile Include="Utilidad\ManejadorExcepciones.cs" />
     <Compile Include="Utilidad\Otros.cs" />
-    <Compile Include="Utilidad\ReleComado.cs" />
     <Compile Include="Utilidad\ServicioManejador.cs" />
     <Compile Include="Utilidad\Validacion.cs" />
     <Compile Include="Utilidad\Singleton.cs" />

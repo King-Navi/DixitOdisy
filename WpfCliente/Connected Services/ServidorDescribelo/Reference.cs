@@ -831,10 +831,10 @@ namespace WpfCliente.ServidorDescribelo {
     public interface IServicioUsuario {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/EditarUsuario", ReplyAction="http://tempuri.org/IServicioUsuario/EditarUsuarioResponse")]
-        bool EditarUsuario(WpfCliente.ServidorDescribelo.Usuario usuario);
+        bool EditarUsuario(WpfCliente.ServidorDescribelo.Usuario usuarioEditado);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/EditarUsuario", ReplyAction="http://tempuri.org/IServicioUsuario/EditarUsuarioResponse")]
-        System.Threading.Tasks.Task<bool> EditarUsuarioAsync(WpfCliente.ServidorDescribelo.Usuario usuario);
+        System.Threading.Tasks.Task<bool> EditarUsuarioAsync(WpfCliente.ServidorDescribelo.Usuario usuarioEditado);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/Ping", ReplyAction="http://tempuri.org/IServicioUsuario/PingResponse")]
         bool Ping();
@@ -876,12 +876,12 @@ namespace WpfCliente.ServidorDescribelo {
                 base(binding, remoteAddress) {
         }
         
-        public bool EditarUsuario(WpfCliente.ServidorDescribelo.Usuario usuario) {
-            return base.Channel.EditarUsuario(usuario);
+        public bool EditarUsuario(WpfCliente.ServidorDescribelo.Usuario usuarioEditado) {
+            return base.Channel.EditarUsuario(usuarioEditado);
         }
         
-        public System.Threading.Tasks.Task<bool> EditarUsuarioAsync(WpfCliente.ServidorDescribelo.Usuario usuario) {
-            return base.Channel.EditarUsuarioAsync(usuario);
+        public System.Threading.Tasks.Task<bool> EditarUsuarioAsync(WpfCliente.ServidorDescribelo.Usuario usuarioEditado) {
+            return base.Channel.EditarUsuarioAsync(usuarioEditado);
         }
         
         public bool Ping() {

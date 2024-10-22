@@ -64,7 +64,11 @@ namespace WcfServicioLibreria.Manejador
                 throw new FaultException<UsuarioFalla>(excepcion, new FaultReason("El usuario ya está conectado"));
             }
 
+
+
         }
+
+
     }
 }
 

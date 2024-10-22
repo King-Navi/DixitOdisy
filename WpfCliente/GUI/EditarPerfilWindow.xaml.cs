@@ -57,33 +57,12 @@ namespace WpfCliente.GUI
         }
         private string AbrirDialogoSeleccionImagen()
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                Title = "Seleccionar una imagen",
-                Filter = "Archivos de imagen (*.jpg; *.jpeg; *.png)|*.jpg;*.jpeg;*.png"
-            };
-
-            return openFileDialog.ShowDialog() == true ? openFileDialog.FileName : null;
+            return Imagen.SelecionarRutaImagen();
         }
 
         private bool EsImagenValida(string rutaImagen)
         {
-            try
-            {
-                BitmapImage bitmap = new BitmapImage();
-                using (FileStream stream = new FileStream(rutaImagen, FileMode.Open, FileAccess.Read))
-                {
-                    bitmap.BeginInit();
-                    bitmap.StreamSource = stream;
-                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmap.EndInit();
-                }
-                return true; 
-            }
-            catch
-            {
-                return false; 
-            }
+            return Imagen.EsImagenValida(rutaImagen);
         }
         private void ProcesarImagen(string rutaImagen)
         {
@@ -118,6 +97,9 @@ namespace WpfCliente.GUI
         public void ActualizarUI()
         {
             labelNombreJugador.Content = Singleton.Instance.NombreUsuario;
+            buttonAceptarCambio.Content = Properties.Idioma.buttonAceptar;
+            buttonCancelarCambio.Content = Properties.Idioma.buttonCancelar;
+            buttonCambiarFoto.Content = Properties.Idioma.buttonCambiarFotoPerfil;
         }
 
         private void clicButtonCancelar(object sender, RoutedEventArgs e)
@@ -129,27 +111,37 @@ namespace WpfCliente.GUI
         {
             bool realizoCambios = false;
             Usuario usuarioEditado = new Usuario();
-            if (cambioImagen)
+
+            // Verificar si hay un cambio en la imagen
+            if (cambioImagen && imageFotoJugador.Source is BitmapImage bitmapImage)
             {
-                usuarioEditado.FotoUsuario = Imagen.ConvertirBitmapImageAMemoryStream(imageFotoJugador.Source as BitmapImage);
+                usuarioEditado.FotoUsuario = Imagen.ConvertirBitmapImageAMemoryStream(bitmapImage);
                 realizoCambios = true;
             }
+
+            // Verificar cambio en el correo
             if (!string.IsNullOrWhiteSpace(textBoxCorreo.Text)
-                || !textBoxCorreo.Text.Contains(" ")
-                || textBoxCorreo.Text != Singleton.Instance.Correo)
+                && !textBoxCorreo.Text.Contains(" ")
+                && textBoxCorreo.Text != Singleton.Instance.Correo)
             {
                 usuarioEditado.Correo = textBoxCorreo.Text;
                 realizoCambios = true;
-
             }
-            if (textBoxContrania.Text == textBoxConfirmacionContrania.Text
-                || textBoxContrania.Text != Singleton.Instance.ContraniaHash)
+
+            // Verificar cambio en la contraseña
+            if (!string.IsNullOrEmpty(textBoxContrania.Text)
+                && textBoxContrania.Text == textBoxConfirmacionContrania.Text
+                && textBoxContrania.Text != Singleton.Instance.ContraniaHash)
             {
+                usuarioEditado.ContraseniaHASH = Encriptacion.OcuparSHA256(textBoxContrania.Text);
                 realizoCambios = true;
             }
+            // Si hubo cambios, asignar otros valores críticos y llamar al servicio
             if (realizoCambios)
             {
                 usuarioEditado.IdUsuario = Singleton.Instance.IdUsuario;
+                usuarioEditado.Nombre = Singleton.Instance.NombreUsuario;
+
                 var manejadorServicio = new ServicioManejador<ServicioUsuarioClient>();
                 bool  resultado = manejadorServicio.EjecutarServicio(proxy =>
                 {
@@ -157,12 +149,12 @@ namespace WpfCliente.GUI
                 });
                 if (resultado)
                 {
-                    MessageBox.Show("Exito");
-
+                    MessageBox.Show("Exito se cerrara su sesion");
+                    Application.Current.Shutdown();
                 }
                 else
                 {
-                    MessageBox.Show("Fallo en la llamada al servidor para editar tus datos");
+                    MessageBox.Show("No se editaron tus datos");
 
                 }
             }

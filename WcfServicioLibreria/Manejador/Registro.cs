@@ -43,7 +43,11 @@ namespace WcfServicioLibreria.Manejador
 
             return resultado;
         }
-
+        /// <summary>
+        /// Metodo para evaluar si cumple con nuestro criterio de encriptacion por SHA256
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <returns>Si es valio retorna true, en caso contraio false</returns>
         public bool EsSha256Valido(string hash)
         {
             return hash.Length == 64 && Regex.IsMatch(hash, @"\A\b[0-9a-fA-F]+\b\Z");

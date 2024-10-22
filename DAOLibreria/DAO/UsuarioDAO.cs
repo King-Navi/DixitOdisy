@@ -37,7 +37,7 @@ namespace DAOLibreria.DAO
             {
                 return resultado;
             }
-            using (var context = new DescribeloEntities()) 
+            using (var context = new DescribeloEntities())
             {
                 using (var transaction = context.Database.BeginTransaction())
                 {
@@ -46,7 +46,7 @@ namespace DAOLibreria.DAO
                         var usuarioCuenta = new UsuarioCuenta
                         {
                             gamertag = _usuarioCuenta.gamertag,
-                            hashContrasenia =_usuarioCuenta.hashContrasenia.ToUpper(),
+                            hashContrasenia = _usuarioCuenta.hashContrasenia.ToUpper(),
                             correo = _usuarioCuenta.correo
                         };
                         context.UsuarioCuenta.Add(usuarioCuenta);
@@ -59,10 +59,10 @@ namespace DAOLibreria.DAO
                             idUsuarioCuenta = usuarioCuenta.idUsuarioCuenta
                         };
                         context.Usuario.Add(usuario);
-                        context.SaveChanges(); 
+                        context.SaveChanges();
                         var estadisticas = new Estadisticas
                         {
-                           idUsuario = usuario.idUsuario
+                            idUsuario = usuario.idUsuario
                         };
                         context.Estadisticas.Add(estadisticas);
                         context.SaveChanges();
@@ -81,11 +81,12 @@ namespace DAOLibreria.DAO
                 return resultado;
             }
         }
-        //FIXME
         public static bool EditarUsuario(UsuarioPerfilDTO usuarioEditado)
         {
             bool resultado = false;
-            if (usuarioEditado == null)
+            if (usuarioEditado == null 
+                || usuarioEditado.IdUsuario < 0
+                || usuarioEditado.NombreUsuario == null)
             {
                 return resultado;
             }
@@ -99,17 +100,22 @@ namespace DAOLibreria.DAO
                         var usuarioCuenta = context.UsuarioCuenta.Single(b => b.gamertag == usuarioEditado.NombreUsuario);
 
                         if (usuarioEditado.Correo != null)
+                        {
                             usuario.UsuarioCuenta.correo = usuarioEditado.Correo;
-
+                            resultado = true;
+                        }
                         if (usuarioEditado.FotoPerfil != null)
+                        {
                             usuario.fotoPerfil = usuarioEditado.FotoPerfil;
-
+                            resultado = true;
+                        }
                         if (usuarioEditado.HashContrasenia != null)
+                        {
                             usuario.UsuarioCuenta.hashContrasenia = usuarioEditado.HashContrasenia;
-
+                            resultado = true;
+                        }
                         context.SaveChanges();
                         transaction.Commit();
-                        resultado = true;
                     }
                     catch (Exception excepcion)
                     {
@@ -129,14 +135,14 @@ namespace DAOLibreria.DAO
         {
             UsuarioCuenta datosUsuarioCuenta = null;
             Usuario usuario = null;
-            UsuarioPerfilDTO  resultado= null;
+            UsuarioPerfilDTO resultado = null;
             try
             {
                 using (var context = new DescribeloEntities())
                 {
                     datosUsuarioCuenta = context.UsuarioCuenta
                                                  .Include("Usuario")
-                                                 .SingleOrDefault(cuenta => cuenta.gamertag == gamertag ); //&& contrasenia.Equals(cuenta.hashContrasenia, StringComparison.OrdinalIgnoreCase) 
+                                                 .SingleOrDefault(cuenta => cuenta.gamertag == gamertag); //&& contrasenia.Equals(cuenta.hashContrasenia, StringComparison.OrdinalIgnoreCase) 
                     if (datosUsuarioCuenta != null)
                     {
                         var contraseniaCuenta = datosUsuarioCuenta.hashContrasenia.ToUpper();

@@ -225,7 +225,7 @@
   <xs:element name="EditarUsuario">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q9:Usuario" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuarioEditado" nillable="true" type="q9:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

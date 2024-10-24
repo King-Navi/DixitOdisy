@@ -73,14 +73,6 @@ namespace Pruebas.DAO
         {
             // Arrange
             //Pre-condicion: El usuario debe estar ya registrado en base de datos
-            Dictionary<string, object> resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-");
-            resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje);
-            Console.WriteLine((string)mensaje);
-            resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
-            if ((bool)fueExitoso)
-            {
-                Assert.Fail("La BD no está configurada.");
-            }
             var (usuarioExistente, usuarioCuentaExistente) = Utilidad.PrepararUsuarioExistente();
 
             var nuevoUsuario = new DAOLibreria.ModeloBD.Usuario

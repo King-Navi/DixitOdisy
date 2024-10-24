@@ -1,9 +1,11 @@
 ﻿using System.Runtime.Serialization;
+using System.ServiceModel;
 using WcfServicioLibreria.Enumerador;
 
 namespace WcfServicioLibreria.Modelo
 {
     [DataContract]
+    [KnownType(typeof(CondicionVictoriaPartida))]
     public class ConfiguracionPartida
     {
         [DataMember]

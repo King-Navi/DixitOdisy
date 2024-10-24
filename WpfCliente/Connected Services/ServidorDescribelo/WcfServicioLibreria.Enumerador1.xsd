@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Enumerador" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Enumerador" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="EstadoUsuario">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Desconectado" />
+      <xs:enumeration value="Conectado" />
+      <xs:enumeration value="Disponible" />
+      <xs:enumeration value="EnSala" />
+      <xs:enumeration value="EnPartida" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="EstadoUsuario" nillable="true" type="tns:EstadoUsuario" />
   <xs:simpleType name="EstadoAmigo">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Conectado" />

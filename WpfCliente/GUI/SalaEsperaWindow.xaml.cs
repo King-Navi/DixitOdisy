@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ServiceModel;
 using System.Windows;
 using UtilidadesLibreria;
@@ -14,6 +15,7 @@ namespace WpfCliente.GUI
     /// </summary>
     public partial class SalaEspera : Window, IActualizacionUI, IServicioSalaJugadorCallback
     {
+        public ObservableCollection<Usuario> jugadoresSala = new ObservableCollection<Usuario>();
         public SalaEspera(string idSala)
         {
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
@@ -28,6 +30,7 @@ namespace WpfCliente.GUI
                 Singleton.Instance.IdChat = idSala;
                 UnirseSala(idSala);
             }
+            DataContext = this;
         }
         private void UnirseSala(string idSala)
         {
@@ -37,7 +40,10 @@ namespace WpfCliente.GUI
                 this.Close();
                 return;
             }
-            if (!Conexion.AbrirConexionSalaJugadorCallback(this))
+            var resultadoTask = Conexion.AbrirConexionSalaJugadorCallbackAsync(this);
+            bool resultado = resultadoTask.Result;
+
+            if (!resultado)
             {
                 //NoHayConexion()
                 this.Close();
@@ -51,7 +57,7 @@ namespace WpfCliente.GUI
 
         private void UnirseChat()
         {
-            Conexion.AbrirConexionChatMotorCallback(chatUserControl);
+            Conexion.AbrirConexionChatMotorCallbackAsync(chatUserControl);
             Conexion.ChatMotor.AgregarUsuarioChat(Singleton.Instance.IdChat, Singleton.Instance.NombreUsuario);
             
         }

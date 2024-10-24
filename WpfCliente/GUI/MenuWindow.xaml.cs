@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ServiceModel;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using WpfCliente.Interfaz;
 using WpfCliente.ServidorDescribelo;
@@ -19,19 +21,33 @@ namespace WpfCliente.GUI
             AbrirConexiones();
         }
 
-        private void AbrirConexiones()
+        private async void AbrirConexiones()
         {
             try
             {
-                Conexion.AbrirConexionUsuarioSesionCallback(this);
-                Conexion.AbrirConexionAmigosCallback(amigosUserControl);
+             
+                var resultadoUsuarioSesion = await Conexion.AbrirConexionUsuarioSesionCallbackAsync(this);
 
+                var resultadoAmigo = await Conexion.AbrirConexionAmigosCallbackAsync(amigosUserControl);
+
+                if (!resultadoAmigo || !resultadoUsuarioSesion)
+                {
+                    MessageBox.Show("Error al conctase al servidor");
+                    this.Close();
+                }
                 ///TODO: Este debe ser el id de usuario (esto esta hecho para pruebas cambiar a una variable en despliegue)
-                Usuario user = new Usuario();
-                user.IdUsuario = Singleton.Instance.IdUsuario;
-                user.Nombre = Singleton.Instance.NombreUsuario;
-                Conexion.UsuarioSesion.ObtenerSessionJugador(user);
+                Usuario user = new Usuario
+                {
+                    IdUsuario = Singleton.Instance.IdUsuario,
+                    Nombre = Singleton.Instance.NombreUsuario
+                };
+                // Ejecutamos las operaciones adicionales en tareas separadas
+                var taskObtenerSesion = Task.Run(() => Conexion.UsuarioSesion.ObtenerSessionJugadorAsync(user));
+                await Task.WhenAll(taskObtenerSesion);
+                Thread.Sleep(10000);
                 Conexion.Amigos.AbrirCanalParaPeticiones(user);
+
+                // Esperamos a que ambas tareas se completen
             }
             catch (Exception excepcion)
             {
@@ -97,7 +113,6 @@ namespace WpfCliente.GUI
                 //TODO: I18N
                 MessageBox.Show("No se ingresó ningún valor.");
             }
-
 
             return valorObtenido;
         }

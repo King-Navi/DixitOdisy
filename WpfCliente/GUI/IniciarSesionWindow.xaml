@@ -87,7 +87,7 @@
             <Border CornerRadius="10" BorderThickness="1" BorderBrush="Transparent" Margin="416,130,410,377" Grid.Row="2" >
                 <PasswordBox x:Name="textBoxContrasenia" MaxLength="20"  FontSize="22" FontFamily="Lucida Sans Unicode Bold" 
                              Foreground="Black" VerticalContentAlignment="Center" BorderBrush="Transparent" 
-                             Background="Transparent"  />
+                             Background="Transparent" KeyDown="passwordBoxKeyDown"  />
             </Border>
 
             <Button x:Name="buttonOlvidarContrasenia" Margin="413,181,631,351" Grid.Row="2" Foreground="#8dadb6" Background="Transparent" BorderThickness="0" Cursor="Hand"/>

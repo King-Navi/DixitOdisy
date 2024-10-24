@@ -14,7 +14,6 @@ namespace WcfServicioLibreria.Contratos
     public interface IServicioPartida
     {
         [OperationContract]
-        [ServiceKnownType(typeof(CondicionVictoriaPartida))]
         string ComenzarPartidaAnfrition(string nombre, ConfiguracionPartida configuracion);
         [OperationContract]
         void UniserPartida(string idPartida);

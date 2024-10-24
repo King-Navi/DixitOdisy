@@ -35,16 +35,14 @@ namespace WpfCliente.GUI
         private void ClicButtonAceptar(object sender, RoutedEventArgs e)
         {
             ValorIngresado = textBoxCodigoSala.Text.ToUpper();
-            
-            SalaEspera salaWindow = new SalaEspera(ValorIngresado);
-            salaWindow.Show();
-
-            foreach (Window window in Application.Current.Windows)
+            if (!string.IsNullOrWhiteSpace(ValorIngresado))
             {
-                if (window != salaWindow) // No cerrar la nueva ventana
-                {
-                    window.Close();
-                }
+                DialogResult = true;
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Por favor, ingresa un valor válido.");
             }
         }
     }

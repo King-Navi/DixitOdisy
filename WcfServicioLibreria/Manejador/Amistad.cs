@@ -1,10 +1,13 @@
 ﻿using DAOLibreria.DAO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Remoting.Contexts;
 using System.ServiceModel;
+using System.ServiceModel.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -62,83 +65,132 @@ namespace WcfServicioLibreria.Manejador
 
 
 
-        public void AbrirCanalParaPeticiones(Usuario _usuario)
+        public  void AbrirCanalParaPeticiones(Usuario _usuarioRemitente)
         {
             try
             {
-                IServicioAmistadCallBack contexto =contextoOperacion.GetCallbackChannel<IServicioAmistadCallBack>();
-                List<DAOLibreria.ModeloBD.Usuario> usuarios = AmistadDAO.RecuperarListaAmigos(_usuario.IdUsuario);
-                List<Amigo> amigos = new List<Amigo>();
-                foreach (DAOLibreria.ModeloBD.Usuario usuario in usuarios)
+                IAmistadCallBack contextoRemitente = contextoOperacion.GetCallbackChannel<IAmistadCallBack>();
+                jugadoresConectadosDiccionario.TryGetValue(_usuarioRemitente.IdUsuario, out UsuarioContexto remitente);
+                lock (remitente)
+                {
+                    remitente.AmistadSesionCallBack = contextoRemitente;
+                }
+                //TODO:Talvez esto se pueda dividir en otra llamada, para mejorar la lectura
+                List<Usuario> amigosConetados= EnviarListaAmigos(_usuarioRemitente , contextoRemitente);
+                foreach (var usuarioDestino in amigosConetados)
+                {
+                    AmigoConetado(_usuarioRemitente, usuarioDestino);
+                }
+            }
+            catch (Exception)
+            {
+                jugadoresConectadosDiccionario.TryGetValue(_usuarioRemitente.IdUsuario, out UsuarioContexto remitente);
+                if (remitente != null)
+                lock (remitente)
+                {
+                    remitente.AmistadSesionCallBack = null;
+                }
+                throw;
+            }
+            return;
+        }
+
+        private List<Usuario> EnviarListaAmigos(Usuario usuario, IAmistadCallBack contextoRemitente)
+        {
+            try
+            {
+                List<DAOLibreria.ModeloBD.Usuario> usuariosModeloBaseDatos = AmistadDAO.RecuperarListaAmigos(usuario.IdUsuario);
+                List<Usuario> usuariosModeloWCF = new List<Usuario>();
+                foreach (DAOLibreria.ModeloBD.Usuario amigoDestinario in usuariosModeloBaseDatos)
                 {
                     EstadoAmigo estadoJugador;
-                    if (jugadoresConectadosDiccionario.ContainsKey(usuario.idUsuario))
+
+                    if (jugadoresConectadosDiccionario.ContainsKey(amigoDestinario.idUsuario))
                     {
-                        AmigoConetado(_usuario, usuario);
                         estadoJugador = EstadoAmigo.Conectado;
 
                     }
-                    else 
+                    else
                     {
                         estadoJugador = EstadoAmigo.Desconectado;
                     }
-                    amigos.Add(new Amigo()
+                    Amigo amigo = new Amigo()
                     {
-                        Nombre = usuario.gamertag,
-                        Estado = estadoJugador
-                    });
+                        Nombre = amigoDestinario.gamertag,
+                        Estado = estadoJugador,
+                        Foto = new MemoryStream(amigoDestinario.fotoPerfil)
+                    };
+                    
+                    contextoRemitente.ObtenerAmigoCallback(amigo);
+                    if (amigo.Estado == EstadoAmigo.Conectado)
+                    {
+                        Usuario usuarioModeloWCF = new Usuario()
+                        {
+                            IdUsuario = amigoDestinario.idUsuario,
+                            //FotoUsuario = new MemoryStream(amigoDestinario.fotoPerfil),
+                            Nombre = amigoDestinario.gamertag,
+                            EstadoJugador = amigo.Estado == EstadoAmigo.Conectado ? EstadoUsuario.Conectado : EstadoUsuario.Desconectado
+                        };
+                        usuariosModeloWCF.Add(usuarioModeloWCF);
+                    }
                 }
-                contexto.ObtenerListaAmigoCallback(amigos);
-            }
-            catch (CommunicationException excepcion)
-            { 
-            
-            }
 
+                return usuariosModeloWCF;
+            }
+            catch (Exception excepcion)
+            {
+                Console.Error.WriteLine(excepcion.Message);
+                Console.WriteLine(excepcion.StackTrace);
+                throw;
+            }
         }
+
         /// <summary>
         /// 
         /// </summary>
         /// <ref>https://learn.microsoft.com/en-us/dotnet/api/system.windows.weakeventmanager?view=windowsdesktop-8.0</ref>
         /// <param name="_remitente"></param>
         /// <param name="_destinatario"></param>
-        //TODO: este metodo puede fallar al ser async, si un usuario se desconecta o los rescursos no estan disponibles puede haber problemas
-        private async void AmigoConetado(Usuario _remitente, DAOLibreria.ModeloBD.Usuario _destinatario)
+        private void AmigoConetado(Usuario _remitente, Usuario _destinatario)
         {
             try
             {
-                jugadoresConectadosDiccionario.TryGetValue(_remitente.IdUsuario, out UsuarioContexto remitente);
-                jugadoresConectadosDiccionario.TryGetValue(_destinatario.idUsuario, out UsuarioContexto destinatario);
-
-                lock (remitente)
+                if (jugadoresConectadosDiccionario.TryGetValue(_remitente.IdUsuario, out UsuarioContexto remitente)
+                    && jugadoresConectadosDiccionario.TryGetValue(_destinatario.IdUsuario, out UsuarioContexto destinatario))
                 {
-                    lock (destinatario)
                     {
-                        //FIXME: No se me ocurrio otra idea mas que ocupar weakEventManager, se tiene que evaluar una mejor manera estar guardando evento/delegados puede no ser eficiente
-                        //WeakEventManager<UsuarioContexto, EventArgs>.AddHandler(remitente, "DesconexionManejadorEvento", destinatario.ActualizarAmigo);
-                        //WeakEventManager<UsuarioContexto, EventArgs>.AddHandler(destinatario, "DesconexionManejadorEvento", remitente.ActualizarAmigo);
-                        EventHandler desconexionHandlerRemitente = null;
-                        EventHandler desconexionHandlerDestinatario = null;
-                        desconexionHandlerRemitente = (sender, e) =>
+                        lock (remitente)
                         {
-                            destinatario.ActualizarAmigo(sender, e);
-                            remitente.DesconexionManejadorEvento -= desconexionHandlerRemitente;
-                        };
+                            lock (destinatario)
+                            {
+                                EventHandler desconexionHandlerRemitente = null;
+                                EventHandler desconexionHandlerDestinatario = null;
+                                desconexionHandlerRemitente = (sender, e) =>
+                                {
+                                    destinatario.AmigoDesconectado(remitente, new UsuarioDesconectadoEventArgs(((Usuario)remitente).Nombre, DateTime.Now));
+                                    remitente.DesconexionManejadorEvento -= desconexionHandlerRemitente;
+                                };
 
-                        desconexionHandlerDestinatario = (sender, e) =>
-                        {
-                            remitente.ActualizarAmigo(sender, e);
-                            destinatario.DesconexionManejadorEvento -= desconexionHandlerDestinatario;
-                        };
-                        remitente.DesconexionManejadorEvento += desconexionHandlerRemitente;
-                        destinatario.DesconexionManejadorEvento += desconexionHandlerDestinatario;
+                                desconexionHandlerDestinatario = (sender, e) =>
+                                {
+                                    remitente.AmigoDesconectado(destinatario, new UsuarioDesconectadoEventArgs(((Usuario)destinatario).Nombre, DateTime.Now));
+                                    destinatario.DesconexionManejadorEvento -= desconexionHandlerDestinatario;
+                                };
+
+                                remitente.DesconexionManejadorEvento += desconexionHandlerRemitente;
+                                destinatario.DesconexionManejadorEvento += desconexionHandlerDestinatario;
+
+                                remitente.EnviarAmigoActulizadoCallback(new Amigo(((Usuario)destinatario).Nombre, EstadoAmigo.Conectado));
+                                destinatario.EnviarAmigoActulizadoCallback(new Amigo(((Usuario)remitente).Nombre, EstadoAmigo.Conectado));
+                            }
+                        }
                     }
                 }
             }
             catch (Exception)
             {
 
-                
+
             }
         }
 

@@ -14,19 +14,19 @@ namespace WpfCliente.Utilidad
         public static ServicioSalaJugadorClient SalaJugador { get; private set; }
         public static ServicioChatMotorClient ChatMotor{ get; private set; }
         public static ServicioAmistadClient Amigos { get; private set; }
-        public static bool AbrirConexionUsuarioSesionCallback(IServicioUsuarioSesionCallback callback)
+        public static Task<bool> AbrirConexionUsuarioSesionCallbackAsync(IServicioUsuarioSesionCallback callback)
         {
-            bool resultado = false;
+            Task<bool> resultado = Task.FromResult(false); 
             if (UsuarioSesion != null)
             {
-                resultado = true;
+                resultado = Task.FromResult(true);
             }
             else
             {
                 try
                 {
                     UsuarioSesion = new ServicioUsuarioSesionClient(new System.ServiceModel.InstanceContext(callback));
-                    resultado = true;
+                    resultado = Task.FromResult(true);
                 }
                 catch (Exception)
                 {
@@ -35,19 +35,19 @@ namespace WpfCliente.Utilidad
             }
             return resultado;
         }
-        public static bool AbrirConexionSalaJugadorCallback(IServicioSalaJugadorCallback callback)
+        public static Task<bool> AbrirConexionSalaJugadorCallbackAsync(IServicioSalaJugadorCallback callback)
         {
-            bool resultado = false;
+            Task<bool> resultado = Task.FromResult(false);
             if (SalaJugador != null)
             {
-                resultado = true;
+                resultado = Task.FromResult(true);
             }
             else
             {
                 try
                 {
                     SalaJugador = new ServicioSalaJugadorClient(new System.ServiceModel.InstanceContext(callback));
-                    resultado = true;
+                    resultado = Task.FromResult(true);
                 }
                 catch (Exception)
                 {
@@ -56,19 +56,19 @@ namespace WpfCliente.Utilidad
             }
             return resultado;
         }
-        public static bool AbrirConexionChatMotorCallback(IServicioChatMotorCallback callback)
+        public static Task<bool> AbrirConexionChatMotorCallbackAsync(IServicioChatMotorCallback callback)
         {
-            bool resultado = false;
+            Task<bool> resultado = Task.FromResult(false);
             if (ChatMotor != null)
             {
-                resultado = true;
+                resultado = Task.FromResult(true);
             }
             else
             {
                 try
                 {
                     ChatMotor = new ServicioChatMotorClient(new System.ServiceModel.InstanceContext(callback));
-                    resultado = true;
+                    resultado = Task.FromResult(true);
                 }
                 catch (Exception)
                 {
@@ -77,19 +77,19 @@ namespace WpfCliente.Utilidad
             }
             return resultado;
         }
-        public static bool AbrirConexionAmigosCallback(IServicioAmistadCallback callback)
+        public static Task<bool> AbrirConexionAmigosCallbackAsync(IServicioAmistadCallback callback)
         {
-            bool resultado = false;
+            Task<bool> resultado = Task.FromResult(false);
             if (Amigos != null)
             {
-                resultado = true;
+                resultado = Task.FromResult(true);
             }
             else
             {
                 try
                 {
                     Amigos = new ServicioAmistadClient(new System.ServiceModel.InstanceContext(callback));
-                    resultado = true;
+                    resultado = Task.FromResult(true);
                 }
                 catch (Exception)
                 {

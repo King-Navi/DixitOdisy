@@ -29,8 +29,7 @@ namespace WpfCliente.GUI
     /// <ref>https://learn.microsoft.com/es-es/dotnet/desktop/wpf/data/?view=netdesktop-8.0</ref>
     public partial class ListaAmigosUserControl : UserControl, IServicioAmistadCallback
     {
-        //Aqui se deberia colocar el modelo friend
-        private ObservableCollection<Amigo> amigos;
+        public ObservableCollection<Amigo> Amigos { get; set; } = new ObservableCollection<Amigo>();
         private bool desechado = false;
         private DispatcherTimer timer;
         private DateTime ultimaActualizacion;
@@ -69,6 +68,7 @@ namespace WpfCliente.GUI
                 timer.Stop();
                 timer.Tick -= HoraActual;
                 timer = null;
+                LimpiarItemsControl();
             }
             desechado = true;
         }
@@ -84,40 +84,42 @@ namespace WpfCliente.GUI
             throw new NotImplementedException();
         }
 
-        public void ObtenerListaAmigoCallback(Amigo[] amigos)
+        public void ObtenerAmigoCallback(Amigo amigo)
         {
-            if (amigos == null)
+            if (amigo == null)
             {
-                //TODO: manejar que pasa si no se pueden cargar datos o no tiene amigos
                 MessageBox.Show("No se pudo cargar los datos de tus amigos");
             }
-            LimpiarItemsControl();
-            AgregarAmigos(amigos);
+            else
+            {
+                // Agregar el amigo a la colección ObservableCollection, esto actualizará automáticamente el ItemsControl
+                Amigos.Add(amigo);
+            }
         }
 
-        private void AgregarAmigos(IEnumerable<Amigo> amigos)
-        {
-            //Fixme Verificar que datos se deben poner
-            foreach (var amigo in amigos)
-            {
-                var amigoControl = new AmigoUserControl
-                {
-                    DataContext = amigo
-                };
-                itemsControlAmigos.Items.Add(amigoControl);
-            }
-
-            for (int i = 0; i < 20; i++)
-            {
-                itemsControlAmigos.Items.Add(new AmigoUserControl("Nombre inventado", "Haciendo algo") );
-
-            }
-
-
-        }
         private void LimpiarItemsControl()
         {
-            itemsControlAmigos.Items.Clear();
+            Amigos.Clear();
+        }
+
+        public void CambiarEstadoAmigo(Amigo amigo)
+        {
+            var amigoExistente = Amigos.FirstOrDefault(a => a.Nombre == amigo.Nombre);
+            if (amigoExistente != null)
+            {
+                // Actualizar las propiedades del amigo encontrado
+                amigoExistente.Estado = amigo.Estado;
+                amigoExistente.Foto = amigo.Foto;
+
+                // más propiedades que actualizar aquí
+
+                // Notificar cambios en la colección
+                // Si la clase Amigo implementa INotifyPropertyChanged, el ItemsControl se actualizará automáticamente. (Amigo es partial de WCF y parece que a la implemeta ¿¿??)
+            }
+            else
+            {
+                MessageBox.Show("El amigo no se encontró en la lista.");
+            }
         }
     }
 }

@@ -2,6 +2,8 @@
 using System.IO;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
+using System.ServiceModel;
+using WcfServicioLibreria.Enumerador;
 
 namespace WcfServicioLibreria.Modelo
 {
@@ -12,6 +14,7 @@ namespace WcfServicioLibreria.Modelo
     [KnownType(typeof(Stream))]
     [KnownType(typeof(FileStream))]
     [KnownType(typeof(MemoryStream))]
+    [KnownType(typeof(EstadoUsuario))]
 
     public class Usuario : UsuarioContexto
     {
@@ -34,6 +37,7 @@ namespace WcfServicioLibreria.Modelo
         public string Correo { get => correo; set => correo = value; }
         [DataMember]
         public Stream FotoUsuario { get => fotoUsuario; set => fotoUsuario = value; }
+        public EstadoUsuario EstadoJugador { get => estadoJugador; set => estadoJugador = value; }
 
         #endregion Propiedades
 

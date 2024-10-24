@@ -84,21 +84,27 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import namespace="http://tempuri.org/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Enumerador" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.IO" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Enumerador" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IServicioAmistad_AbrirCanalParaPeticiones_InputMessage">
     <wsdl:part name="parameters" element="tns:AbrirCanalParaPeticiones" />
   </wsdl:message>
-  <wsdl:message name="IServicioAmistad_ObtenerListaAmigoCallback_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ObtenerListaAmigoCallback" />
+  <wsdl:message name="IServicioAmistad_CambiarEstadoAmigo_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:CambiarEstadoAmigo" />
   </wsdl:message>
-  <wsdl:message name="IServicioAmistad_ObtenerListaAmigoCallback_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ObtenerListaAmigoCallbackResponse" />
+  <wsdl:message name="IServicioAmistad_CambiarEstadoAmigo_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:CambiarEstadoAmigoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioAmistad_ObtenerAmigoCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerAmigoCallback" />
+  </wsdl:message>
+  <wsdl:message name="IServicioAmistad_ObtenerAmigoCallback_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerAmigoCallbackResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioAmistad_ObtenerPeticionAmistadCallback_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ObtenerPeticionAmistadCallback" />
@@ -227,9 +233,13 @@
     <wsdl:operation name="AbrirCanalParaPeticiones">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticiones" message="tns:IServicioAmistad_AbrirCanalParaPeticiones_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ObtenerListaAmigoCallback">
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/ObtenerListaAmigoCallback" message="tns:IServicioAmistad_ObtenerListaAmigoCallback_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/ObtenerListaAmigoCallbackResponse" message="tns:IServicioAmistad_ObtenerListaAmigoCallback_InputCallbackMessage" />
+    <wsdl:operation name="CambiarEstadoAmigo">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/CambiarEstadoAmigo" message="tns:IServicioAmistad_CambiarEstadoAmigo_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/CambiarEstadoAmigoResponse" message="tns:IServicioAmistad_CambiarEstadoAmigo_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerAmigoCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/ObtenerAmigoCallback" message="tns:IServicioAmistad_ObtenerAmigoCallback_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/ObtenerAmigoCallbackResponse" message="tns:IServicioAmistad_ObtenerAmigoCallback_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="ObtenerPeticionAmistadCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/ObtenerPeticionAmistadCallback" message="tns:IServicioAmistad_ObtenerPeticionAmistadCallback_OutputCallbackMessage" />
@@ -341,8 +351,17 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
-    <wsdl:operation name="ObtenerListaAmigoCallback">
-      <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/ObtenerListaAmigoCallback" style="document" />
+    <wsdl:operation name="CambiarEstadoAmigo">
+      <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/CambiarEstadoAmigo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerAmigoCallback">
+      <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/ObtenerAmigoCallback" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

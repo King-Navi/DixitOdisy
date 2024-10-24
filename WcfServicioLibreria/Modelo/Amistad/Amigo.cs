@@ -1,10 +1,13 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Runtime.Serialization;
 using WcfServicioLibreria.Enumerador;
 namespace WcfServicioLibreria.Modelo
 {
     [DataContract]
+    [KnownType(typeof(Stream))]
+    [KnownType(typeof(FileStream))]
+    [KnownType(typeof(MemoryStream))]
+    [KnownType(typeof(EstadoAmigo))]
     public class Amigo
     {
         [DataMember]

@@ -4,6 +4,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using WpfCliente.Interfaz;
 using WpfCliente.ServidorDescribelo;
@@ -146,6 +148,14 @@ namespace WpfCliente.GUI
             MenuWindow nuevaVentana = new MenuWindow();
             nuevaVentana.Show();
             this.Close();
+        }
+
+        private void passwordBoxKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                buttonIniciarSesion.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            }
         }
     }
 }

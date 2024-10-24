@@ -17,17 +17,39 @@
                 <Label x:Name="labelHora" d:Content="Son las 18:17" Unloaded="Cerrado"/>
             </StackPanel>
             <!--Contenido-->
-            <Grid>
+            <!--<Grid>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <ItemsControl x:Name="itemsControlAmigos" Background="DarkGray">
-                        <!-- El ItemsPanel organiza los elementos -->
+                        --><!-- El ItemsPanel organiza los elementos --><!--
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 
                                 <StackPanel Orientation="Vertical" HorizontalAlignment="Left" />
                             </ItemsPanelTemplate>
+                            
                         </ItemsControl.ItemsPanel>
                         <d:Grid Height="80" Width="190" d:Background="Azure"></d:Grid>
+                    </ItemsControl>
+                    
+                </ScrollViewer>
+            </Grid>-->
+            <!--Contenido-->
+            <Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl x:Name="itemsControlAmigos" Background="DarkGray" ItemsSource="{Binding Amigos}">
+                        <!-- El ItemsPanel organiza los elementos -->
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <!-- DataTemplate para los elementos del ItemsControl -->
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <!-- Aquí se muestra el AmigoUserControl con el DataContext correspondiente -->
+                                <local:AmigoUserControl DataContext="{Binding}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
             </Grid>

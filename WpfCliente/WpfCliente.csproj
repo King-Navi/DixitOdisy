@@ -127,6 +127,9 @@
     <Compile Include="GUI\ListaAmigosUserControl.xaml.cs">
       <DependentUpon>ListaAmigosUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\ListaUsuariosSalaUserControl.xaml.cs">
+      <DependentUpon>ListaUsuariosSalaUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\MenuWindow.xaml.cs">
       <DependentUpon>MenuWindow.xaml</DependentUpon>
     </Compile>
@@ -142,9 +145,13 @@
     <Compile Include="GUI\UnirseSalaModalWindow.xaml.cs">
       <DependentUpon>UnirseSalaModalWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\UsuarioUserControl.xaml.cs">
+      <DependentUpon>UsuarioUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\VentanaEmergente.xaml.cs">
       <DependentUpon>VentanaEmergente.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilidad\Amigo.cs" />
     <Compile Include="Utilidad\ChatMensaje.cs" />
     <Compile Include="Utilidad\Conexion.cs" />
     <Compile Include="Utilidad\CambiarIdioma.cs" />
@@ -269,6 +276,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\ListaUsuariosSalaUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\MenuWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -289,6 +300,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\UnirseSalaModalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\UsuarioUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

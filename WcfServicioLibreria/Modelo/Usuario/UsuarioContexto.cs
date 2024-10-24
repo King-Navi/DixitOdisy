@@ -19,6 +19,7 @@ namespace WcfServicioLibreria.Modelo
         protected String nombre;
         private bool desechado = false;
         public IUsuarioSesionCallback UsuarioSesionCallBack { get; set; }
+        public IAmistadCallBack AmistadSesionCallBack { get; set; }
         public EventHandler CerrandoEvento { get; set; }
         public EventHandler CerradoEvento { get; set; }
         public EventHandler FalloEvento { get; set; }
@@ -32,7 +33,7 @@ namespace WcfServicioLibreria.Modelo
             DesconexionManejadorEvento?.Invoke(idUsuario, new UsuarioDesconectadoEventArgs(nombre, DateTime.Now, idUsuario));
         }
         //FIXME
-        public void ActualizarAmigo(object sender, EventArgs e)
+        public void AmigoDesconectado(object sender, EventArgs e)
         {
             var desconectadoArgs = e as UsuarioDesconectadoEventArgs;
             if (desconectadoArgs != null)
@@ -42,9 +43,16 @@ namespace WcfServicioLibreria.Modelo
                     Nombre = desconectadoArgs.NombreUsuario,
                     Estado = desconectadoArgs.EstadoAmigo
                 };
-                ActulizarAmigoManejadorEvento?.Invoke(this, new ActualizarAmgioEventArgs(amigo, DateTime.Now));
+                AmistadSesionCallBack.CambiarEstadoAmigo(amigo);
             }
         }
+
+        public void EnviarAmigoActulizadoCallback(Amigo amigo)
+        {
+            AmistadSesionCallBack.CambiarEstadoAmigo(amigo);
+
+        }
+
         /// <summary>
         /// Libera recursos que de otra manera no serian liberados
         /// </summary>

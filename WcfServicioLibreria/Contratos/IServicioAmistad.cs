@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Enumerador;
@@ -6,21 +9,19 @@ using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Contratos
 {
-    [ServiceContract(CallbackContract = typeof(IServicioAmistadCallBack))]
+    [ServiceContract(CallbackContract = typeof(IAmistadCallBack))]
     public interface IServicioAmistad
     {
         [OperationContract(IsOneWay = true)]
-        [ServiceKnownType(typeof(EstadoAmigo))]
-        [ServiceKnownType(typeof(List<Amigo>))]
         void AbrirCanalParaPeticiones(Usuario usuario);
     }
     [ServiceContract]
-    public interface IServicioAmistadCallBack
+    public interface IAmistadCallBack
     {
         [OperationContract]
-        [ServiceKnownType(typeof(EstadoAmigo))]
-        [ServiceKnownType(typeof(List<Amigo>))]
-        void ObtenerListaAmigoCallback(List<Amigo> amigos);
+        void CambiarEstadoAmigo(Amigo amigo);
+        [OperationContract]
+        void ObtenerAmigoCallback(Amigo amigo);
         [OperationContract]
         void ObtenerPeticionAmistadCallback(SolicitudAmistad nuevaSolicitudAmistad);
     }

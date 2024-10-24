@@ -169,6 +169,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ¿No recibiste el código? Volver a enviar.
+        /// </summary>
+        public static string buttonenviarCodigoNuevamente {
+            get {
+                return ResourceManager.GetString("buttonenviarCodigoNuevamente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Expulsar.
         /// </summary>
         public static string buttonExpulsar {
@@ -390,6 +399,15 @@ namespace WpfCliente.Properties {
         public static string labelCorreoE {
             get {
                 return ResourceManager.GetString("labelCorreoE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese el código que le enviamos a su correo.
+        /// </summary>
+        public static string labelIngresarCodigoCorreo {
+            get {
+                return ResourceManager.GetString("labelIngresarCodigoCorreo", resourceCulture);
             }
         }
         
@@ -705,6 +723,15 @@ namespace WpfCliente.Properties {
         public static string tituloErrorServidor {
             get {
                 return ResourceManager.GetString("tituloErrorServidor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingresar código.
+        /// </summary>
+        public static string tituloIngresarCodigoCorreo {
+            get {
+                return ResourceManager.GetString("tituloIngresarCodigoCorreo", resourceCulture);
             }
         }
         

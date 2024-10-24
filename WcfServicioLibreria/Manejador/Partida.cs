@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
@@ -18,7 +19,7 @@ namespace WcfServicioLibreria.Manejador
             try
             {
                 IPartidaCallabck usuarioSolicitante = contextoOperacion.GetCallbackChannel<IPartidaCallabck>();
-                string idPartida = GenerarIdUnico();
+                string idPartida = Utilidad.GenerarIdUnico();
                 Partida partida = new Partida(idPartida, nombre, configuracion);
                 //TODO realmnete aqui deberia ir configuraciones de partida
                 partidasdDiccionario.TryAdd(idPartida, partida);

@@ -47,7 +47,7 @@ namespace WpfCliente.GUI
             labelContrasenia.Content = Properties.Idioma.labelContrasenia;
             labelGamertag.Content = Properties.Idioma.labelUsuario;
             labelCorreo.Content = Properties.Idioma.labelCorreoE;
-            labelFotoPerfil.Content = Properties.Idioma.labelSeleccionarFotoPerfil; 
+            labelFotoPerfil.Content = Properties.Idioma.labelSeleccionarFotoPerfil;
 
             labelCamposObligatorios.Inlines.Clear();
             labelCamposObligatorios.Inlines.Add(new Run("*") { Foreground = Brushes.Red });
@@ -107,8 +107,16 @@ namespace WpfCliente.GUI
         {
             if (ValidarCampos() && rutaAbsolutaImagen != null)
             {
+                VerificarCorreo();
                 RegistrarUsuario();
             }
+        }
+
+        private void VerificarCorreo()
+        {
+            //AbrirVentanaModal();
+            //ServidorDescribelo.IServicioCorreo servicio = new ServidorDescribelo.ServicioCorreoClient();
+            
         }
 
         private async void RegistrarUsuario()
@@ -135,7 +143,7 @@ namespace WpfCliente.GUI
                         fileStream.CopyTo(memoryStream);
                         memoryStream.Position = 0; // Restablecer la posición al inicio del MemoryStream
 
-                        
+
                         // Llamar al servicio con el MemoryStream
                         bool resultado = servicio.RegistrarUsuario(new Usuario()
                         {
@@ -158,9 +166,6 @@ namespace WpfCliente.GUI
                         }
                     }
                 }
-
-
-
             }
             catch (Exception e)
             {
@@ -173,6 +178,26 @@ namespace WpfCliente.GUI
             buttonRegistrarUsuario.IsEnabled = habilitado;
             buttonCambiarFoto.IsEnabled = habilitado;
             //TODO desuscribir del evento y suscribirse en otro momento miImagen.mouseLeftButtonDown -= event;
+        }
+
+        private string AbrirVentanaModal()
+        {
+            string valorObtenido = null;
+            VerificarCorreoModalWindow ventanaModal = new VerificarCorreoModalWindow();
+            ventanaModal.Owner = this;
+            bool? resultado = ventanaModal.ShowDialog();
+
+            if (resultado == true)
+            {
+                valorObtenido = ventanaModal.ValorIngresado;
+            }
+            else
+            {
+                //TODO: I18N
+                MessageBox.Show("No se ingresó ningún valor.");
+            }
+
+            return valorObtenido;
         }
 
         public bool ValidarCampos()

@@ -148,6 +148,9 @@
     <Compile Include="GUI\VentanaEmergente.xaml.cs">
       <DependentUpon>VentanaEmergente.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\VerificarCorreoModalWindow.xaml.cs">
+      <DependentUpon>VerificarCorreoModalWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilidad\Amigo.cs" />
     <Compile Include="Utilidad\ChatMensaje.cs" />
     <Compile Include="Utilidad\Conexion.cs" />
@@ -301,6 +304,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\VentanaEmergente.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\VerificarCorreoModalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

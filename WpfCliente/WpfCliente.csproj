@@ -121,9 +121,6 @@
     <Compile Include="GUI\EditarPerfilWindow.xaml.cs">
       <DependentUpon>EditarPerfilWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\ErrorConexionModalWindow.xaml.cs">
-      <DependentUpon>ErrorConexionModalWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GUI\ListaAmigosUserControl.xaml.cs">
       <DependentUpon>ListaAmigosUserControl.xaml</DependentUpon>
     </Compile>
@@ -268,10 +265,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\ErrorConexionModalWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="GUI\ListaAmigosUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -384,6 +377,9 @@
     <Resource Include="Recursos\profile.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\fondoMenu.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Pesistencia\" />

@@ -68,9 +68,7 @@ namespace WpfCliente.GUI
             HabilitarBotones(false);
             if (!await verificarConexion)
             {
-                ErrorConexionModalWindow ventanaModal = new ErrorConexionModalWindow();
-                ventanaModal.Owner = this;
-                ventanaModal.ShowDialog();
+                VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
                 HabilitarBotones(true);
                 return;
             }
@@ -92,13 +90,13 @@ namespace WpfCliente.GUI
         {
             bool camposValidos = true;
 
-            if (string.IsNullOrWhiteSpace(textBoxUsuario.Text))
+            if (string.IsNullOrWhiteSpace(textBoxUsuario.Text) && textBoxUsuario.Text.Contains(" "))
             {
                 textBoxUsuario.Style = (Style)FindResource("ErrorTextBoxStyle");
                 camposValidos = false;
             }
 
-            if (string.IsNullOrWhiteSpace(textBoxContrasenia.Password))
+            if (string.IsNullOrWhiteSpace(textBoxContrasenia.Password) && textBoxContrasenia.Password.Contains(" "))
             {
                 pwBxPasswordMask.Style = (Style)FindResource("ErrorTextBoxStyle");
                 camposValidos = false;
@@ -128,6 +126,7 @@ namespace WpfCliente.GUI
                 Singleton.Instance.ContraniaHash = resultadoUsuario.ContraseniaHASH;
                 AbrirVentanaMenu();
             }
+            labelCredencialesIncorrectas.Visibility = Visibility.Visible;
             return exito;
         }
 
@@ -140,6 +139,7 @@ namespace WpfCliente.GUI
             if (result == true)
             {
                 string codigoSala = modalWindow.textBoxCodigoSala.Text;
+                SalaEspera salaEspera = new SalaEspera(codigoSala);
             }
         }
 

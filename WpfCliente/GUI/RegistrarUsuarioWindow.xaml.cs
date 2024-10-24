@@ -1,26 +1,17 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Security.Cryptography;
-using System.Security.Principal;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Linq;
 using WpfCliente.Interfaz;
+using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
@@ -29,7 +20,7 @@ namespace WpfCliente.GUI
     /// <summary>
     /// Lógica de interacción para RegistrarUsuario.xaml
     /// </summary>
-    public partial class RegistrarUsuarioWindow : Window, IActualizacionUI
+    public partial class RegistrarUsuarioWindow : IActualizacionUI
     {
         private Boolean esInivtado;
         private string rutaAbsolutaImagen;
@@ -101,8 +92,6 @@ namespace WpfCliente.GUI
             {
                 MessageBox.Show("No se seleccionó ninguna imagen.");
             }
-            //contadorImagen = (contadorImagen + 1) % imagenesPerfil.Length;
-            //imgPerfil.Source = new BitmapImage(new Uri(imagenesPerfil[contadorImagen], UriKind.Relative));
         }
 
 
@@ -116,15 +105,23 @@ namespace WpfCliente.GUI
 
         private void CrearCuenta()
         {
-            if (ValidarCampos() || rutaAbsolutaImagen != null)
+            if (ValidarCampos() && rutaAbsolutaImagen != null)
             {
                 RegistrarUsuario();
             }
         }
 
-        private  void RegistrarUsuario()
+        private async void RegistrarUsuario()
         {
-            //TODO: Realizar caso en el que no hay conexion
+            Task<bool> verificarConexion = Validacion.ValidarConexion();
+            HabilitarBotones(false);
+            if (!await verificarConexion)
+            {
+                VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                HabilitarBotones(true);
+                return;
+            }
+
             ServidorDescribelo.IServicioRegistro servicio = new ServidorDescribelo.ServicioRegistroClient();
             try
             {
@@ -138,6 +135,7 @@ namespace WpfCliente.GUI
                         fileStream.CopyTo(memoryStream);
                         memoryStream.Position = 0; // Restablecer la posición al inicio del MemoryStream
 
+                        
                         // Llamar al servicio con el MemoryStream
                         bool resultado = servicio.RegistrarUsuario(new Usuario()
                         {
@@ -149,14 +147,14 @@ namespace WpfCliente.GUI
                         if (resultado)
                         {
                             //TODO: Manejar el error
-                            MessageBox.Show("Acierto");
+                            VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloRegistroUsuario, Idioma.mensajeUsuarioRegistradoConExito);
                             IniciarSesion iniciarSesion = new IniciarSesion();
                             iniciarSesion.Show();
                             this.Close();
                         }
                         else
                         {
-                            MessageBox.Show("Error");
+                            VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
                         }
                     }
                 }
@@ -164,11 +162,17 @@ namespace WpfCliente.GUI
 
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 //TODO: Manejar error
             }
-        
+        }
+
+        private void HabilitarBotones(bool habilitado)
+        {
+            buttonRegistrarUsuario.IsEnabled = habilitado;
+            buttonCambiarFoto.IsEnabled = habilitado;
+            //TODO desuscribir del evento y suscribirse en otro momento miImagen.mouseLeftButtonDown -= event;
         }
 
         public bool ValidarCampos()
@@ -179,7 +183,7 @@ namespace WpfCliente.GUI
             SetDefaultStyles();
             ValidarCaracteristicasContrasenia();
 
-            if (!ValidacionesString.IsValidEmail(textBoxCorreo.Text.Trim()))
+            if (!ValidacionesString.EsCorreoValido(textBoxCorreo.Text.Trim()))
             {
                 textBoxCorreo.Style = (Style)FindResource(errorTextBoxStyle);
                 labelCorreoInvalido.Visibility = Visibility.Visible;
@@ -187,7 +191,7 @@ namespace WpfCliente.GUI
                 isValid = false;
             }
 
-            if (!ValidacionesString.IsValidGamertag(textBoxGamertag.Text.Trim()))
+            if (!ValidacionesString.EsGamertagValido(textBoxGamertag.Text.Trim()))
             {
                 textBoxGamertag.Style = (Style)FindResource(errorTextBoxStyle);
 
@@ -293,5 +297,4 @@ namespace WpfCliente.GUI
             }
         }
     }
-
 }

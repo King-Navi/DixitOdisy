@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using WpfCliente.Interfaz;
 using WpfCliente.Utilidad;
@@ -8,7 +9,7 @@ namespace WpfCliente.GUI
     /// <summary>
     /// Interaction logic for UniserSalaModalWindow.xaml
     /// </summary>
-    public partial class UnirseSalaModalWindow : Window, IActualizacionUI
+    public partial class UnirseSalaModalWindow : IActualizacionUI
     {
         public string ValorIngresado { get; private set; }
 
@@ -32,18 +33,37 @@ namespace WpfCliente.GUI
             this.Title = Properties.Idioma.tituloIngresarCodigoSala;
         }
 
-        private void ClicButtonAceptar(object sender, RoutedEventArgs e)
+        private async void ClicButtonAceptar(object sender, RoutedEventArgs e)
         {
-            ValorIngresado = textBoxCodigoSala.Text.ToUpper();
-            if (!string.IsNullOrWhiteSpace(ValorIngresado))
+            Task<bool> verificarConexion = Validacion.ValidarConexion();
+            HabilitarBotones(false);
+            if (!await verificarConexion)
             {
+                VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                DialogResult = false;
+                this.Close();
+                return;
+            }
+
+            HabilitarBotones(true);
+            ValorIngresado = textBoxCodigoSala.Text.ToUpper();
+            
+            if(!string.IsNullOrWhiteSpace(ValorIngresado))
+            {
+
                 DialogResult = true;
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Por favor, ingresa un valor válido.");
+                VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado(this);
             }
+
+        }
+
+        private void HabilitarBotones(bool habilitado)
+        {
+            buttonAceptar.IsEnabled = habilitado;
         }
     }
 }

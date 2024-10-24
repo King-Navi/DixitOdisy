@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Windows;
-using UtilidadesLibreria;
 using WpfCliente.Interfaz;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
@@ -34,6 +34,17 @@ namespace WpfCliente.GUI
         }
         private void UnirseSala(string idSala)
         {
+            //Task<bool> verificarConexion = Validacion.ValidarConexion();
+            //HabilitarBotones(false);
+            //if (!await verificarConexion)
+            //{
+            //    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+            //    this.Close();
+
+            //    return;
+            //}
+            //HabilitarBotones(true);
+
             if (!Validacion.ExisteSala(idSala))
             {
                 //No existe la sala ¿¿??
@@ -55,6 +66,11 @@ namespace WpfCliente.GUI
 
         }
 
+        private void HabilitarBotones(bool v)
+        {
+            //TODO
+        }
+
         private void UnirseChat()
         {
             Conexion.AbrirConexionChatMotorCallbackAsync(chatUserControl);
@@ -73,14 +89,14 @@ namespace WpfCliente.GUI
                  });
                 Singleton.Instance.IdChat = Singleton.Instance.IdSala;
 
+                CrearChat();
+                UnirseSala(Singleton.Instance.IdSala);
             }
             catch (Exception excepcion)
             {
                 //TODO: Manejo de otras excepciones
                 NoHayConexion();
             }
-            CrearChat();
-            UnirseSala(Singleton.Instance.IdSala);
 
         }
 
@@ -104,7 +120,7 @@ namespace WpfCliente.GUI
         }
         private void NoHayConexion()
         {
-            throw new NotImplementedException();
+            this.Close();
         }
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
         {
@@ -141,8 +157,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-
-                throw;
+                //TODO Manejar excepcion
             }
 
         }

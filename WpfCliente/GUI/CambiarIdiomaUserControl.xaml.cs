@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using WpfCliente.Interfaz;
+using WpfCliente.Persistencia;
 using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI

@@ -73,6 +73,8 @@
                 <SolidColorBrush Color="Black"/>
             </Grid.Background>
 
+            <Menu Width="45" Height="30"  Margin="0,50,0,0" Background="{x:Null}"/>
+
             <Label   x:Name = "labelRegistro" Content="Registrar nuevo usuario" Foreground="White" FontSize="62"  FontWeight="Bold"  FontFamily="Arial" HorizontalAlignment="Left"  Width="738" Margin="170,28,0,653"/>
             <Image   Source="/Recursos/leonRegistro.png" Margin="807,184,-35,200"/>
 

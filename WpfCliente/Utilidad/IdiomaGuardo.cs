@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Windows;
 
-namespace WpfCliente
+namespace WpfCliente.Persistencia
 {
     public sealed class IdiomaGuardo
     {

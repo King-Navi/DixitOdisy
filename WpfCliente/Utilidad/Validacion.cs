@@ -49,6 +49,16 @@ namespace WpfCliente
         {
             IServicioSala servicioSala = new ServicioSalaClient();
             return servicioSala.ValidarSala(codigoSala);
+
+            /*try
+            {
+                return servicioSala.ValidarSala(codigoSala);
+            }
+            catch (Exception ex)
+            {
+                VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado();
+                return false;
+            }*/
         }
 
         public static async Task<bool> ValidarConexion()

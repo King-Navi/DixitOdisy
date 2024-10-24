@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfCliente.GUI"
         mc:Ignorable="d"
-        Title="VentanaEmergente" Height="300" Width="500"
+        Title="VentanaEmergente" Height="200" Width="550"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Background="Transparent">
@@ -18,15 +18,14 @@
             </Style.Resources>
         </Style>
     </Window.Resources>
-    
-    <Grid Height="300" Width="500">
+
+    <Grid Height="150" Width="500">
         <Border CornerRadius="25" Background="#F9F5E9" Padding="20">
             <Grid>
                 <Label x:Name="labelTituloVentanaEmergente" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="Black" FontFamily="Lucida Sans Unicode" FontSize="18" Content="Título de la Ventana Emergente" Width="460"/>
-                <Label x:Name="labelDescripcionVentanaEmergente" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontFamily="Lucida Sans Unicode" FontSize="12">
-                    <TextBlock x:Name="textBlockDescripcionVentanaEmergente" TextWrapping="Wrap" Text="Descripción de la ventana emergente" Width="450"/>
-                </Label>
-                <Button x:Name="buttonAceptar" Content="Aceptar" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="100" Height="40" Margin="0,0,0,20" FontFamily="Lucida Sans Unicode Bold Italic" Foreground="Black" Background="#E3DAC9" BorderBrush="Black" FontSize="16" Click="buttonAceptar_Click" Cursor="Hand"/>
+                <Label x:Name="labelDescripcionVentanaEmergente" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontFamily="Lucida Sans Unicode" FontSize="12" Height="24" Width="360"/>
+                <Button x:Name="buttonAceptar" Content="Aceptar" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Height="40" Margin="360,0,0,-2" FontFamily="Lucida Sans Unicode Bold Italic" Foreground="Black" Background="#E3DAC9" BorderBrush="Black" FontSize="16" Click="buttonAceptar_Click" Cursor="Hand"/>
+                <TextBlock x:Name="textBlockDescripcionVentanaEmergente" TextWrapping="Wrap" Text="Descripción de la ventana emergente" Margin="10,38,-10,49" />
             </Grid>
         </Border>
     </Grid>

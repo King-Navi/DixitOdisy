@@ -565,6 +565,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No se pudo establecer conexión con el servidor.
+        /// </summary>
+        public static string mensajeErrorServidor {
+            get {
+                return ResourceManager.GetString("mensajeErrorServidor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El jugador ya ha salido de la sala.
         /// </summary>
         public static string mensajeJugadorSaleDeSala {
@@ -687,6 +696,15 @@ namespace WpfCliente.Properties {
         public static string tituloErrorInesperado {
             get {
                 return ResourceManager.GetString("tituloErrorInesperado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error al conectar con el servidor.
+        /// </summary>
+        public static string tituloErrorServidor {
+            get {
+                return ResourceManager.GetString("tituloErrorServidor", resourceCulture);
             }
         }
         

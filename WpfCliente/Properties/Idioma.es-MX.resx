@@ -351,4 +351,10 @@
   <data name="mensajeLobbyNoEncontrado" xml:space="preserve">
     <value>El código de sala ingresado no se encontró</value>
   </data>
+  <data name="mensajeErrorServidor" xml:space="preserve">
+    <value>No se pudo establecer conexión con el servidor</value>
+  </data>
+  <data name="tituloErrorServidor" xml:space="preserve">
+    <value>Error al conectar con el servidor</value>
+  </data>
 </root>

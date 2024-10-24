@@ -52,7 +52,7 @@ namespace WpfCliente.GUI
             ventanaSala.Closed += (s, args) => {
                 if (!Conexion.CerrarConexionesSalaConChat())
                 {
-                    MessageBox.Show("Error al tratar de conectarse con el servidor");
+                    VentanasEmergentes.CrearVentanaEmergenteErrorServidor();
                     this.Close();   
                 }
                 this.Show(); 
@@ -76,7 +76,7 @@ namespace WpfCliente.GUI
             else
             {
                 //TODO: I18N
-                MessageBox.Show("No existe la sala.");
+                VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado();
             }
 
 

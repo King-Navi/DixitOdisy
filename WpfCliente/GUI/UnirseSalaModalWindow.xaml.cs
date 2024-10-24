@@ -36,16 +36,16 @@ namespace WpfCliente.GUI
         {
             ValorIngresado = textBoxCodigoSala.Text.ToUpper();
             
-            SalaEspera salaWindow = new SalaEspera(ValorIngresado);
-            salaWindow.Show();
-
-            foreach (Window window in Application.Current.Windows)
+            if(!string.IsNullOrWhiteSpace(ValorIngresado))
             {
-                if (window != salaWindow) // No cerrar la nueva ventana
-                {
-                    window.Close();
-                }
+                DialogResult = true;
+                this.Close();
             }
+            else
+            {
+                VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado();
+            }
+
         }
     }
 }

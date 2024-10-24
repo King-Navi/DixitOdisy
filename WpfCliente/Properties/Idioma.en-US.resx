@@ -351,4 +351,10 @@
   <data name="mensajeLobbyNoEncontrado" xml:space="preserve">
     <value>The room code entered was not found</value>
   </data>
+  <data name="mensajeErrorServidor" xml:space="preserve">
+    <value>Could not establish connection to the server</value>
+  </data>
+  <data name="tituloErrorServidor" xml:space="preserve">
+    <value>Error connecting to server</value>
+  </data>
 </root>

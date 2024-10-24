@@ -104,7 +104,7 @@ namespace WpfCliente.GUI
 
         private void CrearCuenta()
         {
-            if (ValidarCampos() || rutaAbsolutaImagen != null)
+            if (ValidarCampos() && rutaAbsolutaImagen != null)
             {
                 RegistrarUsuario();
             }
@@ -144,7 +144,7 @@ namespace WpfCliente.GUI
                         }
                         else
                         {
-                            VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloErrorInesperado, Idioma.mensajeErrorInesperado);
+                            VentanasEmergentes.CrearVentanaEmergenteErrorServidor();
                         }
                     }
                 }
@@ -152,16 +152,9 @@ namespace WpfCliente.GUI
 
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 //TODO: Manejar error
-            }
-            finally
-            {
-                if (servicio != null)
-                {
-                    ((ICommunicationObject)servicio).Close();
-                }
             }
         }
 
@@ -173,7 +166,7 @@ namespace WpfCliente.GUI
             SetDefaultStyles();
             ValidarCaracteristicasContrasenia();
 
-            if (!ValidacionesString.IsValidEmail(textBoxCorreo.Text.Trim()))
+            if (!ValidacionesString.EsCorreoValido(textBoxCorreo.Text.Trim()))
             {
                 textBoxCorreo.Style = (Style)FindResource(errorTextBoxStyle);
                 labelCorreoInvalido.Visibility = Visibility.Visible;
@@ -181,7 +174,7 @@ namespace WpfCliente.GUI
                 isValid = false;
             }
 
-            if (!ValidacionesString.IsValidGamertag(textBoxGamertag.Text.Trim()))
+            if (!ValidacionesString.EsGamertagValido(textBoxGamertag.Text.Trim()))
             {
                 textBoxGamertag.Style = (Style)FindResource(errorTextBoxStyle);
 

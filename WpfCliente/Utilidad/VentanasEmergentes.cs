@@ -15,6 +15,19 @@ namespace WpfCliente.Utilidad
             ventanaEmergente.Show();
         }
 
+        public static void CrearVentanaEmergenteErrorServidor()
+        {
+            string tituloVentanaEmergente = Properties.Idioma.tituloErrorServidor;
+            string descripcionVentanaEmergente = Properties.Idioma.mensajeErrorServidor;
+
+            VentanaEmergente ventanaEmergente = new VentanaEmergente(
+                tituloVentanaEmergente,
+                descripcionVentanaEmergente
+            );
+
+            ventanaEmergente.Show();
+        }
+
         public static void CrearVentanaEmergenteErrorBD()
         {
             string tituloVentanaEmergente = Properties.Idioma.tituloErrorBaseDatos;

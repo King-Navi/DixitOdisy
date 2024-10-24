@@ -121,9 +121,6 @@
     <Compile Include="GUI\EditarPerfilWindow.xaml.cs">
       <DependentUpon>EditarPerfilWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\ErrorConexionModalWindow.xaml.cs">
-      <DependentUpon>ErrorConexionModalWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GUI\ListaAmigosUserControl.xaml.cs">
       <DependentUpon>ListaAmigosUserControl.xaml</DependentUpon>
     </Compile>
@@ -261,10 +258,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\ErrorConexionModalWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="GUI\ListaAmigosUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -374,6 +367,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Recursos\fondoMenu.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

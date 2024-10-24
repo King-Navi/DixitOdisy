@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using WpfCliente.Interfaz;
 using WpfCliente.ServidorDescribelo;
@@ -29,6 +30,17 @@ namespace WpfCliente.GUI
         }
         private void UnirseSala(string idSala)
         {
+            //Task<bool> verificarConexion = Validacion.ValidarConexion();
+            //HabilitarBotones(false);
+            //if (!await verificarConexion)
+            //{
+            //    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+            //    this.Close();
+
+            //    return;
+            //}
+            //HabilitarBotones(true);
+
             if (!Validacion.ExisteSala(idSala))
             {
                 //No existe la sala ¿¿??
@@ -45,6 +57,11 @@ namespace WpfCliente.GUI
             labelCodigoSala.Content += idSala;
             UnirseChat();
 
+        }
+
+        private void HabilitarBotones(bool v)
+        {
+            //TODO
         }
 
         private void UnirseChat()
@@ -65,14 +82,14 @@ namespace WpfCliente.GUI
                  });
                 Singleton.Instance.IdChat = Singleton.Instance.IdSala;
 
+                CrearChat();
+                UnirseSala(Singleton.Instance.IdSala);
             }
             catch (Exception excepcion)
             {
                 //TODO: Manejo de otras excepciones
                 NoHayConexion();
             }
-            CrearChat();
-            UnirseSala(Singleton.Instance.IdSala);
 
         }
 
@@ -96,7 +113,7 @@ namespace WpfCliente.GUI
         }
         private void NoHayConexion()
         {
-            throw new NotImplementedException();
+            this.Close();
         }
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
         {

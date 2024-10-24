@@ -4,6 +4,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.ServiceModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -110,9 +111,17 @@ namespace WpfCliente.GUI
             }
         }
 
-        private  void RegistrarUsuario()
+        private async void RegistrarUsuario()
         {
-            //TODO: Realizar caso en el que no hay conexion
+            Task<bool> verificarConexion = Validacion.ValidarConexion();
+            HabilitarBotones(false);
+            if (!await verificarConexion)
+            {
+                VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                HabilitarBotones(true);
+                return;
+            }
+
             ServidorDescribelo.IServicioRegistro servicio = new ServidorDescribelo.ServicioRegistroClient();
             try
             {
@@ -126,6 +135,7 @@ namespace WpfCliente.GUI
                         fileStream.CopyTo(memoryStream);
                         memoryStream.Position = 0; // Restablecer la posición al inicio del MemoryStream
 
+                        
                         // Llamar al servicio con el MemoryStream
                         bool resultado = servicio.RegistrarUsuario(new Usuario()
                         {
@@ -144,7 +154,7 @@ namespace WpfCliente.GUI
                         }
                         else
                         {
-                            VentanasEmergentes.CrearVentanaEmergenteErrorServidor();
+                            VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
                         }
                     }
                 }
@@ -156,6 +166,13 @@ namespace WpfCliente.GUI
             {
                 //TODO: Manejar error
             }
+        }
+
+        private void HabilitarBotones(bool habilitado)
+        {
+            buttonRegistrarUsuario.IsEnabled = habilitado;
+            buttonCambiarFoto.IsEnabled = habilitado;
+            //TODO desuscribir del evento y suscribirse en otro momento miImagen.mouseLeftButtonDown -= event;
         }
 
         public bool ValidarCampos()

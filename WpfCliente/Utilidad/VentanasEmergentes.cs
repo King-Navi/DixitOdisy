@@ -1,4 +1,5 @@
-﻿using WpfCliente.GUI;
+﻿using System.Windows;
+using WpfCliente.GUI;
 
 namespace WpfCliente.Utilidad
 {
@@ -15,7 +16,7 @@ namespace WpfCliente.Utilidad
             ventanaEmergente.Show();
         }
 
-        public static void CrearVentanaEmergenteErrorServidor()
+        public static void CrearVentanaEmergenteErrorServidor(Window window)
         {
             string tituloVentanaEmergente = Properties.Idioma.tituloErrorServidor;
             string descripcionVentanaEmergente = Properties.Idioma.mensajeErrorServidor;
@@ -24,11 +25,11 @@ namespace WpfCliente.Utilidad
                 tituloVentanaEmergente,
                 descripcionVentanaEmergente
             );
-
-            ventanaEmergente.Show();
+            ventanaEmergente.Owner = window;  
+            ventanaEmergente.ShowDialog();
         }
 
-        public static void CrearVentanaEmergenteErrorBD()
+        public static void CrearVentanaEmergenteErrorBD(Window window)
         {
             string tituloVentanaEmergente = Properties.Idioma.tituloErrorBaseDatos;
             string descripcionVentanaEmergente = Properties.Idioma.mensajeErrorBaseDatos;
@@ -42,7 +43,7 @@ namespace WpfCliente.Utilidad
         }
 
 
-        public static void CrearVentanaEmergenteErrorInesperado()
+        public static void CrearVentanaEmergenteErrorInesperado(Window window)
         {
             string tituloVentanaEmergente = Properties.Idioma.tituloErrorInesperado;
             string descripcionVentanaEmergente = Properties.Idioma.mensajeErrorInesperado;
@@ -55,7 +56,7 @@ namespace WpfCliente.Utilidad
             ventanaEmergente.Show();
         }
 
-        public static void CrearVentanaEmergenteLobbyNoEncontrado()
+        public static void CrearVentanaEmergenteLobbyNoEncontrado(Window window)
         {
             string tituloVentanaEmergente = Properties.Idioma.tituloLobbyNoEncontrado;
             string descripcionVentanaEmergente = Properties.Idioma.mensajeLobbyNoEncontrado;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Windows;
 using WpfCliente.Interfaz;
 using WpfCliente.ServidorDescribelo;
@@ -47,12 +48,18 @@ namespace WpfCliente.GUI
         private void AbrirVentanaSala(string idSala)
         {
             SalaEspera ventanaSala = new SalaEspera(idSala);
+            if(ventanaSala == null || !ventanaSala.IsLoaded)
+            {
+                VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                this.Close();
+                return;
+            }
             ventanaSala.Show();
             this.Hide();
             ventanaSala.Closed += (s, args) => {
                 if (!Conexion.CerrarConexionesSalaConChat())
                 {
-                    VentanasEmergentes.CrearVentanaEmergenteErrorServidor();
+                    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
                     this.Close();   
                 }
                 this.Show(); 
@@ -65,8 +72,18 @@ namespace WpfCliente.GUI
             Console.WriteLine("Im a teapot");
         }
 
-        private void ClicButtonUnirseSala(object sender, RoutedEventArgs e)
+        private async void ClicButtonUnirseSala(object sender, RoutedEventArgs e)
         {
+            Task<bool> verificarConexion = Validacion.ValidarConexion();
+            HabilitarBotones(false);
+            if (!await verificarConexion)
+            {
+                VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                this.Close();
+                
+                return;
+            }
+            HabilitarBotones(true);
             string codigoSala = AbrirVentanaModal();
             if (Validacion.ExisteSala(codigoSala))
             {
@@ -76,11 +93,17 @@ namespace WpfCliente.GUI
             else
             {
                 //TODO: I18N
-                VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado();
+                VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado(this);
             }
 
 
         }
+
+        private void HabilitarBotones(bool v)
+        {
+            //TODO
+        }
+
         private string AbrirVentanaModal()
         {
             string valorObtenido = null;
@@ -114,7 +137,8 @@ namespace WpfCliente.GUI
             {
                 //TODO Manejar el error
             }
-
+            IniciarSesion iniciarSesion = new IniciarSesion();
+            iniciarSesion.Show();
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)

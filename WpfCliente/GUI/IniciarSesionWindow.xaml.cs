@@ -64,7 +64,7 @@ namespace WpfCliente.GUI
             HabilitarBotones(false);
             if (!await verificarConexion)
             {
-                VentanasEmergentes.CrearVentanaEmergenteErrorServidor();
+                VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
                 HabilitarBotones(true);
                 return;
             }

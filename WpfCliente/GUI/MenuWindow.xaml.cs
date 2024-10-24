@@ -42,10 +42,8 @@ namespace WpfCliente.GUI
                     Nombre = Singleton.Instance.NombreUsuario
                 };
                 // Ejecutamos las operaciones adicionales en tareas separadas
-                var taskObtenerSesion = Task.Run(() => Conexion.UsuarioSesion.ObtenerSessionJugadorAsync(user));
-                await Task.WhenAll(taskObtenerSesion);
-                Thread.Sleep(10000);
-                Conexion.Amigos.AbrirCanalParaPeticiones(user);
+                Conexion.UsuarioSesion.ObtenerSessionJugador(user);
+                //Thread.Sleep(10000);
 
                 // Esperamos a que ambas tareas se completen
             }
@@ -77,6 +75,13 @@ namespace WpfCliente.GUI
 
         public void ObtenerSessionJugadorCallback(bool esSesionAbierta)
         {
+            Usuario user = new Usuario
+            {
+                IdUsuario = Singleton.Instance.IdUsuario,
+                Nombre = Singleton.Instance.NombreUsuario
+            };
+            Conexion.Amigos.AbrirCanalParaPeticiones(user);
+
             //TODO: No imitar el 418
             Console.WriteLine("Im a teapot");
         }

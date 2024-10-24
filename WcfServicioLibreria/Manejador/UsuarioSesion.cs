@@ -45,8 +45,11 @@ namespace WcfServicioLibreria.Manejador
                     comunicacionObjecto.Closed += usuario.CerradoEvento;
                     comunicacionObjecto.Faulted += usuario.FalloEvento;
                     sesionAbierta = true;
-                    contexto.ObtenerSessionJugadorCallback(sesionAbierta);
-                    jugadoresConectadosDiccionario.TryAdd(usuario.IdUsuario, usuario);
+                    if (jugadoresConectadosDiccionario.TryAdd(usuario.IdUsuario, usuario))
+                    {
+                        contexto.ObtenerSessionJugadorCallback(sesionAbierta);
+                    }
+
 
                 }
                 catch (CommunicationException excepcion)

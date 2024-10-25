@@ -25,12 +25,13 @@ namespace DAOLibreria.DAO
         public static bool RegistrarNuevoUsuario(Usuario _usuario, UsuarioCuenta _usuarioCuenta)
         {
             bool resultado = false;
-            VerificarNombreUnico(_usuario.gamertag);
-            VerificarNombreUnico(_usuarioCuenta.gamertag);
             if (_usuario == null || _usuarioCuenta == null)
             {
                 return resultado;
             }
+            VerificarNombreUnico(_usuario.gamertag);
+            VerificarNombreUnico(_usuarioCuenta.gamertag);
+            
             if (_usuario.gamertag != _usuarioCuenta.gamertag)
             {
                 return resultado;
@@ -88,22 +89,25 @@ namespace DAOLibreria.DAO
         public static bool EditarUsuario(UsuarioPerfilDTO usuarioEditado)
         {
             bool resultado = false;
-            VerificarNombreUnico(usuarioEditado.NombreUsuario);
-            if (usuarioEditado == null 
+            if (usuarioEditado == null
                 || usuarioEditado.IdUsuario < 0
                 || usuarioEditado.NombreUsuario == null)
             {
                 return resultado;
             }
+            
             using (var context = new DescribeloEntities())
             {
                 using (var transaction = context.Database.BeginTransaction())
                 {
                     try
                     {
-                        var usuario = context.Usuario.Single(b => b.idUsuario == usuarioEditado.IdUsuario);
+                        var usuario = context.Usuario.Single(b => b.gamertag == usuarioEditado.NombreUsuario);
                         var usuarioCuenta = context.UsuarioCuenta.Single(b => b.gamertag == usuarioEditado.NombreUsuario);
-
+                        if (usuario.idUsuario != usuarioEditado.IdUsuario)
+                        {
+                            return false;
+                        }
                         if (usuarioEditado.Correo != null)
                         {
                             usuario.UsuarioCuenta.correo = usuarioEditado.Correo;

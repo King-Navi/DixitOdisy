@@ -45,7 +45,7 @@ namespace WcfServicioLibreria.Manejador
         {
             bool resultado = false;
             if (usuarioEditado == null
-                || usuarioEditado.IdUsuario < 0
+                || usuarioEditado.IdUsuario <= 0
                 || usuarioEditado.Nombre == null)
             {
                 return resultado;

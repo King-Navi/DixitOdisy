@@ -105,7 +105,7 @@ namespace Pruebas.DAO
             
             //Debe ser un UsuarioCuenta existente en base de datos
             string gamertagValido = "unaay";
-            string contraseniaValida = "b7a88e8d61d649a44848a48c8de0e6bd48d2fd4d7a61cb733301634d5eac5080";
+            string contraseniaValida = "B7A88E8D61D649A44848A48C8DE0E6BD48D2FD4D7A61CB733301634D5EAC5080";
             // Act
             UsuarioPerfilDTO usuario = DAOLibreria.DAO.UsuarioDAO.ValidarCredenciales(gamertagValido, contraseniaValida);
             // Assert

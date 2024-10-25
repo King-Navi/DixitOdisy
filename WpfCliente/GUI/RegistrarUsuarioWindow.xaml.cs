@@ -115,19 +115,33 @@ namespace WpfCliente.GUI
             }
         }
 
-        private bool VerificarCorreo() { 
-            ServidorDescribelo.IServicioCorreo servicio = new ServidorDescribelo.ServicioCorreoClient();
-            bool resultado = servicio.VerificarCorreo(new Usuario()
-            {
-                ContraseniaHASH = null,
-                Correo = textBoxCorreo.Text,
-                Nombre = textBoxGamertag.Text,
-                FotoUsuario = null
+        private bool VerificarCorreo() {
+            //ServidorDescribelo.IServicioCorreo servicio = new ServidorDescribelo.ServicioCorreoClient();
+            //bool resultado = servicio.VerificarCorreo(new Usuario()
+            //{
+            //    ContraseniaHASH = null,
+            //    Correo = textBoxCorreo.Text,
+            //    Nombre = textBoxGamertag.Text,
+            //    FotoUsuario = null
+            //});
+            var manejadorServicio = new ServicioManejador<ServicioCorreoClient>();
+            var resultado = manejadorServicio.EjecutarServicio(proxy => {
+                return proxy.VerificarCorreo(new Usuario()
+                {
+                    ContraseniaHASH = null,
+                    Correo = textBoxCorreo.Text,
+                    Nombre = textBoxGamertag.Text,
+                    FotoUsuario = null
+                });
             });
-            if(resultado)
+            if (resultado)
             {
                 string codigoIngresado = AbrirVentanaModal();
-                return servicio.VerificarCodigo(codigoIngresado);
+                manejadorServicio.EjecutarServicio(proxy =>
+                {
+                    return proxy.VerificarCodigo(codigoIngresado);
+                });
+                return false;
             }
             else
             {
@@ -168,8 +182,6 @@ namespace WpfCliente.GUI
                         {
                             //TODO: Manejar el error
                             VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloRegistroUsuario, Idioma.mensajeUsuarioRegistradoConExito, this);
-                            IniciarSesion iniciarSesion = new IniciarSesion();
-                            iniciarSesion.Show();
                             this.Close();
                         }
                         else

@@ -6,8 +6,8 @@ using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.Linq;
 using System.Data.SqlClient;
-using System.Linq;
 using UtilidadesLibreria;
+using DAOLibreria.Excepciones;
 
 namespace DAOLibreria.DAO
 {
@@ -29,6 +29,8 @@ namespace DAOLibreria.DAO
         public static bool RegistrarNuevoUsuario(Usuario _usuario, UsuarioCuenta _usuarioCuenta)
         {
             bool resultado = false;
+            VerificarNombreUnico(_usuario.gamertag);
+            VerificarNombreUnico(_usuarioCuenta.gamertag);
             if (_usuario == null || _usuarioCuenta == null)
             {
                 return resultado;
@@ -84,6 +86,7 @@ namespace DAOLibreria.DAO
         public static bool EditarUsuario(UsuarioPerfilDTO usuarioEditado)
         {
             bool resultado = false;
+            VerificarNombreUnico(usuarioEditado.NombreUsuario);
             if (usuarioEditado == null 
                 || usuarioEditado.IdUsuario < 0
                 || usuarioEditado.NombreUsuario == null)
@@ -163,16 +166,15 @@ namespace DAOLibreria.DAO
             return resultado;
         }
 
-        public static Usuario GetUsuarioById(int id)
+        public static Usuario ObtenerUsuarioPorNombre(string gamertag)
         {
             Usuario usuario = null;
-
             try
             {
                 using (var context = new DescribeloEntities())
                 {
                     usuario = context.Usuario
-                                   .SingleOrDefault(user => user.idUsuario == id);
+                                   .SingleOrDefault(userioFila => userioFila.gamertag == gamertag);
                 }
             }
 
@@ -180,7 +182,40 @@ namespace DAOLibreria.DAO
             {
                 //TODO manejar excepcion
             }
+           
             return usuario;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gamertag"></param>
+        /// <returns>Retorna True si es uncio, caso contrario retorna False</returns>
+        public static bool VerificarNombreUnico(string gamertag)
+        {
+            bool resultado = true;
+            Usuario usuario = null;
+            UsuarioCuenta usuarioCuenta = null;
+            try
+            {
+                using (var context = new DescribeloEntities())
+                {
+                    usuario = context.Usuario
+                                   .SingleOrDefault(userioFila => userioFila.gamertag == gamertag);
+                    usuarioCuenta = context.UsuarioCuenta
+                                   .SingleOrDefault(userioFila => userioFila.gamertag == gamertag);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                //TODO manejar excepcion
+            }
+
+            if (usuario != null || usuarioCuenta != null)
+            {
+                throw new GamertagDuplicadoException($"El gamertag '{gamertag}' ya está en uso.");
+            }
+            return resultado;
         }
 
     }

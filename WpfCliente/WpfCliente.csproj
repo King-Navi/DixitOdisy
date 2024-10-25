@@ -210,6 +210,9 @@
     <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Enumerador1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Modelo.Excepciones.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Modelo.xsd">
       <SubType>Designer</SubType>
     </None>

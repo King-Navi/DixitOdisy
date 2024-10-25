@@ -88,11 +88,18 @@
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.IO" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Enumerador" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IServicioAmistad_AbrirCanalParaPeticiones_InputMessage">
     <wsdl:part name="parameters" element="tns:AbrirCanalParaPeticiones" />
+  </wsdl:message>
+  <wsdl:message name="IServicioAmistad_EnviarSolicitudAmistad_InputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarSolicitudAmistad" />
+  </wsdl:message>
+  <wsdl:message name="IServicioAmistad_EnviarSolicitudAmistad_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarSolicitudAmistadResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioAmistad_CambiarEstadoAmigo_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:CambiarEstadoAmigo" />
@@ -148,6 +155,9 @@
   <wsdl:message name="IServicioRegistro_RegistrarUsuario_OutputMessage">
     <wsdl:part name="parameters" element="tns:RegistrarUsuarioResponse" />
   </wsdl:message>
+  <wsdl:message name="IServicioRegistro_RegistrarUsuario_BaseDatosFallaFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q2:BaseDatosFalla" />
+  </wsdl:message>
   <wsdl:message name="IServicioSala_CrearSala_InputMessage">
     <wsdl:part name="parameters" element="tns:CrearSala" />
   </wsdl:message>
@@ -167,7 +177,7 @@
     <wsdl:part name="parameters" element="tns:AgregarJugadorSalaResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioSalaJugador_AgregarJugadorSala_UsuarioFallaFault_FaultMessage">
-    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q2:UsuarioFalla" />
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q3:UsuarioFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioSalaJugador_RemoverJugadorSala_InputMessage">
     <wsdl:part name="parameters" element="tns:RemoverJugadorSala" />
@@ -233,6 +243,10 @@
     <wsdl:operation name="AbrirCanalParaPeticiones">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticiones" message="tns:IServicioAmistad_AbrirCanalParaPeticiones_InputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="EnviarSolicitudAmistad">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistad" message="tns:IServicioAmistad_EnviarSolicitudAmistad_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistadResponse" message="tns:IServicioAmistad_EnviarSolicitudAmistad_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="CambiarEstadoAmigo">
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/CambiarEstadoAmigo" message="tns:IServicioAmistad_CambiarEstadoAmigo_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/CambiarEstadoAmigoResponse" message="tns:IServicioAmistad_CambiarEstadoAmigo_InputCallbackMessage" />
@@ -274,6 +288,7 @@
     <wsdl:operation name="RegistrarUsuario">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioRegistro/RegistrarUsuario" message="tns:IServicioRegistro_RegistrarUsuario_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioRegistro/RegistrarUsuarioResponse" message="tns:IServicioRegistro_RegistrarUsuario_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioRegistro/RegistrarUsuarioBaseDatosFallaFault" name="BaseDatosFallaFault" message="tns:IServicioRegistro_RegistrarUsuario_BaseDatosFallaFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioSala">
@@ -350,6 +365,15 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="EnviarSolicitudAmistad">
+      <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="CambiarEstadoAmigo">
       <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/CambiarEstadoAmigo" style="document" />
@@ -446,6 +470,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="BaseDatosFallaFault">
+        <soap12:fault use="literal" name="BaseDatosFallaFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="NetTcpBinding_IServicioSala" type="tns:IServicioSala">

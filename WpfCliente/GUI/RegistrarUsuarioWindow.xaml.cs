@@ -118,10 +118,9 @@ namespace WpfCliente.GUI
             if (!await verificarConexion)
             {
                 VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
-                HabilitarBotones(true);
                 return;
             }
-
+            HabilitarBotones(true);
             ServidorDescribelo.IServicioRegistro servicio = new ServidorDescribelo.ServicioRegistroClient();
             try
             {
@@ -147,7 +146,7 @@ namespace WpfCliente.GUI
                         if (resultado)
                         {
                             //TODO: Manejar el error
-                            VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloRegistroUsuario, Idioma.mensajeUsuarioRegistradoConExito);
+                            VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloRegistroUsuario, Idioma.mensajeUsuarioRegistradoConExito, this);
                             IniciarSesion iniciarSesion = new IniciarSesion();
                             iniciarSesion.Show();
                             this.Close();
@@ -161,6 +160,9 @@ namespace WpfCliente.GUI
 
 
 
+            }catch(FaultException<BaseDatosFalla>)
+            {
+                VentanasEmergentes.CrearVentanaEmergente("El usuario ya existe", "Ya hay un gamertag, busca otro gamertag",this);
             }
             catch (Exception e)
             {

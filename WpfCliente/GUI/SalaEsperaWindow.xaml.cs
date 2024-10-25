@@ -56,8 +56,7 @@ namespace WpfCliente.GUI
 
             if (!resultado)
             {
-                //NoHayConexion()
-                this.Close();
+                NoHayConexion();
                 return;
             }
             Conexion.SalaJugador.AgregarJugadorSala(Singleton.Instance.NombreUsuario, idSala);
@@ -132,7 +131,7 @@ namespace WpfCliente.GUI
             //TODO:Actualizar toda la inferfaz, Pedir a Unnay los .resx
         }
 
-        public void ObtenerJugadoresSalaCallback(string[] jugardoresEnSala)
+        public void ObtenerJugadoresSalaCallback(Usuario[] jugardoresEnSala)
         {
             throw new NotImplementedException();
         }

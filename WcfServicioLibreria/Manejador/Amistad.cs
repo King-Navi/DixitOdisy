@@ -22,7 +22,7 @@ namespace WcfServicioLibreria.Manejador
     public partial class ManejadorPrincipal : IServicioAmistad
     {
 
-        public void AgregarAmigo(Usuario remitente, string destinatario) //FIXME
+        public void EnviarSolicitudAmistad(Usuario remitente, string destinatario) //FIXME
         {
             //TODO:Se necesita un metodo que convierta de gamertag a id de base de datos
             //ObtenerIdPorNombre(remitente.Nombre) En esta caso para prueba sera 2
@@ -50,6 +50,7 @@ namespace WcfServicioLibreria.Manejador
                 EnviarSolicitudJugadorConectado(remitente, idDestinatario);
             }
         }
+
         private void EnviarSolicitudJugadorConectado(Usuario remitente, int idDestinatario) 
         {
             jugadoresConectadosDiccionario.TryGetValue(idDestinatario, out UsuarioContexto destinatarioConectado);

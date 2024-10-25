@@ -23,7 +23,7 @@ namespace WcfServicioLibreria.Contratos
     public interface ISalaJugadorCallback
     {
         [OperationContract]
-        void ObtenerJugadoresSalaCallback(List<string> jugardoresEnSala);
+        void ObtenerJugadoresSalaCallback(Usuario[] jugardoresEnSala);
         [OperationContract]
         void EmpezarPartidaCallBack();
         [OperationContract]

@@ -105,18 +105,34 @@ namespace WpfCliente.GUI
 
         private void CrearCuenta()
         {
-            if (ValidarCampos() && rutaAbsolutaImagen != null)
+            if (ValidarCampos() && VerificarCorreo() && rutaAbsolutaImagen != null)
             {
-                VerificarCorreo();
                 RegistrarUsuario();
+            }
+            else
+            {
+                VentanasEmergentes.CrearVentanaEmergenteErrorInesperado(this);
             }
         }
 
-        private void VerificarCorreo()
-        {
-            //AbrirVentanaModal();
-            //ServidorDescribelo.IServicioCorreo servicio = new ServidorDescribelo.ServicioCorreoClient();
-            
+        private bool VerificarCorreo() { 
+            ServidorDescribelo.IServicioCorreo servicio = new ServidorDescribelo.ServicioCorreoClient();
+            bool resultado = servicio.VerificarCorreo(new Usuario()
+            {
+                ContraseniaHASH = null,
+                Correo = textBoxCorreo.Text,
+                Nombre = textBoxGamertag.Text,
+                FotoUsuario = null
+            });
+            if(resultado)
+            {
+                string codigoIngresado = AbrirVentanaModal();
+                return servicio.VerificarCodigo(codigoIngresado);
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private async void RegistrarUsuario()
@@ -190,11 +206,6 @@ namespace WpfCliente.GUI
             if (resultado == true)
             {
                 valorObtenido = ventanaModal.ValorIngresado;
-            }
-            else
-            {
-                //TODO: I18N
-                MessageBox.Show("No se ingresó ningún valor.");
             }
 
             return valorObtenido;

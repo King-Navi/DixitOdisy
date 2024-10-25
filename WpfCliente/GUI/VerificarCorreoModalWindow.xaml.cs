@@ -44,9 +44,21 @@ namespace WpfCliente.GUI
 
         private void buttonAceptar_Click(object sender, RoutedEventArgs e)
         {
-            
+            if(ValidarCodigo()){
+                ValorIngresado = textBoxCodigo.Text;
+                this.Close();
+            }
+            else
+            {
+                labelCodigoInvalido.Visibility = Visibility.Visible;
+            }
+
         }
 
+        private bool ValidarCodigo()
+        {
+            return (textBoxCodigo.Text.Contains(" ") && string.IsNullOrWhiteSpace(textBoxCodigo.Text));
+        }
         private void buttonEnviarCodigoNuevamente_Click(object sender, RoutedEventArgs e)
         {
 

@@ -80,6 +80,16 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_IServicioCorreo_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
+        </msb:BinaryEncoding>
+        <wsaw:UsingAddressing>
+        </wsaw:UsingAddressing>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import namespace="http://tempuri.org/" />
@@ -229,6 +239,18 @@
   <wsdl:message name="IServicioUsuarioSesion_ObtenerSessionJugadorCallback_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ObtenerSessionJugadorCallbackResponse" />
   </wsdl:message>
+  <wsdl:message name="IServicioCorreo_VerificarCorreo_InputMessage">
+    <wsdl:part name="parameters" element="tns:VerificarCorreo" />
+  </wsdl:message>
+  <wsdl:message name="IServicioCorreo_VerificarCorreo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VerificarCorreoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioCorreo_VerificarCodigo_InputMessage">
+    <wsdl:part name="parameters" element="tns:VerificarCodigo" />
+  </wsdl:message>
+  <wsdl:message name="IServicioCorreo_VerificarCodigo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VerificarCodigoResponse" />
+  </wsdl:message>
   <wsdl:portType name="IServicioAmistad">
     <wsdl:operation name="AbrirCanalParaPeticiones">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticiones" message="tns:IServicioAmistad_AbrirCanalParaPeticiones_InputMessage" />
@@ -339,6 +361,16 @@
     <wsdl:operation name="ObtenerSessionJugadorCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioUsuarioSesion/ObtenerSessionJugadorCallback" message="tns:IServicioUsuarioSesion_ObtenerSessionJugadorCallback_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuarioSesion/ObtenerSessionJugadorCallbackResponse" message="tns:IServicioUsuarioSesion_ObtenerSessionJugadorCallback_InputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IServicioCorreo">
+    <wsdl:operation name="VerificarCorreo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioCorreo/VerificarCorreo" message="tns:IServicioCorreo_VerificarCorreo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioCorreo/VerificarCorreoResponse" message="tns:IServicioCorreo_VerificarCorreo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VerificarCodigo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioCorreo/VerificarCodigo" message="tns:IServicioCorreo_VerificarCodigo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioCorreo/VerificarCodigoResponse" message="tns:IServicioCorreo_VerificarCodigo_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IServicioAmistad" type="tns:IServicioAmistad">
@@ -594,6 +626,29 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
+  <wsdl:binding name="NetTcpBinding_IServicioCorreo" type="tns:IServicioCorreo">
+    <wsp:PolicyReference URI="#NetTcpBinding_IServicioCorreo_policy">
+    </wsp:PolicyReference>
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="VerificarCorreo">
+      <soap12:operation soapAction="http://tempuri.org/IServicioCorreo/VerificarCorreo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerificarCodigo">
+      <soap12:operation soapAction="http://tempuri.org/IServicioCorreo/VerificarCodigo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
   <wsdl:service name="ManejadorPrincipal">
     <wsdl:port name="NetTcpBinding_IServicioAmistad" binding="tns:NetTcpBinding_IServicioAmistad">
       <soap12:address location="net.tcp://localhost:6969/" />
@@ -659,6 +714,15 @@
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IServicioUsuarioSesion" binding="tns:NetTcpBinding_IServicioUsuarioSesion">
+      <soap12:address location="net.tcp://localhost:6969/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IServicioCorreo" binding="tns:NetTcpBinding_IServicioCorreo">
       <soap12:address location="net.tcp://localhost:6969/" />
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>

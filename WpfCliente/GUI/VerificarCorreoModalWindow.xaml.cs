@@ -46,18 +46,20 @@ namespace WpfCliente.GUI
         {
             if(ValidarCodigo()){
                 ValorIngresado = textBoxCodigo.Text;
+                DialogResult = true;
                 this.Close();
             }
             else
             {
                 labelCodigoInvalido.Visibility = Visibility.Visible;
+                DialogResult = false;
             }
 
         }
 
         private bool ValidarCodigo()
         {
-            return (textBoxCodigo.Text.Contains(" ") && string.IsNullOrWhiteSpace(textBoxCodigo.Text));
+            return string.IsNullOrWhiteSpace(textBoxCodigo.Text);
         }
         private void buttonEnviarCodigoNuevamente_Click(object sender, RoutedEventArgs e)
         {

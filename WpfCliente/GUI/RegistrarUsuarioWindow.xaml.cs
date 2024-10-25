@@ -219,7 +219,10 @@ namespace WpfCliente.GUI
             string errorTextBoxStyle = "ErrorTextBoxStyle";
 
             SetDefaultStyles();
-            ValidarCaracteristicasContrasenia();
+            if (!ValidarCaracteristicasContrasenia())
+            {
+                isValid = false;
+            }
 
             if (!ValidacionesString.EsCorreoValido(textBoxCorreo.Text.Trim()))
             {
@@ -258,31 +261,37 @@ namespace WpfCliente.GUI
             labelContraseniaSimbolos.Foreground = Brushes.Red;
         }
 
-        private void ValidarCaracteristicasContrasenia()
+        private bool ValidarCaracteristicasContrasenia()
         {
+            bool isValid = false;
             if (textBoxContrasenia.Password.Trim().Length >= 5)
             {
                 labelContraseniaMinimo.Foreground = Brushes.Green;
+                isValid = true;
             }
 
             if (textBoxContrasenia.Password.Trim().Length <= 20)
             {
                 labelContraseniaMaximo.Foreground = Brushes.Green;
+                isValid = true;
             }
 
             if (ValidacionesString.IsValidSymbol(textBoxContrasenia.Password))
             {
                 labelContraseniaSimbolos.Foreground = Brushes.Green;
+                isValid = true;
             }
 
             if (textBoxContrasenia.Password != textBoxRepetirContrasenia.Password)
             {
                 labelContraseniasNoCoinciden.Visibility = Visibility.Visible;
+                isValid = false;
             }
             else
             {
                 labelContraseniasNoCoinciden.Visibility = Visibility.Collapsed;
             }
+            return isValid;
         }
 
         private string AbrirDialogoSeleccionImagen()

@@ -25,8 +25,6 @@ namespace DAOLibreria.DAO
         public static bool RegistrarNuevoUsuario(Usuario _usuario, UsuarioCuenta _usuarioCuenta)
         {
             bool resultado = false;
-            VerificarNombreUnico(_usuario.gamertag);
-            VerificarNombreUnico(_usuarioCuenta.gamertag);
             if (_usuario == null || _usuarioCuenta == null)
             {
                 return resultado;

@@ -33,6 +33,9 @@ namespace DAOLibreria.DAO
             {
                 return resultado;
             }
+            VerificarNombreUnico(_usuario.gamertag);
+            VerificarNombreUnico(_usuarioCuenta.gamertag);
+            
             if (_usuario.gamertag != _usuarioCuenta.gamertag)
             {
                 return resultado;
@@ -85,7 +88,7 @@ namespace DAOLibreria.DAO
         {
             bool resultado = false;
             if (usuarioEditado == null 
-                || usuarioEditado.IdUsuario < 0
+                || usuarioEditado.IdUsuario <= 0
                 || usuarioEditado.NombreUsuario == null)
             {
                 return resultado;
@@ -96,9 +99,12 @@ namespace DAOLibreria.DAO
                 {
                     try
                     {
-                        var usuario = context.Usuario.Single(b => b.idUsuario == usuarioEditado.IdUsuario);
+                        var usuario = context.Usuario.Single(b => b.gamertag == usuarioEditado.NombreUsuario);
                         var usuarioCuenta = context.UsuarioCuenta.Single(b => b.gamertag == usuarioEditado.NombreUsuario);
-
+                        if (usuario.idUsuario != usuarioEditado.IdUsuario)
+                        {
+                            return false;
+                        }
                         if (usuarioEditado.Correo != null)
                         {
                             usuario.UsuarioCuenta.correo = usuarioEditado.Correo;

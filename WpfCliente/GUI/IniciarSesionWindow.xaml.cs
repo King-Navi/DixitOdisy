@@ -103,24 +103,33 @@ namespace WpfCliente.GUI
             ServidorDescribelo.IServicioUsuario servicio = new ServidorDescribelo.ServicioUsuarioClient();
             string contraseniaHash = Encriptacion.OcuparSHA256(textBoxContrasenia.Password);
             Usuario resultadoUsuario = servicio.ValidarCredenciales(textBoxUsuario.Text, contraseniaHash);
-            if (resultadoUsuario != null)
+            bool yaInicioSesion = servicio.YaIniciadoSesion(textBoxUsuario.Text);
+            if (yaInicioSesion)
             {
-                exito = true;
-                Singleton.Instance.NombreUsuario = textBoxUsuario.Text;
-                Singleton.Instance.IdUsuario = resultadoUsuario.IdUsuario;
-                BitmapImage imagenUsuario=Imagen.ConvertirStreamABitmapImagen(resultadoUsuario.FotoUsuario);
-                if (imagenUsuario  == null)
-                {
-                    MessageBox.Show("Error al cargar su imagen poravor cambiela");
-                    this.Close();
-                }
-                Singleton.Instance.FotoJugador = imagenUsuario;
-                Singleton.Instance.NombreUsuario = resultadoUsuario.Nombre;
-                Singleton.Instance.Correo = resultadoUsuario.Correo;
-                Singleton.Instance.ContraniaHash = resultadoUsuario.ContraseniaHASH;
-                AbrirVentanaMenu();
+                VentanasEmergentes.CrearVentanaEmergente("Ya has iniciado sesion",
+                    "Ya has iniciado sesion, si no eres tu el que inicio sesion porfavor contacta a soporte", this);
             }
-            labelCredencialesIncorrectas.Visibility = Visibility.Visible;
+            else
+            {
+                if (resultadoUsuario != null)
+                {
+                    exito = true;
+                    Singleton.Instance.NombreUsuario = textBoxUsuario.Text;
+                    Singleton.Instance.IdUsuario = resultadoUsuario.IdUsuario;
+                    BitmapImage imagenUsuario = Imagen.ConvertirStreamABitmapImagen(resultadoUsuario.FotoUsuario);
+                    if (imagenUsuario == null)
+                    {
+                        MessageBox.Show("Error al cargar su imagen poravor cambiela");
+                        this.Close();
+                    }
+                    Singleton.Instance.FotoJugador = imagenUsuario;
+                    Singleton.Instance.NombreUsuario = resultadoUsuario.Nombre;
+                    Singleton.Instance.Correo = resultadoUsuario.Correo;
+                    Singleton.Instance.ContraniaHash = resultadoUsuario.ContraseniaHASH;
+                    AbrirVentanaMenu();
+                }
+                labelCredencialesIncorrectas.Visibility = Visibility.Visible;
+            }
             return exito;
         }
 

@@ -893,6 +893,13 @@ namespace WpfCliente.ServidorDescribelo {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/EditarUsuario", ReplyAction="http://tempuri.org/IServicioUsuario/EditarUsuarioResponse")]
         System.Threading.Tasks.Task<bool> EditarUsuarioAsync(WpfCliente.ServidorDescribelo.Usuario usuarioEditado);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/YaIniciadoSesion", ReplyAction="http://tempuri.org/IServicioUsuario/YaIniciadoSesionResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(WpfCliente.ServidorDescribelo.UsuarioFalla), Action="http://tempuri.org/IServicioUsuario/YaIniciadoSesionUsuarioFallaFault", Name="UsuarioFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
+        bool YaIniciadoSesion(string nombreUsuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/YaIniciadoSesion", ReplyAction="http://tempuri.org/IServicioUsuario/YaIniciadoSesionResponse")]
+        System.Threading.Tasks.Task<bool> YaIniciadoSesionAsync(string nombreUsuario);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/Ping", ReplyAction="http://tempuri.org/IServicioUsuario/PingResponse")]
         bool Ping();
         
@@ -939,6 +946,14 @@ namespace WpfCliente.ServidorDescribelo {
         
         public System.Threading.Tasks.Task<bool> EditarUsuarioAsync(WpfCliente.ServidorDescribelo.Usuario usuarioEditado) {
             return base.Channel.EditarUsuarioAsync(usuarioEditado);
+        }
+        
+        public bool YaIniciadoSesion(string nombreUsuario) {
+            return base.Channel.YaIniciadoSesion(nombreUsuario);
+        }
+        
+        public System.Threading.Tasks.Task<bool> YaIniciadoSesionAsync(string nombreUsuario) {
+            return base.Channel.YaIniciadoSesionAsync(nombreUsuario);
         }
         
         public bool Ping() {

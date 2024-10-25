@@ -84,13 +84,12 @@ namespace DAOLibreria.DAO
         /// 
         /// </summary>
         /// <param name="usuarioEditado"></param>
-        /// <exception cref="VerificarNombreUnico(string)"></exception>
         /// <returns></returns>
         public static bool EditarUsuario(UsuarioPerfilDTO usuarioEditado)
         {
             bool resultado = false;
             if (usuarioEditado == null
-                || usuarioEditado.IdUsuario < 0
+                || usuarioEditado.IdUsuario <= 0
                 || usuarioEditado.NombreUsuario == null)
             {
                 return resultado;

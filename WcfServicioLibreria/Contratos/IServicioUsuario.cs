@@ -10,6 +10,8 @@ namespace WcfServicioLibreria.Contratos
         [OperationContract]
         bool EditarUsuario(Usuario usuarioEditado);
         void DesconectarUsuario(int idUsuario);
+        [OperationContract]
+        [FaultContract(typeof(UsuarioFalla))]
         bool YaIniciadoSesion(string nombreUsuario);
         [OperationContract]
         bool Ping();

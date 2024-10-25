@@ -30,12 +30,12 @@ namespace Pruebas.Servidor
         public void ValidarCredenciales_CredencialesCorrectas_DeberiaRetornarUsuario()
         {
             // Arrange
-            string gamertagValido = "NaviKing";
-            string contraseniaValida = "6B86B273FF34FCE19D6B804EFF5A3F5747ADA4EAA22F1D49C01E52DDB7875B4B";
+            string gamertagValido = "unaay";
+            string contraseniaValida = "b7a88e8d61d649a44848a48c8de0e6bd48d2fd4d7a61cb733301634d5eac5080";
             var usuarioEsperado = new DAOLibreria.ModeloBD.Usuario
             {
                 gamertag = gamertagValido,
-                idUsuario = 1
+                idUsuario = 2
             };
 
 
@@ -79,8 +79,8 @@ namespace Pruebas.Servidor
             // Arrange
             var usuarioEditado = new Usuario
             {
-                IdUsuario = 1, // ID de un usuario existente
-                Nombre = "NaviKing",
+                //IdUsuario = 4,  ID de un usuario existente
+                Nombre = "ivan",
                 Correo = $"NaviKing{new Random().Next(1000, 9999)}@editado.com", // Correo aleatorio para evitar duplicados
                 FotoUsuario = new MemoryStream(new byte[] { 0x20, 0x21, 0x22, 0x23 }), // Ejemplo de foto como MemoryStream
                 ContraseniaHASH = "6B86B273FF34FCE19D6B804EFF5A3F5747ADA4EAA22F1D49C01E52DDB7875B4B" // Hash de la contraseña actualizado
@@ -99,7 +99,7 @@ namespace Pruebas.Servidor
             var usuarioEditado = new Usuario
             {
                 IdUsuario = 1, // ID de un usuario existente
-                Nombre = "NaviKing",
+                Nombre = "egege",
                 Correo =null, 
                 FotoUsuario = null,
                 ContraseniaHASH = null

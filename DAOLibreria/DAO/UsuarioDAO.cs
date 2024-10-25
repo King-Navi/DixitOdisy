@@ -94,7 +94,6 @@ namespace DAOLibreria.DAO
             {
                 return resultado;
             }
-            
             using (var context = new DescribeloEntities())
             {
                 using (var transaction = context.Database.BeginTransaction())

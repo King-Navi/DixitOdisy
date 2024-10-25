@@ -39,7 +39,7 @@
                     <Label Content="Describelo" HorizontalAlignment="Center" FontFamily="Lucida Sans Unicode Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36"></Label>
                     <Button x:Name="buttonCrearSala" d:Content="Crear sala de espera" FontFamily="Lucida Sans Unicode" Background="#E0DCC7" Foreground="Black" BorderBrush="Black" Click="ClicBotonCrearSala"></Button>
                     <Button x:Name="buttonUniserSala" d:Content="Unirse a sala de espera" FontFamily="Lucida Sans Unicode" Background="#E0DCC7" Foreground="Black" BorderBrush="Black" Click="ClicButtonUnirseSala"></Button>
-                    <Button x:Name="buttonSalir" d:Content="Cerrar sesión" FontFamily="Lucida Sans Unicode" Background="#E0DCC7" Foreground="Black" BorderBrush="Black"></Button>
+                    <Button x:Name="buttonSalir" d:Content="Cerrar sesión" FontFamily="Lucida Sans Unicode" Background="#E0DCC7" Foreground="Black" BorderBrush="Black" Click="buttonSalir_Click"></Button>
                 </StackPanel>
             </StackPanel>
 

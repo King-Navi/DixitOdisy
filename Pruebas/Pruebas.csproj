@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Servidor\ServicioCorreo.cs" />
     <Compile Include="Servidor\ServicioUsuario.cs" />
     <Compile Include="Servidor\Utilidades\CallbackImplementado.cs" />
     <Compile Include="Cliente\Utilidades\Conexion.cs" />

@@ -169,7 +169,16 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Expulsar.
+        ///   Busca una cadena traducida similar a ¿No recibiste el código? Volver a enviar.
+        /// </summary>
+        public static string buttonenviarCodigoNuevamente {
+            get {
+                return ResourceManager.GetString("buttonenviarCodigoNuevamente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Expulsar.
         /// </summary>
         public static string buttonExpulsar {
             get {
@@ -394,7 +403,16 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ingrese el código de sala.
+        ///   Busca una cadena traducida similar a Ingrese el código que le enviamos a su correo.
+        /// </summary>
+        public static string labelIngresarCodigoCorreo {
+            get {
+                return ResourceManager.GetString("labelIngresarCodigoCorreo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingrese el código de sala.
         /// </summary>
         public static string labelIngresarCodigoSala {
             get {
@@ -745,7 +763,16 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ingresa el código de la sala.
+        ///   Busca una cadena traducida similar a Ingresar código.
+        /// </summary>
+        public static string tituloIngresarCodigoCorreo {
+            get {
+                return ResourceManager.GetString("tituloIngresarCodigoCorreo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingresa el código de la sala.
         /// </summary>
         public static string tituloIngresarCodigoSala {
             get {

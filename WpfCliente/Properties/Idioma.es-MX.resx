@@ -357,6 +357,15 @@
   <data name="tituloErrorServidor" xml:space="preserve">
     <value>Error al conectar con el servidor</value>
   </data>
+  <data name="labelIngresarCodigoCorreo" xml:space="preserve">
+    <value>Ingrese el código que le enviamos a su correo</value>
+  </data>
+  <data name="tituloIngresarCodigoCorreo" xml:space="preserve">
+    <value>Ingresar código</value>
+  </data>
+  <data name="buttonenviarCodigoNuevamente" xml:space="preserve">
+    <value>¿No recibiste el código? Volver a enviar</value>
+  </data>
   <data name="labelListaAmigos" xml:space="preserve">
     <value>Lista de amigos</value>
   </data>

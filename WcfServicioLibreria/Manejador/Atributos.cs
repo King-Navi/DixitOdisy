@@ -26,6 +26,7 @@ namespace WcfServicioLibreria.Manejador
         private static readonly ConcurrentDictionary<int, UsuarioContexto> jugadoresConectadosDiccionario = new ConcurrentDictionary<int, UsuarioContexto>();
 
         #endregion JuagdorSesion
+
         #region Chat
         /// <summary>
         ///  Diccionario que guarda la clave idChat (equivalentes al idSala) y el modelo del chat con sus jugadores.
@@ -40,6 +41,12 @@ namespace WcfServicioLibreria.Manejador
         private static readonly ConcurrentDictionary<string, Partida> partidasdDiccionario = new ConcurrentDictionary<string, Partida>();
 
         #endregion Partida
+
+        #region Correo
+        private static readonly string correo = "describeloproyecto@gmail.com";
+        private static readonly string contrasenia = "rbyu noyd vebq adwe";
+
+        #endregion Correo
 
         #region Inyeccion de depdendencias
         private readonly IContextoOperacion contextoOperacion;

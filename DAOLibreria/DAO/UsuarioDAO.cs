@@ -91,7 +91,7 @@ namespace DAOLibreria.DAO
         public static bool EditarUsuario(UsuarioPerfilDTO usuarioEditado)
         {
             bool resultado = false;
-            VerificarNombreUnico(usuarioEditado.NombreUsuario);
+            //noo
             if (usuarioEditado == null 
                 || usuarioEditado.IdUsuario <= 0
                 || usuarioEditado.NombreUsuario == null)

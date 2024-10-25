@@ -151,6 +151,7 @@
     <Compile Include="GUI\VerificarCorreoModalWindow.xaml.cs">
       <DependentUpon>VerificarCorreoModalWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaz\IHabilitadorBotones.cs" />
     <Compile Include="Utilidad\Amigo.cs" />
     <Compile Include="Utilidad\ChatMensaje.cs" />
     <Compile Include="Utilidad\Conexion.cs" />
@@ -211,6 +212,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Enumerador1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Modelo.Excepciones.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Modelo.xsd">

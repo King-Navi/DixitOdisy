@@ -90,6 +90,7 @@
     <Compile Include="Modelo\Chat\Chat.cs" />
     <Compile Include="Modelo\Chat\ChatMensaje.cs" />
     <Compile Include="Modelo\Amistad\SolicitudAmistad.cs" />
+    <Compile Include="Modelo\Excepciones\BaseDatosFalla.cs" />
     <Compile Include="Modelo\Partida\CondicionVictoriaPorRondas.cs" />
     <Compile Include="Modelo\Partida\CondicionVictoriaCartasAgotadas .cs" />
     <Compile Include="Modelo\Partida\ConfiguracionPartida.cs" />

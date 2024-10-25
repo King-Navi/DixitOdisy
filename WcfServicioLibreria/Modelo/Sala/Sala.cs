@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data.Entity.Infrastructure;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -17,9 +20,12 @@ namespace WcfServicioLibreria.Modelo
         private string anfitrion;
         private const int cantidadMinimaJugadores = 3;
         private const int cantidadMaximaJugadores = 12;
-        private readonly ConcurrentDictionary<string, ISalaJugadorCallback> jugadoresSala = new ConcurrentDictionary<string, ISalaJugadorCallback>();
+        private readonly ConcurrentDictionary<string, ISalaJugadorCallback> jugadoresSalaCallbacks = new ConcurrentDictionary<string, ISalaJugadorCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
+        private ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario> jugadoresInformacion = new ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario>();
+
         public EventHandler salaVaciaManejadorEvento;
+
         #endregion Campos
         #region Propiedades
         public static int CantidadMaximaJugadores => cantidadMaximaJugadores;
@@ -33,7 +39,7 @@ namespace WcfServicioLibreria.Modelo
         {
             this.IdCodigoSala = _idCodigoSala;
             this.anfitrion = nombreUsuario;
-            jugadoresSala.TryAdd(nombreUsuario, null);
+            jugadoresSalaCallbacks.TryAdd(nombreUsuario, null);
         }
 
         #endregion Contructores
@@ -45,26 +51,26 @@ namespace WcfServicioLibreria.Modelo
         }
         private int ContarJugadores()
         {
-            return jugadoresSala.Count;
+            return jugadoresSalaCallbacks.Count;
         }
 
         bool EsVacia()
         {
-            return jugadoresSala.IsEmpty;
+            return jugadoresSalaCallbacks.IsEmpty;
         }
 
-        public IReadOnlyCollection<string> ObtenerNombresJugadoresSala()
+        private IReadOnlyCollection<string> ObtenerNombresJugadoresSala()
         {
-            return jugadoresSala.Keys.ToList().AsReadOnly();
+            return jugadoresSalaCallbacks.Keys.ToList().AsReadOnly();
         }
-
+      
         public bool AgregarJugadorSala(string nombreJugador, ISalaJugadorCallback nuevoContexto)
         {
             bool resultado = false;
             if (ContarJugadores() < cantidadMaximaJugadores)
             {
-                jugadoresSala.AddOrUpdate(nombreJugador, nuevoContexto, (key, oldValue) => nuevoContexto);
-                if (jugadoresSala.TryGetValue(nombreJugador, out ISalaJugadorCallback contextoCambiado))
+                jugadoresSalaCallbacks.AddOrUpdate(nombreJugador, nuevoContexto, (key, oldValue) => nuevoContexto);
+                if (jugadoresSalaCallbacks.TryGetValue(nombreJugador, out ISalaJugadorCallback contextoCambiado))
                 {
                     if (ReferenceEquals(nuevoContexto, contextoCambiado))
                     {
@@ -78,7 +84,7 @@ namespace WcfServicioLibreria.Modelo
 
         bool RemoverJugadorSala(string nombreJugador)
         {
-            bool seElimino = jugadoresSala.TryRemove(nombreJugador, out ISalaJugadorCallback jugadorEliminado);
+            bool seElimino = jugadoresSalaCallbacks.TryRemove(nombreJugador, out ISalaJugadorCallback jugadorEliminado);
             eventosCommunication.TryGetValue(nombreJugador, out DesconectorEventoManejador eventosJugador);
             eventosJugador.Desechar();
             if (ContarJugadores() == 0)
@@ -101,19 +107,19 @@ namespace WcfServicioLibreria.Modelo
             IReadOnlyCollection<string> claveJugadores = ObtenerNombresJugadoresSala();
             foreach (var clave in claveJugadores)
             {
-                if (jugadoresSala.ContainsKey(clave))
+                if (jugadoresSalaCallbacks.ContainsKey(clave))
                 {
-                    ((ICommunicationObject)jugadoresSala[clave]).Close();
+                    ((ICommunicationObject)jugadoresSalaCallbacks[clave]).Close();
                 }
             }
-            jugadoresSala.Clear();
+            jugadoresSalaCallbacks.Clear();
             EnSalaVacia();
 
         }
 
         bool DelegarRolAnfitrion(string nuevoAnfitrionNombre)
         {
-            bool existeJugador = jugadoresSala.TryGetValue(nuevoAnfitrionNombre, out _);
+            bool existeJugador = jugadoresSalaCallbacks.TryGetValue(nuevoAnfitrionNombre, out _);
             if (!existeJugador)
             {
                 return false;
@@ -122,9 +128,74 @@ namespace WcfServicioLibreria.Modelo
             return anfitrion == nuevoAnfitrionNombre;
         }
 
-        void IObservador.DesconectarUsuario(string clave)
+        void IObservador.DesconectarUsuario(string nombreJugador)
         {
-            RemoverJugadorSala(clave);
+            RemoverJugadorSala(nombreJugador);
+            AvisarRetiroJugador(nombreJugador);
+        }
+
+        public void AvisarNuevoJugador(string nombreJugador)
+        {
+            DAOLibreria.ModeloBD.Usuario informacionUsuario = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
+            lock (jugadoresSalaCallbacks)
+            {
+                lock (jugadoresInformacion)
+                {
+                    jugadoresInformacion.TryAdd(nombreJugador, informacionUsuario);
+                    Usuario usuario = new Usuario
+                    {
+                        Nombre = informacionUsuario.gamertag,
+                        FotoUsuario = new MemoryStream(informacionUsuario.fotoPerfil)
+                        //TODO: Si se necesita algo mas del jugador nuevo colocar aqui
+                    };
+                    // Enviar la lista completa de jugadores al nuevo jugador
+                    if (jugadoresSalaCallbacks.TryGetValue(nombreJugador, out ISalaJugadorCallback nuevoCallback))
+                    {
+                        foreach (var jugadorExistente in jugadoresInformacion.Values)
+                        {
+                            Usuario jugador = new Usuario
+                            {
+                                Nombre = jugadorExistente.gamertag,
+                                FotoUsuario = new MemoryStream(jugadorExistente.fotoPerfil)
+                            };
+                            nuevoCallback.ObtenerJugadorSalaCallback(jugador);
+                        }
+                    }
+                    // Enviar la información del nuevo jugador a los jugadores existentes
+                    foreach (var jugadorConectado in ObtenerNombresJugadoresSala())
+                    {
+                        if (jugadoresSalaCallbacks.TryGetValue(jugadorConectado, out ISalaJugadorCallback callback))
+                        {
+                            if (jugadorConectado != nombreJugador)
+                            {
+                                callback.ObtenerJugadorSalaCallback(usuario);
+                            }
+                        }
+                    }
+                   
+                }
+            }
+        }
+        private void AvisarRetiroJugador(string nombreUsuarioEliminado)
+        {
+            lock (jugadoresSalaCallbacks)
+            {
+                lock (jugadoresInformacion)
+                {
+                    jugadoresInformacion.TryRemove(nombreUsuarioEliminado, out DAOLibreria.ModeloBD.Usuario usuarioEliminado);
+                    Usuario usuario = new Usuario
+                    {
+                        Nombre = usuarioEliminado.gamertag,
+                        //FotoUsuario = new MemoryStream(usuarioEliminado.fotoPerfil),
+
+                    };
+                    foreach (var nombreJugador in ObtenerNombresJugadoresSala())
+                    {
+                        jugadoresSalaCallbacks.TryGetValue(nombreJugador, out ISalaJugadorCallback callback);
+                        callback.EliminarJugadorSalaCallback(usuario);
+                    }
+                }
+            }
         }
         #endregion Metodos
     }

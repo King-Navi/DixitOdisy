@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using WpfCliente.Interfaz;
+using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
@@ -18,6 +19,7 @@ namespace WpfCliente.GUI
         {
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
+            ActualizarUI();
             AbrirConexiones();
         }
 
@@ -25,27 +27,20 @@ namespace WpfCliente.GUI
         {
             try
             {
-             
                 var resultadoUsuarioSesion = await Conexion.AbrirConexionUsuarioSesionCallbackAsync(this);
-
                 var resultadoAmigo = await Conexion.AbrirConexionAmigosCallbackAsync(amigosUserControl);
-
                 if (!resultadoAmigo || !resultadoUsuarioSesion)
                 {
                     MessageBox.Show("Error al conctase al servidor");
                     this.Close();
                 }
-                ///TODO: Este debe ser el id de usuario (esto esta hecho para pruebas cambiar a una variable en despliegue)
                 Usuario user = new Usuario
                 {
                     IdUsuario = Singleton.Instance.IdUsuario,
                     Nombre = Singleton.Instance.NombreUsuario
                 };
-                // Ejecutamos las operaciones adicionales en tareas separadas
+                //TODO: Hay que verificar que no haya iniciado sesion antes
                 Conexion.UsuarioSesion.ObtenerSessionJugador(user);
-                //Thread.Sleep(10000);
-
-                // Esperamos a que ambas tareas se completen
             }
             catch (Exception excepcion)
             {
@@ -61,13 +56,17 @@ namespace WpfCliente.GUI
         private void AbrirVentanaSala(string idSala)
         {
             SalaEspera ventanaSala = new SalaEspera(idSala);
-            if(ventanaSala == null || !ventanaSala.IsLoaded)
+            try
+            {
+                ventanaSala.Show();
+
+            }
+            catch (InvalidOperationException)
             {
                 VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
                 this.Close();
                 return;
             }
-            ventanaSala.Show();
             this.Hide();
             ventanaSala.Closed += (s, args) => {
                 if (!Conexion.CerrarConexionesSalaConChat())
@@ -94,26 +93,25 @@ namespace WpfCliente.GUI
 
         private async void ClicButtonUnirseSala(object sender, RoutedEventArgs e)
         {
-            Task<bool> verificarConexion = Validacion.ValidarConexion();
-            HabilitarBotones(false);
-            if (!await verificarConexion)
-            {
-                VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
-                this.Close();
-                
-                return;
-            }
-            HabilitarBotones(true);
             string codigoSala = AbrirVentanaModal();
-            if (Validacion.ExisteSala(codigoSala))
+            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+            if (!conexionExitosa)
             {
-                AbrirVentanaSala(codigoSala);
                 return;
             }
-            else
+            if (codigoSala != null)
             {
-                //TODO: I18N
-                VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado(this);
+                if (Validacion.ExisteSala(codigoSala))
+                {
+                    AbrirVentanaSala(codigoSala);
+                    return;
+                }
+                else
+                {
+                    //TODO: I18N
+                    VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado(this);
+                }
+
             }
 
 
@@ -128,18 +126,22 @@ namespace WpfCliente.GUI
         {
             string valorObtenido = null;
             UnirseSalaModalWindow ventanaModal = new UnirseSalaModalWindow();
-            ventanaModal.Owner = this;
+            try
+            {
+                ventanaModal.Owner = this;
+
+            }
+            catch (Exception)
+            {
+                
+            }            
             bool? resultado = ventanaModal.ShowDialog();
 
             if (resultado == true)
             {
                 valorObtenido = ventanaModal.ValorIngresado;
             }
-            else
-            {
-                //TODO: I18N
-                MessageBox.Show("No se ingresó ningún valor.");
-            }
+            
 
             return valorObtenido;
         }
@@ -167,6 +169,9 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
+            buttonCrearSala.Content = Idioma.buttonCrearSalaEspera;
+            buttonUniserSala.Content = Idioma.buttonUnirseSalaDeEspera;
+            buttonSalir.Content = Idioma.buttonCerrarSesion;
             //TODO: Pedirle a unaay los .resx
         }
     }

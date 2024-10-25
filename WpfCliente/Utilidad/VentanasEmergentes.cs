@@ -6,14 +6,15 @@ namespace WpfCliente.Utilidad
     public class VentanasEmergentes
     {
 
-        public static void CrearVentanaEmergente(string tituloVentanaEmergente, string descripcionVentanaEmergente)
+        public static void CrearVentanaEmergente(string tituloVentanaEmergente, string descripcionVentanaEmergente, Window window)
         {
             VentanaEmergente ventanaEmergente = new VentanaEmergente(
                 tituloVentanaEmergente,
-                descripcionVentanaEmergente
-            );
-
-            ventanaEmergente.Show();
+                descripcionVentanaEmergente)
+            {
+                Owner = window
+            };
+            ventanaEmergente.ShowDialog();
         }
 
         public static void CrearVentanaEmergenteErrorServidor(Window window)

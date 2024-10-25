@@ -32,13 +32,10 @@
             </StackPanel>
             <!--Middler-->
             <StackPanel Orientation="Vertical"  Background="AntiqueWhite" HorizontalAlignment="Center">
-                <Label x:Name="labelCodigoSala" Content="/CodigoSala/"></Label>
+                <Label x:Name="labelCodigoSala" d:Content="Codigo de la Sala"></Label>
                 <!--Usuario en la sala de espera-->
                 <StackPanel Orientation="Vertical">
-                    <Label Content="Usuarios en el lobby"/>
-                    <Label Content="hOLA"/>
-                    <Label Content="Unaay"/>
-                    <Label Content="Messi"/>
+                    <local:ListaUsuariosSalaUserControl x:Name="usuariosSalaUserControl" />
                 </StackPanel>
             </StackPanel>
         </DockPanel>

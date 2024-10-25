@@ -82,6 +82,7 @@
     <Compile Include="ConfiguradorConexion.cs" />
     <Compile Include="DAO\AmistadDAO.cs" />
     <Compile Include="DAO\UsuarioDAO.cs" />
+    <Compile Include="Excepciones\GamertagDuplicado.cs" />
     <Compile Include="ModeloBD\Amigo.cs">
       <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>

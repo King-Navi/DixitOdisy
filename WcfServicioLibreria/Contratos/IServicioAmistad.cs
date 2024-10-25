@@ -14,6 +14,8 @@ namespace WcfServicioLibreria.Contratos
     {
         [OperationContract(IsOneWay = true)]
         void AbrirCanalParaPeticiones(Usuario usuario);
+        [OperationContract]
+        void EnviarSolicitudAmistad (Usuario usuarioRemitente, string destinatario);
     }
     [ServiceContract]
     public interface IAmistadCallBack

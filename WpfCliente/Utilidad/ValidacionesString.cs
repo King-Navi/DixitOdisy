@@ -42,6 +42,9 @@ namespace WpfCliente.Utilidad
             catch (FormatException)
             {
                 validacionCorreo = false;
+            }catch(Exception)
+            {
+                validacionCorreo = false;
             }
 
             if (string.IsNullOrWhiteSpace(correo))

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
@@ -187,6 +188,42 @@ namespace WpfCliente.Utilidad
                 //TODO Manejar el error
                 return false;
             }
+            return true;
+        }
+        private static async Task<bool> ValidarConexion()
+        {
+            bool resultado = false;
+            try
+            {
+                ServidorDescribelo.IServicioUsuario ping = new ServicioUsuarioClient();
+                resultado = await ping.PingAsync();
+            }
+            catch (Exception excepcion)
+            {
+                //TODO: Manejar excepcion
+                return resultado;
+            }
+            return resultado;
+        }
+        /// <summary>
+        /// Espera la funcion si no hay conexion el se encargara de cerrar la ventana con .Close()
+        /// </summary>
+        /// <param name="habilitarAcciones"></param>
+        /// <param name="ventana"></param>
+        /// <returns></returns>
+        public static async Task<bool> VerificarConexion(Action<bool> habilitarAcciones, Window ventana)
+        {
+            habilitarAcciones(false);
+            Task<bool> verificarConexion = ValidarConexion();
+
+            if (!await verificarConexion)
+            {
+                VentanasEmergentes.CrearVentanaEmergenteErrorServidor(ventana);
+                ventana.Close();
+                return false;
+            }
+
+            habilitarAcciones(true);
             return true;
         }
     }

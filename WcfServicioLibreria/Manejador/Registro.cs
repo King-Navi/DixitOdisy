@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ServiceModel;
 using System.Text.RegularExpressions;
 using DAOLibreria.DAO;
+using DAOLibreria.Excepciones;
 using DAOLibreria.ModeloBD;
 using UtilidadesLibreria;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Modelo.Excepciones;
 using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
@@ -33,6 +36,13 @@ namespace WcfServicioLibreria.Manejador
                     };
                     resultado = DAOLibreria.DAO.UsuarioDAO.RegistrarNuevoUsuario(usuario, usuarioCuenta);
                 }
+            }catch (GamertagDuplicadoException)
+            {
+                BaseDatosFalla excepcion = new BaseDatosFalla()
+                {
+                    EsGamertagDuplicado = true
+                };
+                throw new FaultException<BaseDatosFalla>(excepcion, new FaultReason("Gamertag en uso"));
             }
             catch (Exception excepcion)
             {

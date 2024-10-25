@@ -1,5 +1,6 @@
 ﻿using DAOLibreria;
 using DAOLibreria.DAO;
+using DAOLibreria.Excepciones;
 using DAOLibreria.ModeloBD;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -9,9 +10,11 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using UtilidadesLibreria;
+using WcfServicioLibreria.Modelo.Excepciones;
 
 namespace Pruebas.DAO
 {
@@ -87,9 +90,10 @@ namespace Pruebas.DAO
                 correo = "nuevo@ejemplo.com" 
             };
             // Act
-            bool resultadoPrueba = DAOLibreria.DAO.UsuarioDAO.RegistrarNuevoUsuario(nuevoUsuario, nuevoUsuarioCuenta);
+            bool resultado = false;
             // Assert
-            Assert.IsFalse(resultadoPrueba, "El registro no debería ser exitoso porque el usuario ya existe en la base de datos.");
+            Assert.ThrowsException<GamertagDuplicadoException>(() => resultado = DAOLibreria.DAO.UsuarioDAO.RegistrarNuevoUsuario(nuevoUsuario, nuevoUsuarioCuenta));
+            Assert.IsFalse(resultado, "El registro no debería ser exitoso porque el usuario ya existe en la base de datos.");
         }
         #endregion
 
@@ -140,22 +144,8 @@ namespace Pruebas.DAO
         }
         #endregion
 
-        #region GetUsuarioById
-        [TestMethod]
-        public void GetUsuarioById_CuandoIdExiste_DeberiaRetornarUsuario()
-        {
-            // Arrange
-
-            //PRE-CONDICION ID 1 corresponde a un usuario existente en la base de datos.
-            int idExistente = 1;
-
-            // Act
-            Usuario usuario = DAOLibreria.DAO.UsuarioDAO.GetUsuarioById(idExistente);
-
-            // Assert
-            Assert.IsNotNull(usuario, "El método debería retornar un usuario cuando el ID existe.");
-            Assert.AreEqual(idExistente, usuario.idUsuario, "El ID del usuario retornado debería coincidir con el ID proporcionado.");
-        }
+        #region ObtenerUsuarioPorNombre
+        
         #endregion
 
         #region  

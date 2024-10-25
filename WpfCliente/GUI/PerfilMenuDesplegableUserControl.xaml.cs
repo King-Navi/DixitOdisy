@@ -13,13 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfCliente.Interfaz;
+using WpfCliente.Properties;
 using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Interaction logic for PerfilMenuDesplegableUserControl.xaml
-    /// </summary>
     public partial class PerfilMenuDesplegableUserControl : UserControl , IActualizacionUI
     {
         public PerfilMenuDesplegableUserControl()
@@ -49,12 +47,13 @@ namespace WpfCliente.GUI
                 };
                 MenuVentana.Hide();
             }
-
         }
 
         public void ActualizarUI()
         {
-            //Preguntar a unaay por recursos
+            menuItemEditarPerfil.Header = Idioma.menuItemEditarperfil;
+            menuItemEstadisticas.Header = Idioma.menuItemEstadisticas;
+            menuItemPerfil.Header = Idioma.menuItemPerfil;
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)

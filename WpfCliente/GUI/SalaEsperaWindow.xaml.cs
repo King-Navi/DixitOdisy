@@ -56,8 +56,7 @@ namespace WpfCliente.GUI
 
             if (!resultado)
             {
-                //NoHayConexion()
-                this.Close();
+                NoHayConexion();
                 return;
             }
             Conexion.SalaJugador.AgregarJugadorSala(Singleton.Instance.NombreUsuario, idSala);
@@ -132,10 +131,7 @@ namespace WpfCliente.GUI
             //TODO:Actualizar toda la inferfaz, Pedir a Unnay los .resx
         }
 
-        public void ObtenerJugadoresSalaCallback(string[] jugardoresEnSala)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public void EmpezarPartidaCallBack()
         {
@@ -160,6 +156,17 @@ namespace WpfCliente.GUI
                 //TODO Manejar excepcion
             }
 
+        }
+
+        public void ObtenerJugadorSalaCallback(Usuario jugardoreNuevoEnSala)
+        {
+            List<Amigo> amigos = new List<Amigo>();
+            usuariosSalaUserControl.ObtenerUsuarioSala(jugardoreNuevoEnSala, amigos);
+        }
+
+        public void EliminarJugadorSalaCallback(Usuario jugardoreRetiradoDeSala)
+        {
+            usuariosSalaUserControl.EliminarUsuarioSala(jugardoreRetiradoDeSala);
         }
     }
 }

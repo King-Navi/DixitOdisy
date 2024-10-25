@@ -35,17 +35,11 @@ namespace WpfCliente.GUI
 
         private async void ClicButtonAceptar(object sender, RoutedEventArgs e)
         {
-            Task<bool> verificarConexion = Validacion.ValidarConexion();
-            HabilitarBotones(false);
-            if (!await verificarConexion)
+            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+            if (!conexionExitosa)
             {
-                VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
-                DialogResult = false;
-                this.Close();
                 return;
             }
-
-            HabilitarBotones(true);
             ValorIngresado = textBoxCodigoSala.Text.ToUpper();
             
             if(!string.IsNullOrWhiteSpace(ValorIngresado))

@@ -431,6 +431,51 @@ namespace WpfCliente.ServidorDescribelo {
         EnPartida = 4,
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="BaseDatosFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones")]
+    [System.SerializableAttribute()]
+    public partial class BaseDatosFalla : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool EsGamertagDuplicadoField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool EsGamertagDuplicado {
+            get {
+                return this.EsGamertagDuplicadoField;
+            }
+            set {
+                if ((this.EsGamertagDuplicadoField.Equals(value) != true)) {
+                    this.EsGamertagDuplicadoField = value;
+                    this.RaisePropertyChanged("EsGamertagDuplicado");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioAmistad", CallbackContract=typeof(WpfCliente.ServidorDescribelo.IServicioAmistadCallback))]
     public interface IServicioAmistad {
@@ -440,6 +485,12 @@ namespace WpfCliente.ServidorDescribelo {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticiones")]
         System.Threading.Tasks.Task AbrirCanalParaPeticionesAsync(WpfCliente.ServidorDescribelo.Usuario usuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistad", ReplyAction="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistadResponse")]
+        void EnviarSolicitudAmistad(WpfCliente.ServidorDescribelo.Usuario usuarioRemitente, string destinatario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistad", ReplyAction="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistadResponse")]
+        System.Threading.Tasks.Task EnviarSolicitudAmistadAsync(WpfCliente.ServidorDescribelo.Usuario usuarioRemitente, string destinatario);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -489,6 +540,14 @@ namespace WpfCliente.ServidorDescribelo {
         
         public System.Threading.Tasks.Task AbrirCanalParaPeticionesAsync(WpfCliente.ServidorDescribelo.Usuario usuario) {
             return base.Channel.AbrirCanalParaPeticionesAsync(usuario);
+        }
+        
+        public void EnviarSolicitudAmistad(WpfCliente.ServidorDescribelo.Usuario usuarioRemitente, string destinatario) {
+            base.Channel.EnviarSolicitudAmistad(usuarioRemitente, destinatario);
+        }
+        
+        public System.Threading.Tasks.Task EnviarSolicitudAmistadAsync(WpfCliente.ServidorDescribelo.Usuario usuarioRemitente, string destinatario) {
+            return base.Channel.EnviarSolicitudAmistadAsync(usuarioRemitente, destinatario);
         }
     }
     
@@ -628,6 +687,7 @@ namespace WpfCliente.ServidorDescribelo {
     public interface IServicioRegistro {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioRegistro/RegistrarUsuario", ReplyAction="http://tempuri.org/IServicioRegistro/RegistrarUsuarioResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(WpfCliente.ServidorDescribelo.BaseDatosFalla), Action="http://tempuri.org/IServicioRegistro/RegistrarUsuarioBaseDatosFallaFault", Name="BaseDatosFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones")]
         bool RegistrarUsuario(WpfCliente.ServidorDescribelo.Usuario usuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioRegistro/RegistrarUsuario", ReplyAction="http://tempuri.org/IServicioRegistro/RegistrarUsuarioResponse")]
@@ -735,24 +795,11 @@ namespace WpfCliente.ServidorDescribelo {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioSalaJugador", CallbackContract=typeof(WpfCliente.ServidorDescribelo.IServicioSalaJugadorCallback))]
     public interface IServicioSalaJugador {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSala", ReplyAction="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(WpfCliente.ServidorDescribelo.UsuarioFalla), Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaUsuarioFallaFault", Name="UsuarioFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
-        bool AgregarJugadorSala(string gamertag, string idSala);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSala")]
+        void AgregarJugadorSala(string gamertag, string idSala);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSala", ReplyAction="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaResponse")]
-        System.Threading.Tasks.Task<bool> AgregarJugadorSalaAsync(string gamertag, string idSala);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/RemoverJugadorSala", ReplyAction="http://tempuri.org/IServicioSalaJugador/RemoverJugadorSalaResponse")]
-        void RemoverJugadorSala(string gamertag, string ididSalaRoom);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/RemoverJugadorSala", ReplyAction="http://tempuri.org/IServicioSalaJugador/RemoverJugadorSalaResponse")]
-        System.Threading.Tasks.Task RemoverJugadorSalaAsync(string gamertag, string ididSalaRoom);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/ObtenerJugadoresSala")]
-        void ObtenerJugadoresSala(string gamertag, string idSala);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/ObtenerJugadoresSala")]
-        System.Threading.Tasks.Task ObtenerJugadoresSalaAsync(string gamertag, string idSala);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSala")]
+        System.Threading.Tasks.Task AgregarJugadorSalaAsync(string gamertag, string idSala);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/EmpezarPartida")]
         void EmpezarPartida(string idSala);
@@ -770,8 +817,11 @@ namespace WpfCliente.ServidorDescribelo {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IServicioSalaJugadorCallback {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/ObtenerJugadoresSalaCallback", ReplyAction="http://tempuri.org/IServicioSalaJugador/ObtenerJugadoresSalaCallbackResponse")]
-        void ObtenerJugadoresSalaCallback(string[] jugardoresEnSala);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/ObtenerJugadorSalaCallback", ReplyAction="http://tempuri.org/IServicioSalaJugador/ObtenerJugadorSalaCallbackResponse")]
+        void ObtenerJugadorSalaCallback(WpfCliente.ServidorDescribelo.Usuario jugardoreNuevoEnSala);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/EliminarJugadorSalaCallback", ReplyAction="http://tempuri.org/IServicioSalaJugador/EliminarJugadorSalaCallbackResponse")]
+        void EliminarJugadorSalaCallback(WpfCliente.ServidorDescribelo.Usuario jugardoreRetiradoDeSala);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/EmpezarPartidaCallBack", ReplyAction="http://tempuri.org/IServicioSalaJugador/EmpezarPartidaCallBackResponse")]
         void EmpezarPartidaCallBack();
@@ -808,28 +858,12 @@ namespace WpfCliente.ServidorDescribelo {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public bool AgregarJugadorSala(string gamertag, string idSala) {
-            return base.Channel.AgregarJugadorSala(gamertag, idSala);
+        public void AgregarJugadorSala(string gamertag, string idSala) {
+            base.Channel.AgregarJugadorSala(gamertag, idSala);
         }
         
-        public System.Threading.Tasks.Task<bool> AgregarJugadorSalaAsync(string gamertag, string idSala) {
+        public System.Threading.Tasks.Task AgregarJugadorSalaAsync(string gamertag, string idSala) {
             return base.Channel.AgregarJugadorSalaAsync(gamertag, idSala);
-        }
-        
-        public void RemoverJugadorSala(string gamertag, string ididSalaRoom) {
-            base.Channel.RemoverJugadorSala(gamertag, ididSalaRoom);
-        }
-        
-        public System.Threading.Tasks.Task RemoverJugadorSalaAsync(string gamertag, string ididSalaRoom) {
-            return base.Channel.RemoverJugadorSalaAsync(gamertag, ididSalaRoom);
-        }
-        
-        public void ObtenerJugadoresSala(string gamertag, string idSala) {
-            base.Channel.ObtenerJugadoresSala(gamertag, idSala);
-        }
-        
-        public System.Threading.Tasks.Task ObtenerJugadoresSalaAsync(string gamertag, string idSala) {
-            return base.Channel.ObtenerJugadoresSalaAsync(gamertag, idSala);
         }
         
         public void EmpezarPartida(string idSala) {

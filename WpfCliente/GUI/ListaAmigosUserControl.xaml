@@ -5,12 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfCliente.GUI"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="260">
+             d:DesignHeight="500" d:DesignWidth="260" Unloaded="CerrandoUserControl">
     <Grid Width="220" Height="400" >
         <DockPanel LastChildFill="True">
             <!--Header-->
             <StackPanel d:Background="Aqua" DockPanel.Dock="Top">
-                <Label d:Content="Lista de amgios"></Label>
+                <Label x:Name="labelListaAmigos" d:Content="Lista de amgios"></Label>
             </StackPanel>
             <!--Footer-->
             <StackPanel Background="Beige" DockPanel.Dock="Bottom">

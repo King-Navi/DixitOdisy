@@ -109,23 +109,24 @@ namespace WpfCliente.GUI
             {
                 RegistrarUsuario();
             }
+            else
+            {
+                VentanasEmergentes.CrearVentanaEmergente("Campos faltantes", "Por favor, llene todos los campos", this);
+            }
         }
 
         private async void RegistrarUsuario()
         {
-            Task<bool> verificarConexion = Validacion.ValidarConexion();
-            HabilitarBotones(false);
-            if (!await verificarConexion)
+            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+            if (!conexionExitosa)
             {
-                VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
                 return;
             }
-            HabilitarBotones(true);
+
             ServidorDescribelo.IServicioRegistro servicio = new ServidorDescribelo.ServicioRegistroClient();
             try
             {
-                string contraseniaHash = BitConverter.ToString(SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(textBoxContrasenia.Password))).Replace("-", "");
-                //TODO:Preguntar por el path de la imagen
+                string contraseniaHash = Encriptacion.OcuparSHA256(textBoxContrasenia.Password);
                 using (FileStream fileStream = new FileStream(rutaAbsolutaImagen, FileMode.Open, FileAccess.Read))
                 {
                     using (MemoryStream memoryStream = new MemoryStream())
@@ -262,22 +263,33 @@ namespace WpfCliente.GUI
 
         private bool EsImagenValida(string rutaImagen)
         {
+            bool resultado = false;
             try
             {
-                BitmapImage bitmap = new BitmapImage();
-                using (FileStream stream = new FileStream(rutaImagen, FileMode.Open, FileAccess.Read))
+                FileInfo fileInfo = new FileInfo(rutaImagen);
+                if (fileInfo.Length > 5 * 1024 * 1024) // 5 MB en bytes verificar
                 {
-                    bitmap.BeginInit();
-                    bitmap.StreamSource = stream;
-                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmap.EndInit();
+                    VentanasEmergentes.CrearVentanaEmergente("Limite de MB superado",
+                        "La imagen no puede pesar mas de 5MB profe, favor de escoger otra imagen", this);
                 }
-                return true;
+                else
+                {
+                    BitmapImage bitmap = new BitmapImage();
+                    using (FileStream stream = new FileStream(rutaImagen, FileMode.Open, FileAccess.Read))
+                    {
+                        bitmap.BeginInit();
+                        bitmap.StreamSource = stream;
+                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmap.EndInit();
+                    }
+                    resultado = true;
+                }
             }
             catch
             {
-                return false;
+
             }
+            return resultado;
         }
         private void CargarImagen(string ruta)
         {
@@ -297,6 +309,13 @@ namespace WpfCliente.GUI
             {
                 MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
             }
+        }
+
+        private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
+            IniciarSesion iniciarSesion = new IniciarSesion();
+            iniciarSesion.Show();
         }
     }
 }

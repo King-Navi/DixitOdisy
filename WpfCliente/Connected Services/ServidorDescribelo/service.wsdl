@@ -173,32 +173,23 @@
   <wsdl:message name="IServicioSalaJugador_AgregarJugadorSala_InputMessage">
     <wsdl:part name="parameters" element="tns:AgregarJugadorSala" />
   </wsdl:message>
-  <wsdl:message name="IServicioSalaJugador_AgregarJugadorSala_OutputMessage">
-    <wsdl:part name="parameters" element="tns:AgregarJugadorSalaResponse" />
-  </wsdl:message>
-  <wsdl:message name="IServicioSalaJugador_AgregarJugadorSala_UsuarioFallaFault_FaultMessage">
-    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q3:UsuarioFalla" />
-  </wsdl:message>
-  <wsdl:message name="IServicioSalaJugador_RemoverJugadorSala_InputMessage">
-    <wsdl:part name="parameters" element="tns:RemoverJugadorSala" />
-  </wsdl:message>
-  <wsdl:message name="IServicioSalaJugador_RemoverJugadorSala_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RemoverJugadorSalaResponse" />
-  </wsdl:message>
-  <wsdl:message name="IServicioSalaJugador_ObtenerJugadoresSala_InputMessage">
-    <wsdl:part name="parameters" element="tns:ObtenerJugadoresSala" />
-  </wsdl:message>
   <wsdl:message name="IServicioSalaJugador_EmpezarPartida_InputMessage">
     <wsdl:part name="parameters" element="tns:EmpezarPartida" />
   </wsdl:message>
   <wsdl:message name="IServicioSalaJugador_AsignarColor_InputMessage">
     <wsdl:part name="parameters" element="tns:AsignarColor" />
   </wsdl:message>
-  <wsdl:message name="IServicioSalaJugador_ObtenerJugadoresSalaCallback_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ObtenerJugadoresSalaCallback" />
+  <wsdl:message name="IServicioSalaJugador_ObtenerJugadorSalaCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerJugadorSalaCallback" />
   </wsdl:message>
-  <wsdl:message name="IServicioSalaJugador_ObtenerJugadoresSalaCallback_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ObtenerJugadoresSalaCallbackResponse" />
+  <wsdl:message name="IServicioSalaJugador_ObtenerJugadorSalaCallback_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerJugadorSalaCallbackResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioSalaJugador_EliminarJugadorSalaCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:EliminarJugadorSalaCallback" />
+  </wsdl:message>
+  <wsdl:message name="IServicioSalaJugador_EliminarJugadorSalaCallback_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:EliminarJugadorSalaCallbackResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioSalaJugador_EmpezarPartidaCallBack_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:EmpezarPartidaCallBack" />
@@ -304,15 +295,6 @@
   <wsdl:portType name="IServicioSalaJugador">
     <wsdl:operation name="AgregarJugadorSala">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSala" message="tns:IServicioSalaJugador_AgregarJugadorSala_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaResponse" message="tns:IServicioSalaJugador_AgregarJugadorSala_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSalaUsuarioFallaFault" name="UsuarioFallaFault" message="tns:IServicioSalaJugador_AgregarJugadorSala_UsuarioFallaFault_FaultMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="RemoverJugadorSala">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioSalaJugador/RemoverJugadorSala" message="tns:IServicioSalaJugador_RemoverJugadorSala_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioSalaJugador/RemoverJugadorSalaResponse" message="tns:IServicioSalaJugador_RemoverJugadorSala_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="ObtenerJugadoresSala">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioSalaJugador/ObtenerJugadoresSala" message="tns:IServicioSalaJugador_ObtenerJugadoresSala_InputMessage" />
     </wsdl:operation>
     <wsdl:operation name="EmpezarPartida">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioSalaJugador/EmpezarPartida" message="tns:IServicioSalaJugador_EmpezarPartida_InputMessage" />
@@ -320,9 +302,13 @@
     <wsdl:operation name="AsignarColor">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioSalaJugador/AsignarColor" message="tns:IServicioSalaJugador_AsignarColor_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ObtenerJugadoresSalaCallback">
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioSalaJugador/ObtenerJugadoresSalaCallback" message="tns:IServicioSalaJugador_ObtenerJugadoresSalaCallback_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioSalaJugador/ObtenerJugadoresSalaCallbackResponse" message="tns:IServicioSalaJugador_ObtenerJugadoresSalaCallback_InputCallbackMessage" />
+    <wsdl:operation name="ObtenerJugadorSalaCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioSalaJugador/ObtenerJugadorSalaCallback" message="tns:IServicioSalaJugador_ObtenerJugadorSalaCallback_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioSalaJugador/ObtenerJugadorSalaCallbackResponse" message="tns:IServicioSalaJugador_ObtenerJugadorSalaCallback_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EliminarJugadorSalaCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioSalaJugador/EliminarJugadorSalaCallback" message="tns:IServicioSalaJugador_EliminarJugadorSalaCallback_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioSalaJugador/EliminarJugadorSalaCallbackResponse" message="tns:IServicioSalaJugador_EliminarJugadorSalaCallback_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="EmpezarPartidaCallBack">
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioSalaJugador/EmpezarPartidaCallBack" message="tns:IServicioSalaJugador_EmpezarPartidaCallBack_OutputCallbackMessage" />
@@ -507,27 +493,6 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="UsuarioFallaFault">
-        <soap12:fault use="literal" name="UsuarioFallaFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="RemoverJugadorSala">
-      <soap12:operation soapAction="http://tempuri.org/IServicioSalaJugador/RemoverJugadorSala" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="ObtenerJugadoresSala">
-      <soap12:operation soapAction="http://tempuri.org/IServicioSalaJugador/ObtenerJugadoresSala" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
     </wsdl:operation>
     <wsdl:operation name="EmpezarPartida">
       <soap12:operation soapAction="http://tempuri.org/IServicioSalaJugador/EmpezarPartida" style="document" />
@@ -541,8 +506,17 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
-    <wsdl:operation name="ObtenerJugadoresSalaCallback">
-      <soap12:operation soapAction="http://tempuri.org/IServicioSalaJugador/ObtenerJugadoresSalaCallback" style="document" />
+    <wsdl:operation name="ObtenerJugadorSalaCallback">
+      <soap12:operation soapAction="http://tempuri.org/IServicioSalaJugador/ObtenerJugadorSalaCallback" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EliminarJugadorSalaCallback">
+      <soap12:operation soapAction="http://tempuri.org/IServicioSalaJugador/EliminarJugadorSalaCallback" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

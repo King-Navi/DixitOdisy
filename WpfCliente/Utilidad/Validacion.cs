@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows;
 using UtilidadesLibreria;
 using WpfCliente.GUI;
 using WpfCliente.ServidorDescribelo;
@@ -59,22 +60,6 @@ namespace WpfCliente
                 VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado();
                 return false;
             }*/
-        }
-
-        public static async Task<bool> ValidarConexion()
-        {
-            bool resultado = false;
-            try
-            {
-                ServidorDescribelo.IServicioUsuario ping = new ServicioUsuarioClient();
-                resultado = await ping.PingAsync();
-            }
-            catch (Exception excepcion)
-            {
-                //TODO: Manejar excepcion
-                return resultado;
-            }
-            return resultado;
         }
 
         private bool ValidarFormatoCorreo(string correo)

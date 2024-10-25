@@ -11,42 +11,7 @@ namespace WcfServicioLibreria.Manejador
         /// </summary>
         /// <param name="gamertag"></param>
         /// <param name="idSala"></param>
-        public bool AgregarJugadorSala(string gamertag, string idSala)
-        {
-            if (!ValidarSala(idSala))
-            {
-                return false;
-            }
-            try
-            {
-                ISalaJugadorCallback contexto = contextoOperacion.GetCallbackChannel<ISalaJugadorCallback>();
-                salasDiccionario.TryGetValue(idSala, out Modelo.Sala sala);
-                lock (sala)
-                {
-                    //FIXME
-                    sala.AgregarJugadorSala(gamertag, contexto);
-
-                }
-
-            }
-            catch (Exception excepcion)
-            {
-                //TODO: Manejar el error
-            }
-            return true;
-        }
-
-        public void AsignarColor(string idSala)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void EmpezarPartida(string idSala)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ObtenerJugadoresSala(string gamertag, string idSala)
+        public void AgregarJugadorSala(string gamertag, string idSala)
         {
             if (!ValidarSala(idSala))
             {
@@ -58,12 +23,9 @@ namespace WcfServicioLibreria.Manejador
                 salasDiccionario.TryGetValue(idSala, out Modelo.Sala sala);
                 lock (sala)
                 {
-                    //FIXME
-
-                    sala.ObtenerNombresJugadoresSala();
-
+                    sala.AgregarJugadorSala(gamertag, contexto);
+                    sala.AvisarNuevoJugador(gamertag);
                 }
-
             }
             catch (Exception excepcion)
             {
@@ -71,7 +33,12 @@ namespace WcfServicioLibreria.Manejador
             }
         }
 
-        public void RemoverJugadorSala(string gamertag, string ididSalaRoom)
+        public void AsignarColor(string idSala)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EmpezarPartida(string idSala)
         {
             throw new NotImplementedException();
         }

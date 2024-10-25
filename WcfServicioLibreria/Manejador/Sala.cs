@@ -105,6 +105,9 @@ namespace WcfServicioLibreria.Manejador
             catch (CommunicationException excepcion)
             {
                    //TODO manejar el error
+            }catch (NullReferenceException)
+            {
+
             }
             return result;
         }

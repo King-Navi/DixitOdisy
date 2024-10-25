@@ -357,4 +357,16 @@
   <data name="tituloErrorServidor" xml:space="preserve">
     <value>Error al conectar con el servidor</value>
   </data>
+  <data name="labelListaAmigos" xml:space="preserve">
+    <value>Lista de amigos</value>
+  </data>
+  <data name="menuItemPerfil" xml:space="preserve">
+    <value>Perfil</value>
+  </data>
+  <data name="menuItemEditarperfil" xml:space="preserve">
+    <value>Editar perfil</value>
+  </data>
+  <data name="menuItemEstadisticas" xml:space="preserve">
+    <value>Ver tus estadistícas</value>
+  </data>
 </root>

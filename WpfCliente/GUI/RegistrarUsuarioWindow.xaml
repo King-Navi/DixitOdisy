@@ -8,7 +8,7 @@
         Height="770" Width="1200"
         WindowStartupLocation="CenterScreen"
         Title="RegistrarUsuario" 
-        ResizeMode="NoResize">
+        ResizeMode="NoResize" Closing="CerrandoVentana">
 
     <Window.Resources>
         <Style TargetType="{x:Type TextBox}">

@@ -7,13 +7,8 @@ namespace WcfServicioLibreria.Contratos
     [ServiceContract(CallbackContract = typeof(ISalaJugadorCallback))]
     public interface IServicioSalaJugador
     {
-        [OperationContract]
-        [FaultContract(typeof(UsuarioFalla))]
-        bool AgregarJugadorSala(string gamertag, string idSala);
-        [OperationContract]
-        void RemoverJugadorSala(string gamertag, string ididSalaRoom);
         [OperationContract(IsOneWay = true)]
-        void ObtenerJugadoresSala(string gamertag, string idSala);
+        void AgregarJugadorSala(string gamertag, string idSala);
         [OperationContract(IsOneWay = true)]
         void EmpezarPartida(string idSala);
         [OperationContract(IsOneWay = true)]
@@ -23,7 +18,9 @@ namespace WcfServicioLibreria.Contratos
     public interface ISalaJugadorCallback
     {
         [OperationContract]
-        void ObtenerJugadoresSalaCallback(Usuario[] jugardoresEnSala);
+        void ObtenerJugadorSalaCallback(Usuario jugardoreNuevoEnSala);
+        [OperationContract]
+        void EliminarJugadorSalaCallback(Usuario jugardoreRetiradoDeSala);
         [OperationContract]
         void EmpezarPartidaCallBack();
         [OperationContract]

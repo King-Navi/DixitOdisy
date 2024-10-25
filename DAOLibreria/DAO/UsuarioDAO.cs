@@ -13,19 +13,15 @@ namespace DAOLibreria.DAO
 {
     public static class UsuarioDAO
     {
+
         /// <summary>
         /// Registra un nuevo usuario en el sistema junto con su cuenta asociada y estadísticas iniciales.
         /// Asegura la coherencia entre el gamertag del usuario y el de la cuenta.
         /// </summary>
         /// <param name="_usuario">El objeto Usuario que contiene la información del usuario, incluido el gamertag y foto de perfil.</param>
         /// <param name="_usuarioCuenta">El objeto UsuarioCuenta que contiene detalles de la cuenta del usuario como el gamertag, el hash de la contraseña y el correo electrónico.</param>
-        /// <returns>True si el registro fue exitoso; False si los gamertags no coinciden o si ocurre un error durante la operación de la base de datos.</returns>
-        /// <exception cref="Exception">Lanza una excepción si ocurre un error durante la transacción de la base de datos.</exception>
-        /// <remarks>
-        /// Este método realiza las siguientes operaciones:
-        /// 1. Verifica que los gamertags de Usuario y UsuarioCuenta coincidan.
-        /// 2. Si ocurre un error durante la transacción, la misma se revierte y el error se maneja lanzando una excepción.
-        /// </remarks>
+        /// <exception cref="VerificarNombreUnico(string)"></exception>
+        /// <returns></returns>
         public static bool RegistrarNuevoUsuario(Usuario _usuario, UsuarioCuenta _usuarioCuenta)
         {
             bool resultado = false;
@@ -83,6 +79,12 @@ namespace DAOLibreria.DAO
                 return resultado;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="usuarioEditado"></param>
+        /// <exception cref="VerificarNombreUnico(string)"></exception>
+        /// <returns></returns>
         public static bool EditarUsuario(UsuarioPerfilDTO usuarioEditado)
         {
             bool resultado = false;
@@ -133,7 +135,12 @@ namespace DAOLibreria.DAO
                 return resultado;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gamertag"></param>
+        /// <param name="contrasenia"></param>
+        /// <returns></returns>
         public static UsuarioPerfilDTO ValidarCredenciales(string gamertag, string contrasenia)
         {
             UsuarioCuenta datosUsuarioCuenta = null;
@@ -165,7 +172,11 @@ namespace DAOLibreria.DAO
 
             return resultado;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gamertag"></param>
+        /// <returns></returns>
         public static Usuario ObtenerUsuarioPorNombre(string gamertag)
         {
             Usuario usuario = null;
@@ -188,8 +199,34 @@ namespace DAOLibreria.DAO
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="nombres"></param>
+        /// <returns></returns>
+        public static List<Usuario> ObtenerListaUsuariosPorNombres(List<string> nombres)
+        {
+            List<Usuario> usuarios = new List<Usuario>();
+
+            try
+            {
+                using (var context = new DescribeloEntities())
+                {
+                    usuarios = context.Usuario
+                        .Where(usuarioFila => nombres.Contains(usuarioFila.gamertag))
+                        .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener la lista de usuarios: {ex.Message}");
+            }
+
+            return usuarios;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="gamertag"></param>
-        /// <returns>Retorna True si es uncio, caso contrario retorna False</returns>
+        /// <returns></returns>
+        /// <exception cref="GamertagDuplicadoException"></exception>
         public static bool VerificarNombreUnico(string gamertag)
         {
             bool resultado = true;

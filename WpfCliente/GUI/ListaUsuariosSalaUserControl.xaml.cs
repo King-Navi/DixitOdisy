@@ -23,7 +23,7 @@ namespace WpfCliente.GUI
     /// </summary>
     public partial class ListaUsuariosSalaUserControl : UserControl
     {
-        public ObservableCollection<Usuario> UsuariosSala { get; set; } = new ObservableCollection<Usuario>();
+        public ObservableCollection<Usuario> JugadoresEnSala { get; set; } = new ObservableCollection<Usuario>();
 
         public ListaUsuariosSalaUserControl()
         {
@@ -32,18 +32,29 @@ namespace WpfCliente.GUI
         }
 
 
-        public void ObtenerUsuarioSala(List<Usuario> usuarios, List<Amigo> amigos)
+        public void ObtenerUsuarioSala(Usuario usuario, List<Amigo> amigos) //FIXME: Falta terminar los amigos
         {
-            foreach (var usuario in usuarios)
+            if (usuario == null)
             {
-                foreach(var amigo in amigos)
-                {
-                    if (usuario.Nombre.Equals(amigo.Nombre, StringComparison.OrdinalIgnoreCase) )
-                    {
-                        
-                    }
-                }
+                MessageBox.Show("No se pudo cargar los datos de tus amigos");
             }
+            else
+            {
+                // Agregar el amigo a la colección ObservableCollection, esto actualizará automáticamente el ItemsControl
+                JugadoresEnSala.Add(usuario);
+            }
+        }
+        public void EliminarUsuarioSala(Usuario usuario)
+        {
+            var usuarioAEliminar = JugadoresEnSala.FirstOrDefault(busqueda => busqueda.Nombre == usuario.Nombre);
+            if (usuarioAEliminar != null)
+            {
+                JugadoresEnSala.Remove(usuarioAEliminar);
+            }
+        }
+        private void LimpiarItemsControl()
+        {
+            JugadoresEnSala.Clear();
         }
     }
 }

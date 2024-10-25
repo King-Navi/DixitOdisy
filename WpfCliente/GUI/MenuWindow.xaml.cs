@@ -174,5 +174,10 @@ namespace WpfCliente.GUI
             buttonSalir.Content = Idioma.buttonCerrarSesion;
             //TODO: Pedirle a unaay los .resx
         }
+
+        private void buttonSalir_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

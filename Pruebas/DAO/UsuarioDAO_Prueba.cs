@@ -154,11 +154,11 @@ namespace Pruebas.DAO
         {
             // Arrange
             //Pre condicion el usuario debe existir
-            string correoAleatorio = $"unaay{new Random().Next(1000, 9999)}@ejemplo.com";
+            string correoAleatorio = $"ivan{new Random().Next(1000, 9999)}@ejemplo.com";
             var usuarioEditado = new UsuarioPerfilDTO
             {
                 IdUsuario = 4, // Un ID existente en el contexto simulado o BD de prueba
-                NombreUsuario = "unaay", //Un nombre existente en BD
+                NombreUsuario = "ivan", //Un nombre existente en BD
                 Correo = correoAleatorio,
                 FotoPerfil = new byte[] { 0x20, 0x21, 0x22, 0x23 }, // Ejemplo de bytes para la nueva foto
                 HashContrasenia = "3E203FE617527077E6B2A2ABFF345FAC15CA2E7338A2D30BF75AD3E5F49504C1"
@@ -188,9 +188,9 @@ namespace Pruebas.DAO
             //Pre condicion el usuario debe existir
             var usuarioEditado = new UsuarioPerfilDTO
             {
-                IdUsuario = 1, // Un ID existente en el contexto simulado o BD de prueba
-                NombreUsuario = "NaviKing", //Un nombre existente en BD
-                Correo = "NaviKing24@gmail.com",
+                IdUsuario = 4, // Un ID existente en el contexto simulado o BD de prueba
+                NombreUsuario = "ivan", //Un nombre existente en BD
+                Correo = "unaay8657@ejemplo.com",
                 HashContrasenia = null,
                 FotoPerfil = null
             };
@@ -236,8 +236,8 @@ namespace Pruebas.DAO
             //Pre condicion el usuario debe existir
             var usuarioEditado = new UsuarioPerfilDTO
             {
-                IdUsuario = 1, // Un ID existente en el contexto simulado o BD de prueba
-                NombreUsuario = "NaviKing", //Un nombre existente en BD
+                IdUsuario = 4, // Un ID existente en el contexto simulado o BD de prueba
+                NombreUsuario = "ivan", //Un nombre existente en BD
                 Correo = null,
                 HashContrasenia = null,
                 FotoPerfil = null

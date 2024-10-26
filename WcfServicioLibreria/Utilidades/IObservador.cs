@@ -8,6 +8,6 @@ namespace WcfServicioLibreria.Utilidades
 {
     public interface IObservador
     {
-        void DesconectarUsuario(string clave);
+        void DesconectarUsuario(string nombreJugador);
     }
 }

@@ -27,7 +27,7 @@
         <DockPanel LastChildFill="True">
             <!--Header-->
             <StackPanel DockPanel.Dock="Top" x:Name="stackPaneEncabezado" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Background="Red">
-                <local:PerfilMenuDesplegableUserControl></local:PerfilMenuDesplegableUserControl>
+                <local:PerfilMenuDesplegableUserControl x:Name="perfilMenuDesplegable"></local:PerfilMenuDesplegableUserControl>
             </StackPanel>
             <!--Footer-->
             <StackPanel DockPanel.Dock="Bottom" Background="#FF43FF02" VerticalAlignment="Bottom" HorizontalAlignment="Center">

@@ -49,4 +49,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ChatMensaje" nillable="true" type="tns:ChatMensaje" />
+  <xs:complexType name="ConfiguracionPartida">
+    <xs:sequence>
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Enumerador" minOccurs="0" name="Condicion" type="q4:CondicionVictoriaPartida" />
+      <xs:element minOccurs="0" name="NumeroRondas" type="xs:int" />
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Enumerador" minOccurs="0" name="Tematica" type="q5:TematicaPartida" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConfiguracionPartida" nillable="true" type="tns:ConfiguracionPartida" />
 </xs:schema>

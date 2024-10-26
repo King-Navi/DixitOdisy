@@ -81,17 +81,20 @@ namespace WcfServicioLibreria.Modelo
             }
             return resultado;
         }
-
-        bool RemoverJugadorSala(string nombreJugador)
+        /// <summary>
+        /// Despues de este metodo cualquier referencia al jugador en sala se pierde
+        /// </summary>
+        /// <param name="nombreJugador"></param>
+        void RemoverJugadorSala(string nombreJugador)
         {
-            bool seElimino = jugadoresSalaCallbacks.TryRemove(nombreJugador, out ISalaJugadorCallback jugadorEliminado);
-            eventosCommunication.TryGetValue(nombreJugador, out DesconectorEventoManejador eventosJugador);
+            jugadoresSalaCallbacks.TryRemove(nombreJugador, out ISalaJugadorCallback _);
+            eventosCommunication.TryRemove(nombreJugador, out DesconectorEventoManejador eventosJugador);
+            jugadoresInformacion.TryRemove(nombreJugador, out  _);
             eventosJugador.Desechar();
             if (ContarJugadores() == 0)
             {
                 EliminarSala();
             }
-            return seElimino;
         }
         private void EliminarSala() 
         {
@@ -130,8 +133,8 @@ namespace WcfServicioLibreria.Modelo
 
         void IObservador.DesconectarUsuario(string nombreJugador)
         {
-            RemoverJugadorSala(nombreJugador);
             AvisarRetiroJugador(nombreJugador);
+            RemoverJugadorSala(nombreJugador);
         }
 
         public void AvisarNuevoJugador(string nombreJugador)
@@ -185,14 +188,40 @@ namespace WcfServicioLibreria.Modelo
                     jugadoresInformacion.TryRemove(nombreUsuarioEliminado, out DAOLibreria.ModeloBD.Usuario usuarioEliminado);
                     Usuario usuario = new Usuario
                     {
-                        Nombre = usuarioEliminado.gamertag,
-                        //FotoUsuario = new MemoryStream(usuarioEliminado.fotoPerfil),
-
+                        Nombre = usuarioEliminado.gamertag
                     };
                     foreach (var nombreJugador in ObtenerNombresJugadoresSala())
                     {
                         jugadoresSalaCallbacks.TryGetValue(nombreJugador, out ISalaJugadorCallback callback);
-                        callback.EliminarJugadorSalaCallback(usuario);
+                        if (callback != null)
+                        {
+                            try
+                            {
+                                callback.EliminarJugadorSalaCallback(usuario);
+
+                            }
+                            catch (Exception)
+                            {
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        internal void AvisarComienzoPatida(string nombreSolicitante, string idPartida)
+        {
+            if (nombreSolicitante.Equals(anfitrion, StringComparison.OrdinalIgnoreCase))
+            {
+                foreach (var nombre in ObtenerNombresJugadoresSala())
+                {
+                    try
+                    {
+                        jugadoresSalaCallbacks.TryRemove(nombre, out ISalaJugadorCallback callback);
+                        callback.EmpezarPartidaCallBack(idPartida);
+                    }
+                    catch (Exception)
+                    {
+                        //TODO. nombre No se puedo coenctar
                     }
                 }
             }

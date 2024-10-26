@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Utilidades;
 
@@ -11,56 +13,65 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioPartida
     {
-
-
-        public string ComenzarPartidaAnfrition(string nombre, ConfiguracionPartida configuracion)
+        public string CrearPartida(string anfitrion, ConfiguracionPartida configuracion)
         {
-            string resultado = null;
+            string idPartida = null;
             try
             {
-                IPartidaCallabck usuarioSolicitante = contextoOperacion.GetCallbackChannel<IPartidaCallabck>();
-                string idPartida = Utilidad.GenerarIdUnico();
-                Partida partida = new Partida(idPartida, nombre, configuracion);
-                //TODO realmnete aqui deberia ir configuraciones de partida
-                partidasdDiccionario.TryAdd(idPartida, partida);
-                resultado = idPartida;
+                do
+                {
+                    idPartida = Utilidad.GenerarIdUnico();
+                } while (salasDiccionario.ContainsKey(idPartida));
+                Partida partidaNueva = new Partida(idPartida, anfitrion, configuracion);
+                bool existeSala = partidasdDiccionario.TryAdd(idPartida, partidaNueva);
+                if (existeSala)
+                {
+                    partidaNueva.partidaVaciaManejadorEvento += BorrarPartida;
+                }
+                else
+                {
+                    throw new Exception("No se creo la Partida");
+                }
+            }
+            catch (CommunicationException excepcion)
+            {
+                //TODO: Manejar el error
             }
             catch (Exception excepcion)
             {
+                //TODO: Manejar el error
+            }
 
+            return idPartida;
+        }
+
+        public void BorrarPartida(object sender, EventArgs e)
+        {
+            if (sender is Sala sala)
+            {
+                PartidaVaciaEventArgs evento = e as PartidaVaciaEventArgs;
+                sala.salaVaciaManejadorEvento -= BorrarSala;
+                partidasdDiccionario.TryRemove(evento.Partida.IdPartida, out _);
+                Console.WriteLine($"La partdia con ID {evento.Partida.IdPartida} está vacía y será eliminada.");
             };
-
-            return resultado;
-        }
-        public void AvanzarRonda()
-        {
-            throw new NotImplementedException();
-        }
-        public void UniserPartida(string idPartida)
-        {
-            throw new NotImplementedException();
         }
 
-        public void ConfirmarMovimiento()
+        public bool ValidarPartida(string idSala)
         {
-            throw new NotImplementedException();
-        }
+            bool result = false;
+            try
+            {
+                result = salasDiccionario.ContainsKey(idSala);
+            }
+            catch (CommunicationException excepcion)
+            {
+                //TODO manejar el error
+            }
+            catch (NullReferenceException)
+            {
 
-        public void EnviarImagenCarta()
-        {
-            throw new NotImplementedException();
+            }
+            return result;
         }
-
-        public void ExpulsarJugador()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void FinalizarPartida()
-        {
-            throw new NotImplementedException();
-        }
-
-        
     }
 }

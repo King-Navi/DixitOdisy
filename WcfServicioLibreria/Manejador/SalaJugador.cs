@@ -1,11 +1,29 @@
 ﻿using System;
 using System.ServiceModel;
+using System.ServiceModel.Configuration;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioSalaJugador
     {
+        public void ComenzarPartidaAnfrition(string nombre, string idSala)
+        {
+            try
+            {
+                salasDiccionario.TryGetValue(idSala, out Sala sala);
+                lock (sala)
+                {
+                    sala.AvisarComienzoPatida(nombre, idSala);
+                }
+            }
+            catch (Exception excepcion)
+            {
+                //TODO: Manejar el error
+            };
+        }
         /// <summary>
         /// Agrega a un jugador a una sala ya existente
         /// </summary>

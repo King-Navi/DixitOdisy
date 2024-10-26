@@ -10,28 +10,14 @@ using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Contratos
 {
-    [ServiceContract(CallbackContract = typeof(IPartidaCallabck))]
+    [ServiceContract]
     public interface IServicioPartida
     {
         [OperationContract]
-        string ComenzarPartidaAnfrition(string nombre, ConfiguracionPartida configuracion);
+        string CrearPartida(string anfitrion, ConfiguracionPartida configuracion);
+        void BorrarPartida(object sender, EventArgs e);
         [OperationContract]
-        void UniserPartida(string idPartida);
-        [OperationContract]
-        void ConfirmarMovimiento();
-        [OperationContract(IsOneWay = true)]
-        void AvanzarRonda();
-        [OperationContract(IsOneWay = true)]
-        void FinalizarPartida();
-        [OperationContract(IsOneWay = true)]
-        void ExpulsarJugador();
-        [OperationContract(IsOneWay = true)]
-        void EnviarImagenCarta(); 
+        bool ValidarPartida(string idSala);
     }
-    [ServiceContract]
-    public interface IPartidaCallabck
-    {
-        //Tal vez int porque regresa el numero de ronda???
 
-    }
 }

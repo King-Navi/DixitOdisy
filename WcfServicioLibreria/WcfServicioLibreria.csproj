@@ -61,6 +61,7 @@
     <Compile Include="Contratos\IServicioAmistad.cs" />
     <Compile Include="Contratos\IServicioChat.cs" />
     <Compile Include="Contratos\IServicioChatMotor.cs" />
+    <Compile Include="Contratos\IServicioPartidaSesion.cs" />
     <Compile Include="Contratos\IServicioPeticionAmistad.cs" />
     <Compile Include="Contratos\IServicioUsuario.cs" />
     <Compile Include="Contratos\IServicioUsuarioSesion.cs" />
@@ -69,9 +70,11 @@
     <Compile Include="Contratos\IServicioSalaJugador.cs" />
     <Compile Include="Manejador\Correo.cs" />
     <Compile Include="Manejador\Partida.cs" />
+    <Compile Include="Manejador\PartidaSesion.cs" />
     <Compile Include="Modelo\Evento\ActualizarAmgioEventArgs.cs" />
     <Compile Include="Enumerador\Enumerador.cs" />
     <Compile Include="Modelo\Evento\MultiChatVacioEventArgs.cs" />
+    <Compile Include="Modelo\Evento\PartidaVaciaEventArgs.cs" />
     <Compile Include="Modelo\Evento\SalaVaciaEventArgs.cs" />
     <Compile Include="Modelo\Evento\UsuarioDesconectadoEventArgs.cs" />
     <Compile Include="InicializadorConfiguracion.cs" />
@@ -95,9 +98,9 @@
     <Compile Include="Modelo\Partida\CondicionVictoriaCartasAgotadas .cs" />
     <Compile Include="Modelo\Partida\ConfiguracionPartida.cs" />
     <Compile Include="Modelo\Partida\ICondicionVictoria.cs" />
+    <Compile Include="Modelo\Sala\Sala.cs" />
     <Compile Include="Modelo\Usuario\UsuarioContexto.cs" />
     <Compile Include="Modelo\Partida\Partida.cs" />
-    <Compile Include="Modelo\Sala\Sala.cs" />
     <Compile Include="Modelo\Usuario\Usuario.cs" />
     <Compile Include="Modelo\Excepciones\UsuarioFalla.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,6 +114,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ChatGPTLibreria\ChatGPTLibreria\ChatGPTLibreria.csproj">
+      <Project>{1db22d68-dec2-4b15-81bb-19794b7e8000}</Project>
+      <Name>ChatGPTLibreria</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DAOLibreria\DAOLibreria.csproj">
       <Project>{14e9f882-4cc6-4331-a0ac-b31206796294}</Project>
       <Name>DAOLibreria</Name>
@@ -120,7 +127,6 @@
       <Name>UtilidadesLibreria</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <VSToolsPath Condition="'$(VSToolsPath)' == '' and '$(VisualStudioVersion)' != '' and '$(VisualStudioVersion)' != '11.0'">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

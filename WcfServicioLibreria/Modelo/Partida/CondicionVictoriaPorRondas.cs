@@ -18,7 +18,7 @@ namespace WcfServicioLibreria.Modelo
         public bool Verificar(Partida partida)
         {
             bool resultado =false;
-            if (partida.Ronda > NumeroRondasParaFinalizar)
+            if (partida.RondaActual > NumeroRondasParaFinalizar)
             {
                 resultado = true;
             }

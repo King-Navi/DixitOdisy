@@ -136,14 +136,15 @@ namespace WpfCliente.GUI
 
         private void buttonJugarComoInvitado_Click(object sender, RoutedEventArgs e)
         {
-            UnirseSalaModalWindow modalWindow = new UnirseSalaModalWindow();
-            bool? result = modalWindow.ShowDialog();
+            //FIXME
+            //UnirseSalaModalWindow modalWindow = new UnirseSalaModalWindow();
+            //bool? result = modalWindow.ShowDialog();
 
-            if (result == true)
-            {
-                string codigoSala = modalWindow.textBoxCodigoSala.Text;
-                SalaEspera salaEspera = new SalaEspera(codigoSala);
-            }
+            //if (result == true)
+            //{
+            //    string codigoSala = modalWindow.textBoxCodigoSala.Text;
+            //    SalaEsperaWindow salaEspera = new SalaEsperaWindow(codigoSala);
+            //}
         }
 
         private void AbrirVentanaMenu()

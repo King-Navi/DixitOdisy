@@ -130,6 +130,9 @@
     <Compile Include="GUI\MenuWindow.xaml.cs">
       <DependentUpon>MenuWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\PartidaWindow.xaml.cs">
+      <DependentUpon>PartidaWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\PerfilMenuDesplegableUserControl.xaml.cs">
       <DependentUpon>PerfilMenuDesplegableUserControl.xaml</DependentUpon>
     </Compile>
@@ -152,8 +155,7 @@
       <DependentUpon>VerificarCorreoModalWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaz\IHabilitadorBotones.cs" />
-    <Compile Include="Utilidad\Amigo.cs" />
-    <Compile Include="Utilidad\ChatMensaje.cs" />
+    <Compile Include="Utilidad\Servidor\ChatMensaje.cs" />
     <Compile Include="Utilidad\Conexion.cs" />
     <Compile Include="Utilidad\CambiarIdioma.cs" />
     <Compile Include="Interfaz\IActualizacionUI.cs" />
@@ -178,6 +180,7 @@
     <Compile Include="Utilidad\Validacion.cs" />
     <Compile Include="Utilidad\Singleton.cs" />
     <Compile Include="Utilidad\ValidacionesString.cs" />
+    <Compile Include="Utilidad\VentanaMediador.cs" />
     <Compile Include="Utilidad\VentanasEmergentes.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -281,6 +284,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\MenuWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\PartidaWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

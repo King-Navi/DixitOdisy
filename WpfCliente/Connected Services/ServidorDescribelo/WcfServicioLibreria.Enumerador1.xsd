@@ -19,4 +19,20 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="EstadoAmigo" nillable="true" type="tns:EstadoAmigo" />
+  <xs:simpleType name="CondicionVictoriaPartida">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PorCartasAgotadas" />
+      <xs:enumeration value="PorCantidadRondas" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CondicionVictoriaPartida" nillable="true" type="tns:CondicionVictoriaPartida" />
+  <xs:simpleType name="TematicaPartida">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Mixta" />
+      <xs:enumeration value="Aniamles" />
+      <xs:enumeration value="Paises" />
+      <xs:enumeration value="Mitologia" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="TematicaPartida" nillable="true" type="tns:TematicaPartida" />
 </xs:schema>

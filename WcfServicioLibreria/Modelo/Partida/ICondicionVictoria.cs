@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace WcfServicioLibreria.Modelo
 {
 
-    public interface ICondicionVictoria
+    internal interface ICondicionVictoria
     {
         bool Verificar(Partida partida);
     }

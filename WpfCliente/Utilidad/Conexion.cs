@@ -13,11 +13,12 @@ namespace WpfCliente.Utilidad
     {
         public static ServicioUsuarioSesionClient UsuarioSesion { get; private set; }
         public static ServicioSalaJugadorClient SalaJugador { get; private set; }
-        public static ServicioChatMotorClient ChatMotor{ get; private set; }
+        public static ServicioChatMotorClient ChatMotor { get; private set; }
         public static ServicioAmistadClient Amigos { get; private set; }
+        public static ServicioPartidaSesionClient Partida { get; private set; }
         public static Task<bool> AbrirConexionUsuarioSesionCallbackAsync(IServicioUsuarioSesionCallback callback)
         {
-            Task<bool> resultado = Task.FromResult(false); 
+            Task<bool> resultado = Task.FromResult(false);
             if (UsuarioSesion != null)
             {
                 resultado = Task.FromResult(true);
@@ -99,6 +100,27 @@ namespace WpfCliente.Utilidad
             }
             return resultado;
         }
+        public static Task<bool> AbrirConexionPartidaCallbackAsync(IServicioPartidaSesionCallback callback)
+        {
+            Task<bool> resultado = Task.FromResult(false);
+            if (Partida != null)
+            {
+                resultado = Task.FromResult(true);
+            }
+            else
+            {
+                try
+                {
+                    Partida = new ServicioPartidaSesionClient(new System.ServiceModel.InstanceContext(callback));
+                    resultado = Task.FromResult(true);
+                }
+                catch (Exception)
+                {
+                    //TODO: Manejar el error
+                }
+            }
+            return resultado;
+        }
         public static bool CerrarUsuarioSesion()
         {
             try
@@ -133,7 +155,8 @@ namespace WpfCliente.Utilidad
                 return false;
             }
             return true;
-        } public static bool CerrarChatMotor()
+        } 
+        public static bool CerrarChatMotor()
         {
             try
             {
@@ -190,7 +213,24 @@ namespace WpfCliente.Utilidad
             }
             return true;
         }
-        private static async Task<bool> ValidarConexion()
+        public static bool CerrarConexionesPartida()
+        {
+            try
+            {
+                if (Partida != null)
+                {
+                    Partida.Close();
+                    Partida = null;
+                }
+            }
+            catch (Exception excepcion)
+            {
+                //TODO Manejar el error
+                return false;
+            }
+            return true;
+        }
+        private static async Task<bool> HacerPing()
         {
             bool resultado = false;
             try
@@ -214,7 +254,7 @@ namespace WpfCliente.Utilidad
         public static async Task<bool> VerificarConexion(Action<bool> habilitarAcciones, Window ventana)
         {
             habilitarAcciones(false);
-            Task<bool> verificarConexion = ValidarConexion();
+            Task<bool> verificarConexion = HacerPing();
 
             if (!await verificarConexion)
             {

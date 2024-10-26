@@ -6,7 +6,7 @@
         xmlns:p="clr-namespace:WpfCliente.Properties"
         xmlns:local="clr-namespace:WpfCliente.GUI"
         mc:Ignorable="d" 
-        Title="Login"
+        d:Title="Login"
         Height="770" Width="1200"
         WindowStartupLocation="CenterScreen"
         Background="Gray"

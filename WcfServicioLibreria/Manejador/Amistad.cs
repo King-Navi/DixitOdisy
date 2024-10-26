@@ -51,7 +51,7 @@ namespace WcfServicioLibreria.Manejador
             }
         }
 
-        private void EnviarSolicitudJugadorConectado(Usuario remitente, int idDestinatario) 
+        private void EnviarSolicitudJugadorConectado(Usuario remitente, int idDestinatario)  //FIXME
         {
             jugadoresConectadosDiccionario.TryGetValue(idDestinatario, out UsuarioContexto destinatarioConectado);
             lock (destinatarioConectado)

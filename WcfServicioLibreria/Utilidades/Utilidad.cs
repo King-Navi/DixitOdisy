@@ -48,7 +48,7 @@ namespace WcfServicioLibreria.Utilidades
                     resultado.Append(CARACTERES[indice]);
                 }
             }
-            catch (CommunicationException excepcion)
+            catch (Exception)
             {
                 //TODO: Manejar el error
             }

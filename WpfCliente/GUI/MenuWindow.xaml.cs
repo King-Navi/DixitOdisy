@@ -10,9 +10,6 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Interaction logic for MenuWindow.xaml
-    /// </summary>
     public partial class MenuWindow : Window, IServicioUsuarioSesionCallback, IActualizacionUI
     {
         public MenuWindow()
@@ -53,9 +50,14 @@ namespace WpfCliente.GUI
             //TODO: Hacer la logica para la peticion al servidor de la sala y la respuesta, este es el caso en el que el solicitante es el anfitrion
             AbrirVentanaSala(null);
         }
-        private void AbrirVentanaSala(string idSala)
+        private async void AbrirVentanaSala(string idSala)
         {
-            SalaEspera ventanaSala = new SalaEspera(idSala);
+            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+            if (!conexionExitosa)
+            {
+                return;
+            }
+            SalaEsperaWindow ventanaSala = new SalaEsperaWindow(idSala);
             try
             {
                 ventanaSala.Show();
@@ -117,9 +119,13 @@ namespace WpfCliente.GUI
 
         }
 
-        private void HabilitarBotones(bool v)
+        private void HabilitarBotones(bool habilitar)
         {
-            //TODO
+            buttonCrearSala.IsEnabled = habilitar;
+            buttonSalir.IsEnabled = habilitar;
+            buttonUniserSala.IsEnabled = habilitar;
+            perfilMenuDesplegable.IsEnabled = habilitar;
+            amigosUserControl.IsEnabled = habilitar;
         }
 
         private string AbrirVentanaModal()

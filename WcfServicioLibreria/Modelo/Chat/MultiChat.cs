@@ -56,7 +56,7 @@ namespace WcfServicioLibreria.Modelo
         bool RemoverJugadorChat(string nombreJugador)
         {
             bool seElimino = jugadores.TryRemove(nombreJugador, out IChatCallback jugadorEliminado);
-            eventosCommunication.TryGetValue(nombreJugador, out DesconectorEventoManejador eventosJugador);
+            eventosCommunication.TryRemove(nombreJugador, out DesconectorEventoManejador eventosJugador);
             eventosJugador.Desechar();
             if (ContarJugadores() == 0)
             {

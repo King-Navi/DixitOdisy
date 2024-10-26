@@ -6,6 +6,7 @@ namespace WcfServicioLibreria.Modelo
 {
     [DataContract]
     [KnownType(typeof(CondicionVictoriaPartida))]
+    [KnownType(typeof(TematicaPartida))]
     public class ConfiguracionPartida
     {
         [DataMember]

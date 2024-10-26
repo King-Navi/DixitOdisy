@@ -121,10 +121,120 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RegistrarUsuario">
+  <xs:element name="VerificarCorreo">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q8:Usuario" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VerificarCorreoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="VerificarCorreoResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VerificarCodigo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="codigo" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VerificarCodigoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="VerificarCodigoResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CrearPartida">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="anfitrion" nillable="true" type="xs:string" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="configuracion" nillable="true" type="q9:ConfiguracionPartida" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CrearPartidaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CrearPartidaResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ValidarPartida">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idSala" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ValidarPartidaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ValidarPartidaResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UniserPartida">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="gamertag" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="idPartida" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UniserPartidaResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConfirmarMovimiento">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ConfirmarMovimientoResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AvanzarRonda">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="FinalizarPartida">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExpulsarJugador">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="EnviarImagenCarta">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AvanzarRondaCallback">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AvanzarRondaCallbackResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegistrarUsuario">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q10:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -171,9 +281,10 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="EmpezarPartida">
+  <xs:element name="ComenzarPartidaAnfrition">
     <xs:complexType>
       <xs:sequence>
+        <xs:element minOccurs="0" name="nombre" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="idSala" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -188,7 +299,7 @@
   <xs:element name="ObtenerJugadorSalaCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreNuevoEnSala" nillable="true" type="q9:Usuario" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreNuevoEnSala" nillable="true" type="q11:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -200,7 +311,7 @@
   <xs:element name="EliminarJugadorSalaCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreRetiradoDeSala" nillable="true" type="q10:Usuario" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreRetiradoDeSala" nillable="true" type="q12:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -211,7 +322,9 @@
   </xs:element>
   <xs:element name="EmpezarPartidaCallBack">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idPartida" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EmpezarPartidaCallBackResponse">
@@ -222,7 +335,7 @@
   <xs:element name="AsignarColorCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="jugadoresColores" nillable="true" type="q11:ArrayOfKeyValueOfstringchar" />
+        <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="jugadoresColores" nillable="true" type="q13:ArrayOfKeyValueOfstringchar" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -234,7 +347,7 @@
   <xs:element name="EditarUsuario">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuarioEditado" nillable="true" type="q12:Usuario" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuarioEditado" nillable="true" type="q14:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -282,14 +395,14 @@
   <xs:element name="ValidarCredencialesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="ValidarCredencialesResult" nillable="true" type="q13:Usuario" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="ValidarCredencialesResult" nillable="true" type="q15:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ObtenerSessionJugador">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q14:Usuario" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q16:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -303,34 +416,6 @@
   <xs:element name="ObtenerSessionJugadorCallbackResponse">
     <xs:complexType>
       <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="VerificarCorreo">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q15:Usuario" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="VerificarCorreoResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="VerificarCorreoResult" type="xs:boolean" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="VerificarCodigo">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="codigo" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="VerificarCodigoResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="VerificarCodigoResult" type="xs:boolean" />
-      </xs:sequence>
     </xs:complexType>
   </xs:element>
 </xs:schema>

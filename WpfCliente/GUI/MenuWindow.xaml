@@ -10,7 +10,7 @@
         ResizeMode="NoResize" Closing="CerrandoVentana">
 
     <Window.Background>
-        <ImageBrush ImageSource="/Recursos/fondoMenu.jpg" Stretch="Fill"/>
+        <ImageBrush ImageSource="/Recursos/fondoMenu.png" Stretch="Fill"/>
     </Window.Background>
 
     <Window.Resources>
@@ -31,15 +31,15 @@
             </StackPanel>
             <!--Footer-->
             <StackPanel DockPanel.Dock="Bottom" Background="#FF43FF02" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-                <Label Content="Copiright 2024 Empresa ficticia S.A. de C.V."></Label>
+                <Label Content="Copiright 2024 Iván y U Náay S.A. de C.V."></Label>
             </StackPanel>
             <!--Middle-->
             <StackPanel x:Name="stackPanePrincipal"  Orientation="Horizontal" HorizontalAlignment="Center">
                 <StackPanel Orientation="Vertical" Background="#E0DCC7" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Label Content="Describelo" HorizontalAlignment="Center" FontFamily="Lucida Sans Unicode Bold" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="36"></Label>
-                    <Button x:Name="buttonCrearSala" d:Content="Crear sala de espera" FontFamily="Lucida Sans Unicode" Background="#E0DCC7" Foreground="Black" BorderBrush="Black" Click="ClicBotonCrearSala"></Button>
-                    <Button x:Name="buttonUniserSala" d:Content="Unirse a sala de espera" FontFamily="Lucida Sans Unicode" Background="#E0DCC7" Foreground="Black" BorderBrush="Black" Click="ClicButtonUnirseSala"></Button>
-                    <Button x:Name="buttonSalir" d:Content="Cerrar sesión" FontFamily="Lucida Sans Unicode" Background="#E0DCC7" Foreground="Black" BorderBrush="Black" Click="buttonSalir_Click"></Button>
+                    <Label Content="Describelo" HorizontalAlignment="Center" FontFamily="ROG Fonts" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="60"></Label>
+                    <Button x:Name="buttonCrearSala" d:Content="Crear sala de espera" FontFamily="ROG Fonts" Background="#E0DCC7" Foreground="Black" BorderBrush="Black" Click="ClicBotonCrearSala" FontSize="24"></Button>
+                    <Button x:Name="buttonUniserSala" d:Content="Unirse a sala de espera" FontFamily="ROG Fonts" Background="#E0DCC7" Foreground="Black" BorderBrush="Black" Click="ClicButtonUnirseSala" FontSize="24"></Button>
+                    <Button x:Name="buttonSalir" d:Content="Cerrar sesion" FontFamily="ROG Fonts" Background="#E0DCC7" Foreground="Black" BorderBrush="Black" Click="buttonSalir_Click" FontSize="24"></Button>
                 </StackPanel>
             </StackPanel>
 

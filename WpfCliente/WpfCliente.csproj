@@ -390,10 +390,10 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Recursos\fondoMenu.jpg" />
+    <Folder Include="Pesistencia\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Pesistencia\" />
+    <Resource Include="Recursos\fondoMenu.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

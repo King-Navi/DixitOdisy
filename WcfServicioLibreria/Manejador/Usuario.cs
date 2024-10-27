@@ -131,8 +131,12 @@ namespace WcfServicioLibreria.Manejador
         /// <returns>retorna true si contiene un usuario con el nombre, en caso contrario retorna false</returns>
         public bool YaIniciadoSesion(string nombreUsuario)
         {
-            int id = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorNombre(nombreUsuario).idUsuario;
-            return jugadoresConectadosDiccionario.ContainsKey(id);
+            DAOLibreria.ModeloBD.Usuario usuario = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorNombre(nombreUsuario);
+            if ( usuario == null)
+            {
+                return false;
+            }
+            return jugadoresConectadosDiccionario.ContainsKey(usuario.idUsuario);
         }
 
     }

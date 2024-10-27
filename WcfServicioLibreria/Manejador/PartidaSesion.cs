@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Modelo.Excepciones;
 
 namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioPartidaSesion
     {
-        public void AvanzarRonda()
-        {
-            throw new NotImplementedException();
-        }
-        public void UniserPartida(string gamertag, string idPartida)
+        public void UnirsePartida(string gamertag, string idPartida)
         {
             if (!ValidarPartida(idPartida))
             {
@@ -27,7 +25,7 @@ namespace WcfServicioLibreria.Manejador
                 lock (partida)
                 {
                     partida.AgregarJugador(gamertag, contexto);
-                    //TODO: partida.AvisarNuevoJugador(gamertag);
+                    partida.AvisarNuevoJugador(gamertag);
                 }
             }
             catch (Exception excepcion)
@@ -36,24 +34,63 @@ namespace WcfServicioLibreria.Manejador
             };
         }
 
-        public void ConfirmarMovimiento()
+        public void ConfirmarMovimiento(string nombreJugador, string idPartida, string claveImagen)
+        {
+            if (!ValidarPartida(idPartida))
+            {
+                throw new FaultException<PartidaFalla>(new PartidaFalla() { PartidaInvalida = true}, new FaultReason("El ID de la partida es invalido"));
+            }
+            try
+            {
+                partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
+                lock (partida)
+                {
+                    partida.ConfirmacionTurnoJugador(nombreJugador, claveImagen);
+                }
+            }
+            catch (Exception excepcion)
+            {
+            };
+            
+        }
+
+        public void ExpulsarJugador(string nombreJugador, string idPartida)
         {
             throw new NotImplementedException();
         }
-
-        public void EnviarImagenCarta()
+        public void EmpezarPartida(string nombreJugador, string idPartida) //FIXME: ¿La mehor manera de empezar la partida?
         {
-            throw new NotImplementedException();
+            if (!ValidarPartida(idPartida))
+            {
+                return;
+            }
+            try
+            {
+                partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
+                partida.EmpezarPartida(nombreJugador);
+            }
+            catch (Exception excepcion)
+            {
+                //TODO: Manejar el error
+            };
         }
 
-        public void ExpulsarJugador()
+        public async Task SolicitarImagenCartaAsync(string nombreJugador, string idPartida)
         {
-            throw new NotImplementedException();
-        }
+            if (!ValidarPartida(idPartida))
+            {
+                return;
+            }
+            try
+            {
+                partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
 
-        public void FinalizarPartida()
-        {
-            throw new NotImplementedException();
+                    await partida.EnviarImagen(nombreJugador);
+                
+            }
+            catch (Exception excepcion)
+            {
+            };
         }
     }
 }

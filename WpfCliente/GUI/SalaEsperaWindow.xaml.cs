@@ -142,7 +142,6 @@ namespace WpfCliente.GUI
         public void EmpezarPartidaCallBack(string idPartida)
         {
             PartidaWindow partida = new PartidaWindow(idPartida);
-
             partida.Show();
 
             this.Close();
@@ -188,7 +187,7 @@ namespace WpfCliente.GUI
             ConfiguracionPartida prueba = new ConfiguracionPartida()
             {
                 Condicion = CondicionVictoriaPartida.PorCantidadRondas,
-                NumeroRondas = 12,
+                NumeroRondas = 2,
                 Tematica = TematicaPartida.Mixta
             };
             //TODO: Evaluar que tengar un configuracion partida valido
@@ -201,7 +200,8 @@ namespace WpfCliente.GUI
             );
             if (Singleton.Instance.IdPartida != null)
             {
-                Conexion.SalaJugador.ComenzarPartidaAnfrition(Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala);
+                Conexion.SalaJugador.ComenzarPartidaAnfrition(
+                    Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala , Singleton.Instance.IdPartida);
             }
         }
     }

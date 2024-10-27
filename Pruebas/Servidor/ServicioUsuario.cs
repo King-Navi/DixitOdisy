@@ -30,6 +30,7 @@ namespace Pruebas.Servidor
         public void ValidarCredenciales_CredencialesCorrectas_DeberiaRetornarUsuario()
         {
             // Arrange
+            //Pre condicion, el usuario debe exisitir en BD
             string gamertagValido = "unaay";
             string contraseniaValida = "b7a88e8d61d649a44848a48c8de0e6bd48d2fd4d7a61cb733301634d5eac5080";
             var usuarioEsperado = new DAOLibreria.ModeloBD.Usuario
@@ -77,9 +78,10 @@ namespace Pruebas.Servidor
         public void EditarUsuario_CuandoDatosValidos_DeberiaActualizarUsuario()
         {
             // Arrange
+            //Pre condicion, el usuario debe exisitir en BD
             var usuarioEditado = new Usuario
             {
-                //IdUsuario = 4,  ID de un usuario existente
+                IdUsuario = 4,  //ID de un usuario existente
                 Nombre = "ivan",
                 Correo = $"NaviKing{new Random().Next(1000, 9999)}@editado.com", // Correo aleatorio para evitar duplicados
                 FotoUsuario = new MemoryStream(new byte[] { 0x20, 0x21, 0x22, 0x23 }), // Ejemplo de foto como MemoryStream
@@ -96,6 +98,7 @@ namespace Pruebas.Servidor
         public void EditarUsuario_CunadoNoModificoNada_RetornaFalse()
         {
             // Arrange
+            //Pre condicion, el usuario debe exisitir en BD
             var usuarioEditado = new Usuario
             {
                 IdUsuario = 1, // ID de un usuario existente

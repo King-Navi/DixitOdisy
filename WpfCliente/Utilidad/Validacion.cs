@@ -61,6 +61,21 @@ namespace WpfCliente
                 return false;
             }*/
         }
+        public static bool ExistePartida(string codigoPartida)
+        {
+            IServicioPartida servicioPartida = new ServicioPartidaClient();
+            return servicioPartida.ValidarPartida(codigoPartida);
+
+            /*try
+            {
+                return servicioSala.ValidarSala(codigoSala);
+            }
+            catch (Exception ex)
+            {
+                VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado();
+                return false;
+            }*/
+        }
 
         private bool ValidarFormatoCorreo(string correo)
         {

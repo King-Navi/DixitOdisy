@@ -10,7 +10,8 @@
         Height="770" Width="1200"
         WindowStartupLocation="CenterScreen"
         Background="Gray"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        Icon="/Recursos/LogoApp.ico">
 
     <Window.Resources>
         <Style TargetType="{x:Type TextBox}" >

@@ -34,7 +34,6 @@ namespace WpfCliente.GUI
 
         private void GuardarConfiguracionIdioma()
         {
-            //FIXME No es correcta la implementacion trata de ocupar el tag del combobox en vez de su index (selecionarIdiomaMenuDesplegable)
             int seleccion = cambiarIdiomaMenuDesplegable.SelectedIndex;
             switch (seleccion)
             {
@@ -70,7 +69,6 @@ namespace WpfCliente.GUI
 
         private void Imagen_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            // Abre el ComboBox cuando se haga clic en la imagen
             cambiarIdiomaMenuDesplegable.IsDropDownOpen = true;
         }
     }

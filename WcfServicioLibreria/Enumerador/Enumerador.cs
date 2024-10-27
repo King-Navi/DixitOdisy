@@ -43,7 +43,7 @@ namespace WcfServicioLibreria.Enumerador
         [EnumMember]
         Mixta,
         [EnumMember]
-        Aniamles,
+        Animales,
         [EnumMember]
         Paises,
         [EnumMember]

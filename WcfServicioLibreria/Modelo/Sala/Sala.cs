@@ -90,7 +90,10 @@ namespace WcfServicioLibreria.Modelo
             jugadoresSalaCallbacks.TryRemove(nombreJugador, out ISalaJugadorCallback _);
             eventosCommunication.TryRemove(nombreJugador, out DesconectorEventoManejador eventosJugador);
             jugadoresInformacion.TryRemove(nombreJugador, out  _);
-            eventosJugador.Desechar();
+            if (eventosJugador != null)
+            {
+                eventosJugador.Desechar();
+            }
             if (ContarJugadores() == 0)
             {
                 EliminarSala();
@@ -186,23 +189,26 @@ namespace WcfServicioLibreria.Modelo
                 lock (jugadoresInformacion)
                 {
                     jugadoresInformacion.TryRemove(nombreUsuarioEliminado, out DAOLibreria.ModeloBD.Usuario usuarioEliminado);
-                    Usuario usuario = new Usuario
+                    if (usuarioEliminado != null)
                     {
-                        Nombre = usuarioEliminado.gamertag
-                    };
-                    foreach (var nombreJugador in ObtenerNombresJugadoresSala())
-                    {
-                        jugadoresSalaCallbacks.TryGetValue(nombreJugador, out ISalaJugadorCallback callback);
-                        if (callback != null)
+                        Usuario usuario = new Usuario
                         {
-                            try
+                            Nombre = usuarioEliminado.gamertag
+                        };
+                        foreach (var nombreJugador in ObtenerNombresJugadoresSala())
+                        {
+                            jugadoresSalaCallbacks.TryGetValue(nombreJugador, out ISalaJugadorCallback callback);
+                            if (callback != null)
                             {
-                                callback.EliminarJugadorSalaCallback(usuario);
+                                try
+                                {
+                                    callback.EliminarJugadorSalaCallback(usuario);
 
-                            }
-                            catch (Exception)
-                            {
-                            }
+                                }
+                                catch (Exception)
+                                {
+                                }
+                            } 
                         }
                     }
                 }

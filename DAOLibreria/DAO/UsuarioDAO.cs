@@ -130,7 +130,6 @@ namespace DAOLibreria.DAO
                         //TODO: Manejar el error
                         Console.WriteLine(excepcion);
                         Console.WriteLine(excepcion.StackTrace);
-                        throw;
                     }
                 }
 

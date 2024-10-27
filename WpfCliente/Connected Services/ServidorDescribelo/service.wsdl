@@ -203,11 +203,8 @@
   <wsdl:message name="IServicioPartida_ValidarPartida_OutputMessage">
     <wsdl:part name="parameters" element="tns:ValidarPartidaResponse" />
   </wsdl:message>
-  <wsdl:message name="IServicioPartidaSesion_UniserPartida_InputMessage">
-    <wsdl:part name="parameters" element="tns:UniserPartida" />
-  </wsdl:message>
-  <wsdl:message name="IServicioPartidaSesion_UniserPartida_OutputMessage">
-    <wsdl:part name="parameters" element="tns:UniserPartidaResponse" />
+  <wsdl:message name="IServicioPartidaSesion_UnirsePartida_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnirsePartida" />
   </wsdl:message>
   <wsdl:message name="IServicioPartidaSesion_ConfirmarMovimiento_InputMessage">
     <wsdl:part name="parameters" element="tns:ConfirmarMovimiento" />
@@ -215,23 +212,35 @@
   <wsdl:message name="IServicioPartidaSesion_ConfirmarMovimiento_OutputMessage">
     <wsdl:part name="parameters" element="tns:ConfirmarMovimientoResponse" />
   </wsdl:message>
-  <wsdl:message name="IServicioPartidaSesion_AvanzarRonda_InputMessage">
-    <wsdl:part name="parameters" element="tns:AvanzarRonda" />
-  </wsdl:message>
-  <wsdl:message name="IServicioPartidaSesion_FinalizarPartida_InputMessage">
-    <wsdl:part name="parameters" element="tns:FinalizarPartida" />
+  <wsdl:message name="IServicioPartidaSesion_ConfirmarMovimiento_PartidaFallaFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q2:PartidaFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioPartidaSesion_ExpulsarJugador_InputMessage">
     <wsdl:part name="parameters" element="tns:ExpulsarJugador" />
   </wsdl:message>
-  <wsdl:message name="IServicioPartidaSesion_EnviarImagenCarta_InputMessage">
-    <wsdl:part name="parameters" element="tns:EnviarImagenCarta" />
+  <wsdl:message name="IServicioPartidaSesion_SolicitarImagenCarta_InputMessage">
+    <wsdl:part name="parameters" element="tns:SolicitarImagenCarta" />
+  </wsdl:message>
+  <wsdl:message name="IServicioPartidaSesion_EmpezarPartida_InputMessage">
+    <wsdl:part name="parameters" element="tns:EmpezarPartida" />
   </wsdl:message>
   <wsdl:message name="IServicioPartidaSesion_AvanzarRondaCallback_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:AvanzarRondaCallback" />
   </wsdl:message>
-  <wsdl:message name="IServicioPartidaSesion_AvanzarRondaCallback_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:AvanzarRondaCallbackResponse" />
+  <wsdl:message name="IServicioPartidaSesion_TurnoPerdidoCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:TurnoPerdidoCallback" />
+  </wsdl:message>
+  <wsdl:message name="IServicioPartidaSesion_RecibirImagenCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:RecibirImagenCallback" />
+  </wsdl:message>
+  <wsdl:message name="IServicioPartidaSesion_FinalizarPartida_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:FinalizarPartida" />
+  </wsdl:message>
+  <wsdl:message name="IServicioPartidaSesion_ObtenerJugadorPartidaCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerJugadorPartidaCallback" />
+  </wsdl:message>
+  <wsdl:message name="IServicioPartidaSesion_EliminarJugadorPartidaCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:EliminarJugadorPartidaCallback" />
   </wsdl:message>
   <wsdl:message name="IServicioRegistro_RegistrarUsuario_InputMessage">
     <wsdl:part name="parameters" element="tns:RegistrarUsuario" />
@@ -240,7 +249,7 @@
     <wsdl:part name="parameters" element="tns:RegistrarUsuarioResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioRegistro_RegistrarUsuario_BaseDatosFallaFault_FaultMessage">
-    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q2:BaseDatosFalla" />
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q3:BaseDatosFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioSala_CrearSala_InputMessage">
     <wsdl:part name="parameters" element="tns:CrearSala" />
@@ -300,7 +309,7 @@
     <wsdl:part name="parameters" element="tns:YaIniciadoSesionResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioUsuario_YaIniciadoSesion_UsuarioFallaFault_FaultMessage">
-    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q3:UsuarioFalla" />
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q4:UsuarioFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioUsuario_Ping_InputMessage">
     <wsdl:part name="parameters" element="tns:Ping" />
@@ -389,29 +398,40 @@
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioPartidaSesion">
-    <wsdl:operation name="UniserPartida">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPartidaSesion/UniserPartida" message="tns:IServicioPartidaSesion_UniserPartida_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/UniserPartidaResponse" message="tns:IServicioPartidaSesion_UniserPartida_OutputMessage" />
+    <wsdl:operation name="UnirsePartida">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPartidaSesion/UnirsePartida" message="tns:IServicioPartidaSesion_UnirsePartida_InputMessage" />
     </wsdl:operation>
     <wsdl:operation name="ConfirmarMovimiento">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioPartidaSesion/ConfirmarMovimiento" message="tns:IServicioPartidaSesion_ConfirmarMovimiento_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/ConfirmarMovimientoResponse" message="tns:IServicioPartidaSesion_ConfirmarMovimiento_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="AvanzarRonda">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPartidaSesion/AvanzarRonda" message="tns:IServicioPartidaSesion_AvanzarRonda_InputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="FinalizarPartida">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPartidaSesion/FinalizarPartida" message="tns:IServicioPartidaSesion_FinalizarPartida_InputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioPartidaSesion/ConfirmarMovimientoPartidaFallaFault" name="PartidaFallaFault" message="tns:IServicioPartidaSesion_ConfirmarMovimiento_PartidaFallaFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="ExpulsarJugador">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioPartidaSesion/ExpulsarJugador" message="tns:IServicioPartidaSesion_ExpulsarJugador_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="EnviarImagenCarta">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPartidaSesion/EnviarImagenCarta" message="tns:IServicioPartidaSesion_EnviarImagenCarta_InputMessage" />
+    <wsdl:operation name="SolicitarImagenCarta">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPartidaSesion/SolicitarImagenCarta" message="tns:IServicioPartidaSesion_SolicitarImagenCarta_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EmpezarPartida">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPartidaSesion/EmpezarPartida" message="tns:IServicioPartidaSesion_EmpezarPartida_InputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AvanzarRondaCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/AvanzarRondaCallback" message="tns:IServicioPartidaSesion_AvanzarRondaCallback_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPartidaSesion/AvanzarRondaCallbackResponse" message="tns:IServicioPartidaSesion_AvanzarRondaCallback_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TurnoPerdidoCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/TurnoPerdidoCallback" message="tns:IServicioPartidaSesion_TurnoPerdidoCallback_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecibirImagenCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/RecibirImagenCallback" message="tns:IServicioPartidaSesion_RecibirImagenCallback_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FinalizarPartida">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/FinalizarPartida" message="tns:IServicioPartidaSesion_FinalizarPartida_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerJugadorPartidaCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/ObtenerJugadorPartidaCallback" message="tns:IServicioPartidaSesion_ObtenerJugadorPartidaCallback_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EliminarJugadorPartidaCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/EliminarJugadorPartidaCallback" message="tns:IServicioPartidaSesion_EliminarJugadorPartidaCallback_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioRegistro">
@@ -638,14 +658,11 @@
     <wsp:PolicyReference URI="#NetTcpBinding_IServicioPartidaSesion_policy">
     </wsp:PolicyReference>
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="UniserPartida">
-      <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/UniserPartida" style="document" />
+    <wsdl:operation name="UnirsePartida">
+      <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/UnirsePartida" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="ConfirmarMovimiento">
       <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/ConfirmarMovimiento" style="document" />
@@ -655,18 +672,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="AvanzarRonda">
-      <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/AvanzarRonda" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-    </wsdl:operation>
-    <wsdl:operation name="FinalizarPartida">
-      <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/FinalizarPartida" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
+      <wsdl:fault name="PartidaFallaFault">
+        <soap12:fault use="literal" name="PartidaFallaFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="ExpulsarJugador">
       <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/ExpulsarJugador" style="document" />
@@ -674,17 +682,50 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
-    <wsdl:operation name="EnviarImagenCarta">
-      <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/EnviarImagenCarta" style="document" />
+    <wsdl:operation name="SolicitarImagenCarta">
+      <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/SolicitarImagenCarta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="EmpezarPartida">
+      <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/EmpezarPartida" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
     <wsdl:operation name="AvanzarRondaCallback">
       <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/AvanzarRondaCallback" style="document" />
-      <wsdl:input>
+      <wsdl:output>
         <soap12:body use="literal" />
-      </wsdl:input>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TurnoPerdidoCallback">
+      <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/TurnoPerdidoCallback" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecibirImagenCallback">
+      <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/RecibirImagenCallback" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FinalizarPartida">
+      <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/FinalizarPartida" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerJugadorPartidaCallback">
+      <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/ObtenerJugadorPartidaCallback" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EliminarJugadorPartidaCallback">
+      <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/EliminarJugadorPartidaCallback" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

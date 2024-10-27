@@ -15,6 +15,10 @@ namespace WcfServicioLibreria.Manejador
     {
         public string CrearPartida(string anfitrion, ConfiguracionPartida configuracion)
         {
+            if (anfitrion == null || configuracion == null)
+            {
+                return null;
+            }
             string idPartida = null;
             try
             {
@@ -47,30 +51,22 @@ namespace WcfServicioLibreria.Manejador
 
         public void BorrarPartida(object sender, EventArgs e)
         {
-            if (sender is Sala sala)
+            if (sender is Partida partida)
             {
                 PartidaVaciaEventArgs evento = e as PartidaVaciaEventArgs;
-                sala.salaVaciaManejadorEvento -= BorrarSala;
+                partida.partidaVaciaManejadorEvento -= BorrarSala;
                 partidasdDiccionario.TryRemove(evento.Partida.IdPartida, out _);
                 Console.WriteLine($"La partdia con ID {evento.Partida.IdPartida} está vacía y será eliminada.");
             };
         }
 
-        public bool ValidarPartida(string idSala)
+        public bool ValidarPartida(string idPartida)
         {
-            bool result = false;
-            try
+            if (idPartida == null)
             {
-                result = salasDiccionario.ContainsKey(idSala);
+                return false;
             }
-            catch (CommunicationException excepcion)
-            {
-                //TODO manejar el error
-            }
-            catch (NullReferenceException)
-            {
-
-            }
+            bool result = partidasdDiccionario.ContainsKey(idPartida);
             return result;
         }
     }

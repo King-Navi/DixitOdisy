@@ -59,4 +59,8 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    <!--El ICON-->
+    <Style TargetType="Window" BasedOn="{x:Null}">
+        <Setter Property="Icon" Value="/Recursos/LogoApp.ico"/>
+    </Style>
 </ResourceDictionary>

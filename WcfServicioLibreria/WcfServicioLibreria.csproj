@@ -94,10 +94,12 @@
     <Compile Include="Modelo\Chat\ChatMensaje.cs" />
     <Compile Include="Modelo\Amistad\SolicitudAmistad.cs" />
     <Compile Include="Modelo\Excepciones\BaseDatosFalla.cs" />
+    <Compile Include="Modelo\Excepciones\PartidaFalla.cs" />
     <Compile Include="Modelo\Partida\CondicionVictoriaPorRondas.cs" />
     <Compile Include="Modelo\Partida\CondicionVictoriaCartasAgotadas .cs" />
     <Compile Include="Modelo\Partida\ConfiguracionPartida.cs" />
     <Compile Include="Modelo\Partida\ICondicionVictoria.cs" />
+    <Compile Include="Modelo\Partida\ImagenCarta.cs" />
     <Compile Include="Modelo\Sala\Sala.cs" />
     <Compile Include="Modelo\Usuario\UsuarioContexto.cs" />
     <Compile Include="Modelo\Partida\Partida.cs" />
@@ -126,6 +128,141 @@
       <Project>{12bc6483-0b89-46f6-9a42-272d0e225764}</Project>
       <Name>UtilidadesLibreria</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Recursos\Animales\0b7806d1-133c-42f2-9c46-cb4021a35748.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\10615ce2-bd46-45cc-aa80-f9ddd85731fe.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\112d65a4-7fa4-46a3-96d8-0bcf2d27f25b.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\1333c339-4c95-42ca-b418-d755f309ceca.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\22537de3-7592-4fb6-865f-05e69bf334a4.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\2722b3d6-d298-4325-a3c8-08e821de5284.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\2bbd340a-5243-417e-983b-b8174e8e50be.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\31765347-d928-4f8c-8550-eaa97e01aa7b.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\3aeea086-e8cb-4cf9-9218-fca479ba7e0c.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\4a090d09-92e6-4104-b469-b776d82c2558.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\5a838d02-4821-4014-9005-0aeaca377bc6.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\5b91c50f-13fc-4f04-b0d9-456a00941aee.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\76389fa1-e2d0-4c13-a4fe-259f2f7fe7ec.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\7a6a05aa-cf3e-4ba1-9877-aed74b58a7f0.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\7c8ca7b6-ffcc-4768-ac78-fde534a30614.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\9295fa23-c467-43aa-98ff-8cbdbea5d3da.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\9cd586f9-1662-451e-b055-2c6cb3044e4b.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\a01b181e-4162-48e6-b9a2-ab944f81d601.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\a0520453-4ce5-426c-abc7-e487818e831b.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\a9c77ba3-8475-44f4-af24-7f2f6a073ef0.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\ad6d2664-ac8d-41f0-bf50-e2bbe392b707.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\cc01114a-92f4-498f-9bfc-91918c879d18.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\cdfc2a19-0b48-42ed-bce7-6e529aaa6fc5.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\e2afc4b4-d047-4e6a-9757-9a72dc94e174.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\f04d3e9b-8ea2-437a-841a-6c6004815260.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\f882ac99-c7ed-45bd-a9ef-3e9737417e55.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mitologia\057284a6-924e-4e0e-84c9-9e566efe31ca.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mitologia\56ee97c0-39c8-465f-a30a-36f9790c19e4.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mitologia\712e8fce-3581-4662-8fc1-a7e0b99f9fc2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\094cf221-7113-4a35-b079-0e8642f09f04.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\0cfd2be8-a288-4c2c-a3de-92e237453779.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\10a68896-eae7-47df-8072-087ab963bdc9.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\135af6d3-62db-467c-a77a-fa77cb8fe31d.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\163c9753-2efb-41d4-a575-59112e2b4b18.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\2a886945-1d6d-4009-acc1-befcb3bdcf82.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\5cd69b34-c5ac-436a-9d40-aa86f8c8718f.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\94ee37e3-743a-484f-97c9-f50ca7e4c4c0.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\9e476c0b-96fd-44fa-9dec-f43beefff12f.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\b702b2a9-b205-40ae-af84-738b55d5087a.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\e536fa54-f267-4acc-a11a-b185c6ec75ed.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\e96a6122-6e07-4f58-baa0-27acb08e10c8.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\f74b0636-3764-4750-af6b-1de8da9bdfde.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Paises\01c81451-f1fc-4f2e-b9fd-4d57c4c60968.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Paises\e0835ab0-36e0-4480-86f7-e4b7b17ce5eb.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

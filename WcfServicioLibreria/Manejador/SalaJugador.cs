@@ -9,14 +9,14 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioSalaJugador
     {
-        public void ComenzarPartidaAnfrition(string nombre, string idSala)
+        public void ComenzarPartidaAnfrition(string nombre, string idSala , string idPartida)
         {
             try
             {
                 salasDiccionario.TryGetValue(idSala, out Sala sala);
                 lock (sala)
                 {
-                    sala.AvisarComienzoPatida(nombre, idSala);
+                    sala.AvisarComienzoPatida(nombre, idPartida);
                 }
             }
             catch (Exception excepcion)
@@ -56,9 +56,6 @@ namespace WcfServicioLibreria.Manejador
             throw new NotImplementedException();
         }
 
-        public void EmpezarPartida(string idSala)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

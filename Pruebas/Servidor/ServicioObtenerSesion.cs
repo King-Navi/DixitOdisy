@@ -35,7 +35,7 @@ namespace Pruebas.Servidor
         public void ObtenerSessionJugadorCallback_SeAbreElCanal_DeberiaRetornarTrue()
         {
             // Arrange
-
+            //Precondicion el Usuario deberia estar en BD
             var implementacionCallback = new UsuarioSesionCallbackImpl();
 
             mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IUsuarioSesionCallback>())
@@ -55,7 +55,7 @@ namespace Pruebas.Servidor
 
         }
         [TestMethod]
-        public void ObtenerSessionJugadorCallback_YaHaIniciadoSesion_DeberiaRetornarFalse()
+        public void ObtenerSessionJugadorCallback_YaHaIniciadoSesion_DeberiaRetornarUsuarioFalla()
         {
             // Arrange
 

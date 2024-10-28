@@ -148,6 +148,9 @@
     <Compile Include="GUI\SalaEsperaWindow.xaml.cs">
       <DependentUpon>SalaEsperaWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\SeleccionCartaUsercontrol.xaml.cs">
+      <DependentUpon>SeleccionCartaUsercontrol.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\UnirseSalaModalWindow.xaml.cs">
       <DependentUpon>UnirseSalaModalWindow.xaml</DependentUpon>
     </Compile>
@@ -161,6 +164,7 @@
       <DependentUpon>VerificarCorreoModalWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaz\IHabilitadorBotones.cs" />
+    <Compile Include="Utilidad\ComandoRele.cs" />
     <Compile Include="Utilidad\Servidor\ChatMensaje.cs" />
     <Compile Include="Utilidad\Conexion.cs" />
     <Compile Include="Utilidad\CambiarIdioma.cs" />
@@ -315,6 +319,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\SalaEsperaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\SeleccionCartaUsercontrol.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

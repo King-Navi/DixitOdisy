@@ -13,24 +13,24 @@ namespace WpfCliente.ServidorDescribelo
     {
         // Propiedad que convierte MemoryStream a BitmapImage solo una vez y lo reutiliza
         private BitmapImage _bitmapImagen;
+        // Propiedad para convertir el MemoryStream en BitmapImage
         public BitmapImage BitmapImagen
         {
             get
             {
-                if (_bitmapImagen == null && ImagenStream != null)
-                {
-                    ImagenStream.Position = 0;
-                    _bitmapImagen = new BitmapImage();
-                    _bitmapImagen.BeginInit();
-                    _bitmapImagen.StreamSource = new MemoryStream(ImagenStream.ToArray());
-                    _bitmapImagen.CacheOption = BitmapCacheOption.OnLoad;
-                    _bitmapImagen.EndInit();
-                    _bitmapImagen.Freeze();
-                }
-                return _bitmapImagen;
-            }
+                if (ImagenStream == null)
+                    return null;
 
+                var bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.StreamSource = new MemoryStream(ImagenStream.ToArray()); // Convertimos el stream para asegurarnos de que está en la posición correcta
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.EndInit();
+                bitmap.Freeze(); // Para mejorar el rendimiento en WPF
+                return bitmap;
+            }
         }
+
         // Comando para manejar el clic en la imagen
         public ICommand ImagenClickCommand { get; }
 

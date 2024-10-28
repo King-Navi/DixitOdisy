@@ -5,10 +5,55 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfCliente.GUI"
         mc:Ignorable="d"
-        Title="PartidaWindow" Height="683" Width="1131">
-    <Grid Margin="0,0,0,-6">
+        Title="Partida" Height="683" Width="1131">
+    <Grid d:Background="Green">
+        <!-- Pantalla 1 -->
+    <Grid Background="Transparent">
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Setter Property="Visibility" Value="Collapsed" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding PantallaActual}" Value="1">
+                        <Setter Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+            <local:SeleccionCartaUsercontrol x:Name="seleccionCartasUserControl"></local:SeleccionCartaUsercontrol>
+    </Grid>
+
+    <!-- Pantalla 2 -->
+    <Grid>
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Setter Property="Visibility" Value="Collapsed" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding PantallaActual}" Value="2">
+                        <Setter Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+    </Grid>
+
+    <!-- Pantalla 3 -->
+    <Grid>
+        <Grid.Style>
+            <Style TargetType="Grid">
+                <Setter Property="Visibility" Value="Collapsed" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding PantallaActual}" Value="3">
+                        <Setter Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+    </Grid>
+    </Grid>
+    <!--<Grid Margin="0,0,0,-6">
         <Button Content="Button" HorizontalAlignment="Left" Margin="825,525,0,0" VerticalAlignment="Top" Height="77" Width="150" Click="ClicButtonConfirmarTurno"/>
         <local:MazoUserControl x:Name="mazoUserControl" Width="600" Height="400" Margin="10,10,521,263" ></local:MazoUserControl>
         <Image x:Name="IMAGEN1" HorizontalAlignment="Left" Height="270" Margin="789,77,0,0" VerticalAlignment="Top" Width="235"/>
-    </Grid>
+    </Grid>-->
+    
 </Window>

@@ -116,10 +116,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ChatGPTLibreria\ChatGPTLibreria\ChatGPTLibreria.csproj">
-      <Project>{1db22d68-dec2-4b15-81bb-19794b7e8000}</Project>
-      <Name>ChatGPTLibreria</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DAOLibreria\DAOLibreria.csproj">
       <Project>{14e9f882-4cc6-4331-a0ac-b31206796294}</Project>
       <Name>DAOLibreria</Name>
@@ -128,8 +124,11 @@
       <Project>{12bc6483-0b89-46f6-9a42-272d0e225764}</Project>
       <Name>UtilidadesLibreria</Name>
     </ProjectReference>
+    <ProjectReference Include="D:\Repos\Source\RepoChatGPT\ChatGPTLibreria\ChatGPTLibreria\ChatGPTLibreria.csproj">
+      <Project>{1db22d68-dec2-4b15-81bb-19794b7e8000}</Project>
+      <Name>ChatGPTLibreria</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="Recursos\Animales\0b7806d1-133c-42f2-9c46-cb4021a35748.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

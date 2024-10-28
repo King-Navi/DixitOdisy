@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,15 +22,43 @@ namespace WpfCliente.GUI
     /// <summary>
     /// Interaction logic for PartidaWindow.xaml
     /// </summary>
-    public partial class PartidaWindow : Window , IActualizacionUI , IHabilitadorBotones, IServicioPartidaSesionCallback
+    public partial class PartidaWindow : Window , IActualizacionUI , IHabilitadorBotones, IServicioPartidaSesionCallback, INotifyPropertyChanged
     {
-        
+        private int pantallaActual = 1;
+        public bool EsNarrador { get; set; }
+        public int PantallaActual
+        {
+            get => pantallaActual;
+            set
+            {
+                pantallaActual = value;
+                OnPropertyChanged();
+            }
+        }
         public PartidaWindow(string idPartida)
         {
             InitializeComponent();
             ActualizarUI();
             UnirsePartida(idPartida);
             DataContext = this;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void AvanzarPantalla()
+        {
+            if (EsNarrador)
+            {
+                PantallaActual = 1; // El narrador siempre ve la pantalla X
+            }
+            else
+            {
+                PantallaActual = (PantallaActual % 3) + 1; // Ciclo de 1 a 3 para jugadores
+            }
         }
         private async void UnirsePartida(string idPartida)
         {
@@ -103,11 +133,7 @@ namespace WpfCliente.GUI
 
         public void RecibirImagenCallback(ImagenCarta imagen)
         {
-            IMAGEN1.Source = Imagen.ConvertirStreamABitmapImagen(imagen.ImagenStream);
-            if (imagen != null)
-            {
-                mazoUserControl.RecibirImagen(imagen);
-            };
+            seleccionCartasUserControl.AgregarImagen(imagen);
         }
 
         public void FinalizarPartida()

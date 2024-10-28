@@ -133,7 +133,6 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
-
             labelListaAmigos.Content = Idioma.labelListaAmigos;
         }
 

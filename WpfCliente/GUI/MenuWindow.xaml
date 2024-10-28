@@ -30,7 +30,7 @@
                 <local:PerfilMenuDesplegableUserControl></local:PerfilMenuDesplegableUserControl>
             </StackPanel>
             <!--Footer-->
-            <StackPanel DockPanel.Dock="Bottom" Background="#FF43FF02" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            <StackPanel DockPanel.Dock="Bottom" Background="#E0DCC7" VerticalAlignment="Bottom" HorizontalAlignment="Center">
                 <Label Content="Copiright 2024 Iván y U Náay S.A. de C.V."></Label>
             </StackPanel>
             <!--Middle-->

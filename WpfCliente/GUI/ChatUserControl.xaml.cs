@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using WpfCliente.Interfaz;
+using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
@@ -36,6 +37,7 @@ namespace WpfCliente.GUI
                     HoraFecha = DateTime.Now,
                     Nombre = Singleton.Instance.NombreUsuario
                 });
+                textBoxEnviarMensaje.Text = "";
             }
             catch (Exception excepcion)
             {
@@ -62,7 +64,7 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
-            //TODO: Pedirle a unaay los .resx
+            buttonEnviar.Content = Idioma.buttonEnviar;
         }
 
         private void CerrarControl(object sender, RoutedEventArgs e)

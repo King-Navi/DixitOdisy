@@ -5,7 +5,7 @@ namespace WpfCliente.ServidorDescribelo
     {
         public override string ToString()
         {
-            return $"{HoraFecha.ToLocalTime()} {Nombre} : {Mensaje}";
+            return $"{HoraFecha.ToLocalTime()} | {Nombre}: \n{Mensaje}";
         }
     }
 }

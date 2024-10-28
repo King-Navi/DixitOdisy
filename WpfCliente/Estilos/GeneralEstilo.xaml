@@ -50,7 +50,7 @@
                 </Setter.Value>
             </Setter>
             <!-- Cambiar colores de fondo y fuente -->
-        <Setter Property="Background" Value="#FF0983D0" />
+        <Setter Property="Background" Value="#E0DCC7" />
         <Setter Property="Foreground" Value="Black" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">

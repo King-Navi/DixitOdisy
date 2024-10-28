@@ -173,7 +173,7 @@
     <Compile Include="Utilidad\Imagen.cs" />
     <Compile Include="Utilidad\LoggerManager.cs" />
     <Compile Include="Utilidad\ManejadorExcepciones.cs" />
-    <Compile Include="Utilidad\Otros.cs" />
+    <Compile Include="Utilidad\Utilidades.cs" />
     <Compile Include="Utilidad\ServicioManejador.cs" />
     <Compile Include="Utilidad\Validacion.cs" />
     <Compile Include="Utilidad\Singleton.cs" />

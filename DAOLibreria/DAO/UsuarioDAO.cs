@@ -6,7 +6,6 @@ using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.Linq;
 using System.Data.SqlClient;
-using UtilidadesLibreria;
 using DAOLibreria.Excepciones;
 
 namespace DAOLibreria.DAO

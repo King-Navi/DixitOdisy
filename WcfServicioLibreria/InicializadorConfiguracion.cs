@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using DAOLibreria;
-using UtilidadesLibreria;
 namespace WcfServicioLibreria
 {
     public static class InicializadorConfiguracion

@@ -31,18 +31,24 @@ namespace WpfCliente.GUI
             InitializeComponent();
             Imagenes = new ObservableCollection<ImagenCarta>();
             DataContext = this;
-            EliminarImagenPorIdCommand = new RelayCommand<string>(EliminarImagenPorId);
+            EliminarImagenPorIdCommand = new ComandoRele<string>(EliminarImagenPorId);
+            this.Loaded += LoadedSeleccionCartaUsercontrol;
+
 
         }
 
         internal void AgregarImagen(ImagenCarta imagen)
         {
+            if (imagen == null)
+            {
+                return;
+            }
             if (Imagenes.Count < 6)
             {
                 Imagenes.Add(imagen);
             }
         }
-        // Método para eliminar una imagen por su Id
+
         public void EliminarImagenPorId(string id)
         {
             var imagenAEliminar = Imagenes.FirstOrDefault(i => i.IdImagen == id);
@@ -50,6 +56,21 @@ namespace WpfCliente.GUI
             {
                 Imagenes.Remove(imagenAEliminar);
             }
+        }
+
+        private void LoadedSeleccionCartaUsercontrol(object sender, RoutedEventArgs e)
+        {
+            if (Window.GetWindow(this) is Window mainWindow)
+            {
+                mainWindow.MinHeight = this.MinHeight;
+                mainWindow.MinWidth = this.MinWidth;
+            }
+        }
+
+        private void UnloadedSeleccionCartaUsercontrol(object sender, RoutedEventArgs e)
+        {
+            this.Loaded -= LoadedSeleccionCartaUsercontrol;
+
         }
     }
 }

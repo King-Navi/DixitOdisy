@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DescribeloServiceHost.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -65,10 +66,6 @@
     <Folder Include="Recursos\Animales\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UtilidadesLibreria\UtilidadesLibreria.csproj">
-      <Project>{12bc6483-0b89-46f6-9a42-272d0e225764}</Project>
-      <Name>UtilidadesLibreria</Name>
-    </ProjectReference>
     <ProjectReference Include="..\WcfServicioLibreria\WcfServicioLibreria.csproj">
       <Project>{a07aeff5-b5e9-44c4-87c5-9af85933de44}</Project>
       <Name>WcfServicioLibreria</Name>

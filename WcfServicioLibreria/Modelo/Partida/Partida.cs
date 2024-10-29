@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using ChatGPTLibreria;
 using ChatGPTLibreria.ModelosJSON;
+using System.Net.Http;
 
 namespace WcfServicioLibreria.Modelo
 {
@@ -32,7 +33,9 @@ namespace WcfServicioLibreria.Modelo
         private bool partidaEmpezada = false;
         private static readonly object imagenLock = new object();
         private static readonly Random random = new Random();
-        private static readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
+        private static readonly SemaphoreSlim semaphoreDisco = new SemaphoreSlim(1, 1);
+        private static readonly SemaphoreSlim semaphoreChatGPT = new SemaphoreSlim(1, 1);
+        private static readonly HttpClient httpCliente = new HttpClient();
 
         #endregion Atributos
 
@@ -45,10 +48,12 @@ namespace WcfServicioLibreria.Modelo
         private ConcurrentBag<string> ImagenesUsadas { get; set; }
         public ConcurrentBag<string> JugadoresPendientes { get; private set; }
         private ConcurrentBag<Tuple<string, string>> JugadorImagenElegida { get; set; }
+        private IEscribirDisco Escritor { get; set; }
+        private SolicitarImagen SolicitarImagen { get; set; }
         #endregion Propiedad
 
-        #region
-        public Partida(string _idPartida, string _anfitrion, ConfiguracionPartida _configuracion)
+        #region Contructor
+        public Partida(string _idPartida, string _anfitrion, ConfiguracionPartida _configuracion, IEscribirDisco _escritorDisco)
         {
             IdPartida = _idPartida;
             Anfitrion = _anfitrion;
@@ -60,11 +65,15 @@ namespace WcfServicioLibreria.Modelo
             JugadoresPendientes = new ConcurrentBag<string>();
             JugadorImagenElegida = new ConcurrentBag<Tuple<string, string>>();
             RondaActual = 0;
+            Escritor = _escritorDisco;
+            SolicitarImagen = new SolicitarImagen();
+
         }
 
 
-        #endregion
+        # endregion Contructor
         #region Metodos
+        #region Imagenes
         public async Task EnviarImagen(string nombreSolicitante) //FIXME
         {
             ImagenCarta imagenCarta = await CalcularNuevaImagen();
@@ -81,7 +90,7 @@ namespace WcfServicioLibreria.Modelo
 
             }
         }
-        
+
         private async Task<ImagenCarta> CalcularNuevaImagen()
         {
             ImagenCarta resultado = null;
@@ -94,7 +103,7 @@ namespace WcfServicioLibreria.Modelo
                 else
                 {
                     resultado = await LeerImagenDiscoAsync();
-
+                    CartasRestantes--;
                 }
             }
             catch (Exception)
@@ -106,86 +115,58 @@ namespace WcfServicioLibreria.Modelo
 
         private async Task<ImagenCarta> LeerImagenDiscoAsync()
         {
-
-            ImagenCarta resultado = null;
-            var archivos = Directory.GetFiles(rutaImagenes, "*.jpg");
-
-            if (archivos.Length == 0)
-            {
-                return await SolicitarImagenChatGPTAsync();
-            }
-            var archivosRestantes = archivos.Where(a => !ImagenesUsadas.Contains(Path.GetFileNameWithoutExtension(a))).ToArray();
-
-            if (archivosRestantes.Length == 0)
-            {
-                return await SolicitarImagenChatGPTAsync();
-            }
+            await semaphoreDisco.WaitAsync();
             try
             {
-                string archivoAleatorio = archivos[random.Next(archivos.Length)];
+                var archivos = Directory.GetFiles(rutaImagenes, "*.jpg");
+
+                if (archivos.Length == 0)
+                {
+                    return await SolicitarImagenChatGPTAsync();
+                }
+
+                var archivosRestantes = archivos.Where(a => !ImagenesUsadas.Contains(Path.GetFileNameWithoutExtension(a))).ToArray();
+
+                if (archivosRestantes.Length == 0)
+                {
+                    return await SolicitarImagenChatGPTAsync();
+                }
+                string archivoAleatorio = archivosRestantes[random.Next(archivosRestantes.Length)];
                 string nombreSinExtension = Path.GetFileNameWithoutExtension(archivoAleatorio);
                 byte[] imagenBytes = File.ReadAllBytes(archivoAleatorio);
-                resultado = new ImagenCarta
+                ImagenesUsadas.Add(nombreSinExtension);
+                return new ImagenCarta
                 {
                     IdImagen = nombreSinExtension,
                     ImagenStream = new MemoryStream(imagenBytes)
                 };
-                lock (imagenLock)
-                {
-                    ImagenesUsadas.Add(nombreSinExtension);
-                }
             }
-            catch (Exception)
+            finally
             {
-
+                semaphoreDisco.Release();
             }
-            CartasRestantes--;
-            return resultado;
         }
 
         private async Task<ImagenCarta> SolicitarImagenChatGPTAsync()
         {
+
             ImagenCarta resultado = null;
-            ImagenPedido imagenPedido = new ImagenPedido("Genera una imagen basada en la tematica " + Tematica);
-            var respuesta = await SolicitarImagen.EjecutarImagenPrompt(imagenPedido);
-            string nombreNuevoImagen =null;
+            ImagenPedido64JSON imagenPedido = new ImagenPedido64JSON("Genera una imagen basada en la tematica " + Tematica + " debe ser rectangular y vertical");
+
+            var respuesta = await SolicitarImagen.EjecutarImagenPrompt64JSON(imagenPedido, httpCliente);
+
             if (respuesta?.ImagenDatosList != null && respuesta.ImagenDatosList.Any())
             {
-                var imagenUrl = respuesta.ImagenDatosList.First().Url;
-                MemoryStream memoryStream = await Descargar.DescargarImagenMemoryStreamAsync(imagenUrl);
-
-                await semaphore.WaitAsync();
-
-                try
-                {
-                    // Tiempo de espera (por ejemplo, 10 segundos)
-                    int timeout = 10000;
-
-                    var tareaGuardar = Convertidor.GuardarJpegGUIDAsync(memoryStream, rutaImagenes);
-                    var tareaConTimeout = Task.WhenAny(tareaGuardar, Task.Delay(timeout));
-
-                    if (await tareaConTimeout == tareaGuardar)
-                    {
-                        // Si se completa dentro del tiempo, obtenemos el resultado
-                        nombreNuevoImagen = await tareaGuardar;
-                    }
-                    else
-                    {
-                        // Si no se completa en el tiempo esperado, registramos el problema
-                        Console.WriteLine("La operación de guardar la imagen ha superado el tiempo de espera.");
-                    }
-                }
-                finally
-                {
-                    semaphore.Release(); 
-                }
+                var imagenBytes = Convert.FromBase64String(respuesta.ImagenDatosList[0].Base64Imagen);
+                MemoryStream memoryStream = new MemoryStream(imagenBytes);
+                string rutaDestino = Path.Combine(rutaImagenes, $"{Guid.NewGuid()}.jpg");
+                Escritor.EncolarEscrituraAsync(memoryStream, rutaDestino);
                 resultado = new ImagenCarta
                 {
                     ImagenStream = memoryStream,
-                    IdImagen = nombreNuevoImagen
+                    IdImagen = Path.GetFileNameWithoutExtension(rutaDestino)
                 };
             }
-
             return resultado;
         }
 
@@ -206,7 +187,7 @@ namespace WcfServicioLibreria.Modelo
                     return Path.Combine(ruta, "Mixta");
             }
         }
-        
+        #endregion Imagenes
         private void EnPartidaVacia()
         {
             partidaVaciaManejadorEvento?.Invoke(this, new PartidaVaciaEventArgs(DateTime.Now, this));
@@ -228,10 +209,10 @@ namespace WcfServicioLibreria.Modelo
                 case CondicionVictoriaPartida.PorCartasAgotadas:
                     return new CondicionVictoriaCartasAgotadas();
                 default:
-                   return new CondicionVictoriaCartasAgotadas();
+                    return new CondicionVictoriaCartasAgotadas();
             }
         }
-        
+
         public void EmpezarPartida(string nombre)
         {
             lock (JugadoresPendientes)
@@ -240,16 +221,16 @@ namespace WcfServicioLibreria.Modelo
                 {
                     JugadoresPendientes.TryTake(out nombre);
                 }
-                if (!partidaEmpezada && JugadoresPendientes.Count< 0)
+                if (!partidaEmpezada && JugadoresPendientes.Count < 0)
                 {
                     partidaEmpezada = true;
                     CambiarRonda();
 
                 }
             }
-            
+
         }
-        
+
         private async void CambiarRonda() //FIXME
         {
             //LimpiarConcurrentbags
@@ -400,7 +381,7 @@ namespace WcfServicioLibreria.Modelo
                 }
             }
         }
-        
+
         private void AvisarRetiroJugador(string nombreUsuarioEliminado)
         {
             lock (jugadoresCallback)
@@ -430,8 +411,8 @@ namespace WcfServicioLibreria.Modelo
                             }
                         }
                     }
-                    
-                    
+
+
                 }
             }
         }
@@ -490,7 +471,6 @@ namespace WcfServicioLibreria.Modelo
             return jugadoresCallback.Count;
         }
         #endregion
-
     }
 
 

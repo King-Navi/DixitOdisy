@@ -31,40 +31,40 @@ namespace WpfCliente.ServidorDescribelo
             }
         }
 
-        // Comando para manejar el clic en la imagen
-        public ICommand ImagenClickCommand { get; }
+        //// Comando para manejar el clic en la imagen
+        //public ICommand ImagenClickCommand { get; }
 
-        public ImagenCarta()
-        {
-            // Asocia el comando al método que manejará el clic
-            ImagenClickCommand = new RelayCommand(OnImagenClick);
-        }
+        //public ImagenCarta()
+        //{
+        //    // Asocia el comando al método que manejará el clic
+        //    ImagenClickCommand = new RelayCommand(OnImagenClick);
+        //}
 
-        private void OnImagenClick(object parameter)
-        {
-            // Muestra el IdImagen o cualquier otra información relevante
-            Console.WriteLine($"Imagen clickeada: {IdImagen}");
-        }
+        //private void OnImagenClick(object parameter)
+        //{
+        //    // Muestra el IdImagen o cualquier otra información relevante
+        //    Console.WriteLine($"Imagen clickeada: {IdImagen}");
+        //}
     }
     // Implementación simple de RelayCommand
-    public class RelayCommand : ICommand
-    {
-        private readonly Action<object> execute;
-        private readonly Func<object, bool> canExecute;
+    //public class RelayCommand : ICommand
+    //{
+    //    private readonly Action<object> execute;
+    //    private readonly Func<object, bool> canExecute;
 
-        public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
-        {
-            this.execute = execute;
-            this.canExecute = canExecute;
-        }
+    //    public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
+    //    {
+    //        this.execute = execute;
+    //        this.canExecute = canExecute;
+    //    }
 
-        public bool CanExecute(object parameter) => canExecute == null || canExecute(parameter);
+    //    public bool CanExecute(object parameter) => canExecute == null || canExecute(parameter);
 
-        public void Execute(object parameter) => execute(parameter);
+    //    public void Execute(object parameter) => execute(parameter);
 
-        public event EventHandler CanExecuteChanged;
-        public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-    }
+    //    public event EventHandler CanExecuteChanged;
+    //    public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+    //}
 
 
 }

@@ -4,7 +4,6 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
 using System.Security;
-using UtilidadesLibreria;
 
 namespace DAOLibreria
 {
@@ -201,5 +200,11 @@ namespace DAOLibreria
                 return null;
             }
         }
+    }
+    public static class Llaves
+    {
+        public const string LLAVE_ERROR = "error";
+        public const string LLAVE_MENSAJE = "mensaje";
+        public const string LLAVE_BOOLEANO = "bool";
     }
 }

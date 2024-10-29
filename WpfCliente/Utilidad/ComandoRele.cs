@@ -3,22 +3,22 @@ using System.Windows.Input;
 
 namespace WpfCliente.Utilidad
 {
-    public class RelayCommand<T> : ICommand
+    public class ComandoRele<T> : ICommand
     {
-        private readonly Action<T> _execute;
-        private readonly Func<T, bool> _canExecute;
+        private readonly Action<T> _executar;
+        private readonly Func<T, bool> _seEjecuta;
+        public event EventHandler CanExecuteChanged;
 
-        public RelayCommand(Action<T> execute, Func<T, bool> canExecute = null)
+        public ComandoRele(Action<T> execute, Func<T, bool> canExecute = null)
         {
-            _execute = execute;
-            _canExecute = canExecute;
+            _executar = execute;
+            _seEjecuta = canExecute;
         }
 
-        public bool CanExecute(object parameter) => _canExecute == null || _canExecute((T)parameter);
+        public bool CanExecute(object parameter) => _seEjecuta == null || _seEjecuta((T)parameter);
 
-        public void Execute(object parameter) => _execute((T)parameter);
+        public void Execute(object parameter) => _executar((T)parameter);
 
-        public event EventHandler CanExecuteChanged;
         public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
 }

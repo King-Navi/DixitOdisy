@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 using DAOLibreria.DAO;
 using DAOLibreria.Excepciones;
 using DAOLibreria.ModeloBD;
-using UtilidadesLibreria;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo.Excepciones;
 using WcfServicioLibreria.Utilidades;

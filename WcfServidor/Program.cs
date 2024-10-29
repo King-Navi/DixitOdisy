@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel;
-using UtilidadesLibreria;
 using WcfServicioLibreria;
+using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Manejador;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServidor
 {
@@ -18,14 +20,25 @@ namespace WcfServidor
         }
         private void IniciarServidor()
         {
-            using (ServiceHost host = new ServiceHost(typeof(WcfServicioLibreria.Manejador.ManejadorPrincipal)))
+            var manejadorPrincipal = new ManejadorPrincipal(); // Instancia de ManejadorPrincipal
+
+            using (ServiceHost host = new DescribeloServiceHost(manejadorPrincipal, typeof(WcfServicioLibreria.Manejador.ManejadorPrincipal)))
             {
                 host.Open();
-                Console.WriteLine("Servidor corriedo");
-                Console.WriteLine("Presiona 9 tecla para atraparlo...");
+                Console.WriteLine("Servidor corriendo. Presiona una tecla para mostrar el menú...");
                 Menu();
-                host.Close();
+                host.Close(); // Se llama a OnClosing y luego a OnClosed automáticamente creo
             }
+            //using (ServiceHost host = new ServiceHost(typeof(WcfServicioLibreria.Manejador.ManejadorPrincipal)))
+            //{
+            //    host.Open();
+            //    Console.WriteLine("Servidor corriedo");
+            //    Console.WriteLine("Presiona 9 tecla para atraparlo...");
+            //    Menu();
+            //    host.Close();
+
+            //}
+
         }
         private void Menu()
         {
@@ -50,6 +63,12 @@ namespace WcfServidor
                         break;
                 }
             }
+        }
+        public static class Llaves
+        {
+            public const string LLAVE_ERROR = "error";
+            public const string LLAVE_MENSAJE = "mensaje";
+            public const string LLAVE_BOOLEANO = "bool";
         }
     }
 }

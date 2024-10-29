@@ -13,7 +13,6 @@ using WcfServicioLibreria.Enumerador;
 using Pruebas.Servidor.Utilidades;
 using System.ServiceModel;
 using DAOLibreria;
-using UtilidadesLibreria;
 using System.IO;
 namespace Pruebas.Servidor
 {
@@ -207,7 +206,7 @@ namespace Pruebas.Servidor
             //PRECAUCION: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP y escribir en disco
             //PRECAUCION: Este metodo gasta credito (DINERO REAL), solo para mostrar a profe descomentar la linea de abajo
             string rutaCarpeta = null;
-            //  rutaCarpeta = Path.Combine("..", "..","..", "WcfServicioLibreria", "Recursos", "Mitologia");
+            rutaCarpeta = Path.Combine("..", "..", "..", "WcfServicioLibreria", "Recursos", "Mitologia");
             if (!Directory.Exists(rutaCarpeta))
             {
                 Console.WriteLine("Ruta completa: " + Path.GetFullPath(rutaCarpeta));

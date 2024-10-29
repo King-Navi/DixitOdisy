@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatGPTLibreria;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ServiceModel;
@@ -52,13 +53,34 @@ namespace WcfServicioLibreria.Manejador
         private readonly IContextoOperacion contextoOperacion;
 
         // Inyección de dependencias 
+        public ManejadorPrincipal(IContextoOperacion _contextoOperacion , IEscribirDisco _escribirDisco)
+        {
+            this.contextoOperacion = _contextoOperacion;
+            Escritor = _escribirDisco; 
+
+        }
         public ManejadorPrincipal(IContextoOperacion _contextoOperacion)
         {
             this.contextoOperacion = _contextoOperacion;
-        }   
+            Escritor = new EscritorDisco();
+
+        }
         public ManejadorPrincipal()
         {
             contextoOperacion = new ContextoOperacion();
+            Escritor = new EscritorDisco(); 
+
+        }
+
+
+        #endregion
+        #region Escritura en disco
+        public IEscribirDisco Escritor { get; private set; }
+
+        public void CerrarAplicacion()
+        {
+            Console.WriteLine("Guardando las ultimas imagenes...");
+            Escritor.Detener();
         }
         #endregion
     }

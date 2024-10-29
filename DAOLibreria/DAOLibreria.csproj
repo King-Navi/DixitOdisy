@@ -137,12 +137,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UtilidadesLibreria\UtilidadesLibreria.csproj">
-      <Project>{12bc6483-0b89-46f6-9a42-272d0e225764}</Project>
-      <Name>UtilidadesLibreria</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="ModeloBD\DescribeloBD.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DescribeloBD.edmx</DependentUpon>

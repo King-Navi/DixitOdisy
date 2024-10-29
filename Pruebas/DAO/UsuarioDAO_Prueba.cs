@@ -13,7 +13,6 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
-using UtilidadesLibreria;
 using WcfServicioLibreria.Modelo.Excepciones;
 
 namespace Pruebas.DAO

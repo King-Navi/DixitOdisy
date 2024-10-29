@@ -26,7 +26,7 @@ namespace WcfServicioLibreria.Manejador
                 {
                     idPartida = Utilidad.GenerarIdUnico();
                 } while (salasDiccionario.ContainsKey(idPartida));
-                Partida partidaNueva = new Partida(idPartida, anfitrion, configuracion);
+                Partida partidaNueva = new Partida(idPartida, anfitrion, configuracion, Escritor);
                 bool existeSala = partidasdDiccionario.TryAdd(idPartida, partidaNueva);
                 if (existeSala)
                 {

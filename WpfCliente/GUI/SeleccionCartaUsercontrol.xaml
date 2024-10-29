@@ -3,27 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:WpfCliente.GUI"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             MinHeight="670" MinWidth="520" Loaded="LoadedSeleccionCartaUsercontrol" Unloaded="UnloadedSeleccionCartaUsercontrol">
     <Grid d:Background="Azure">
         <Label d:Content="Algo grande" HorizontalAlignment="Left" Margin="297,35,0,0" VerticalAlignment="Top" d:FontSize="30"/>
         <Grid Margin="0,100,0,0">
             <ItemsControl ItemsSource="{Binding Imagenes}">
                 <ItemsControl.ItemsPanel>
-                    <!-- Organiza las imágenes en un panel de 6 celdas -->
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="3" Rows="2"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderBrush="Black" BorderThickness="1" Padding="5" Margin="5">
-                            <Button Command="{Binding DataContext.EliminarImagenPorIdCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                CommandParameter="{Binding Id}">
-                                <Image Source="{Binding Imagen}" Width="100" Height="100"/>
-                            </Button>
-                        </Border>
+                        <StackPanel Orientation="Vertical" >
+                            <!--Por cada Width x 1.75 = Height -->
+                            <Image Source="{Binding BitmapImagen}" Width="130"> 
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                        <i:InvokeCommandAction Command="{Binding DataContext.EliminarImagenPorIdCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                               CommandParameter="{Binding IdImagen}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Image>
+                        </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

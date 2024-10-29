@@ -395,5 +395,9 @@
   <ItemGroup>
     <Resource Include="Recursos\fondoMenu.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\fondoSala.png" />
+    <Content Include="Sonidos\musicaFondo.mp3" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

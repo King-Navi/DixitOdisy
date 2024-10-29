@@ -378,4 +378,16 @@
   <data name="menuItemEstadisticas" xml:space="preserve">
     <value>View stats</value>
   </data>
+  <data name="labelCodigoSala" xml:space="preserve">
+    <value>Lobby code: </value>
+  </data>
+  <data name="tituloCodigoCopiado" xml:space="preserve">
+    <value>Copied code</value>
+  </data>
+  <data name="mensajeCodigoCopiado" xml:space="preserve">
+    <value>Code successfully copied to clipboard</value>
+  </data>
+  <data name="labelUsuariosLobby" xml:space="preserve">
+    <value>Users in the lobby</value>
+  </data>
 </root>

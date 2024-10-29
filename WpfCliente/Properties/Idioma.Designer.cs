@@ -313,6 +313,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Codigo de la sala: .
+        /// </summary>
+        public static string labelCodigoSala {
+            get {
+                return ResourceManager.GetString("labelCodigoSala", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Condición de victoria.
         /// </summary>
         public static string labelCondicionDeVictoria {
@@ -520,6 +529,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Usuarios en la sala de espera.
+        /// </summary>
+        public static string labelUsuariosLobby {
+            get {
+                return ResourceManager.GetString("labelUsuariosLobby", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cambios aplicados con éxito.
         /// </summary>
         public static string mensajeCambiosAplicadosExito {
@@ -534,6 +552,15 @@ namespace WpfCliente.Properties {
         public static string mensajeCamposVacios {
             get {
                 return ResourceManager.GetString("mensajeCamposVacios", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Código copiado exitosamente en el portapapeles.
+        /// </summary>
+        public static string mensajeCodigoCopiado {
+            get {
+                return ResourceManager.GetString("mensajeCodigoCopiado", resourceCulture);
             }
         }
         
@@ -723,6 +750,15 @@ namespace WpfCliente.Properties {
         public static string tituloCambiarContrasenia {
             get {
                 return ResourceManager.GetString("tituloCambiarContrasenia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Código copiado.
+        /// </summary>
+        public static string tituloCodigoCopiado {
+            get {
+                return ResourceManager.GetString("tituloCodigoCopiado", resourceCulture);
             }
         }
         

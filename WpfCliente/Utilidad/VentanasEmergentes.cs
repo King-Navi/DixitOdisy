@@ -70,5 +70,18 @@ namespace WpfCliente.Utilidad
             ventanaEmergente.Show();
         }
 
+        public static void CrearVentanaEmergenteCodigoCopiado(Window window)
+        {
+            string tituloVentanaEmergente = Properties.Idioma.tituloCodigoCopiado;
+            string descripcionVentanaEmergente = Properties.Idioma.mensajeCodigoCopiado;
+
+            VentanaEmergente ventanaEmergente = new VentanaEmergente(
+                tituloVentanaEmergente,
+                descripcionVentanaEmergente
+            );
+            ventanaEmergente.Owner = window;
+            ventanaEmergente.ShowDialog();
+        }
+
     }
 }

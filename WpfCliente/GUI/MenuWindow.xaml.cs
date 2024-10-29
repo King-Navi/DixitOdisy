@@ -3,6 +3,7 @@ using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;

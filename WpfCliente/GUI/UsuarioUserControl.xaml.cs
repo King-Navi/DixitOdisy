@@ -29,6 +29,7 @@ namespace WpfCliente.GUI
         public UsuarioUserControl()
         {
             InitializeComponent();
+            SetFondoColorAleatorio();
         }
         public UsuarioUserControl(bool _esAmigo, Usuario usuario)
         {
@@ -59,6 +60,10 @@ namespace WpfCliente.GUI
             { 
             
             }
+        }
+        private void SetFondoColorAleatorio()
+        {
+            this.Background = Utilidades.GetColorAleatorio();
         }
     }
 }

@@ -10,11 +10,13 @@
         <DockPanel LastChildFill="True">
             <!--Header-->
             <StackPanel d:Background="#E0DCC7" DockPanel.Dock="Top">
-                <Label x:Name="labelListaAmigos" FontFamily="Lucida Sans Unicode Bold" d:Content="Lista de amigos"></Label>
+                <Label x:Name="labelListaAmigos" HorizontalContentAlignment="Center" FontFamily="Lucida Sans Unicode Bold" BorderBrush="Black" BorderThickness="3" d:Content="Lista de amigos"></Label>
             </StackPanel>
             <!--Footer-->
             <StackPanel Background="#E0DCC7" DockPanel.Dock="Bottom">
-                <Label x:Name="labelHora" d:Content="Son las 18:17" FontFamily="Lucida Sans Unicode Bold" Unloaded="Cerrado"/>
+                <Label x:Name="labelHora" d:Content="Son las 18:17" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="3" FontFamily="Lucida Sans Unicode Bold" Unloaded="Cerrado">
+                    <Image Height="100" Width="100"/>
+                </Label>
             </StackPanel>
             <!--Contenido-->
             <!--<Grid>

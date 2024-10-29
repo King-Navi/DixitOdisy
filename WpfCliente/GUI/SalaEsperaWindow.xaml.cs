@@ -4,7 +4,9 @@ using System.Collections.ObjectModel;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using WpfCliente.Interfaz;
+using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
@@ -60,7 +62,7 @@ namespace WpfCliente.GUI
                 return;
             }
             Conexion.SalaJugador.AgregarJugadorSala(Singleton.Instance.NombreUsuario, idSala);
-            labelCodigoSala.Content += idSala;
+            labelCodigo.Content += idSala;
             UnirseChat();
 
         }
@@ -128,7 +130,8 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
-            //TODO:Actualizar toda la inferfaz, Pedir a Unnay los .resx
+            labelCodigoSala.Content = Idioma.labelCodigoSala;
+            labelUsuariosLobby.Content = Idioma.labelUsuariosLobby;
         }
 
         
@@ -167,6 +170,16 @@ namespace WpfCliente.GUI
         public void EliminarJugadorSalaCallback(Usuario jugardoreRetiradoDeSala)
         {
             usuariosSalaUserControl.EliminarUsuarioSala(jugardoreRetiradoDeSala);
+        }
+
+        private void LabelCodigoSala_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (labelCodigo.Content != null)
+            {
+                Clipboard.SetText(labelCodigo.Content.ToString());
+
+                VentanasEmergentes.CrearVentanaEmergenteCodigoCopiado(this);
+            }
         }
     }
 }

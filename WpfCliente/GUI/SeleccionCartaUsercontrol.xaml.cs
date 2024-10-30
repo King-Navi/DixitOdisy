@@ -18,44 +18,20 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Lógica de interacción para SeleccionCartaUsercontrol.xaml
-    /// </summary>
+
     public partial class SeleccionCartaUsercontrol : UserControl
     {
         public ObservableCollection<ImagenCarta> Imagenes { get; set; }
-        public ICommand EliminarImagenPorIdCommand { get; }
 
-        public SeleccionCartaUsercontrol()
+
+
+        public SeleccionCartaUsercontrol(ObservableCollection<ImagenCarta> imagenCartas)
         {
             InitializeComponent();
-            Imagenes = new ObservableCollection<ImagenCarta>();
-            DataContext = this;
-            EliminarImagenPorIdCommand = new ComandoRele<string>(EliminarImagenPorId);
+            Imagenes = imagenCartas;
             this.Loaded += LoadedSeleccionCartaUsercontrol;
+            DataContext = this;
 
-
-        }
-
-        internal void AgregarImagen(ImagenCarta imagen)
-        {
-            if (imagen == null)
-            {
-                return;
-            }
-            if (Imagenes.Count < 6)
-            {
-                Imagenes.Add(imagen);
-            }
-        }
-
-        public void EliminarImagenPorId(string id)
-        {
-            var imagenAEliminar = Imagenes.FirstOrDefault(i => i.IdImagen == id);
-            if (imagenAEliminar != null)
-            {
-                Imagenes.Remove(imagenAEliminar);
-            }
         }
 
         private void LoadedSeleccionCartaUsercontrol(object sender, RoutedEventArgs e)

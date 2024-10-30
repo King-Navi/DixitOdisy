@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfCliente.GUI"
         mc:Ignorable="d"
-        Title="Partida" Height="683" Width="1131">
-    <Grid d:Background="Green">
+        Title="Partida" Height="683" Width="1131" Closing="CerrandoVentana">
+    <Grid x:Name="gridPantalla1" d:Background="Green">
         <!-- Pantalla 1 -->
-        <Grid Background="Transparent">
+        <Grid Background="Blue">
             <Grid.Style>
                 <Style TargetType="Grid">
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -19,11 +19,10 @@
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
-            <local:SeleccionCartaUsercontrol x:Name="seleccionCartasUserControl"></local:SeleccionCartaUsercontrol>
         </Grid>
 
         <!-- Pantalla 2 -->
-        <Grid>
+        <Grid x:Name="gridPantalla2" Background="Pink">
             <Grid.Style>
                 <Style TargetType="Grid">
                     <Setter Property="Visibility" Value="Collapsed" />

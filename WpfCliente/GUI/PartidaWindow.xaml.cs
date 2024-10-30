@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -19,13 +20,32 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Interaction logic for PartidaWindow.xaml
-    /// </summary>
+    
+
     public partial class PartidaWindow : Window , IActualizacionUI , IHabilitadorBotones, IServicioPartidaSesionCallback, INotifyPropertyChanged
     {
+        private class ImagenesCompartidas
+        {
+            public ObservableCollection<ImagenCarta> Imagenes { get; } = new ObservableCollection<ImagenCarta>();
+        }
+        public ICommand ComandoImagenGlobal { get; set; } //testing
+
+
+        private ImagenesCompartidas imagenesCompartidas;
+        public event PropertyChangedEventHandler PropertyChanged;
         private int pantallaActual = 1;
-        public bool EsNarrador { get; set; }
+        SeleccionCartaUsercontrol seleccionCartasUserControl;
+        NarradorSeleccionCartaUserControl narradorSeleccionCartasUserControl;
+        private bool esNarrador;
+        public bool EsNarrador
+        {
+            get => esNarrador;
+            set
+            {
+                esNarrador = value;
+                OnPropertyChanged();
+            }
+        }
         public int PantallaActual
         {
             get => pantallaActual;
@@ -40,25 +60,65 @@ namespace WpfCliente.GUI
             InitializeComponent();
             ActualizarUI();
             UnirsePartida(idPartida);
+            EsNarrador = true;
             DataContext = this;
+            InicializarComponenetes();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        private void InicializarComponenetes()
+        {
+            imagenesCompartidas = new ImagenesCompartidas();
+            ComandoImagenGlobal = new ComandoRele<string>(ComandoImagenPorId);
+
+
+
+            narradorSeleccionCartasUserControl = new NarradorSeleccionCartaUserControl(imagenesCompartidas.Imagenes);
+
+            seleccionCartasUserControl = new SeleccionCartaUsercontrol(imagenesCompartidas.Imagenes);
+
+            gridPantalla1.Children.Add(seleccionCartasUserControl);
+            gridPantalla2.Children.Add(narradorSeleccionCartasUserControl);
+            // Lógica para remover `gridPantalla1` del `Grid` principal
+            //if (this.Content is Grid mainGrid)
+            //{
+            //    mainGrid.Children.Remove(gridPantalla2);
+            //}
+        }
+
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void AvanzarPantalla()
+        public void AvanzarPantalla() //Fixme o algo por el estilo
         {
-            if (EsNarrador)
+            //if (EsNarrador)
+            //{
+            //    PantallaActual = 1; // El narrador siempre ve la pantalla X
+            //}
+            //else
+            //{
+            //    PantallaActual = ; // Ciclo para jugadores
+            //}
+            PantallaActual++;
+            if (PantallaActual == 3)
             {
-                PantallaActual = 1; // El narrador siempre ve la pantalla X
+                pantallaActual = 1;
             }
-            else
+            //ActualizarDataContext();
+        }
+
+        private void ActualizarDataContext()
+        {
+            if (PantallaActual == 1)
             {
-                PantallaActual = (PantallaActual % 3) + 1; // Ciclo de 1 a 3 para jugadores
+                gridPantalla1.DataContext = seleccionCartasUserControl;
             }
+            else if (PantallaActual == 2)
+            {
+                gridPantalla2.DataContext = narradorSeleccionCartasUserControl;
+            }
+            // Y así sucesivamente para otras pantallas
         }
         private async void UnirsePartida(string idPartida)
         {
@@ -105,8 +165,9 @@ namespace WpfCliente.GUI
             ActualizarUI();
         }
 
-        private async void ClicButtonConfirmarTurno(object sender, RoutedEventArgs e)
+        private async void ClicButtonConfirmarTurno(object sender, RoutedEventArgs e) //FIXME esat en pruebas
         {
+            AvanzarPantalla();
             //TODO: Verficar que seleciono imagen
             try
             {
@@ -133,7 +194,8 @@ namespace WpfCliente.GUI
 
         public void RecibirImagenCallback(ImagenCarta imagen)
         {
-            seleccionCartasUserControl.AgregarImagen(imagen);
+            imagenesCompartidas.Imagenes.Add(imagen);
+
         }
 
         public void FinalizarPartida()
@@ -148,6 +210,54 @@ namespace WpfCliente.GUI
         public void EliminarJugadorPartidaCallback(Usuario jugardoreRetiradoDeSala)
         {
             throw new NotImplementedException();
+        }
+
+        private void CerrandoVentana(object sender, CancelEventArgs e)
+        {
+            CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
+            try
+            {
+                Conexion.CerrarChatMotor();
+                Conexion.CerrarConexionesPartida();
+            }
+            catch (Exception excepcion)
+            {
+                //TODO Manejar excepcion
+            }
+        }
+        public void ComandoImagenPorId(string id)
+        {
+            if (EsNarrador)
+            {
+                EscogerImagenNarrador(id);
+            }
+            else
+            {
+                EliminarImagenPorId(id);
+            }
+        }
+        public void EliminarImagenPorId(string id)
+        {
+            var imagenAEliminar = imagenesCompartidas.Imagenes.FirstOrDefault(i => i.IdImagen == id);
+            if (imagenAEliminar != null)
+            {
+                imagenesCompartidas.Imagenes.Remove(imagenAEliminar);
+            }
+        }
+        public void EscogerImagenNarrador(string id)
+        {
+            var imagenAEscoger = imagenesCompartidas.Imagenes.FirstOrDefault(i => i.IdImagen == id);
+            if (imagenAEscoger == null)
+                return;
+            MostrarCartaModelWindow ventanaModal = new MostrarCartaModelWindow(true, imagenAEscoger.BitmapImagen);
+            bool? resultado = ventanaModal.ShowDialog();
+            var pista = ventanaModal.Pista;
+            if ((bool)resultado)
+            {
+                //TODO: El narrador escogio esta ID de imagen y ya dio el promp (pista)
+                Console.WriteLine($"El narrador ya escogio {pista}");
+                imagenesCompartidas.Imagenes.Remove(imagenAEscoger);
+            }
         }
     }
 }

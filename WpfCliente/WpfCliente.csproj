@@ -136,6 +136,12 @@
     <Compile Include="GUI\MenuWindow.xaml.cs">
       <DependentUpon>MenuWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\MostrarCartaModelWindow.xaml.cs">
+      <DependentUpon>MostrarCartaModelWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\NarradorSeleccionCartaUserControl.xaml.cs">
+      <DependentUpon>NarradorSeleccionCartaUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\PartidaWindow.xaml.cs">
       <DependentUpon>PartidaWindow.xaml</DependentUpon>
     </Compile>
@@ -296,6 +302,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\MenuWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\MostrarCartaModelWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\NarradorSeleccionCartaUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

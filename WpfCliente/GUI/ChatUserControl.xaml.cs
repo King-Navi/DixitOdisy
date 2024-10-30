@@ -23,8 +23,7 @@ namespace WpfCliente.GUI
         {
             gridChat.Visibility = Visibility.Visible;
             buttonAbrirChat.Visibility = Visibility.Collapsed;
-            //CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
-            //ActualizarUI();
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
         }
 
         private async void ClicButtonEnviar(object sender, RoutedEventArgs e)
@@ -53,7 +52,6 @@ namespace WpfCliente.GUI
 
         public void RecibirMensajeCliente(ChatMensaje mensaje)
         {
-            //TODO: Realizar el diseño grafico del chat, si es que tiene colores logica para colocarlos
             textBoxReceptorMensaje.Text += $"{Environment.NewLine} {mensaje.ToString()}";
         }
 

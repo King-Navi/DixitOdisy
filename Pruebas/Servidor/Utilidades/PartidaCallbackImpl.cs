@@ -14,7 +14,7 @@ public class PartidaCallbackImpl : ICommunicationObjectImpl, IPartidaCallback
     public ImagenCarta UltimaImagenRecibida { get; private set; }
     public ConcurrentDictionary<string, ImagenCarta> Imagenes { get; private set; } = new ConcurrentDictionary<string, ImagenCarta>();
     public bool PartidaFinalizada { get; private set; }
-    public ConcurrentDictionary<string, Usuario> JugadoresEnSala { get; private set; } = new ConcurrentDictionary<string, Usuario>();
+    public ConcurrentDictionary<string, Usuario> JugadoresEnPartida { get; private set; } = new ConcurrentDictionary<string, Usuario>();
 
     // Eventos para facilitar las pruebas y monitorear las llamadas a los métodos
     public event Action<int> OnAvanzarRonda;
@@ -69,15 +69,25 @@ public class PartidaCallbackImpl : ICommunicationObjectImpl, IPartidaCallback
 
     public void ObtenerJugadorPartidaCallback(Usuario jugadorNuevoEnSala)
     {
-        JugadoresEnSala.AddOrUpdate(jugadorNuevoEnSala.Nombre, jugadorNuevoEnSala , (key , oldValue) => jugadorNuevoEnSala);
+        JugadoresEnPartida.AddOrUpdate(jugadorNuevoEnSala.Nombre, jugadorNuevoEnSala , (key , oldValue) => jugadorNuevoEnSala);
         OnObtenerJugadorSala?.Invoke(jugadorNuevoEnSala);
         Console.WriteLine($"Jugador añadido a la sala: {jugadorNuevoEnSala.Nombre}");
     }
 
     public void EliminarJugadorPartidaCallback(Usuario jugadorRetiradoDeSala)
     {
-        JugadoresEnSala.TryRemove(jugadorRetiradoDeSala.Nombre, out _);
+        JugadoresEnPartida.TryRemove(jugadorRetiradoDeSala.Nombre, out _);
         OnEliminarJugadorSala?.Invoke(jugadorRetiradoDeSala);
         Console.WriteLine($"Jugador eliminado de la sala: {jugadorRetiradoDeSala.Nombre}");
+    }
+
+    public void NotificarNarradorCallback()
+    {
+        //TODO:
+    }
+
+    public void MostrarPistaCallback(string pista)
+    {
+        //TODO:
     }
 }

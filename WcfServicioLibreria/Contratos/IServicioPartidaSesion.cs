@@ -17,13 +17,13 @@ namespace WcfServicioLibreria.Contratos
         void UnirsePartida(string gamertag, string idPartida);
         [OperationContract]
         [FaultContract(typeof(PartidaFalla))]
-        void ConfirmarMovimiento(string nombreJugador, string idPartida , string claveImagen);
+        void ConfirmarMovimiento(string nombreJugador, string idPartida , string claveImagen, string pista = null);
         [OperationContract(IsOneWay = true)]
         void ExpulsarJugador(string nombreJugador, string idPartida);
         [OperationContract(IsOneWay = true)]
         Task SolicitarImagenCartaAsync(string nombreJugador, string idPartida);
         [OperationContract(IsOneWay = true)]
-        void EmpezarPartida(string nombreJugador, string idPartida);
+        Task EmpezarPartida(string nombreJugador, string idPartida);
     }
     [ServiceContract]
     public interface IPartidaCallback
@@ -40,5 +40,10 @@ namespace WcfServicioLibreria.Contratos
         void ObtenerJugadorPartidaCallback(Usuario jugardoreNuevoEnSala);
         [OperationContract(IsOneWay = true)]
         void EliminarJugadorPartidaCallback(Usuario jugardoreRetiradoDeSala);
+        //Verificar
+        [OperationContract(IsOneWay = true)]
+        void NotificarNarradorCallback(); //Se notifica a un jugador que es un narrador
+        [OperationContract(IsOneWay = true)]
+        void MostrarPistaCallback(string pista);  //Este metodo se llama despues de NotificarNarrador
     }
 }

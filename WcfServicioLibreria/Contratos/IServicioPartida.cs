@@ -17,7 +17,9 @@ namespace WcfServicioLibreria.Contratos
         string CrearPartida(string anfitrion, ConfiguracionPartida configuracion);
         void BorrarPartida(object sender, EventArgs e);
         [OperationContract]
-        bool ValidarPartida(string idSala);
+        bool ValidarPartida(string idPartida);
+        [OperationContract]
+        bool EsPartidaEmpezada(string idPartida);
     }
 
 }

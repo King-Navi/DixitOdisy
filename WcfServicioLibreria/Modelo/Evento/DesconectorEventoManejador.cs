@@ -64,7 +64,7 @@ namespace WcfServicioLibreria.Evento
         /// <param name="communicationObject">El objeto de comunicación del cual desuscribir los eventos.</param>
         private void DesuscribirEventos(ICommunicationObject communicationObject)
         {
-            if (!desechado)
+            if (!desechado) //FIXME: Puede ser nulo el parametro porque quien sabe
             {
                 communicationObject.Closed -= Cerrado;
                 communicationObject.Faulted -= EnFalla;

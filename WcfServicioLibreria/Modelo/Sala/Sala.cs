@@ -18,8 +18,8 @@ namespace WcfServicioLibreria.Modelo
         #region Campos
         private string idCodigoSala;
         private string anfitrion;
-        private const int cantidadMinimaJugadores = 3;
-        private const int cantidadMaximaJugadores = 12;
+        private const int CANTIDAD_MINIMA_JUGADORES = 3;
+        private const int CANTIDAD_MAXIMA_JUGADORES = 12;
         private readonly ConcurrentDictionary<string, ISalaJugadorCallback> jugadoresSalaCallbacks = new ConcurrentDictionary<string, ISalaJugadorCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
         private ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario> jugadoresInformacion = new ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario>();
@@ -28,8 +28,8 @@ namespace WcfServicioLibreria.Modelo
 
         #endregion Campos
         #region Propiedades
-        public static int CantidadMaximaJugadores => cantidadMaximaJugadores;
-        public static int CantidadMinimaJugadores => cantidadMinimaJugadores;
+        public static int CantidadMaximaJugadores => CANTIDAD_MAXIMA_JUGADORES;
+        public static int CantidadMinimaJugadores => CANTIDAD_MINIMA_JUGADORES;
 
         public string IdCodigoSala { get => idCodigoSala; internal set => idCodigoSala = value; }
         #endregion Propiedades
@@ -67,7 +67,7 @@ namespace WcfServicioLibreria.Modelo
         public bool AgregarJugadorSala(string nombreJugador, ISalaJugadorCallback nuevoContexto)
         {
             bool resultado = false;
-            if (ContarJugadores() < cantidadMaximaJugadores)
+            if (ContarJugadores() < CANTIDAD_MAXIMA_JUGADORES)
             {
                 jugadoresSalaCallbacks.AddOrUpdate(nombreJugador, nuevoContexto, (key, oldValue) => nuevoContexto);
                 if (jugadoresSalaCallbacks.TryGetValue(nombreJugador, out ISalaJugadorCallback contextoCambiado))
@@ -143,6 +143,7 @@ namespace WcfServicioLibreria.Modelo
         public void AvisarNuevoJugador(string nombreJugador)
         {
             DAOLibreria.ModeloBD.Usuario informacionUsuario = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
+            //TODO: Si es null significa que es invitado
             lock (jugadoresSalaCallbacks)
             {
                 lock (jugadoresInformacion)

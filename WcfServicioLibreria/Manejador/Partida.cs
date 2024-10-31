@@ -69,5 +69,28 @@ namespace WcfServicioLibreria.Manejador
             bool result = partidasdDiccionario.ContainsKey(idPartida);
             return result;
         }
+
+        public bool EsPartidaEmpezada(string idPartida)
+        {
+            bool resultado = false;
+            if (ValidarPartida(idPartida))
+            {
+                try
+                {
+                    lock (partidasdDiccionario)
+                    {
+                        partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
+                        resultado = partida.PartidaEnProgreso;
+                    }
+
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+            return resultado;
+        }
     }
 }

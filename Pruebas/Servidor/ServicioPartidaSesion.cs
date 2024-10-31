@@ -16,6 +16,10 @@ using DAOLibreria;
 using System.IO;
 namespace Pruebas.Servidor
 {
+    /// <summary>
+    /// Prueba de <see cref="WcfServicioLibreria.Contratos.IServicioPartidaSesion" />
+    /// que a su vez llama a  <see cref="IServicioPartidaSesion"/>
+    /// </summary>
     [TestClass]
     public class ServicioPartidaSesion
     {
@@ -57,7 +61,7 @@ namespace Pruebas.Servidor
             manejador.UnirsePartida(usuario.Nombre, idPartida);
 
             // Assert
-            Assert.IsTrue(implementacionCallback.JugadoresEnSala.Any(jugador => jugador.Key == usuario.Nombre), "El callback debería haber sido llamado y la sesión debería estar activa.");
+            Assert.IsTrue(implementacionCallback.JugadoresEnPartida.Any(jugador => jugador.Key == usuario.Nombre), "El callback debería haber sido llamado y la sesión debería estar activa.");
 
         }
         [TestMethod]
@@ -74,7 +78,7 @@ namespace Pruebas.Servidor
             manejador.UnirsePartida(gamertag, idPartidaInexistente);
 
             // Assert
-            Assert.IsFalse(implementacionCallback.JugadoresEnSala.Any(j => j.Key == gamertag), "El jugador no debería haberse agregado ya que la partida no es válida.");
+            Assert.IsFalse(implementacionCallback.JugadoresEnPartida.Any(j => j.Key == gamertag), "El jugador no debería haberse agregado ya que la partida no es válida.");
             if (implementacionCallback != null)
             {
                 implementacionCallback.Close();
@@ -116,8 +120,7 @@ namespace Pruebas.Servidor
             manejador.UnirsePartida(usuarioNuevo.Nombre, idPartida);
 
             // Assert
-
-            Assert.IsTrue(implementacionCallback.JugadoresEnSala.Count < 2, "El jugador debería haberse agregado (total jugadores 2).");
+            Assert.IsTrue(implementacionCallback.JugadoresEnPartida.Count < 2, "El jugador debería haberse agregado (total jugadores 2).");
             if (implementacionCallback != null)
             {
                 implementacionCallback.Close();
@@ -139,8 +142,8 @@ namespace Pruebas.Servidor
             manejador.UnirsePartida(usuarioNuevo.Nombre, idPartida);
 
             // Assert
-            Console.WriteLine(implementacionCallback.JugadoresEnSala.Count);
-            Assert.IsTrue(implementacionCallback.JugadoresEnSala.Count == 2, "El jugador debería haberse agregado (total jugadores 2).");
+            Console.WriteLine(implementacionCallback.JugadoresEnPartida.Count);
+            Assert.IsTrue(implementacionCallback.JugadoresEnPartida.Count == 2, "El jugador debería haberse agregado (total jugadores 2).");
             if (implementacionCallback != null)
             {
                 implementacionCallback.Close();
@@ -206,7 +209,7 @@ namespace Pruebas.Servidor
             //PRECAUCION: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP y escribir en disco
             //PRECAUCION: Este metodo gasta credito (DINERO REAL), solo para mostrar a profe descomentar la linea de abajo
             string rutaCarpeta = null;
-            rutaCarpeta = Path.Combine("..", "..", "..", "WcfServicioLibreria", "Recursos", "Mitologia");
+             //rutaCarpeta = Path.Combine("..", "..", "..", "WcfServicioLibreria", "Recursos", "Mitologia");
             if (!Directory.Exists(rutaCarpeta))
             {
                 Console.WriteLine("Ruta completa: " + Path.GetFullPath(rutaCarpeta));
@@ -242,5 +245,22 @@ namespace Pruebas.Servidor
         }
 
         #endregion
+        #region EmpezarPartida
+        [TestMethod]
+        public async Task EmpezarPartida_NoHaySuficienteJugadores_EliminaPartida()
+        {
+            var implementacionCallback = new PartidaCallbackImpl();
+            mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
+            //Precondicion: El usuario debe existir
+            var anfitrion = new Usuario { IdUsuario = 19, Nombre = "navi" };
+            var idPartida = manejador.CrearPartida(anfitrion.Nombre, configuracionGenerica);
+
+            manejador.UnirsePartida(anfitrion.Nombre, idPartida);
+            await manejador.EmpezarPartida(anfitrion.Nombre, idPartida);
+            
+            Assert.IsFalse(manejador.ValidarPartida(idPartida), "La partida no deberia exisitir");
+        }
+
+        #endregion EmpezarPartida
     }
 }

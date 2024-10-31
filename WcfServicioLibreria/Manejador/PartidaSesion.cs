@@ -34,7 +34,7 @@ namespace WcfServicioLibreria.Manejador
             };
         }
 
-        public void ConfirmarMovimiento(string nombreJugador, string idPartida, string claveImagen)
+        public void ConfirmarMovimiento(string nombreJugador, string idPartida, string claveImagen, string pista = null)
         {
             if (!ValidarPartida(idPartida))
             {
@@ -45,20 +45,29 @@ namespace WcfServicioLibreria.Manejador
                 partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
                 lock (partida)
                 {
-                    partida.ConfirmacionTurnoJugador(nombreJugador, claveImagen);
+                    var narrador = partida.NarradorActual;
+                    if (narrador == nombreJugador && pista != null)
+                    {
+                        partida.ConfirmacionTurnoNarrador(nombreJugador, claveImagen, pista);
+
+                    }
+                    else
+                    {
+                        partida.ConfirmacionTurnoJugador(nombreJugador, claveImagen);
+                    }
                 }
             }
             catch (Exception excepcion)
             {
             };
-            
         }
+
 
         public void ExpulsarJugador(string nombreJugador, string idPartida)
         {
             throw new NotImplementedException();
         }
-        public void EmpezarPartida(string nombreJugador, string idPartida) //FIXME: ¿La mehor manera de empezar la partida?
+        public async Task EmpezarPartida(string nombreJugador, string idPartida) //FIXME: ¿La mehor manera de empezar la partida?
         {
             if (!ValidarPartida(idPartida))
             {
@@ -67,7 +76,7 @@ namespace WcfServicioLibreria.Manejador
             try
             {
                 partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
-                partida.EmpezarPartida(nombreJugador);
+                await partida.EmpezarPartida();
             }
             catch (Exception excepcion)
             {
@@ -84,9 +93,7 @@ namespace WcfServicioLibreria.Manejador
             try
             {
                 partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
-
-                    await partida.EnviarImagen(nombreJugador);
-                
+                await partida.EnviarImagen(nombreJugador);
             }
             catch (Exception excepcion)
             {

@@ -23,6 +23,7 @@ namespace WcfServicioLibreria.Modelo
     internal class Partida : IObservador//FIXME: Faltan muchas funcionalidades y pruebas
     {
         #region Atributos
+        private const int CANTIDAD_MINIMA_JUGADORES = 3;
         private ConcurrentDictionary<string, IPartidaCallback> jugadoresCallback = new ConcurrentDictionary<string, IPartidaCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
         private ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario> jugadoresInformacion = new ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario>();
@@ -30,11 +31,10 @@ namespace WcfServicioLibreria.Modelo
         public ConfiguracionPartida Configuracion { get; private set; }
         public EventHandler partidaVaciaManejadorEvento;
         private string rutaImagenes;
-        private bool partidaEmpezada = false;
-        private static readonly object imagenLock = new object();
         private static readonly Random random = new Random();
         private static readonly SemaphoreSlim semaphoreDisco = new SemaphoreSlim(1, 1);
-        private static readonly SemaphoreSlim semaphoreChatGPT = new SemaphoreSlim(1, 1);
+        private static readonly SemaphoreSlim semaphoreEscogerNarrador = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim semaphoreEmpezarPartida = new SemaphoreSlim(1, 1);
         private static readonly HttpClient httpCliente = new HttpClient();
 
         #endregion Atributos
@@ -43,13 +43,19 @@ namespace WcfServicioLibreria.Modelo
         public string IdPartida { get; private set; }
         public string Anfitrion { get; private set; }
         public string Tematica { get; private set; }
+        public string NarradorActual { get; private set; }
+        public string ClaveImagenCorrectaActual { get; private set; }
+        public string PistaActual { get; private set; }
         public int RondaActual { get; private set; }
         public int CartasRestantes { get; private set; }
+        public bool PartidaEnProgreso { get; private set; } = false;
+
         private ConcurrentBag<string> ImagenesUsadas { get; set; }
         public ConcurrentBag<string> JugadoresPendientes { get; private set; }
         private ConcurrentBag<Tuple<string, string>> JugadorImagenElegida { get; set; }
         private IEscribirDisco Escritor { get; set; }
         private SolicitarImagen SolicitarImagen { get; set; }
+
         #endregion Propiedad
 
         #region Contructor
@@ -71,8 +77,10 @@ namespace WcfServicioLibreria.Modelo
         }
 
 
-        # endregion Contructor
+        #endregion Contructor
+
         #region Metodos
+
         #region Imagenes
         public async Task EnviarImagen(string nombreSolicitante) //FIXME
         {
@@ -188,11 +196,41 @@ namespace WcfServicioLibreria.Modelo
             }
         }
         #endregion Imagenes
+
+        #region ManejarEstadoPartida
         private void EnPartidaVacia()
         {
             partidaVaciaManejadorEvento?.Invoke(this, new PartidaVaciaEventArgs(DateTime.Now, this));
         }
 
+        private void EliminarPartida()
+        {
+            IReadOnlyCollection<string> claveEventos = ObtenerNombresJugadores();
+            foreach (var clave in claveEventos)
+            {
+                if (eventosCommunication.ContainsKey(clave))
+                {
+                    eventosCommunication[clave].Desechar();
+                }
+            }
+            eventosCommunication.Clear();
+            IReadOnlyCollection<string> claveJugadores = ObtenerNombresJugadores();
+            foreach (var clave in claveJugadores)
+            {
+                if (jugadoresCallback.ContainsKey(clave))
+                {
+                    ((ICommunicationObject)jugadoresCallback[clave]).Close();
+                }
+            }
+            jugadoresCallback.Clear();
+            EnPartidaVacia();
+        }
+
+
+
+        #endregion ManejarEstadoPartida
+
+        #region InicializarPartida
         private ICondicionVictoria CrearCondicionVictoria(ConfiguracionPartida condicionVictoria)
         {
             switch (condicionVictoria.Condicion)
@@ -213,41 +251,62 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        public void EmpezarPartida(string nombre)
-        {
-            lock (JugadoresPendientes)
-            {
-                if (nombre != null)
-                {
-                    JugadoresPendientes.TryTake(out nombre);
-                }
-                if (!partidaEmpezada && JugadoresPendientes.Count < 0)
-                {
-                    partidaEmpezada = true;
-                    CambiarRonda();
 
+        #endregion InicializarPartida
+
+        #region Ronda
+
+        public async Task EmpezarPartida()
+        {
+            await semaphoreEmpezarPartida.WaitAsync();
+            try
+            {
+                if (PartidaEnProgreso)
+                {
+                    return;
+                }
+
+                int tiempoEspera = 10; //Evaluar cuanto es necesario
+                DateTime inicioEspera = DateTime.Now;
+
+                while ((DateTime.Now - inicioEspera).TotalSeconds < tiempoEspera)
+                {
+                    //if (jugadoresCallback.Count >= minimoJugadores)
+                    //{
+                    //    partidaEnProgreso = true;
+                    //    IniciarPartida();
+                    //    break;
+                    //}
+
+                    await Task.Delay(1000);
+                }
+
+                if (!PartidaEnProgreso && jugadoresCallback.Count >= CANTIDAD_MINIMA_JUGADORES)// && jugadoresConectados.Count >= minimoJugadores
+                {
+                    PartidaEnProgreso = true;
+                    IniciarPartida();
+                }
+                else
+                {
+                    //TODO: No empezar ya uqe no se cumplio el minimo en un tiempo determinado
+                    TerminarPartida();
                 }
             }
+            finally
+            {
+                semaphoreEmpezarPartida.Release();
+            }
+        }
 
+        private void IniciarPartida()
+        {
+            CambiarRonda();
         }
 
         private async void CambiarRonda() //FIXME
         {
-            //LimpiarConcurrentbags
-            lock (JugadoresPendientes)
-            {
-                JugadoresPendientes = new ConcurrentBag<string>(jugadoresCallback.Keys);
-
-            }
-            lock (JugadorImagenElegida)
-            {
-                JugadorImagenElegida = new ConcurrentBag<Tuple<string, string>>();
-
-            }
-            //Escoger Narrador
-            await EscogerNarrador();
-            //
-            if (VerificarCondicionVictoria())
+            
+            if (VerificarCondicionVictoria() || ContarJugadores() < CANTIDAD_MINIMA_JUGADORES)
             {
                 TerminarPartida();
                 return;
@@ -255,6 +314,8 @@ namespace WcfServicioLibreria.Modelo
             else
             {
                 //TODO:Seguir juando
+                await EscogerNarrador();
+                RestablecerDesicionesJugadores();
                 var tiempoParaSiguienteRonda = new CancellationTokenSource();
                 // Espera por confirmación de los jugadores
                 var tareaEspera = Task.Delay(TimeSpan.FromSeconds(60), tiempoParaSiguienteRonda.Token);
@@ -277,7 +338,7 @@ namespace WcfServicioLibreria.Modelo
                     {
                         if (jugadoresCallback.TryGetValue(jugador, out var callback))
                         {
-                            //callback.TurnoPerdido();
+                            callback.TurnoPerdidoCallback();
                         }
                     }
                 }
@@ -287,8 +348,44 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        private async Task EscogerNarrador() //FIXME
+        private void RestablecerDesicionesJugadores()
         {
+            lock (JugadoresPendientes)
+            {
+                JugadoresPendientes = new ConcurrentBag<string>(jugadoresCallback.Keys);
+
+            }
+            lock (JugadorImagenElegida)
+            {
+                JugadorImagenElegida = new ConcurrentBag<Tuple<string, string>>();
+
+            }
+        }
+
+        private async Task EscogerNarrador()
+        {
+            var narrador = ObtenerNombresJugadores().OrderBy(x => random.Next()); //.Take(5)
+
+            await semaphoreEscogerNarrador.WaitAsync();
+            try
+            {
+
+                lock (jugadoresCallback)
+                {
+                    jugadoresCallback.TryGetValue(narrador.ToString(), out IPartidaCallback callback);
+                    callback.NotificarNarradorCallback();
+                }
+            }
+            catch (Exception)
+            {
+                semaphoreEscogerNarrador.Release();
+                DesconectarUsuario(narrador.ToString());
+                await EscogerNarrador();
+            }
+            finally
+            {
+                semaphoreEscogerNarrador.Release();
+            }
         }
 
         public void ConfirmacionTurnoJugador(string nombreJugador, string claveImagen)
@@ -310,9 +407,41 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        private void TerminarPartida() //FIXME
+        private void TerminarPartida()
+        //FIXME: Este metodo termina la partida independientemente de lo que este pasando
         {
-            throw new NotImplementedException();
+            //Cacular los puntos de rondas menores a 2 no hacer nada
+            CalcularPuntos();
+            
+            //Avisar a todos de la terminacion
+            AvisarPartidaTerminada();
+            //Eliminar la partida (despues de esto la partida ya no existe)
+            EliminarPartida();
+        }
+
+        private void CalcularPuntos()
+        {
+            //TODO: Calcular puntos solo si fueron mas de 3 rondas;
+            if (RondaActual > 3)
+            {
+                
+            }
+            else
+            {
+                
+            }
+        }
+
+        private void AvisarPartidaTerminada()
+        {
+            lock (jugadoresCallback)
+            {
+                foreach (var nombre in jugadoresCallback)
+                {
+                    jugadoresCallback.TryGetValue(nombre.ToString(), out IPartidaCallback callback);
+                    callback?.FinalizarPartida();
+                }
+            }
         }
 
         private bool VerificarCondicionVictoria()
@@ -320,6 +449,47 @@ namespace WcfServicioLibreria.Modelo
             return condicionVictoria.Verificar(this);
         }
 
+        internal void ConfirmacionTurnoNarrador(string nombreJugador, string claveImagen, string pista)
+        {
+            this.ClaveImagenCorrectaActual = claveImagen;
+            this.PistaActual = pista;
+            try
+            {
+                lock (JugadoresPendientes)
+                {
+                    JugadoresPendientes.TryTake(out nombreJugador);
+                }
+                lock (JugadorImagenElegida)
+                {
+                    JugadorImagenElegida.Add(new Tuple<string, string>(nombreJugador, claveImagen));
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+            MostrarPistaJugadores();
+
+        }
+
+        private void MostrarPistaJugadores()
+        {
+            lock (jugadoresCallback)
+            {
+                foreach (var nombre in ObtenerNombresJugadores())
+                {
+                    //TODO: tal vez aqui no deberiamos llamar al narrador pero lo podemos ocupar 
+                    //para indicar que el narrador ya escogio por lo tanto se pasa a la siguiente fase de 
+                    //la ronda;
+                    jugadoresCallback.TryGetValue(nombre.ToString(), out IPartidaCallback callback);
+                    callback.MostrarPistaCallback(this.PistaActual);
+                }
+            }
+
+        }
+
+        #endregion Ronda
+
+        #region ManejoJugadores
         internal bool AgregarJugador(string nombreJugador, IPartidaCallback nuevoContexto) //FIXME
         {
             bool resultado = false;
@@ -330,10 +500,6 @@ namespace WcfServicioLibreria.Modelo
                 {
                     eventosCommunication.TryAdd(nombreJugador, new DesconectorEventoManejador((ICommunicationObject)contextoCambiado, this, nombreJugador));
                     resultado = true;
-                    lock (JugadoresPendientes)
-                    {
-                        JugadoresPendientes.Add(nombreJugador);
-                    }
                 }
             }
             return resultado;
@@ -342,6 +508,8 @@ namespace WcfServicioLibreria.Modelo
         internal void AvisarNuevoJugador(string nombreJugador)
         {
             DAOLibreria.ModeloBD.Usuario informacionUsuario = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
+            //TODO: Si es null significa que es invitado
+            
             lock (jugadoresCallback)
             {
                 lock (jugadoresInformacion)
@@ -419,6 +587,7 @@ namespace WcfServicioLibreria.Modelo
 
         public void DesconectarUsuario(string nombreJugador)
         {
+            //TODO: EVALUAR QUE EL QUE SE DESCONECTA NO SEA EL NARRADOR O ALGO IMPORTANTE
             AvisarRetiroJugador(nombreJugador);
             RemoverJugador(nombreJugador);
         }
@@ -438,29 +607,6 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        private void EliminarPartida()
-        {
-            IReadOnlyCollection<string> claveEventos = ObtenerNombresJugadores();
-            foreach (var clave in claveEventos)
-            {
-                if (eventosCommunication.ContainsKey(clave))
-                {
-                    eventosCommunication[clave].Desechar();
-                }
-            }
-            eventosCommunication.Clear();
-            IReadOnlyCollection<string> claveJugadores = ObtenerNombresJugadores();
-            foreach (var clave in claveJugadores)
-            {
-                if (jugadoresCallback.ContainsKey(clave))
-                {
-                    ((ICommunicationObject)jugadoresCallback[clave]).Close();
-                }
-            }
-            jugadoresCallback.Clear();
-            EnPartidaVacia();
-        }
-
         private IReadOnlyCollection<string> ObtenerNombresJugadores()
         {
             return jugadoresCallback.Keys.ToList().AsReadOnly();
@@ -470,7 +616,11 @@ namespace WcfServicioLibreria.Modelo
         {
             return jugadoresCallback.Count;
         }
-        #endregion
+
+        #endregion ManejoJugadores
+
+
+        #endregion Metodos
     }
 
 

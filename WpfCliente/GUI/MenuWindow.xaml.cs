@@ -32,7 +32,7 @@ namespace WpfCliente.GUI
                 var resultadoAmigo = await Conexion.AbrirConexionAmigosCallbackAsync(amigosUserControl);
                 if (!resultadoAmigo || !resultadoUsuarioSesion)
                 {
-                    MessageBox.Show("Error al conctase al servidor");
+                    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
                     this.Close();
                 }
                 Usuario user = new Usuario
@@ -45,7 +45,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                this.Close();
+                ManejadorExcepciones.ManejarFatalException(excepcion,this);
             };
         }
 
@@ -153,7 +153,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                //TODO Manejar el error
+                ManejadorExcepciones.ManejarComponentErrorException(excepcion);
             }
             IniciarSesion iniciarSesion = new IniciarSesion();
             iniciarSesion.Show();

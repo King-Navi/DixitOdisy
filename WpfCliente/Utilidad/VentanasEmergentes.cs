@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using WpfCliente.GUI;
 
 namespace WpfCliente.Utilidad
@@ -39,7 +40,7 @@ namespace WpfCliente.Utilidad
                 tituloVentanaEmergente,
                 descripcionVentanaEmergente
             );
-
+            ventanaEmergente.Owner = window;
             ventanaEmergente.Show();
         }
 
@@ -53,7 +54,7 @@ namespace WpfCliente.Utilidad
                 tituloVentanaEmergente,
                 descripcionVentanaEmergente
             );
-
+            ventanaEmergente.Owner = window;
             ventanaEmergente.Show();
         }
 
@@ -66,7 +67,7 @@ namespace WpfCliente.Utilidad
                 tituloVentanaEmergente,
                 descripcionVentanaEmergente
             );
-
+            ventanaEmergente.Owner = window;
             ventanaEmergente.Show();
         }
 
@@ -80,6 +81,58 @@ namespace WpfCliente.Utilidad
                 descripcionVentanaEmergente
             );
             ventanaEmergente.Owner = window;
+            ventanaEmergente.ShowDialog();
+        }
+
+        public static void CrearVentanaEmergenteIdiomaInvalido(UserControl userControl)
+        {
+            string tituloVentanaEmergente = Properties.Idioma.tituloIdiomaInvalido;
+            string descripcionVentanaEmergente = Properties.Idioma.mensajeIdiomaInvalido;
+
+            VentanaEmergente ventanaEmergente = new VentanaEmergente(
+                tituloVentanaEmergente,
+                descripcionVentanaEmergente
+            );
+            ventanaEmergente.Owner = Window.GetWindow(userControl);
+            ventanaEmergente.ShowDialog();
+        }
+
+        public static void CrearVentanaEmergenteImagenInvalida(Window window)
+        {
+            string tituloVentanaEmergente = Properties.Idioma.tituloImagenInvalida;
+            string descripcionVentanaEmergente = Properties.Idioma.mensajeImagenInvalida;
+
+            VentanaEmergente ventanaEmergente = new VentanaEmergente(
+                tituloVentanaEmergente,
+                descripcionVentanaEmergente
+            );
+            ventanaEmergente.Owner = window;
+            ventanaEmergente.ShowDialog();
+        }
+
+        public static void CrearVentanaEmergenteDatosEditadosExito(Window window)
+        {
+            string tituloVentanaEmergente = Properties.Idioma.tituloEditarUsuario;
+            string descripcionVentanaEmergente = Properties.Idioma.mensajeUsuarioEditadoConExito;
+
+            VentanaEmergente ventanaEmergente = new VentanaEmergente(
+                tituloVentanaEmergente,
+                descripcionVentanaEmergente
+            );
+            ventanaEmergente.Owner = window;
+            ventanaEmergente.ShowDialog();
+        }
+
+        public static void CrearVentanaEmergenteCargarDatosAmigosFalla(UserControl userControl)
+        {
+            string tituloVentanaEmergente = Properties.Idioma.tituloCargarAmigosFalla;
+            string descripcionVentanaEmergente = Properties.Idioma.mensajeCargarAmigosFalla;
+
+            VentanaEmergente ventanaEmergente = new VentanaEmergente(
+                tituloVentanaEmergente,
+                descripcionVentanaEmergente
+            );
+            ventanaEmergente.Owner = Window.GetWindow(userControl);
             ventanaEmergente.ShowDialog();
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -95,7 +96,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                //TODO: Manejo de otras excepciones
+                ManejadorExcepciones.ManejarFatalException(excepcion,this);
                 NoHayConexion();
             }
 
@@ -112,10 +113,9 @@ namespace WpfCliente.GUI
                     return proxy.CrearChat(Singleton.Instance.IdChat);
                 });
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
-                //TODO: Manejo de otras excepciones
-                NoHayConexion();
+                ManejadorExcepciones.ManejarFatalException(excepcion, this);
             }
 
         }

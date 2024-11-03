@@ -66,14 +66,13 @@ namespace WpfCliente.GUI
         }
         private void ProcesarImagen(string rutaImagen)
         {
-            MessageBox.Show($"Imagen válida seleccionada: {rutaImagen}");
+            VentanasEmergentes.CrearVentanaEmergente("Imagen seleccionada", rutaImagen, this);
             // Aquí puedes asignar la imagen a un control de imagen o hacer más procesamiento
             cambioImagen = true;
         }
         private void MostrarError(string mensaje)
         {
-            //TODO: Podemos hacer una windows de advertencia o ocupar la de error
-            MessageBox.Show(mensaje, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            VentanasEmergentes.CrearVentanaEmergenteErrorInesperado(this);
         }
 
         private void CargarImagen()
@@ -85,7 +84,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
+                ManejadorExcepciones.ManejarComponentErrorException(ex);
             }
         }
 
@@ -149,7 +148,7 @@ namespace WpfCliente.GUI
                 });
                 if (resultado)
                 {
-                    MessageBox.Show("Exito se cerrara su sesion");
+                    VentanasEmergentes.CrearVentanaEmergenteDatosEditadosExito(this);
                     Application.Current.Shutdown();
                 }
                 else
@@ -161,7 +160,6 @@ namespace WpfCliente.GUI
             else 
             {
                 MessageBox.Show("No hiciste nada");
-            
             }
     
         }

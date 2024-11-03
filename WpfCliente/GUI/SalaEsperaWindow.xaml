@@ -12,39 +12,30 @@
         <Grid.Background>
             <ImageBrush ImageSource="/Recursos/fondoSala.png" Stretch="Fill"/>
         </Grid.Background>
-        <!-- Definir tres columnas: una para cada sección -->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="407*"/>
-            <!-- Columna para el código de sala -->
-            <ColumnDefinition Width="401*"/>
-            <!-- Columna para la lista de usuarios -->
-            <ColumnDefinition Width="392*"/>
-            <!-- Columna para los botones -->
-        </Grid.ColumnDefinitions>
+
 
         <!-- Código de la sala a la izquierda -->
-        <StackPanel Background="AntiqueWhite" HorizontalAlignment="Center" VerticalAlignment="Top" Height="123" Width="407">
-            <Label x:Name="labelCodigoSala" Content="Código de la sala:" FontFamily="ROG Fonts" FontSize="16" 
-                   HorizontalContentAlignment="Left" ToolTip="Haga clic para copiar el código" 
-                   MouseLeftButtonUp="LabelCodigoSala_MouseLeftButtonUp" Width="407" Height="73"/>
-            <Label x:Name="labelCodigo" Content=" " FontFamily="ROG Fonts" FontSize="16" 
-                HorizontalContentAlignment="Left" ToolTip="Haga clic para copiar el código" 
-                MouseLeftButtonUp="LabelCodigoSala_MouseLeftButtonUp" Width="407" Height="50" RenderTransformOrigin="0.5,0.585"/>
-        </StackPanel>
+        <StackPanel Background="AntiqueWhite" HorizontalAlignment="Left" VerticalAlignment="Top" Height="123" Width="257" Margin="0,5,0,0"/>
 
         <!-- Lista de usuarios en el centro -->
         <StackPanel Grid.Column="1" Background="Aqua" HorizontalAlignment="Center" VerticalAlignment="Center" Height="701" Width="300">
             <Label x:Name="labelUsuariosLobby" Content="Usuarios en el lobby" FontFamily="Lucida Sans Unicode" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
-            <local:ListaUsuariosSalaUserControl x:Name="usuariosSalaUserControl" Height="724" />
+            <local:ListaUsuariosSalaUserControl x:Name="usuariosSalaUserControl" Height="692" />
         </StackPanel>
 
         <!-- Botones a la derecha -->
-        <StackPanel Grid.Column="2" Orientation="Vertical" Background="Coral" HorizontalAlignment="Center" VerticalAlignment="Top" Height="102" Width="223" Margin="0,220,0,0">
+        <StackPanel Orientation="Vertical" Background="Coral" HorizontalAlignment="Left" VerticalAlignment="Top" Height="102" Width="223" Margin="871,325,0,0">
             <Button Content="Listo!" Margin="5" FontFamily="Lucida Sans Unicode" BorderThickness="2" BorderBrush="Black" Background="AntiqueWhite"/>
             <Button Content="Configurar partida" Margin="5" FontFamily="Lucida Sans Unicode" BorderThickness="2" BorderBrush="Black" Background="AntiqueWhite"/>
             <Button Content="Empezar partida" Margin="5" FontFamily="Lucida Sans Unicode" BorderThickness="2" BorderBrush="Black" Background="AntiqueWhite"/>
         </StackPanel>
-        <local:ChatUserControl x:Name="chatUserControl" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Grid.Column="2" Height="120" Width="120"/>
+        <Label x:Name="labelCodigoSala" Content="Código de la sala:" FontFamily="ROG Fonts" FontSize="16" 
+                   HorizontalContentAlignment="Left" ToolTip="Haga clic para copiar el código" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   MouseLeftButtonUp="LabelCodigoSala_MouseLeftButtonUp" Width="257" Height="73" Margin="0,5,0,0"/>
+        <Label x:Name="labelCodigo" Content=" " FontFamily="ROG Fonts" FontSize="16" 
+                HorizontalContentAlignment="Left" ToolTip="Haga clic para copiar el código" HorizontalAlignment="Left" VerticalAlignment="Top"
+                MouseLeftButtonUp="LabelCodigoSala_MouseLeftButtonUp" Width="257" Height="50" RenderTransformOrigin="0.5,0.585" Margin="0,78,0,0"/>
+        <local:ChatUserControl x:Name="chatUserControl" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Height="120" Width="120"/>
 
     </Grid>
 </Window>

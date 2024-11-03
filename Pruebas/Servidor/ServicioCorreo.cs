@@ -24,6 +24,7 @@ namespace Pruebas.Servidor
         {
             mockContextoProvedor = new Mock<IContextoOperacion>();
             manejador = new ManejadorPrincipal(mockContextoProvedor.Object);
+            codigoCorrecto = manejador.GenerarCodigo();
         }
 
         [TestMethod]
@@ -61,10 +62,12 @@ namespace Pruebas.Servidor
         public void TestVerificarCodigoCoincide()
         {
             // Arrange
-            codigoCorrecto = "ABC123";
-            manejador.Codigo = codigoCorrecto;  
+            string codigoCorrecto = "ABC123";
+            manejador.codigo = codigoCorrecto;  // Establecemos el código generado en el manejador
+
             // Act
             bool result = manejador.VerificarCodigo(codigoCorrecto);
+
             // Assert
             Assert.IsTrue(result, "El código recibido coincide con el generado.");
         }
@@ -72,8 +75,6 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void TestVerificarCodigoNoCoincide()
         {
-            // Arrange
-            manejador.Codigo = "ABC123";  
             string codigoRecibido = "CodigoInvalido";
             // Act
             bool result = manejador.VerificarCodigo(codigoRecibido);

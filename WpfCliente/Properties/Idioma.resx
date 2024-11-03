@@ -390,4 +390,22 @@
   <data name="labelUsuariosLobby" xml:space="preserve">
     <value>Usuarios en la sala de espera</value>
   </data>
+  <data name="tituloIdiomaInvalido" xml:space="preserve">
+    <value>Selección de idioma inválida</value>
+  </data>
+  <data name="mensajeIdiomaInvalido" xml:space="preserve">
+    <value>Se ha configurado el idioma predeterminado</value>
+  </data>
+  <data name="tituloImagenInvalida" xml:space="preserve">
+    <value>Imagen inválida</value>
+  </data>
+  <data name="mensajeImagenInvalida" xml:space="preserve">
+    <value>La imagen seleccionada es inválida o no se seleccionó correctamente</value>
+  </data>
+  <data name="tituloCargarAmigosFalla" xml:space="preserve">
+    <value>No se pudieron cargar los datos</value>
+  </data>
+  <data name="mensajeCargarAmigosFalla" xml:space="preserve">
+    <value>Hubo un error y no se pudieron cargar los datos de tus amigos</value>
+  </data>
 </root>

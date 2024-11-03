@@ -556,6 +556,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Hubo un error y no se pudieron cargar los datos de tus amigos.
+        /// </summary>
+        public static string mensajeCargarAmigosFalla {
+            get {
+                return ResourceManager.GetString("mensajeCargarAmigosFalla", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Código copiado exitosamente en el portapapeles.
         /// </summary>
         public static string mensajeCodigoCopiado {
@@ -624,6 +633,24 @@ namespace WpfCliente.Properties {
         public static string mensajeErrorServidor {
             get {
                 return ResourceManager.GetString("mensajeErrorServidor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Se ha configurado el idioma predeterminado.
+        /// </summary>
+        public static string mensajeIdiomaInvalido {
+            get {
+                return ResourceManager.GetString("mensajeIdiomaInvalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La imagen seleccionada es inválida o no se seleccionó correctamente.
+        /// </summary>
+        public static string mensajeImagenInvalida {
+            get {
+                return ResourceManager.GetString("mensajeImagenInvalida", resourceCulture);
             }
         }
         
@@ -754,6 +781,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No se pudieron cargar los datos.
+        /// </summary>
+        public static string tituloCargarAmigosFalla {
+            get {
+                return ResourceManager.GetString("tituloCargarAmigosFalla", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Código copiado.
         /// </summary>
         public static string tituloCodigoCopiado {
@@ -795,6 +831,24 @@ namespace WpfCliente.Properties {
         public static string tituloErrorServidor {
             get {
                 return ResourceManager.GetString("tituloErrorServidor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Selección de idioma inválida.
+        /// </summary>
+        public static string tituloIdiomaInvalido {
+            get {
+                return ResourceManager.GetString("tituloIdiomaInvalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Imagen inválida.
+        /// </summary>
+        public static string tituloImagenInvalida {
+            get {
+                return ResourceManager.GetString("tituloImagenInvalida", resourceCulture);
             }
         }
         

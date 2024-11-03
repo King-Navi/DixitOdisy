@@ -47,7 +47,7 @@ namespace WpfCliente.GUI
                 default:
                     //TODO manejar el default
                     IdiomaGuardo.GuardarInglesUS();
-                    MessageBox.Show("Selección de idioma inválida. Se ha configurado el idioma predeterminado.", "Advertencia", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    VentanasEmergentes.CrearVentanaEmergenteIdiomaInvalido(this);
                     break;
             }
             WpfCliente.Properties.Settings.Default.Save();

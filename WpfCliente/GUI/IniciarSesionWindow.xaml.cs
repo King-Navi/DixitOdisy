@@ -111,7 +111,7 @@ namespace WpfCliente.GUI
                 BitmapImage imagenUsuario=Imagen.ConvertirStreamABitmapImagen(resultadoUsuario.FotoUsuario);
                 if (imagenUsuario  == null)
                 {
-                    MessageBox.Show("Error al cargar su imagen poravor cambiela");
+                    VentanasEmergentes.CrearVentanaEmergenteImagenInvalida(this);
                     this.Close();
                 }
                 Singleton.Instance.FotoJugador = imagenUsuario;

@@ -13,18 +13,14 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioCorreo
     {
-        public string Codigo  
-        {
-            get { return Codigo; }
-            set { Codigo = value; }
-        }
+        public string codigo;
         public bool VerificarCorreo(Usuario usuario)
         {
             try
             {
-                Codigo = GenerarCodigo();
+                codigo = GenerarCodigo();
                 string correoUsuario = usuario.Correo;
-                EnviarCorreo(Codigo, correoUsuario);
+                EnviarCorreo(codigo, correoUsuario);
                 return true;
             }
             catch(Exception ex) 
@@ -57,8 +53,8 @@ namespace WcfServicioLibreria.Manejador
 
         public bool VerificarCodigo(string codigoRecibido)
         {
-            Console.WriteLine($"Código esperado: '{Codigo}', Código recibido: '{codigoRecibido}'");
-            return Codigo == codigoRecibido;
+            Console.WriteLine($"Código esperado: '{codigo}', Código recibido: '{codigoRecibido}'");
+            return codigo == codigoRecibido;
         }
     }
 }

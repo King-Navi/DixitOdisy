@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfCliente.ServidorDescribelo;
+using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
@@ -36,7 +37,7 @@ namespace WpfCliente.GUI
         {
             if (usuario == null)
             {
-                MessageBox.Show("No se pudo cargar los datos de tus amigos");
+                VentanasEmergentes.CrearVentanaEmergenteCargarDatosAmigosFalla(this);
             }
             else
             {

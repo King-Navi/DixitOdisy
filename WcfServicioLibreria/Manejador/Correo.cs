@@ -13,7 +13,7 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioCorreo
     {
-        private string codigo;
+        public string codigo;
         public bool VerificarCorreo(Usuario usuario)
         {
             try
@@ -53,6 +53,7 @@ namespace WcfServicioLibreria.Manejador
 
         public bool VerificarCodigo(string codigoRecibido)
         {
+            Console.WriteLine($"Código esperado: '{codigo}', Código recibido: '{codigoRecibido}'");
             return codigo == codigoRecibido;
         }
     }

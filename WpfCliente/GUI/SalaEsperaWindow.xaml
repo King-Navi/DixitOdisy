@@ -5,43 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfCliente.GUI"
         mc:Ignorable="d"
-        Title="SalaEspera" MinWidth="800" MinHeight="450" VerticalAlignment="Center" Closing="CerrandoVentana">
+        Title="SalaEspera" MinWidth="1200" MinHeight="770" 
+        VerticalAlignment="Center" Closing="CerrandoVentana"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-
-        <DockPanel LastChildFill="True">
-            <!--Encabezado-->
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Background="Aqua" HorizontalAlignment="Right">
-                <Label Content="coNFIG"/>
-                <Label Content="uSUARIO FOTO"/>
-            </StackPanel>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Recursos/fondoSala.png" Stretch="Fill"/>
+        </Grid.Background>
 
 
-            <!--Pie de pagina-->
-            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Background="Coral" HorizontalAlignment="Center">
-                <Button Content="Unirse a sala de espera"></Button>
-                <Button Content="Configurar partida"></Button>
-                <Button x:Name="buttonEmpezarPartida" Content="Empezar partida" Click="ClicButtonEmpezarPartida"></Button>
-            </StackPanel>
-            <!--Amigos conectado lista-->
-            <StackPanel DockPanel.Dock="Left" Background="DarkGray" Orientation="Vertical">
-                <Label Content="Amigos"/>
-                <Label Content="Perosna"/>
-                <Label Content="Perosna"/>
-                <Label Content="Perosna"/>
-                <Label Content="Perosna"/>
-            </StackPanel>
-            <!--Middler-->
-            <StackPanel Orientation="Vertical"  Background="AntiqueWhite" HorizontalAlignment="Center">
-                <TextBox x:Name="labelCodigoSala" IsReadOnly="True" d:Text="Codigo de la Sala"></TextBox>
-                <Button x:Name="buttonCopiarCodigo"  Click="ClicButtonCopiarCodigo"  Content="Copiar "></Button>
-                <!--Usuario en la sala de espera-->
-                <StackPanel Orientation="Vertical">
-                    <local:ListaUsuariosSalaUserControl x:Name="usuariosSalaUserControl" />
-                </StackPanel>
-            </StackPanel>
-        </DockPanel>
-        <!-- UserControl superpuesto -->
-        <local:ChatUserControl x:Name="chatUserControl" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10"></local:ChatUserControl>
+        <!-- Código de la sala a la izquierda -->
+        <StackPanel Background="AntiqueWhite" HorizontalAlignment="Left" VerticalAlignment="Top" Height="123" Width="257" Margin="0,5,0,0"/>
+
+        <!-- Lista de usuarios en el centro -->
+        <StackPanel Grid.Column="1" Background="Aqua" HorizontalAlignment="Center" VerticalAlignment="Center" Height="701" Width="300">
+            <Label x:Name="labelUsuariosLobby" Content="Usuarios en el lobby" FontFamily="Lucida Sans Unicode" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <local:ListaUsuariosSalaUserControl x:Name="usuariosSalaUserControl" Height="692" />
+        </StackPanel>
+
+        <!-- Botones a la derecha -->
+        <StackPanel Orientation="Vertical" Background="Coral" HorizontalAlignment="Left" VerticalAlignment="Top" Height="102" Width="223" Margin="871,325,0,0">
+            <Button Content="Listo!" Margin="5" FontFamily="Lucida Sans Unicode" BorderThickness="2" BorderBrush="Black" Background="AntiqueWhite"/>
+            <Button Content="Configurar partida" Margin="5" FontFamily="Lucida Sans Unicode" BorderThickness="2" BorderBrush="Black" Background="AntiqueWhite"/>
+            <Button x:Name="buttonEmpezarPartida" Content="Empezar partida" Margin="5" Click="ClicButtonEmpezarPartida" FontFamily="Lucida Sans Unicode" BorderThickness="2" BorderBrush="Black" Background="AntiqueWhite"/>
+        </StackPanel>
+        <Label x:Name="labelCodigoSala" Content="Código de la sala:" FontFamily="ROG Fonts" FontSize="16" 
+                   HorizontalContentAlignment="Left" ToolTip="Haga clic para copiar el código" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   MouseLeftButtonUp="LabelCodigoSala_MouseLeftButtonUp" Width="257" Height="73" Margin="0,5,0,0"/>
+        <Label x:Name="labelCodigo" Content=" " FontFamily="ROG Fonts" FontSize="16" 
+                HorizontalContentAlignment="Left" ToolTip="Haga clic para copiar el código" HorizontalAlignment="Left" VerticalAlignment="Top"
+                MouseLeftButtonUp="LabelCodigoSala_MouseLeftButtonUp" Width="257" Height="50" RenderTransformOrigin="0.5,0.585" Margin="0,78,0,0"/>
+        <local:ChatUserControl x:Name="chatUserControl" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Height="120" Width="120"/>
+
     </Grid>
-
 </Window>

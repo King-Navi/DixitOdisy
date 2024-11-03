@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Threading;
 using System.Windows;
+using WpfCliente.Utilidad;
 
 namespace WpfCliente.Persistencia
 {
@@ -50,8 +51,7 @@ namespace WpfCliente.Persistencia
             }
             catch (CultureNotFoundException ex)
             {
-                //TODO manejar error
-                MessageBox.Show($"Error al cargar el idioma: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                ManejadorExcepciones.ManejarComponentErrorException(ex);
             }
         }
         /// <summary>
@@ -67,8 +67,7 @@ namespace WpfCliente.Persistencia
             }
             catch (CultureNotFoundException ex)
             {
-                //TODO manejar el error e I18n
-                MessageBox.Show($"Error al cambiar el idioma: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                ManejadorExcepciones.ManejarComponentErrorException(ex);
             }
         }
     }

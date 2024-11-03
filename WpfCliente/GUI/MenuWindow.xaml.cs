@@ -3,6 +3,7 @@ using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
@@ -28,7 +29,7 @@ namespace WpfCliente.GUI
                 var resultadoAmigo = await Conexion.AbrirConexionAmigosCallbackAsync(amigosUserControl);
                 if (!resultadoAmigo || !resultadoUsuarioSesion)
                 {
-                    MessageBox.Show("Error al conctase al servidor");
+                    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
                     this.Close();
                 }
                 Usuario user = new Usuario
@@ -41,7 +42,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                this.Close();
+                ManejadorExcepciones.ManejarFatalException(excepcion,this);
             };
         }
 
@@ -88,9 +89,6 @@ namespace WpfCliente.GUI
                 Nombre = Singleton.Instance.NombreUsuario
             };
             Conexion.Amigos.AbrirCanalParaPeticiones(user);
-
-            //TODO: No imitar el 418
-            Console.WriteLine("Im a teapot");
         }
 
         private async void ClicButtonUnirseSala(object sender, RoutedEventArgs e)
@@ -110,7 +108,6 @@ namespace WpfCliente.GUI
                 }
                 else
                 {
-                    //TODO: I18N
                     VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado(this);
                 }
 
@@ -162,7 +159,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                //TODO Manejar el error
+                ManejadorExcepciones.ManejarComponentErrorException(excepcion);
             }
             IniciarSesion iniciarSesion = new IniciarSesion();
             iniciarSesion.Show();

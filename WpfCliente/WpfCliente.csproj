@@ -207,7 +207,7 @@
     <Compile Include="Utilidad\Imagen.cs" />
     <Compile Include="Utilidad\LoggerManager.cs" />
     <Compile Include="Utilidad\ManejadorExcepciones.cs" />
-    <Compile Include="Utilidad\Otros.cs" />
+    <Compile Include="Utilidad\Utilidades.cs" />
     <Compile Include="Utilidad\ServicioManejador.cs" />
     <Compile Include="Utilidad\Servidor\ImagenCarta.cs" />
     <Compile Include="Utilidad\Singleton.cs" />
@@ -458,10 +458,15 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Recursos\fondoMenu.jpg" />
+    <Folder Include="Logs\" />
+    <Folder Include="Pesistencia\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Pesistencia\" />
+    <Resource Include="Recursos\fondoMenu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\fondoSala.png" />
+    <Content Include="Sonidos\musicaFondo.mp3" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Recursos\LogoApp.ico" />

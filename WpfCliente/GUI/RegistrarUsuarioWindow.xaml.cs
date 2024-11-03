@@ -85,12 +85,12 @@ namespace WpfCliente.GUI
                 }
                 else
                 {
-                    MessageBox.Show("El archivo seleccionado no es una imagen válida. Por favor selecciona una imagen.");
+                    VentanasEmergentes.CrearVentanaEmergenteImagenInvalida(this);
                 }
             }
             else
             {
-                MessageBox.Show("No se seleccionó ninguna imagen.");
+                VentanasEmergentes.CrearVentanaEmergenteImagenInvalida(this);
             }
         }
 
@@ -190,7 +190,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception e)
             {
-                //TODO: Manejar error
+                ManejadorExcepciones.ManejarFatalException(e, this);
             }
         }
 
@@ -354,7 +354,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
+                VentanasEmergentes.CrearVentanaEmergenteImagenInvalida(this);
             }
         }
 

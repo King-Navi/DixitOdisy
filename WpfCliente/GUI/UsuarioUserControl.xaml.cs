@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,6 +30,7 @@ namespace WpfCliente.GUI
         public UsuarioUserControl()
         {
             InitializeComponent();
+            SetFondoColorAleatorio();
         }
         public UsuarioUserControl(bool _esAmigo, Usuario usuario)
         {
@@ -55,10 +57,14 @@ namespace WpfCliente.GUI
                 //    return proxy.
                 //});
             }
-            catch (Exception ex)
-            { 
-            
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponentErrorException(excepcion);
             }
+        }
+        private void SetFondoColorAleatorio()
+        {
+            this.Background = Utilidades.GetColorAleatorio();
         }
     }
 }

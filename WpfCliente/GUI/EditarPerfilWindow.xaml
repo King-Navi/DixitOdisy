@@ -6,6 +6,48 @@
         xmlns:local="clr-namespace:WpfCliente.GUI"
         mc:Ignorable="d"
         Title="EditarPerfilWindow" Height="450" Width="800">
+
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBox}" >
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="4" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style TargetType="{x:Type Button}" >
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="6" />
+                </Style>
+            </Style.Resources>
+        </Style>
+
+        <Style TargetType="{x:Type TextBox}" x:Key="NormalTextBoxStyle">
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="4" />
+                </Style>
+            </Style.Resources>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#CDCDCD" />
+            <Setter Property="Tag" Value="UserName" />
+        </Style>
+
+        <Style TargetType="{x:Type TextBox}" x:Key="ErrorTextBoxStyle">
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="4" />
+
+                </Style>
+            </Style.Resources>
+            <Setter Property="Background" Value="#FF0800"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Tag" Value="UserName" />
+        </Style>
+
+    </Window.Resources>
+
     <Grid>
 
         <DockPanel LastChildFill="True">
@@ -17,28 +59,28 @@
 
             <!--Pie de pagina-->
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Background="Coral" HorizontalAlignment="Center">
-                <Button d:Content="Cancelar cambios" x:Name="buttonCancelarCambio" Click="clicButtonCancelar"></Button>
-                <Button d:Content="Cambiar perfil" x:Name="buttonAceptarCambio" Click="clicButtonAceptar"></Button>
+                <Button d:Content="Cancelar cambios" x:Name="buttonCancelarCambio" Click="clicButtonCancelar" Background="#E0DCC7"></Button>
+                <Button d:Content="Cambiar perfil" x:Name="buttonAceptarCambio" Click="clicButtonAceptar" Background="#E0DCC7"></Button>
             </StackPanel>
             <!--Amigos conectado lista-->
             <StackPanel DockPanel.Dock="Left" Background="DarkGray" Orientation="Vertical">
 
             </StackPanel>
             <!--Middler-->
-            <StackPanel Orientation="Horizontal"  Background="AntiqueWhite" HorizontalAlignment="Center" Width="300" Height="199">
+            <StackPanel Orientation="Horizontal"  Background="AntiqueWhite" Width="570" Height="291">
 
                 <StackPanel Orientation="Vertical">
                     <Label d:Content=" Edita tu foto" x:Name="labelEditarFoto"></Label>
                     <Border d:BorderBrush="Red" d:BorderThickness="10">
                         <Image x:Name="imageFotoJugador" d:OpacityMask="Red" Width="100" Height="100" ></Image>
                     </Border>
-                    <Button d:Content="Cambiar foto" x:Name="buttonCambiarFoto" Click="ClicButtonCambiarImagen"></Button>
+                    <Button d:Content="Cambiar foto" x:Name="buttonCambiarFoto" Click="ClicButtonCambiarImagen" Background="#E0DCC7"></Button>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">
                     <Label d:Content="NaviKing"  x:Name="labelNombreJugador"></Label>
                     <Label d:Content="Edita tu correo" x:Name="labelCorreo"></Label>
                     <TextBox x:Name="textBoxCorreo"></TextBox>
-                    <Label d:Content="Edita tu contraseña" x:Name="labelContrasenia"></Label>
+                    <Label d:Content="Edita tu contraseña" x:Name="labelContrasenia" Width="176"></Label>
                     <TextBox x:Name="textBoxContrania"></TextBox>
                     <Label d:Content="Confirma tu contraseña" x:Name="labelConfirmaContrasenia"></Label>
                     <TextBox x:Name="textBoxConfirmacionContrania"></TextBox>
@@ -47,7 +89,7 @@
         </DockPanel>
         <!--Superposicion en pantalla-->
         <Grid>
-            
+
         </Grid>
     </Grid>
 </Window>

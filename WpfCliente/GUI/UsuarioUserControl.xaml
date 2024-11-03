@@ -4,14 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfCliente.GUI"
-             mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="250">
-    <Grid x:Name="gridPrincipal" Height="100" Width="250" d:Background="Aqua">
-        <Image x:Name="imageAmigo" Source="{Binding FotoUsuario}"  d:Source="pack://application:,,,/WpfCliente;component/Recursos/profile.jpg" Width="60" Height="60" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="9,0,0,0" ></Image>
-        <Label x:Name="labelNombreAmigo" Content="{Binding Nombre}" d:Content="PedroSanchz27" Canvas.Left="85" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="81,10,0,0"></Label>
-        <!--Podemos agregar mas cosas como estisticas-->
-        <Grid x:Name="gridInvitacionAmistad" Margin="81,70,10,10">
-            <Button d:Content="Enviar solicitud de amistad" Click="clicButtonEnviarSolicitud"></Button>
-        </Grid>
-    </Grid>
+             mc:Ignorable="d" Height="104" Width="273">
+    <Border BorderBrush="Black" BorderThickness="4" CornerRadius="15" Height="80" Margin="4,10,4,10">
+        <Border CornerRadius="11" Margin="2">
+            <Grid x:Name="gridPrincipal" Height="100" Width="250" d:Background="Aqua">
+                <Image x:Name="imageAmigo" Source="{Binding FotoUsuario}"  d:Source="pack://application:,,,/WpfCliente;component/Recursos/profile.jpg" Width="60" Height="60" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="6,4,0,0" ></Image>
+                <Label x:Name="labelNombreAmigo" Content="{Binding Nombre}" d:Content="PedroSanchz27" FontFamily="Lucida Sans Unicode" Canvas.Left="85" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="89,0,0,0"></Label>
+                <!--Podemos agregar mas cosas como estisticas-->
+                <Grid x:Name="gridInvitacionAmistad" Margin="81,70,10,10">
+                    <Button d:Content="Enviar solicitud de amistad" Click="clicButtonEnviarSolicitud" Margin="1,-35,-1,35"></Button>
+                </Grid>
+            </Grid>
+        </Border>
+    </Border>
 </UserControl>

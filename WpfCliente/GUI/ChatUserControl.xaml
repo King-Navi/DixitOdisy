@@ -28,10 +28,11 @@
                 <TextBox x:Name="textBoxEnviarMensaje"
                      Height="30"
                      Margin="0,0,10,0" MinWidth="380"/>
-                <Button Content="/ENVIAR"
+                <Button x:Name="buttonEnviar" Content="ENVIAR"
                     Width="80"
                     Height="30"
-                    Click="ClicButtonEnviar"/>
+                    Click="ClicButtonEnviar"
+                    IsDefault="True"/>
             </StackPanel>
 
             <!-- Botón para cerrar el chat -->

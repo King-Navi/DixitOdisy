@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="5d29788a-51de-482f-b589-72591c775464" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="8b74b84c-02a9-4aff-ae30-aa9ef401d4b8" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,18 +19,18 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="net.tcp://localhost:6969/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="net.tcp://192.168.0.102:6969/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="ea3ad7f8-da40-43f6-941c-cdcb0dc0059d" SourceId="1" SourceUrl="net.tcp://localhost:6969/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="dcee8360-dd84-428f-b2fe-22ba254f8b0f" SourceId="1" SourceUrl="net.tcp://localhost:6969/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="cde871ee-87d7-4397-b68b-fb7ed81d54f2" SourceId="1" SourceUrl="net.tcp://localhost:6969/mex" />
-    <MetadataFile FileName="WcfServicioLibreria.Modelo.xsd" MetadataType="Schema" ID="d886aa90-a27c-4a6e-b073-9377f789daa3" SourceId="1" SourceUrl="net.tcp://localhost:6969/mex" />
-    <MetadataFile FileName="System.IO.xsd" MetadataType="Schema" ID="1c23a872-910d-4d86-acca-b87ee5d73826" SourceId="1" SourceUrl="net.tcp://localhost:6969/mex" />
-    <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="7ac61162-7c9a-45db-8183-44282110b304" SourceId="1" SourceUrl="net.tcp://localhost:6969/mex" />
-    <MetadataFile FileName="WcfServicioLibreria.Enumerador.xsd" MetadataType="Schema" ID="56da34ff-60e4-4f82-a935-82c3dd892266" SourceId="1" SourceUrl="net.tcp://localhost:6969/mex" />
-    <MetadataFile FileName="WcfServicioLibreria.Modelo.Excepciones.xsd" MetadataType="Schema" ID="8c219ad2-caa1-4bae-a37c-c9c59c72e5e0" SourceId="1" SourceUrl="net.tcp://localhost:6969/mex" />
-    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="5cc9f24b-27b6-486f-a22c-2512a5fe8eff" SourceId="1" SourceUrl="net.tcp://localhost:6969/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="e7b7be5b-2187-4816-b9a7-56ea65fd6496" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="c96050d0-1558-44c6-b561-712626eccbd6" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="c1d3ed84-e7fe-4684-b5c5-d2bdf559f932" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
+    <MetadataFile FileName="WcfServicioLibreria.Modelo.xsd" MetadataType="Schema" ID="85eeef8b-8092-4cb8-870e-af7d65425cb6" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
+    <MetadataFile FileName="System.IO.xsd" MetadataType="Schema" ID="10b9b862-cb04-43c5-a5e5-27c946b56fa5" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
+    <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="fd7bd48a-0bb8-4941-83f2-51b1bf826ce7" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
+    <MetadataFile FileName="WcfServicioLibreria.Enumerador.xsd" MetadataType="Schema" ID="0704c3f2-60e7-4896-b1e4-7c7cb3f97912" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
+    <MetadataFile FileName="WcfServicioLibreria.Modelo.Excepciones.xsd" MetadataType="Schema" ID="41acdc72-8e55-479e-9182-392001c688e1" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="a53159b5-d7ae-4ac3-8154-b834ef331471" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

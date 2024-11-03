@@ -467,6 +467,9 @@
     <Resource Include="Recursos\LogoApp.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Recursos\podioJugador.png" />
+  </ItemGroup>
+  <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\ServidorDescribelo\" />
   </ItemGroup>
   <ItemGroup>
@@ -480,9 +483,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Recursos\podioJugador.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -24,17 +24,17 @@ namespace WcfServicioLibreria.Modelo
     {
         #region Atributos
         private const int CANTIDAD_MINIMA_JUGADORES = 2; // 3
-        private const int TIEMPO_ESPERA_JUGADORES = 5;// 20
-        private const int TIEMPO_ESPERA_NARRADOR = 20; // 40
-        private const int TIEMPO_ESPERA_SELECCION = 30; //60
-        private const int TIEMPO_ESPERA_PARA_CONFIRMAR = 25; //5
+        private const int TIEMPO_ESPERA_JUGADORES = 20;// 20
+        private const int TIEMPO_ESPERA_NARRADOR = 40; // 40
+        private const int TIEMPO_ESPERA_SELECCION = 50; //60
+        private const int TIEMPO_ESPERA_PARA_CONFIRMAR = 5; //5
 
-        private const int JUGADORES_PARTIDA_VACIA = 0;
-        private const int NADIE_ACERTO = 0;
-        private const int RONDAS_MINIMA_PARA_PUNTOS = 3;
-        private const int PUNTOS_RESTADOS_NO_PARTICIPAR = 1;
-        private const int PUNTOS_ACIERTO = 1;
-        private const int AUMENTO_POR_PENALIZACION_NARRADOR = 2;
+        private const int JUGADORES_PARTIDA_VACIA = 0; //0
+        private const int NADIE_ACERTO = 0;//0
+        private const int RONDAS_MINIMA_PARA_PUNTOS = 3; //3
+        private const int PUNTOS_RESTADOS_NO_PARTICIPAR = 1; //1
+        private const int PUNTOS_ACIERTO = 1; //1
+        private const int AUMENTO_POR_PENALIZACION_NARRADOR = 2; //2
         private ConcurrentDictionary<string, IPartidaCallback> jugadoresCallback = new ConcurrentDictionary<string, IPartidaCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
         private ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario> jugadoresInformacion = new ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario>();

@@ -944,99 +944,99 @@
   </wsdl:binding>
   <wsdl:service name="ManejadorPrincipal">
     <wsdl:port name="NetTcpBinding_IServicioAmistad" binding="tns:NetTcpBinding_IServicioAmistad">
-      <soap12:address location="net.tcp://localhost:6969/" />
+      <soap12:address location="net.tcp://192.168.0.102:6969/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.0.102:6969/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Dns>localhost</Dns>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IServicioChat" binding="tns:NetTcpBinding_IServicioChat">
-      <soap12:address location="net.tcp://localhost:6969/" />
+      <soap12:address location="net.tcp://192.168.0.102:6969/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.0.102:6969/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Dns>localhost</Dns>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IServicioChatMotor" binding="tns:NetTcpBinding_IServicioChatMotor">
-      <soap12:address location="net.tcp://localhost:6969/" />
+      <soap12:address location="net.tcp://192.168.0.102:6969/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.0.102:6969/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Dns>localhost</Dns>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IServicioCorreo" binding="tns:NetTcpBinding_IServicioCorreo">
-      <soap12:address location="net.tcp://localhost:6969/" />
+      <soap12:address location="net.tcp://192.168.0.102:6969/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.0.102:6969/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Dns>localhost</Dns>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IServicioPartida" binding="tns:NetTcpBinding_IServicioPartida">
-      <soap12:address location="net.tcp://localhost:6969/" />
+      <soap12:address location="net.tcp://192.168.0.102:6969/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.0.102:6969/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Dns>localhost</Dns>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IServicioPartidaSesion" binding="tns:NetTcpBinding_IServicioPartidaSesion">
-      <soap12:address location="net.tcp://localhost:6969/" />
+      <soap12:address location="net.tcp://192.168.0.102:6969/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.0.102:6969/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Dns>localhost</Dns>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IServicioRegistro" binding="tns:NetTcpBinding_IServicioRegistro">
-      <soap12:address location="net.tcp://localhost:6969/" />
+      <soap12:address location="net.tcp://192.168.0.102:6969/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.0.102:6969/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Dns>localhost</Dns>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IServicioSala" binding="tns:NetTcpBinding_IServicioSala">
-      <soap12:address location="net.tcp://localhost:6969/" />
+      <soap12:address location="net.tcp://192.168.0.102:6969/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.0.102:6969/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Dns>localhost</Dns>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IServicioSalaJugador" binding="tns:NetTcpBinding_IServicioSalaJugador">
-      <soap12:address location="net.tcp://localhost:6969/" />
+      <soap12:address location="net.tcp://192.168.0.102:6969/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.0.102:6969/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Dns>localhost</Dns>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IServicioUsuario" binding="tns:NetTcpBinding_IServicioUsuario">
-      <soap12:address location="net.tcp://localhost:6969/" />
+      <soap12:address location="net.tcp://192.168.0.102:6969/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.0.102:6969/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Dns>localhost</Dns>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="NetTcpBinding_IServicioUsuarioSesion" binding="tns:NetTcpBinding_IServicioUsuarioSesion">
-      <soap12:address location="net.tcp://localhost:6969/" />
+      <soap12:address location="net.tcp://192.168.0.102:6969/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
+        <wsa10:Address>net.tcp://192.168.0.102:6969/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Dns>localhost</Dns>
         </Identity>

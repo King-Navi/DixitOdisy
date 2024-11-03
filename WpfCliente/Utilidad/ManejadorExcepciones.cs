@@ -2,6 +2,7 @@
 using Serilog;
 using System.Windows.Navigation;
 using WpfCliente.GUI;
+using System.Windows;
 
 namespace WpfCliente.Utilidad
 {
@@ -9,32 +10,36 @@ namespace WpfCliente.Utilidad
     {
         private static readonly ILogger _logger = LoggerManager.GetLogger();
 
-        public static void HandleErrorException(Exception ex, NavigationService navigationService)
+        public static void ManejarErrorException(Exception ex, Window window)
         {
             _logger.Error(ex.Message + "\n" + ex.StackTrace + "\n");
 
-            if (navigationService != null)
+            if (window != null)
             {
-                navigationService.Navigate(new IniciarSesion());
+                window.Close();
+                IniciarSesion iniciarSesion = new IniciarSesion();
+                iniciarSesion.Show();
             }
         }
 
-        public static void HandleFatalException(Exception ex, NavigationService navigationService)
+        public static void ManejarFatalException(Exception ex, Window window)
         {
             _logger.Fatal(ex.Message + "\n" + ex.StackTrace + "\n");
 
-            if (navigationService != null)
+            if (window != null)
             {
-                navigationService.Navigate(new IniciarSesion());
+                window.Close();
+                IniciarSesion iniciarSesion = new IniciarSesion();
+                iniciarSesion.Show();
             }
         }
 
-        public static void HandleComponentErrorException(Exception ex)
+        public static void ManejarComponentErrorException(Exception ex)
         {
             _logger.Error(ex.Message + "\n" + ex.StackTrace + "\n");
         }
 
-        public static void HandleComponentFatalException(Exception ex)
+        public static void ManejarComponentFatalException(Exception ex)
         {
             _logger.Fatal(ex.Message + "\n" + ex.StackTrace + "\n");
         }

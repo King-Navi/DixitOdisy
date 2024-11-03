@@ -87,9 +87,6 @@ namespace WpfCliente.GUI
                 Nombre = Singleton.Instance.NombreUsuario
             };
             Conexion.Amigos.AbrirCanalParaPeticiones(user);
-
-            //TODO: No imitar el 418
-            Console.WriteLine("Im a teapot");
         }
 
         private async void ClicButtonUnirseSala(object sender, RoutedEventArgs e)
@@ -109,7 +106,6 @@ namespace WpfCliente.GUI
                 }
                 else
                 {
-                    //TODO: I18N
                     VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado(this);
                 }
 

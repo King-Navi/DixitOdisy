@@ -59,7 +59,7 @@ namespace WpfCliente.GUI
 
         private bool ValidarCodigo()
         {
-            return string.IsNullOrWhiteSpace(textBoxCodigo.Text);
+            return !string.IsNullOrWhiteSpace(textBoxCodigo.Text);
         }
         private void buttonEnviarCodigoNuevamente_Click(object sender, RoutedEventArgs e)
         {

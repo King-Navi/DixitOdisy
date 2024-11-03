@@ -390,6 +390,7 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Logs\" />
     <Folder Include="Pesistencia\" />
   </ItemGroup>
   <ItemGroup>

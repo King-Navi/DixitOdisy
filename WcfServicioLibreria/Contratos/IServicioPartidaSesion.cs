@@ -14,9 +14,8 @@ namespace WcfServicioLibreria.Contratos
     public interface IServicioPartidaSesion
     {
         [OperationContract(IsOneWay = true)]
-        void UnirsePartida(string gamertag, string idPartida);
-        [OperationContract]
-        [FaultContract(typeof(PartidaFalla))]
+        Task UnirsePartida(string gamertag, string idPartida);
+        [OperationContract(IsOneWay = true)]
         void ConfirmarMovimiento(string nombreJugador, string idPartida , string claveImagen, string pista = null);
         [OperationContract(IsOneWay = true)]
         void ExpulsarJugador(string nombreJugador, string idPartida);
@@ -28,7 +27,7 @@ namespace WcfServicioLibreria.Contratos
     [ServiceContract]
     public interface IPartidaCallback
     {
-        [OperationContract(IsOneWay = true)]
+        [OperationContract]
         void AvanzarRondaCallback(int RondaActual);
         [OperationContract(IsOneWay = true)]
         void TurnoPerdidoCallback();
@@ -40,10 +39,14 @@ namespace WcfServicioLibreria.Contratos
         void ObtenerJugadorPartidaCallback(Usuario jugardoreNuevoEnSala);
         [OperationContract(IsOneWay = true)]
         void EliminarJugadorPartidaCallback(Usuario jugardoreRetiradoDeSala);
-        //Verificar
         [OperationContract(IsOneWay = true)]
-        void NotificarNarradorCallback(); //Se notifica a un jugador que es un narrador
+        void NotificarNarradorCallback(bool esNarrador);
         [OperationContract(IsOneWay = true)]
-        void MostrarPistaCallback(string pista);  //Este metodo se llama despues de NotificarNarrador
+        void MostrarPistaCallback(string pista);
+        [OperationContract(IsOneWay = true)]
+        [ServiceKnownTypeAttribute(typeof(EstadisticasPartida))]
+        [ServiceKnownTypeAttribute(typeof(List<JugadorEstadisticas>))]
+        [ServiceKnownTypeAttribute(typeof(JugadorEstadisticas))]
+        void EnviarEstadisticas(EstadisticasPartida estadisticas);
     }
 }

@@ -32,7 +32,8 @@
             </StackPanel>
             <!--Middler-->
             <StackPanel Orientation="Vertical"  Background="AntiqueWhite" HorizontalAlignment="Center">
-                <Label x:Name="labelCodigoSala" d:Content="Codigo de la Sala"></Label>
+                <TextBox x:Name="labelCodigoSala" IsReadOnly="True" d:Text="Codigo de la Sala"></TextBox>
+                <Button x:Name="buttonCopiarCodigo"  Click="ClicButtonCopiarCodigo"  Content="Copiar "></Button>
                 <!--Usuario en la sala de espera-->
                 <StackPanel Orientation="Vertical">
                     <local:ListaUsuariosSalaUserControl x:Name="usuariosSalaUserControl" />

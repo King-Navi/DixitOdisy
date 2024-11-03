@@ -4,11 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfCliente.GUI"
+        xmlns:bc="clr-namespace:WpfCliente.Estilos"
         mc:Ignorable="d"
+         MinHeight="670" MinWidth="520"
         Title="Partida" Height="683" Width="1131" Closing="CerrandoVentana">
-    <Grid x:Name="gridPantalla1" d:Background="Green">
-        <!-- Pantalla 1 -->
-        <Grid Background="Blue">
+    <Grid x:Name="gridPantalla1">
+        <!-- Pantalla 1 Inicio de ronda-->
+        <Grid>
             <Grid.Style>
                 <Style TargetType="Grid">
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -19,10 +21,11 @@
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
+            <local:InicioRondaUserControl></local:InicioRondaUserControl>
         </Grid>
 
-        <!-- Pantalla 2 -->
-        <Grid x:Name="gridPantalla2" Background="Pink">
+        <!-- Pantalla 2   el narrador escoge carta y pista-->
+        <Grid x:Name="gridPantalla2">
             <Grid.Style>
                 <Style TargetType="Grid">
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -34,9 +37,8 @@
                 </Style>
             </Grid.Style>
         </Grid>
-
-        <!-- Pantalla 3 -->
-        <Grid>
+        <!-- Pantalla 3 Solo la ve el jugador-->
+        <Grid x:Name="gridPantalla3" Background="Pink">
             <Grid.Style>
                 <Style TargetType="Grid">
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -48,6 +50,59 @@
                 </Style>
             </Grid.Style>
         </Grid>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="825,525,0,0" VerticalAlignment="Top" Height="77" Width="150" Click="ClicButtonConfirmarTurno"/>
-    </Grid>
+        <!-- Pantalla 4 Estadisticas de fin de ronda-->
+        <Grid x:Name="gridPantalla4" Background="Pink">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding PantallaActual}" Value="4">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+
+        </Grid>
+
+
+        <!-- Pantalla 5 -->
+        <Grid x:Name="gridPantalla5" Background="Purple">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding PantallaActual}" Value="5">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Label Content="FIN DE LA PARTIDA" FontSize="80"></Label>
+        </Grid>
+
+        <!-- Pantalla 6 Esperando a otro jugadores-->
+        <Grid x:Name="gridPantalla6" >
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding PantallaActual}" Value="6">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <local:EsperaRestoJugadoresUserControl></local:EsperaRestoJugadoresUserControl>
+        </Grid>
+
+
+
+                <Button Height="80" Width="180" Content="SIMULACION CAMBIO RONDA" Margin="941,534,10,53" Click="BORRAME_SImulacionCambioRonda"></Button>
+                <Button Height="80" Width="180" Content="SIMULACION soy jugador" Margin="941,449,10,138" Click="BORRAME_SImulacionCambioRondaSoyJugador"></Button>
+                <Button Height="80" Width="180" Content="SIMULACION soy narrador" Margin="941,334,10,253" Click="BORRAME_SImulacionCambioRondaSoyNarrador"></Button>
+        </Grid>
+
+
+
 </Window>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ServiceModel;
 using System.ServiceModel.Configuration;
+using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Utilidades;
@@ -29,7 +30,7 @@ namespace WcfServicioLibreria.Manejador
         /// </summary>
         /// <param name="gamertag"></param>
         /// <param name="idSala"></param>
-        public void AgregarJugadorSala(string gamertag, string idSala)
+        public async Task AgregarJugadorSala(string gamertag, string idSala)
         {
             if (!ValidarSala(idSala))
             {

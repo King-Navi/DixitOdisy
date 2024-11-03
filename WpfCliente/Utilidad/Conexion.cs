@@ -228,6 +228,11 @@ namespace WpfCliente.Utilidad
                 //TODO Manejar el error
                 return false;
             }
+            finally
+            {
+                //TODO: Si espera un callback tira un error hay que ver como hacer para evitar eso
+                Partida = null;
+            }
             return true;
         }
         private static async Task<bool> HacerPing()

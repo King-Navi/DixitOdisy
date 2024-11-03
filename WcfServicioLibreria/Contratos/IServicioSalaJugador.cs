@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Contratos
@@ -8,7 +9,7 @@ namespace WcfServicioLibreria.Contratos
     public interface IServicioSalaJugador
     {
         [OperationContract(IsOneWay = true)]
-        void AgregarJugadorSala(string gamertag, string idSala);
+        Task AgregarJugadorSala(string gamertag, string idSala);
         [OperationContract(IsOneWay = true)]
         void ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida);
         [OperationContract(IsOneWay = true)]

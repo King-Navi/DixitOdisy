@@ -66,7 +66,7 @@ namespace WpfCliente.GUI
                 return;
             }
             Conexion.SalaJugador.AgregarJugadorSala(Singleton.Instance.NombreUsuario, idSala);
-            labelCodigoSala.Content += idSala;
+            labelCodigoSala.Text += idSala;
             UnirseChat();
 
         }
@@ -203,6 +203,11 @@ namespace WpfCliente.GUI
                 Conexion.SalaJugador.ComenzarPartidaAnfrition(
                     Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala , Singleton.Instance.IdPartida);
             }
+        }
+
+        private void ClicButtonCopiarCodigo(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(labelCodigoSala.Text);
         }
     }
 }

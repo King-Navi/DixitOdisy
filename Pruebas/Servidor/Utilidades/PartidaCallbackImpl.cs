@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
@@ -15,7 +16,7 @@ public class PartidaCallbackImpl : ICommunicationObjectImpl, IPartidaCallback
     public ConcurrentDictionary<string, ImagenCarta> Imagenes { get; private set; } = new ConcurrentDictionary<string, ImagenCarta>();
     public bool PartidaFinalizada { get; private set; }
     public ConcurrentDictionary<string, Usuario> JugadoresEnPartida { get; private set; } = new ConcurrentDictionary<string, Usuario>();
-
+    public bool Ping { get; set; }
     // Eventos para facilitar las pruebas y monitorear las llamadas a los métodos
     public event Action<int> OnAvanzarRonda;
     public event Action OnTurnoPerdido;
@@ -81,7 +82,7 @@ public class PartidaCallbackImpl : ICommunicationObjectImpl, IPartidaCallback
         Console.WriteLine($"Jugador eliminado de la sala: {jugadorRetiradoDeSala.Nombre}");
     }
 
-    public void NotificarNarradorCallback()
+    public void NotificarNarradorCallback(bool esNarrador)
     {
         //TODO:
     }
@@ -89,5 +90,10 @@ public class PartidaCallbackImpl : ICommunicationObjectImpl, IPartidaCallback
     public void MostrarPistaCallback(string pista)
     {
         //TODO:
+    }
+
+    public void EnviarEstadisticas(EstadisticasPartida estadisticas)
+    {
+        //TODO: 
     }
 }

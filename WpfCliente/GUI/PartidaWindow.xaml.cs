@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -20,20 +21,13 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    
 
-    public partial class PartidaWindow : Window , IActualizacionUI , IHabilitadorBotones, IServicioPartidaSesionCallback, INotifyPropertyChanged
+
+    public partial class PartidaWindow : Window, IActualizacionUI, IHabilitadorBotones, IServicioPartidaSesionCallback, INotifyPropertyChanged
     {
-        private class ImagenesCompartidas
-        {
-            public ObservableCollection<ImagenCarta> Imagenes { get; } = new ObservableCollection<ImagenCarta>();
-        }
-        public ICommand ComandoImagenGlobal { get; set; } //testing
-
-
-        private ImagenesCompartidas imagenesCompartidas;
+        public ICommand ComandoImagenGlobal { get; set; }
+        private RecursosCompartidos imagenesCompartidas;
         public event PropertyChangedEventHandler PropertyChanged;
-        private int pantallaActual = 1;
         SeleccionCartaUsercontrol seleccionCartasUserControl;
         NarradorSeleccionCartaUserControl narradorSeleccionCartasUserControl;
         private bool esNarrador;
@@ -43,9 +37,19 @@ namespace WpfCliente.GUI
             set
             {
                 esNarrador = value;
+                if (value)
+                {
+                    AvanzarPantalla(3);
+                }
+                else
+                {
+                    AvanzarPantalla(2);
+                }
                 OnPropertyChanged();
             }
         }
+
+        private int pantallaActual;
         public int PantallaActual
         {
             get => pantallaActual;
@@ -55,34 +59,40 @@ namespace WpfCliente.GUI
                 OnPropertyChanged();
             }
         }
+
+
         public PartidaWindow(string idPartida)
         {
             InitializeComponent();
-            ActualizarUI();
-            UnirsePartida(idPartida);
-            EsNarrador = true;
-            DataContext = this;
             InicializarComponenetes();
+            ActualizarUI();
+            DataContext = this;
+            UnirsePartida(idPartida);
+
+        }
+
+        private void SolicitarMazo()
+        {
+            var tareasSolicitudes = new List<Task>();
+            for (int i = 0; i < 6; i++)
+            {
+                tareasSolicitudes.Add(Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida));
+            }
+            Task.WhenAll(tareasSolicitudes);
         }
 
         private void InicializarComponenetes()
         {
-            imagenesCompartidas = new ImagenesCompartidas();
+
+            imagenesCompartidas = new RecursosCompartidos();
             ComandoImagenGlobal = new ComandoRele<string>(ComandoImagenPorId);
-
-
-
             narradorSeleccionCartasUserControl = new NarradorSeleccionCartaUserControl(imagenesCompartidas.Imagenes);
-
             seleccionCartasUserControl = new SeleccionCartaUsercontrol(imagenesCompartidas.Imagenes);
+            gridPantalla2.Children.Add(seleccionCartasUserControl);
+            gridPantalla3.Children.Add(narradorSeleccionCartasUserControl);
+            PantallaActual = 1;
 
-            gridPantalla1.Children.Add(seleccionCartasUserControl);
-            gridPantalla2.Children.Add(narradorSeleccionCartasUserControl);
-            // Lógica para remover `gridPantalla1` del `Grid` principal
-            //if (this.Content is Grid mainGrid)
-            //{
-            //    mainGrid.Children.Remove(gridPantalla2);
-            //}
+
         }
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -90,96 +100,20 @@ namespace WpfCliente.GUI
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void AvanzarPantalla() //Fixme o algo por el estilo
-        {
-            //if (EsNarrador)
-            //{
-            //    PantallaActual = 1; // El narrador siempre ve la pantalla X
-            //}
-            //else
-            //{
-            //    PantallaActual = ; // Ciclo para jugadores
-            //}
-            PantallaActual++;
-            if (PantallaActual == 3)
-            {
-                pantallaActual = 1;
-            }
-            //ActualizarDataContext();
-        }
-
-        private void ActualizarDataContext()
-        {
-            if (PantallaActual == 1)
-            {
-                gridPantalla1.DataContext = seleccionCartasUserControl;
-            }
-            else if (PantallaActual == 2)
-            {
-                gridPantalla2.DataContext = narradorSeleccionCartasUserControl;
-            }
-            // Y así sucesivamente para otras pantallas
-        }
-        private async void UnirsePartida(string idPartida)
-        {
-            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
-            if (!conexionExitosa)
-            {
-                return;
-            }
-            if (!Validacion.ExistePartida(idPartida))
-            {
-                //No existe la partida ¿¿??
-                NoHayConexion();
-                return;
-            }
-            var resultadoTask = Conexion.AbrirConexionPartidaCallbackAsync(this);
-            bool resultado = resultadoTask.Result;
-
-            if (!resultado)
-            {
-                NoHayConexion();
-                return;
-            }
-            Conexion.Partida.UnirsePartida(Singleton.Instance.NombreUsuario, idPartida);
-            //TODO: UnirseChat();
-
-        }
-       
-        public void ActualizarUI()
-        {
-            //TODO: recursos .resx
-        }
+        #region IServicioPartidaSesionCallback
 
         public void AvanzarRondaCallback()
         {
+
+        }
+
+        public void ObtenerJugadorPartidaCallback(Usuario jugardoreNuevoEnSala)
+        {
+        }
+
+        public void EliminarJugadorPartidaCallback(Usuario jugardoreRetiradoDeSala)
+        {
             throw new NotImplementedException();
-        }
-
-        public void HabilitarBotones(bool esValido)
-        {
-        }
-
-        public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
-        {
-            ActualizarUI();
-        }
-
-        private async void ClicButtonConfirmarTurno(object sender, RoutedEventArgs e) //FIXME esat en pruebas
-        {
-            AvanzarPantalla();
-            //TODO: Verficar que seleciono imagen
-            try
-            {
-                await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
-            }
-            catch (Exception ex)
-            { 
-            }
-        }
-        private void NoHayConexion()
-        {
-            this.Close();
         }
 
         public void AvanzarRondaCallback(int RondaActual)
@@ -198,19 +132,108 @@ namespace WpfCliente.GUI
 
         }
 
+        /// <summary>
+        /// Notifica si eres el narrador
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        public void NotificarNarradorCallback(bool esNarrador)
+        {
+            EsNarrador = esNarrador;
+        }
+
+        public void MostrarPistaCallback(string pista)
+        {
+           
+            seleccionCartasUserControl.ColocarPista(pista);
+            if (EsNarrador)
+            {
+                AvanzarPantalla(6);
+            }
+            else
+            {
+                //TODO: AVANZAR A ESCOGER CARTAS Y VER CLUE LES
+            }
+        }
+
+        public void EnviarEstadisticas(EstadisticasPartida estadisticas)
+        {
+            List<JugadorEstadisticas> jugadorEstadisticas = new List<JugadorEstadisticas>(estadisticas.Jugadores);
+
+        }
+
+        #endregion IServicioPartidaSesionCallback
+
+        /// <summary>
+        /// Fin partida = 5
+        /// InicioRonda = 1
+        /// Escoger carta jugador = 2
+        /// EscogerCataNarrador = 3
+        /// </summary>
+        /// <param name="numeroPantallla"></param>
+        public void AvanzarPantalla(int numeroPantallla) //Fixme o algo por el estilo
+        {
+            PantallaActual = numeroPantallla;
+        }
+
+
+        private async void UnirsePartida(string idPartida)
+        {
+            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+            if (!conexionExitosa)
+            {
+                return;
+            }
+            if (!Validacion.ExistePartida(idPartida))
+            {
+                //No existe la partida ¿¿??
+                MessageBox.Show("Partida no disponible");
+                NoHayConexion();
+                return;
+            }
+            var resultadoTask = Conexion.AbrirConexionPartidaCallbackAsync(this);
+            bool resultado = resultadoTask.Result;
+
+            if (!resultado)
+            {
+                NoHayConexion();
+                return;
+            }
+            Conexion.Partida.UnirsePartida(Singleton.Instance.NombreUsuario, idPartida);
+            //TODO: UnirseChat();
+            SolicitarMazo();
+            Conexion.Partida.EmpezarPartida(Singleton.Instance.NombreUsuario,
+                                                              Singleton.Instance.IdPartida);
+
+        }
+
+        public void ActualizarUI()
+        {
+            //TODO: recursos .resx
+        }
+
+
+
+        public void HabilitarBotones(bool esValido)
+        {
+        }
+
+        public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
+        {
+            ActualizarUI();
+        }
+
+        private void NoHayConexion()
+        {
+            this.Close();
+        }
+
+
         public void FinalizarPartida()
         {
-            throw new NotImplementedException();
+            AvanzarPantalla(5);
         }
 
-        public void ObtenerJugadorPartidaCallback(Usuario jugardoreNuevoEnSala)
-        {
-        }
 
-        public void EliminarJugadorPartidaCallback(Usuario jugardoreRetiradoDeSala)
-        {
-            throw new NotImplementedException();
-        }
 
         private void CerrandoVentana(object sender, CancelEventArgs e)
         {
@@ -225,6 +248,11 @@ namespace WpfCliente.GUI
                 //TODO Manejar excepcion
             }
         }
+
+        /// <summary>
+        /// Escoge la imagen segun el rol (narrador o jugador )que le toco en la ronda 
+        /// </summary>
+        /// <param name="id"></param>
         public void ComandoImagenPorId(string id)
         {
             if (EsNarrador)
@@ -233,31 +261,96 @@ namespace WpfCliente.GUI
             }
             else
             {
-                EliminarImagenPorId(id);
+                EscogerImagenPorId(id);
             }
+            AvanzarPantalla(6);
         }
-        public void EliminarImagenPorId(string id)
+        /// <summary>
+        /// Envia la imagen escoigda en base a la pista por el Jugador al servidor
+        /// </summary>
+        /// <param name="id"></param>
+        public void EscogerImagenPorId(string id)
         {
-            var imagenAEliminar = imagenesCompartidas.Imagenes.FirstOrDefault(i => i.IdImagen == id);
-            if (imagenAEliminar != null)
+            ImagenCarta imagenEscogida = imagenesCompartidas.Imagenes.FirstOrDefault(i => i.IdImagen == id);
+            if (imagenEscogida == null)
+                return;
+            string claveImagen = imagenEscogida.IdImagen;
+            MostrarCartaModelWindow ventanaModal = new MostrarCartaModelWindow(false, imagenEscogida.BitmapImagen);
+            bool? resultado = ventanaModal.ShowDialog();
+            if ((bool)resultado)
             {
-                imagenesCompartidas.Imagenes.Remove(imagenAEliminar);
+
+                imagenesCompartidas.Imagenes.Remove(imagenEscogida);
+                Task.Run(async () =>
+                {
+                    await Conexion.VerificarConexion(HabilitarBotones, this);
+                    Conexion.Partida.ConfirmarMovimiento(Singleton.Instance.NombreUsuario,
+                                                                            Singleton.Instance.IdPartida,
+                                                                            imagenEscogida.IdImagen,
+                                                                            null);
+                    await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
+                });
+            }
+            else
+            {
+                MessageBox.Show("Debes selecionar una imagen");
             }
         }
+        /// <summary>
+        /// Envia la imagen y pista escoigda por el narrador al servidor
+        /// </summary>
+        /// <param name="id"></param>
         public void EscogerImagenNarrador(string id)
         {
-            var imagenAEscoger = imagenesCompartidas.Imagenes.FirstOrDefault(i => i.IdImagen == id);
+            ImagenCarta imagenAEscoger = imagenesCompartidas.Imagenes.FirstOrDefault(i => i.IdImagen == id);
             if (imagenAEscoger == null)
                 return;
             MostrarCartaModelWindow ventanaModal = new MostrarCartaModelWindow(true, imagenAEscoger.BitmapImagen);
             bool? resultado = ventanaModal.ShowDialog();
-            var pista = ventanaModal.Pista;
+            string pista = ventanaModal.Pista;
             if ((bool)resultado)
             {
-                //TODO: El narrador escogio esta ID de imagen y ya dio el promp (pista)
-                Console.WriteLine($"El narrador ya escogio {pista}");
                 imagenesCompartidas.Imagenes.Remove(imagenAEscoger);
+                Task.Run(async () =>
+                {
+                    await Conexion.VerificarConexion(HabilitarBotones, this);
+                    Conexion.Partida.ConfirmarMovimiento(Singleton.Instance.NombreUsuario,
+                                                                            Singleton.Instance.IdPartida,
+                                                                            imagenAEscoger.IdImagen,
+                                                                            pista);
+                    await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
+                });
+            }
+            else
+            {
+                MessageBox.Show("Debes selecionar una imagen");
             }
         }
+
+
+        private class RecursosCompartidos
+        {
+            public ObservableCollection<ImagenCarta> Imagenes { get; } = new ObservableCollection<ImagenCarta>();
+            public ObservableCollection<JugadorEstadisticas> JugadorEstadisticas { get; } = new ObservableCollection<JugadorEstadisticas>();
+
+        }
+
+        private void BORRAME_SImulacionCambioRonda(object sender, RoutedEventArgs e)
+        {
+            AvanzarRondaCallback(pantallaActual + 1);
+        }
+        private void BORRAME_SImulacionCambioRondaSoyJugador(object sender, RoutedEventArgs e)
+        {
+            NotificarNarradorCallback(false);
+
+        }
+
+        private void BORRAME_SImulacionCambioRondaSoyNarrador(object sender, RoutedEventArgs e)
+        {
+            NotificarNarradorCallback(true);
+
+        }
+
+        
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ServiceModel;
+using System.Threading;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Utilidades;
@@ -83,5 +84,9 @@ namespace WcfServicioLibreria.Manejador
             Escritor.Detener();
         }
         #endregion
+        #region PartidaSesion
+        private readonly SemaphoreSlim semaphoreLeerFotoInvitado = new SemaphoreSlim(100, 100);
+
+        #endregion 
     }
 }

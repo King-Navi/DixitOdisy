@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.Entity.Infrastructure;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.Threading;
+using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Utilidades;
@@ -23,8 +23,9 @@ namespace WcfServicioLibreria.Modelo
         private readonly ConcurrentDictionary<string, ISalaJugadorCallback> jugadoresSalaCallbacks = new ConcurrentDictionary<string, ISalaJugadorCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
         private ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario> jugadoresInformacion = new ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario>();
-
+        private static readonly Random random = new Random();
         public EventHandler salaVaciaManejadorEvento;
+        private readonly SemaphoreSlim semaphoreLeerFotoInvitado = new SemaphoreSlim(1, 1);
 
         #endregion Campos
         #region Propiedades
@@ -101,15 +102,6 @@ namespace WcfServicioLibreria.Modelo
         }
         private void EliminarSala() 
         {
-            IReadOnlyCollection<string> claveEventos = ObtenerNombresJugadoresSala();
-            foreach (var clave in claveEventos)
-            {
-                if (eventosCommunication.ContainsKey(clave))
-                {
-                    eventosCommunication[clave].Desechar();
-                }
-            }
-            eventosCommunication.Clear();
             IReadOnlyCollection<string> claveJugadores = ObtenerNombresJugadoresSala();
             foreach (var clave in claveJugadores)
             {
@@ -119,6 +111,16 @@ namespace WcfServicioLibreria.Modelo
                 }
             }
             jugadoresSalaCallbacks.Clear();
+            IReadOnlyCollection<string> claveEventos = ObtenerNombresJugadoresSala();
+            foreach (var clave in claveEventos)
+            {
+                if (eventosCommunication.ContainsKey(clave))
+                {
+                    eventosCommunication[clave].Desechar();
+                }
+            }
+            eventosCommunication.Clear();
+            
             EnSalaVacia();
 
         }
@@ -140,10 +142,35 @@ namespace WcfServicioLibreria.Modelo
             RemoverJugadorSala(nombreJugador);
         }
 
-        public void AvisarNuevoJugador(string nombreJugador)
+        public async Task AvisarNuevoJugador(string nombreJugador)
         {
             DAOLibreria.ModeloBD.Usuario informacionUsuario = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
-            //TODO: Si es null significa que es invitado
+            bool esInvitado = false;
+            if (informacionUsuario == null)
+            {
+                await semaphoreLeerFotoInvitado.WaitAsync();
+                try
+                {
+                    //TODO: Hacer algo si no hay imagenes
+                    string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Recursos", "FotosInvitados");
+                    var archivos = Directory.GetFiles(ruta, "*.png");
+                    string archivoAleatorio = archivos[random.Next(archivos.Length)];
+                    string nombreSinExtension = Path.GetFileNameWithoutExtension(archivoAleatorio);
+                    esInvitado = true;
+                    informacionUsuario = new DAOLibreria.ModeloBD.Usuario
+                    {
+                        gamertag = nombreJugador,
+                        fotoPerfil = File.ReadAllBytes(archivoAleatorio)
+                    };
+                }
+                catch (Exception)
+                {
+                }
+                finally
+                {
+                    semaphoreLeerFotoInvitado.Release();
+                }
+            }
             lock (jugadoresSalaCallbacks)
             {
                 lock (jugadoresInformacion)
@@ -163,7 +190,8 @@ namespace WcfServicioLibreria.Modelo
                             Usuario jugador = new Usuario
                             {
                                 Nombre = jugadorExistente.gamertag,
-                                FotoUsuario = new MemoryStream(jugadorExistente.fotoPerfil)
+                                FotoUsuario = new MemoryStream(jugadorExistente.fotoPerfil),
+                                EsInvitado = esInvitado
                             };
                             nuevoCallback.ObtenerJugadorSalaCallback(jugador);
                         }
@@ -215,6 +243,7 @@ namespace WcfServicioLibreria.Modelo
                 }
             }
         }
+
         internal void AvisarComienzoPatida(string nombreSolicitante, string idPartida)
         {
             if (nombreSolicitante.Equals(anfitrion, StringComparison.OrdinalIgnoreCase))

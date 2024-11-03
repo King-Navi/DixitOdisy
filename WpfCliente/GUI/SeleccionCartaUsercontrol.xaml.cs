@@ -48,5 +48,9 @@ namespace WpfCliente.GUI
             this.Loaded -= LoadedSeleccionCartaUsercontrol;
 
         }
+        public void ColocarPista(string pista)
+        {
+            labelPista.Content = "Pista : " + pista;
+        }
     }
 }

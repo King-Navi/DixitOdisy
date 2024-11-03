@@ -23,19 +23,36 @@ namespace WcfServicioLibreria.Modelo
     internal class Partida : IObservador//FIXME: Faltan muchas funcionalidades y pruebas
     {
         #region Atributos
-        private const int CANTIDAD_MINIMA_JUGADORES = 3;
+        private const int CANTIDAD_MINIMA_JUGADORES = 2; // 3
+        private const int TIEMPO_ESPERA_JUGADORES = 5;// 20
+        private const int TIEMPO_ESPERA_NARRADOR = 20; // 40
+        private const int TIEMPO_ESPERA_SELECCION = 30; //60
+        private const int TIEMPO_ESPERA_PARA_CONFIRMAR = 25; //5
+
+        private const int JUGADORES_PARTIDA_VACIA = 0;
+        private const int NADIE_ACERTO = 0;
+        private const int RONDAS_MINIMA_PARA_PUNTOS = 3;
+        private const int PUNTOS_RESTADOS_NO_PARTICIPAR = 1;
+        private const int PUNTOS_ACIERTO = 1;
+        private const int AUMENTO_POR_PENALIZACION_NARRADOR = 2;
         private ConcurrentDictionary<string, IPartidaCallback> jugadoresCallback = new ConcurrentDictionary<string, IPartidaCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
         private ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario> jugadoresInformacion = new ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario>();
         private readonly ICondicionVictoria condicionVictoria;
         public ConfiguracionPartida Configuracion { get; private set; }
-        public EventHandler partidaVaciaManejadorEvento;
+        private EstadisticasPartida estadisticasPartida;
+
         private string rutaImagenes;
         private static readonly Random random = new Random();
         private static readonly SemaphoreSlim semaphoreDisco = new SemaphoreSlim(1, 1);
         private static readonly SemaphoreSlim semaphoreEscogerNarrador = new SemaphoreSlim(1, 1);
         private readonly SemaphoreSlim semaphoreEmpezarPartida = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim semaphoreLeerFotoInvitado = new SemaphoreSlim(1, 1);
         private static readonly HttpClient httpCliente = new HttpClient();
+
+        public EventHandler partidaVaciaManejadorEvento;
+
+        public event EventHandler todosListos;
 
         #endregion Atributos
 
@@ -73,7 +90,9 @@ namespace WcfServicioLibreria.Modelo
             RondaActual = 0;
             Escritor = _escritorDisco;
             SolicitarImagen = new SolicitarImagen();
+            estadisticasPartida = new EstadisticasPartida(_configuracion.Tematica);
 
+            todosListos += (sender, e) => Task.Run(async () => await IniciarPartidaSeguroAsync());
         }
 
 
@@ -126,7 +145,7 @@ namespace WcfServicioLibreria.Modelo
             await semaphoreDisco.WaitAsync();
             try
             {
-                var archivos = Directory.GetFiles(rutaImagenes, "*.jpg");
+                var archivos = Directory.GetFiles(rutaImagenes, "*.jpg"); 
 
                 if (archivos.Length == 0)
                 {
@@ -168,7 +187,7 @@ namespace WcfServicioLibreria.Modelo
                 var imagenBytes = Convert.FromBase64String(respuesta.ImagenDatosList[0].Base64Imagen);
                 MemoryStream memoryStream = new MemoryStream(imagenBytes);
                 string rutaDestino = Path.Combine(rutaImagenes, $"{Guid.NewGuid()}.jpg");
-                Escritor.EncolarEscrituraAsync(memoryStream, rutaDestino);
+                Escritor.EncolarEscritura(memoryStream, rutaDestino);
                 resultado = new ImagenCarta
                 {
                     ImagenStream = memoryStream,
@@ -205,15 +224,6 @@ namespace WcfServicioLibreria.Modelo
 
         private void EliminarPartida()
         {
-            IReadOnlyCollection<string> claveEventos = ObtenerNombresJugadores();
-            foreach (var clave in claveEventos)
-            {
-                if (eventosCommunication.ContainsKey(clave))
-                {
-                    eventosCommunication[clave].Desechar();
-                }
-            }
-            eventosCommunication.Clear();
             IReadOnlyCollection<string> claveJugadores = ObtenerNombresJugadores();
             foreach (var clave in claveJugadores)
             {
@@ -223,6 +233,16 @@ namespace WcfServicioLibreria.Modelo
                 }
             }
             jugadoresCallback.Clear();
+            IReadOnlyCollection<string> claveEventos = ObtenerNombresJugadores();
+            foreach (var clave in claveEventos)
+            {
+                if (eventosCommunication.ContainsKey(clave))
+                {
+                    eventosCommunication[clave].Desechar();
+                }
+            }
+            eventosCommunication.Clear();
+
             EnPartidaVacia();
         }
 
@@ -266,29 +286,21 @@ namespace WcfServicioLibreria.Modelo
                     return;
                 }
 
-                int tiempoEspera = 10; //Evaluar cuanto es necesario
                 DateTime inicioEspera = DateTime.Now;
 
-                while ((DateTime.Now - inicioEspera).TotalSeconds < tiempoEspera)
+                while ((DateTime.Now - inicioEspera).TotalSeconds < TIEMPO_ESPERA_JUGADORES)
                 {
-                    //if (jugadoresCallback.Count >= minimoJugadores)
-                    //{
-                    //    partidaEnProgreso = true;
-                    //    IniciarPartida();
-                    //    break;
-                    //}
-
                     await Task.Delay(1000);
                 }
 
-                if (!PartidaEnProgreso && jugadoresCallback.Count >= CANTIDAD_MINIMA_JUGADORES)// && jugadoresConectados.Count >= minimoJugadores
+                if (!PartidaEnProgreso && jugadoresCallback.Count >= CANTIDAD_MINIMA_JUGADORES)
                 {
                     PartidaEnProgreso = true;
-                    IniciarPartida();
+                    todosListos?.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
-                    //TODO: No empezar ya uqe no se cumplio el minimo en un tiempo determinado
+                    //TODO: No empezar ya que no se cumplio el minimo en un tiempo determinado
                     TerminarPartida();
                 }
             }
@@ -298,58 +310,230 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        private void IniciarPartida()
+        private async Task IniciarPartidaSeguroAsync()
         {
-            CambiarRonda();
+            try
+            {
+                await EjecutarRondasAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al ejecutar ronda {RondaActual} :  {ex.Message} ");
+            }
+        }
+        
+        private async Task EjecutarRondasAsync()
+        {
+            while (!VerificarCondicionVictoria() && ContarJugadores() >= CANTIDAD_MINIMA_JUGADORES)
+            {
+                //Tiempos de ronda
+                Console.WriteLine("Ronda: " + RondaActual);
+                await EjecutarRondaAsync();
+                ///Evaluar puntajes de ronda
+                await EvaluarPuntosRondaAsync();
+                ++RondaActual;
+            }
+
+            TerminarPartida();
         }
 
-        private async void CambiarRonda() //FIXME
+        private async Task EvaluarPuntosRondaAsync()  //FIXME
         {
-            
-            if (VerificarCondicionVictoria() || ContarJugadores() < CANTIDAD_MINIMA_JUGADORES)
+            //TODO: Necesitaremos una clase que nos ayude aqui y sea un data contract para estarla pasando
+
+            CalculoPuntosEnSituaciones();
+
+            //TODO:Mostrar resultados
+            try
             {
-                TerminarPartida();
-                return;
+                foreach (var nombre in ObtenerNombresJugadores().ToList())
+                {
+
+                    lock (jugadoresCallback)
+                    {
+                        jugadoresCallback.TryGetValue(nombre, out IPartidaCallback callback);
+                        callback.EnviarEstadisticas(estadisticasPartida);
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+            }
+
+        }
+
+        private void CalculoPuntosEnSituaciones()
+        {
+            bool alguienAdivinoImagen = false;
+            bool todosAdivinaron = true;
+            int totalJugadores = estadisticasPartida.Jugadores.Count;
+            int votosCorrectos = 0;
+
+            // Contar cuántos jugadores acertaron la imagen correcta
+            foreach (var jugadorEleccion in JugadorImagenElegida)
+            {
+                var jugador = estadisticasPartida.Jugadores.SingleOrDefault(j => j.Nombre == jugadorEleccion.Item1);
+
+                if (jugador != null)
+                {
+                    if (jugadorEleccion.Item2 == ClaveImagenCorrectaActual)
+                    {
+                        jugador.Puntos += PUNTOS_ACIERTO;
+                        votosCorrectos++;
+                        alguienAdivinoImagen = true;
+                    }
+                    else
+                    {
+                        todosAdivinaron = false; 
+                    }
+                }
+                else
+                {
+                    // Jugador que no participó, resta 1 punto
+                    jugador.Puntos -= PUNTOS_RESTADOS_NO_PARTICIPAR;
+                }
+            }
+
+            // Evaluar condiciones de puntuación    todos acertaron o nadie acerto
+            if (votosCorrectos == NADIE_ACERTO || votosCorrectos == totalJugadores)
+            {
+                foreach (var jugador in estadisticasPartida.Jugadores)
+                {
+                    // El cuentacuentos no recibe puntos ya que es el que esta siendo penalizado
+                    if (jugador.Nombre != NarradorActual) 
+                    {
+                        jugador.Puntos += AUMENTO_POR_PENALIZACION_NARRADOR;
+                    }
+                }
             }
             else
             {
-                //TODO:Seguir juando
-                await EscogerNarrador();
-                RestablecerDesicionesJugadores();
-                var tiempoParaSiguienteRonda = new CancellationTokenSource();
-                // Espera por confirmación de los jugadores
-                var tareaEspera = Task.Delay(TimeSpan.FromSeconds(60), tiempoParaSiguienteRonda.Token);
-                while (JugadoresPendientes.Any())
+                // Si hay jugadores que acertaron (ya se asignaron los 3 puntos arriba)
+                // asignamos 1 punto a los jugadores por cada voto recibido, máximo 3
+                foreach (var jugadorEleccion in JugadorImagenElegida)
                 {
-
-                    // Si el tiempo se cumple rompe el bucle
-                    if (tareaEspera.IsCompleted)
+                    var jugador = estadisticasPartida.Jugadores.SingleOrDefault(j => j.Nombre == jugadorEleccion.Item2);
+                    if (jugador != null && jugador.Nombre != NarradorActual)
                     {
-                        break;
-                    }
-                    await Task.Delay(TimeSpan.FromSeconds(3));
-                }
-
-                // Si termina el tiempo penaliza a los que no confirmaron
-                if (!tareaEspera.IsCompleted)
-                {
-                    tiempoParaSiguienteRonda.Cancel();
-                    foreach (var jugador in JugadoresPendientes)
-                    {
-                        if (jugadoresCallback.TryGetValue(jugador, out var callback))
-                        {
-                            callback.TurnoPerdidoCallback();
-                        }
+                        jugador.Puntos += Math.Min(3, JugadorImagenElegida.Count(j => j.Item2 == jugador.Nombre));
                     }
                 }
-                ++RondaActual;
-                CambiarRonda();
+            };
+        }
 
+        private async Task EjecutarRondaAsync()
+        {
+            await EscogerNarradorAsync();
+            AvisarQuienEsNarrador();
+
+            // Espera por la confirmación del narrador
+            await EsperarConfirmacionNarradorAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_NARRADOR));
+            //TODO: El narrador no escogio nada
+            //await El narrador no escogio nada
+
+            // Espera por la confirmación de los jugadores
+            await EsperarConfirmacionJugadoresAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_SELECCION));
+
+            ReiniciarRonda();
+
+        }
+
+        private void ReiniciarRonda()
+        {
+            foreach (var nombre in ObtenerNombresJugadores().ToList())
+            {
+                try
+                {
+                    jugadoresCallback.TryGetValue(nombre, out IPartidaCallback callback);
+                    callback.AvanzarRondaCallback(1);
+                }
+                catch (Exception)
+                {
+
+                }
+            };
+        }
+
+        private void AvisarQuienEsNarrador()
+        {
+            foreach (var nombre in ObtenerNombresJugadores().ToList())
+            {
+                try
+                {
+                    jugadoresCallback.TryGetValue(nombre, out IPartidaCallback callback);
+                    if (!NarradorActual.Equals(nombre, StringComparison.OrdinalIgnoreCase))
+                    {
+                        callback?.NotificarNarradorCallback(false);
+                    }
+                }
+                catch (Exception)
+                {
+                    RemoverJugador(nombre);
+                }
+            };
+        }
+
+        private async Task EsperarConfirmacionNarradorAsync(TimeSpan tiempoEspera)
+        {
+            var tiempoParaNarrador = new CancellationTokenSource();
+            var tareaEsperaNarrador = Task.Delay(tiempoEspera, tiempoParaNarrador.Token);
+
+            while (NarradorActual == null || (ClaveImagenCorrectaActual == null && PistaActual == null))
+            {
+                if (tareaEsperaNarrador.IsCompleted)
+                {
+                    Console.WriteLine("Tiempo agotado para el narrador");
+                    break;
+                }
+
+                await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA_PARA_CONFIRMAR));
+            }
+            if (ClaveImagenCorrectaActual == null || PistaActual == null || NarradorActual == null)
+            {
+                throw new Exception("No faltan valores");
+            }
+        }
+
+        private async Task EsperarConfirmacionJugadoresAsync(TimeSpan tiempoEspera)
+        {
+            var tiempoParaJugadores = new CancellationTokenSource();
+            var tareaEsperaJugadores = Task.Delay(tiempoEspera, tiempoParaJugadores.Token);
+
+            while (JugadoresPendientes.Any())
+            {
+                if (tareaEsperaJugadores.IsCompleted)
+                {
+                    Console.WriteLine("Tiempo agotado para los jugadores");
+                    break;
+                }
+
+                await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA_PARA_CONFIRMAR));
+            }
+
+            if (!tareaEsperaJugadores.IsCompleted)
+            {
+                tiempoParaJugadores.Cancel();
+                PenalizarJugadoresSinConfirmar();
+            }
+        }
+
+        private void PenalizarJugadoresSinConfirmar()
+        {
+            foreach (var jugador in JugadoresPendientes)
+            {
+                if (jugadoresCallback.TryGetValue(jugador, out var callback))
+                {
+                    callback.TurnoPerdidoCallback();
+                }
             }
         }
 
         private void RestablecerDesicionesJugadores()
         {
+            NarradorActual = null;
+            ClaveImagenCorrectaActual = null;
+            PistaActual = null;
             lock (JugadoresPendientes)
             {
                 JugadoresPendientes = new ConcurrentBag<string>(jugadoresCallback.Keys);
@@ -362,30 +546,40 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        private async Task EscogerNarrador()
+        private async Task EscogerNarradorAsync()
         {
-            var narrador = ObtenerNombresJugadores().OrderBy(x => random.Next()); //.Take(5)
-
+            RestablecerDesicionesJugadores();
+            var narrador = ObtenerNombresJugadores().OrderBy(x => random.Next()).FirstOrDefault();
+            if (narrador == null)
+            {
+                return;
+            }
             await semaphoreEscogerNarrador.WaitAsync();
             try
             {
 
                 lock (jugadoresCallback)
                 {
-                    jugadoresCallback.TryGetValue(narrador.ToString(), out IPartidaCallback callback);
-                    callback.NotificarNarradorCallback();
+                    jugadoresCallback.TryGetValue(narrador, out IPartidaCallback callbackNarrador);
+                    //No evaluar si es nulll, ya que puede ser null y lo tendria que sacar
+                    callbackNarrador.NotificarNarradorCallback(true);
+                    NarradorActual = narrador;
+                    Console.WriteLine("Se escogio a " + narrador +" como narrador");
                 }
             }
             catch (Exception)
             {
-                semaphoreEscogerNarrador.Release();
-                DesconectarUsuario(narrador.ToString());
-                await EscogerNarrador();
+                DesconectarUsuario(narrador);
             }
             finally
             {
                 semaphoreEscogerNarrador.Release();
             }
+            if (NarradorActual == null) // Si falló, intenta de nuevo fuera del bloqueo del semáforo
+            {
+                await EscogerNarradorAsync();
+            }
+
         }
 
         public void ConfirmacionTurnoJugador(string nombreJugador, string claveImagen)
@@ -405,48 +599,6 @@ namespace WcfServicioLibreria.Modelo
             {
 
             }
-        }
-
-        private void TerminarPartida()
-        //FIXME: Este metodo termina la partida independientemente de lo que este pasando
-        {
-            //Cacular los puntos de rondas menores a 2 no hacer nada
-            CalcularPuntos();
-            
-            //Avisar a todos de la terminacion
-            AvisarPartidaTerminada();
-            //Eliminar la partida (despues de esto la partida ya no existe)
-            EliminarPartida();
-        }
-
-        private void CalcularPuntos()
-        {
-            //TODO: Calcular puntos solo si fueron mas de 3 rondas;
-            if (RondaActual > 3)
-            {
-                
-            }
-            else
-            {
-                
-            }
-        }
-
-        private void AvisarPartidaTerminada()
-        {
-            lock (jugadoresCallback)
-            {
-                foreach (var nombre in jugadoresCallback)
-                {
-                    jugadoresCallback.TryGetValue(nombre.ToString(), out IPartidaCallback callback);
-                    callback?.FinalizarPartida();
-                }
-            }
-        }
-
-        private bool VerificarCondicionVictoria()
-        {
-            return condicionVictoria.Verificar(this);
         }
 
         internal void ConfirmacionTurnoNarrador(string nombreJugador, string claveImagen, string pista)
@@ -471,6 +623,48 @@ namespace WcfServicioLibreria.Modelo
 
         }
 
+        private void TerminarPartida()
+        //FIXME: Este metodo termina la partida independientemente de lo que este pasando
+        {
+            //Cacular los puntos de rondas menores a 3 no hacer nada
+            CalcularPuntos();
+
+            //Avisar a todos de la terminacion
+            AvisarPartidaTerminada();
+            //Eliminar la partida (despues de esto la partida ya no existe)
+            EliminarPartida();
+        }
+
+        private void CalcularPuntos()
+        {
+            //TODO: Calcular puntos solo si fueron mas de 3 rondas;
+            if (RondaActual > RONDAS_MINIMA_PARA_PUNTOS)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
+        private void AvisarPartidaTerminada()
+        {
+            lock (jugadoresCallback)
+            {
+                foreach (var nombre in jugadoresCallback)
+                {
+                    jugadoresCallback.TryGetValue(nombre.ToString(), out IPartidaCallback callback);
+                    callback?.FinalizarPartida();
+                }
+            }
+        }
+
+        private bool VerificarCondicionVictoria()
+        {
+            return condicionVictoria.Verificar(this);
+        }
+
         private void MostrarPistaJugadores()
         {
             lock (jugadoresCallback)
@@ -492,24 +686,66 @@ namespace WcfServicioLibreria.Modelo
         #region ManejoJugadores
         internal bool AgregarJugador(string nombreJugador, IPartidaCallback nuevoContexto) //FIXME
         {
+            //TODO: Si partida progreso tal vez deberiamos evitar que se unan 
             bool resultado = false;
             jugadoresCallback.AddOrUpdate(nombreJugador, nuevoContexto, (key, oldValue) => nuevoContexto);
+            //TODO:Asegurarse que es un contexto valido, tal vez no es necesario
+            //try
+            //{
+            //    nuevoContexto.Ping();
+            //}
+            //catch (Exception)
+            //{
+            //    jugadoresCallback.TryRemove(nombreJugador, out _);
+            //    return false;
+            //}
             if (jugadoresCallback.TryGetValue(nombreJugador, out IPartidaCallback contextoCambiado))
             {
                 if (ReferenceEquals(nuevoContexto, contextoCambiado))
                 {
                     eventosCommunication.TryAdd(nombreJugador, new DesconectorEventoManejador((ICommunicationObject)contextoCambiado, this, nombreJugador));
+                    //// Verificar si todos los jugadores están listos
+                    //if (TodosEstanListos())
+                    //{
+                    //    // Disparar el evento
+                    //    TodosListos?.Invoke(this, EventArgs.Empty);
+                    //}
                     resultado = true;
                 }
             }
             return resultado;
         }
 
-        internal void AvisarNuevoJugador(string nombreJugador)
+        internal async Task AvisarNuevoJugadorAsync(string nombreJugador)
         {
             DAOLibreria.ModeloBD.Usuario informacionUsuario = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
             //TODO: Si es null significa que es invitado
-            
+            bool esInvitado = false;
+            if (informacionUsuario == null)
+            {
+                await semaphoreLeerFotoInvitado.WaitAsync();
+                try
+                {
+                    //TODO: Hacer algo si no hay imagenes
+                    string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Recursos", "FotosInvitados");
+                    var archivos = Directory.GetFiles(ruta, "*.png");
+                    string archivoAleatorio = archivos[random.Next(archivos.Length)];
+                    string nombreSinExtension = Path.GetFileNameWithoutExtension(archivoAleatorio);
+                    esInvitado = true;
+                    informacionUsuario = new DAOLibreria.ModeloBD.Usuario
+                    {
+                        gamertag =nombreJugador, 
+                        fotoPerfil = File.ReadAllBytes(archivoAleatorio)
+                    };
+                }
+                catch (Exception)
+                {
+                }
+                finally
+                {
+                    semaphoreLeerFotoInvitado.Release();
+                }
+            }
             lock (jugadoresCallback)
             {
                 lock (jugadoresInformacion)
@@ -518,7 +754,8 @@ namespace WcfServicioLibreria.Modelo
                     Usuario usuario = new Usuario
                     {
                         Nombre = informacionUsuario.gamertag,
-                        FotoUsuario = new MemoryStream(informacionUsuario.fotoPerfil)
+                        FotoUsuario = new MemoryStream(informacionUsuario.fotoPerfil),
+                        EsInvitado = esInvitado
                         //TODO: Si se necesita algo mas del jugador nuevo colocar aqui
                     };
                     // enviar la lista completa de jugadores al nuevo jugador
@@ -552,6 +789,7 @@ namespace WcfServicioLibreria.Modelo
 
         private void AvisarRetiroJugador(string nombreUsuarioEliminado)
         {
+            //TODO:Revisar si se va alguien importante en un momento critico (Podemos ocupar estado para ciertos puntos de la partida)
             lock (jugadoresCallback)
             {
                 lock (jugadoresInformacion)
@@ -601,7 +839,7 @@ namespace WcfServicioLibreria.Modelo
             {
                 eventosJugador.Desechar();
             }
-            if (ContarJugadores() == 0)
+            if (ContarJugadores() == JUGADORES_PARTIDA_VACIA)
             {
                 EliminarPartida();
             }

@@ -12,33 +12,41 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioPartidaSesion
     {
-        public void UnirsePartida(string gamertag, string idPartida)
+
+        public async Task UnirsePartida(string gamertag, string idPartida)
         {
             if (!ValidarPartida(idPartida))
             {
                 return;
             }
+            await semaphoreLeerFotoInvitado.WaitAsync();
             try
             {
                 IPartidaCallback contexto = contextoOperacion.GetCallbackChannel<IPartidaCallback>();
                 partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
-                lock (partida)
+                if (partida.PartidaEnProgreso)
                 {
-                    partida.AgregarJugador(gamertag, contexto);
-                    partida.AvisarNuevoJugador(gamertag);
+                    semaphoreLeerFotoInvitado.Release();
+                    return;
                 }
+                partida.AgregarJugador(gamertag, contexto);
+                await partida.AvisarNuevoJugadorAsync(gamertag);
             }
             catch (Exception excepcion)
             {
                 //TODO: Manejar el error
-            };
+            }
+            finally
+            {
+                semaphoreLeerFotoInvitado.Release();
+            }
         }
 
         public void ConfirmarMovimiento(string nombreJugador, string idPartida, string claveImagen, string pista = null)
         {
-            if (!ValidarPartida(idPartida))
+            if (!ValidarPartida(idPartida)) //
             {
-                throw new FaultException<PartidaFalla>(new PartidaFalla() { PartidaInvalida = true}, new FaultReason("El ID de la partida es invalido"));
+                return;
             }
             try
             {
@@ -62,11 +70,11 @@ namespace WcfServicioLibreria.Manejador
             };
         }
 
-
         public void ExpulsarJugador(string nombreJugador, string idPartida)
         {
             throw new NotImplementedException();
         }
+
         public async Task EmpezarPartida(string nombreJugador, string idPartida) //FIXME: ¿La mehor manera de empezar la partida?
         {
             if (!ValidarPartida(idPartida))

@@ -8,6 +8,7 @@
         <xs:sequence>
           <xs:element minOccurs="0" name="ContraseniaHASH" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Correo" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EsInvitado" type="xs:boolean" />
           <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="FotoUsuario" nillable="true" type="q1:Stream" />
           <xs:element minOccurs="0" name="IdUsuario" type="xs:int" />
           <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
@@ -64,4 +65,28 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ImagenCarta" nillable="true" type="tns:ImagenCarta" />
+  <xs:complexType name="EstadisticasPartida">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Jugadores" nillable="true" type="tns:ArrayOfJugadorEstadisticas" />
+      <xs:element minOccurs="0" name="PrimerLugar" nillable="true" type="tns:JugadorEstadisticas" />
+      <xs:element minOccurs="0" name="SegundoLugar" nillable="true" type="tns:JugadorEstadisticas" />
+      <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Enumerador" minOccurs="0" name="Tematica" type="q7:TematicaPartida" />
+      <xs:element minOccurs="0" name="TercerLugar" nillable="true" type="tns:JugadorEstadisticas" />
+      <xs:element minOccurs="0" name="TotalRondas" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EstadisticasPartida" nillable="true" type="tns:EstadisticasPartida" />
+  <xs:complexType name="ArrayOfJugadorEstadisticas">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="JugadorEstadisticas" nillable="true" type="tns:JugadorEstadisticas" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfJugadorEstadisticas" nillable="true" type="tns:ArrayOfJugadorEstadisticas" />
+  <xs:complexType name="JugadorEstadisticas">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Puntos" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="JugadorEstadisticas" nillable="true" type="tns:JugadorEstadisticas" />
 </xs:schema>

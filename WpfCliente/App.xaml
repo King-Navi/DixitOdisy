@@ -17,6 +17,12 @@
             <!-- Enlazar el Resource Dictionary -->
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Estilos/GeneralEstilo.xaml" />
+                <ResourceDictionary  Source="pack://application:,,,/WpfCliente;component/Estilos/ArcSpinner.xaml"></ResourceDictionary>
+                <ResourceDictionary  Source="pack://application:,,,/WpfCliente;component/Estilos/CogwheelSpinner.xaml"></ResourceDictionary>
+                <ResourceDictionary  Source="pack://application:,,,/WpfCliente;component/Estilos/DotsRingSpinner.xaml"></ResourceDictionary>
+                <ResourceDictionary  Source="pack://application:,,,/WpfCliente;component/Estilos/DonutSpinner.xaml"></ResourceDictionary>
+                <ResourceDictionary  Source="pack://application:,,,/WpfCliente;component/Estilos/ThreeDotsAnimation.xaml"></ResourceDictionary>
+                <ResourceDictionary  Source="pack://application:,,,/WpfCliente;component/Estilos/WaveAnimation.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

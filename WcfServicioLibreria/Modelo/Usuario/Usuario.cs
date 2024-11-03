@@ -37,6 +37,8 @@ namespace WcfServicioLibreria.Modelo
         public string Correo { get => correo; set => correo = value; }
         [DataMember]
         public Stream FotoUsuario { get => fotoUsuario; set => fotoUsuario = value; }
+        [DataMember]
+        public bool EsInvitado { get; set; }
         public EstadoUsuario EstadoJugador { get => estadoJugador; set => estadoJugador = value; }
 
         #endregion Propiedades

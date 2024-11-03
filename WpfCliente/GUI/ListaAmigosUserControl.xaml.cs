@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -52,6 +53,8 @@ namespace WpfCliente.GUI
             timer.Tick += HoraActual;
             timer.Start();
         }
+
+        [DebuggerStepThrough]
         private void HoraActual(object sender, EventArgs e)
         {
             DateTime horaActual = DateTime.Now;

@@ -112,6 +112,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Estilos\Control\ArcSpinner.cs" />
+    <Compile Include="Estilos\Control\CogwheelSpinner.cs" />
+    <Compile Include="Estilos\Control\DonutSpinner.cs" />
+    <Compile Include="Estilos\Control\DotsRingSpinner.cs" />
+    <Compile Include="Estilos\Control\ThreeDotsAnimation.cs" />
+    <Compile Include="Estilos\Control\WaveAnimation.cs" />
+    <Compile Include="Estilos\Converters\DiameterAndThicknessToStrokeDashArrayConverter.cs" />
     <Compile Include="GUI\AmigoUserControl.xaml.cs">
       <DependentUpon>AmigoUserControl.xaml</DependentUpon>
     </Compile>
@@ -126,6 +133,12 @@
     </Compile>
     <Compile Include="GUI\EditarPerfilWindow.xaml.cs">
       <DependentUpon>EditarPerfilWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EsperaRestoJugadoresUserControl.xaml.cs">
+      <DependentUpon>EsperaRestoJugadoresUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\InicioRondaUserControl.xaml.cs">
+      <DependentUpon>InicioRondaUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\ListaAmigosUserControl.xaml.cs">
       <DependentUpon>ListaAmigosUserControl.xaml</DependentUpon>
@@ -150,6 +163,9 @@
     </Compile>
     <Compile Include="GUI\RegistrarUsuarioWindow.xaml.cs">
       <DependentUpon>RegistrarUsuarioWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ResumenRondaUserControl.xaml.cs">
+      <DependentUpon>ResumenRondaUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\SalaEsperaWindow.xaml.cs">
       <DependentUpon>SalaEsperaWindow.xaml</DependentUpon>
@@ -265,7 +281,31 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Estilos\ArcSpinner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Estilos\CogwheelSpinner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Estilos\DonutSpinner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Estilos\DotsRingSpinner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Estilos\GeneralEstilo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Estilos\ThreeDotsAnimation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Estilos\WaveAnimation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -290,6 +330,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\EditarPerfilWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\EsperaRestoJugadoresUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\InicioRondaUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -325,6 +373,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\IniciarSesionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ResumenRondaUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -428,6 +480,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\podioJugador.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

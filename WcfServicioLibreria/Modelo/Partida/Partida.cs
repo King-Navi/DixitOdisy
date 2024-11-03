@@ -24,9 +24,9 @@ namespace WcfServicioLibreria.Modelo
     {
         #region Atributos
         private const int CANTIDAD_MINIMA_JUGADORES = 0; // 3
-        private const int TIEMPO_ESPERA_JUGADORES = 10;// 20
-        private const int TIEMPO_ESPERA_NARRADOR = 20; // 40
-        private const int TIEMPO_ESPERA_SELECCION = 20; //60
+        private const int TIEMPO_ESPERA_JUGADORES = 30;// 20
+        private const int TIEMPO_ESPERA_NARRADOR = 80; // 40
+        private const int TIEMPO_ESPERA_SELECCION = 80; //60
         private const int TIEMPO_ESPERA_PARA_CONFIRMAR = 5; //5
 
         private const int JUGADORES_PARTIDA_VACIA = 0; //0
@@ -120,6 +120,8 @@ namespace WcfServicioLibreria.Modelo
             {
 
             }
+            Console.WriteLine($"Método EnviarImagen llamado.");
+
         }
 
         private async Task<ImagenCarta> CalcularNuevaImagen()

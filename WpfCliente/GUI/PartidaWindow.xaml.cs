@@ -199,7 +199,7 @@ namespace WpfCliente.GUI
                 NoHayConexion();
                 return;
             }
-            Conexion.Partida.UnirsePartida(Singleton.Instance.NombreUsuario, idPartida);
+            await Task.Run(() => Conexion.Partida.UnirsePartidaAsync(Singleton.Instance.NombreUsuario, idPartida));
             //TODO: UnirseChat();
             SolicitarMazo();
             Conexion.Partida.EmpezarPartida(Singleton.Instance.NombreUsuario,

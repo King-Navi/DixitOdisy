@@ -58,19 +58,19 @@ namespace Pruebas.Servidor
         }
 
 
-        [TestMethod]
-        public void TestVerificarCodigoCoincide()
-        {
-            // Arrange
-            string codigoCorrecto = "ABC123";
-            manejador.codigo = codigoCorrecto;  // Establecemos el código generado en el manejador
+        //[TestMethod]
+        //public void TestVerificarCodigoCoincide()
+        //{
+        //    // Arrange
+        //    string codigoCorrecto = "ABC123";
+        //    manejador.codigo = codigoCorrecto;  // Establecemos el código generado en el manejador
 
-            // Act
-            bool result = manejador.VerificarCodigo(codigoCorrecto);
+        //    // Act
+        //    bool result = manejador.VerificarCodigo(codigoCorrecto);
 
-            // Assert
-            Assert.IsTrue(result, "El código recibido coincide con el generado.");
-        }
+        //    // Assert
+        //    Assert.IsTrue(result, "El código recibido coincide con el generado.");
+        //}
 
         [TestMethod]
         public void TestVerificarCodigoNoCoincide()

@@ -13,14 +13,14 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioCorreo
     {
-        public string codigo;
+        public static string codigo;
         public bool VerificarCorreo(Usuario usuario)
         {
             try
             {
                 codigo = GenerarCodigo();
                 string correoUsuario = usuario.Correo;
-                EnviarCorreo(codigo, correoUsuario);
+                Task.Run(() => EnviarCorreoAsync(codigo, correoUsuario));
                 return true;
             }
             catch(Exception ex) 
@@ -35,7 +35,7 @@ namespace WcfServicioLibreria.Manejador
             string codigo = Utilidad.GenerarIdUnico();
             return codigo;
         }
-        public void EnviarCorreo(string codigo, string correoUsuario)
+        public async Task EnviarCorreoAsync(string codigo, string correoUsuario)
         {
             using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587))
             {
@@ -46,7 +46,7 @@ namespace WcfServicioLibreria.Manejador
                 string cuerpo = "Tu código es: " + codigo;
                 using (MailMessage mail = new MailMessage(correo, correoUsuario, asunto, cuerpo))
                 {
-                    smtpClient.Send(mail);
+                    await smtpClient.SendMailAsync(mail);
                 }
             }
         }

@@ -16,7 +16,7 @@ namespace WcfServicioLibreria.Contratos
         [OperationContract]
         bool VerificarCorreo(Usuario usuario);
         string GenerarCodigo();
-        void EnviarCorreo(string codigo, string correo);
+        //void EnviarCorreo(string codigo, string correo);
         [OperationContract]
         bool VerificarCodigo(string codigo);
 

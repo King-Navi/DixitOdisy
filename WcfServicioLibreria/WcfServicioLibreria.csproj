@@ -122,7 +122,7 @@
       <Project>{14e9f882-4cc6-4331-a0ac-b31206796294}</Project>
       <Name>DAOLibreria</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ChatGPTLibreria\ChatGPTLibreria\ChatGPTLibreria.csproj">
+    <ProjectReference Include="..\..\ChatGPTLibreria1\ChatGPTLibreria\ChatGPTLibreria.csproj">
       <Project>{1db22d68-dec2-4b15-81bb-19794b7e8000}</Project>
       <Name>ChatGPTLibreria</Name>
     </ProjectReference>

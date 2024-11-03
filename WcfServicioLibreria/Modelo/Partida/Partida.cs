@@ -187,7 +187,7 @@ namespace WcfServicioLibreria.Modelo
                 var imagenBytes = Convert.FromBase64String(respuesta.ImagenDatosList[0].Base64Imagen);
                 MemoryStream memoryStream = new MemoryStream(imagenBytes);
                 string rutaDestino = Path.Combine(rutaImagenes, $"{Guid.NewGuid()}.jpg");
-                Escritor.EncolarEscritura(memoryStream, rutaDestino);
+                //Escritor.EncolarEscritura(memoryStream, rutaDestino);
                 resultado = new ImagenCarta
                 {
                     ImagenStream = memoryStream,

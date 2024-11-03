@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading;
+using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Utilidades;
@@ -81,7 +82,7 @@ namespace WcfServicioLibreria.Manejador
         public void CerrarAplicacion()
         {
             Console.WriteLine("Guardando las ultimas imagenes...");
-            Escritor.Detener();
+            Task.Run(async () => await Escritor.DetenerAsync());
         }
         #endregion
         #region PartidaSesion

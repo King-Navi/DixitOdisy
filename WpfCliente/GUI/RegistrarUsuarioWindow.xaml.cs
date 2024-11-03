@@ -129,11 +129,10 @@ namespace WpfCliente.GUI
             if (resultado)
             {
                 string codigoIngresado = AbrirVentanaModal();
-                manejadorServicio.EjecutarServicio(proxy =>
+                return manejadorServicio.EjecutarServicio(proxy =>
                 {
                     return proxy.VerificarCodigo(codigoIngresado);
                 });
-                return false;
             }
             else
             {

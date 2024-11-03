@@ -62,7 +62,7 @@
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
-
+            <local:ResumenRondaUserControl></local:ResumenRondaUserControl>
         </Grid>
 
 

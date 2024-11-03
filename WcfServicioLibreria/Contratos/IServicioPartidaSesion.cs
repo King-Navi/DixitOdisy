@@ -48,5 +48,7 @@ namespace WcfServicioLibreria.Contratos
         [ServiceKnownTypeAttribute(typeof(List<JugadorEstadisticas>))]
         [ServiceKnownTypeAttribute(typeof(JugadorEstadisticas))]
         void EnviarEstadisticas(EstadisticasPartida estadisticas);
+        [OperationContract]
+        void CambiarPantallaCallback(int numeroPantalla);
     }
 }

@@ -1250,6 +1250,9 @@ namespace WpfCliente.ServidorDescribelo {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioPartidaSesion/EnviarEstadisticas")]
         void EnviarEstadisticas(WpfCliente.ServidorDescribelo.EstadisticasPartida estadisticas);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioPartidaSesion/CambiarPantallaCallback", ReplyAction="http://tempuri.org/IServicioPartidaSesion/CambiarPantallaCallbackResponse")]
+        void CambiarPantallaCallback(int numeroPantalla);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

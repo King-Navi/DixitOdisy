@@ -23,10 +23,10 @@ namespace WcfServicioLibreria.Modelo
     internal class Partida : IObservador//FIXME: Faltan muchas funcionalidades y pruebas
     {
         #region Atributos
-        private const int CANTIDAD_MINIMA_JUGADORES = 2; // 3
-        private const int TIEMPO_ESPERA_JUGADORES = 20;// 20
-        private const int TIEMPO_ESPERA_NARRADOR = 40; // 40
-        private const int TIEMPO_ESPERA_SELECCION = 50; //60
+        private const int CANTIDAD_MINIMA_JUGADORES = 0; // 3
+        private const int TIEMPO_ESPERA_JUGADORES = 10;// 20
+        private const int TIEMPO_ESPERA_NARRADOR = 20; // 40
+        private const int TIEMPO_ESPERA_SELECCION = 20; //60
         private const int TIEMPO_ESPERA_PARA_CONFIRMAR = 5; //5
 
         private const int JUGADORES_PARTIDA_VACIA = 0; //0
@@ -52,7 +52,9 @@ namespace WcfServicioLibreria.Modelo
 
         public EventHandler partidaVaciaManejadorEvento;
 
-        public event EventHandler todosListos;
+        private event EventHandler todosListos;
+
+        private string[] archivosCache;
 
         #endregion Atributos
 
@@ -93,6 +95,8 @@ namespace WcfServicioLibreria.Modelo
             estadisticasPartida = new EstadisticasPartida(_configuracion.Tematica);
 
             todosListos += (sender, e) => Task.Run(async () => await IniciarPartidaSeguroAsync());
+            archivosCache = Directory.GetFiles(rutaImagenes, "*.jpg");
+
         }
 
 
@@ -101,7 +105,7 @@ namespace WcfServicioLibreria.Modelo
         #region Metodos
 
         #region Imagenes
-        public async Task EnviarImagen(string nombreSolicitante) //FIXME
+        public async Task EnviarImagen(string nombreSolicitante) 
         {
             ImagenCarta imagenCarta = await CalcularNuevaImagen();
 
@@ -125,7 +129,7 @@ namespace WcfServicioLibreria.Modelo
             {
                 if (CartasRestantes <= 0)
                 {
-                    resultado = await SolicitarImagenChatGPTAsync(); //FIXME
+                    resultado = await SolicitarImagenChatGPTAsync(); 
                 }
                 else
                 {
@@ -140,27 +144,26 @@ namespace WcfServicioLibreria.Modelo
             return resultado;
         }
 
-        private async Task<ImagenCarta> LeerImagenDiscoAsync()
+        private async Task<ImagenCarta> LeerImagenDiscoAsync() //FIXME: Cambiar a hilos como el escritor
         {
+            if (archivosCache == null || archivosCache.Length == 0)
+            {
+                archivosCache = Directory.GetFiles(rutaImagenes, "*.jpg");
+            }
+
+            var archivosRestantes = archivosCache.Where(a => !ImagenesUsadas.Contains(Path.GetFileNameWithoutExtension(a))).ToArray();
+
+            if (archivosRestantes.Length == 0)
+            {
+                return await SolicitarImagenChatGPTAsync();
+            }
+
             await semaphoreDisco.WaitAsync();
             try
             {
-                var archivos = Directory.GetFiles(rutaImagenes, "*.jpg"); 
-
-                if (archivos.Length == 0)
-                {
-                    return await SolicitarImagenChatGPTAsync();
-                }
-
-                var archivosRestantes = archivos.Where(a => !ImagenesUsadas.Contains(Path.GetFileNameWithoutExtension(a))).ToArray();
-
-                if (archivosRestantes.Length == 0)
-                {
-                    return await SolicitarImagenChatGPTAsync();
-                }
                 string archivoAleatorio = archivosRestantes[random.Next(archivosRestantes.Length)];
                 string nombreSinExtension = Path.GetFileNameWithoutExtension(archivoAleatorio);
-                byte[] imagenBytes = File.ReadAllBytes(archivoAleatorio);
+                byte[] imagenBytes = await Task.Run(() => File.ReadAllBytes(archivoAleatorio));
                 ImagenesUsadas.Add(nombreSinExtension);
                 return new ImagenCarta
                 {
@@ -329,8 +332,10 @@ namespace WcfServicioLibreria.Modelo
                 //Tiempos de ronda
                 Console.WriteLine("Ronda: " + RondaActual);
                 await EjecutarRondaAsync();
-                ///Evaluar puntajes de ronda
+                ///Evaluar puntajes de ronda y manda a la pantalla
                 await EvaluarPuntosRondaAsync();
+                //Regresa a pantalla 1
+                CambiarPantalla(1);
                 ++RondaActual;
             }
 
@@ -360,6 +365,8 @@ namespace WcfServicioLibreria.Modelo
             catch (Exception)
             {
             }
+            CambiarPantalla(4);
+            await Task.Delay(5000);
 
         }
 
@@ -390,8 +397,10 @@ namespace WcfServicioLibreria.Modelo
                 }
                 else
                 {
+                    //PUEDE SER NULO
+                    //SI LA CONDICION DE ARRIBA EVALUA QUE NO SEA NULO ESTE ES EL CASO EN EL QUE ES NULO
                     // Jugador que no participó, resta 1 punto
-                    jugador.Puntos -= PUNTOS_RESTADOS_NO_PARTICIPAR;
+                    //jugador.Puntos -= PUNTOS_RESTADOS_NO_PARTICIPAR;
                 }
             }
 
@@ -435,18 +444,24 @@ namespace WcfServicioLibreria.Modelo
             // Espera por la confirmación de los jugadores
             await EsperarConfirmacionJugadoresAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_SELECCION));
 
-            ReiniciarRonda();
-
         }
 
-        private void ReiniciarRonda()
+        /// <summary>
+        ///  1.- Inicio ronda
+        /// Escoger carta jugador = 2
+        /// EscogerCataNarrador = 3
+        ///  4.- Estadisitcas
+        ///  5.- Fin Partida
+        /// </summary>
+        /// <param name="numeroPantalla"></param>
+        private void CambiarPantalla(int numeroPantalla)
         {
             foreach (var nombre in ObtenerNombresJugadores().ToList())
             {
                 try
                 {
                     jugadoresCallback.TryGetValue(nombre, out IPartidaCallback callback);
-                    callback.AvanzarRondaCallback(1);
+                    callback.CambiarPantallaCallback(numeroPantalla);
                 }
                 catch (Exception)
                 {
@@ -719,7 +734,6 @@ namespace WcfServicioLibreria.Modelo
         internal async Task AvisarNuevoJugadorAsync(string nombreJugador)
         {
             DAOLibreria.ModeloBD.Usuario informacionUsuario = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
-            //TODO: Si es null significa que es invitado
             bool esInvitado = false;
             if (informacionUsuario == null)
             {

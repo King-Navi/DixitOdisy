@@ -102,6 +102,7 @@
     <Compile Include="Modelo\Partida\EstadisticasPartida.cs" />
     <Compile Include="Modelo\Partida\ICondicionVictoria.cs" />
     <Compile Include="Modelo\Partida\ImagenCarta.cs" />
+    <Compile Include="Modelo\Partida\LectorDisco.cs" />
     <Compile Include="Modelo\Sala\Sala.cs" />
     <Compile Include="Modelo\Usuario\UsuarioContexto.cs" />
     <Compile Include="Modelo\Partida\Partida.cs" />

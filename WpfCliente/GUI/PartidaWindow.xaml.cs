@@ -102,9 +102,9 @@ namespace WpfCliente.GUI
 
         #region IServicioPartidaSesionCallback
 
-        public void AvanzarRondaCallback()
+        public void CambiarPantallaCallback(int numeroPantalla)
         {
-
+            PantallaActual = numeroPantalla;
         }
 
         public void ObtenerJugadorPartidaCallback(Usuario jugardoreNuevoEnSala)
@@ -118,7 +118,6 @@ namespace WpfCliente.GUI
 
         public void AvanzarRondaCallback(int RondaActual)
         {
-            throw new NotImplementedException();
         }
 
         public void TurnoPerdidoCallback()
@@ -164,10 +163,12 @@ namespace WpfCliente.GUI
         #endregion IServicioPartidaSesionCallback
 
         /// <summary>
-        /// Fin partida = 5
         /// InicioRonda = 1
+        /// 
+        /// 
         /// Escoger carta jugador = 2
         /// EscogerCataNarrador = 3
+        /// Fin partida = 5
         /// </summary>
         /// <param name="numeroPantallla"></param>
         public void AvanzarPantalla(int numeroPantallla) //Fixme o algo por el estilo

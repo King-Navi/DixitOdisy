@@ -23,7 +23,7 @@ namespace WcfServicioLibreria.Modelo
         private readonly ConcurrentDictionary<string, ISalaJugadorCallback> jugadoresSalaCallbacks = new ConcurrentDictionary<string, ISalaJugadorCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
         private ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario> jugadoresInformacion = new ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario>();
-        private static readonly Random random = new Random();
+        private static ThreadLocal<Random> random = new ThreadLocal<Random>(() => new Random());
         public EventHandler salaVaciaManejadorEvento;
         private readonly SemaphoreSlim semaphoreLeerFotoInvitado = new SemaphoreSlim(1, 1);
 
@@ -154,7 +154,7 @@ namespace WcfServicioLibreria.Modelo
                     //TODO: Hacer algo si no hay imagenes
                     string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Recursos", "FotosInvitados");
                     var archivos = Directory.GetFiles(ruta, "*.png");
-                    string archivoAleatorio = archivos[random.Next(archivos.Length)];
+                    string archivoAleatorio = archivos[random.Value.Next(archivos.Length)];
                     string nombreSinExtension = Path.GetFileNameWithoutExtension(archivoAleatorio);
                     esInvitado = true;
                     informacionUsuario = new DAOLibreria.ModeloBD.Usuario

@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.ServiceModel;
+using System.ServiceModel.Configuration;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,8 +25,8 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-
-
+    /// Multiples hilos pueden acceder a esto ¡Cuidado!
+    [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     public partial class PartidaWindow : Window, IActualizacionUI, IHabilitadorBotones, IServicioPartidaSesionCallback, INotifyPropertyChanged
     {
         public ICommand ComandoImagenGlobal { get; set; }
@@ -30,6 +34,7 @@ namespace WpfCliente.GUI
         public event PropertyChangedEventHandler PropertyChanged;
         SeleccionCartaUsercontrol seleccionCartasUserControl;
         NarradorSeleccionCartaUserControl narradorSeleccionCartasUserControl;
+        private readonly SemaphoreSlim semaphoreRecibirImagenCallback = new SemaphoreSlim(1,1);
         private bool esNarrador;
         public bool EsNarrador
         {
@@ -73,6 +78,12 @@ namespace WpfCliente.GUI
 
         private async Task SolicitarMazoAsync()
         {
+            //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
+            //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
+            //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
+            //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
+            //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
+            //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
             var tareasSolicitudes = new List<Task>();
             for (int i = 0; i < 6; i++)
             {
@@ -127,8 +138,23 @@ namespace WpfCliente.GUI
 
         public void RecibirImagenCallback(ImagenCarta imagen)
         {
-            imagenesCompartidas.Imagenes.Add(imagen);
-
+            //ESTO PARECE SER EL DEADLOCK :   imagenesCompartidas.Imagenes.Add(imagen);
+            //-----------------Solucion 1:
+            // Verifica si se está ejecutando en el hilo de la UI
+            if (System.Windows.Application.Current.Dispatcher.CheckAccess())
+            {
+                // Si ya está en el hilo de la UI, agrega directamente
+                imagenesCompartidas.Imagenes.Add(imagen);
+            }
+            else
+            {
+                // Si no está en el hilo de la UI, usa el Dispatcher para invocar en el hilo de la UI
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                {
+                    imagenesCompartidas.Imagenes.Add(imagen);
+                });
+            }
+            //
         }
 
         /// <summary>
@@ -162,10 +188,6 @@ namespace WpfCliente.GUI
 
         public async void IniciarValoresPartidaCallback(bool seUnio)
         {
-            if (seUnio)
-            {
-                MessageBox.Show("Te has Unido crack!!!!");
-            }
             await SolicitarMazoAsync();
             Conexion.Partida.EmpezarPartida(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
         }

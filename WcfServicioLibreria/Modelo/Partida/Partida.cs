@@ -24,7 +24,7 @@ namespace WcfServicioLibreria.Modelo
     {
         #region Atributos
         private const int CANTIDAD_MINIMA_JUGADORES = 0; // 3
-        private const int TIEMPO_ESPERA_JUGADORES = 15;// 20
+        private const int TIEMPO_ESPERA_JUGADORES = 9;// 20
         private const int TIEMPO_ESPERA_NARRADOR = 20; // 40
         private const int TIEMPO_ESPERA_SELECCION = 10; //60
         private const int TIEMPO_ESPERA = 5; //5
@@ -48,6 +48,7 @@ namespace WcfServicioLibreria.Modelo
         private static readonly SemaphoreSlim semaphoreEscogerNarrador = new SemaphoreSlim(1, 1);
         private readonly SemaphoreSlim semaphoreEmpezarPartida = new SemaphoreSlim(1, 1);
         private readonly SemaphoreSlim semaphoreLeerFotoInvitado = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim semaphoreEnviandoImagenDeChatGPT = new SemaphoreSlim(1, 1);
         private static readonly HttpClient httpCliente = new HttpClient();
 
         public EventHandler partidaVaciaManejadorEvento;
@@ -55,6 +56,9 @@ namespace WcfServicioLibreria.Modelo
         private event EventHandler todosListos;
 
         private string[] archivosCache;
+
+        private readonly LectorDisco lectorDisco = new LectorDisco();
+
 
         #endregion Atributos
 
@@ -106,37 +110,25 @@ namespace WcfServicioLibreria.Modelo
         #region Metodos
 
         #region Imagenes
-        public async Task EnviarImagen(string nombreSolicitante) 
+        public async Task<bool> EnviarImagen(string nombreSolicitante) 
         {
-            ImagenCarta imagenCarta = await CalcularNuevaImagen();
-
-            try
-            {
-                jugadoresCallback.TryGetValue(nombreSolicitante, out IPartidaCallback callback);
-
-                callback?.RecibirImagenCallback(imagenCarta);
-
-            }
-            catch (Exception)
-            {
-
-            }
             Console.WriteLine($"Método EnviarImagen llamado.");
+            return await CalcularNuevaImagen(nombreSolicitante);
 
         }
 
-        private async Task<ImagenCarta> CalcularNuevaImagen()
+        private async Task<bool> CalcularNuevaImagen(string nombreSolicitante)
         {
-            ImagenCarta resultado = null;
+            bool resultado = false;
             try
             {
                 if (CartasRestantes <= 0)
                 {
-                    resultado = await SolicitarImagenChatGPTAsync(); 
+                    resultado = await SolicitarImagenChatGPTAsync(nombreSolicitante); 
                 }
                 else
                 {
-                    resultado = await LeerImagenDiscoAsync();
+                    resultado = await LeerImagenDiscoAsync(nombreSolicitante);
                     CartasRestantes--;
                 }
             }
@@ -144,10 +136,10 @@ namespace WcfServicioLibreria.Modelo
             {
 
             }
-            return resultado;
+            return true;
         }
 
-        private async Task<ImagenCarta> LeerImagenDiscoAsync() //FIXME: Cambiar a hilos como el escritor
+        private async Task<bool> LeerImagenDiscoAsync(string nombreSolicitante) //FIXME: Cambiar a hilos como el escritor
         {
             if (archivosCache == null || archivosCache.Length == 0)
             {
@@ -158,29 +150,34 @@ namespace WcfServicioLibreria.Modelo
 
             if (archivosRestantes.Length == 0)
             {
-                return await SolicitarImagenChatGPTAsync();
+                // Aquí podrías encolar la solicitud a un método alternativo si necesitas pedir una imagen externa
+                Console.WriteLine($"No quedan imágenes disponibles. Solicitud externa requerida para petion de {nombreSolicitante}");
+                return await SolicitarImagenChatGPTAsync(nombreSolicitante);
             }
 
-            await semaphoreDisco.WaitAsync();
+            string archivoAleatorio = archivosRestantes[random.Next(archivosRestantes.Length)];
+            string nombreSinExtension = Path.GetFileNameWithoutExtension(archivoAleatorio);
+
+            // Encolar la solicitud de lectura y procesarla mediante LectorDisco
             try
             {
-                string archivoAleatorio = archivosRestantes[random.Next(archivosRestantes.Length)];
-                string nombreSinExtension = Path.GetFileNameWithoutExtension(archivoAleatorio);
-                byte[] imagenBytes = await Task.Run(() => File.ReadAllBytes(archivoAleatorio));
+                jugadoresCallback.TryGetValue(nombreSolicitante, out IPartidaCallback callback);
+                lectorDisco.EncolarLecturaEnvio(archivoAleatorio, callback);
+
+                // Agregar el nombre a la lista de imágenes usadas
                 ImagenesUsadas.Add(nombreSinExtension);
-                return new ImagenCarta
-                {
-                    IdImagen = nombreSinExtension,
-                    ImagenStream = new MemoryStream(imagenBytes)
-                };
+
+                // Regresar `true` para indicar que la solicitud se encoló correctamente
+                return true;
             }
-            finally
+            catch (Exception)
             {
-                semaphoreDisco.Release();
             }
+            return false;
+
         }
 
-        private async Task<ImagenCarta> SolicitarImagenChatGPTAsync()
+        private async Task<bool> SolicitarImagenChatGPTAsync(string nombreSolicitante)
         {
 
             ImagenCarta resultado = null;
@@ -199,8 +196,28 @@ namespace WcfServicioLibreria.Modelo
                     ImagenStream = memoryStream,
                     IdImagen = Path.GetFileNameWithoutExtension(rutaDestino)
                 };
+                await semaphoreEnviandoImagenDeChatGPT.WaitAsync();
+                try
+                {
+                    jugadoresCallback.TryGetValue(nombreSolicitante, out IPartidaCallback callback);
+
+                    callback?.RecibirImagenCallback(resultado);
+                    if (callback == null) //BORRAME IF
+                    {
+                        Console.WriteLine($"Callback no encontrado para el jugador: {nombreSolicitante}");
+                    }
+                    return true;
+                }
+                catch (Exception)
+                {
+                }
+                finally
+                {
+                    semaphoreEnviandoImagenDeChatGPT.Release();
+
+                }
             }
-            return resultado;
+            return false;
         }
 
         private string CalcularRutaImagenes(ConfiguracionPartida configuracion)
@@ -248,7 +265,7 @@ namespace WcfServicioLibreria.Modelo
                 }
             }
             eventosCommunication.Clear();
-
+            lectorDisco.DetenerLectura();
             EnPartidaVacia();
         }
 

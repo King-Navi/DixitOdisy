@@ -93,20 +93,21 @@ namespace WcfServicioLibreria.Manejador
             };
         }
 
-        public async Task SolicitarImagenCartaAsync(string nombreJugador, string idPartida)
+        public async Task<bool> SolicitarImagenCartaAsync(string nombreJugador, string idPartida)
         {
             if (!ValidarPartida(idPartida))
             {
-                return;
-            }
+                return false;
+            } 
             try
             {
                 partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
-                await partida.EnviarImagen(nombreJugador);
+                return await partida.EnviarImagen(nombreJugador);
             }
             catch (Exception excepcion)
             {
-            };
+            }
+            return false;
         }
     }
 }

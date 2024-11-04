@@ -3,10 +3,13 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
+using System.ServiceModel;
+using System.Threading;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
 
+[CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
 public class PartidaCallbackImpl : ICommunicationObjectImpl, IPartidaCallback
 {
     // Variables de prueba para almacenar el estado actual de la partida
@@ -17,6 +20,8 @@ public class PartidaCallbackImpl : ICommunicationObjectImpl, IPartidaCallback
     public bool PartidaFinalizada { get; private set; }
     public ConcurrentDictionary<string, Usuario> JugadoresEnPartida { get; private set; } = new ConcurrentDictionary<string, Usuario>();
     public bool Ping { get; set; }
+    private readonly SemaphoreSlim semaphoreRecibirImagenCallback = new SemaphoreSlim(1, 1);
+
     // Eventos para facilitar las pruebas y monitorear las llamadas a los métodos
     public event Action<int> OnAvanzarRonda;
     public event Action OnTurnoPerdido;
@@ -52,6 +57,7 @@ public class PartidaCallbackImpl : ICommunicationObjectImpl, IPartidaCallback
 
     public void RecibirImagenCallback(ImagenCarta imagen)
     {
+        semaphoreRecibirImagenCallback.Wait();
         if (UltimaImagenRecibida == null)
         {
             UltimaImagenRecibida = imagen;
@@ -59,6 +65,7 @@ public class PartidaCallbackImpl : ICommunicationObjectImpl, IPartidaCallback
         Imagenes.TryAdd(imagen.IdImagen, imagen);
         OnRecibirImagen?.Invoke(imagen);
         Console.WriteLine("Imagen recibida en callback");
+        semaphoreRecibirImagenCallback.Release();
     }
 
     public void FinalizarPartida()

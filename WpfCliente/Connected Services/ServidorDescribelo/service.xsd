@@ -226,6 +226,13 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SolicitarImagenCartaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SolicitarImagenCartaResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="EmpezarPartida">
     <xs:complexType>
       <xs:sequence>

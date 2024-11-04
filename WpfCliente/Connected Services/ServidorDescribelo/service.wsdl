@@ -221,6 +221,9 @@
   <wsdl:message name="IServicioPartidaSesion_SolicitarImagenCarta_InputMessage">
     <wsdl:part name="parameters" element="tns:SolicitarImagenCarta" />
   </wsdl:message>
+  <wsdl:message name="IServicioPartidaSesion_SolicitarImagenCarta_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SolicitarImagenCartaResponse" />
+  </wsdl:message>
   <wsdl:message name="IServicioPartidaSesion_EmpezarPartida_InputMessage">
     <wsdl:part name="parameters" element="tns:EmpezarPartida" />
   </wsdl:message>
@@ -437,6 +440,7 @@
     </wsdl:operation>
     <wsdl:operation name="SolicitarImagenCarta">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioPartidaSesion/SolicitarImagenCarta" message="tns:IServicioPartidaSesion_SolicitarImagenCarta_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/SolicitarImagenCartaResponse" message="tns:IServicioPartidaSesion_SolicitarImagenCarta_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="EmpezarPartida">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioPartidaSesion/EmpezarPartida" message="tns:IServicioPartidaSesion_EmpezarPartida_InputMessage" />
@@ -734,6 +738,9 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="EmpezarPartida">
       <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/EmpezarPartida" style="document" />

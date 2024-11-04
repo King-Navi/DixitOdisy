@@ -1208,11 +1208,11 @@ namespace WpfCliente.ServidorDescribelo {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioPartidaSesion/ExpulsarJugador")]
         System.Threading.Tasks.Task ExpulsarJugadorAsync(string nombreJugador, string idPartida);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioPartidaSesion/SolicitarImagenCarta")]
-        void SolicitarImagenCarta(string nombreJugador, string idPartida);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioPartidaSesion/SolicitarImagenCarta", ReplyAction="http://tempuri.org/IServicioPartidaSesion/SolicitarImagenCartaResponse")]
+        bool SolicitarImagenCarta(string nombreJugador, string idPartida);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioPartidaSesion/SolicitarImagenCarta")]
-        System.Threading.Tasks.Task SolicitarImagenCartaAsync(string nombreJugador, string idPartida);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioPartidaSesion/SolicitarImagenCarta", ReplyAction="http://tempuri.org/IServicioPartidaSesion/SolicitarImagenCartaResponse")]
+        System.Threading.Tasks.Task<bool> SolicitarImagenCartaAsync(string nombreJugador, string idPartida);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioPartidaSesion/EmpezarPartida")]
         void EmpezarPartida(string nombreJugador, string idPartida);
@@ -1310,11 +1310,11 @@ namespace WpfCliente.ServidorDescribelo {
             return base.Channel.ExpulsarJugadorAsync(nombreJugador, idPartida);
         }
         
-        public void SolicitarImagenCarta(string nombreJugador, string idPartida) {
-            base.Channel.SolicitarImagenCarta(nombreJugador, idPartida);
+        public bool SolicitarImagenCarta(string nombreJugador, string idPartida) {
+            return base.Channel.SolicitarImagenCarta(nombreJugador, idPartida);
         }
         
-        public System.Threading.Tasks.Task SolicitarImagenCartaAsync(string nombreJugador, string idPartida) {
+        public System.Threading.Tasks.Task<bool> SolicitarImagenCartaAsync(string nombreJugador, string idPartida) {
             return base.Channel.SolicitarImagenCartaAsync(nombreJugador, idPartida);
         }
         

@@ -71,14 +71,14 @@ namespace WpfCliente.GUI
 
         }
 
-        private void SolicitarMazo()
+        private async Task SolicitarMazoAsync()
         {
             var tareasSolicitudes = new List<Task>();
             for (int i = 0; i < 6; i++)
             {
                 tareasSolicitudes.Add(Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida));
             }
-            Task.WhenAll(tareasSolicitudes);
+            await Task.WhenAll(tareasSolicitudes);
         }
 
         private void InicializarComponenetes()
@@ -160,12 +160,14 @@ namespace WpfCliente.GUI
 
         }
 
-        public void IniciarValoresPartidaCallback(bool seUnio)
+        public async void IniciarValoresPartidaCallback(bool seUnio)
         {
-            //TODO: UnirseChat();
-            SolicitarMazo();
-            Conexion.Partida.EmpezarPartida(Singleton.Instance.NombreUsuario,
-                                                              Singleton.Instance.IdPartida);
+            if (seUnio)
+            {
+                MessageBox.Show("Te has Unido crack!!!!");
+            }
+            await SolicitarMazoAsync();
+            Conexion.Partida.EmpezarPartida(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
         }
 
         #endregion IServicioPartidaSesionCallback

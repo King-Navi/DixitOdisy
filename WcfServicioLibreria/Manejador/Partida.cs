@@ -80,7 +80,7 @@ namespace WcfServicioLibreria.Manejador
                     lock (partidasdDiccionario)
                     {
                         partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
-                        resultado = partida.PartidaEnProgreso;
+                        resultado = partida.SeLlamoEmpezarPartida;
                     }
 
                 }

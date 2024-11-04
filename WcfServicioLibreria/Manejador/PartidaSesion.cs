@@ -24,11 +24,11 @@ namespace WcfServicioLibreria.Manejador
             {
                 IPartidaCallback contexto = contextoOperacion.GetCallbackChannel<IPartidaCallback>();
                 partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
-                if (partida.PartidaEnProgreso)
-                {
-                    semaphoreLeerFotoInvitado.Release();
-                    return;
-                }
+                //if (partida.SeTerminoEsperaUnirse)
+                //{
+                //    semaphoreLeerFotoInvitado.Release();
+                //    return;
+                //}
                 partida.AgregarJugador(gamertag, contexto);
                 await partida.AvisarNuevoJugadorAsync(gamertag);
                 partida.ConfirmarInclusionPartida(gamertag, contexto);

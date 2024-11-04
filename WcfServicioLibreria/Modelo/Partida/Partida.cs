@@ -24,10 +24,10 @@ namespace WcfServicioLibreria.Modelo
     {
         #region Atributos
         private const int CANTIDAD_MINIMA_JUGADORES = 0; // 3
-        private const int TIEMPO_ESPERA_JUGADORES = 30;// 20
-        private const int TIEMPO_ESPERA_NARRADOR = 80; // 40
-        private const int TIEMPO_ESPERA_SELECCION = 80; //60
-        private const int TIEMPO_ESPERA_PARA_CONFIRMAR = 5; //5
+        private const int TIEMPO_ESPERA_JUGADORES = 15;// 20
+        private const int TIEMPO_ESPERA_NARRADOR = 20; // 40
+        private const int TIEMPO_ESPERA_SELECCION = 10; //60
+        private const int TIEMPO_ESPERA = 5; //5
 
         private const int JUGADORES_PARTIDA_VACIA = 0; //0
         private const int NADIE_ACERTO = 0;//0
@@ -67,7 +67,8 @@ namespace WcfServicioLibreria.Modelo
         public string PistaActual { get; private set; }
         public int RondaActual { get; private set; }
         public int CartasRestantes { get; private set; }
-        public bool PartidaEnProgreso { get; private set; } = false;
+        public bool SeLlamoEmpezarPartida { get; private set; } = false;
+        public bool SeTerminoEsperaUnirse { get; private set; } = false;
 
         private ConcurrentBag<string> ImagenesUsadas { get; set; }
         public ConcurrentBag<string> JugadoresPendientes { get; private set; }
@@ -286,7 +287,7 @@ namespace WcfServicioLibreria.Modelo
             await semaphoreEmpezarPartida.WaitAsync();
             try
             {
-                if (PartidaEnProgreso)
+                if (SeLlamoEmpezarPartida)
                 {
                     return;
                 }
@@ -297,10 +298,10 @@ namespace WcfServicioLibreria.Modelo
                 {
                     await Task.Delay(1000);
                 }
-
-                if (!PartidaEnProgreso && jugadoresCallback.Count >= CANTIDAD_MINIMA_JUGADORES)
+                SeTerminoEsperaUnirse = true;
+                if (!SeLlamoEmpezarPartida && jugadoresCallback.Count >= CANTIDAD_MINIMA_JUGADORES)
                 {
-                    PartidaEnProgreso = true;
+                    SeLlamoEmpezarPartida = true;
                     todosListos?.Invoke(this, EventArgs.Empty);
                 }
                 else
@@ -504,7 +505,7 @@ namespace WcfServicioLibreria.Modelo
                     break;
                 }
 
-                await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA_PARA_CONFIRMAR));
+                await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
             }
             if (ClaveImagenCorrectaActual == null || PistaActual == null || NarradorActual == null)
             {
@@ -525,7 +526,7 @@ namespace WcfServicioLibreria.Modelo
                     break;
                 }
 
-                await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA_PARA_CONFIRMAR));
+                await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
             }
 
             if (!tareaEsperaJugadores.IsCompleted)

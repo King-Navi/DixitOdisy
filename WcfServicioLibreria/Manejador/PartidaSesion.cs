@@ -19,7 +19,6 @@ namespace WcfServicioLibreria.Manejador
             {
                 return;
             }
-            await semaphoreLeerFotoInvitado.WaitAsync();
             try
             {
                 IPartidaCallback contexto = contextoOperacion.GetCallbackChannel<IPartidaCallback>();
@@ -36,10 +35,10 @@ namespace WcfServicioLibreria.Manejador
             catch (Exception excepcion)
             {
                 //TODO: Manejar el error
+                Console.WriteLine("Error en el metodo  UnirsePartida(string gamertag, string idPartida)");
             }
             finally
             {
-                semaphoreLeerFotoInvitado.Release();
             }
         }
 

@@ -64,7 +64,7 @@ namespace WcfServicioLibreria.Modelo
         {
             return jugadoresSalaCallbacks.Keys.ToList().AsReadOnly();
         }
-      
+
         public bool AgregarJugadorSala(string nombreJugador, ISalaJugadorCallback nuevoContexto)
         {
             bool resultado = false;
@@ -90,7 +90,7 @@ namespace WcfServicioLibreria.Modelo
         {
             jugadoresSalaCallbacks.TryRemove(nombreJugador, out ISalaJugadorCallback _);
             eventosCommunication.TryRemove(nombreJugador, out DesconectorEventoManejador eventosJugador);
-            jugadoresInformacion.TryRemove(nombreJugador, out  _);
+            jugadoresInformacion.TryRemove(nombreJugador, out _);
             if (eventosJugador != null)
             {
                 eventosJugador.Desechar();
@@ -100,7 +100,7 @@ namespace WcfServicioLibreria.Modelo
                 EliminarSala();
             }
         }
-        private void EliminarSala() 
+        private void EliminarSala()
         {
             IReadOnlyCollection<string> claveJugadores = ObtenerNombresJugadoresSala();
             foreach (var clave in claveJugadores)
@@ -120,7 +120,7 @@ namespace WcfServicioLibreria.Modelo
                 }
             }
             eventosCommunication.Clear();
-            
+
             EnSalaVacia();
 
         }
@@ -207,7 +207,7 @@ namespace WcfServicioLibreria.Modelo
                             }
                         }
                     }
-                   
+
                 }
             }
         }
@@ -237,30 +237,52 @@ namespace WcfServicioLibreria.Modelo
                                 catch (Exception)
                                 {
                                 }
-                            } 
+                            }
                         }
                     }
                 }
             }
         }
 
-        internal void AvisarComienzoPatida(string nombreSolicitante, string idPartida)
+        /// <summary>
+        /// El 
+        /// </summary>
+        /// <param name="nombreSolicitante"></param>
+        /// <param name="idPartida"></param>
+        internal bool AvisarComienzoPatida(string nombreSolicitante, string idPartida)
         {
+            bool resultado= false;
+            //El anfitrion debe ir al final por la condicion de carrera
             if (nombreSolicitante.Equals(anfitrion, StringComparison.OrdinalIgnoreCase))
             {
-                foreach (var nombre in ObtenerNombresJugadoresSala())
+
+                try
                 {
-                    try
+                    foreach (var nombre in ObtenerNombresJugadoresSala())
                     {
-                        jugadoresSalaCallbacks.TryRemove(nombre, out ISalaJugadorCallback callback);
-                        callback.EmpezarPartidaCallBack(idPartida);
+                        if (!nombre.Equals(anfitrion, StringComparison.OrdinalIgnoreCase))
+                        {
+                            //TODO: Al llamar al callback se salen de la sala lo que provoca que el observador llame a Desconectar()
+                            //Y ocurra una null reference aqui
+                            jugadoresSalaCallbacks.TryGetValue(nombre, out ISalaJugadorCallback callback);
+                            try
+                            {
+                                callback.EmpezarPartidaCallBack(idPartida);
+                            }
+                            catch (CommunicationException)
+                            {
+
+                            }
+                        }
                     }
-                    catch (Exception)
-                    {
-                        //TODO. nombre No se puedo coenctar
-                    }
+                    return true;
+                }
+                catch (Exception)
+                {
                 }
             }
+            return false;
+
         }
         #endregion Metodos
     }

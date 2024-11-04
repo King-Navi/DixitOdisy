@@ -10,8 +10,8 @@ namespace WcfServicioLibreria.Contratos
     {
         [OperationContract(IsOneWay = true)]
         Task AgregarJugadorSala(string gamertag, string idSala);
-        [OperationContract(IsOneWay = true)]
-        void ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida);
+        [OperationContract]
+        bool ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida);
         [OperationContract(IsOneWay = true)]
         void AsignarColor(string idSala);
     }

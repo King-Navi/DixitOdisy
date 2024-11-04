@@ -1446,11 +1446,11 @@ namespace WpfCliente.ServidorDescribelo {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSala")]
         System.Threading.Tasks.Task AgregarJugadorSalaAsync(string gamertag, string idSala);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfrition")]
-        void ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfrition", ReplyAction="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfritionResponse")]
+        bool ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfrition")]
-        System.Threading.Tasks.Task ComenzarPartidaAnfritionAsync(string nombre, string idSala, string idPartida);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfrition", ReplyAction="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfritionResponse")]
+        System.Threading.Tasks.Task<bool> ComenzarPartidaAnfritionAsync(string nombre, string idSala, string idPartida);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/AsignarColor")]
         void AsignarColor(string idSala);
@@ -1511,11 +1511,11 @@ namespace WpfCliente.ServidorDescribelo {
             return base.Channel.AgregarJugadorSalaAsync(gamertag, idSala);
         }
         
-        public void ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida) {
-            base.Channel.ComenzarPartidaAnfrition(nombre, idSala, idPartida);
+        public bool ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida) {
+            return base.Channel.ComenzarPartidaAnfrition(nombre, idSala, idPartida);
         }
         
-        public System.Threading.Tasks.Task ComenzarPartidaAnfritionAsync(string nombre, string idSala, string idPartida) {
+        public System.Threading.Tasks.Task<bool> ComenzarPartidaAnfritionAsync(string nombre, string idSala, string idPartida) {
             return base.Channel.ComenzarPartidaAnfritionAsync(nombre, idSala, idPartida);
         }
         

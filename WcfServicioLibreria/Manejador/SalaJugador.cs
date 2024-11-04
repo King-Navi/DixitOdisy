@@ -10,20 +10,21 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioSalaJugador
     {
-        public void ComenzarPartidaAnfrition(string nombre, string idSala , string idPartida)
+        public bool ComenzarPartidaAnfrition(string nombre, string idSala , string idPartida)
         {
             try
             {
                 salasDiccionario.TryGetValue(idSala, out Sala sala);
                 lock (sala)
                 {
-                    sala.AvisarComienzoPatida(nombre, idPartida);
+                    return sala.AvisarComienzoPatida(nombre, idPartida);
                 }
             }
             catch (Exception excepcion)
             {
                 //TODO: Manejar el error
             };
+            return false;
         }
         /// <summary>
         /// Agrega a un jugador a una sala ya existente
@@ -43,8 +44,9 @@ namespace WcfServicioLibreria.Manejador
                 lock (sala)
                 {
                     sala.AgregarJugadorSala(gamertag, contexto);
-                    sala.AvisarNuevoJugador(gamertag);
                 }
+                await sala.AvisarNuevoJugador(gamertag);
+
             }
             catch (Exception excepcion)
             {

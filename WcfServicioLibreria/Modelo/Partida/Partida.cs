@@ -24,7 +24,7 @@ namespace WcfServicioLibreria.Modelo
     {
         #region Constantes
         private const int CANTIDAD_MINIMA_JUGADORES = 0; // 3
-        private const int TIEMPO_ESPERA_JUGADORES = 60;// 20
+        private const int TIEMPO_ESPERA_JUGADORES = 120;// 20
         private const int TIEMPO_ESPERA_NARRADOR = 20; // 40
         private const int TIEMPO_ESPERA_SELECCION = 10; //60
         private const int TIEMPO_ESPERA = 5; //5

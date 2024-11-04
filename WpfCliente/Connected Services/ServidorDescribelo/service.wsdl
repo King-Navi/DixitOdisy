@@ -296,6 +296,9 @@
   <wsdl:message name="IServicioSalaJugador_ComenzarPartidaAnfrition_InputMessage">
     <wsdl:part name="parameters" element="tns:ComenzarPartidaAnfrition" />
   </wsdl:message>
+  <wsdl:message name="IServicioSalaJugador_ComenzarPartidaAnfrition_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ComenzarPartidaAnfritionResponse" />
+  </wsdl:message>
   <wsdl:message name="IServicioSalaJugador_AsignarColor_InputMessage">
     <wsdl:part name="parameters" element="tns:AsignarColor" />
   </wsdl:message>
@@ -505,6 +508,7 @@
     </wsdl:operation>
     <wsdl:operation name="ComenzarPartidaAnfrition">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfrition" message="tns:IServicioSalaJugador_ComenzarPartidaAnfrition_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfritionResponse" message="tns:IServicioSalaJugador_ComenzarPartidaAnfrition_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AsignarColor">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioSalaJugador/AsignarColor" message="tns:IServicioSalaJugador_AsignarColor_InputMessage" />
@@ -879,6 +883,9 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="AsignarColor">
       <soap12:operation soapAction="http://tempuri.org/IServicioSalaJugador/AsignarColor" style="document" />

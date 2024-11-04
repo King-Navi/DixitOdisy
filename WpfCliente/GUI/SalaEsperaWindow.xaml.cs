@@ -141,9 +141,16 @@ namespace WpfCliente.GUI
 
         public void EmpezarPartidaCallBack(string idPartida)
         {
+            if (!Validacion.ExistePartida(idPartida))
+            {
+                //No existe la partida ¿¿??
+                MessageBox.Show("Partida no existe");
+                NoHayConexion();
+                return;
+            }
+            Singleton.Instance.IdPartida = idPartida;
             PartidaWindow partida = new PartidaWindow(idPartida);
             partida.Show();
-
             this.Close();
         }
 
@@ -200,8 +207,15 @@ namespace WpfCliente.GUI
             );
             if (Singleton.Instance.IdPartida != null)
             {
-                Conexion.SalaJugador.ComenzarPartidaAnfrition(
-                    Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala , Singleton.Instance.IdPartida);
+                bool resutlado = Conexion.SalaJugador.ComenzarPartidaAnfrition(Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala , Singleton.Instance.IdPartida);
+                if (resutlado)
+                {
+                    //Ir a partida
+                    PartidaWindow partida = new PartidaWindow(Singleton.Instance.IdPartida);
+                    partida.Show();
+
+                    this.Close();
+                }
             }
         }
 

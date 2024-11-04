@@ -78,18 +78,18 @@ namespace WpfCliente.GUI
 
         private async Task SolicitarMazoAsync()
         {
+            await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
             //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
             //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
             //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
             //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
             //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
-            //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
-            var tareasSolicitudes = new List<Task>();
-            for (int i = 0; i < 6; i++)
-            {
-                tareasSolicitudes.Add(Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida));
-            }
-            await Task.WhenAll(tareasSolicitudes);
+            //var tareasSolicitudes = new List<Task>();
+            //for (int i = 0; i < 6; i++)
+            //{
+            //    tareasSolicitudes.Add(Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida));
+            //}
+            //await Task.WhenAll(tareasSolicitudes);
         }
 
         private void InicializarComponenetes()
@@ -379,6 +379,10 @@ namespace WpfCliente.GUI
 
         }
 
-        
+        private async void BORRAME_SImulacionSolicitarImagen(object sender, RoutedEventArgs e)
+        {
+            await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
+
+        }
     }
 }

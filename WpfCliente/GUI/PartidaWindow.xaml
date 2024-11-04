@@ -101,6 +101,7 @@
                 <Button Height="80" Width="180" Content="SIMULACION CAMBIO RONDA" Margin="941,534,10,53" Click="BORRAME_SImulacionCambioRonda"></Button>
                 <Button Height="80" Width="180" Content="SIMULACION soy jugador" Margin="941,449,10,138" Click="BORRAME_SImulacionCambioRondaSoyJugador"></Button>
                 <Button Height="80" Width="180" Content="SIMULACION soy narrador" Margin="941,334,10,253" Click="BORRAME_SImulacionCambioRondaSoyNarrador"></Button>
+                <Button Height="80" Width="180" Content="SIMULACION solictaImagen" Margin="951,249,0,338" Click="BORRAME_SImulacionSolicitarImagen"></Button>
         </Grid>
 
 

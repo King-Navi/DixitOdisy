@@ -22,19 +22,24 @@ namespace WcfServicioLibreria.Modelo
     /// <ref>https://refactoring.guru/es/design-patterns/strategy</ref>
     internal class Partida : IObservador//FIXME: Faltan muchas funcionalidades y pruebas
     {
-        #region Atributos
+        #region Constantes
         private const int CANTIDAD_MINIMA_JUGADORES = 0; // 3
-        private const int TIEMPO_ESPERA_JUGADORES = 9;// 20
+        private const int TIEMPO_ESPERA_JUGADORES = 60;// 20
         private const int TIEMPO_ESPERA_NARRADOR = 20; // 40
         private const int TIEMPO_ESPERA_SELECCION = 10; //60
         private const int TIEMPO_ESPERA = 5; //5
 
-        private const int JUGADORES_PARTIDA_VACIA = 0; //0
-        private const int NADIE_ACERTO = 0;//0
+        private const int NUM_JUGADOR_PARTIDA_VACIA = 0; //0
+        private const int NUM_JUGADOR_NADIE_ACERTO = 0;//0
         private const int RONDAS_MINIMA_PARA_PUNTOS = 3; //3
         private const int PUNTOS_RESTADOS_NO_PARTICIPAR = 1; //1
         private const int PUNTOS_ACIERTO = 1; //1
-        private const int AUMENTO_POR_PENALIZACION_NARRADOR = 2; //2
+        private const int PUNTOS_PENALIZACION_NARRADOR = 2; //2
+        private const int TIEMPO_MOSTRAR_ESTADISTICAS = 10; //10
+        #endregion Constantes
+        #region Atributos
+
+
         private ConcurrentDictionary<string, IPartidaCallback> jugadoresCallback = new ConcurrentDictionary<string, IPartidaCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
         private ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario> jugadoresInformacion = new ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario>();
@@ -49,13 +54,14 @@ namespace WcfServicioLibreria.Modelo
         private readonly SemaphoreSlim semaphoreEmpezarPartida = new SemaphoreSlim(1, 1);
         private readonly SemaphoreSlim semaphoreLeerFotoInvitado = new SemaphoreSlim(1, 1);
         private readonly SemaphoreSlim semaphoreEnviandoImagenDeChatGPT = new SemaphoreSlim(1, 1);
+        private readonly object lockCartasRestantes = new object();
         private static readonly HttpClient httpCliente = new HttpClient();
 
         public EventHandler partidaVaciaManejadorEvento;
 
         private event EventHandler todosListos;
 
-        private string[] archivosCache;
+        private readonly Lazy<string[]> archivosCache;
 
         private readonly LectorDisco lectorDisco = new LectorDisco();
 
@@ -100,7 +106,7 @@ namespace WcfServicioLibreria.Modelo
             estadisticasPartida = new EstadisticasPartida(_configuracion.Tematica);
 
             todosListos += (sender, e) => Task.Run(async () => await IniciarPartidaSeguroAsync());
-            archivosCache = Directory.GetFiles(rutaImagenes, "*.jpg");
+            archivosCache = new Lazy<string[]>(() => Directory.GetFiles(rutaImagenes, "*.jpg"));
 
         }
 
@@ -129,23 +135,30 @@ namespace WcfServicioLibreria.Modelo
                 else
                 {
                     resultado = await LeerImagenDiscoAsync(nombreSolicitante);
-                    CartasRestantes--;
+                    // Uso de lock para proteger la operación de decremento
+                    lock (lockCartasRestantes)
+                    {
+                        CartasRestantes--;
+                    }
                 }
             }
             catch (Exception)
             {
-
+                Console.Write("Error en el metodo CalcularNuevaImagen(string nombreSolicitante)");
             }
             return true;
         }
 
+        private string[] ObtenerArchivosCache()
+        {
+            return archivosCache.Value;
+        }
+
         private async Task<bool> LeerImagenDiscoAsync(string nombreSolicitante) //FIXME: Cambiar a hilos como el escritor
         {
-            if (archivosCache == null || archivosCache.Length == 0)
-            {
-                archivosCache = Directory.GetFiles(rutaImagenes, "*.jpg");
-            }
+            string[] archivosCache = ObtenerArchivosCache();
 
+            // Filtrar los archivos restantes
             var archivosRestantes = archivosCache.Where(a => !ImagenesUsadas.Contains(Path.GetFileNameWithoutExtension(a))).ToArray();
 
             if (archivosRestantes.Length == 0)
@@ -386,7 +399,7 @@ namespace WcfServicioLibreria.Modelo
             {
             }
             CambiarPantalla(4);
-            await Task.Delay(5000);
+            await Task.Delay(TimeSpan.FromSeconds(TIEMPO_MOSTRAR_ESTADISTICAS));
 
         }
 
@@ -425,14 +438,14 @@ namespace WcfServicioLibreria.Modelo
             }
 
             // Evaluar condiciones de puntuación    todos acertaron o nadie acerto
-            if (votosCorrectos == NADIE_ACERTO || votosCorrectos == totalJugadores)
+            if (votosCorrectos == NUM_JUGADOR_NADIE_ACERTO || votosCorrectos == totalJugadores)
             {
                 foreach (var jugador in estadisticasPartida.Jugadores)
                 {
                     // El cuentacuentos no recibe puntos ya que es el que esta siendo penalizado
                     if (jugador.Nombre != NarradorActual) 
                     {
-                        jugador.Puntos += AUMENTO_POR_PENALIZACION_NARRADOR;
+                        jugador.Puntos += PUNTOS_PENALIZACION_NARRADOR;
                     }
                 }
             }
@@ -873,7 +886,7 @@ namespace WcfServicioLibreria.Modelo
             {
                 eventosJugador.Desechar();
             }
-            if (ContarJugadores() == JUGADORES_PARTIDA_VACIA)
+            if (ContarJugadores() == NUM_JUGADOR_PARTIDA_VACIA)
             {
                 EliminarPartida();
             }

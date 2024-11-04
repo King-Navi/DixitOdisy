@@ -31,6 +31,7 @@ namespace WcfServicioLibreria.Manejador
                 }
                 partida.AgregarJugador(gamertag, contexto);
                 await partida.AvisarNuevoJugadorAsync(gamertag);
+                partida.ConfirmarInclusionPartida(gamertag, contexto);
             }
             catch (Exception excepcion)
             {

@@ -160,6 +160,14 @@ namespace WpfCliente.GUI
 
         }
 
+        public void IniciarValoresPartidaCallback(bool seUnio)
+        {
+            //TODO: UnirseChat();
+            SolicitarMazo();
+            Conexion.Partida.EmpezarPartida(Singleton.Instance.NombreUsuario,
+                                                              Singleton.Instance.IdPartida);
+        }
+
         #endregion IServicioPartidaSesionCallback
 
         /// <summary>
@@ -199,12 +207,7 @@ namespace WpfCliente.GUI
                 NoHayConexion();
                 return;
             }
-            await Task.Run(() => Conexion.Partida.UnirsePartidaAsync(Singleton.Instance.NombreUsuario, idPartida));
-            //TODO: UnirseChat();
-            SolicitarMazo();
-            Conexion.Partida.EmpezarPartida(Singleton.Instance.NombreUsuario,
-                                                              Singleton.Instance.IdPartida);
-
+            Conexion.Partida.UnirsePartida(Singleton.Instance.NombreUsuario, idPartida);
         }
 
         public void ActualizarUI()

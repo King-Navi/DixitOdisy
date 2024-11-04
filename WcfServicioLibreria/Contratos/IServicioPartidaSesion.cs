@@ -28,6 +28,8 @@ namespace WcfServicioLibreria.Contratos
     public interface IPartidaCallback
     {
         [OperationContract]
+        void IniciarValoresPartidaCallback(bool seUnio); //FIXME
+        [OperationContract]
         void AvanzarRondaCallback(int RondaActual);
         [OperationContract(IsOneWay = true)]
         void TurnoPerdidoCallback();

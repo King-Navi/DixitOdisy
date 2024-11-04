@@ -1224,6 +1224,9 @@ namespace WpfCliente.ServidorDescribelo {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IServicioPartidaSesionCallback {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioPartidaSesion/IniciarValoresPartidaCallback", ReplyAction="http://tempuri.org/IServicioPartidaSesion/IniciarValoresPartidaCallbackResponse")]
+        void IniciarValoresPartidaCallback(bool seUnio);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioPartidaSesion/AvanzarRondaCallback", ReplyAction="http://tempuri.org/IServicioPartidaSesion/AvanzarRondaCallbackResponse")]
         void AvanzarRondaCallback(int RondaActual);
         

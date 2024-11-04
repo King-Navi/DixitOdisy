@@ -99,6 +99,9 @@ public class PartidaCallbackImpl : ICommunicationObjectImpl, IPartidaCallback
 
     public void CambiarPantallaCallback(int numeroPantalla)
     {
-        throw new NotImplementedException();
+    }
+
+    public void IniciarValoresPartidaCallback(bool seUnio)
+    {
     }
 }

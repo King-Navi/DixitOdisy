@@ -871,6 +871,18 @@ namespace WcfServicioLibreria.Modelo
             return jugadoresCallback.Count;
         }
 
+        internal void ConfirmarInclusionPartida(string gamertag, IPartidaCallback contexto)
+        {
+            try
+            {
+                contexto.IniciarValoresPartidaCallback(true);
+            }
+            catch (Exception)
+            {
+
+            };
+        }
+
         #endregion ManejoJugadores
 
 

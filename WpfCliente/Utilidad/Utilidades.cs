@@ -7,6 +7,8 @@ namespace WpfCliente.Utilidad
 {
     internal class Utilidades
     {
+        private static Random random = new Random();
+
         private static readonly List<Color> BackgroundColors = new List<Color>
         {
             Color.FromRgb(245, 245, 220), // Beige
@@ -38,6 +40,12 @@ namespace WpfCliente.Utilidad
             }
 
             return absolutePath;
+        }
+
+        public static string GenerarGamertagInvitado()
+        {
+            int numeroAleatorio = random.Next(10000, 99999);
+            return $"guest-{numeroAleatorio}";
         }
     }
 }

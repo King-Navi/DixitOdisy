@@ -45,7 +45,7 @@ namespace WpfCliente.GUI
         private void buttonAceptar_Click(object sender, RoutedEventArgs e)
         {
             if(ValidarCodigo()){
-                ValorIngresado = textBoxCodigo.Text;
+                ValorIngresado = textBoxCodigo.Text.ToUpper();
                 DialogResult = true;
                 this.Close();
             }

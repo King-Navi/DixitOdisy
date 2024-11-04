@@ -27,6 +27,10 @@ namespace WpfCliente.Utilidad
             {
                 validacionGamertag = false;
             }
+            if (gamertag.Contains("guest"))
+            {
+                validacionGamertag = false;
+            }
 
             return regex.IsMatch(gamertag.Trim()) && validacionGamertag;
         }

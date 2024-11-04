@@ -134,17 +134,81 @@ namespace WpfCliente.GUI
         }
 
 
-        private void buttonJugarComoInvitado_Click(object sender, RoutedEventArgs e)
+        private async void buttonJugarComoInvitado_Click(object sender, RoutedEventArgs e)
         {
-            //FIXME
-            //UnirseSalaModalWindow modalWindow = new UnirseSalaModalWindow();
-            //bool? result = modalWindow.ShowDialog();
+            string codigoSala = AbrirVentanaModal();
+            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+            if (!conexionExitosa)
+            {
+                return;
+            }
+            if (codigoSala != null)
+            {
+                if (Validacion.ExisteSala(codigoSala))
+                {
+                    Singleton.Instance.NombreUsuario = Utilidades.GenerarGamertagInvitado();
+                    AbrirVentanaSala(codigoSala);
+                    return;
+                }
+                else
+                {
+                    VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado(this);
+                }
 
-            //if (result == true)
-            //{
-            //    string codigoSala = modalWindow.textBoxCodigoSala.Text;
-            //    SalaEsperaWindow salaEspera = new SalaEsperaWindow(codigoSala);
-            //}
+            }
+        }
+        private string AbrirVentanaModal()
+        {
+            string valorObtenido = null;
+            UnirseSalaModalWindow ventanaModal = new UnirseSalaModalWindow();
+            try
+            {
+                ventanaModal.Owner = this;
+
+            }
+            catch (Exception)
+            {
+
+            }
+            bool? resultado = ventanaModal.ShowDialog();
+
+            if (resultado == true)
+            {
+                valorObtenido = ventanaModal.ValorIngresado;
+            }
+
+
+            return valorObtenido;
+        }
+
+        private async void AbrirVentanaSala(string idSala)
+        {
+            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+            if (!conexionExitosa)
+            {
+                return;
+            }
+            SalaEsperaWindow ventanaSala = new SalaEsperaWindow(idSala);
+            try
+            {
+                ventanaSala.Show();
+
+            }
+            catch (InvalidOperationException)
+            {
+                VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                this.Close();
+                return;
+            }
+            this.Hide();
+            ventanaSala.Closed += (s, args) => {
+                if (!Conexion.CerrarConexionesSalaConChat())
+                {
+                    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                    this.Close();
+                }
+                this.Show();
+            };
         }
 
         private void AbrirVentanaMenu()

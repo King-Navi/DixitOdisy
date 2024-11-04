@@ -32,7 +32,7 @@
         <Label x:Name="labelCodigoSala" Content="Código de la sala:" FontFamily="ROG Fonts" FontSize="16" 
                    HorizontalContentAlignment="Left" ToolTip="Haga clic para copiar el código" HorizontalAlignment="Left" VerticalAlignment="Top"
                    MouseLeftButtonUp="LabelCodigoSala_MouseLeftButtonUp" Width="257" Height="73" Margin="0,5,0,0"/>
-        <Label x:Name="labelCodigo" Content=" " FontFamily="ROG Fonts" FontSize="16" 
+        <Label x:Name="labelCodigo" Content="" FontFamily="ROG Fonts" FontSize="16" 
                 HorizontalContentAlignment="Left" ToolTip="Haga clic para copiar el código" HorizontalAlignment="Left" VerticalAlignment="Top"
                 MouseLeftButtonUp="LabelCodigoSala_MouseLeftButtonUp" Width="257" Height="50" RenderTransformOrigin="0.5,0.585" Margin="0,78,0,0"/>
         

@@ -64,9 +64,6 @@ namespace WpfCliente.GUI
 
         private async void buttonIniciarSesion_Click(object sender, RoutedEventArgs e)
         {
-            //TODO QUITAR
-            textBoxUsuario.Text = "unaay";
-            textBoxContrasenia.Password = "unaay123!";
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
             {
@@ -350,6 +347,7 @@ namespace WpfCliente.GUI
         private void AbrirVentanaCambiarContrasenia(string gamertag)
         {
             CambiarContraseniaWindow cambiarContraseniaWindow = new CambiarContraseniaWindow(gamertag);
+            cambiarContraseniaWindow.Show();
         }
     }
 }

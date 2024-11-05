@@ -122,6 +122,9 @@
     <Compile Include="GUI\AmigoUserControl.xaml.cs">
       <DependentUpon>AmigoUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\CambiarContraseniaWindow.xaml.cs">
+      <DependentUpon>CambiarContraseniaWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\CartaUserControl.xaml.cs">
       <DependentUpon>CartaUserControl.xaml</DependentUpon>
     </Compile>
@@ -310,6 +313,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\AmigoUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\CambiarContraseniaWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

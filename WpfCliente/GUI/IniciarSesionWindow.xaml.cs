@@ -64,6 +64,9 @@ namespace WpfCliente.GUI
 
         private async void buttonIniciarSesion_Click(object sender, RoutedEventArgs e)
         {
+            //TODO QUITAR
+            textBoxUsuario.Text = "unaay";
+            textBoxContrasenia.Password = "unaay123!";
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
             {
@@ -136,7 +139,7 @@ namespace WpfCliente.GUI
 
         private async void buttonJugarComoInvitado_Click(object sender, RoutedEventArgs e)
         {
-            string codigoSala = AbrirVentanaModal();
+            string codigoSala = AbrirVentanaModalSala();
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
             {
@@ -157,7 +160,7 @@ namespace WpfCliente.GUI
 
             }
         }
-        private string AbrirVentanaModal()
+        private string AbrirVentanaModalSala()
         {
             string valorObtenido = null;
             UnirseSalaModalWindow ventanaModal = new UnirseSalaModalWindow();
@@ -177,6 +180,77 @@ namespace WpfCliente.GUI
                 valorObtenido = ventanaModal.ValorIngresado;
             }
 
+
+            return valorObtenido;
+        }
+
+        private string AbrirVentanaModalCorreo()
+        {
+            string valorObtenido = null;
+            bool olvidarContrasenia = true;
+            VerificarCorreoModalWindow ventanaModal = new VerificarCorreoModalWindow(olvidarContrasenia);
+            try
+            {
+                ventanaModal.Owner = this;
+
+            }
+            catch (Exception)
+            {
+
+            }
+            bool? resultado = ventanaModal.ShowDialog();
+
+            if (resultado == true)
+            {
+                valorObtenido = ventanaModal.ValorIngresado;
+            }
+
+
+            return valorObtenido;
+        }
+
+        private string AbrirVentanaModalVerificarCorreo()
+        {
+            string valorObtenido = null;
+            VerificarCorreoModalWindow ventanaModal = new VerificarCorreoModalWindow();
+            try
+            {
+                ventanaModal.Owner = this;
+
+            }
+            catch (Exception)
+            {
+
+            }
+            bool? resultado = ventanaModal.ShowDialog();
+
+            if (resultado == true)
+            {
+                valorObtenido = ventanaModal.ValorIngresado;
+            }
+
+            return valorObtenido;
+        }
+        private string AbrirVentanaModalGamertag()
+        {
+            string valorObtenido = null;
+            bool olvidarContrasenia = false;
+            VerificarCorreoModalWindow ventanaModal = new VerificarCorreoModalWindow(olvidarContrasenia);
+            try
+            {
+                ventanaModal.Owner = this;
+
+            }
+            catch (Exception)
+            {
+
+            }
+            bool? resultado = ventanaModal.ShowDialog();
+
+            if (resultado == true)
+            {
+                valorObtenido = ventanaModal.ValorIngresado;
+            }
 
             return valorObtenido;
         }
@@ -224,6 +298,54 @@ namespace WpfCliente.GUI
             {
                 buttonIniciarSesion.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             }
+        }
+
+        private void buttonOlvidarContrasenia_Click(object sender, RoutedEventArgs e)
+        {
+            OlvidarContrasenia();
+        }
+
+        private void OlvidarContrasenia()
+        {
+            //TODO avisarle al usuario si el correo es invalido
+            string correoIngresado = AbrirVentanaModalCorreo();
+            if(correoIngresado != null && VerificarCorreo(correoIngresado))
+            {
+                string gamertag = AbrirVentanaModalGamertag();
+                AbrirVentanaCambiarContrasenia(gamertag);
+            }
+            
+        }
+
+        private bool VerificarCorreo(string correo)
+        {
+            var manejadorServicio = new ServicioManejador<ServicioCorreoClient>();
+            var resultado = manejadorServicio.EjecutarServicio(proxy => {
+                return proxy.VerificarCorreo(new Usuario()
+                {
+                    ContraseniaHASH = null,
+                    Correo = correo,
+                    Nombre = null,
+                    FotoUsuario = null
+                });
+            });
+            if (resultado)
+            {
+                string codigoIngresado = AbrirVentanaModalVerificarCorreo();
+                return manejadorServicio.EjecutarServicio(proxy =>
+                {
+                    return proxy.VerificarCodigo(codigoIngresado);
+                });
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void AbrirVentanaCambiarContrasenia(string gamertag)
+        {
+            CambiarContraseniaWindow cambiarContraseniaWindow = new CambiarContraseniaWindow(gamertag);
         }
     }
 }

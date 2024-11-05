@@ -97,8 +97,6 @@ namespace WpfCliente.GUI
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            IniciarSesion iniciarSesionWindow = new IniciarSesion();
-            iniciarSesionWindow.Show();
             this.Close();
         }
 
@@ -354,6 +352,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception ex)
             {
+                ManejadorExcepciones.ManejarComponentErrorException(ex);
                 VentanasEmergentes.CrearVentanaEmergenteImagenInvalida(this);
             }
         }

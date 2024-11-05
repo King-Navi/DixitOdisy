@@ -29,6 +29,20 @@ namespace WpfCliente.GUI
             ActualizarUI();
         }
 
+        public VerificarCorreoModalWindow(bool olvidoContrasenia)
+        {
+            InitializeComponent();
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
+            ActualizarUI();
+            if (olvidoContrasenia) {
+                labelIngresarCodigo.Content = Properties.Idioma.labelIngresarCorreo;
+            }else
+            {
+                labelIngresarCodigo.Content = Properties.Idioma.labelIngresarUsuario;
+            }
+        }
+
+
         public void ActualizarUI()
         {
             labelIngresarCodigo.Content = Properties.Idioma.labelIngresarCodigoCorreo;

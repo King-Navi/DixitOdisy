@@ -430,6 +430,24 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Ingresa tu correo electrónico.
+        /// </summary>
+        public static string labelIngresarCorreo {
+            get {
+                return ResourceManager.GetString("labelIngresarCorreo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingresa tu usuario.
+        /// </summary>
+        public static string labelIngresarUsuario {
+            get {
+                return ResourceManager.GetString("labelIngresarUsuario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Iniciar sesión.
         /// </summary>
         public static string labelInicioSesion {
@@ -583,15 +601,6 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Contraseña editada con éxito.
-        /// </summary>
-        public static string mensajeContraseniaEditadaConExito {
-            get {
-                return ResourceManager.GetString("mensajeContraseniaEditadaConExito", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Busca una cadena traducida similar a No puedes usar esa contraseña, usa una más segura.
         /// </summary>
         public static string mensajeContraseniaInsegura {
@@ -691,6 +700,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No se realizó ningún cambio.
+        /// </summary>
+        public static string mensajeNoHuboCambios {
+            get {
+                return ResourceManager.GetString("mensajeNoHuboCambios", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El servidor no se encuentra disponible.
         /// </summary>
         public static string mensajeServidorNoDisponible {
@@ -723,6 +741,15 @@ namespace WpfCliente.Properties {
         public static string mensajeUsuarioEditadoConExito {
             get {
                 return ResourceManager.GetString("mensajeUsuarioEditadoConExito", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ocurrió un error al editar al usuario.
+        /// </summary>
+        public static string mensajeUsuarioEditadoFallo {
+            get {
+                return ResourceManager.GetString("mensajeUsuarioEditadoFallo", resourceCulture);
             }
         }
         

@@ -8,8 +8,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              MinHeight="670" MinWidth="520" Loaded="LoadedSeleccionCartaUsercontrol" Unloaded="UnloadedSeleccionCartaUsercontrol">
-    <Grid d:Background="Azure">
-        <Label x:Name="labelPista" d:Content="Pista: Algo grandre" HorizontalAlignment="Center" VerticalAlignment="Top" d:FontSize="30" Margin="0,20,0,0"/>
+    <Grid>
+        <Grid.Background>
+            <RadialGradientBrush Center="0.3,0.2" RadiusX="0.9" RadiusY="0.8" GradientOrigin="0.1,0.2">
+                <GradientStop Color="#FF230314" Offset="1"/>
+                <GradientStop Color="#FF940051" Offset="0"/>
+                <GradientStop Color="#FF7F2255" Offset="0.332"/>
+                <GradientStop Color="#FF940754" Offset="0.152"/>
+            </RadialGradientBrush>
+        </Grid.Background>
+        <Label x:Name="labelPista" d:Content="Pista: Algo grandre" HorizontalAlignment="Center" VerticalAlignment="Top" d:FontSize="30" Margin="0,20,0,0" Foreground="#FFEAEAEA"/>
+        <TextBox TextAlignment="Center" x:Name="labelInstrucciones" d:Text="En base a la pista escoge una carta, ¡Confunde a tus compañeros!" HorizontalAlignment="Center" VerticalAlignment="Top" d:FontSize="30" Margin="0,59,0,0" TextWrapping="Wrap" Background="{x:Null}" Foreground="White" />
         <Grid Margin="0,100,0,0">
             <ItemsControl ItemsSource="{Binding Imagenes}">
                 <ItemsControl.ItemsPanel>
@@ -21,7 +30,7 @@
                     <DataTemplate>
                         <StackPanel Orientation="Vertical" >
                             <!--Por cada Width x 1.75 = Height -->
-                            <Image Source="{Binding BitmapImagen}" Width="130"> 
+                            <Image Source="{Binding BitmapImagen}" Width="130">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseLeftButtonDown">
                                         <i:InvokeCommandAction Command="{Binding DataContext.ComandoImagenGlobal, RelativeSource={RelativeSource AncestorType=Window}}"

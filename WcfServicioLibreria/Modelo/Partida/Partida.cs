@@ -22,10 +22,19 @@ namespace WcfServicioLibreria.Modelo
     /// <ref>https://refactoring.guru/es/design-patterns/strategy</ref>
     internal class Partida : IObservador//FIXME: Faltan muchas funcionalidades y pruebas
     {
+        #region PantallasCliente
+        private const int PANTALLA_INICIO = 1;
+        private const int PANTALLA_NARRADOR_SELECION = 2;
+        private const int PANTALLA_JUGADOR_SELECION = 3;
+        private const int PANTALLA_TODOS_CARTAS = 4;
+        private const int PANTALLA_ESTADISTICAS = 5;
+        private const int PANTALLA_FIN_PARTIDA = 6;
+        private const int PANTALLA_ESPERA = 7;
+        #endregion PantallasCliente
         #region Constantes
         private const int CANTIDAD_MINIMA_JUGADORES = 0; // 3
-        private const int TIEMPO_ESPERA_JUGADORES = 120;// 20
-        private const int TIEMPO_ESPERA_NARRADOR = 20; // 40
+        private const int TIEMPO_ESPERA_JUGADORES = 10;// 20
+        private const int TIEMPO_ESPERA_NARRADOR = 10; // 40
         private const int TIEMPO_ESPERA_SELECCION = 10; //60
         private const int TIEMPO_ESPERA = 5; //5
 
@@ -49,7 +58,6 @@ namespace WcfServicioLibreria.Modelo
 
         private string rutaImagenes;
         private static readonly Random random = new Random();
-        private static readonly SemaphoreSlim semaphoreDisco = new SemaphoreSlim(1, 1);
         private static readonly SemaphoreSlim semaphoreEscogerNarrador = new SemaphoreSlim(1, 1);
         private readonly SemaphoreSlim semaphoreEmpezarPartida = new SemaphoreSlim(1, 1);
         private readonly SemaphoreSlim semaphoreLeerFotoInvitado = new SemaphoreSlim(1, 1);
@@ -79,6 +87,7 @@ namespace WcfServicioLibreria.Modelo
         public int CartasRestantes { get; private set; }
         public bool SeLlamoEmpezarPartida { get; private set; } = false;
         public bool SeTerminoEsperaUnirse { get; private set; } = false;
+        public bool SelecionoCartaNarrador { get; private set; } = false;
 
         private ConcurrentBag<string> ImagenesUsadas { get; set; }
         public ConcurrentBag<string> JugadoresPendientes { get; private set; }
@@ -368,7 +377,7 @@ namespace WcfServicioLibreria.Modelo
                 ///Evaluar puntajes de ronda y manda a la pantalla
                 await EvaluarPuntosRondaAsync();
                 //Regresa a pantalla 1
-                CambiarPantalla(1);
+                CambiarPantalla(PANTALLA_INICIO);
                 ++RondaActual;
             }
 
@@ -398,7 +407,7 @@ namespace WcfServicioLibreria.Modelo
             catch (Exception)
             {
             }
-            CambiarPantalla(4);
+            CambiarPantalla(PANTALLA_ESTADISTICAS);
             await Task.Delay(TimeSpan.FromSeconds(TIEMPO_MOSTRAR_ESTADISTICAS));
 
         }
@@ -466,6 +475,7 @@ namespace WcfServicioLibreria.Modelo
 
         private async Task EjecutarRondaAsync()
         {
+            RestablecerDesicionesJugadores();
             await EscogerNarradorAsync();
             AvisarQuienEsNarrador();
 
@@ -473,16 +483,29 @@ namespace WcfServicioLibreria.Modelo
             await EsperarConfirmacionNarradorAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_NARRADOR));
             //TODO: El narrador no escogio nada
             //await El narrador no escogio nada
+            if (SelecionoCartaNarrador)
+            {
+                // Espera por la confirmación de los jugadores de la imagen que escogen segun la pista
+                await EsperarConfirmacionJugadoresAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_SELECCION));
+                //Ir a la pantalla para mostrar todas las cartas elegidas
+                CambiarPantalla(PANTALLA_TODOS_CARTAS);
+                ////await AvisarCartasTotales();
 
-            // Espera por la confirmación de los jugadores
-            await EsperarConfirmacionJugadoresAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_SELECCION));
+
+            }
+            else
+            {
+                //El narrador no escogio nada
+            }
+
+
 
         }
 
         /// <summary>
         ///  1.- Inicio ronda
-        /// Escoger carta jugador = 2
-        /// EscogerCataNarrador = 3
+        ///  2.- Escoger carta jugador = 2
+        ///  3.- EscogerCataNarrador
         ///  4.- Estadisitcas
         ///  5.- Fin Partida
         /// </summary>
@@ -539,8 +562,15 @@ namespace WcfServicioLibreria.Modelo
             }
             if (ClaveImagenCorrectaActual == null || PistaActual == null || NarradorActual == null)
             {
-                throw new Exception("No faltan valores");
+                //TODO: Penalizar narrador
+                SelecionoCartaNarrador = false;
+
+                Console.Write($"Partida {IdPartida} el narrador {NarradorActual} no escogio nada se le penalizara");
+                return;
+
             }
+            SelecionoCartaNarrador = true;
+
         }
 
         private async Task EsperarConfirmacionJugadoresAsync(TimeSpan tiempoEspera)
@@ -582,6 +612,7 @@ namespace WcfServicioLibreria.Modelo
             NarradorActual = null;
             ClaveImagenCorrectaActual = null;
             PistaActual = null;
+            SelecionoCartaNarrador = false;
             lock (JugadoresPendientes)
             {
                 JugadoresPendientes = new ConcurrentBag<string>(jugadoresCallback.Keys);
@@ -596,7 +627,6 @@ namespace WcfServicioLibreria.Modelo
 
         private async Task EscogerNarradorAsync()
         {
-            RestablecerDesicionesJugadores();
             var narrador = ObtenerNombresJugadores().OrderBy(x => random.Next()).FirstOrDefault();
             if (narrador == null)
             {

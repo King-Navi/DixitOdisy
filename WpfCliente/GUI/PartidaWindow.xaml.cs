@@ -29,6 +29,13 @@ namespace WpfCliente.GUI
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     public partial class PartidaWindow : Window, IActualizacionUI, IHabilitadorBotones, IServicioPartidaSesionCallback, INotifyPropertyChanged
     {
+        private const int PANTALLA_INICIO= 1;
+        private const int PANTALLA_NARRADOR_SELECION=2 ;
+        private const int PANTALLA_JUGADOR_SELECION = 3;
+        private const int PANTALLA_TODOS_CARTAS = 4;
+        private const int PANTALLA_ESTADISTICAS= 5;
+        private const int PANTALLA_FIN_PARTIDA = 6;
+        private const int PANTALLA_ESPERA= 7 ;
         public ICommand ComandoImagenGlobal { get; set; }
         private RecursosCompartidos imagenesCompartidas;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -44,11 +51,11 @@ namespace WpfCliente.GUI
                 esNarrador = value;
                 if (value)
                 {
-                    AvanzarPantalla(3);
+                    AvanzarPantalla(PANTALLA_JUGADOR_SELECION);
                 }
                 else
                 {
-                    AvanzarPantalla(2);
+                    AvanzarPantalla(PANTALLA_NARRADOR_SELECION);
                 }
                 OnPropertyChanged();
             }
@@ -84,12 +91,12 @@ namespace WpfCliente.GUI
             //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
             //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
             //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
-            //var tareasSolicitudes = new List<Task>();
-            //for (int i = 0; i < 6; i++)
-            //{
-            //    tareasSolicitudes.Add(Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida));
-            //}
-            //await Task.WhenAll(tareasSolicitudes);
+            var tareasSolicitudes = new List<Task>();
+            for (int i = 0; i < 6; i++)
+            {
+                tareasSolicitudes.Add(Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida));
+            }
+            await Task.WhenAll(tareasSolicitudes);
         }
 
         private void InicializarComponenetes()
@@ -101,7 +108,7 @@ namespace WpfCliente.GUI
             seleccionCartasUserControl = new SeleccionCartaUsercontrol(imagenesCompartidas.Imagenes);
             gridPantalla2.Children.Add(seleccionCartasUserControl);
             gridPantalla3.Children.Add(narradorSeleccionCartasUserControl);
-            PantallaActual = 1;
+            PantallaActual = PANTALLA_INICIO;
 
 
         }
@@ -172,7 +179,7 @@ namespace WpfCliente.GUI
             seleccionCartasUserControl.ColocarPista(pista);
             if (EsNarrador)
             {
-                AvanzarPantalla(6);
+                AvanzarPantalla(PANTALLA_ESPERA);
             }
             else
             {
@@ -258,7 +265,7 @@ namespace WpfCliente.GUI
 
         public void FinalizarPartida()
         {
-            AvanzarPantalla(5);
+            AvanzarPantalla(PANTALLA_FIN_PARTIDA);
         }
 
 
@@ -291,7 +298,7 @@ namespace WpfCliente.GUI
             {
                 EscogerImagenPorId(id);
             }
-            AvanzarPantalla(6);
+            AvanzarPantalla(PANTALLA_ESPERA);
         }
         /// <summary>
         /// Envia la imagen escoigda en base a la pista por el Jugador al servidor
@@ -359,6 +366,7 @@ namespace WpfCliente.GUI
         private class RecursosCompartidos
         {
             public ObservableCollection<ImagenCarta> Imagenes { get; } = new ObservableCollection<ImagenCarta>();
+            public ObservableCollection<ImagenCarta> TodasImagenes { get; } = new ObservableCollection<ImagenCarta>();
             public ObservableCollection<JugadorEstadisticas> JugadorEstadisticas { get; } = new ObservableCollection<JugadorEstadisticas>();
 
         }

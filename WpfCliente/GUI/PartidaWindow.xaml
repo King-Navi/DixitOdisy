@@ -37,7 +37,7 @@
                 </Style>
             </Grid.Style>
         </Grid>
-        <!-- Pantalla 3 Solo la ve el jugador-->
+        <!-- Pantalla 3  el jugador escoge carta para la pista-->
         <Grid x:Name="gridPantalla3" Background="Pink">
             <Grid.Style>
                 <Style TargetType="Grid">
@@ -50,7 +50,8 @@
                 </Style>
             </Grid.Style>
         </Grid>
-        <!-- Pantalla 4 Estadisticas de fin de ronda-->
+
+        <!-- Pantalla 4 Pool de toda la cartas-->
         <Grid x:Name="gridPantalla4" Background="Pink">
             <Grid.Style>
                 <Style TargetType="Grid">
@@ -62,12 +63,10 @@
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
-            <local:ResumenRondaUserControl></local:ResumenRondaUserControl>
         </Grid>
 
-
-        <!-- Pantalla 5 -->
-        <Grid x:Name="gridPantalla5" Background="Purple">
+        <!-- Pantalla 5 Estadisticas de fin de ronda-->
+        <Grid x:Name="gridPantalla5" Background="Pink">
             <Grid.Style>
                 <Style TargetType="Grid">
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -78,16 +77,32 @@
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
-            <Label Content="FIN DE LA PARTIDA" FontSize="80"></Label>
+            <local:ResumenRondaUserControl></local:ResumenRondaUserControl>
         </Grid>
 
-        <!-- Pantalla 6 Esperando a otro jugadores-->
-        <Grid x:Name="gridPantalla6" >
+
+        <!-- Pantalla 6 Fin de la partida-->
+        <Grid x:Name="gridPantalla6" Background="Purple">
             <Grid.Style>
                 <Style TargetType="Grid">
                     <Setter Property="Visibility" Value="Collapsed" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding PantallaActual}" Value="6">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Label Content="FIN DE LA PARTIDA" FontSize="80"></Label>
+        </Grid>
+
+        <!-- Pantalla 7 Esperando a otro jugadores-->
+        <Grid x:Name="gridPantalla7" >
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding PantallaActual}" Value="7">
                             <Setter Property="Visibility" Value="Visible"/>
                         </DataTrigger>
                     </Style.Triggers>

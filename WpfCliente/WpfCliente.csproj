@@ -185,6 +185,9 @@
     <Compile Include="GUI\VerificarCorreoModalWindow.xaml.cs">
       <DependentUpon>VerificarCorreoModalWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\VerTodasCartasUserControl.xaml.cs">
+      <DependentUpon>VerTodasCartasUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interfaz\IHabilitadorBotones.cs" />
     <Compile Include="Utilidad\ComandoRele.cs" />
     <Compile Include="Utilidad\Servidor\ChatMensaje.cs" />
@@ -401,6 +404,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\VerificarCorreoModalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\VerTodasCartasUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

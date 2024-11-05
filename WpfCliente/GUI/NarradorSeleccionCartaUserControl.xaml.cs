@@ -5,18 +5,20 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WpfCliente.Interfaz;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class NarradorSeleccionCartaUserControl : UserControl
+    public partial class NarradorSeleccionCartaUserControl : UserControl , IActualizacionUI
     {
         public ObservableCollection<ImagenCarta> Imagenes { get; set; }
 
         public NarradorSeleccionCartaUserControl(ObservableCollection<ImagenCarta> imagenes)
         {
             InitializeComponent();
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento; 
             Imagenes = imagenes;
             this.Loaded += LoadedNarradorSeleccionCartaUsercontrol;
             DataContext = this;
@@ -36,6 +38,22 @@ namespace WpfCliente.GUI
         private void UnloadedNarradorSeleccionCartaUsercontrol(object sender, RoutedEventArgs e)
         {
             this.Loaded -= LoadedNarradorSeleccionCartaUsercontrol;
+
+        }
+
+        public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
+        {
+            ActualizarUI();
+        }
+
+        public void ActualizarUI()
+        {
+            //TODO
+        }
+
+        private void CerrandoUserControl(object sender, RoutedEventArgs e)
+        {
+            CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
 
         }
     }

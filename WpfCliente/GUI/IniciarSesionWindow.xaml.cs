@@ -314,6 +314,10 @@ namespace WpfCliente.GUI
                 string gamertag = AbrirVentanaModalGamertag();
                 AbrirVentanaCambiarContrasenia(gamertag);
             }
+            else
+            {
+                VentanasEmergentes.CrearVentanaEmergenteErrorInesperado(this);
+            }
             
         }
 

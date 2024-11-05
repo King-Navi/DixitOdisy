@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfCliente.Interfaz;
 using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
@@ -20,13 +21,33 @@ namespace WpfCliente.GUI
     /// <summary>
     /// Lógica de interacción para CambiarContraseniaWindow.xaml
     /// </summary>
-    public partial class CambiarContraseniaWindow : Window
+    public partial class CambiarContraseniaWindow : Window, IActualizacionUI
     {
         Usuario usuarioEditado = new Usuario();
         public CambiarContraseniaWindow(string gamertag)
         {
             InitializeComponent();
             usuarioEditado.Nombre = gamertag;
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
+            ActualizarUI();
+        }
+
+        public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
+        {
+            ActualizarUI();
+        }
+
+        public void ActualizarUI()
+        {
+            
+            labelRepetirContrasenia.Content = Properties.Idioma.labelRepitaContraseña;
+            labelContrasenia.Content = Properties.Idioma.labelContrasenia;
+            labelContraseniaInstruccion.Content = Properties.Idioma.labelContraseniaInstruccion;
+            labelContraseniaMinimo.Content = Properties.Idioma.labelContraseniaMinimo;
+            labelContraseniaMaximo.Content = Properties.Idioma.labelContraseniaMaximo;
+            labelContraseniaSimbolos.Content = Properties.Idioma.labelContraseniaSimbolos;
+            buttonEditarContrasenia.Content = Properties.Idioma.buttonCambiarContrasenia;
+            buttonCancelarCambio.Content = Properties.Idioma.buttonCancelar;
         }
 
         private void clicButtonAceptar(object sender, RoutedEventArgs e)
@@ -134,6 +155,8 @@ namespace WpfCliente.GUI
         {
             this.Close();
         }
+
+        
     }
 
 }

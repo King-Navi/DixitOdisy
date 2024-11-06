@@ -86,7 +86,6 @@ namespace WcfServicioLibreria.Manejador
         }
         #endregion
         #region PartidaSesion
-        private readonly SemaphoreSlim semaphoreLeerFotoInvitado = new SemaphoreSlim(100, 100);
 
         #endregion 
     }

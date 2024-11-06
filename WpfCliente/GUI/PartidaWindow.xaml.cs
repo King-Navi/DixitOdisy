@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using System.ServiceModel.Configuration;
@@ -37,10 +38,11 @@ namespace WpfCliente.GUI
         private const int PANTALLA_FIN_PARTIDA = 6;
         private const int PANTALLA_ESPERA= 7 ;
         public ICommand ComandoImagenGlobal { get; set; }
-        private RecursosCompartidos imagenesCompartidas;
+        private RecursosCompartidos recursosCompartidos;
         public event PropertyChangedEventHandler PropertyChanged;
         SeleccionCartaUsercontrol seleccionCartasUserControl;
         NarradorSeleccionCartaUserControl narradorSeleccionCartasUserControl;
+        VerTodasCartasUserControl VerTodasCartasUserControl;
         private readonly SemaphoreSlim semaphoreRecibirImagenCallback = new SemaphoreSlim(1,1);
         private bool esNarrador;
         public bool EsNarrador
@@ -73,6 +75,8 @@ namespace WpfCliente.GUI
         }
 
 
+
+
         public PartidaWindow(string idPartida)
         {
             InitializeComponent();
@@ -102,12 +106,14 @@ namespace WpfCliente.GUI
         private void InicializarComponenetes()
         {
 
-            imagenesCompartidas = new RecursosCompartidos();
+            recursosCompartidos = new RecursosCompartidos();
             ComandoImagenGlobal = new ComandoRele<string>(ComandoImagenPorId);
-            narradorSeleccionCartasUserControl = new NarradorSeleccionCartaUserControl(imagenesCompartidas.Imagenes);
-            seleccionCartasUserControl = new SeleccionCartaUsercontrol(imagenesCompartidas.Imagenes);
+            narradorSeleccionCartasUserControl = new NarradorSeleccionCartaUserControl(recursosCompartidos.Imagenes);
+            seleccionCartasUserControl = new SeleccionCartaUsercontrol(recursosCompartidos.Imagenes);
+            VerTodasCartasUserControl = new VerTodasCartasUserControl(recursosCompartidos.TodasImagenes);
             gridPantalla2.Children.Add(seleccionCartasUserControl);
             gridPantalla3.Children.Add(narradorSeleccionCartasUserControl);
+            gridPantalla4.Children.Add(VerTodasCartasUserControl);
             PantallaActual = PANTALLA_INICIO;
 
 
@@ -122,6 +128,11 @@ namespace WpfCliente.GUI
 
         public void CambiarPantallaCallback(int numeroPantalla)
         {
+            if (numeroPantalla == PANTALLA_INICIO)
+            {
+                //TODO: Reiniciar pista
+                MostrarPistaCallback(""); //FIXME no es la mejor manera
+            }
             PantallaActual = numeroPantalla;
         }
 
@@ -151,14 +162,14 @@ namespace WpfCliente.GUI
             if (System.Windows.Application.Current.Dispatcher.CheckAccess())
             {
                 // Si ya está en el hilo de la UI, agrega directamente
-                imagenesCompartidas.Imagenes.Add(imagen);
+                recursosCompartidos.Imagenes.Add(imagen);
             }
             else
             {
                 // Si no está en el hilo de la UI, usa el Dispatcher para invocar en el hilo de la UI
                 System.Windows.Application.Current.Dispatcher.Invoke(() =>
                 {
-                    imagenesCompartidas.Imagenes.Add(imagen);
+                    recursosCompartidos.Imagenes.Add(imagen);
                 });
             }
             //
@@ -176,6 +187,7 @@ namespace WpfCliente.GUI
         public void MostrarPistaCallback(string pista)
         {
            
+            
             seleccionCartasUserControl.ColocarPista(pista);
             if (EsNarrador)
             {
@@ -214,7 +226,6 @@ namespace WpfCliente.GUI
         {
             PantallaActual = numeroPantallla;
         }
-
 
         private async void UnirsePartida(string idPartida)
         {
@@ -306,7 +317,7 @@ namespace WpfCliente.GUI
         /// <param name="id"></param>
         public void EscogerImagenPorId(string id)
         {
-            ImagenCarta imagenEscogida = imagenesCompartidas.Imagenes.FirstOrDefault(i => i.IdImagen == id);
+            ImagenCarta imagenEscogida = recursosCompartidos.Imagenes.FirstOrDefault(i => i.IdImagen == id);
             if (imagenEscogida == null)
                 return;
             string claveImagen = imagenEscogida.IdImagen;
@@ -315,7 +326,7 @@ namespace WpfCliente.GUI
             if ((bool)resultado)
             {
 
-                imagenesCompartidas.Imagenes.Remove(imagenEscogida);
+                recursosCompartidos.Imagenes.Remove(imagenEscogida);
                 Task.Run(async () =>
                 {
                     await Conexion.VerificarConexion(HabilitarBotones, this);
@@ -337,7 +348,7 @@ namespace WpfCliente.GUI
         /// <param name="id"></param>
         public void EscogerImagenNarrador(string id)
         {
-            ImagenCarta imagenAEscoger = imagenesCompartidas.Imagenes.FirstOrDefault(i => i.IdImagen == id);
+            ImagenCarta imagenAEscoger = recursosCompartidos.Imagenes.FirstOrDefault(i => i.IdImagen == id);
             if (imagenAEscoger == null)
                 return;
             MostrarCartaModelWindow ventanaModal = new MostrarCartaModelWindow(true, imagenAEscoger.BitmapImagen);
@@ -345,7 +356,7 @@ namespace WpfCliente.GUI
             string pista = ventanaModal.Pista;
             if ((bool)resultado)
             {
-                imagenesCompartidas.Imagenes.Remove(imagenAEscoger);
+                recursosCompartidos.Imagenes.Remove(imagenAEscoger);
                 Task.Run(async () =>
                 {
                     await Conexion.VerificarConexion(HabilitarBotones, this);
@@ -368,7 +379,6 @@ namespace WpfCliente.GUI
             public ObservableCollection<ImagenCarta> Imagenes { get; } = new ObservableCollection<ImagenCarta>();
             public ObservableCollection<ImagenCarta> TodasImagenes { get; } = new ObservableCollection<ImagenCarta>();
             public ObservableCollection<JugadorEstadisticas> JugadorEstadisticas { get; } = new ObservableCollection<JugadorEstadisticas>();
-
         }
 
         private void BORRAME_SImulacionCambioRonda(object sender, RoutedEventArgs e)

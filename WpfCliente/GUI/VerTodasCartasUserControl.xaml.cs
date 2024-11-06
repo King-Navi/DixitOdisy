@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,6 +27,9 @@ namespace WpfCliente.GUI
     public partial class VerTodasCartasUserControl : UserControl , IActualizacionUI
     {
         public ObservableCollection<ImagenCarta> TodasImagenes;
+
+
+
         public VerTodasCartasUserControl(ObservableCollection<ImagenCarta> imagenCartas)
         {
             InitializeComponent();
@@ -45,9 +50,7 @@ namespace WpfCliente.GUI
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
         }
-        public void ColocarPista(string pista)
-        {
-            labelPista.Content = "Pista: " + pista;
-        }
+
+
     }
 }

@@ -231,8 +231,7 @@ namespace WpfCliente.GUI
         private string AbrirVentanaModalGamertag()
         {
             string valorObtenido = null;
-            bool olvidarContrasenia = false;
-            VerificarCorreoModalWindow ventanaModal = new VerificarCorreoModalWindow(olvidarContrasenia);
+            IngresarGamertagModalWindow ventanaModal = new IngresarGamertagModalWindow();
             try
             {
                 ventanaModal.Owner = this;
@@ -306,42 +305,23 @@ namespace WpfCliente.GUI
         {
             //TODO avisarle al usuario si el correo es invalido
             string correoIngresado = AbrirVentanaModalCorreo();
-            if(correoIngresado != null && VerificarCorreo(correoIngresado))
+            if (correoIngresado != null && Correo.VerificarCorreo(correoIngresado,this))
             {
                 string gamertag = AbrirVentanaModalGamertag();
-                AbrirVentanaCambiarContrasenia(gamertag);
+                if (gamertag != null && Correo.VerificarCorreoConGamertag(gamertag, correoIngresado))
+                {
+                    AbrirVentanaCambiarContrasenia(gamertag);
+                }
+                else
+                {
+                    VentanasEmergentes.CrearVentanaEmergenteCorreoYGamertagNoCoinciden(this);
+                }
             }
             else
             {
                 VentanasEmergentes.CrearVentanaEmergenteErrorInesperado(this);
             }
             
-        }
-
-        private bool VerificarCorreo(string correo)
-        {
-            var manejadorServicio = new ServicioManejador<ServicioCorreoClient>();
-            var resultado = manejadorServicio.EjecutarServicio(proxy => {
-                return proxy.VerificarCorreo(new Usuario()
-                {
-                    ContraseniaHASH = null,
-                    Correo = correo,
-                    Nombre = null,
-                    FotoUsuario = null
-                });
-            });
-            if (resultado)
-            {
-                string codigoIngresado = AbrirVentanaModalVerificarCorreo();
-                return manejadorServicio.EjecutarServicio(proxy =>
-                {
-                    return proxy.VerificarCodigo(codigoIngresado);
-                });
-            }
-            else
-            {
-                return false;
-            }
         }
 
         private void AbrirVentanaCambiarContrasenia(string gamertag)

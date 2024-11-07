@@ -131,7 +131,7 @@ namespace WpfCliente.GUI
             realizoCambios |= VerificarCambioContrasenia(usuarioEditado);
             if (realizoCambioCorreo)
             {
-                VerificarCorreo();
+                Correo.VerificarCorreo(textBoxCorreo.Text,this);
             }
             if (realizoCambios)
             {
@@ -275,47 +275,6 @@ namespace WpfCliente.GUI
             }
 
             return isValid;
-        }
-
-        private bool VerificarCorreo()
-        {
-            var manejadorServicio = new ServicioManejador<ServicioCorreoClient>();
-            var resultado = manejadorServicio.EjecutarServicio(proxy => {
-                return proxy.VerificarCorreo(new Usuario()
-                {
-                    ContraseniaHASH = null,
-                    Correo = textBoxCorreo.Text,
-                    Nombre = null,
-                    FotoUsuario = null
-                });
-            });
-            if (resultado)
-            {
-                string codigoIngresado = AbrirVentanaModal();
-                return manejadorServicio.EjecutarServicio(proxy =>
-                {
-                    return proxy.VerificarCodigo(codigoIngresado);
-                });
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private string AbrirVentanaModal()
-        {
-            string valorObtenido = null;
-            VerificarCorreoModalWindow ventanaModal = new VerificarCorreoModalWindow();
-            ventanaModal.Owner = this;
-            bool? resultado = ventanaModal.ShowDialog();
-
-            if (resultado == true)
-            {
-                valorObtenido = ventanaModal.ValorIngresado;
-            }
-
-            return valorObtenido;
         }
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

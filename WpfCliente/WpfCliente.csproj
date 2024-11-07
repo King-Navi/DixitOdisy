@@ -140,6 +140,9 @@
     <Compile Include="GUI\EsperaRestoJugadoresUserControl.xaml.cs">
       <DependentUpon>EsperaRestoJugadoresUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\IngresarGamertagModalWindow.xaml.cs">
+      <DependentUpon>IngresarGamertagModalWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\InicioRondaUserControl.xaml.cs">
       <DependentUpon>InicioRondaUserControl.xaml</DependentUpon>
     </Compile>
@@ -190,6 +193,7 @@
     </Compile>
     <Compile Include="Interfaz\IHabilitadorBotones.cs" />
     <Compile Include="Utilidad\ComandoRele.cs" />
+    <Compile Include="Utilidad\Correo.cs" />
     <Compile Include="Utilidad\Servidor\ChatMensaje.cs" />
     <Compile Include="Utilidad\Conexion.cs" />
     <Compile Include="Utilidad\CambiarIdioma.cs" />
@@ -341,6 +345,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\EsperaRestoJugadoresUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\IngresarGamertagModalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

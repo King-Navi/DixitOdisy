@@ -417,4 +417,10 @@
   <data name="labelIngresarUsuario" xml:space="preserve">
     <value>Ingresa tu usuario</value>
   </data>
+  <data name="mensajeCorreoYGamertagNoCoinciden" xml:space="preserve">
+    <value>No encontramos un usuario con el correo electrónico y el gamertag ingresados, intenta de nuevo</value>
+  </data>
+  <data name="tituloCorreoYGamertagNoCoinciden" xml:space="preserve">
+    <value>El correo y el gamertag no coinciden</value>
+  </data>
 </root>

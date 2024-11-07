@@ -1065,6 +1065,12 @@ namespace WpfCliente.ServidorDescribelo {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioCorreo/VerificarCodigo", ReplyAction="http://tempuri.org/IServicioCorreo/VerificarCodigoResponse")]
         System.Threading.Tasks.Task<bool> VerificarCodigoAsync(string codigo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioCorreo/VerificarCorreoConGamertag", ReplyAction="http://tempuri.org/IServicioCorreo/VerificarCorreoConGamertagResponse")]
+        bool VerificarCorreoConGamertag(WpfCliente.ServidorDescribelo.Usuario usuario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioCorreo/VerificarCorreoConGamertag", ReplyAction="http://tempuri.org/IServicioCorreo/VerificarCorreoConGamertagResponse")]
+        System.Threading.Tasks.Task<bool> VerificarCorreoConGamertagAsync(WpfCliente.ServidorDescribelo.Usuario usuario);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1108,6 +1114,14 @@ namespace WpfCliente.ServidorDescribelo {
         
         public System.Threading.Tasks.Task<bool> VerificarCodigoAsync(string codigo) {
             return base.Channel.VerificarCodigoAsync(codigo);
+        }
+        
+        public bool VerificarCorreoConGamertag(WpfCliente.ServidorDescribelo.Usuario usuario) {
+            return base.Channel.VerificarCorreoConGamertag(usuario);
+        }
+        
+        public System.Threading.Tasks.Task<bool> VerificarCorreoConGamertagAsync(WpfCliente.ServidorDescribelo.Usuario usuario) {
+            return base.Channel.VerificarCorreoConGamertagAsync(usuario);
         }
     }
     

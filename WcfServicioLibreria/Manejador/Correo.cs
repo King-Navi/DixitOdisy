@@ -56,5 +56,18 @@ namespace WcfServicioLibreria.Manejador
             Console.WriteLine($"Código esperado: '{codigo}', Código recibido: '{codigoRecibido}'");
             return codigo == codigoRecibido;
         }
+
+        public bool VerificarCorreoConGamertag(Usuario usuario)
+        {
+            try
+            {
+                return DAOLibreria.DAO.UsuarioDAO.ExisteUnicoUsuarioConGamertagYCorreo(usuario.Correo, usuario.Nombre);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al enviar el correo: " + ex.Message);
+                return false;
+            }
+        }
     }
 }

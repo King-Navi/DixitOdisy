@@ -136,5 +136,18 @@ namespace WpfCliente.Utilidad
             ventanaEmergente.ShowDialog();
         }
 
+        public static void CrearVentanaEmergenteCorreoYGamertagNoCoinciden(Window window)
+        {
+            string tituloVentanaEmergente = Properties.Idioma.tituloCorreoYGamertagNoCoinciden;
+            string descripcionVentanaEmergente = Properties.Idioma.mensajeCorreoYGamertagNoCoinciden;
+
+            VentanaEmergente ventanaEmergente = new VentanaEmergente(
+                tituloVentanaEmergente,
+                descripcionVentanaEmergente
+            );
+            ventanaEmergente.Owner = window;
+            ventanaEmergente.ShowDialog();
+        }
+        
     }
 }

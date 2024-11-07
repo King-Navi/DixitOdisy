@@ -619,6 +619,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No encontramos un usuario con el correo electrónico y el gamertag ingresados, intenta de nuevo.
+        /// </summary>
+        public static string mensajeCorreoYGamertagNoCoinciden {
+            get {
+                return ResourceManager.GetString("mensajeCorreoYGamertagNoCoinciden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Hubo un error al conectarse con la base de datos.
         /// </summary>
         public static string mensajeErrorBaseDatos {
@@ -822,6 +831,15 @@ namespace WpfCliente.Properties {
         public static string tituloCodigoCopiado {
             get {
                 return ResourceManager.GetString("tituloCodigoCopiado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El correo y el gamertag no coinciden.
+        /// </summary>
+        public static string tituloCorreoYGamertagNoCoinciden {
+            get {
+                return ResourceManager.GetString("tituloCorreoYGamertagNoCoinciden", resourceCulture);
             }
         }
         

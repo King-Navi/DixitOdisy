@@ -19,6 +19,8 @@ namespace WcfServicioLibreria.Contratos
         //void EnviarCorreo(string codigo, string correo);
         [OperationContract]
         bool VerificarCodigo(string codigo);
+        [OperationContract]
+        bool VerificarCorreoConGamertag(Usuario usuario);
 
     }
 }

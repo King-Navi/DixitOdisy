@@ -18,6 +18,7 @@
             <TextBox x:Name="textBoxReceptorMensaje"
                  Grid.Row="0"
                  IsReadOnly="True"
+                 Background="#E0DCCE"
                  AcceptsReturn="True"
                  VerticalScrollBarVisibility="Auto"
                  TextWrapping="Wrap"

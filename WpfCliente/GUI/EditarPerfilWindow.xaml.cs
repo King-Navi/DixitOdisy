@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WpfCliente.Interfaz;
+using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
@@ -66,14 +67,13 @@ namespace WpfCliente.GUI
         }
         private void ProcesarImagen(string rutaImagen)
         {
-            MessageBox.Show($"Imagen válida seleccionada: {rutaImagen}");
+            VentanasEmergentes.CrearVentanaEmergente("Imagen seleccionada", rutaImagen, this);
             // Aquí puedes asignar la imagen a un control de imagen o hacer más procesamiento
             cambioImagen = true;
         }
         private void MostrarError(string mensaje)
         {
-            //TODO: Podemos hacer una windows de advertencia o ocupar la de error
-            MessageBox.Show(mensaje, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            VentanasEmergentes.CrearVentanaEmergenteErrorInesperado(this);
         }
 
         private void CargarImagen()
@@ -85,7 +85,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
+                ManejadorExcepciones.ManejarComponentErrorException(ex);
             }
         }
 
@@ -97,9 +97,20 @@ namespace WpfCliente.GUI
         public void ActualizarUI()
         {
             labelNombreJugador.Content = Singleton.Instance.NombreUsuario;
-            buttonAceptarCambio.Content = Properties.Idioma.buttonAceptar;
+            buttonEditarUsuario.Content = Properties.Idioma.buttonEditarUsuario;
             buttonCancelarCambio.Content = Properties.Idioma.buttonCancelar;
             buttonCambiarFoto.Content = Properties.Idioma.buttonCambiarFotoPerfil;
+
+            labelRepetirContrasenia.Content = Properties.Idioma.labelRepitaContraseña;
+            labelContrasenia.Content = Properties.Idioma.labelContrasenia;
+            labelCorreo.Content = Properties.Idioma.labelCorreoE;
+            labelFotoPerfil.Content = Properties.Idioma.labelSeleccionarFotoPerfil;
+
+            labelContraseniaInstruccion.Content = Properties.Idioma.labelContraseniaInstruccion;
+            labelContraseniaMinimo.Content = Properties.Idioma.labelContraseniaMinimo;
+            labelContraseniaMaximo.Content = Properties.Idioma.labelContraseniaMaximo;
+            labelContraseniaSimbolos.Content = Properties.Idioma.labelContraseniaSimbolos;
+            
         }
 
         private void clicButtonCancelar(object sender, RoutedEventArgs e)
@@ -109,61 +120,166 @@ namespace WpfCliente.GUI
 
         private void clicButtonAceptar(object sender, RoutedEventArgs e)
         {
+            if (!ValidarCampos()) return;
+
             bool realizoCambios = false;
+            bool realizoCambioCorreo = false;
             Usuario usuarioEditado = new Usuario();
 
-            // Verificar si hay un cambio en la imagen
+            realizoCambios |= VerificarCambioImagen(usuarioEditado);
+            realizoCambioCorreo |= VerificarCambioCorreo(usuarioEditado);
+            realizoCambios |= VerificarCambioContrasenia(usuarioEditado);
+            if (realizoCambioCorreo)
+            {
+                Correo.VerificarCorreo(textBoxCorreo.Text,this);
+            }
+            if (realizoCambios)
+            {
+                GuardarCambiosUsuario(usuarioEditado);
+            }
+            else
+            {
+                MostrarMensajeSinCambios();
+            }
+        }
+
+        private bool VerificarCambioImagen(Usuario usuarioEditado)
+        {
             if (cambioImagen && imageFotoJugador.Source is BitmapImage bitmapImage)
             {
                 usuarioEditado.FotoUsuario = Imagen.ConvertirBitmapImageAMemoryStream(bitmapImage);
-                realizoCambios = true;
+                return true;
             }
+            return false;
+        }
 
-            // Verificar cambio en el correo
+        private bool VerificarCambioCorreo(Usuario usuarioEditado)
+        {
             if (!string.IsNullOrWhiteSpace(textBoxCorreo.Text)
                 && !textBoxCorreo.Text.Contains(" ")
                 && textBoxCorreo.Text != Singleton.Instance.Correo)
             {
                 usuarioEditado.Correo = textBoxCorreo.Text;
-                realizoCambios = true;
+                return true;
+            }
+            return false;
+        }
+
+        private bool VerificarCambioContrasenia(Usuario usuarioEditado)
+        {
+            if (!string.IsNullOrEmpty(textBoxContrasenia.Password)
+                && textBoxContrasenia.Password == textBoxRepetirContrasenia.Password
+                && textBoxContrasenia.Password != Singleton.Instance.ContraniaHash)
+            {
+                usuarioEditado.ContraseniaHASH = Encriptacion.OcuparSHA256(textBoxContrasenia.Password);
+                return true;
+            }
+            return false;
+        }
+
+        private void GuardarCambiosUsuario(Usuario usuarioEditado)
+        {
+            usuarioEditado.IdUsuario = Singleton.Instance.IdUsuario;
+            usuarioEditado.Nombre = Singleton.Instance.NombreUsuario;
+
+            var manejadorServicio = new ServicioManejador<ServicioUsuarioClient>();
+            bool resultado = manejadorServicio.EjecutarServicio(proxy =>
+            {
+                return proxy.EditarUsuario(usuarioEditado);
+            });
+
+            if (resultado)
+            {
+                VentanasEmergentes.CrearVentanaEmergenteDatosEditadosExito(this);
+                Application.Current.Shutdown();
+            }
+            else
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloEditarUsuario, Idioma.mensajeUsuarioEditadoFallo, this);
+            }
+        }
+
+        private void MostrarMensajeSinCambios()
+        {
+            VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloEditarUsuario, Idioma.mensajeNoHuboCambios, this);
+        }
+
+        private bool ValidarCampos()
+        {
+            bool isValid = true;
+            SetDefaultStyles();
+
+            if (!ValidarCaracteristicasContrasenia())
+            {
+                isValid = false;
             }
 
-            // Verificar cambio en la contraseña
-            if (!string.IsNullOrEmpty(textBoxContrania.Text)
-                && textBoxContrania.Text == textBoxConfirmacionContrania.Text
-                && textBoxContrania.Text != Singleton.Instance.ContraniaHash)
+            if (!ValidacionesString.EsCorreoValido(textBoxCorreo.Text.Trim()))
             {
-                usuarioEditado.ContraseniaHASH = Encriptacion.OcuparSHA256(textBoxContrania.Text);
-                realizoCambios = true;
+                textBoxCorreo.Style = (Style)FindResource("ErrorTextBoxStyle");
+                isValid = false;
             }
-            // Si hubo cambios, asignar otros valores críticos y llamar al servicio
-            if (realizoCambios)
-            {
-                usuarioEditado.IdUsuario = Singleton.Instance.IdUsuario;
-                usuarioEditado.Nombre = Singleton.Instance.NombreUsuario;
 
-                var manejadorServicio = new ServicioManejador<ServicioUsuarioClient>();
-                bool  resultado = manejadorServicio.EjecutarServicio(proxy =>
-                {
-                    return proxy.EditarUsuario(usuarioEditado);
-                });
-                if (resultado)
-                {
-                    MessageBox.Show("Exito se cerrara su sesion");
-                    Application.Current.Shutdown();
-                }
-                else
-                {
-                    MessageBox.Show("No se editaron tus datos");
+            return isValid;
+        }
 
-                }
-            }
-            else 
+        private void SetDefaultStyles()
+        {
+            labelContraseniasNoCoinciden.Visibility = Visibility.Collapsed;
+            textBoxCorreo.Style = (Style)FindResource("NormalTextBoxStyle");
+
+            labelContraseniaMinimo.Foreground = Brushes.Red;
+            labelContraseniaMaximo.Foreground = Brushes.Red;
+            labelContraseniaSimbolos.Foreground = Brushes.Red;
+        }
+
+        private bool ValidarCaracteristicasContrasenia()
+        {
+            bool isValid = true;
+
+            if (textBoxContrasenia.Password.Trim().Length >= 5)
             {
-                MessageBox.Show("No hiciste nada");
-            
+                labelContraseniaMinimo.Foreground = Brushes.Green;
             }
-    
+            else
+            {
+                isValid = false;
+            }
+
+            if (textBoxContrasenia.Password.Trim().Length <= 20)
+            {
+                labelContraseniaMaximo.Foreground = Brushes.Green;
+            }
+            else
+            {
+                isValid = false;
+            }
+
+            if (ValidacionesString.IsValidSymbol(textBoxContrasenia.Password))
+            {
+                labelContraseniaSimbolos.Foreground = Brushes.Green;
+            }
+            else
+            {
+                isValid = false;
+            }
+
+            if (textBoxContrasenia.Password != textBoxRepetirContrasenia.Password)
+            {
+                labelContraseniasNoCoinciden.Visibility = Visibility.Visible;
+                isValid = false;
+            }
+            else
+            {
+                labelContraseniasNoCoinciden.Visibility = Visibility.Collapsed;
+            }
+
+            return isValid;
+        }
+
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
         }
     }
 }

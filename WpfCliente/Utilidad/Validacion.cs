@@ -76,30 +76,5 @@ namespace WpfCliente
             }*/
         }
 
-        private bool ValidarFormatoCorreo(string correo)
-        {
-            if (!correo.Contains("@"))
-            {
-                return false;
-            }
-
-            int ultimoArrobaIndex = correo.LastIndexOf("@");
-
-            string localPart = correo.Substring(0, ultimoArrobaIndex);
-            string domainPart = correo.Substring(ultimoArrobaIndex + 1);
-
-            if (string.IsNullOrEmpty(localPart))
-            {
-                return false;
-            }
-
-            if (!domainPart.Contains("."))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
     }
 }

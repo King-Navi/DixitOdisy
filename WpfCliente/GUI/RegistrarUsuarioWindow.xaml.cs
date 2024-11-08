@@ -85,58 +85,31 @@ namespace WpfCliente.GUI
                 }
                 else
                 {
-                    MessageBox.Show("El archivo seleccionado no es una imagen válida. Por favor selecciona una imagen.");
+                    VentanasEmergentes.CrearVentanaEmergenteImagenInvalida(this);
                 }
             }
             else
             {
-                MessageBox.Show("No se seleccionó ninguna imagen.");
+                VentanasEmergentes.CrearVentanaEmergenteImagenInvalida(this);
             }
         }
 
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            IniciarSesion iniciarSesionWindow = new IniciarSesion();
-            iniciarSesionWindow.Show();
             this.Close();
         }
 
 
         private void CrearCuenta()
         {
-            if (ValidarCampos() && VerificarCorreo() && rutaAbsolutaImagen != null)
+            if (ValidarCampos() && Correo.VerificarCorreo(textBoxCorreo.Text,this) && rutaAbsolutaImagen != null)
             {
                 RegistrarUsuario();
             }
             else
             {
                 VentanasEmergentes.CrearVentanaEmergenteErrorInesperado(this);
-            }
-        }
-
-        private bool VerificarCorreo() {
-            var manejadorServicio = new ServicioManejador<ServicioCorreoClient>();
-            var resultado = manejadorServicio.EjecutarServicio(proxy => {
-                return proxy.VerificarCorreo(new Usuario()
-                {
-                    ContraseniaHASH = null,
-                    Correo = textBoxCorreo.Text,
-                    Nombre = textBoxGamertag.Text,
-                    FotoUsuario = null
-                });
-            });
-            if (resultado)
-            {
-                string codigoIngresado = AbrirVentanaModal();
-                return manejadorServicio.EjecutarServicio(proxy =>
-                {
-                    return proxy.VerificarCodigo(codigoIngresado);
-                });
-            }
-            else
-            {
-                return false;
             }
         }
 
@@ -190,7 +163,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception e)
             {
-                //TODO: Manejar error
+                ManejadorExcepciones.ManejarFatalException(e, this);
             }
         }
 
@@ -201,20 +174,6 @@ namespace WpfCliente.GUI
             //TODO desuscribir del evento y suscribirse en otro momento miImagen.mouseLeftButtonDown -= event;
         }
 
-        private string AbrirVentanaModal()
-        {
-            string valorObtenido = null;
-            VerificarCorreoModalWindow ventanaModal = new VerificarCorreoModalWindow();
-            ventanaModal.Owner = this;
-            bool? resultado = ventanaModal.ShowDialog();
-
-            if (resultado == true)
-            {
-                valorObtenido = ventanaModal.ValorIngresado;
-            }
-
-            return valorObtenido;
-        }
 
         public bool ValidarCampos()
         {
@@ -354,7 +313,8 @@ namespace WpfCliente.GUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar la imagen: {ex.Message}");
+                ManejadorExcepciones.ManejarComponentErrorException(ex);
+                VentanasEmergentes.CrearVentanaEmergenteImagenInvalida(this);
             }
         }
 

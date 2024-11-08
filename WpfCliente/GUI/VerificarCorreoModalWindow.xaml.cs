@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using WpfCliente.Interfaz;
 using WpfCliente.Utilidad;
 
@@ -29,10 +30,20 @@ namespace WpfCliente.GUI
             ActualizarUI();
         }
 
+        public VerificarCorreoModalWindow(bool olvidoContrasenia)
+        {
+            InitializeComponent();
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
+            ActualizarUI();
+            if (olvidoContrasenia) {
+                labelIngresarCodigo.Content = Properties.Idioma.labelIngresarCorreo;
+            }
+        }
+
+
         public void ActualizarUI()
         {
             labelIngresarCodigo.Content = Properties.Idioma.labelIngresarCodigoCorreo;
-            buttonEnviarCodigoNuevamente.Content = Properties.Idioma.buttonenviarCodigoNuevamente;
             buttonAceptar.Content = Properties.Idioma.buttonAceptar;
             Title = Properties.Idioma.tituloIngresarCodigoCorreo;
         }
@@ -45,7 +56,7 @@ namespace WpfCliente.GUI
         private void buttonAceptar_Click(object sender, RoutedEventArgs e)
         {
             if(ValidarCodigo()){
-                ValorIngresado = textBoxCodigo.Text;
+                ValorIngresado = textBoxCodigo.Text.ToUpper();
                 DialogResult = true;
                 this.Close();
             }
@@ -59,11 +70,7 @@ namespace WpfCliente.GUI
 
         private bool ValidarCodigo()
         {
-            return string.IsNullOrWhiteSpace(textBoxCodigo.Text);
-        }
-        private void buttonEnviarCodigoNuevamente_Click(object sender, RoutedEventArgs e)
-        {
-
+            return !string.IsNullOrWhiteSpace(textBoxCodigo.Text);
         }
     }
 }

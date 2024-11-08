@@ -122,6 +122,9 @@
     <Compile Include="GUI\AmigoUserControl.xaml.cs">
       <DependentUpon>AmigoUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\CambiarContraseniaWindow.xaml.cs">
+      <DependentUpon>CambiarContraseniaWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\CartaUserControl.xaml.cs">
       <DependentUpon>CartaUserControl.xaml</DependentUpon>
     </Compile>
@@ -136,6 +139,9 @@
     </Compile>
     <Compile Include="GUI\EsperaRestoJugadoresUserControl.xaml.cs">
       <DependentUpon>EsperaRestoJugadoresUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\IngresarGamertagModalWindow.xaml.cs">
+      <DependentUpon>IngresarGamertagModalWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\InicioRondaUserControl.xaml.cs">
       <DependentUpon>InicioRondaUserControl.xaml</DependentUpon>
@@ -190,6 +196,7 @@
     </Compile>
     <Compile Include="Interfaz\IHabilitadorBotones.cs" />
     <Compile Include="Utilidad\ComandoRele.cs" />
+    <Compile Include="Utilidad\Correo.cs" />
     <Compile Include="Utilidad\Servidor\ChatMensaje.cs" />
     <Compile Include="Utilidad\Conexion.cs" />
     <Compile Include="Utilidad\CambiarIdioma.cs" />
@@ -210,7 +217,7 @@
     <Compile Include="Utilidad\Imagen.cs" />
     <Compile Include="Utilidad\LoggerManager.cs" />
     <Compile Include="Utilidad\ManejadorExcepciones.cs" />
-    <Compile Include="Utilidad\Otros.cs" />
+    <Compile Include="Utilidad\Utilidades.cs" />
     <Compile Include="Utilidad\ServicioManejador.cs" />
     <Compile Include="Utilidad\Servidor\ImagenCarta.cs" />
     <Compile Include="Utilidad\Singleton.cs" />
@@ -316,6 +323,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\CambiarContraseniaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\CambiarIdiomaUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -337,6 +348,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\EsperaRestoJugadoresUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\IngresarGamertagModalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -465,10 +480,15 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Recursos\fondoMenu.jpg" />
+    <Folder Include="Logs\" />
+    <Folder Include="Pesistencia\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Pesistencia\" />
+    <Resource Include="Recursos\fondoMenu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\fondoSala.png" />
+    <Content Include="Sonidos\musicaFondo.mp3" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Recursos\LogoApp.ico" />

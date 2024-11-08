@@ -255,5 +255,32 @@ namespace DAOLibreria.DAO
             return resultado;
         }
 
+        /// <summary>
+        /// Verifica si existe únicamente un usuario con el gamertag y el correo especificados.
+        /// </summary>
+        /// <param name="gamertag">El gamertag del usuario.</param>
+        /// <param name="correo">El correo electrónico del usuario.</param>
+        /// <returns>True si existe exactamente un usuario con ese gamertag y correo, de lo contrario, false.</returns>
+        public static bool ExisteUnicoUsuarioConGamertagYCorreo(string gamertag, string correo)
+        {
+            try
+            {
+                using (var context = new DescribeloEntities())
+                {
+                    var cantidadUsuarios = context.UsuarioCuenta
+                        .Where(u => u.gamertag == gamertag && u.correo == correo)
+                        .Count();
+
+                    return (cantidadUsuarios == 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al verificar usuario único: {ex.Message}");
+                return false;
+            }
+        }
+
+
     }
 }

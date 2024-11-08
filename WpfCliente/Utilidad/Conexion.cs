@@ -169,7 +169,7 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception excepcion)
             {
-                //TODO Manejar el error
+                ManejadorExcepciones.ManejarComponentErrorException(excepcion);
                 return false;
             }
             return true;
@@ -186,7 +186,7 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception excepcion)
             {
-                //TODO Manejar el error
+                ManejadorExcepciones.ManejarComponentErrorException(excepcion);
                 return false;
             }
             return true;

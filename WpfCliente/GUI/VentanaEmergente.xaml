@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfCliente.GUI"
         mc:Ignorable="d"
-        Title="VentanaEmergente" Height="200" Width="550"
+        Title="VentanaEmergente" Height="185" Width="515"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Background="Transparent">
@@ -26,6 +26,16 @@
                 <Label x:Name="labelDescripcionVentanaEmergente" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontFamily="Lucida Sans Unicode" FontSize="12" Height="24" Width="360"/>
                 <Button x:Name="buttonAceptar" Content="Aceptar" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Height="40" Margin="360,0,0,-2" FontFamily="Lucida Sans Unicode Bold Italic" Foreground="Black" Background="#E3DAC9" BorderBrush="Black" FontSize="16" Click="buttonAceptar_Click" Cursor="Hand"/>
                 <TextBlock x:Name="textBlockDescripcionVentanaEmergente" TextWrapping="Wrap" Text="Descripción de la ventana emergente" Margin="10,38,-10,49" />
+                <Rectangle Margin="-20,33,-20,76" RenderTransformOrigin="0.5,0.5" Fill="Black">
+                    <Rectangle.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleY="-1"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Rectangle.RenderTransform>
+                </Rectangle>
             </Grid>
         </Border>
     </Grid>

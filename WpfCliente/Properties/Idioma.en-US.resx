@@ -219,8 +219,8 @@
   <data name="labelNuevaContrasenia" xml:space="preserve">
     <value>New password</value>
   </data>
-  <data name="mensajeContraseniaEditadaConExito" xml:space="preserve">
-    <value>Password edited successfully</value>
+  <data name="mensajeUsuarioEditadoFallo" xml:space="preserve">
+    <value>An error occurred while editing the user</value>
   </data>
   <data name="mensajeUsuarioEditadoConExito" xml:space="preserve">
     <value>User edited successfully</value>
@@ -377,5 +377,50 @@
   </data>
   <data name="menuItemEstadisticas" xml:space="preserve">
     <value>View stats</value>
+  </data>
+  <data name="labelCodigoSala" xml:space="preserve">
+    <value>Lobby code: </value>
+  </data>
+  <data name="tituloCodigoCopiado" xml:space="preserve">
+    <value>Copied code</value>
+  </data>
+  <data name="mensajeCodigoCopiado" xml:space="preserve">
+    <value>Code successfully copied to clipboard</value>
+  </data>
+  <data name="labelUsuariosLobby" xml:space="preserve">
+    <value>Users in the lobby</value>
+  </data>
+  <data name="tituloIdiomaInvalido" xml:space="preserve">
+    <value>Invalid language selection</value>
+  </data>
+  <data name="mensajeIdiomaInvalido" xml:space="preserve">
+    <value>The default language has been set</value>
+  </data>
+  <data name="tituloImagenInvalida" xml:space="preserve">
+    <value>Invalid image</value>
+  </data>
+  <data name="mensajeImagenInvalida" xml:space="preserve">
+    <value>The selected image is invalid or was not selected correctly</value>
+  </data>
+  <data name="tituloCargarAmigosFalla" xml:space="preserve">
+    <value>Could not load data</value>
+  </data>
+  <data name="mensajeCargarAmigosFalla" xml:space="preserve">
+    <value>There was an error and your friends' data could not be loaded</value>
+  </data>
+  <data name="mensajeNoHuboCambios" xml:space="preserve">
+    <value>No changes were made</value>
+  </data>
+  <data name="labelIngresarCorreo" xml:space="preserve">
+    <value>Enter your email</value>
+  </data>
+  <data name="labelIngresarUsuario" xml:space="preserve">
+    <value>Enter your gamertag</value>
+  </data>
+  <data name="mensajeCorreoYGamertagNoCoinciden" xml:space="preserve">
+    <value>We did not find a user with the email and gamertag entered, please try again</value>
+  </data>
+  <data name="tituloCorreoYGamertagNoCoinciden" xml:space="preserve">
+    <value>Email and gamertag do not match</value>
   </data>
 </root>

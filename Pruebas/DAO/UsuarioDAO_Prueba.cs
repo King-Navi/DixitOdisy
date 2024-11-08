@@ -277,5 +277,33 @@ namespace Pruebas.DAO
             }
         }
         #endregion
+
+        [TestMethod]
+        public void VerificarCorreoConGamertag_CuandoCoinciden_DeberiaRetornarTrue()
+        {
+            // Arrange
+            var correo = "unaayjose@gmail.com";
+            var gamertag = "unaay";
+
+            // Act
+            bool resultado = UsuarioDAO.ExisteUnicoUsuarioConGamertagYCorreo(gamertag, correo);
+
+            // Assert
+            Assert.IsTrue(resultado, "El método debería retornar true cuando el correo y el gamertag coinciden.");
+        }
+
+        [TestMethod]
+        public void VerificarCorreoConGamertag_CuandoNoCoinciden_DeberiaRetornarFalse()
+        {
+            // Arrange
+            var correo = "unaayjose@gmail.com";
+            var gamertag = "unaay20";
+
+            // Act
+            bool resultado = UsuarioDAO.ExisteUnicoUsuarioConGamertagYCorreo(gamertag, correo);
+
+            // Assert
+            Assert.IsFalse(resultado, "El método debería retornar false cuando el correo y el gamertag no coinciden.");
+        }
     }
 }

@@ -191,6 +191,12 @@
   <wsdl:message name="IServicioCorreo_VerificarCodigo_OutputMessage">
     <wsdl:part name="parameters" element="tns:VerificarCodigoResponse" />
   </wsdl:message>
+  <wsdl:message name="IServicioCorreo_VerificarCorreoConGamertag_InputMessage">
+    <wsdl:part name="parameters" element="tns:VerificarCorreoConGamertag" />
+  </wsdl:message>
+  <wsdl:message name="IServicioCorreo_VerificarCorreoConGamertag_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VerificarCorreoConGamertagResponse" />
+  </wsdl:message>
   <wsdl:message name="IServicioPartida_CrearPartida_InputMessage">
     <wsdl:part name="parameters" element="tns:CrearPartida" />
   </wsdl:message>
@@ -415,6 +421,10 @@
     <wsdl:operation name="VerificarCodigo">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioCorreo/VerificarCodigo" message="tns:IServicioCorreo_VerificarCodigo_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioCorreo/VerificarCodigoResponse" message="tns:IServicioCorreo_VerificarCodigo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VerificarCorreoConGamertag">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioCorreo/VerificarCorreoConGamertag" message="tns:IServicioCorreo_VerificarCorreoConGamertag_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioCorreo/VerificarCorreoConGamertagResponse" message="tns:IServicioCorreo_VerificarCorreoConGamertag_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioPartida">
@@ -675,6 +685,15 @@
     </wsdl:operation>
     <wsdl:operation name="VerificarCodigo">
       <soap12:operation soapAction="http://tempuri.org/IServicioCorreo/VerificarCodigo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerificarCorreoConGamertag">
+      <soap12:operation soapAction="http://tempuri.org/IServicioCorreo/VerificarCorreoConGamertag" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

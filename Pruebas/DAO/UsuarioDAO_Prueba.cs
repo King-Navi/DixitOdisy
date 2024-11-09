@@ -305,5 +305,47 @@ namespace Pruebas.DAO
             // Assert
             Assert.IsFalse(resultado, "El método debería retornar false cuando el correo y el gamertag no coinciden.");
         }
+
+        [TestMethod]
+        public void EditarContraseniaPorGamertag_CuandoDatosValidos_DeberiaRetornarTrue()
+        {
+            // Arrange
+            string gamertag = "leoleo";
+            string nuevoHashContrasenia = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd6d0fcb4c8b9e3fbb5"; // SHA256 de "password"
+
+            // Act
+            bool resultado = UsuarioDAO.EditarContraseniaPorGamertag(gamertag, nuevoHashContrasenia);
+
+            // Assert
+            Assert.IsTrue(resultado, "El método debería retornar true cuando los datos son válidos y la contraseña está en SHA256.");
+        }
+
+        [TestMethod]
+        public void EditarContraseniaPorGamertag_CuandoContraseniaNoEsSHA256_DeberiaRetornarFalse()
+        {
+            // Arrange
+            string gamertag = "usuarioPrueba";
+            string nuevoHashContraseniaInvalido = "password"; // Contraseña en texto plano, no en SHA256
+
+            // Act
+            bool resultado = UsuarioDAO.EditarContraseniaPorGamertag(gamertag, nuevoHashContraseniaInvalido);
+
+            // Assert
+            Assert.IsFalse(resultado, "El método debería retornar false cuando la nueva contraseña no está en SHA256.");
+        }
+
+        [TestMethod]
+        public void EditarContraseniaPorGamertag_CuandoGamertagYContraseniaSonNulos_DeberiaRetornarFalse()
+        {
+            // Arrange
+            string gamertagNulo = null;
+            string nuevoHashContraseniaNulo = null;
+
+            // Act
+            bool resultado = UsuarioDAO.EditarContraseniaPorGamertag(gamertagNulo, nuevoHashContraseniaNulo);
+
+            // Assert
+            Assert.IsFalse(resultado, "El método debería retornar false cuando el gamertag y la nueva contraseña son nulos.");
+        }
     }
 }

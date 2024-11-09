@@ -1565,11 +1565,11 @@ namespace WpfCliente.ServidorDescribelo {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/ValidarCredenciales", ReplyAction="http://tempuri.org/IServicioUsuario/ValidarCredencialesResponse")]
         System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.Usuario> ValidarCredencialesAsync(string gamertag, string contrasenia);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/GetUsuarioByGamertag", ReplyAction="http://tempuri.org/IServicioUsuario/GetUsuarioByGamertagResponse")]
-        WpfCliente.ServidorDescribelo.Usuario GetUsuarioByGamertag(string gamertag);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/EditarContraseniaUsuario", ReplyAction="http://tempuri.org/IServicioUsuario/EditarContraseniaUsuarioResponse")]
+        bool EditarContraseniaUsuario(string gamertag, string nuevoHashContrasenia);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/GetUsuarioByGamertag", ReplyAction="http://tempuri.org/IServicioUsuario/GetUsuarioByGamertagResponse")]
-        System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.Usuario> GetUsuarioByGamertagAsync(string gamertag);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/EditarContraseniaUsuario", ReplyAction="http://tempuri.org/IServicioUsuario/EditarContraseniaUsuarioResponse")]
+        System.Threading.Tasks.Task<bool> EditarContraseniaUsuarioAsync(string gamertag, string nuevoHashContrasenia);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1631,12 +1631,12 @@ namespace WpfCliente.ServidorDescribelo {
             return base.Channel.ValidarCredencialesAsync(gamertag, contrasenia);
         }
         
-        public WpfCliente.ServidorDescribelo.Usuario GetUsuarioByGamertag(string gamertag) {
-            return base.Channel.GetUsuarioByGamertag(gamertag);
+        public bool EditarContraseniaUsuario(string gamertag, string nuevoHashContrasenia) {
+            return base.Channel.EditarContraseniaUsuario(gamertag, nuevoHashContrasenia);
         }
         
-        public System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.Usuario> GetUsuarioByGamertagAsync(string gamertag) {
-            return base.Channel.GetUsuarioByGamertagAsync(gamertag);
+        public System.Threading.Tasks.Task<bool> EditarContraseniaUsuarioAsync(string gamertag, string nuevoHashContrasenia) {
+            return base.Channel.EditarContraseniaUsuarioAsync(gamertag, nuevoHashContrasenia);
         }
     }
     

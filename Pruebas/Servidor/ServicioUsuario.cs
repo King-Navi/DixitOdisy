@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Manejador;
@@ -103,7 +104,7 @@ namespace Pruebas.Servidor
             {
                 IdUsuario = 1, // ID de un usuario existente
                 Nombre = "egege",
-                Correo =null, 
+                Correo = null,
                 FotoUsuario = null,
                 ContraseniaHASH = null
             };
@@ -125,6 +126,34 @@ namespace Pruebas.Servidor
 
             // Assert
             Assert.IsFalse(resultado, "El método debería retornar false cuando se actualiza el usuario con datos válidos.");
+        }
+
+        [TestMethod]
+        public void EditarContraseniaUsuario_CuandoFormatoInvalido_RetornaFalse()
+        {
+            // Arrange
+            string gamertagValido = "juanZZZ";
+            string nuevaContraseniaInvalida = "contraseñaNoValida"; 
+
+            // Act
+            bool resultado = manejador.EditarContraseniaUsuario(gamertagValido, nuevaContraseniaInvalida);
+
+            // Assert
+            Assert.IsFalse(resultado, "El método debería retornar false cuando la contraseña no tiene el formato SHA-256.");
+        }
+
+        [TestMethod]
+        public void EditarContraseniaUsuario_CuandoDatosNulos_RetornaFalse()
+        {
+            // Arrange
+            string gamertagNulo = null;
+            string nuevaContraseniaNula = null;
+
+            // Act
+            bool resultado = manejador.EditarContraseniaUsuario(gamertagNulo, nuevaContraseniaNula);
+
+            // Assert
+            Assert.IsFalse(resultado, "El método debería retornar false cuando los valores de gamertag y nuevaContrasenia son nulos.");
         }
     }
 }

@@ -53,7 +53,7 @@ namespace WpfCliente.GUI
         private void clicButtonAceptar(object sender, RoutedEventArgs e)
         {
             if (ValidarCampos()){
-                
+                EncriptarContrasenia(textBoxContrasenia.Password);
                 GuardarCambiosUsuario(usuarioEditado);
             }
         }
@@ -124,21 +124,24 @@ namespace WpfCliente.GUI
             return isValid;
         }
 
+        private void EncriptarContrasenia(string contrasenia)
+        {
+            usuarioEditado.ContraseniaHASH = Encriptacion.OcuparSHA256(contrasenia);
+        }
+
         private void GuardarCambiosUsuario(Usuario usuarioEditado)
         {
-            usuarioEditado.IdUsuario = Singleton.Instance.IdUsuario;
-            usuarioEditado.Nombre = Singleton.Instance.NombreUsuario;
 
             var manejadorServicio = new ServicioManejador<ServicioUsuarioClient>();
             bool resultado = manejadorServicio.EjecutarServicio(proxy =>
             {
-                return proxy.EditarUsuario(usuarioEditado);
+                return proxy.EditarContraseniaUsuario(usuarioEditado.Nombre,usuarioEditado.ContraseniaHASH);
             });
 
             if (resultado)
             {
                 VentanasEmergentes.CrearVentanaEmergenteDatosEditadosExito(this);
-                Application.Current.Shutdown();
+                this.Close();
             }
             else
             {

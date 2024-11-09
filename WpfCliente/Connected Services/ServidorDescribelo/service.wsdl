@@ -341,11 +341,11 @@
   <wsdl:message name="IServicioUsuario_ValidarCredenciales_OutputMessage">
     <wsdl:part name="parameters" element="tns:ValidarCredencialesResponse" />
   </wsdl:message>
-  <wsdl:message name="IServicioUsuario_GetUsuarioByGamertag_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetUsuarioByGamertag" />
+  <wsdl:message name="IServicioUsuario_EditarContraseniaUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditarContraseniaUsuario" />
   </wsdl:message>
-  <wsdl:message name="IServicioUsuario_GetUsuarioByGamertag_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetUsuarioByGamertagResponse" />
+  <wsdl:message name="IServicioUsuario_EditarContraseniaUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditarContraseniaUsuarioResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioUsuarioSesion_ObtenerSessionJugador_InputMessage">
     <wsdl:part name="parameters" element="tns:ObtenerSessionJugador" />
@@ -536,9 +536,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuario/ValidarCredenciales" message="tns:IServicioUsuario_ValidarCredenciales_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioUsuario/ValidarCredencialesResponse" message="tns:IServicioUsuario_ValidarCredenciales_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetUsuarioByGamertag">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuario/GetUsuarioByGamertag" message="tns:IServicioUsuario_GetUsuarioByGamertag_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioUsuario/GetUsuarioByGamertagResponse" message="tns:IServicioUsuario_GetUsuarioByGamertag_OutputMessage" />
+    <wsdl:operation name="EditarContraseniaUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuario/EditarContraseniaUsuario" message="tns:IServicioUsuario_EditarContraseniaUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioUsuario/EditarContraseniaUsuarioResponse" message="tns:IServicioUsuario_EditarContraseniaUsuario_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioUsuarioSesion">
@@ -950,8 +950,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetUsuarioByGamertag">
-      <soap12:operation soapAction="http://tempuri.org/IServicioUsuario/GetUsuarioByGamertag" style="document" />
+    <wsdl:operation name="EditarContraseniaUsuario">
+      <soap12:operation soapAction="http://tempuri.org/IServicioUsuario/EditarContraseniaUsuario" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

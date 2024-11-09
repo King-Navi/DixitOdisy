@@ -161,8 +161,6 @@ namespace WpfCliente.GUI
             {
                 ManejadorExcepciones.ManejarComponentErrorException(excepcion);
             }
-            IniciarSesion iniciarSesion = new IniciarSesion();
-            iniciarSesion.Show();
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)

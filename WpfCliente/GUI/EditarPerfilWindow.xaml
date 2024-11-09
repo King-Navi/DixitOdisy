@@ -64,13 +64,13 @@
 
 
         <!-- Contenido principal -->
-        <Border Background="#E0DCC7" HorizontalAlignment="Center" VerticalAlignment="Top" Width="805" Height="639" CornerRadius="20">
-            <StackPanel Orientation="Horizontal" Background="#E0DCC7" HorizontalAlignment="Center" VerticalAlignment="Top" Width="806" Height="479" Margin="0,118,0,0">
+        <Border Background="#E0DCC7" HorizontalAlignment="Center" VerticalAlignment="Top" Width="913" Height="639" CornerRadius="20">
+            <StackPanel Orientation="Horizontal" Background="#E0DCC7" HorizontalAlignment="Center" VerticalAlignment="Top" Width="893" Height="479" Margin="0,118,0,0">
                 <!-- Columna de foto -->
                 <StackPanel Orientation="Vertical" Margin="10,0">
                     <Label Content="Edita tu foto" x:Name="labelFotoPerfil" FontFamily="Lucida Sans Unicode" FontSize="33"/>
                     <Border BorderBrush="Red" BorderThickness="10">
-                        <Image x:Name="imageFotoJugador" Width="216" Height="226"/>
+                        <Image x:Name="imageFotoJugador" Width="229" Height="226"/>
                     </Border>
                     <Button Content="Cambiar foto" x:Name="buttonCambiarFoto" Click="ClicButtonCambiarImagen" FontFamily="Lucida Sans Unicode" FontSize="20" Background="#E0DCC7" BorderBrush="Black" BorderThickness="3" Height="54" Width="183"/>
                 </StackPanel>

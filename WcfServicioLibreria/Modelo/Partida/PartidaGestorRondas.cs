@@ -593,10 +593,6 @@ namespace WcfServicioLibreria.Modelo
             {
 
             }
-            else
-            {
-
-            }
         }
 
         private void AvisarPartidaTerminada()

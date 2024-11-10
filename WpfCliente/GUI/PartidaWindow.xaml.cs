@@ -435,7 +435,7 @@ namespace WpfCliente.GUI
 
         private void BORRAME_SImulacionCambioRonda(object sender, RoutedEventArgs e)
         {
-            AvanzarRondaCallback(pantallaActual + 1);
+            CambiarPantallaCallback(PANTALLA_TODOS_CARTAS);
         }
         private void BORRAME_SImulacionCambioRondaSoyJugador(object sender, RoutedEventArgs e)
         {

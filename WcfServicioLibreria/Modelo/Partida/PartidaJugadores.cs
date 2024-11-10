@@ -41,7 +41,7 @@ namespace WcfServicioLibreria.Modelo
         private const int PANTALLA_FIN_PARTIDA = 6;
         private const int PANTALLA_ESPERA = 7;
         #endregion PantallasCliente
-        private const int CANTIDAD_MINIMA_JUGADORES = 0; // 3
+        private const int CANTIDAD_MINIMA_JUGADORES = 0; // 2
         private const int TIEMPO_ESPERA_UNIRSE_JUGADORES = 20;// 20
         private const int TIEMPO_ESPERA_NARRADOR = 20; // 40
         private const int TIEMPO_ESPERA_SELECCION = 10; //60

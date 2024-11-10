@@ -196,8 +196,8 @@ namespace WpfCliente.GUI
 
             }
             bool? resultado = ventanaModal.ShowDialog();
-
-            if (resultado == true)
+            //TODO: resultado no puede ser null
+            if (resultado == true && !ventanaModal.ValorIngresado.Contains(" ") && ventanaModal.ValorIngresado != null)
             {
                 valorObtenido = ventanaModal.ValorIngresado;
             }

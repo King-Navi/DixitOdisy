@@ -245,6 +245,9 @@
   <wsdl:message name="IServicioPartidaSesion_RecibirImagenCallback_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:RecibirImagenCallback" />
   </wsdl:message>
+  <wsdl:message name="IServicioPartidaSesion_RecibirGrupoImagenCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:RecibirGrupoImagenCallback" />
+  </wsdl:message>
   <wsdl:message name="IServicioPartidaSesion_FinalizarPartida_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:FinalizarPartida" />
   </wsdl:message>
@@ -461,6 +464,9 @@
     </wsdl:operation>
     <wsdl:operation name="RecibirImagenCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/RecibirImagenCallback" message="tns:IServicioPartidaSesion_RecibirImagenCallback_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecibirGrupoImagenCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/RecibirGrupoImagenCallback" message="tns:IServicioPartidaSesion_RecibirGrupoImagenCallback_OutputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="FinalizarPartida">
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/FinalizarPartida" message="tns:IServicioPartidaSesion_FinalizarPartida_OutputCallbackMessage" />
@@ -778,6 +784,12 @@
     </wsdl:operation>
     <wsdl:operation name="RecibirImagenCallback">
       <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/RecibirImagenCallback" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecibirGrupoImagenCallback">
+      <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/RecibirGrupoImagenCallback" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

@@ -52,9 +52,8 @@ namespace WcfServicioLibreria.Manejador
 
 
                 }
-                catch (CommunicationException excepcion)
+                catch (CommunicationException)
                 {
-                    //TODO: Manejar el error
                 }
 
             }

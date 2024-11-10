@@ -102,7 +102,7 @@ namespace Pruebas.DAO
         {
             // Arrange
             
-            //Debe ser un UsuarioCuenta existente en base de datos
+            //Precondicion: Debe ser un UsuarioCuenta existente en base de datos
             string gamertagValido = "unaay";
             string contraseniaValida = "B7A88E8D61D649A44848A48C8DE0E6BD48D2FD4D7A61CB733301634D5EAC5080";
             // Act

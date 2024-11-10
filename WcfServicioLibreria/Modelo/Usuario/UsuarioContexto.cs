@@ -35,8 +35,7 @@ namespace WcfServicioLibreria.Modelo
         //FIXME
         public void AmigoDesconectado(object sender, EventArgs e)
         {
-            var desconectadoArgs = e as UsuarioDesconectadoEventArgs;
-            if (desconectadoArgs != null)
+            if (e is UsuarioDesconectadoEventArgs desconectadoArgs)
             {
                 Amigo amigo = new Amigo
                 {

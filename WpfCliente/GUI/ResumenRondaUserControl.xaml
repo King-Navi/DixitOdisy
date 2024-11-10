@@ -36,13 +36,13 @@
                 <Image Source="/Recursos/podioJugador.png" Height="250" Width="460" HorizontalAlignment="Center"/>
             </StackPanel>
         </DockPanel>
-        <Image d:Source="/Recursos/pfp1.png" Height="100" Margin="360,66,340,504"  Panel.ZIndex="2" />
+        <Image Source="pack://application:,,,/Recursos/pfp1.png" Height="100" Margin="360,66,340,504"  Panel.ZIndex="2" />
         <Label x:Name="labelPrimerLugar" Content="Primer" 
                Margin="391,166,0,0"  Panel.ZIndex="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Image d:Source="/Recursos/pfp2.png" Height="100" Width="100" Margin="220,135,480,435"  Panel.ZIndex="2" />
+        <Image Source="pack://application:,,,/Recursos/pfp2.png" Height="100" Width="100" Margin="220,135,480,435"  Panel.ZIndex="2" />
         <Label x:Name="labelSegundoLugar" Content="Segundo" 
                Margin="251,235,0,0"  Panel.ZIndex="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Image d:Source="/Recursos/pfp3.png" Height="100" Width="100" Margin="490,166,210,404"   Panel.ZIndex="2"/>
+        <Image Source="pack://application:,,,/Recursos/pfp3.png" Height="100" Width="100" Margin="490,166,210,404"   Panel.ZIndex="2"/>
         <Label x:Name="labelTercerLugar" 
                     Content="Tercero" 
                     Margin="521,266,0,0" 

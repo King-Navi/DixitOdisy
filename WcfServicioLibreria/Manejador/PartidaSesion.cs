@@ -31,7 +31,7 @@ namespace WcfServicioLibreria.Manejador
                 await partida.AvisarNuevoJugadorAsync(gamertag);
                 partida.ConfirmarInclusionPartida(gamertag, contexto);
             }
-            catch (Exception excepcion)
+            catch (Exception)
             {
                 //TODO: Manejar el error
                 Console.WriteLine("Error en el metodo  UnirsePartida(string gamertag, string idPartida)");
@@ -39,6 +39,30 @@ namespace WcfServicioLibreria.Manejador
             finally
             {
             }
+        }
+
+        public void TratarAdivinar(string nombreJugador, string idPartida, string claveImagen)
+        {
+            if (!ValidarPartida(idPartida)) 
+            { 
+                return;
+            }
+            try
+            {
+                partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
+                lock (partida)
+                {
+                    var narrador = partida.NarradorActual;
+                    if (narrador != nombreJugador)
+                    {
+                        partida.ConfirmarTurnoAdivinarJugador(nombreJugador, claveImagen);
+
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            };
         }
 
         public void ConfirmarMovimiento(string nombreJugador, string idPartida, string claveImagen, string pista = null)
@@ -55,16 +79,16 @@ namespace WcfServicioLibreria.Manejador
                     var narrador = partida.NarradorActual;
                     if (narrador == nombreJugador && pista != null)
                     {
-                        partida.ConfirmacionTurnoNarrador(nombreJugador, claveImagen, pista);
+                        partida.ConfirmarTurnoNarrador(nombreJugador, claveImagen, pista);
 
                     }
                     else
                     {
-                        partida.ConfirmacionTurnoJugador(nombreJugador, claveImagen);
+                        partida.ConfirmacionTurnoEleccionJugador(nombreJugador, claveImagen);
                     }
                 }
             }
-            catch (Exception excepcion)
+            catch (Exception)
             {
             };
         }
@@ -85,7 +109,7 @@ namespace WcfServicioLibreria.Manejador
                 partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
                 await partida.EmpezarPartida();
             }
-            catch (Exception excepcion)
+            catch (Exception)
             {
                 //TODO: Manejar el error
             };
@@ -102,7 +126,7 @@ namespace WcfServicioLibreria.Manejador
                 partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
                 return await partida.EnviarImagen(nombreJugador);
             }
-            catch (Exception excepcion)
+            catch (Exception)
             {
             }
             return false;

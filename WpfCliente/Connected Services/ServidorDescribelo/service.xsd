@@ -277,6 +277,13 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RecibirGrupoImagenCallback">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="imagen" nillable="true" type="q11:ImagenCarta" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="FinalizarPartida">
     <xs:complexType>
       <xs:sequence />
@@ -285,14 +292,14 @@
   <xs:element name="ObtenerJugadorPartidaCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreNuevoEnSala" nillable="true" type="q11:Usuario" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreNuevoEnSala" nillable="true" type="q12:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EliminarJugadorPartidaCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreRetiradoDeSala" nillable="true" type="q12:Usuario" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreRetiradoDeSala" nillable="true" type="q13:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -313,7 +320,7 @@
   <xs:element name="EnviarEstadisticas">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="estadisticas" nillable="true" type="q13:EstadisticasPartida" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="estadisticas" nillable="true" type="q14:EstadisticasPartida" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -332,7 +339,7 @@
   <xs:element name="RegistrarUsuario">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q14:Usuario" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q15:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -405,7 +412,7 @@
   <xs:element name="ObtenerJugadorSalaCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreNuevoEnSala" nillable="true" type="q15:Usuario" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreNuevoEnSala" nillable="true" type="q16:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -417,7 +424,7 @@
   <xs:element name="EliminarJugadorSalaCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreRetiradoDeSala" nillable="true" type="q16:Usuario" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreRetiradoDeSala" nillable="true" type="q17:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -441,7 +448,7 @@
   <xs:element name="AsignarColorCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="jugadoresColores" nillable="true" type="q17:ArrayOfKeyValueOfstringchar" />
+        <xs:element xmlns:q18="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="jugadoresColores" nillable="true" type="q18:ArrayOfKeyValueOfstringchar" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -453,7 +460,7 @@
   <xs:element name="EditarUsuario">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuarioEditado" nillable="true" type="q18:Usuario" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuarioEditado" nillable="true" type="q19:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -501,14 +508,14 @@
   <xs:element name="ValidarCredencialesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="ValidarCredencialesResult" nillable="true" type="q19:Usuario" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="ValidarCredencialesResult" nillable="true" type="q20:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ObtenerSessionJugador">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q20:Usuario" />
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q21:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

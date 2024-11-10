@@ -37,7 +37,12 @@ namespace WpfCliente.GUI
         private const int PANTALLA_ESTADISTICAS= 5;
         private const int PANTALLA_FIN_PARTIDA = 6;
         private const int PANTALLA_ESPERA= 7 ;
+        //TODO: lo define la partida
+        private readonly int seleccionMaximaNarrador = 1; 
+        private readonly int seleccionMaximaJugador = 1; 
+        private int contadorSeleccion =  0;
         public ICommand ComandoImagenGlobal { get; set; }
+        public ICommand ComandoImagenSelecionCorrecta { get; set; }
         private RecursosCompartidos recursosCompartidos;
         public event PropertyChangedEventHandler PropertyChanged;
         SeleccionCartaUsercontrol seleccionCartasUserControl;
@@ -89,12 +94,6 @@ namespace WpfCliente.GUI
 
         private async Task SolicitarMazoAsync()
         {
-            //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
-            //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
-            //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
-            //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
-            //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
-            //await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
             var tareasSolicitudes = new List<Task>();
             for (int i = 0; i < 6; i++)
             {
@@ -108,6 +107,7 @@ namespace WpfCliente.GUI
 
             recursosCompartidos = new RecursosCompartidos();
             ComandoImagenGlobal = new ComandoRele<string>(ComandoImagenPorId);
+            ComandoImagenSelecionCorrecta = new ComandoRele<string>(ComandoSeleccionCorrecta);
             narradorSeleccionCartasUserControl = new NarradorSeleccionCartaUserControl(recursosCompartidos.Imagenes);
             seleccionCartasUserControl = new SeleccionCartaUsercontrol(recursosCompartidos.Imagenes);
             VerTodasCartasUserControl = new VerTodasCartasUserControl(recursosCompartidos.TodasImagenes);
@@ -117,6 +117,38 @@ namespace WpfCliente.GUI
             PantallaActual = PANTALLA_INICIO;
 
 
+        }
+
+        private void ComandoSeleccionCorrecta(string idImagen)
+        {
+            MessageBox.Show("Escogiste " + idImagen);
+            ImagenCarta imagenAEscoger = recursosCompartidos.Imagenes.FirstOrDefault(i => i.IdImagen == idImagen);
+            if (imagenAEscoger == null)
+                return;
+            MostrarCartaModelWindow ventanaModal = new MostrarCartaModelWindow(true, imagenAEscoger.BitmapImagen);
+            bool? resultado = ventanaModal.ShowDialog();
+            string pista = ventanaModal.Pista;
+            if ((bool)resultado)
+            {
+                contadorSeleccion++;
+                recursosCompartidos.Imagenes.Remove(imagenAEscoger);
+                Task.Run(async () =>
+                {
+                    await Conexion.VerificarConexion(HabilitarBotones, this);
+                    //TODO: Ver que hacer
+                    Conexion.Partida.ConfirmarMovimiento(Singleton.Instance.NombreUsuario,
+                                                                            Singleton.Instance.IdPartida,
+                                                                            imagenAEscoger.IdImagen,
+                                                                            pista);
+                    await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
+                });
+                if (contadorSeleccion >= seleccionMaximaNarrador)
+                {
+                    AvanzarPantalla(PANTALLA_ESPERA);
+                    contadorSeleccion = 0;
+                }
+
+            }
         }
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -209,6 +241,21 @@ namespace WpfCliente.GUI
         {
             await SolicitarMazoAsync();
             Conexion.Partida.EmpezarPartida(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
+        }
+
+        public void RecibirGrupoImagenCallback(ImagenCarta imagen)
+        {
+            if (System.Windows.Application.Current.Dispatcher.CheckAccess())
+            {
+                recursosCompartidos.Imagenes.Add(imagen);
+            }
+            else
+            {
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                {
+                    recursosCompartidos.Imagenes.Add(imagen);
+                });
+            }
         }
 
         #endregion IServicioPartidaSesionCallback
@@ -309,7 +356,6 @@ namespace WpfCliente.GUI
             {
                 EscogerImagenPorId(id);
             }
-            AvanzarPantalla(PANTALLA_ESPERA);
         }
         /// <summary>
         /// Envia la imagen escoigda en base a la pista por el Jugador al servidor
@@ -325,7 +371,7 @@ namespace WpfCliente.GUI
             bool? resultado = ventanaModal.ShowDialog();
             if ((bool)resultado)
             {
-
+                contadorSeleccion++;
                 recursosCompartidos.Imagenes.Remove(imagenEscogida);
                 Task.Run(async () =>
                 {
@@ -336,11 +382,14 @@ namespace WpfCliente.GUI
                                                                             null);
                     await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
                 });
+                if (contadorSeleccion >= seleccionMaximaJugador)
+                {
+                    AvanzarPantalla(PANTALLA_ESPERA);
+                    contadorSeleccion = 0;
+                }
+
             }
-            else
-            {
-                MessageBox.Show("Debes selecionar una imagen");
-            }
+
         }
         /// <summary>
         /// Envia la imagen y pista escoigda por el narrador al servidor
@@ -356,6 +405,7 @@ namespace WpfCliente.GUI
             string pista = ventanaModal.Pista;
             if ((bool)resultado)
             {
+                contadorSeleccion++;
                 recursosCompartidos.Imagenes.Remove(imagenAEscoger);
                 Task.Run(async () =>
                 {
@@ -366,10 +416,12 @@ namespace WpfCliente.GUI
                                                                             pista);
                     await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
                 });
-            }
-            else
-            {
-                MessageBox.Show("Debes selecionar una imagen");
+                if (contadorSeleccion >= seleccionMaximaNarrador)
+                {
+                    AvanzarPantalla(PANTALLA_ESPERA);
+                    contadorSeleccion = 0;
+                }
+
             }
         }
 
@@ -402,5 +454,7 @@ namespace WpfCliente.GUI
             await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
 
         }
+
+        
     }
 }

@@ -183,10 +183,7 @@ namespace Pruebas.Servidor
             manejador.UnirsePartida(usuarioAnfritrion.Nombre, idPartida);
             manejador.UnirsePartida(usuarioNuevo.Nombre, idPartida);
 
-            if (implementacionCallback !=null)
-            {
-                implementacionCallback.Close();
-            }
+            implementacionCallback?.Close();
 
             // Act
             bool resultado = manejador.ValidarPartida(idPartida);

@@ -106,9 +106,18 @@ public class PartidaCallbackImpl : ICommunicationObjectImpl, IPartidaCallback
 
     public void CambiarPantallaCallback(int numeroPantalla)
     {
+        //TODO: 
+
     }
 
     public void IniciarValoresPartidaCallback(bool seUnio)
     {
+        //TODO: 
+
+    }
+
+    public void RecibirGrupoImagenCallback(ImagenCarta imagen)
+    {
+        //TODO: 
     }
 }

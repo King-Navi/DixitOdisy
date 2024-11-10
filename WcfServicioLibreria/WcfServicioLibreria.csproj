@@ -100,12 +100,14 @@
     <Compile Include="Modelo\Partida\CondicionVictoriaCartasAgotadas .cs" />
     <Compile Include="Modelo\Partida\ConfiguracionPartida.cs" />
     <Compile Include="Modelo\Partida\EstadisticasPartida.cs" />
+    <Compile Include="Modelo\Partida\LecturaTrabajo.cs" />
+    <Compile Include="Modelo\Partida\PartidaGestorRondas.cs" />
     <Compile Include="Modelo\Partida\ICondicionVictoria.cs" />
     <Compile Include="Modelo\Partida\ImagenCarta.cs" />
     <Compile Include="Modelo\Partida\LectorDisco.cs" />
     <Compile Include="Modelo\Sala\Sala.cs" />
     <Compile Include="Modelo\Usuario\UsuarioContexto.cs" />
-    <Compile Include="Modelo\Partida\Partida.cs" />
+    <Compile Include="Modelo\Partida\PartidaJugadores.cs" />
     <Compile Include="Modelo\Usuario\Usuario.cs" />
     <Compile Include="Modelo\Excepciones\UsuarioFalla.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

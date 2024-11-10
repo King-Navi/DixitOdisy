@@ -43,5 +43,11 @@ namespace WpfCliente.GUI
             }
             DialogResult = true;
         }
+
+
+        private void ClicButtonCerrar(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

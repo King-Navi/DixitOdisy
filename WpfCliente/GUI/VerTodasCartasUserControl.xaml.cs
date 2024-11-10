@@ -40,7 +40,15 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
+
         }
+
+
+        public void ColocarPista(string pista)
+        {
+            labelPista.Content = "Pista : " + pista;
+        }
+
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
         {

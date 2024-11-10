@@ -12,7 +12,7 @@ namespace WcfServicioLibreria.Modelo
 {
     internal class LectorDisco
     {
-        private readonly BlockingCollection<(string archivoPath, IPartidaCallback callback)> colaLectura = new BlockingCollection<(string, IPartidaCallback)>();
+        private readonly BlockingCollection<LecturaTrabajo> colaLectura = new BlockingCollection<LecturaTrabajo>();
         private readonly Task tareaLectura;
         private bool detener = false;
 
@@ -21,32 +21,33 @@ namespace WcfServicioLibreria.Modelo
             tareaLectura = Task.Run( async () => await ProcesarColaLecturaEnvio());
         }
 
-        public void EncolarLecturaEnvio(string archivoPath, IPartidaCallback callback)
+        public void EncolarLecturaEnvio(string archivoPath, IPartidaCallback callback, bool usarGrupo = false)
         {
+            LecturaTrabajo nuevotrabajo = new LecturaTrabajo(archivoPath, callback, usarGrupo);
             if (callback != null)
-            colaLectura.Add((archivoPath, callback));
+            colaLectura.Add(nuevotrabajo);
         }
 
         private async Task ProcesarColaLecturaEnvio()
         {
             while (!detener || !colaLectura.IsCompleted)
             {
-                foreach (var (archivoPath, callback) in colaLectura.GetConsumingEnumerable())
+                foreach (var lecturaTrabajo in colaLectura.GetConsumingEnumerable())
                 {
-                    Console.WriteLine($"Procesando archivo: {archivoPath}");
+                    Console.WriteLine($"Procesando archivo: {lecturaTrabajo.ArchivoPath}");
 
                     try
                     {
                         // Leer la imagen del disco de forma asíncrona
                         byte[] imagenBytes;
-                        using (var fileStream = new FileStream(archivoPath, FileMode.Open, FileAccess.Read, FileShare.Read, 16384, useAsync: true))
+                        using (var fileStream = new FileStream(lecturaTrabajo.ArchivoPath, FileMode.Open, FileAccess.Read, FileShare.Read, 16384, useAsync: true))
                         {
                             imagenBytes = new byte[fileStream.Length];
                             await fileStream.ReadAsync(imagenBytes, 0, (int)fileStream.Length);
                         }
 
                         // Obtener el nombre del archivo sin la extensión
-                        string nombreSinExtension = Path.GetFileNameWithoutExtension(archivoPath);
+                        string nombreSinExtension = Path.GetFileNameWithoutExtension(lecturaTrabajo.ArchivoPath);
 
                         // Crear el objeto de la imagen
                         using (var imagenStream = new MemoryStream(imagenBytes))
@@ -60,7 +61,14 @@ namespace WcfServicioLibreria.Modelo
                             // Intentar enviar la imagen al callback
                             try
                             {
-                                callback.RecibirImagenCallback(imagenCarta);
+                                if (lecturaTrabajo.UsarGrupo)
+                                {
+                                    lecturaTrabajo.Callback.RecibirGrupoImagenCallback(imagenCarta);
+                                }
+                                else
+                                {
+                                    lecturaTrabajo.Callback.RecibirImagenCallback(imagenCarta);
+                                }
                             }
                             catch (Exception ex)
                             {

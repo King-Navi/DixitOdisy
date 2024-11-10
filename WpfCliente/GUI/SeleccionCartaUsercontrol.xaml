@@ -17,7 +17,7 @@
                 <GradientStop Color="#FF940754" Offset="0.152"/>
             </RadialGradientBrush>
         </Grid.Background>
-        <Label x:Name="labelPista" d:Content="Pista: Algo grandre" HorizontalAlignment="Center" VerticalAlignment="Top" d:FontSize="30" Margin="0,20,0,0" Foreground="#FFEAEAEA"/>
+        <Label x:Name="labelPista" Content="Esperando pista..." HorizontalAlignment="Center" VerticalAlignment="Top" d:FontSize="30" Margin="0,20,0,0" Foreground="#FFEAEAEA"/>
         <TextBox TextAlignment="Center" x:Name="labelInstrucciones" Text="En base a la pista escoge una carta, ¡Confunde a tus compañeros!" HorizontalAlignment="Center" VerticalAlignment="Top" d:FontSize="30" Margin="0,59,0,0" TextWrapping="Wrap" Background="{x:Null}" Foreground="White" />
         <Grid Margin="0,100,0,0">
             <ItemsControl ItemsSource="{Binding Imagenes}">

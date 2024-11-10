@@ -11,7 +11,7 @@ using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall, ConcurrencyMode = ConcurrencyMode.Reentrant)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public partial class ManejadorPrincipal
     {
         #region Sala

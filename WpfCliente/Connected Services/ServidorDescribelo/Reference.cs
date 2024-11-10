@@ -1236,6 +1236,9 @@ namespace WpfCliente.ServidorDescribelo {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioPartidaSesion/RecibirImagenCallback")]
         void RecibirImagenCallback(WpfCliente.ServidorDescribelo.ImagenCarta imagen);
         
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioPartidaSesion/RecibirGrupoImagenCallback")]
+        void RecibirGrupoImagenCallback(WpfCliente.ServidorDescribelo.ImagenCarta imagen);
+        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioPartidaSesion/FinalizarPartida")]
         void FinalizarPartida();
         

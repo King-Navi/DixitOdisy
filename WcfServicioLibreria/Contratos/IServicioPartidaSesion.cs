@@ -36,6 +36,8 @@ namespace WcfServicioLibreria.Contratos
         [OperationContract(IsOneWay = true)]
         void RecibirImagenCallback(ImagenCarta imagen);
         [OperationContract(IsOneWay = true)]
+        void RecibirGrupoImagenCallback(ImagenCarta imagen);
+        [OperationContract(IsOneWay = true)]
         void FinalizarPartida();
         [OperationContract(IsOneWay = true)]
         void ObtenerJugadorPartidaCallback(Usuario jugardoreNuevoEnSala);

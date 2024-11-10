@@ -121,7 +121,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="D:\Repos\Source\RepoChatGPT\ChatGPTLibreria\ChatGPTLibreria\ChatGPTLibreria.csproj">
+    <ProjectReference Include="..\..\ChatGPTLibreria\ChatGPTLibreria\ChatGPTLibreria.csproj">
       <Project>{1db22d68-dec2-4b15-81bb-19794b7e8000}</Project>
       <Name>ChatGPTLibreria</Name>
     </ProjectReference>
@@ -224,19 +224,64 @@
     <Content Include="Recursos\Mitologia\057284a6-924e-4e0e-84c9-9e566efe31ca.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mitologia\0bfb30c5-74dc-4524-820b-c928756974d2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mitologia\156d62bf-42cb-471a-bef8-ed8337dff11a.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mitologia\3ff8743a-52e2-44bc-837f-5148ec798cc9.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mitologia\4bb85b7e-a050-40a5-86e7-3237a85289e2.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mitologia\501b1cb5-78a4-4148-a7dc-2a485c274183.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mitologia\5127d76d-cf15-49b1-b9bb-867b26c586b7.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mitologia\51d9f505-a69c-458e-8e65-1594ad9ec5a2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mitologia\56ee97c0-39c8-465f-a30a-36f9790c19e4.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mitologia\672d0893-eaa0-4bbd-a99c-ad38048f3a57.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mitologia\68bd6e5b-9a26-4f6e-9a39-c136a01ede91.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mitologia\712e8fce-3581-4662-8fc1-a7e0b99f9fc2.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mitologia\7d29437d-c9cc-49cc-ae68-22931aa61693.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mitologia\82fd841a-e940-4fe4-ab6a-0128782cbc30.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mitologia\8ea5d137-446c-4aed-9ff0-faf0afdd52eb.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mitologia\a4617d68-51ba-4a08-a348-fafb399d7e78.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mitologia\ba92a1ea-4e3a-4a3d-96cd-3d1ca3cffed0.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mitologia\be841caa-247e-474f-bc33-f01470f12fd7.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mitologia\d2398ea8-a603-4544-a2c1-f1f337dec059.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mitologia\d6aaad11-8e98-48f1-9004-a9260e927fd0.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mitologia\eb6ac5f1-4c12-42d3-8021-e0e012a86400.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\00eb92ce-5651-462e-9995-a9900e9162ea.jpg">

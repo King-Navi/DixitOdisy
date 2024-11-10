@@ -305,9 +305,6 @@
   <wsdl:message name="IServicioSalaJugador_ComenzarPartidaAnfrition_InputMessage">
     <wsdl:part name="parameters" element="tns:ComenzarPartidaAnfrition" />
   </wsdl:message>
-  <wsdl:message name="IServicioSalaJugador_ComenzarPartidaAnfrition_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ComenzarPartidaAnfritionResponse" />
-  </wsdl:message>
   <wsdl:message name="IServicioSalaJugador_AsignarColor_InputMessage">
     <wsdl:part name="parameters" element="tns:AsignarColor" />
   </wsdl:message>
@@ -325,9 +322,6 @@
   </wsdl:message>
   <wsdl:message name="IServicioSalaJugador_EmpezarPartidaCallBack_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:EmpezarPartidaCallBack" />
-  </wsdl:message>
-  <wsdl:message name="IServicioSalaJugador_EmpezarPartidaCallBack_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:EmpezarPartidaCallBackResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioSalaJugador_AsignarColorCallback_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:AsignarColorCallback" />
@@ -524,7 +518,6 @@
     </wsdl:operation>
     <wsdl:operation name="ComenzarPartidaAnfrition">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfrition" message="tns:IServicioSalaJugador_ComenzarPartidaAnfrition_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfritionResponse" message="tns:IServicioSalaJugador_ComenzarPartidaAnfrition_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AsignarColor">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioSalaJugador/AsignarColor" message="tns:IServicioSalaJugador_AsignarColor_InputMessage" />
@@ -539,7 +532,6 @@
     </wsdl:operation>
     <wsdl:operation name="EmpezarPartidaCallBack">
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioSalaJugador/EmpezarPartidaCallBack" message="tns:IServicioSalaJugador_EmpezarPartidaCallBack_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioSalaJugador/EmpezarPartidaCallBackResponse" message="tns:IServicioSalaJugador_EmpezarPartidaCallBack_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="AsignarColorCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioSalaJugador/AsignarColorCallback" message="tns:IServicioSalaJugador_AsignarColorCallback_OutputCallbackMessage" />
@@ -914,9 +906,6 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="AsignarColor">
       <soap12:operation soapAction="http://tempuri.org/IServicioSalaJugador/AsignarColor" style="document" />
@@ -944,9 +933,6 @@
     </wsdl:operation>
     <wsdl:operation name="EmpezarPartidaCallBack">
       <soap12:operation soapAction="http://tempuri.org/IServicioSalaJugador/EmpezarPartidaCallBack" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

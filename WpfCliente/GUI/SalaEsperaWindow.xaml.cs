@@ -211,14 +211,12 @@ namespace WpfCliente.GUI
             );
             if (Singleton.Instance.IdPartida != null)
             {
-                bool resutlado = Conexion.SalaJugador.ComenzarPartidaAnfrition(Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala , Singleton.Instance.IdPartida);
-                if (resutlado)
+                try
                 {
-                    //Ir a partida
-                    PartidaWindow partida = new PartidaWindow(Singleton.Instance.IdPartida);
-                    partida.Show();
-
-                    this.Close();
+                    Conexion.SalaJugador.ComenzarPartidaAnfrition(Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala, Singleton.Instance.IdPartida);
+                }
+                catch (Exception)
+                {
                 }
             }
         }

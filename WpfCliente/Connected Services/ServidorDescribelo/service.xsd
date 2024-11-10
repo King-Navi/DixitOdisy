@@ -409,13 +409,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ComenzarPartidaAnfritionResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="ComenzarPartidaAnfritionResult" type="xs:boolean" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="AsignarColor">
     <xs:complexType>
       <xs:sequence>
@@ -452,11 +445,6 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="idPartida" nillable="true" type="xs:string" />
       </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="EmpezarPartidaCallBackResponse">
-    <xs:complexType>
-      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="AsignarColorCallback">

@@ -1463,11 +1463,11 @@ namespace WpfCliente.ServidorDescribelo {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSala")]
         System.Threading.Tasks.Task AgregarJugadorSalaAsync(string gamertag, string idSala);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfrition", ReplyAction="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfritionResponse")]
-        bool ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfrition")]
+        void ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfrition", ReplyAction="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfritionResponse")]
-        System.Threading.Tasks.Task<bool> ComenzarPartidaAnfritionAsync(string nombre, string idSala, string idPartida);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfrition")]
+        System.Threading.Tasks.Task ComenzarPartidaAnfritionAsync(string nombre, string idSala, string idPartida);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/AsignarColor")]
         void AsignarColor(string idSala);
@@ -1485,7 +1485,7 @@ namespace WpfCliente.ServidorDescribelo {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/EliminarJugadorSalaCallback", ReplyAction="http://tempuri.org/IServicioSalaJugador/EliminarJugadorSalaCallbackResponse")]
         void EliminarJugadorSalaCallback(WpfCliente.ServidorDescribelo.Usuario jugardoreRetiradoDeSala);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/EmpezarPartidaCallBack", ReplyAction="http://tempuri.org/IServicioSalaJugador/EmpezarPartidaCallBackResponse")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/EmpezarPartidaCallBack")]
         void EmpezarPartidaCallBack(string idPartida);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/AsignarColorCallback", ReplyAction="http://tempuri.org/IServicioSalaJugador/AsignarColorCallbackResponse")]
@@ -1528,11 +1528,11 @@ namespace WpfCliente.ServidorDescribelo {
             return base.Channel.AgregarJugadorSalaAsync(gamertag, idSala);
         }
         
-        public bool ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida) {
-            return base.Channel.ComenzarPartidaAnfrition(nombre, idSala, idPartida);
+        public void ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida) {
+            base.Channel.ComenzarPartidaAnfrition(nombre, idSala, idPartida);
         }
         
-        public System.Threading.Tasks.Task<bool> ComenzarPartidaAnfritionAsync(string nombre, string idSala, string idPartida) {
+        public System.Threading.Tasks.Task ComenzarPartidaAnfritionAsync(string nombre, string idSala, string idPartida) {
             return base.Channel.ComenzarPartidaAnfritionAsync(nombre, idSala, idPartida);
         }
         

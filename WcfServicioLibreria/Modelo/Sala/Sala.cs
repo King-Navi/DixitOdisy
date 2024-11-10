@@ -251,7 +251,7 @@ namespace WcfServicioLibreria.Modelo
         /// <param name="idPartida"></param>
         internal bool AvisarComienzoPatida(string nombreSolicitante, string idPartida)
         {
-            bool resultado= false;
+            bool resultado = false;
             //El anfitrion debe ir al final por la condicion de carrera
             if (nombreSolicitante.Equals(anfitrion, StringComparison.OrdinalIgnoreCase))
             {
@@ -269,12 +269,21 @@ namespace WcfServicioLibreria.Modelo
                             {
                                 callback.EmpezarPartidaCallBack(idPartida);
                             }
-                            catch (CommunicationException)
+                            catch (Exception)
                             {
-
                             }
                         }
                     }
+
+                    try
+                    {
+                        jugadoresSalaCallbacks.TryGetValue(anfitrion, out ISalaJugadorCallback callback);
+                        callback.EmpezarPartidaCallBack(idPartida);
+                    }
+                    catch (Exception)
+                    {
+                    }
+
                     return true;
                 }
                 catch (Exception)

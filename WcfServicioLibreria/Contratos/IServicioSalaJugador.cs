@@ -10,8 +10,8 @@ namespace WcfServicioLibreria.Contratos
     {
         [OperationContract(IsOneWay = true)]
         Task AgregarJugadorSala(string gamertag, string idSala);
-        [OperationContract]
-        bool ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida);
+        [OperationContract(IsOneWay = true)]
+        void ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida);
         [OperationContract(IsOneWay = true)]
         void AsignarColor(string idSala);
     }
@@ -22,7 +22,7 @@ namespace WcfServicioLibreria.Contratos
         void ObtenerJugadorSalaCallback(Usuario jugardoreNuevoEnSala);
         [OperationContract]
         void EliminarJugadorSalaCallback(Usuario jugardoreRetiradoDeSala);
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void EmpezarPartidaCallBack(string idPartida);
         [OperationContract]
         void AsignarColorCallback(Dictionary<string, char> jugadoresColores);

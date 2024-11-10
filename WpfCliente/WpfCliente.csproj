@@ -488,6 +488,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Recursos\fondoSala.png" />
+    <None Include="Connected Services\ServidorDescribelo\configuration91.svcinfo" />
+    <None Include="Connected Services\ServidorDescribelo\configuration.svcinfo" />
+    <None Include="Connected Services\ServidorDescribelo\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Sonidos\musicaFondo.mp3" />
   </ItemGroup>
   <ItemGroup>
@@ -497,22 +503,10 @@
     <Resource Include="Recursos\podioJugador.png" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\ServidorDescribelo\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ServidorDescribelo\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ServidorDescribelo\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ServidorDescribelo\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Recursos\cerrarCruz.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\ServidorDescribelo\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="8b74b84c-02a9-4aff-ae30-aa9ef401d4b8" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="47671fdb-0168-4c8f-8424-765b1a25e66d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,15 +22,15 @@
     <MetadataSource Address="net.tcp://192.168.0.102:6969/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="e7b7be5b-2187-4816-b9a7-56ea65fd6496" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="c96050d0-1558-44c6-b561-712626eccbd6" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="c1d3ed84-e7fe-4684-b5c5-d2bdf559f932" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
-    <MetadataFile FileName="WcfServicioLibreria.Modelo.xsd" MetadataType="Schema" ID="85eeef8b-8092-4cb8-870e-af7d65425cb6" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
-    <MetadataFile FileName="System.IO.xsd" MetadataType="Schema" ID="10b9b862-cb04-43c5-a5e5-27c946b56fa5" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
-    <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="fd7bd48a-0bb8-4941-83f2-51b1bf826ce7" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
-    <MetadataFile FileName="WcfServicioLibreria.Enumerador.xsd" MetadataType="Schema" ID="0704c3f2-60e7-4896-b1e4-7c7cb3f97912" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
-    <MetadataFile FileName="WcfServicioLibreria.Modelo.Excepciones.xsd" MetadataType="Schema" ID="41acdc72-8e55-479e-9182-392001c688e1" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
-    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="a53159b5-d7ae-4ac3-8154-b834ef331471" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="a446d189-fffa-42fb-879b-ce6fccef5e54" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="54435fb6-6286-4db6-9cfe-a9b512534337" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="a984f061-1937-417d-894f-f8848659d6d4" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
+    <MetadataFile FileName="WcfServicioLibreria.Modelo.xsd" MetadataType="Schema" ID="a71806fd-874b-4a31-b68a-d6e4ff27237b" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
+    <MetadataFile FileName="System.IO.xsd" MetadataType="Schema" ID="3fd0f8c4-20b0-4436-99ed-c5bad32294f8" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
+    <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="f932ecee-24d2-41bb-977c-78f93c0f2d5e" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
+    <MetadataFile FileName="WcfServicioLibreria.Enumerador.xsd" MetadataType="Schema" ID="1021bab3-ac55-4fda-a814-7f7e175caef9" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
+    <MetadataFile FileName="WcfServicioLibreria.Modelo.Excepciones.xsd" MetadataType="Schema" ID="f84231d3-8ef8-40bf-87a6-4fef2f14f216" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
+    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="b18bbbb2-a60d-4370-bb13-649cdf02719c" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -101,7 +101,7 @@ namespace WcfServicioLibreria.Modelo
         /// <summary>
         /// Diccionario para la piscina de cartas
         /// </summary>
-        private ConcurrentDictionary<string, List<string>> JugadorImagenPuesta { get; set; }
+        private ConcurrentDictionary<string, List<string>> JugadorImagenPuesta { get; set; } = new ConcurrentDictionary<string, List<string>>();
         /// <summary>
         /// Diccionario para la eleccion de los jugadores
         /// </summary>

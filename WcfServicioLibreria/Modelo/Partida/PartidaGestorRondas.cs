@@ -437,6 +437,7 @@ namespace WcfServicioLibreria.Modelo
                 JugadorImagenElegida = new ConcurrentDictionary<string, List<string>>();
 
             }
+            JugadorImagenPuesta = new ConcurrentDictionary<string, List<string>>();
         }
 
         private async Task EscogerNarradorAsync()

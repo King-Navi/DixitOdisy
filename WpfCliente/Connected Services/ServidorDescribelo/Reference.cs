@@ -1487,9 +1487,6 @@ namespace WpfCliente.ServidorDescribelo {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/EmpezarPartidaCallBack")]
         void EmpezarPartidaCallBack(string idPartida);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/AsignarColorCallback", ReplyAction="http://tempuri.org/IServicioSalaJugador/AsignarColorCallbackResponse")]
-        void AsignarColorCallback(System.Collections.Generic.Dictionary<string, char> jugadoresColores);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

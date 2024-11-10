@@ -19,6 +19,7 @@ namespace WpfCliente.GUI
     public partial class SalaEsperaWindow : Window, IActualizacionUI, IServicioSalaJugadorCallback
     {
         public ObservableCollection<Usuario> jugadoresSala = new ObservableCollection<Usuario>();
+        private const int SEGUNDOS_PARA_UNIRSE = 5;
         public SalaEsperaWindow(string idSala)
         {
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
@@ -158,11 +159,6 @@ namespace WpfCliente.GUI
             this.Close();
         }
 
-        public void AsignarColorCallback(Dictionary<string, char> jugadoresColores)
-        {
-            throw new NotImplementedException();
-        }
-
         private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
@@ -214,10 +210,15 @@ namespace WpfCliente.GUI
                 try
                 {
                     Conexion.SalaJugador.ComenzarPartidaAnfrition(Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala, Singleton.Instance.IdPartida);
+                    Task.Delay(TimeSpan.FromSeconds(SEGUNDOS_PARA_UNIRSE));
+                    PartidaWindow partida = new PartidaWindow(Singleton.Instance.IdPartida);
+                    partida.Show();
+                    this.Close();
                 }
                 catch (Exception)
                 {
                 }
+                
             }
         }
 

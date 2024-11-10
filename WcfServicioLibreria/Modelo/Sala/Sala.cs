@@ -275,14 +275,14 @@ namespace WcfServicioLibreria.Modelo
                         }
                     }
 
-                    try
-                    {
-                        jugadoresSalaCallbacks.TryGetValue(anfitrion, out ISalaJugadorCallback callback);
-                        callback.EmpezarPartidaCallBack(idPartida);
-                    }
-                    catch (Exception)
-                    {
-                    }
+                    //try
+                    //{
+                    //    jugadoresSalaCallbacks.TryGetValue(anfitrion, out ISalaJugadorCallback callback);
+                    //    callback.EmpezarPartidaCallBack(idPartida);
+                    //}
+                    //catch (Exception)
+                    //{
+                    //}
 
                     return true;
                 }

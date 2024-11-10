@@ -30,7 +30,6 @@
     <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="f932ecee-24d2-41bb-977c-78f93c0f2d5e" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
     <MetadataFile FileName="WcfServicioLibreria.Enumerador.xsd" MetadataType="Schema" ID="1021bab3-ac55-4fda-a814-7f7e175caef9" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
     <MetadataFile FileName="WcfServicioLibreria.Modelo.Excepciones.xsd" MetadataType="Schema" ID="f84231d3-8ef8-40bf-87a6-4fef2f14f216" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
-    <MetadataFile FileName="Arrays.xsd" MetadataType="Schema" ID="b18bbbb2-a60d-4370-bb13-649cdf02719c" SourceId="1" SourceUrl="net.tcp://192.168.0.102:6969/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

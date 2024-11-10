@@ -24,7 +24,6 @@ namespace WcfServicioLibreria.Contratos
         void EliminarJugadorSalaCallback(Usuario jugardoreRetiradoDeSala);
         [OperationContract(IsOneWay = true)]
         void EmpezarPartidaCallBack(string idPartida);
-        [OperationContract]
-        void AsignarColorCallback(Dictionary<string, char> jugadoresColores);
+
     }
 }

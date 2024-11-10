@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using WpfCliente.Interfaz;
+using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
@@ -14,8 +15,6 @@ namespace WpfCliente.GUI
     {
         public ChatUserControl()
         {
-            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
-            ActualizarUI();
             InitializeComponent();
             gridChat.Visibility = Visibility.Collapsed;
         }
@@ -24,6 +23,7 @@ namespace WpfCliente.GUI
         {
             gridChat.Visibility = Visibility.Visible;
             buttonAbrirChat.Visibility = Visibility.Collapsed;
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
         }
 
         private async void ClicButtonEnviar(object sender, RoutedEventArgs e)
@@ -36,10 +36,11 @@ namespace WpfCliente.GUI
                     HoraFecha = DateTime.Now,
                     Nombre = Singleton.Instance.NombreUsuario
                 });
+                textBoxEnviarMensaje.Text = "";
             }
             catch (Exception excepcion)
             {
-                //TODO:Manejar execpcion
+                ManejadorExcepciones.ManejarComponentErrorException(excepcion);
             }
         }
 
@@ -51,7 +52,6 @@ namespace WpfCliente.GUI
 
         public void RecibirMensajeCliente(ChatMensaje mensaje)
         {
-            //TODO: Realizar el diseño grafico del chat, si es que tiene colores logica para colocarlos
             textBoxReceptorMensaje.Text += $"{Environment.NewLine} {mensaje.ToString()}";
         }
 
@@ -62,7 +62,7 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
-            //TODO: Pedirle a unaay los .resx
+            buttonEnviar.Content = Idioma.buttonEnviar;
         }
 
         private void CerrarControl(object sender, RoutedEventArgs e)

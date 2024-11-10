@@ -149,11 +149,25 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="VerificarCorreoConGamertag">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q9:Usuario" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VerificarCorreoConGamertagResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="VerificarCorreoConGamertagResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="CrearPartida">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="anfitrion" nillable="true" type="xs:string" />
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="configuracion" nillable="true" type="q9:ConfiguracionPartida" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="configuracion" nillable="true" type="q10:ConfiguracionPartida" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -273,7 +287,7 @@
   <xs:element name="RecibirImagenCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="imagen" nillable="true" type="q10:ImagenCarta" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="imagen" nillable="true" type="q11:ImagenCarta" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

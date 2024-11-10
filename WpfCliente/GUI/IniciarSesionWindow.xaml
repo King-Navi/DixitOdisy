@@ -91,7 +91,7 @@
                              Background="Transparent" KeyDown="passwordBoxKeyDown"  />
             </Border>
 
-            <Button x:Name="buttonOlvidarContrasenia" Margin="413,181,631,351" Grid.Row="2" Foreground="#8dadb6" Background="Transparent" BorderThickness="0" Cursor="Hand"/>
+            <Button x:Name="buttonOlvidarContrasenia" Margin="413,181,631,351" Grid.Row="2" Foreground="#8dadb6" Background="Transparent" BorderThickness="0" Cursor="Hand" Click="buttonOlvidarContrasenia_Click"/>
 
             <Button x:Name="buttonIniciarSesion" Background="#E0DCC7" Foreground="Black" BorderBrush="Gray" BorderThickness="2"
             FontFamily="Lucida Sans Unicode" FontSize="24" Content="Iniciar sesión" 

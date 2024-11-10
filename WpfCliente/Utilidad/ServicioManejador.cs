@@ -49,7 +49,7 @@ namespace WpfCliente.Utilidad
             }
             catch(Exception excepcion)
             {
-                //TODO:Manejar el error
+                ManejadorExcepciones.ManejarComponentErrorException(excepcion);
                 cliente.Abort(); 
                 throw; 
             }

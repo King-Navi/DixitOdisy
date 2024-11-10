@@ -26,6 +26,7 @@ namespace WpfCliente.GUI
         public AmigoUserControl()
         {
             InitializeComponent();
+            SetFondoColorAleatorio();
         }
         public AmigoUserControl( Amigo amigo)
         {
@@ -33,7 +34,13 @@ namespace WpfCliente.GUI
             labelNombreAmigo.Content = amigo.Nombre;
             labelEstadoAmigo.Content = amigo.Estado;
             imageAmigo.Source = Imagen.ConvertirStreamABitmapImagen(amigo.Foto);
+            SetFondoColorAleatorio();
+            
+        }
 
+        private void SetFondoColorAleatorio()
+        {
+            this.Background = Utilidades.GetColorAleatorio();
         }
     }
 }

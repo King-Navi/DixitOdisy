@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using WpfCliente.Interfaz;
+using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
@@ -66,7 +69,7 @@ namespace WpfCliente.GUI
                 return;
             }
             Conexion.SalaJugador.AgregarJugadorSala(Singleton.Instance.NombreUsuario, idSala);
-            labelCodigoSala.Text += idSala;
+            labelCodigo.Content += idSala;
             UnirseChat();
 
         }
@@ -99,7 +102,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                //TODO: Manejo de otras excepciones
+                ManejadorExcepciones.ManejarFatalException(excepcion,this);
                 NoHayConexion();
             }
 
@@ -116,10 +119,9 @@ namespace WpfCliente.GUI
                     return proxy.CrearChat(Singleton.Instance.IdChat);
                 });
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
-                //TODO: Manejo de otras excepciones
-                NoHayConexion();
+                ManejadorExcepciones.ManejarFatalException(excepcion, this);
             }
 
         }
@@ -134,7 +136,9 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
-            //TODO:Actualizar toda la inferfaz, Pedir a Unnay los .resx
+            //TODO: faltan recursos (botones)
+            labelCodigoSala.Content = Idioma.labelCodigoSala;
+            labelUsuariosLobby.Content = Idioma.labelUsuariosLobby;
         }
 
         
@@ -219,9 +223,15 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void ClicButtonCopiarCodigo(object sender, RoutedEventArgs e)
+
+        private void LabelCodigoSala_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Clipboard.SetText(labelCodigoSala.Text);
+            if (labelCodigo.Content != null)
+            {
+                Clipboard.SetText(labelCodigo.Content.ToString());
+
+                VentanasEmergentes.CrearVentanaEmergenteCodigoCopiado(this);
+            }
         }
     }
 }

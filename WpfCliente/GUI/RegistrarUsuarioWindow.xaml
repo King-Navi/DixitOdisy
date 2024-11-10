@@ -112,7 +112,7 @@
            VerticalAlignment="Top" FontSize="15" Width="152" Height="32" TextWrapping="Wrap"><!-- Asterisco rojo --><Run Text="*" Foreground="Red"/><Run Text=" "/><!-- Texto blanco --><Run Text="Campos obligatorios" Foreground="White"/></TextBlock>
 
 
-            <Image   x:Name = "imgPerfil" Source="/Recursos/pfp1.png" Margin="379,581,704,71"/>
+            <Image   x:Name = "imgPerfil" Source="/Recursos/pfp1.png" Margin="379,581,704,71" />
             <Label   x:Name = "labelFotoPerfil" Content="Foto de perfil" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="26" Margin="357,534,0,0" />
             <Button  x:Name="buttonCambiarFoto" Content="Cambiar foto" VerticalAlignment="Top" Background="#E0DCC7" Foreground="Black" BorderBrush="Gray" BorderThickness="2"
             FontFamily="Lucida Sans Unicode" FontSize="18"   Height="39" Margin="536,616,532,0"  Cursor="Hand" Click="buttonCambiarFoto_Click" RenderTransformOrigin="0.355,0.519"/>

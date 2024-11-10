@@ -95,7 +95,7 @@ namespace WpfCliente.GUI
         {
             if (amigo == null)
             {
-                MessageBox.Show("No se pudo cargar los datos de tus amigos");
+                VentanasEmergentes.CrearVentanaEmergenteCargarDatosAmigosFalla(this);
             }
             else
             {
@@ -136,7 +136,6 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
-
             labelListaAmigos.Content = Idioma.labelListaAmigos;
         }
 

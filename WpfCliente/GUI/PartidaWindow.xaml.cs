@@ -49,6 +49,9 @@ namespace WpfCliente.GUI
         NarradorSeleccionCartaUserControl narradorSeleccionCartasUserControl;
         VerTodasCartasUserControl VerTodasCartasUserControl;
         private readonly SemaphoreSlim semaphoreRecibirImagenCallback = new SemaphoreSlim(1,1);
+        private Window ventanaMenu;
+
+
         private bool esNarrador;
         public bool EsNarrador
         {
@@ -84,12 +87,24 @@ namespace WpfCliente.GUI
 
         public PartidaWindow(string idPartida)
         {
+            ConfigurarVentanaMenu();
             InitializeComponent();
             InicializarComponenetes();
             ActualizarUI();
             DataContext = this;
             UnirsePartida(idPartida);
+        }
 
+        private void ConfigurarVentanaMenu()
+        {
+            // Encontrar la ventana del menú y ocultarla
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window is MenuWindow ventanaMenu)
+                {
+                    this.ventanaMenu = ventanaMenu;
+                }
+            }
         }
 
         private async Task SolicitarMazoAsync()
@@ -110,7 +125,7 @@ namespace WpfCliente.GUI
             ComandoImagenSelecionCorrecta = new ComandoRele<string>(ComandoSeleccionCorrecta);
             narradorSeleccionCartasUserControl = new NarradorSeleccionCartaUserControl(recursosCompartidos.Imagenes);
             seleccionCartasUserControl = new SeleccionCartaUsercontrol(recursosCompartidos.Imagenes);
-            VerTodasCartasUserControl = new VerTodasCartasUserControl(recursosCompartidos.TodasImagenes);
+            VerTodasCartasUserControl = new VerTodasCartasUserControl(recursosCompartidos.GruposDeImagenes);
             gridPantalla2.Children.Add(seleccionCartasUserControl);
             gridPantalla3.Children.Add(narradorSeleccionCartasUserControl);
             gridPantalla4.Children.Add(VerTodasCartasUserControl);
@@ -170,6 +185,7 @@ namespace WpfCliente.GUI
 
         public void ObtenerJugadorPartidaCallback(Usuario jugardoreNuevoEnSala)
         {
+
         }
 
         public void EliminarJugadorPartidaCallback(Usuario jugardoreRetiradoDeSala)
@@ -204,13 +220,9 @@ namespace WpfCliente.GUI
                     recursosCompartidos.Imagenes.Add(imagen);
                 });
             }
-            //
+            
         }
 
-        /// <summary>
-        /// Notifica si eres el narrador
-        /// </summary>
-        /// <exception cref="NotImplementedException"></exception>
         public void NotificarNarradorCallback(bool esNarrador)
         {
             EsNarrador = esNarrador;
@@ -241,35 +253,27 @@ namespace WpfCliente.GUI
         {
             await SolicitarMazoAsync();
             Conexion.Partida.EmpezarPartida(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
+            EsconderVentanaMenu();
         }
 
         public void RecibirGrupoImagenCallback(ImagenCarta imagen)
         {
             if (System.Windows.Application.Current.Dispatcher.CheckAccess())
             {
-                recursosCompartidos.Imagenes.Add(imagen);
+                recursosCompartidos.GruposDeImagenes.Add(imagen);
             }
             else
             {
                 System.Windows.Application.Current.Dispatcher.Invoke(() =>
                 {
-                    recursosCompartidos.Imagenes.Add(imagen);
+                    recursosCompartidos.GruposDeImagenes.Add(imagen);
                 });
             }
         }
 
         #endregion IServicioPartidaSesionCallback
 
-        /// <summary>
-        /// InicioRonda = 1
-        /// 
-        /// 
-        /// Escoger carta jugador = 2
-        /// EscogerCataNarrador = 3
-        /// Fin partida = 5
-        /// </summary>
-        /// <param name="numeroPantallla"></param>
-        public void AvanzarPantalla(int numeroPantallla) //Fixme o algo por el estilo
+        public void AvanzarPantalla(int numeroPantallla)
         {
             PantallaActual = numeroPantallla;
         }
@@ -327,7 +331,20 @@ namespace WpfCliente.GUI
         }
 
 
-
+        private void EsconderVentanaMenu()
+        {
+            try
+            {
+                if (ventanaMenu != null)
+                {
+                    ventanaMenu.Hide();
+                }
+            }
+            catch (Exception)
+            {
+                Application.Current.Shutdown();
+            }
+        }
         private void CerrandoVentana(object sender, CancelEventArgs e)
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
@@ -339,6 +356,17 @@ namespace WpfCliente.GUI
             catch (Exception excepcion)
             {
                 //TODO Manejar excepcion
+            }
+            try
+            {
+                if (ventanaMenu != null)
+                {
+                    ventanaMenu.Show();
+                }
+            }
+            catch (Exception)
+            {
+                Application.Current.Shutdown();
             }
         }
 
@@ -429,7 +457,7 @@ namespace WpfCliente.GUI
         private class RecursosCompartidos
         {
             public ObservableCollection<ImagenCarta> Imagenes { get; } = new ObservableCollection<ImagenCarta>();
-            public ObservableCollection<ImagenCarta> TodasImagenes { get; } = new ObservableCollection<ImagenCarta>();
+            public ObservableCollection<ImagenCarta> GruposDeImagenes { get; } = new ObservableCollection<ImagenCarta>();
             public ObservableCollection<JugadorEstadisticas> JugadorEstadisticas { get; } = new ObservableCollection<JugadorEstadisticas>();
         }
 

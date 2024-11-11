@@ -12,8 +12,6 @@ namespace WcfServicioLibreria.Contratos
         Task AgregarJugadorSala(string gamertag, string idSala);
         [OperationContract(IsOneWay = true)]
         void ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida);
-        [OperationContract(IsOneWay = true)]
-        void AsignarColor(string idSala);
     }
     [ServiceContract]
     public interface ISalaJugadorCallback

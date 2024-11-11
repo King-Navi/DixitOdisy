@@ -20,9 +20,8 @@ namespace WcfServicioLibreria.Manejador
                     sala.AvisarComienzoPatida(nombre, idPartida);
                 }
             }
-            catch (Exception excepcion)
+            catch (Exception)
             {
-                //TODO: Manejar el error
             };
         }
         /// <summary>
@@ -47,17 +46,10 @@ namespace WcfServicioLibreria.Manejador
                 await sala.AvisarNuevoJugador(gamertag);
 
             }
-            catch (Exception excepcion)
+            catch (Exception)
             {
-                //TODO: Manejar el error
             }
         }
-
-        public void AsignarColor(string idSala)
-        {
-            throw new NotImplementedException();
-        }
-
         
     }
 }

@@ -26,15 +26,15 @@ namespace WpfCliente.GUI
     /// </summary>
     public partial class VerTodasCartasUserControl : UserControl , IActualizacionUI
     {
-        public ObservableCollection<ImagenCarta> TodasImagenes;
+        public ObservableCollection<ImagenCarta> TodasImagenes { get; set; }
 
 
 
-        public VerTodasCartasUserControl(ObservableCollection<ImagenCarta> imagenCartas)
+        public VerTodasCartasUserControl(ObservableCollection<ImagenCarta> todasImagenes)
         {
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
-            TodasImagenes = imagenCartas;
+            TodasImagenes = todasImagenes;
             DataContext = this;
         }
 

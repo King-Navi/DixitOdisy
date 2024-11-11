@@ -248,17 +248,18 @@ namespace WcfServicioLibreria.Modelo
         private void MostrarGrupoCartas()
         {
             string[] archivosCache = ObtenerArchivosCache();
+            //Esto deberia se mas eficiente
+            var archivoRutaMap = archivosCache.ToDictionary(ruta => Path.GetFileNameWithoutExtension(ruta), ruta => ruta);
             List<string> rutasCompletas = new List<string>();
             // Iteramos en el diccionario y añadimos las rutas completas
             foreach (var listaDeNombres in JugadorImagenPuesta.Values)
             {
                 foreach (var nombreArchivo in listaDeNombres)
                 {
-                    // Buscamos la ruta completa correspondiente al nombre de archivo en archivosCache
-                    var rutaCompleta = archivosCache.FirstOrDefault(ruta => Path.GetFileName(ruta) == nombreArchivo);
-                    if (rutaCompleta != null)
+                    // Verificamos si el nombre del archivo está en el diccionario
+                    if (archivoRutaMap.TryGetValue(nombreArchivo, out var rutaCompleta))
                     {
-                        rutasCompletas.Add(rutaCompleta);
+                        rutasCompletas.Add(rutaCompleta); // Añadimos la ruta completa si existe
                     }
                 }
             }

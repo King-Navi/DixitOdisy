@@ -77,9 +77,12 @@
     <Compile Include="Servidor\ServicioCorreo.cs" />
     <Compile Include="Servidor\ServicioPartida.cs" />
     <Compile Include="Servidor\ServicioPartidaSesion.cs" />
+    <Compile Include="Servidor\ServicioSala.cs" />
+    <Compile Include="Servidor\ServicioSalaJugador.cs" />
     <Compile Include="Servidor\ServicioUsuario.cs" />
     <Compile Include="Servidor\Utilidades\ICommunicationObjectImpl.cs" />
     <Compile Include="Servidor\Utilidades\PartidaCallbackImpl.cs" />
+    <Compile Include="Servidor\Utilidades\SalaCallbackImpl.cs" />
     <Compile Include="Servidor\Utilidades\UsuarioSessionCallbackImpl.cs" />
     <Compile Include="Cliente\Utilidades\Conexion.cs" />
     <Compile Include="Cliente\Utilidades\ServicioManejador.cs" />

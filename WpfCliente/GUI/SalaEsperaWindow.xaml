@@ -18,17 +18,17 @@
         <StackPanel Background="AntiqueWhite" HorizontalAlignment="Left" VerticalAlignment="Top" Height="123" Width="257" Margin="0,5,0,0"/>
 
         <!-- Lista de usuarios en el centro -->
-        <StackPanel Grid.Column="1" Background="Aqua" HorizontalAlignment="Center" VerticalAlignment="Center" Height="701" Width="300">
-            <Label x:Name="labelUsuariosLobby" Content="Usuarios en el lobby" FontFamily="Lucida Sans Unicode" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+        <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="701" Width="300">
+            <Label x:Name="labelUsuariosLobby" Content="Usuarios en el lobby" FontFamily="Lucida Sans Unicode" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Background="#FFD8D2AB"/>
             <local:ListaUsuariosSalaUserControl x:Name="usuariosSalaUserControl" Height="692" />
         </StackPanel>
 
         <!-- Botones a la derecha -->
-        <StackPanel Orientation="Vertical" Background="Coral" HorizontalAlignment="Left" VerticalAlignment="Top" Height="102" Width="223" Margin="871,325,0,0">
-            <Button Content="Listo!" Margin="5" FontFamily="Lucida Sans Unicode" BorderThickness="2" BorderBrush="Black" Background="AntiqueWhite"/>
-            <Button Content="Configurar partida" Margin="5" FontFamily="Lucida Sans Unicode" BorderThickness="2" BorderBrush="Black" Background="AntiqueWhite"/>
+        <StackPanel x:Name="stackPanePartida" Visibility="Visible" Orientation="Vertical" Background="Coral" HorizontalAlignment="Right" VerticalAlignment="Top"  Width="223" Margin="0,400,100,0">
+            <Button x:Name="buttonConfigurarPartida" Content="Configurar partida" Margin="5" FontFamily="Lucida Sans Unicode" BorderThickness="2" BorderBrush="Black" Background="AntiqueWhite" Click="ClicButtonConfigurarPartida"/>
             <Button x:Name="buttonEmpezarPartida" Content="Empezar partida" Margin="5" Click="ClicButtonEmpezarPartida" FontFamily="Lucida Sans Unicode" BorderThickness="2" BorderBrush="Black" Background="AntiqueWhite"/>
         </StackPanel>
+        
         <Label x:Name="labelCodigoSala" Content="Código de la sala:" FontFamily="ROG Fonts" FontSize="16" 
                    HorizontalContentAlignment="Left" ToolTip="Haga clic para copiar el código" HorizontalAlignment="Left" VerticalAlignment="Top"
                    MouseLeftButtonUp="LabelCodigoSala_MouseLeftButtonUp" Width="257" Height="73" Margin="0,5,0,0"/>
@@ -38,6 +38,51 @@
         
         <Grid>
             <local:ChatUserControl x:Name="chatUserControl" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" />
+        </Grid>
+        <Grid x:Name="gridConfiguracion" Visibility="Visible" Width="400" HorizontalAlignment="Right" Margin="0,40,20,0" VerticalAlignment="Top" Background="Coral">
+            <StackPanel Orientation="Vertical">
+                <!-- GroupBox para Selección de Temática -->
+                <GroupBox x:Name="grouoBoxTematica" Header="Selección de Temática" Margin="10">
+                    <WrapPanel Orientation="Horizontal" Margin="5">
+                        <RadioButton Name="radioButtonMixta" Content="[Mixta]" Margin="5" GroupName="Tematica"/>
+                        <RadioButton Name="radioButtonAnimales" Content="[Animales]" Margin="5" GroupName="Tematica"/>
+                        <RadioButton Name="radioButtonPaises" Content="[Paises]" Margin="5" GroupName="Tematica"/>
+                        <RadioButton Name="radioButtonMitologia" Content="[Mitologia]" Margin="5" GroupName="Tematica"/>
+                    </WrapPanel>
+                </GroupBox>
+
+                <!-- GroupBox para Condición de Victoria -->
+                <GroupBox x:Name="groupBoxCondicionVictoria" Header="Condición de Victoria" Margin="10">
+                    <StackPanel Margin="5">
+                        <!-- Primera línea de botones -->
+                        <WrapPanel Orientation="Horizontal" Margin="5">
+                            <RadioButton Name="radioButtonFinRondas" Content="[Hasta que se acaben las rondas]" Margin="5" GroupName="CondicionVictoria" />
+                            <RadioButton Name="radioButtonFinCartas" Content="[Hasta que se acaben las cartas]" Margin="5" GroupName="CondicionVictoria" />
+                         </WrapPanel>
+
+                        <!-- Segunda línea con Label y ComboBox -->
+                        <WrapPanel Orientation="Horizontal" Margin="5">
+                            <Label Name="labelNumeroRondas" Content="[Número de rondas]" VerticalAlignment="Center" Margin="5"/>
+                            <ComboBox Name="comboBoxNumeroRondas" Width="100" Margin="5">
+                                <ComboBoxItem Content="1"/>
+                                <ComboBoxItem Content="2"/>
+                                <ComboBoxItem Content="3"/>
+                                <ComboBoxItem Content="4"/>
+                                <ComboBoxItem Content="5"/>
+                                <ComboBoxItem Content="6"/>
+                                <ComboBoxItem Content="7"/>
+                                <ComboBoxItem Content="8"/>
+                                <ComboBoxItem Content="9"/>
+                                <ComboBoxItem Content="10"/>
+                                <ComboBoxItem Content="11"/>
+                                <ComboBoxItem Content="12"/>
+                            </ComboBox>
+                        </WrapPanel>
+                    </StackPanel>
+
+                </GroupBox>
+                <Button x:Name="buttonGuardarCambios" Content="Guarda cambios" Height="30" Width="356" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,5"></Button>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

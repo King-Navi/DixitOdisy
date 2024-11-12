@@ -353,9 +353,8 @@ namespace WpfCliente.GUI
                 Conexion.CerrarChatMotor();
                 Conexion.CerrarConexionesPartida();
             }
-            catch (Exception excepcion)
+            catch (Exception)
             {
-                //TODO Manejar excepcion
             }
             try
             {

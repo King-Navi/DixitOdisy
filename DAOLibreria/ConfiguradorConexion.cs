@@ -110,7 +110,7 @@ namespace DAOLibreria
                     resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexionruta()) [Exception]. {ruta}");
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 resultado.Add(Llaves.LLAVE_ERROR, true);
                 resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexionRuta()) [Exception].");

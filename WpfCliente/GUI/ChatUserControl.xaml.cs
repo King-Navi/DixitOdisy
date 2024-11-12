@@ -8,11 +8,9 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Interaction logic for ChatUserControl.xaml
-    /// </summary>
     public partial class ChatUserControl : UserControl , IServicioChatMotorCallback , IActualizacionUI
     {
+        private const int MAXIMO_CARACTERES_PERMITIDOS = 200;
         public ChatUserControl()
         {
             InitializeComponent();
@@ -28,6 +26,17 @@ namespace WpfCliente.GUI
 
         private async void ClicButtonEnviar(object sender, RoutedEventArgs e)
         {
+            if (textBoxEnviarMensaje.Text.Length > MAXIMO_CARACTERES_PERMITIDOS || string.IsNullOrWhiteSpace(textBoxEnviarMensaje.Text))
+            {
+                RecibirMensajeCliente(new ChatMensaje
+                {
+                    //TODO: I18N
+                    Mensaje = "Profe ese texto no vale",
+                    HoraFecha = DateTime.Now,
+                    Nombre = "Describelo"
+                });
+                return;
+            }
             try
             {
                 await Conexion.ChatMotor.EnviarMensajeAsync(Singleton.Instance.IdChat, new ChatMensaje

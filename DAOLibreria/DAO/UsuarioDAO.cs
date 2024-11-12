@@ -67,12 +67,10 @@ namespace DAOLibreria.DAO
                         transaction.Commit();
                         resultado = true;
                     }
-                    catch (Exception excepcion)
+                    catch (Exception)
                     {
                         transaction.Rollback();
                         resultado = false;
-
-                        //TODO: Manejar el error
                     }
                 }
 

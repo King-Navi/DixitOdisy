@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:WpfCliente.GUI"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="300">
-    <Grid d:Background="Aqua" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="700">
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="700">
         <Label x:Name="labelUsuariosEnLobby" d:Content="Usuarios en el lobby" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <ItemsControl x:Name="itemsControlUsuarios" ItemsSource="{Binding JugadoresEnSala}" Margin="5,30,5,5">
             <ItemsControl.ItemTemplate>

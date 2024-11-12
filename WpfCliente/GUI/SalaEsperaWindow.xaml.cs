@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
@@ -19,15 +20,23 @@ namespace WpfCliente.GUI
     public partial class SalaEsperaWindow : Window, IActualizacionUI, IServicioSalaJugadorCallback
     {
         public ObservableCollection<Usuario> jugadoresSala = new ObservableCollection<Usuario>();
+        private bool soyAnfitrion = false;
+        private bool visibleConfigurarPartida = false;
         private const int SEGUNDOS_PARA_UNIRSE = 5;
+        private ConfiguracionPartida ConfiguracionPartida { get; set; }
+
         public SalaEsperaWindow(string idSala)
         {
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             InitializeComponent();
+            EsconderOpciones();
             VerificarConexion();
+            ConfiguracionPartidaPorDefecto(); 
             if (idSala == null)
             {
+                soyAnfitrion = true;
                 GenerarSalaComoAnfitrion();
+                VerDiposicionAnfitrion();
             }
             else
             {
@@ -36,6 +45,27 @@ namespace WpfCliente.GUI
                 UnirseSala(idSala);
             }
             DataContext = this;
+        }
+
+        private void EsconderOpciones()
+        {
+            stackPanePartida.Visibility = Visibility.Hidden;
+            gridConfiguracion.Visibility = Visibility.Hidden;
+        }
+
+        private void ConfiguracionPartidaPorDefecto()
+        {
+            ConfiguracionPartida = new ConfiguracionPartida()
+            {
+                Condicion = CondicionVictoriaPartida.PorCantidadRondas,
+                NumeroRondas = 3,
+                Tematica = TematicaPartida.Mixta
+            };
+        }
+
+        private void VerDiposicionAnfitrion()
+        {
+            stackPanePartida.Visibility = Visibility.Visible;
         }
 
         private async void VerificarConexion()
@@ -126,10 +156,12 @@ namespace WpfCliente.GUI
             }
 
         }
+
         private void NoHayConexion()
         {
             this.Close();
         }
+
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
         {
             ActualizarUI();
@@ -140,9 +172,22 @@ namespace WpfCliente.GUI
             //TODO: faltan recursos (botones)
             labelCodigoSala.Content = Idioma.labelCodigoSala;
             labelUsuariosLobby.Content = Idioma.labelUsuariosLobby;
-        }
+            //groupBoxCondicionVicotoria.Header
+            //grouoBoxTematica.Header
 
-        
+            //radioButtonAnimales
+            //radioButtonMitologia
+            //radioButtonMixta
+            //radioButtonPaises
+            //radioButtonFinCartas
+            //radioButtonFinRondas
+
+            //buttonConfigurarPartida
+            //buttonEmpezarPartida
+
+            //buttonGuardarCambios
+            //labelNumeroRondas
+        }
 
         public void EmpezarPartidaCallBack(string idPartida)
         {
@@ -191,18 +236,12 @@ namespace WpfCliente.GUI
 
         private void ClicButtonEmpezarPartida(object sender, RoutedEventArgs e)
         {
-            ConfiguracionPartida prueba = new ConfiguracionPartida()
-            {
-                Condicion = CondicionVictoriaPartida.PorCantidadRondas,
-                NumeroRondas = 2,
-                Tematica = TematicaPartida.Mixta
-            };
             //TODO: Evaluar que tengar un configuracion partida valido
             //TODO: Evaluar que seas el anfitrion para poder ver el boton
             var manejador = new ServicioManejador<ServicioPartidaClient>();
             Singleton.Instance.IdPartida = manejador.EjecutarServicio(proxy =>
             {
-                return proxy.CrearPartida(Singleton.Instance.NombreUsuario, prueba);
+                return proxy.CrearPartida(Singleton.Instance.NombreUsuario, this.ConfiguracionPartida);
             }
             );
             if (Singleton.Instance.IdPartida != null)
@@ -222,7 +261,6 @@ namespace WpfCliente.GUI
             }
         }
 
-
         private void LabelCodigoSala_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (labelCodigo.Content != null)
@@ -230,6 +268,71 @@ namespace WpfCliente.GUI
                 Clipboard.SetText(labelCodigo.Content.ToString());
 
                 VentanasEmergentes.CrearVentanaEmergenteCodigoCopiado(this);
+            }
+        }
+
+        private void ClicButtonConfigurarPartida(object sender, RoutedEventArgs e)
+        {
+            if (visibleConfigurarPartida)
+            {
+                gridConfiguracion.Visibility = Visibility.Hidden;
+                visibleConfigurarPartida = false;
+            }
+            else
+            {
+                gridConfiguracion.Visibility = Visibility.Visible;
+                visibleConfigurarPartida = true;
+            }
+        }
+
+        private void EvaluarTematicaSelecionada()
+        {
+
+            if (radioButtonMixta.IsChecked == true)
+            {
+                ConfiguracionPartida.Tematica = TematicaPartida.Mixta;
+            }
+            else if (radioButtonAnimales.IsChecked == true)
+            {
+                ConfiguracionPartida.Tematica = TematicaPartida.Animales;
+            }
+            else if (radioButtonPaises.IsChecked == true)
+            {
+                ConfiguracionPartida.Tematica = TematicaPartida.Paises;
+            }
+            else if (radioButtonMitologia.IsChecked == true)
+            {
+                ConfiguracionPartida.Tematica = TematicaPartida.Mitologia;
+            }
+        }
+
+        private void EvaluarCondicionVictoria()
+        {
+
+            if (radioButtonFinCartas.IsChecked == true)
+            {
+                ConfiguracionPartida.Condicion = CondicionVictoriaPartida.PorCartasAgotadas;
+            }
+            else if (radioButtonFinRondas.IsChecked == true)
+            {
+                ConfiguracionPartida.Condicion = CondicionVictoriaPartida.PorCantidadRondas;
+
+            }
+            
+        }
+
+        private void EvaluarCantidaRondas()
+        {
+            if (comboBoxNumeroRondas.SelectedItem is ComboBoxItem seleccion)
+            {
+                if (int.TryParse(seleccion.Content.ToString(), out int numeroSeleccionado))
+                {
+                    ConfiguracionPartida.NumeroRondas = numeroSeleccionado;
+                }
+                else
+                {
+                    ConfiguracionPartida.NumeroRondas = 3;
+                }
             }
         }
     }

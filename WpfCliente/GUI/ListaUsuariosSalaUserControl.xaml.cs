@@ -32,7 +32,6 @@ namespace WpfCliente.GUI
             DataContext = this;
         }
 
-
         public void ObtenerUsuarioSala(Usuario usuario, List<Amigo> amigos) //FIXME: Falta terminar los amigos
         {
             if (usuario == null)
@@ -45,6 +44,7 @@ namespace WpfCliente.GUI
                 JugadoresEnSala.Add(usuario);
             }
         }
+
         public void EliminarUsuarioSala(Usuario usuario)
         {
             var usuarioAEliminar = JugadoresEnSala.FirstOrDefault(busqueda => busqueda.Nombre == usuario.Nombre);
@@ -53,6 +53,7 @@ namespace WpfCliente.GUI
                 JugadoresEnSala.Remove(usuarioAEliminar);
             }
         }
+
         private void LimpiarItemsControl()
         {
             JugadoresEnSala.Clear();

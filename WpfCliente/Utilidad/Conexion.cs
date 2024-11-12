@@ -114,7 +114,7 @@ namespace WpfCliente.Utilidad
                     Partida = new ServicioPartidaSesionClient(new System.ServiceModel.InstanceContext(callback));
                     resultado = Task.FromResult(true);
                 }
-                catch (Exception)
+                catch (Exception excepcion)
                 {
                     //TODO: Manejar el error
                 }

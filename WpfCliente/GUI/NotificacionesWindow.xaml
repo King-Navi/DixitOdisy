@@ -1,0 +1,23 @@
+﻿<Window x:Class="WpfCliente.GUI.NotificacionesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfCliente.GUI"
+        mc:Ignorable="d"
+        Title="NotificacionesWindow"
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="NoResize" Height="770" Width="1200">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Recursos/fondoNotificaciones.png" />
+        </Grid.Background>
+        <Image   Source="/Recursos/flechaAtras.png" Margin="10,2,1094,657" Cursor="Hand" MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
+        <Grid>
+            <local:ListaSolicitudesAmistadUserControl x:Name="listaSoolicitudesAmistadUserControl" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="249,0,0,0" />
+        </Grid>
+        <Grid>
+            <local:ListaInvitacionesPartidaUserControl x:Name="listaInvitacionesPartidaUserControl" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="800,0,0,0" />
+        </Grid>
+    </Grid>
+</Window>

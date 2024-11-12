@@ -146,8 +146,17 @@
     <Compile Include="GUI\InicioRondaUserControl.xaml.cs">
       <DependentUpon>InicioRondaUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\InvitacionPartidaUserControl.xaml.cs">
+      <DependentUpon>InvitacionPartidaUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\ListaAmigosUserControl.xaml.cs">
       <DependentUpon>ListaAmigosUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ListaInvitacionesPartidaUserControl.xaml.cs">
+      <DependentUpon>ListaInvitacionesPartidaUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ListaSolicitudesAmistadUserControl.xaml.cs">
+      <DependentUpon>ListaSolicitudesAmistadUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\ListaUsuariosSalaUserControl.xaml.cs">
       <DependentUpon>ListaUsuariosSalaUserControl.xaml</DependentUpon>
@@ -160,6 +169,9 @@
     </Compile>
     <Compile Include="GUI\NarradorSeleccionCartaUserControl.xaml.cs">
       <DependentUpon>NarradorSeleccionCartaUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\NotificacionesWindow.xaml.cs">
+      <DependentUpon>NotificacionesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\PartidaWindow.xaml.cs">
       <DependentUpon>PartidaWindow.xaml</DependentUpon>
@@ -356,7 +368,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\InvitacionPartidaUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\ListaAmigosUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ListaInvitacionesPartidaUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ListaSolicitudesAmistadUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -373,6 +397,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\NarradorSeleccionCartaUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\NotificacionesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -481,6 +509,8 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Recursos\fondoSala.png" />
+    <Resource Include="Recursos\notificaciones.png" />
+    <Resource Include="Recursos\fondoNotificaciones.png" />
     <Content Include="Sonidos\musicaFondo.mp3" />
   </ItemGroup>
   <ItemGroup>

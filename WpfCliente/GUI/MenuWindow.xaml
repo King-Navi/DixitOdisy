@@ -22,12 +22,14 @@
             </Style.Resources>
         </Style>
     </Window.Resources>
-    
+
+
     <Grid>
         <DockPanel LastChildFill="True">
             <!--Header-->
             <StackPanel DockPanel.Dock="Top" x:Name="stackPaneEncabezado" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <local:PerfilMenuDesplegableUserControl x:Name="perfilMenuDesplegable"></local:PerfilMenuDesplegableUserControl>
+                <Image Height="48" Width="54" Source="/recursos/notificaciones.png" VerticalAlignment="Top" RenderTransformOrigin="0.556,0.5" Cursor="Hand" MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
+                <local:PerfilMenuDesplegableUserControl x:Name="perfilMenuDesplegable"/>
             </StackPanel>
             <!--Footer-->
             <StackPanel DockPanel.Dock="Bottom" Background="#E0DCC7" VerticalAlignment="Bottom" HorizontalAlignment="Center">

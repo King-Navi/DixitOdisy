@@ -3,6 +3,7 @@ using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
@@ -179,6 +180,12 @@ namespace WpfCliente.GUI
         private void buttonSalir_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            NotificacionesWindow notificaciones = new NotificacionesWindow();
+            notificaciones.Show();
         }
     }
 }

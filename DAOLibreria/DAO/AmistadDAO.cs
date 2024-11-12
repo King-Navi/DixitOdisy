@@ -42,5 +42,14 @@ namespace DAOLibreria.DAO
             }
             return resultado;
         }
+        public static bool SonAmigos(int idUsuario1, int idUsuario2)
+        {
+            using (var context = new DescribeloEntities())
+            {
+                return context.Amigo.Any(a =>
+                    (a.idMayor_usuario == idUsuario1 && a.idMenor_usuario == idUsuario2) ||
+                    (a.idMayor_usuario == idUsuario2 && a.idMenor_usuario == idUsuario1));
+            }
+        }
     }
 }

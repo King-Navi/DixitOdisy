@@ -15,7 +15,7 @@
             <!--Contenido-->
             <Grid>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ItemsControl x:Name="itemsControlAmigos" Background="#A9A9A9" ItemsSource="{Binding Amigos}">
+                    <ItemsControl x:Name="itemsControlAmigos" Background="#A9A9A9" ItemsSource="{Binding Solicitudes}">
                         <!-- El ItemsPanel organiza los elementos -->
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -25,8 +25,8 @@
                         <!-- DataTemplate para los elementos del ItemsControl -->
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <!-- Aquí se muestra el AmigoUserControl con el DataContext correspondiente -->
-                                <local:AmigoUserControl DataContext="{Binding}" />
+                                <!-- Aquí se muestra el SolicitudAmistadUserControl con el DataContext correspondiente -->
+                                <local:SolicitudAmistadUserControl DataContext="{Binding}" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

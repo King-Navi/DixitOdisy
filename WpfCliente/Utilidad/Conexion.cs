@@ -16,6 +16,7 @@ namespace WpfCliente.Utilidad
         public static ServicioChatMotorClient ChatMotor { get; private set; }
         public static ServicioAmistadClient Amigos { get; private set; }
         public static ServicioPartidaSesionClient Partida { get; private set; }
+        public static ServicioInvitacionPartidaClient InvitacionPartida { get; private set; }
         public static Task<bool> AbrirConexionUsuarioSesionCallbackAsync(IServicioUsuarioSesionCallback callback)
         {
             Task<bool> resultado = Task.FromResult(false);
@@ -112,6 +113,28 @@ namespace WpfCliente.Utilidad
                 try
                 {
                     Partida = new ServicioPartidaSesionClient(new System.ServiceModel.InstanceContext(callback));
+                    resultado = Task.FromResult(true);
+                }
+                catch (Exception)
+                {
+                    //TODO: Manejar el error
+                }
+            }
+            return resultado;
+        }
+
+        public static Task<bool> AbrirConexionInvitacionPartidaCallbackAsync(IServicioInvitacionPartidaCallback callback)
+        {
+            Task<bool> resultado = Task.FromResult(false);
+            if (InvitacionPartida != null)
+            {
+                resultado = Task.FromResult(true);
+            }
+            else
+            {
+                try
+                {
+                    InvitacionPartida = new ServicioInvitacionPartidaClient(new System.ServiceModel.InstanceContext(callback));
                     resultado = Task.FromResult(true);
                 }
                 catch (Exception)

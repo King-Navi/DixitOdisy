@@ -191,6 +191,9 @@
     <Compile Include="GUI\SeleccionCartaUsercontrol.xaml.cs">
       <DependentUpon>SeleccionCartaUsercontrol.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\SolicitudAmistadUserControl.xaml.cs">
+      <DependentUpon>SolicitudAmistadUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\UnirseSalaModalWindow.xaml.cs">
       <DependentUpon>UnirseSalaModalWindow.xaml</DependentUpon>
     </Compile>
@@ -428,6 +431,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\SeleccionCartaUsercontrol.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\SolicitudAmistadUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

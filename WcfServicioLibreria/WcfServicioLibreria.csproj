@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contratos\IServicioCorreo.cs" />
+    <Compile Include="Contratos\IServicioInvitacionPartida.cs" />
     <Compile Include="Contratos\IServicioPartida.cs" />
     <Compile Include="Contratos\IServicioAmistad.cs" />
     <Compile Include="Contratos\IServicioChat.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Contratos\IServicioSala.cs" />
     <Compile Include="Contratos\IServicioSalaJugador.cs" />
     <Compile Include="Manejador\Correo.cs" />
+    <Compile Include="Manejador\InvitacionPartida.cs" />
     <Compile Include="Manejador\Partida.cs" />
     <Compile Include="Manejador\PartidaSesion.cs" />
     <Compile Include="Modelo\Evento\ActualizarAmgioEventArgs.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="Modelo\Partida\EstadisticasPartida.cs" />
     <Compile Include="Modelo\Partida\ICondicionVictoria.cs" />
     <Compile Include="Modelo\Partida\ImagenCarta.cs" />
+    <Compile Include="Modelo\Partida\InvitacionPartida.cs" />
     <Compile Include="Modelo\Sala\Sala.cs" />
     <Compile Include="Modelo\Usuario\UsuarioContexto.cs" />
     <Compile Include="Modelo\Partida\Partida.cs" />

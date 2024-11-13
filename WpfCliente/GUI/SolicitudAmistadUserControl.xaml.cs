@@ -10,26 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WpfCliente.Interfaz;
-using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
     /// <summary>
-    /// Lógica de interacción para NotificacionesWindow.xaml
+    /// Lógica de interacción para SolicitudAmistadUserControl.xaml
     /// </summary>
-    public partial class NotificacionesWindow : Window
+    public partial class SolicitudAmistadUserControl : UserControl
     {
-        public NotificacionesWindow()
+        public SolicitudAmistadUserControl()
         {
             InitializeComponent();
-
-        }
-
-        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            this.Close();
         }
     }
 }

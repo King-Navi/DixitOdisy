@@ -219,5 +219,36 @@ namespace WpfCliente.GUI
                 VentanasEmergentes.CrearVentanaEmergenteCodigoCopiado(this);
             }
         }
+
+        private void buttonInvitarAmigos_Click(object sender, RoutedEventArgs e)
+        {
+            string gamertagInvitado = AbrirVentanaModalGamertag();
+            if (gamertagInvitado != null) {
+                //enviar invitacion de partida
+            }
+        }
+
+        private string AbrirVentanaModalGamertag()
+        {
+            string valorObtenido = null;
+            IngresarGamertagModalWindow ventanaModal = new IngresarGamertagModalWindow();
+            try
+            {
+                ventanaModal.Owner = this;
+
+            }
+            catch (Exception)
+            {
+
+            }
+            bool? resultado = ventanaModal.ShowDialog();
+
+            if (resultado == true)
+            {
+                valorObtenido = ventanaModal.ValorIngresado;
+            }
+
+            return valorObtenido;
+        }
     }
 }

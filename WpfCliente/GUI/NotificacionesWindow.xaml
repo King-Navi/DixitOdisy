@@ -14,9 +14,7 @@
         </Grid.Background>
         <Image   Source="/Recursos/flechaAtras.png" Margin="10,2,1094,657" Cursor="Hand" MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
         <Grid>
-            <local:ListaSolicitudesAmistadUserControl x:Name="listaSoolicitudesAmistadUserControl" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="249,0,0,0" />
-        </Grid>
-        <Grid>
+            <local:ListaSolicitudesAmistadUserControl x:Name="listaSolicitudesAmistadUserControl" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="249,0,0,0" />
             <local:ListaInvitacionesPartidaUserControl x:Name="listaInvitacionesPartidaUserControl" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="800,0,0,0" />
         </Grid>
     </Grid>

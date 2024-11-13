@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:WpfCliente.GUI"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="450">
-    <Grid Width="220" Height="400" >
+    <Grid Width="220" Height="400">
         <DockPanel LastChildFill="True">
             <!--Header-->
             <StackPanel d:Background="#E0DCC7" DockPanel.Dock="Top">
@@ -15,18 +15,15 @@
             <!--Contenido-->
             <Grid>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ItemsControl x:Name="itemsControlAmigos" Background="#A9A9A9" ItemsSource="{Binding Amigos}">
-                        <!-- El ItemsPanel organiza los elementos -->
+                    <ItemsControl x:Name="itemsControlAmigos" Background="#A9A9A9" ItemsSource="{Binding Invitaciones}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Vertical" HorizontalAlignment="Left" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
-                        <!-- DataTemplate para los elementos del ItemsControl -->
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <!-- Aquí se muestra el AmigoUserControl con el DataContext correspondiente -->
-                                <local:AmigoUserControl DataContext="{Binding}" />
+                                <local:InvitacionPartidaUserControl DataContext="{Binding}" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

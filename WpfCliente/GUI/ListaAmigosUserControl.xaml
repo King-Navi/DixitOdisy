@@ -56,5 +56,6 @@
                 </ScrollViewer>
             </Grid>
         </DockPanel>
+        <DataGrid HorizontalAlignment="Left" Height="864" Margin="392,-500,0,0" VerticalAlignment="Top" Width="1754" d:ItemsSource="{d:SampleData ItemCount=5}"/>
     </Grid>
 </UserControl>

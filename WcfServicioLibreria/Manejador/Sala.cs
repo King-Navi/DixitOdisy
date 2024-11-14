@@ -16,7 +16,7 @@ namespace WcfServicioLibreria.Manejador
         /// </summary>
         /// <param name="sender">La sala que desencadena el evento de ser eliminada.</param>
         /// <param name="e">Argumentos del evento, que contienen detalles específicos de la sala vacía.</param>
-        public void BorrarSala(object sender, EventArgs e)
+        internal void BorrarSala(object sender, EventArgs e)
         {
             if (sender is Sala sala)
             {
@@ -33,6 +33,10 @@ namespace WcfServicioLibreria.Manejador
         /// <returns>El identificador único de la sala recién creada.</returns>
         public string CrearSala(string nombreUsuarioAnfitrion)
         {
+            if (string.IsNullOrWhiteSpace(nombreUsuarioAnfitrion))
+            {
+                return null;
+            }
             string idSala = null;
             try
             {

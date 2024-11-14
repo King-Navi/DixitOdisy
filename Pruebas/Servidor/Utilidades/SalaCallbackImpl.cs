@@ -12,7 +12,8 @@ namespace Pruebas.Servidor.Utilidades
     public class SalaCallbackImpl : ICommunicationObjectImpl, ISalaJugadorCallback
     {
         public ObservableCollection<Usuario> JugadoresEnSala { get; set; } = new ObservableCollection<Usuario>();
-
+        private bool seEmpezoPartida = false;
+        private string idPartida;
 
         public void EliminarJugadorSalaCallback(Usuario jugardoreRetiradoDeSala)
         {
@@ -25,7 +26,8 @@ namespace Pruebas.Servidor.Utilidades
 
         public void EmpezarPartidaCallBack(string idPartida)
         {
-            throw new NotImplementedException();
+            seEmpezoPartida =true;
+            this.idPartida = idPartida;
         }
 
         public void ObtenerJugadorSalaCallback(Usuario jugardoreNuevoEnSala)

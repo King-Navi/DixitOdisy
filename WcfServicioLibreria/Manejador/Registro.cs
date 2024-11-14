@@ -19,7 +19,6 @@ namespace WcfServicioLibreria.Manejador
             bool resultado = false;
             try
             {
-
                 if (EsSha256Valido(_usuario.ContraseniaHASH))
                 {
                     var usuarioCuenta = new UsuarioCuenta

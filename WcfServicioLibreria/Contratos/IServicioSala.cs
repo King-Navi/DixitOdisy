@@ -10,7 +10,6 @@ namespace WcfServicioLibreria.Contratos
     {
         [OperationContract]
         string CrearSala(string nombreUsuarioAnfitrion);
-        void BorrarSala(object sender, EventArgs e);
         [OperationContract]
         bool ValidarSala(string idSala);
     }

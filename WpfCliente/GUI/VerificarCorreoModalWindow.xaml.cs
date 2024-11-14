@@ -37,6 +37,7 @@ namespace WpfCliente.GUI
             ActualizarUI();
             if (olvidoContrasenia) {
                 labelIngresarCodigo.Content = Properties.Idioma.labelIngresarCorreo;
+                textBoxCodigo.MaxLength = 100;
             }
         }
 

@@ -13,26 +13,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfCliente.Interfaz;
 using WpfCliente.ServidorDescribelo;
+using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
     /// <summary>
     /// Lógica de interacción para ListaInvitacionesPartidaUserControl.xaml
     /// </summary>
-    public partial class ListaInvitacionesPartidaUserControl : UserControl, IServicioInvitacionPartidaCallback
+    public partial class ListaInvitacionesPartidaUserControl : UserControl, IServicioInvitacionPartidaCallback, IActualizacionUI
     {
         public ObservableCollection<InvitacionPartida> InvitacionesPartida { get; set; } = new ObservableCollection<InvitacionPartida>();
         public ListaInvitacionesPartidaUserControl()
         {
             InitializeComponent();
             this.DataContext = this;
-            InvitacionPartida invitacion = new InvitacionPartida();
-            InvitacionesPartida.Add(invitacion);
-            InvitacionPartida invitacion1 = new InvitacionPartida();
-            InvitacionesPartida.Add(invitacion1);
-            InvitacionPartida invitacion2 = new InvitacionPartida();
-            InvitacionesPartida.Add(invitacion2);
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
+            ActualizarUI();
         }
         public void RecibirInvitacion(InvitacionPartida invitacion)
         {
@@ -46,6 +44,16 @@ namespace WpfCliente.GUI
         public void AgregarInvitacion(InvitacionPartida invitacion)
         {
             InvitacionesPartida.Add(invitacion);
+        }
+
+        public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
+        {
+            ActualizarUI();
+        }
+
+        public void ActualizarUI()
+        {
+            labelListaInvitaciones.Content = "Lista de invitaciones a partida";
         }
     }
 }

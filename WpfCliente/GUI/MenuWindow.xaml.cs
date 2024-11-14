@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Remoting.Contexts;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,8 +13,9 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class MenuWindow : Window, IServicioUsuarioSesionCallback, IActualizacionUI
+    public partial class MenuWindow : Window, IServicioUsuarioSesionCallback, IServicioInvitacionPartidaCallback, IActualizacionUI
     {
+        public event Action<InvitacionPartida> InvitacionRecibida;
         public MenuWindow()
         {
             InitializeComponent();
@@ -26,12 +28,37 @@ namespace WpfCliente.GUI
         {
             try
             {
+                //var resultadoUsuarioSesion = await Conexion.AbrirConexionUsuarioSesionCallbackAsync(this);
+                //var resultadoAmigo = await Conexion.AbrirConexionAmigosCallbackAsync(amigosUserControl);
+                //var resultadoInvitacion = await Conexion.AbrirConexionInvitacionPartidaCallbackAsync(this);
+                //if (!resultadoAmigo || !resultadoUsuarioSesion || !resultadoUsuarioSesion)
+                //{
+                //    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                //    this.Close();
+                //}
+
                 var resultadoUsuarioSesion = await Conexion.AbrirConexionUsuarioSesionCallbackAsync(this);
-                var resultadoAmigo = await Conexion.AbrirConexionAmigosCallbackAsync(amigosUserControl);
-                if (!resultadoAmigo || !resultadoUsuarioSesion)
+                if (!resultadoUsuarioSesion)
                 {
                     VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
                     this.Close();
+                    return;
+                }
+
+                var resultadoAmigo = await Conexion.AbrirConexionAmigosCallbackAsync(amigosUserControl);
+                if (!resultadoAmigo)
+                {
+                    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                    this.Close();
+                    return;
+                }
+
+                var resultadoInvitacion = await Conexion.AbrirConexionInvitacionPartidaCallbackAsync(this);
+                if (!resultadoInvitacion)
+                {
+                    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                    this.Close();
+                    return;
                 }
                 Usuario user = new Usuario
                 {
@@ -174,7 +201,6 @@ namespace WpfCliente.GUI
             buttonCrearSala.Content = Idioma.buttonCrearSalaEspera;
             buttonUniserSala.Content = Idioma.buttonUnirseSalaDeEspera;
             buttonSalir.Content = Idioma.buttonCerrarSesion;
-            //TODO: Pedirle a unaay los .resx
         }
 
         private void buttonSalir_Click(object sender, RoutedEventArgs e)
@@ -184,8 +210,13 @@ namespace WpfCliente.GUI
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            NotificacionesWindow notificaciones = new NotificacionesWindow();
+            NotificacionesWindow notificaciones = new NotificacionesWindow(this);
             notificaciones.Show();
+        }
+
+        public void RecibirInvitacion(InvitacionPartida invitacion)
+        {
+            InvitacionRecibida?.Invoke(invitacion);
         }
     }
 }

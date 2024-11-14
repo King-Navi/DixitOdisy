@@ -1777,10 +1777,10 @@ namespace WpfCliente.ServidorDescribelo {
     public interface IServicioInvitacionPartida {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioInvitacionPartida/EnviarInvitacion", ReplyAction="http://tempuri.org/IServicioInvitacionPartida/EnviarInvitacionResponse")]
-        bool EnviarInvitacion(WpfCliente.ServidorDescribelo.InvitacionPartida invitacion);
+        bool EnviarInvitacion(string gamertagEmisor, string codigoSala, string gamertagReceptor);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioInvitacionPartida/EnviarInvitacion", ReplyAction="http://tempuri.org/IServicioInvitacionPartida/EnviarInvitacionResponse")]
-        System.Threading.Tasks.Task<bool> EnviarInvitacionAsync(WpfCliente.ServidorDescribelo.InvitacionPartida invitacion);
+        System.Threading.Tasks.Task<bool> EnviarInvitacionAsync(string gamertagEmisor, string codigoSala, string gamertagReceptor);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1818,12 +1818,12 @@ namespace WpfCliente.ServidorDescribelo {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public bool EnviarInvitacion(WpfCliente.ServidorDescribelo.InvitacionPartida invitacion) {
-            return base.Channel.EnviarInvitacion(invitacion);
+        public bool EnviarInvitacion(string gamertagEmisor, string codigoSala, string gamertagReceptor) {
+            return base.Channel.EnviarInvitacion(gamertagEmisor, codigoSala, gamertagReceptor);
         }
         
-        public System.Threading.Tasks.Task<bool> EnviarInvitacionAsync(WpfCliente.ServidorDescribelo.InvitacionPartida invitacion) {
-            return base.Channel.EnviarInvitacionAsync(invitacion);
+        public System.Threading.Tasks.Task<bool> EnviarInvitacionAsync(string gamertagEmisor, string codigoSala, string gamertagReceptor) {
+            return base.Channel.EnviarInvitacionAsync(gamertagEmisor, codigoSala, gamertagReceptor);
         }
     }
 }

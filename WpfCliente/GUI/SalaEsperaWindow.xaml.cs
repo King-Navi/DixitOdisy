@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
@@ -220,11 +222,18 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void buttonInvitarAmigos_Click(object sender, RoutedEventArgs e)
+        private async void buttonInvitarAmigos_Click(object sender, RoutedEventArgs e)
         {
             string gamertagInvitado = AbrirVentanaModalGamertag();
             if (gamertagInvitado != null) {
-                //enviar invitacion de partida
+                if (await EnviarInvitacion(gamertagInvitado))
+                {
+                    VentanasEmergentes.CrearVentanaEmergenteInvitacionEnviada(this);
+                }
+                else
+                {
+                    VentanasEmergentes.CrearVentanaEmergenteInvitacionNoEnviada(this);
+                }
             }
         }
 
@@ -249,6 +258,19 @@ namespace WpfCliente.GUI
             }
 
             return valorObtenido;
+        }
+
+        private async Task<bool> EnviarInvitacion(string gamertagReceptor)
+        {
+            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+            if (!conexionExitosa)
+            {
+                return false;
+            }
+
+            var resultado = Conexion.InvitacionPartida.EnviarInvitacion(Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala, gamertagReceptor); 
+            return resultado;
+            
         }
     }
 }

@@ -35,7 +35,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Label x:Name="labelIngresarCodigo" Content="Ingrese el código" FontFamily="Lucida Sans Unicode" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Foreground="Black" Grid.Row="1" Height="38" Width="132"/>
-        <TextBox  x:Name="textBoxCodigo" Grid.Row="0" Width="260" Height="25" Margin="60,29,60,11" Grid.RowSpan="3"/>
+        <TextBox  x:Name="textBoxCodigo" MaxLength="6" Grid.Row="0" Width="260" Height="25" Margin="60,29,60,11" Grid.RowSpan="3"/>
         <Button x:Name="buttonAceptar" Content="Aceptar" FontFamily="Lucida Sans Unicode" Grid.Row="2" Width="74" HorizontalAlignment="Center" Margin="0,45,0,-37" Click="buttonAceptar_Click"/>
         <Label x:Name="labelCodigoInvalido" Content="Codigo invalido" HorizontalAlignment="Left" Margin="261,32,0,0" Grid.Row="1" VerticalAlignment="Top" Visibility="Collapsed" FontFamily="Lucida Sans Unicode" FontSize="6" Grid.RowSpan="2"/>
     </Grid>

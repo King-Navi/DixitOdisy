@@ -673,6 +673,24 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a La invitación se envió correctamente.
+        /// </summary>
+        public static string mensajeInvitacionExitosa {
+            get {
+                return ResourceManager.GetString("mensajeInvitacionExitosa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Hubo un error al enviar la invitación, intente de nuevo más tarde.
+        /// </summary>
+        public static string mensajeInvitacionFallida {
+            get {
+                return ResourceManager.GetString("mensajeInvitacionFallida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El jugador ya ha salido de la sala.
         /// </summary>
         public static string mensajeJugadorSaleDeSala {
@@ -921,6 +939,15 @@ namespace WpfCliente.Properties {
         public static string tituloInicioSesion {
             get {
                 return ResourceManager.GetString("tituloInicioSesion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Invitación a partida.
+        /// </summary>
+        public static string tituloInvitacionPartida {
+            get {
+                return ResourceManager.GetString("tituloInvitacionPartida", resourceCulture);
             }
         }
         

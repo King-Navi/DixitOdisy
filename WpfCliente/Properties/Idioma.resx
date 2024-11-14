@@ -423,4 +423,13 @@
   <data name="tituloCorreoYGamertagNoCoinciden" xml:space="preserve">
     <value>El correo y el gamertag no coinciden</value>
   </data>
+  <data name="tituloInvitacionPartida" xml:space="preserve">
+    <value>Invitación a partida</value>
+  </data>
+  <data name="mensajeInvitacionExitosa" xml:space="preserve">
+    <value>La invitación se envió correctamente</value>
+  </data>
+  <data name="mensajeInvitacionFallida" xml:space="preserve">
+    <value>Hubo un error al enviar la invitación, intente de nuevo más tarde</value>
+  </data>
 </root>

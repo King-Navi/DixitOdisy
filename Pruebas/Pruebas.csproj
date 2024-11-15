@@ -91,11 +91,6 @@
     <Compile Include="Servidor\ServicioObtenerSesion.cs" />
     <Compile Include="Servidor\ServicioRegistro.cs" />
     <Compile Include="Cliente\ValidarContraseniaPruebas.cs" />
-    <Compile Include="Connected Services\ServidorDescribeloPrueba\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="DAO\UsuarioDAO_Prueba.cs" />
     <Compile Include="DAO\Utilidades\Utilidad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -104,28 +99,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <None Include="Connected Services\ServidorDescribeloPrueba\Arrays.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ServidorDescribeloPrueba\service.wsdl" />
-    <None Include="Connected Services\ServidorDescribeloPrueba\service.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ServidorDescribeloPrueba\service1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ServidorDescribeloPrueba\System.IO.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ServidorDescribeloPrueba\System.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ServidorDescribeloPrueba\WcfServicioLibreria.Enumerador.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\ServidorDescribeloPrueba\WcfServicioLibreria.Modelo.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -139,24 +112,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\ServidorDescribeloPrueba\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ServidorDescribeloPrueba\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ServidorDescribeloPrueba\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\ServidorDescribeloPrueba\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

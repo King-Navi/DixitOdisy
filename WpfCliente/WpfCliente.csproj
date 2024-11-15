@@ -515,6 +515,12 @@
     <Resource Include="Recursos\fondoSala.png" />
     <Resource Include="Recursos\notificaciones.png" />
     <Resource Include="Recursos\fondoNotificaciones.png" />
+    <None Include="Connected Services\ServidorDescribelo\configuration91.svcinfo" />
+    <None Include="Connected Services\ServidorDescribelo\configuration.svcinfo" />
+    <None Include="Connected Services\ServidorDescribelo\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Sonidos\musicaFondo.mp3" />
   </ItemGroup>
   <ItemGroup>

@@ -1545,12 +1545,6 @@ namespace WpfCliente.ServidorDescribelo {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfrition")]
         System.Threading.Tasks.Task ComenzarPartidaAnfritionAsync(string nombre, string idSala, string idPartida);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/AsignarColor")]
-        void AsignarColor(string idSala);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/AsignarColor")]
-        System.Threading.Tasks.Task AsignarColorAsync(string idSala);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1608,14 +1602,6 @@ namespace WpfCliente.ServidorDescribelo {
         
         public System.Threading.Tasks.Task ComenzarPartidaAnfritionAsync(string nombre, string idSala, string idPartida) {
             return base.Channel.ComenzarPartidaAnfritionAsync(nombre, idSala, idPartida);
-        }
-        
-        public void AsignarColor(string idSala) {
-            base.Channel.AsignarColor(idSala);
-        }
-        
-        public System.Threading.Tasks.Task AsignarColorAsync(string idSala) {
-            return base.Channel.AsignarColorAsync(idSala);
         }
     }
     

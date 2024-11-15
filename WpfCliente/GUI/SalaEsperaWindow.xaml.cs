@@ -177,10 +177,9 @@ namespace WpfCliente.GUI
             labelUsuariosLobby.Content = Idioma.labelUsuariosLobby;
             labelInvitaAmigos.Content = Idioma.labelInvitaAmigos;
             buttonInvitarAmigos.Content = Idioma.buttonInvitaAmigos;
-            buttonListo.Content = Idioma.buttonListo;
             buttonConfigurarPartida.Content = Idioma.buttonConfigurarPartida;
             buttonEmpezarPartida.Content = Idioma.buttonEmpezarPartida;
-        }
+        
             //groupBoxCondicionVicotoria.Header
             //grouoBoxTematica.Header
 
@@ -333,13 +332,6 @@ namespace WpfCliente.GUI
             var resultado = Conexion.InvitacionPartida.EnviarInvitacion(Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala, gamertagReceptor); 
             return resultado;
             
-        }
-
-        private void ClicButtonConfigurarPartida(object sender, RoutedEventArgs e)
-        {
-            ConfigurarPartidaWindow configurarPartidaWindow = new ConfigurarPartidaWindow();
-            configurarPartidaWindow.Show();
-            this.Hide();
         }
 
         private void ClicButtonConfigurarPartida(object sender, RoutedEventArgs e)

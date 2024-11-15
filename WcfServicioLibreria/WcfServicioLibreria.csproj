@@ -134,6 +134,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Librerias\ChatGPTLibreria.dll" />
+    <Content Include="Librerias\Newtonsoft.Json.dll" />
     <Content Include="Recursos\Animales\0b7806d1-133c-42f2-9c46-cb4021a35748.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

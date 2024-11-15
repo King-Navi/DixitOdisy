@@ -373,7 +373,7 @@
     <value>Profile</value>
   </data>
   <data name="menuItemEditarperfil" xml:space="preserve">
-    <value>edition of profile</value>
+    <value>Edit profile</value>
   </data>
   <data name="menuItemEstadisticas" xml:space="preserve">
     <value>View stats</value>
@@ -431,5 +431,14 @@
   </data>
   <data name="mensajeInvitacionFallida" xml:space="preserve">
     <value>There was an error sending the invitation, try again later</value>
+  </data>
+  <data name="labelInvitaAmigos" xml:space="preserve">
+    <value>Send your friends an invitation</value>
+  </data>
+  <data name="buttonInvitaAmigos" xml:space="preserve">
+    <value>Invite friends</value>
+  </data>
+  <data name="buttonListo" xml:space="preserve">
+    <value>Ready!</value>
   </data>
 </root>

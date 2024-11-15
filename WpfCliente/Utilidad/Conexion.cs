@@ -161,7 +161,8 @@ namespace WpfCliente.Utilidad
                 return false;
             }
             return true;
-        } public static bool CerrarSalaJugador()
+        } 
+        public static bool CerrarSalaJugador()
         {
             try
             {
@@ -255,6 +256,29 @@ namespace WpfCliente.Utilidad
             {
                 //TODO: Si espera un callback tira un error hay que ver como hacer para evitar eso
                 Partida = null;
+            }
+            return true;
+        }
+
+        public static bool CerrarConexionInvitacionesPartida()
+        {
+            try
+            {
+                if (InvitacionPartida != null)
+                {
+                    InvitacionPartida.Close();
+                    InvitacionPartida = null;
+                }
+            }
+            catch (Exception excepcion)
+            {
+                //TODO Manejar el error
+                return false;
+            }
+            finally
+            {
+                //TODO: Si espera un callback tira un error hay que ver como hacer para evitar eso
+                InvitacionPartida = null;
             }
             return true;
         }

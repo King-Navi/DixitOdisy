@@ -24,6 +24,7 @@ namespace WpfCliente.GUI
         public SalaEsperaWindow(string idSala)
         {
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
+            ActualizarUI();
             InitializeComponent();
             VerificarConexion();
             if (idSala == null)
@@ -140,6 +141,11 @@ namespace WpfCliente.GUI
         {
             labelCodigoSala.Content = Idioma.labelCodigoSala;
             labelUsuariosLobby.Content = Idioma.labelUsuariosLobby;
+            labelInvitaAmigos.Content = Idioma.labelInvitaAmigos;
+            buttonInvitarAmigos.Content = Idioma.buttonInvitaAmigos;
+            buttonListo.Content = Idioma.buttonListo;
+            buttonConfigurarPartida.Content = Idioma.buttonConfigurarPartida;
+            buttonEmpezarPartida.Content = Idioma.buttonEmpezarPartida;
         }
 
         
@@ -225,7 +231,7 @@ namespace WpfCliente.GUI
         private async void buttonInvitarAmigos_Click(object sender, RoutedEventArgs e)
         {
             string gamertagInvitado = AbrirVentanaModalGamertag();
-            if (gamertagInvitado != null) {
+            if (gamertagInvitado != null && gamertagInvitado != Singleton.Instance.NombreUsuario) {
                 if (await EnviarInvitacion(gamertagInvitado))
                 {
                     VentanasEmergentes.CrearVentanaEmergenteInvitacionEnviada(this);
@@ -234,6 +240,10 @@ namespace WpfCliente.GUI
                 {
                     VentanasEmergentes.CrearVentanaEmergenteInvitacionNoEnviada(this);
                 }
+            }
+            else
+            {
+                VentanasEmergentes.CrearVentanaEmergenteInvitacionNoEnviada(this);
             }
         }
 

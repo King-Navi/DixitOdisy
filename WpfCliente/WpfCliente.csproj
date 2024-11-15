@@ -131,8 +131,8 @@
     <Compile Include="GUI\ChatUserControl.xaml.cs">
       <DependentUpon>ChatUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\ConfigurarPartidaPage.xaml.cs">
-      <DependentUpon>ConfigurarPartidaPage.xaml</DependentUpon>
+    <Compile Include="GUI\ConfigurarPartidaWindow.xaml.cs">
+      <DependentUpon>ConfigurarPartidaWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\EditarPerfilWindow.xaml.cs">
       <DependentUpon>EditarPerfilWindow.xaml</DependentUpon>
@@ -151,9 +151,6 @@
     </Compile>
     <Compile Include="GUI\ListaAmigosUserControl.xaml.cs">
       <DependentUpon>ListaAmigosUserControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\ListaInvitacionesPartidaUserControl.xaml.cs">
-      <DependentUpon>ListaInvitacionesPartidaUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\ListaSolicitudesAmistadUserControl.xaml.cs">
       <DependentUpon>ListaSolicitudesAmistadUserControl.xaml</DependentUpon>
@@ -209,7 +206,6 @@
     <Compile Include="Interfaz\IHabilitadorBotones.cs" />
     <Compile Include="Utilidad\ComandoRele.cs" />
     <Compile Include="Utilidad\Correo.cs" />
-    <Compile Include="Utilidad\InvitacionesPartida.cs" />
     <Compile Include="Utilidad\Servidor\ChatMensaje.cs" />
     <Compile Include="Utilidad\Conexion.cs" />
     <Compile Include="Utilidad\CambiarIdioma.cs" />
@@ -352,7 +348,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\ConfigurarPartidaPage.xaml">
+    <Page Include="GUI\ConfigurarPartidaWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -377,10 +373,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\ListaAmigosUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="GUI\ListaInvitacionesPartidaUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

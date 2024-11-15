@@ -49,10 +49,17 @@ namespace WpfCliente.GUI
             }
         }
 
+        private void CerrarSesion(object sender, RoutedEventArgs e)
+        {
+            Window menuVentana = Window.GetWindow(this);
+            menuVentana.Close();
+        }
+
         public void ActualizarUI()
         {
             menuItemEditarPerfil.Header = Idioma.menuItemEditarperfil;
             menuItemEstadisticas.Header = Idioma.menuItemEstadisticas;
+            menuItemCerrarSesion.Header = Idioma.buttonCerrarSesion;
             menuItemPerfil.Header = Idioma.menuItemPerfil;
         }
 

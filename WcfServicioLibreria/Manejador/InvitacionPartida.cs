@@ -42,5 +42,33 @@ namespace WcfServicioLibreria.Manejador
                 return false;
             }
         }
+
+        public void AbrirCanalParaInvitaciones(Usuario usuarioRemitente)
+        {
+            try
+            {
+                IInvitacionPartidaCallback contextoRemitente = contextoOperacion.GetCallbackChannel<IInvitacionPartidaCallback>();
+                if (jugadoresConectadosDiccionario.TryGetValue(usuarioRemitente.IdUsuario, out UsuarioContexto remitente))
+                {
+                    lock (remitente)
+                    {
+                        remitente.InvitacionPartidaCallBack = contextoRemitente;
+                    }
+                    Console.WriteLine($"Canal de invitaciones abierto para el usuario {usuarioRemitente.Nombre}");
+                }
+            }
+            catch (Exception ex)
+            {
+                if (jugadoresConectadosDiccionario.TryGetValue(usuarioRemitente.IdUsuario, out UsuarioContexto remitente))
+                {
+                    lock (remitente)
+                    {
+                        remitente.InvitacionPartidaCallBack = null;
+                    }
+                }
+                Console.Error.WriteLine($"Error al abrir canal de invitaciones para {usuarioRemitente.Nombre}: {ex.Message}");
+                throw;
+            }
+        }
     }
 }

@@ -432,4 +432,13 @@
   <data name="mensajeInvitacionFallida" xml:space="preserve">
     <value>Hubo un error al enviar la invitación, intente de nuevo más tarde</value>
   </data>
+  <data name="labelInvitaAmigos" xml:space="preserve">
+    <value>Envíale a tus amigos una invitación</value>
+  </data>
+  <data name="buttonInvitaAmigos" xml:space="preserve">
+    <value>Invitar amigos</value>
+  </data>
+  <data name="buttonListo" xml:space="preserve">
+    <value>Listo!</value>
+  </data>
 </root>

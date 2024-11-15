@@ -3,11 +3,11 @@
 namespace WpfCliente.GUI
 {
     /// <summary>
-    /// Lógica de interacción para ConfigurarPartidaPage.xaml
+    /// Lógica de interacción para ConfigurarPartidaWindow.xaml
     /// </summary>
-    public partial class ConfigurarPartidaPage : Page
+    public partial class ConfigurarPartidaWindow : Page
     {
-        public ConfigurarPartidaPage()
+        public ConfigurarPartidaWindow()
         {
             InitializeComponent();
         }

@@ -531,10 +531,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="AbrirCanalParaInvitaciones">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q22:Usuario" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="RecibirInvitacion">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="invitacion" nillable="true" type="q22:InvitacionPartida" />
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="invitacion" nillable="true" type="q23:InvitacionPartida" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

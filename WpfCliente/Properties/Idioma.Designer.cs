@@ -196,6 +196,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Invitar amigos.
+        /// </summary>
+        public static string buttonInvitaAmigos {
+            get {
+                return ResourceManager.GetString("buttonInvitaAmigos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Jugar.
         /// </summary>
         public static string buttonJugar {
@@ -210,6 +219,15 @@ namespace WpfCliente.Properties {
         public static string buttonJugarComoInvitado {
             get {
                 return ResourceManager.GetString("buttonJugarComoInvitado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Listo!.
+        /// </summary>
+        public static string buttonListo {
+            get {
+                return ResourceManager.GetString("buttonListo", resourceCulture);
             }
         }
         
@@ -453,6 +471,15 @@ namespace WpfCliente.Properties {
         public static string labelInicioSesion {
             get {
                 return ResourceManager.GetString("labelInicioSesion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Envíale a tus amigos una invitación.
+        /// </summary>
+        public static string labelInvitaAmigos {
+            get {
+                return ResourceManager.GetString("labelInvitaAmigos", resourceCulture);
             }
         }
         

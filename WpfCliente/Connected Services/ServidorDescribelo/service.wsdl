@@ -372,6 +372,9 @@
   <wsdl:message name="IServicioInvitacionPartida_EnviarInvitacion_OutputMessage">
     <wsdl:part name="parameters" element="tns:EnviarInvitacionResponse" />
   </wsdl:message>
+  <wsdl:message name="IServicioInvitacionPartida_AbrirCanalParaInvitaciones_InputMessage">
+    <wsdl:part name="parameters" element="tns:AbrirCanalParaInvitaciones" />
+  </wsdl:message>
   <wsdl:message name="IServicioInvitacionPartida_RecibirInvitacion_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:RecibirInvitacion" />
   </wsdl:message>
@@ -573,6 +576,9 @@
     <wsdl:operation name="EnviarInvitacion">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioInvitacionPartida/EnviarInvitacion" message="tns:IServicioInvitacionPartida_EnviarInvitacion_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioInvitacionPartida/EnviarInvitacionResponse" message="tns:IServicioInvitacionPartida_EnviarInvitacion_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AbrirCanalParaInvitaciones">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioInvitacionPartida/AbrirCanalParaInvitaciones" message="tns:IServicioInvitacionPartida_AbrirCanalParaInvitaciones_InputMessage" />
     </wsdl:operation>
     <wsdl:operation name="RecibirInvitacion">
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioInvitacionPartida/RecibirInvitacion" message="tns:IServicioInvitacionPartida_RecibirInvitacion_OutputCallbackMessage" />
@@ -1020,6 +1026,12 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AbrirCanalParaInvitaciones">
+      <soap12:operation soapAction="http://tempuri.org/IServicioInvitacionPartida/AbrirCanalParaInvitaciones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
     </wsdl:operation>
     <wsdl:operation name="RecibirInvitacion">
       <soap12:operation soapAction="http://tempuri.org/IServicioInvitacionPartida/RecibirInvitacion" style="document" />

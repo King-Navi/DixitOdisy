@@ -15,7 +15,7 @@ namespace WpfCliente.Utilidad
             Color.FromRgb(255, 239, 219), // Hueso
             Color.FromRgb(211, 211, 211), // Gris Claro
             Color.FromRgb(255, 248, 220), // Maíz
-            Color.FromRgb(240, 230, 140),  // Kaki Claro
+            Color.FromRgb(240, 230, 140), // Kaki Claro
             Color.FromRgb(255, 182, 193), // Rosa Pastel
             Color.FromRgb(176, 224, 230), // Azul Pastel
             Color.FromRgb(255, 222, 173), // Durazno Pastel

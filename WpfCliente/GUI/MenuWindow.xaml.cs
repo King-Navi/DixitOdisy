@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Runtime.Remoting.Contexts;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
@@ -11,26 +14,46 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class MenuWindow : Window, IServicioUsuarioSesionCallback, IActualizacionUI
+    public partial class MenuWindow : Window, IServicioUsuarioSesionCallback, IServicioInvitacionPartidaCallback, IActualizacionUI
     {
+        private DispatcherTimer timerNotificacion;
+        private InvitacionPartida invitacionActual;
         public MenuWindow()
         {
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             ActualizarUI();
             AbrirConexiones();
+            ConfigurarTimerNotificacion();
         }
 
         private async void AbrirConexiones()
         {
             try
             {
+
                 var resultadoUsuarioSesion = await Conexion.AbrirConexionUsuarioSesionCallbackAsync(this);
-                var resultadoAmigo = await Conexion.AbrirConexionAmigosCallbackAsync(amigosUserControl);
-                if (!resultadoAmigo || !resultadoUsuarioSesion)
+                if (!resultadoUsuarioSesion)
                 {
                     VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
                     this.Close();
+                    return;
+                }
+
+                var resultadoAmigo = await Conexion.AbrirConexionAmigosCallbackAsync(amigosUserControl);
+                if (!resultadoAmigo)
+                {
+                    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                    this.Close();
+                    return;
+                }
+
+                var resultadoInvitacion = await Conexion.AbrirConexionInvitacionPartidaCallbackAsync(this);
+                if (!resultadoInvitacion)
+                {
+                    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                    this.Close();
+                    return;
                 }
                 Usuario user = new Usuario
                 {
@@ -89,11 +112,27 @@ namespace WpfCliente.GUI
                 Nombre = Singleton.Instance.NombreUsuario
             };
             Conexion.Amigos.AbrirCanalParaPeticiones(user);
+            Conexion.InvitacionPartida.AbrirCanalParaInvitaciones(user);
         }
 
-        private async void ClicButtonUnirseSala(object sender, RoutedEventArgs e)
+        private void ClicButtonUnirseSala(object sender, RoutedEventArgs e)
         {
-            string codigoSala = AbrirVentanaModal();
+            bool esInvitacion = false;
+            string _codigoSala = null;
+            UnirseASala(esInvitacion, _codigoSala);
+        }
+
+        private async void UnirseASala(bool esInvitacion, string _codigoSala)
+        {
+            string codigoSala = "";
+            if (esInvitacion)
+            {
+                codigoSala = _codigoSala;
+            }
+            else
+            {
+                codigoSala = AbrirVentanaModal();
+            }
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
             {
@@ -112,14 +151,11 @@ namespace WpfCliente.GUI
                 }
 
             }
-
-
         }
 
         private void HabilitarBotones(bool habilitar)
         {
             buttonCrearSala.IsEnabled = habilitar;
-            buttonSalir.IsEnabled = habilitar;
             buttonUniserSala.IsEnabled = habilitar;
             perfilMenuDesplegable.IsEnabled = habilitar;
             amigosUserControl.IsEnabled = habilitar;
@@ -156,6 +192,7 @@ namespace WpfCliente.GUI
             {
                 Conexion.CerrarUsuarioSesion();
                 Conexion.CerrarConexionesSalaConChat();
+                Conexion.CerrarConexionInvitacionesPartida();
             }
             catch (Exception excepcion)
             {
@@ -174,13 +211,58 @@ namespace WpfCliente.GUI
         {
             buttonCrearSala.Content = Idioma.buttonCrearSalaEspera;
             buttonUniserSala.Content = Idioma.buttonUnirseSalaDeEspera;
-            buttonSalir.Content = Idioma.buttonCerrarSesion;
-            //TODO: Pedirle a unaay los .resx
         }
 
-        private void buttonSalir_Click(object sender, RoutedEventArgs e)
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            NotificacionesWindow notificaciones = new NotificacionesWindow(this);
+            notificaciones.Show();
         }
+
+        private void ConfigurarTimerNotificacion()
+        {
+            timerNotificacion = new DispatcherTimer();
+            timerNotificacion.Interval = TimeSpan.FromMilliseconds(50); // Actualización del progreso
+            timerNotificacion.Tick += TimerNotificacion_Tick;
+        }
+
+        public void RecibirInvitacion(InvitacionPartida invitacion)
+        {
+            invitacionActual = invitacion;
+            MostrarNotificacion($"Invitación de {invitacion.GamertagEmisor} para unirse a la sala {invitacion.CodigoSala}");
+        }
+
+        private void MostrarNotificacion(string mensaje)
+        {
+            textNotificacionInvitacion.Text = mensaje;
+            borderNotificacionInvitacion.Visibility = Visibility.Visible;
+            progressTimer.Value = 0; 
+            timerNotificacion.Start();
+        }
+
+        private void OcultarNotificacion()
+        {
+            borderNotificacionInvitacion.Visibility = Visibility.Collapsed;
+            timerNotificacion.Stop();
+        }
+
+        private void TimerNotificacion_Tick(object sender, EventArgs e)
+        {
+            progressTimer.Value += 2; 
+
+            if (progressTimer.Value >= 100)
+            {
+                OcultarNotificacion();
+            }
+        }
+
+        private void UnirseSala_Click(object sender, RoutedEventArgs e)
+        {
+            bool esInvitacion = true;
+            UnirseASala(esInvitacion, invitacionActual.CodigoSala);
+            OcultarNotificacion();
+        }
+
+
     }
 }

@@ -16,6 +16,7 @@ namespace WpfCliente.Utilidad
         public static ServicioChatMotorClient ChatMotor { get; private set; }
         public static ServicioAmistadClient Amigos { get; private set; }
         public static ServicioPartidaSesionClient Partida { get; private set; }
+        public static ServicioInvitacionPartidaClient InvitacionPartida { get; private set; }
         public static Task<bool> AbrirConexionUsuarioSesionCallbackAsync(IServicioUsuarioSesionCallback callback)
         {
             Task<bool> resultado = Task.FromResult(false);
@@ -121,6 +122,28 @@ namespace WpfCliente.Utilidad
             }
             return resultado;
         }
+
+        public static Task<bool> AbrirConexionInvitacionPartidaCallbackAsync(IServicioInvitacionPartidaCallback callback)
+        {
+            Task<bool> resultado = Task.FromResult(false);
+            if (InvitacionPartida != null)
+            {
+                resultado = Task.FromResult(true);
+            }
+            else
+            {
+                try
+                {
+                    InvitacionPartida = new ServicioInvitacionPartidaClient(new System.ServiceModel.InstanceContext(callback));
+                    resultado = Task.FromResult(true);
+                }
+                catch (Exception)
+                {
+                    //TODO: Manejar el error
+                }
+            }
+            return resultado;
+        }
         public static bool CerrarUsuarioSesion()
         {
             try
@@ -138,7 +161,8 @@ namespace WpfCliente.Utilidad
                 return false;
             }
             return true;
-        } public static bool CerrarSalaJugador()
+        } 
+        public static bool CerrarSalaJugador()
         {
             try
             {
@@ -232,6 +256,29 @@ namespace WpfCliente.Utilidad
             {
                 //TODO: Si espera un callback tira un error hay que ver como hacer para evitar eso
                 Partida = null;
+            }
+            return true;
+        }
+
+        public static bool CerrarConexionInvitacionesPartida()
+        {
+            try
+            {
+                if (InvitacionPartida != null)
+                {
+                    InvitacionPartida.Close();
+                    InvitacionPartida = null;
+                }
+            }
+            catch (Exception excepcion)
+            {
+                //TODO Manejar el error
+                return false;
+            }
+            finally
+            {
+                //TODO: Si espera un callback tira un error hay que ver como hacer para evitar eso
+                InvitacionPartida = null;
             }
             return true;
         }

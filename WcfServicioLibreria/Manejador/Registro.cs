@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.ServiceModel;
 using System.Text.RegularExpressions;
 using DAOLibreria.DAO;
@@ -55,10 +56,12 @@ namespace WcfServicioLibreria.Manejador
         /// Metodo para evaluar si cumple con nuestro criterio de encriptacion por SHA256
         /// </summary>
         /// <param name="hash"></param>
-        /// <returns>Si es valio retorna true, en caso contraio false</returns>
+        /// <returns>Si es valido retorna true, en caso contraio false</returns>
         public bool EsSha256Valido(string hash)
         {
-            return hash.Length == 64 && Regex.IsMatch(hash, @"\A\b[0-9a-fA-F]+\b\Z");
+            if (hash.Length != 64) return false;
+
+            return hash.All(c => "0123456789abcdefABCDEF".Contains(c));
         }
     }
 }

@@ -779,6 +779,83 @@ namespace WpfCliente.ServidorDescribelo {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="InvitacionPartida", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
+    [System.SerializableAttribute()]
+    public partial class InvitacionPartida : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CodigoSalaField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string GamertagEmisorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string GamertagReceptorField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CodigoSala {
+            get {
+                return this.CodigoSalaField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CodigoSalaField, value) != true)) {
+                    this.CodigoSalaField = value;
+                    this.RaisePropertyChanged("CodigoSala");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GamertagEmisor {
+            get {
+                return this.GamertagEmisorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GamertagEmisorField, value) != true)) {
+                    this.GamertagEmisorField = value;
+                    this.RaisePropertyChanged("GamertagEmisor");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GamertagReceptor {
+            get {
+                return this.GamertagReceptorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GamertagReceptorField, value) != true)) {
+                    this.GamertagReceptorField = value;
+                    this.RaisePropertyChanged("GamertagReceptor");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="EstadoUsuario", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Enumerador")]
     public enum EstadoUsuario : int {
@@ -1570,6 +1647,12 @@ namespace WpfCliente.ServidorDescribelo {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/ValidarCredenciales", ReplyAction="http://tempuri.org/IServicioUsuario/ValidarCredencialesResponse")]
         System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.Usuario> ValidarCredencialesAsync(string gamertag, string contrasenia);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/EditarContraseniaUsuario", ReplyAction="http://tempuri.org/IServicioUsuario/EditarContraseniaUsuarioResponse")]
+        bool EditarContraseniaUsuario(string gamertag, string nuevoHashContrasenia);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/EditarContraseniaUsuario", ReplyAction="http://tempuri.org/IServicioUsuario/EditarContraseniaUsuarioResponse")]
+        System.Threading.Tasks.Task<bool> EditarContraseniaUsuarioAsync(string gamertag, string nuevoHashContrasenia);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1630,6 +1713,14 @@ namespace WpfCliente.ServidorDescribelo {
         public System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.Usuario> ValidarCredencialesAsync(string gamertag, string contrasenia) {
             return base.Channel.ValidarCredencialesAsync(gamertag, contrasenia);
         }
+        
+        public bool EditarContraseniaUsuario(string gamertag, string nuevoHashContrasenia) {
+            return base.Channel.EditarContraseniaUsuario(gamertag, nuevoHashContrasenia);
+        }
+        
+        public System.Threading.Tasks.Task<bool> EditarContraseniaUsuarioAsync(string gamertag, string nuevoHashContrasenia) {
+            return base.Channel.EditarContraseniaUsuarioAsync(gamertag, nuevoHashContrasenia);
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1684,6 +1775,75 @@ namespace WpfCliente.ServidorDescribelo {
         
         public System.Threading.Tasks.Task ObtenerSessionJugadorAsync(WpfCliente.ServidorDescribelo.Usuario usuario) {
             return base.Channel.ObtenerSessionJugadorAsync(usuario);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioInvitacionPartida", CallbackContract=typeof(WpfCliente.ServidorDescribelo.IServicioInvitacionPartidaCallback))]
+    public interface IServicioInvitacionPartida {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioInvitacionPartida/EnviarInvitacion", ReplyAction="http://tempuri.org/IServicioInvitacionPartida/EnviarInvitacionResponse")]
+        bool EnviarInvitacion(string gamertagEmisor, string codigoSala, string gamertagReceptor);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioInvitacionPartida/EnviarInvitacion", ReplyAction="http://tempuri.org/IServicioInvitacionPartida/EnviarInvitacionResponse")]
+        System.Threading.Tasks.Task<bool> EnviarInvitacionAsync(string gamertagEmisor, string codigoSala, string gamertagReceptor);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioInvitacionPartida/AbrirCanalParaInvitaciones")]
+        void AbrirCanalParaInvitaciones(WpfCliente.ServidorDescribelo.Usuario usuario);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioInvitacionPartida/AbrirCanalParaInvitaciones")]
+        System.Threading.Tasks.Task AbrirCanalParaInvitacionesAsync(WpfCliente.ServidorDescribelo.Usuario usuario);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IServicioInvitacionPartidaCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioInvitacionPartida/RecibirInvitacion")]
+        void RecibirInvitacion(WpfCliente.ServidorDescribelo.InvitacionPartida invitacion);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IServicioInvitacionPartidaChannel : WpfCliente.ServidorDescribelo.IServicioInvitacionPartida, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class ServicioInvitacionPartidaClient : System.ServiceModel.DuplexClientBase<WpfCliente.ServidorDescribelo.IServicioInvitacionPartida>, WpfCliente.ServidorDescribelo.IServicioInvitacionPartida {
+        
+        public ServicioInvitacionPartidaClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
+        }
+        
+        public ServicioInvitacionPartidaClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
+        }
+        
+        public ServicioInvitacionPartidaClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ServicioInvitacionPartidaClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ServicioInvitacionPartidaClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public bool EnviarInvitacion(string gamertagEmisor, string codigoSala, string gamertagReceptor) {
+            return base.Channel.EnviarInvitacion(gamertagEmisor, codigoSala, gamertagReceptor);
+        }
+        
+        public System.Threading.Tasks.Task<bool> EnviarInvitacionAsync(string gamertagEmisor, string codigoSala, string gamertagReceptor) {
+            return base.Channel.EnviarInvitacionAsync(gamertagEmisor, codigoSala, gamertagReceptor);
+        }
+        
+        public void AbrirCanalParaInvitaciones(WpfCliente.ServidorDescribelo.Usuario usuario) {
+            base.Channel.AbrirCanalParaInvitaciones(usuario);
+        }
+        
+        public System.Threading.Tasks.Task AbrirCanalParaInvitacionesAsync(WpfCliente.ServidorDescribelo.Usuario usuario) {
+            return base.Channel.AbrirCanalParaInvitacionesAsync(usuario);
         }
     }
 }

@@ -196,6 +196,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Invitar amigos.
+        /// </summary>
+        public static string buttonInvitaAmigos {
+            get {
+                return ResourceManager.GetString("buttonInvitaAmigos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Jugar.
         /// </summary>
         public static string buttonJugar {
@@ -210,6 +219,15 @@ namespace WpfCliente.Properties {
         public static string buttonJugarComoInvitado {
             get {
                 return ResourceManager.GetString("buttonJugarComoInvitado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Listo!.
+        /// </summary>
+        public static string buttonListo {
+            get {
+                return ResourceManager.GetString("buttonListo", resourceCulture);
             }
         }
         
@@ -457,6 +475,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Envíale a tus amigos una invitación.
+        /// </summary>
+        public static string labelInvitaAmigos {
+            get {
+                return ResourceManager.GetString("labelInvitaAmigos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Lista de amigos.
         /// </summary>
         public static string labelListaAmigos {
@@ -669,6 +696,24 @@ namespace WpfCliente.Properties {
         public static string mensajeImagenInvalida {
             get {
                 return ResourceManager.GetString("mensajeImagenInvalida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La invitación se envió correctamente.
+        /// </summary>
+        public static string mensajeInvitacionExitosa {
+            get {
+                return ResourceManager.GetString("mensajeInvitacionExitosa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Hubo un error al enviar la invitación, intente de nuevo más tarde.
+        /// </summary>
+        public static string mensajeInvitacionFallida {
+            get {
+                return ResourceManager.GetString("mensajeInvitacionFallida", resourceCulture);
             }
         }
         
@@ -921,6 +966,15 @@ namespace WpfCliente.Properties {
         public static string tituloInicioSesion {
             get {
                 return ResourceManager.GetString("tituloInicioSesion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Invitación a partida.
+        /// </summary>
+        public static string tituloInvitacionPartida {
+            get {
+                return ResourceManager.GetString("tituloInvitacionPartida", resourceCulture);
             }
         }
         

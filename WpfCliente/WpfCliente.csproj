@@ -131,6 +131,9 @@
     <Compile Include="GUI\ChatUserControl.xaml.cs">
       <DependentUpon>ChatUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\ConfigurarPartidaWindow.xaml.cs">
+      <DependentUpon>ConfigurarPartidaWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\EditarPerfilWindow.xaml.cs">
       <DependentUpon>EditarPerfilWindow.xaml</DependentUpon>
     </Compile>
@@ -143,8 +146,14 @@
     <Compile Include="GUI\InicioRondaUserControl.xaml.cs">
       <DependentUpon>InicioRondaUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\InvitacionPartidaUserControl.xaml.cs">
+      <DependentUpon>InvitacionPartidaUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\ListaAmigosUserControl.xaml.cs">
       <DependentUpon>ListaAmigosUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ListaSolicitudesAmistadUserControl.xaml.cs">
+      <DependentUpon>ListaSolicitudesAmistadUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\ListaUsuariosSalaUserControl.xaml.cs">
       <DependentUpon>ListaUsuariosSalaUserControl.xaml</DependentUpon>
@@ -157,6 +166,9 @@
     </Compile>
     <Compile Include="GUI\NarradorSeleccionCartaUserControl.xaml.cs">
       <DependentUpon>NarradorSeleccionCartaUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\NotificacionesWindow.xaml.cs">
+      <DependentUpon>NotificacionesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\PartidaWindow.xaml.cs">
       <DependentUpon>PartidaWindow.xaml</DependentUpon>
@@ -175,6 +187,9 @@
     </Compile>
     <Compile Include="GUI\SeleccionCartaUsercontrol.xaml.cs">
       <DependentUpon>SeleccionCartaUsercontrol.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\SolicitudAmistadUserControl.xaml.cs">
+      <DependentUpon>SolicitudAmistadUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\UnirseSalaModalWindow.xaml.cs">
       <DependentUpon>UnirseSalaModalWindow.xaml</DependentUpon>
@@ -333,6 +348,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\ConfigurarPartidaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\EditarPerfilWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -349,7 +368,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\InvitacionPartidaUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\ListaAmigosUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ListaSolicitudesAmistadUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -366,6 +393,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\NarradorSeleccionCartaUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\NotificacionesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -393,6 +424,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\SeleccionCartaUsercontrol.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\SolicitudAmistadUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -478,12 +513,8 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Recursos\fondoSala.png" />
-    <None Include="Connected Services\ServidorDescribelo\configuration91.svcinfo" />
-    <None Include="Connected Services\ServidorDescribelo\configuration.svcinfo" />
-    <None Include="Connected Services\ServidorDescribelo\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
+    <Resource Include="Recursos\notificaciones.png" />
+    <Resource Include="Recursos\fondoNotificaciones.png" />
     <Content Include="Sonidos\musicaFondo.mp3" />
   </ItemGroup>
   <ItemGroup>

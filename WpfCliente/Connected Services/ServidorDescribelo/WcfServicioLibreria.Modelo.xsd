@@ -89,4 +89,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="JugadorEstadisticas" nillable="true" type="tns:JugadorEstadisticas" />
+  <xs:complexType name="InvitacionPartida">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodigoSala" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GamertagEmisor" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GamertagReceptor" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InvitacionPartida" nillable="true" type="tns:InvitacionPartida" />
 </xs:schema>

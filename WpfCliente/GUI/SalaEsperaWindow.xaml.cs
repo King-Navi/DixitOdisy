@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
@@ -27,7 +29,6 @@ namespace WpfCliente.GUI
 
         public SalaEsperaWindow(string idSala)
         {
-            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             InitializeComponent();
             EsconderOpciones();
             VerificarConexion();
@@ -45,6 +46,8 @@ namespace WpfCliente.GUI
                 UnirseSala(idSala);
             }
             DataContext = this;
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
+            ActualizarUI();
         }
 
         private void EsconderOpciones()
@@ -172,6 +175,12 @@ namespace WpfCliente.GUI
             //TODO: faltan recursos (botones)
             labelCodigoSala.Content = Idioma.labelCodigoSala;
             labelUsuariosLobby.Content = Idioma.labelUsuariosLobby;
+            labelInvitaAmigos.Content = Idioma.labelInvitaAmigos;
+            buttonInvitarAmigos.Content = Idioma.buttonInvitaAmigos;
+            buttonListo.Content = Idioma.buttonListo;
+            buttonConfigurarPartida.Content = Idioma.buttonConfigurarPartida;
+            buttonEmpezarPartida.Content = Idioma.buttonEmpezarPartida;
+        }
             //groupBoxCondicionVicotoria.Header
             //grouoBoxTematica.Header
 
@@ -269,6 +278,68 @@ namespace WpfCliente.GUI
 
                 VentanasEmergentes.CrearVentanaEmergenteCodigoCopiado(this);
             }
+        }
+
+        private async void buttonInvitarAmigos_Click(object sender, RoutedEventArgs e)
+        {
+            string gamertagInvitado = AbrirVentanaModalGamertag();
+            if (gamertagInvitado != null && gamertagInvitado != Singleton.Instance.NombreUsuario) {
+                if (await EnviarInvitacion(gamertagInvitado))
+                {
+                    VentanasEmergentes.CrearVentanaEmergenteInvitacionEnviada(this);
+                }
+                else
+                {
+                    VentanasEmergentes.CrearVentanaEmergenteInvitacionNoEnviada(this);
+                }
+            }
+            else
+            {
+                VentanasEmergentes.CrearVentanaEmergenteInvitacionNoEnviada(this);
+            }
+        }
+
+        private string AbrirVentanaModalGamertag()
+        {
+            string valorObtenido = null;
+            IngresarGamertagModalWindow ventanaModal = new IngresarGamertagModalWindow();
+            try
+            {
+                ventanaModal.Owner = this;
+
+            }
+            catch (Exception)
+            {
+
+            }
+            bool? resultado = ventanaModal.ShowDialog();
+
+            if (resultado == true)
+            {
+                valorObtenido = ventanaModal.ValorIngresado;
+            }
+
+            return valorObtenido;
+        }
+
+        private async Task<bool> EnviarInvitacion(string gamertagReceptor)
+        {
+            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+            if (!conexionExitosa)
+            {
+                return false;
+            }
+            //TODO rodear con un try catch
+            var resultado = Conexion.InvitacionPartida.EnviarInvitacion(Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala, gamertagReceptor); 
+            return resultado;
+            
+        }
+
+        private void ClicButtonConfigurarPartida(object sender, RoutedEventArgs e)
+        {
+            ConfigurarPartidaWindow configurarPartidaWindow = new ConfigurarPartidaWindow();
+            configurarPartidaWindow.Show();
+            this.Hide();
         }
 
         private void ClicButtonConfigurarPartida(object sender, RoutedEventArgs e)

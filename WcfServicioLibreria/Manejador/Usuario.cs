@@ -2,6 +2,7 @@
 using DAOLibreria.ModeloBD;
 using System;
 using System.IO;
+using System.Linq;
 using System.Security.Principal;
 using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
@@ -39,6 +40,36 @@ namespace WcfServicioLibreria.Manejador
             {
                 //TODO : Manejar el error
             }
+        }
+
+        public bool EditarContraseniaUsuario(string gamertag, string nuevaContrasenia)
+        {
+            bool resultado = false;
+
+            if (string.IsNullOrEmpty(gamertag) || string.IsNullOrEmpty(nuevaContrasenia))
+            {
+                return resultado;
+            }
+
+            if (!EsSha256Valido(nuevaContrasenia))
+            {
+                return resultado;
+            }
+
+            try
+            {
+                resultado = UsuarioDAO.EditarContraseniaPorGamertag(gamertag, nuevaContrasenia);
+            }
+            catch (CommunicationException ex)
+            {
+                Console.WriteLine($"Error al editar contraseña para el usuario {gamertag}: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error general al editar contraseña para el usuario {gamertag}: {ex.Message}");
+            }
+
+            return resultado;
         }
 
         public bool EditarUsuario(Modelo.Usuario usuarioEditado)

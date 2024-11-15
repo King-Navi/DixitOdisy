@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="WpfCliente.GUI.ListaSolicitudesAmistadUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfCliente.GUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="450">
+    <Grid Width="220" Height="400" >
+        <DockPanel LastChildFill="True">
+            <!--Header-->
+            <StackPanel d:Background="#E0DCC7" DockPanel.Dock="Top">
+                <Label x:Name="labelSolicitudes" HorizontalContentAlignment="Center" FontFamily="Lucida Sans Unicode Bold" BorderBrush="Black" BorderThickness="3" d:Content="Solicitudes de amistad"></Label>
+            </StackPanel>
+            <!--Contenido-->
+            <Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ItemsControl x:Name="itemsControlAmigos" Background="#A9A9A9" ItemsSource="{Binding Solicitudes}">
+                        <!-- El ItemsPanel organiza los elementos -->
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <!-- DataTemplate para los elementos del ItemsControl -->
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <!-- Aquí se muestra el SolicitudAmistadUserControl con el DataContext correspondiente -->
+                                <local:SolicitudAmistadUserControl DataContext="{Binding}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</UserControl>

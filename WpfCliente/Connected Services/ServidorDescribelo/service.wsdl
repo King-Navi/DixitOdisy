@@ -110,6 +110,16 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_IServicioInvitacionPartida_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
+        </msb:BinaryEncoding>
+        <wsaw:UsingAddressing>
+        </wsaw:UsingAddressing>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import namespace="http://tempuri.org/" />
@@ -349,6 +359,12 @@
   <wsdl:message name="IServicioUsuario_ValidarCredenciales_OutputMessage">
     <wsdl:part name="parameters" element="tns:ValidarCredencialesResponse" />
   </wsdl:message>
+  <wsdl:message name="IServicioUsuario_EditarContraseniaUsuario_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditarContraseniaUsuario" />
+  </wsdl:message>
+  <wsdl:message name="IServicioUsuario_EditarContraseniaUsuario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditarContraseniaUsuarioResponse" />
+  </wsdl:message>
   <wsdl:message name="IServicioUsuarioSesion_ObtenerSessionJugador_InputMessage">
     <wsdl:part name="parameters" element="tns:ObtenerSessionJugador" />
   </wsdl:message>
@@ -357,6 +373,18 @@
   </wsdl:message>
   <wsdl:message name="IServicioUsuarioSesion_ObtenerSessionJugadorCallback_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ObtenerSessionJugadorCallbackResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioInvitacionPartida_EnviarInvitacion_InputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarInvitacion" />
+  </wsdl:message>
+  <wsdl:message name="IServicioInvitacionPartida_EnviarInvitacion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EnviarInvitacionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioInvitacionPartida_AbrirCanalParaInvitaciones_InputMessage">
+    <wsdl:part name="parameters" element="tns:AbrirCanalParaInvitaciones" />
+  </wsdl:message>
+  <wsdl:message name="IServicioInvitacionPartida_RecibirInvitacion_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:RecibirInvitacion" />
   </wsdl:message>
   <wsdl:portType name="IServicioAmistad">
     <wsdl:operation name="AbrirCanalParaPeticiones">
@@ -545,6 +573,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuario/ValidarCredenciales" message="tns:IServicioUsuario_ValidarCredenciales_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioUsuario/ValidarCredencialesResponse" message="tns:IServicioUsuario_ValidarCredenciales_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="EditarContraseniaUsuario">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuario/EditarContraseniaUsuario" message="tns:IServicioUsuario_EditarContraseniaUsuario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioUsuario/EditarContraseniaUsuarioResponse" message="tns:IServicioUsuario_EditarContraseniaUsuario_OutputMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioUsuarioSesion">
     <wsdl:operation name="ObtenerSessionJugador">
@@ -553,6 +585,18 @@
     <wsdl:operation name="ObtenerSessionJugadorCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioUsuarioSesion/ObtenerSessionJugadorCallback" message="tns:IServicioUsuarioSesion_ObtenerSessionJugadorCallback_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuarioSesion/ObtenerSessionJugadorCallbackResponse" message="tns:IServicioUsuarioSesion_ObtenerSessionJugadorCallback_InputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IServicioInvitacionPartida">
+    <wsdl:operation name="EnviarInvitacion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioInvitacionPartida/EnviarInvitacion" message="tns:IServicioInvitacionPartida_EnviarInvitacion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioInvitacionPartida/EnviarInvitacionResponse" message="tns:IServicioInvitacionPartida_EnviarInvitacion_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AbrirCanalParaInvitaciones">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioInvitacionPartida/AbrirCanalParaInvitaciones" message="tns:IServicioInvitacionPartida_AbrirCanalParaInvitaciones_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecibirInvitacion">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioInvitacionPartida/RecibirInvitacion" message="tns:IServicioInvitacionPartida_RecibirInvitacion_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IServicioAmistad" type="tns:IServicioAmistad">
@@ -970,6 +1014,15 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="EditarContraseniaUsuario">
+      <soap12:operation soapAction="http://tempuri.org/IServicioUsuario/EditarContraseniaUsuario" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="NetTcpBinding_IServicioUsuarioSesion" type="tns:IServicioUsuarioSesion">
     <wsp:PolicyReference URI="#NetTcpBinding_IServicioUsuarioSesion_policy">
@@ -986,6 +1039,32 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="NetTcpBinding_IServicioInvitacionPartida" type="tns:IServicioInvitacionPartida">
+    <wsp:PolicyReference URI="#NetTcpBinding_IServicioInvitacionPartida_policy">
+    </wsp:PolicyReference>
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="EnviarInvitacion">
+      <soap12:operation soapAction="http://tempuri.org/IServicioInvitacionPartida/EnviarInvitacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AbrirCanalParaInvitaciones">
+      <soap12:operation soapAction="http://tempuri.org/IServicioInvitacionPartida/AbrirCanalParaInvitaciones" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="RecibirInvitacion">
+      <soap12:operation soapAction="http://tempuri.org/IServicioInvitacionPartida/RecibirInvitacion" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
@@ -1086,6 +1165,15 @@
       <soap12:address location="net.tcp://192.168.0.102:6969/" />
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://192.168.0.102:6969/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IServicioInvitacionPartida" binding="tns:NetTcpBinding_IServicioInvitacionPartida">
+      <soap12:address location="net.tcp://localhost:6969/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Dns>localhost</Dns>
         </Identity>

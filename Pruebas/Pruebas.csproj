@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Servidor\ServicioCorreo.cs" />
+    <Compile Include="Servidor\ServicioInvitacionPartida.cs" />
     <Compile Include="Servidor\ServicioPartida.cs" />
     <Compile Include="Servidor\ServicioPartidaSesion.cs" />
     <Compile Include="Servidor\ServicioSala.cs" />

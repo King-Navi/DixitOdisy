@@ -20,11 +20,13 @@ namespace WcfServicioLibreria.Modelo
         private bool desechado = false;
         public IUsuarioSesionCallback UsuarioSesionCallBack { get; set; }
         public IAmistadCallBack AmistadSesionCallBack { get; set; }
+        public IInvitacionPartidaCallback InvitacionPartidaCallBack { get; set; }
         public EventHandler CerrandoEvento { get; set; }
         public EventHandler CerradoEvento { get; set; }
         public EventHandler FalloEvento { get; set; }
         public EventHandler DesconexionManejadorEvento;
         public EventHandler ActulizarAmigoManejadorEvento;
+        public string Nombre => nombre;
         /// <summary>
         /// Avisa a todos los sucriptores que se esta desconectando
         /// </summary>

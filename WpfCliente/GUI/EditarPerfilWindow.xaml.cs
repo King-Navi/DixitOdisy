@@ -23,8 +23,10 @@ namespace WpfCliente.GUI
     public partial class EditarPerfilWindow : Window , IActualizacionUI
     {
         private bool cambioImagen = false;
-        public EditarPerfilWindow()
+        private readonly Window menuWindow;
+        public EditarPerfilWindow(Window menuWindow)
         {
+            this.menuWindow = menuWindow;
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             InitializeComponent();
             CargarDatos();
@@ -67,8 +69,9 @@ namespace WpfCliente.GUI
         }
         private void ProcesarImagen(string rutaImagen)
         {
+            BitmapImage nuevaImagen = new BitmapImage(new Uri(rutaImagen));
+            imageFotoJugador.Source = nuevaImagen;
             VentanasEmergentes.CrearVentanaEmergente("Imagen seleccionada", rutaImagen, this);
-            // Aquí puedes asignar la imagen a un control de imagen o hacer más procesamiento
             cambioImagen = true;
         }
         private void MostrarError(string mensaje)
@@ -120,22 +123,18 @@ namespace WpfCliente.GUI
 
         private void clicButtonAceptar(object sender, RoutedEventArgs e)
         {
-            if (!ValidarCampos()) return;
-
-            bool realizoCambios = false;
-            bool realizoCambioCorreo = false;
             Usuario usuarioEditado = new Usuario();
 
-            realizoCambios |= VerificarCambioImagen(usuarioEditado);
-            realizoCambioCorreo |= VerificarCambioCorreo(usuarioEditado);
-            realizoCambios |= VerificarCambioContrasenia(usuarioEditado);
-            if (realizoCambioCorreo)
-            {
-                Correo.VerificarCorreo(textBoxCorreo.Text,this);
-            }
+            bool realizoCambios = VerificarCambioImagen(usuarioEditado)
+                                  || VerificarCambioCorreo(usuarioEditado)
+                                  || VerificarCambioContrasenia(usuarioEditado);
+
             if (realizoCambios)
             {
-                GuardarCambiosUsuario(usuarioEditado);
+                if (ValidarCampos())
+                {
+                    GuardarCambiosUsuario(usuarioEditado);
+                }
             }
             else
             {
@@ -168,8 +167,7 @@ namespace WpfCliente.GUI
         private bool VerificarCambioContrasenia(Usuario usuarioEditado)
         {
             if (!string.IsNullOrEmpty(textBoxContrasenia.Password)
-                && textBoxContrasenia.Password == textBoxRepetirContrasenia.Password
-                && textBoxContrasenia.Password != Singleton.Instance.ContraniaHash)
+                && textBoxContrasenia.Password == textBoxRepetirContrasenia.Password)
             {
                 usuarioEditado.ContraseniaHASH = Encriptacion.OcuparSHA256(textBoxContrasenia.Password);
                 return true;
@@ -191,7 +189,7 @@ namespace WpfCliente.GUI
             if (resultado)
             {
                 VentanasEmergentes.CrearVentanaEmergenteDatosEditadosExito(this);
-                Application.Current.Shutdown();
+                CerrarSesion();
             }
             else
             {
@@ -235,6 +233,11 @@ namespace WpfCliente.GUI
 
         private bool ValidarCaracteristicasContrasenia()
         {
+            if (string.IsNullOrEmpty(textBoxContrasenia.Password) && string.IsNullOrEmpty(textBoxRepetirContrasenia.Password))
+            {
+                return true;
+            }
+
             bool isValid = true;
 
             if (textBoxContrasenia.Password.Trim().Length >= 5)
@@ -275,6 +278,23 @@ namespace WpfCliente.GUI
             }
 
             return isValid;
+        }
+
+        private void CerrarSesion()
+        {
+            try
+            {
+                Conexion.CerrarUsuarioSesion();
+                Conexion.CerrarConexionesSalaConChat();
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponentErrorException(excepcion);
+            }
+            IniciarSesion iniciarSesion = new IniciarSesion();
+            iniciarSesion.Show();
+            menuWindow?.Close();
+            this.Close();
         }
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

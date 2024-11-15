@@ -22,12 +22,14 @@
             </Style.Resources>
         </Style>
     </Window.Resources>
-    
+
+
     <Grid>
         <DockPanel LastChildFill="True">
             <!--Header-->
             <StackPanel DockPanel.Dock="Top" x:Name="stackPaneEncabezado" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <local:PerfilMenuDesplegableUserControl x:Name="perfilMenuDesplegable"></local:PerfilMenuDesplegableUserControl>
+                <Image Height="48" Width="54" Source="/recursos/notificaciones.png" VerticalAlignment="Top" RenderTransformOrigin="0.556,0.5" Cursor="Hand" MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
+                <local:PerfilMenuDesplegableUserControl x:Name="perfilMenuDesplegable"/>
             </StackPanel>
             <!--Footer-->
             <StackPanel DockPanel.Dock="Bottom" Background="#E0DCC7" VerticalAlignment="Bottom" HorizontalAlignment="Center">
@@ -47,13 +49,22 @@
                 Background="#E0DCC7" Foreground="Black" BorderThickness="4" BorderBrush="Black" Click="ClicButtonUnirseSala" 
                 FontSize="24" Margin="0,10,0,10" />
 
-                    <Button x:Name="buttonSalir" d:Content="Cerrar sesion" FontFamily="ROG Fonts" 
-                Background="#E0DCC7" Foreground="Black" BorderThickness="4" BorderBrush="Black" Click="buttonSalir_Click" 
-                FontSize="24" Margin="0,70,0,10" />
                 </StackPanel>
             </StackPanel>
 
         </DockPanel>
         <local:ListaAmigosUserControl x:Name="amigosUserControl" HorizontalAlignment="Left" ></local:ListaAmigosUserControl>
+
+        <!-- Notificación de invitación -->
+        <Border x:Name="borderNotificacionInvitacion" Background="Chartreuse"  CornerRadius="8" Padding="10" 
+            VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,20" Width="322" Height="100" 
+            Visibility="Collapsed" Opacity="0.9">
+            <StackPanel>
+                <TextBlock x:Name="textNotificacionInvitacion" Text="Has recibido una invitación a una sala" 
+                       FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+                <ProgressBar x:Name="progressTimer" Height="10" Foreground="Green" Margin="0,0,0,10"/>
+                <Button Content="Unirse" Click="UnirseSala_Click" HorizontalAlignment="Right" Width="80"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

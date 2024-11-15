@@ -148,6 +148,32 @@ namespace WpfCliente.Utilidad
             ventanaEmergente.Owner = window;
             ventanaEmergente.ShowDialog();
         }
-        
+
+        public static void CrearVentanaEmergenteInvitacionEnviada(Window window)
+        {
+            string tituloVentanaEmergente = Properties.Idioma.tituloInvitacionPartida;
+            string descripcionVentanaEmergente = Properties.Idioma.mensajeInvitacionExitosa;
+
+            VentanaEmergente ventanaEmergente = new VentanaEmergente(
+                tituloVentanaEmergente,
+                descripcionVentanaEmergente
+            );
+            ventanaEmergente.Owner = window;
+            ventanaEmergente.ShowDialog();
+        }
+
+        public static void CrearVentanaEmergenteInvitacionNoEnviada(Window window)
+        {
+            string tituloVentanaEmergente = Properties.Idioma.tituloInvitacionPartida;
+            string descripcionVentanaEmergente = Properties.Idioma.mensajeInvitacionFallida;
+
+            VentanaEmergente ventanaEmergente = new VentanaEmergente(
+                tituloVentanaEmergente,
+                descripcionVentanaEmergente
+            );
+            ventanaEmergente.Owner = window;
+            ventanaEmergente.ShowDialog();
+        }
+
     }
 }

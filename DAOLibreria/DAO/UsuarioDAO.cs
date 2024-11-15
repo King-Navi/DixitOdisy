@@ -279,6 +279,55 @@ namespace DAOLibreria.DAO
             }
         }
 
+        /// <summary>
+        /// Edita la contraseña de un usuario especificado por su gamertag.
+        /// </summary>
+        /// <param name="gamertag">El gamertag del usuario.</param>
+        /// <param name="nuevoHashContrasenia">El nuevo hash de la contraseña.</param>
+        /// <returns>True si la contraseña se actualizó correctamente, de lo contrario, false.</returns>
+        public static bool EditarContraseniaPorGamertag(string gamertag, string nuevoHashContrasenia)
+        {
+            bool resultado = false;
+            if (string.IsNullOrEmpty(gamertag) || string.IsNullOrEmpty(nuevoHashContrasenia))
+            {
+                return resultado;
+            }
 
+            try
+            {
+                using (var context = new DescribeloEntities())
+                {
+                    using (var transaction = context.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            var usuarioCuenta = context.UsuarioCuenta.SingleOrDefault(cuenta => cuenta.gamertag == gamertag);
+                            if (usuarioCuenta == null)
+                            {
+                                return false; 
+                            }
+
+                            usuarioCuenta.hashContrasenia = nuevoHashContrasenia.ToUpper();
+                            context.SaveChanges();
+
+                            transaction.Commit();
+                            resultado = true;
+                        }
+                        catch (Exception excepcion)
+                        {
+                            transaction.Rollback();
+                            Console.WriteLine($"Error al actualizar la contraseña: {excepcion.Message}");
+                            Console.WriteLine(excepcion.StackTrace);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error general en EditarContraseniaPorGamertag: {ex.Message}");
+            }
+
+            return resultado;
+        }
     }
 }

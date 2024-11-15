@@ -29,8 +29,8 @@ namespace WpfCliente.GUI
 
         private void AbrirEditarVentana(object sender, RoutedEventArgs e)
         {
-
-            EditarPerfilWindow editarPerfilVentana = new EditarPerfilWindow();
+            Window menuVentana = Window.GetWindow(this);
+            EditarPerfilWindow editarPerfilVentana = new EditarPerfilWindow(menuVentana);
             editarPerfilVentana.Show();
             Window MenuVentana = Window.GetWindow(this);  
             if (MenuVentana != null)
@@ -49,10 +49,17 @@ namespace WpfCliente.GUI
             }
         }
 
+        private void CerrarSesion(object sender, RoutedEventArgs e)
+        {
+            Window menuVentana = Window.GetWindow(this);
+            menuVentana.Close();
+        }
+
         public void ActualizarUI()
         {
             menuItemEditarPerfil.Header = Idioma.menuItemEditarperfil;
             menuItemEstadisticas.Header = Idioma.menuItemEstadisticas;
+            menuItemCerrarSesion.Header = Idioma.buttonCerrarSesion;
             menuItemPerfil.Header = Idioma.menuItemPerfil;
         }
 

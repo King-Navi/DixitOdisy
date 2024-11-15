@@ -1,11 +1,11 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
 
 namespace WpfCliente.GUI
 {
     /// <summary>
     /// Lógica de interacción para ConfigurarPartidaWindow.xaml
     /// </summary>
-    public partial class ConfigurarPartidaWindow : Page
+    public partial class ConfigurarPartidaWindow : Window
     {
         public ConfigurarPartidaWindow()
         {

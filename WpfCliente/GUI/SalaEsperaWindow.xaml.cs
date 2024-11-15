@@ -23,8 +23,6 @@ namespace WpfCliente.GUI
         public ObservableCollection<Usuario> jugadoresSala = new ObservableCollection<Usuario>();
         public SalaEsperaWindow(string idSala)
         {
-            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
-            ActualizarUI();
             InitializeComponent();
             VerificarConexion();
             if (idSala == null)
@@ -38,6 +36,8 @@ namespace WpfCliente.GUI
                 UnirseSala(idSala);
             }
             DataContext = this;
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
+            ActualizarUI();
         }
 
         private async void VerificarConexion()
@@ -277,10 +277,17 @@ namespace WpfCliente.GUI
             {
                 return false;
             }
-
+            //TODO rodear con un try catch
             var resultado = Conexion.InvitacionPartida.EnviarInvitacion(Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala, gamertagReceptor); 
             return resultado;
             
+        }
+
+        private void ClicButtonConfigurarPartida(object sender, RoutedEventArgs e)
+        {
+            ConfigurarPartidaWindow configurarPartidaWindow = new ConfigurarPartidaWindow();
+            configurarPartidaWindow.Show();
+            this.Hide();
         }
     }
 }

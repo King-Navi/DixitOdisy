@@ -34,5 +34,10 @@ namespace Pruebas.Servidor.Utilidades
         {
             JugadoresEnSala.Add(jugardoreNuevoEnSala);
         }
+
+        public void DelegacionRolCallback(bool esAnfitrion)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

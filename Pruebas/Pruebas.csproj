@@ -74,6 +74,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAO\EstadisticasDAONoConexion_Prueba.cs" />
+    <Compile Include="DAO\EstadisticasDAO_Prueba.cs" />
+    <Compile Include="DAO\Utilidades\ConfiguracionPruebaBD.cs" />
     <Compile Include="Servidor\ServicioCorreo.cs" />
     <Compile Include="Servidor\ServicioInvitacionPartida.cs" />
     <Compile Include="Servidor\ServicioPartida.cs" />

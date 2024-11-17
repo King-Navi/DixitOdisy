@@ -329,5 +329,28 @@ namespace DAOLibreria.DAO
 
             return resultado;
         }
+
+        public static bool ColocarUltimaConexion(int idUsuario)
+        {
+            bool resultado = false;
+            try
+            {
+                using (var context = new DescribeloEntities())
+                {
+                    var usuario = context.Usuario.FirstOrDefault(b => b.idUsuario == idUsuario);
+                    if (usuario != null)
+                    {
+                        usuario.ultimaConexion = DateTime.Now;
+                        context.SaveChanges(); 
+                        resultado = true;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return resultado;
+        }
     }
 }

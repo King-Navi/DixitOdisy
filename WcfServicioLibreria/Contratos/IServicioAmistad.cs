@@ -24,7 +24,5 @@ namespace WcfServicioLibreria.Contratos
         void CambiarEstadoAmigo(Amigo amigo);
         [OperationContract]
         void ObtenerAmigoCallback(Amigo amigo);
-        [OperationContract]
-        void ObtenerPeticionAmistadCallback(SolicitudAmistad nuevaSolicitudAmistad);
     }
 }

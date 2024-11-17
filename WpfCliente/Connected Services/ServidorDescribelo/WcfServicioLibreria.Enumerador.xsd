@@ -32,6 +32,7 @@
       <xs:enumeration value="Animales" />
       <xs:enumeration value="Paises" />
       <xs:enumeration value="Mitologia" />
+      <xs:enumeration value="Espacio" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="TematicaPartida" nillable="true" type="tns:TematicaPartida" />

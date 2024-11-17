@@ -38,8 +38,9 @@ namespace WpfCliente.GUI
         private const int PANTALLA_FIN_PARTIDA = 6;
         private const int PANTALLA_ESPERA= 7 ;
         //TODO: lo define la partida
-        private readonly int seleccionMaximaNarrador = 1; 
-        private readonly int seleccionMaximaJugador = 1; 
+        private const int SELECCION_MAXIMA_NARRADOR = 1; 
+        private const int SELECCION_MAXIMA_JUGADOR = 1; 
+        private const int ADIVINAR_MAXIMA_JUGADOR = 1; 
         private int contadorSeleccion =  0;
         public ICommand ComandoImagenGlobal { get; set; }
         public ICommand ComandoImagenSelecionCorrecta { get; set; }
@@ -136,11 +137,10 @@ namespace WpfCliente.GUI
 
         private void ComandoSeleccionCorrecta(string idImagen)
         {
-            MessageBox.Show("Escogiste " + idImagen);
-            ImagenCarta imagenAEscoger = recursosCompartidos.Imagenes.FirstOrDefault(i => i.IdImagen == idImagen);
+            ImagenCarta imagenAEscoger = recursosCompartidos.GruposDeImagenes.FirstOrDefault(i => i.IdImagen == idImagen);
             if (imagenAEscoger == null)
                 return;
-            MostrarCartaModelWindow ventanaModal = new MostrarCartaModelWindow(true, imagenAEscoger.BitmapImagen);
+            MostrarCartaModelWindow ventanaModal = new MostrarCartaModelWindow(false, imagenAEscoger.BitmapImagen);
             bool? resultado = ventanaModal.ShowDialog();
             string pista = ventanaModal.Pista;
             if ((bool)resultado)
@@ -150,14 +150,10 @@ namespace WpfCliente.GUI
                 Task.Run(async () =>
                 {
                     await Conexion.VerificarConexion(HabilitarBotones, this);
-                    //TODO: Ver que hacer
-                    Conexion.Partida.ConfirmarMovimiento(Singleton.Instance.NombreUsuario,
-                                                                            Singleton.Instance.IdPartida,
-                                                                            imagenAEscoger.IdImagen,
-                                                                            pista);
+                    await Conexion.Partida.TratarAdivinarAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida, idImagen);
                     await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
                 });
-                if (contadorSeleccion >= seleccionMaximaNarrador)
+                if (contadorSeleccion >= ADIVINAR_MAXIMA_JUGADOR)
                 {
                     AvanzarPantalla(PANTALLA_ESPERA);
                     contadorSeleccion = 0;
@@ -345,6 +341,7 @@ namespace WpfCliente.GUI
                 Application.Current.Shutdown();
             }
         }
+
         private void CerrandoVentana(object sender, CancelEventArgs e)
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
@@ -409,7 +406,7 @@ namespace WpfCliente.GUI
                                                                             null);
                     await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
                 });
-                if (contadorSeleccion >= seleccionMaximaJugador)
+                if (contadorSeleccion >= SELECCION_MAXIMA_JUGADOR)
                 {
                     AvanzarPantalla(PANTALLA_ESPERA);
                     contadorSeleccion = 0;
@@ -443,7 +440,7 @@ namespace WpfCliente.GUI
                                                                             pista);
                     await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
                 });
-                if (contadorSeleccion >= seleccionMaximaNarrador)
+                if (contadorSeleccion >= SELECCION_MAXIMA_NARRADOR)
                 {
                     AvanzarPantalla(PANTALLA_ESPERA);
                     contadorSeleccion = 0;

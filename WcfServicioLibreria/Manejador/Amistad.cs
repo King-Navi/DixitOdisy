@@ -119,7 +119,9 @@ namespace WcfServicioLibreria.Manejador
                     {
                         Nombre = amigoDestinario.gamertag,
                         Estado = estadoJugador,
-                        Foto = new MemoryStream(amigoDestinario.fotoPerfil)
+                        Foto = new MemoryStream(amigoDestinario.fotoPerfil),
+                        UltimaConexion = amigoDestinario.ultimaConexion.ToString()
+                        
                     };
                     
                     contextoRemitente.ObtenerAmigoCallback(amigo);

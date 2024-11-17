@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DAOLibreria.DAO;
+using DAOLibreria.ModeloBD;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -40,21 +42,46 @@ namespace WcfServicioLibreria.Modelo
             SegundoLugar = null;
             TercerLugar = null;
         }
-    }
 
-    [DataContract]
-    public class JugadorEstadisticas
-    {
-        [DataMember]
-        public string Nombre { get; set; }
-
-        [DataMember]
-        public int Puntos { get; set; }
-        public JugadorEstadisticas(string nombre)
+        public void CalcularPodio()
         {
-            Nombre = nombre;
-            Puntos = 0;
+            var jugadoresOrdenados = Jugadores.OrderByDescending(j => j.Puntos).ToList();
+            PrimerLugar = jugadoresOrdenados.ElementAtOrDefault(0);
+            SegundoLugar = jugadoresOrdenados.ElementAtOrDefault(1);
+            TercerLugar = jugadoresOrdenados.ElementAtOrDefault(2);
         }
 
+        internal async Task GuardarPuntajeAsync(List<Tuple<String , int >> listaTuplaNombreIdEstadistica)
+        {
+            var accion = SelecionarAccion(Tematica);
+            var tareasSolicitudes = new List<Task>();
+            foreach (var tupla in listaTuplaNombreIdEstadistica)
+            {
+                if (tupla.Item1.Equals(PrimerLugar.Nombre, StringComparison.OrdinalIgnoreCase))
+                {
+                    tareasSolicitudes.Add(EstadisticasDAO.AgregarEstadiscaPartidaAsync(tupla.Item2, accion, 1));
+
+                }
+            }
+        }
+
+        private EstadisticasAcciones SelecionarAccion(TematicaPartida tematica)
+        {
+            switch (tematica)
+            {
+                case TematicaPartida.Mitologia:
+                    return EstadisticasAcciones.IncrementarPartidasMitologia;
+                case TematicaPartida.Mixta:
+                    return EstadisticasAcciones.IncrementarPartidaMixta;
+                case TematicaPartida.Espacio:
+                    return EstadisticasAcciones.IncrementarPartidaEspacio;
+                case TematicaPartida.Animales:
+                    return EstadisticasAcciones.IncrementarPartidaAnimales;
+                case TematicaPartida.Paises:
+                    return EstadisticasAcciones.IncrementarPartidaPaises;
+                default:
+                    return EstadisticasAcciones.IncrementarPartidaMixta;
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
@@ -21,10 +22,11 @@ namespace WpfCliente.GUI
     /// </summary>
     public partial class SalaEsperaWindow : Window, IActualizacionUI, IServicioSalaJugadorCallback
     {
-        public ObservableCollection<Usuario> jugadoresSala = new ObservableCollection<Usuario>();
+        public ObservableCollection<Usuario> JugadoresSala { get; set; } = new ObservableCollection<Usuario>();
         private bool soyAnfitrion = false;
         private bool visibleConfigurarPartida = false;
         private const int SEGUNDOS_PARA_UNIRSE = 5;
+        private const int NUMERO_RONDAS_PORDEFECTO = 3;
         private ConfiguracionPartida ConfiguracionPartida { get; set; }
 
         public SalaEsperaWindow(string idSala)
@@ -54,6 +56,7 @@ namespace WpfCliente.GUI
         {
             stackPanePartida.Visibility = Visibility.Hidden;
             gridConfiguracion.Visibility = Visibility.Hidden;
+            stakePaneListaExpulsion.Visibility = Visibility.Collapsed;
         }
 
         private void ConfiguracionPartidaPorDefecto()
@@ -61,7 +64,7 @@ namespace WpfCliente.GUI
             ConfiguracionPartida = new ConfiguracionPartida()
             {
                 Condicion = CondicionVictoriaPartida.PorCantidadRondas,
-                NumeroRondas = 3,
+                NumeroRondas = NUMERO_RONDAS_PORDEFECTO,
                 Tematica = TematicaPartida.Mixta
             };
         }
@@ -69,6 +72,7 @@ namespace WpfCliente.GUI
         private void VerDiposicionAnfitrion()
         {
             stackPanePartida.Visibility = Visibility.Visible;
+            stakePaneListaExpulsion.Visibility= Visibility.Visible;
         }
 
         private async void VerificarConexion()
@@ -90,8 +94,8 @@ namespace WpfCliente.GUI
             }
             if (!Validacion.ExisteSala(idSala))
             {
-                //No existe la sala ¿¿??
-                this.Close();
+                VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado(this);
+                NoHayConexion();
                 return;
             }
             var resultadoTask = Conexion.AbrirConexionSalaJugadorCallbackAsync(this);
@@ -108,16 +112,23 @@ namespace WpfCliente.GUI
 
         }
 
-        private void HabilitarBotones(bool v)
+        private void HabilitarBotones(bool estaHabilitado)
         {
-            //TODO
+            buttonConfigurarPartida.IsEnabled = estaHabilitado;
+            buttonEmpezarPartida.IsEnabled = estaHabilitado;
+            buttonGuardarCambios.IsEnabled = estaHabilitado;
+            buttonInvitarAmigos.IsEnabled = estaHabilitado;
+            chatUserControl.IsEnabled = estaHabilitado;
+            stakePaneListaExpulsion.IsEnabled = estaHabilitado;
+            stackPanePartida.IsEnabled = estaHabilitado;
+            gridConfiguracion.IsEnabled = estaHabilitado;
+
         }
 
         private void UnirseChat()
         {
             Conexion.AbrirConexionChatMotorCallbackAsync(chatUserControl);
             Conexion.ChatMotor.AgregarUsuarioChat(Singleton.Instance.IdChat, Singleton.Instance.NombreUsuario);
-            
         }
 
         private void GenerarSalaComoAnfitrion()
@@ -144,7 +155,6 @@ namespace WpfCliente.GUI
 
         private void CrearChat()
         {
-            //TODO: Agregar caso en el que no hay conexion
             try
             {
                 var manajadorServicio = new ServicioManejador<ServicioChatClient>();
@@ -155,6 +165,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
+                NoHayConexion();
                 ManejadorExcepciones.ManejarFatalException(excepcion, this);
             }
 
@@ -179,20 +190,17 @@ namespace WpfCliente.GUI
             buttonInvitarAmigos.Content = Idioma.buttonInvitaAmigos;
             buttonConfigurarPartida.Content = Idioma.buttonConfigurarPartida;
             buttonEmpezarPartida.Content = Idioma.buttonEmpezarPartida;
-        
             //groupBoxCondicionVicotoria.Header
             //grouoBoxTematica.Header
-
             //radioButtonAnimales
             //radioButtonMitologia
             //radioButtonMixta
             //radioButtonPaises
             //radioButtonFinCartas
             //radioButtonFinRondas
-
             //buttonConfigurarPartida
             //buttonEmpezarPartida
-
+            //labelExpulsarUsuario
             //buttonGuardarCambios
             //labelNumeroRondas
         }
@@ -201,8 +209,7 @@ namespace WpfCliente.GUI
         {
             if (!Validacion.ExistePartida(idPartida))
             {
-                //No existe la partida ¿¿??
-                MessageBox.Show("Partida no existe");
+                VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado(this);
                 NoHayConexion();
                 return;
             }
@@ -229,12 +236,21 @@ namespace WpfCliente.GUI
 
         public void ObtenerJugadorSalaCallback(Usuario jugardoreNuevoEnSala)
         {
+            if (!jugardoreNuevoEnSala.Nombre.Equals(Singleton.Instance.NombreUsuario , StringComparison.OrdinalIgnoreCase ))
+            {
+                JugadoresSala.Add(jugardoreNuevoEnSala);
+            }
             List<Amigo> amigos = new List<Amigo>();
             usuariosSalaUserControl.ObtenerUsuarioSala(jugardoreNuevoEnSala, amigos);
         }
 
         public void EliminarJugadorSalaCallback(Usuario jugardoreRetiradoDeSala)
         {
+            var jugadorARemover= JugadoresSala.FirstOrDefault(jugador  => jugador.Nombre == jugardoreRetiradoDeSala.Nombre);
+            if (jugadorARemover != null)
+            {
+                JugadoresSala.Remove(jugadorARemover);
+            }
             usuariosSalaUserControl.EliminarUsuarioSala(jugardoreRetiradoDeSala);
             if (jugardoreRetiradoDeSala.Nombre.Equals(Singleton.Instance.NombreUsuario, StringComparison.OrdinalIgnoreCase))
             {
@@ -244,8 +260,9 @@ namespace WpfCliente.GUI
 
         private void ClicButtonEmpezarPartida(object sender, RoutedEventArgs e)
         {
-            //TODO: Evaluar que tengar un configuracion partida valido
-            //TODO: Evaluar que seas el anfitrion para poder ver el boton
+            EvaluarCantidaRondas();
+            EvaluarCondicionVictoria();
+            EvaluarTematicaSelecionada();
             var manejador = new ServicioManejador<ServicioPartidaClient>();
             Singleton.Instance.IdPartida = manejador.EjecutarServicio(proxy =>
             {
@@ -394,9 +411,25 @@ namespace WpfCliente.GUI
                 }
                 else
                 {
-                    ConfiguracionPartida.NumeroRondas = 3;
+                    ConfiguracionPartida.NumeroRondas = NUMERO_RONDAS_PORDEFECTO;
                 }
             }
+        }
+
+        private void ClicButtonEliminarUsuario(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button boton && boton.DataContext is Usuario usuario)
+            {
+                String id = usuario.Nombre;
+                MessageBox.Show($"IdUsuario: {id}, Nombre: {usuario.Nombre}", "Información del Usuario");
+
+            }
+        }
+
+        public void DelegacionRolCallback(bool esAnfitrion)
+        {
+            soyAnfitrion = esAnfitrion;
+            VerDiposicionAnfitrion();
         }
     }
 }

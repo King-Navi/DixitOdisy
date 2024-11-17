@@ -227,10 +227,6 @@ namespace WcfServicioLibreria.Modelo
                     jugadoresCallback.TryGetValue(nombreSolicitante, out IPartidaCallback callback);
 
                     callback?.RecibirImagenCallback(resultado);
-                    if (callback == null) //BORRAME IF
-                    {
-                        Console.WriteLine($"Callback no encontrado para el jugador: {nombreSolicitante}");
-                    }
                     return true;
                 }
                 catch (Exception)

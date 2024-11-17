@@ -26,15 +26,10 @@
       <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Enumerador" minOccurs="0" name="Estado" type="q2:EstadoAmigo" />
       <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="Foto" nillable="true" type="q3:Stream" />
       <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UltimaConexion" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Amigo" nillable="true" type="tns:Amigo" />
-  <xs:complexType name="SolicitudAmistad">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Remitente" nillable="true" type="tns:Usuario" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="SolicitudAmistad" nillable="true" type="tns:SolicitudAmistad" />
   <xs:complexType name="UsuarioFalla">
     <xs:sequence>
       <xs:element minOccurs="0" name="EstaConectado" type="xs:boolean" />

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/System.Threading.Tasks" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System.Threading.Tasks" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="Task">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="Task" nillable="true" type="tns:Task" />
+  <xs:complexType name="TaskOfboolean">
+    <xs:annotation>
+      <xs:appinfo>
+        <GenericType Name="TaskOf{0}{#}" Namespace="http://schemas.datacontract.org/2004/07/System.Threading.Tasks" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+          <GenericParameter Name="boolean" Namespace="http://www.w3.org/2001/XMLSchema">
+          </GenericParameter>
+        </GenericType>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Task">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="TaskOfboolean" nillable="true" type="tns:TaskOfboolean" />
+</xs:schema>

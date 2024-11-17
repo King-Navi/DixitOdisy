@@ -1,5 +1,6 @@
 ﻿using System.Net.NetworkInformation;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Contratos
@@ -9,12 +10,15 @@ namespace WcfServicioLibreria.Contratos
     {
         [OperationContract]
         bool EditarUsuario(Usuario usuarioEditado);
-        void DesconectarUsuario(int idUsuario);
         [OperationContract]
         [FaultContract(typeof(UsuarioFalla))]
         bool YaIniciadoSesion(string nombreUsuario);
         [OperationContract]
         bool Ping();
+        [OperationContract]
+        [ServiceKnownType (typeof(Task))]
+        [ServiceKnownType (typeof(Task<bool>))]
+        Task<bool> PingBDAsync();
         [OperationContract]
         Usuario ValidarCredenciales(string gamertag, string contrasenia);
         [OperationContract]

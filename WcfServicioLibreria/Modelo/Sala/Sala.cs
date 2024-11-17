@@ -16,6 +16,7 @@ namespace WcfServicioLibreria.Modelo
     public class Sala : IObservador
     {
         #region Campos
+        private const int SALA_VACIA = 0;
         private string idCodigoSala;
         private string anfitrion;
         private const int CANTIDAD_MINIMA_JUGADORES = 3;
@@ -91,11 +92,15 @@ namespace WcfServicioLibreria.Modelo
             jugadoresSalaCallbacks.TryRemove(nombreJugador, out ISalaJugadorCallback _);
             eventosCommunication.TryRemove(nombreJugador, out DesconectorEventoManejador eventosJugador);
             jugadoresInformacion.TryRemove(nombreJugador, out _);
+            if (nombreJugador.Equals(anfitrion, StringComparison.OrdinalIgnoreCase))
+            {
+                DelegarRolAnfitrion();
+            }
             if (eventosJugador != null)
             {
                 eventosJugador.Desechar();
             }
-            if (ContarJugadores() == 0)
+            if (ContarJugadores() == SALA_VACIA)
             {
                 EliminarSala();
             }
@@ -125,15 +130,29 @@ namespace WcfServicioLibreria.Modelo
 
         }
 
-        bool DelegarRolAnfitrion(string nuevoAnfitrionNombre)
+        void DelegarRolAnfitrion()
         {
-            bool existeJugador = jugadoresSalaCallbacks.TryGetValue(nuevoAnfitrionNombre, out _);
-            if (!existeJugador)
+            if (jugadoresSalaCallbacks == null || !jugadoresSalaCallbacks.Any())
             {
-                return false;
+                return;
             }
-            anfitrion = nuevoAnfitrionNombre;
-            return anfitrion == nuevoAnfitrionNombre;
+            var jugadoresKeys = jugadoresSalaCallbacks.Keys.ToList();
+            Random random = new Random();
+            int indiceAleatorio = random.Next(jugadoresKeys.Count);
+            string jugadorClave = jugadoresKeys[indiceAleatorio];
+            anfitrion = jugadorClave;
+            jugadoresSalaCallbacks.TryGetValue(jugadorClave, out ISalaJugadorCallback callback);
+            try
+            {
+                callback?.DelegacionRolCallback(true);
+            }
+            catch (Exception)
+            {
+                if (this is IObservador observador)
+                {
+                    observador.DesconectarUsuario(jugadorClave);
+                }
+            }
         }
 
         void IObservador.DesconectarUsuario(string nombreJugador)

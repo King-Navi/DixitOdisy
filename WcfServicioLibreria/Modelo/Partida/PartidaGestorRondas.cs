@@ -37,8 +37,7 @@ namespace WcfServicioLibreria.Modelo
                 }
                 else
                 {
-                    //TODO: No empezar ya que no se cumplio el minimo en un tiempo determinado
-                    TerminarPartida();
+                    await TerminarPartidaAsync();
                 }
             }
             finally
@@ -69,7 +68,7 @@ namespace WcfServicioLibreria.Modelo
                 CambiarPantalla(PANTALLA_INICIO);
                 ++RondaActual;
             }
-            TerminarPartida();
+            await TerminarPartidaAsync();
         }
 
         private async Task EvaluarPuntosRondaAsync()  //FIXME
@@ -455,7 +454,6 @@ namespace WcfServicioLibreria.Modelo
                 lock (jugadoresCallback)
                 {
                     jugadoresCallback.TryGetValue(narrador, out IPartidaCallback callbackNarrador);
-                    //No evaluar si es nulll, ya que puede ser null y lo tendria que sacar
                     callbackNarrador.NotificarNarradorCallback(true);
                     NarradorActual = narrador;
                     Console.WriteLine("Se escogio a " + narrador + " como narrador");
@@ -469,7 +467,7 @@ namespace WcfServicioLibreria.Modelo
             {
                 semaphoreEscogerNarrador.Release();
             }
-            if (NarradorActual == null) // Si falló, intenta de nuevo fuera del bloqueo del semáforo
+            if (NarradorActual == null)
             {
                 await EscogerNarradorAsync();
             }
@@ -517,7 +515,7 @@ namespace WcfServicioLibreria.Modelo
                 JugadorImagenPuesta.AddOrUpdate(
                     nombreJugador,
                     new List<string> { claveImagen },
-                    (llave, listaExistente) =>            // agrega la imagen a la lista existente
+                    (llave, listaExistente) =>            
                     {
                         if (!listaExistente.Contains(claveImagen))
                         {
@@ -575,11 +573,11 @@ namespace WcfServicioLibreria.Modelo
 
         }
 
-        private void TerminarPartida()
+        private async Task TerminarPartidaAsync()
         //FIXME: Este metodo termina la partida independientemente de lo que este pasando
         {
             //Cacular los puntos de rondas menores a 3 no hacer nada
-            CalcularPuntos();
+            await CalcularPuntos();
 
             //Avisar a todos de la terminacion
             AvisarPartidaTerminada();
@@ -587,12 +585,31 @@ namespace WcfServicioLibreria.Modelo
             EliminarPartida();
         }
 
-        private void CalcularPuntos()
+        private async Task CalcularPuntos()
         {
-            //TODO: Calcular puntos solo si fueron mas de 3 rondas;
             if (RondaActual > RONDAS_MINIMA_PARA_PUNTOS)
             {
+                var listaNoInvitado = jugadoresInformacion.Values
+                    .Where(jugador => jugador.idUsuario > 0)
+                    .Select(jugador =>
+                    {
+                        try
+                        {
+                            int idEstadistica = DAOLibreria.DAO.EstadisticasDAO.ObtenerIdEstadisticaConIdUsuario(jugador.idUsuario);
+                            return idEstadistica != 0 ? new Tuple<string, int>(jugador.gamertag, idEstadistica) : null;
+                        }
+                        catch (Exception)
+                        {
+                            return null;
+                        }
+                    })
+                    .Where(tuple => tuple != null)
+                    .ToList();
 
+                if (listaNoInvitado.Any())
+                {
+                    await estadisticasPartida.GuardarPuntajeAsync(listaNoInvitado);
+                }
             }
         }
 

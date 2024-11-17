@@ -290,10 +290,8 @@ namespace WpfCliente.Utilidad
                 ServidorDescribelo.IServicioUsuario ping = new ServicioUsuarioClient();
                 resultado = await ping.PingAsync();
             }
-            catch (Exception excepcion)
+            catch (Exception)
             {
-                //TODO: Manejar excepcion
-                return resultado;
             }
             return resultado;
         }
@@ -314,9 +312,31 @@ namespace WpfCliente.Utilidad
                 ventana.Close();
                 return false;
             }
+            Task<bool> verificarConexionBD = HacerPingBD();
+
+            if (!await verificarConexionBD)
+            {
+                VentanasEmergentes.CrearVentanaEmergenteErrorBD(ventana);
+                ventana.Close();
+                return false;
+            }
 
             habilitarAcciones(true);
             return true;
+        }
+
+        private static async Task<bool> HacerPingBD()
+        {
+            bool resultado = false;
+            try
+            {
+                ServidorDescribelo.IServicioUsuario ping = new ServicioUsuarioClient();
+                resultado = await ping.PingBDAsync();
+            }
+            catch (Exception)
+            {
+            }
+            return resultado;
         }
     }
 }

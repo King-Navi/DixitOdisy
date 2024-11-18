@@ -188,5 +188,32 @@ namespace WpfCliente.Utilidad
             ventanaEmergente.ShowDialog();
         }
 
+        public static void CrearVentanaEmergenteSolicitudAceptada(Window window, string gamertag)
+        {
+            string tituloVentanaEmergente = Properties.Idioma.tituloSolicitudAmistad;
+            string descripcionVentanaEmergente = Properties.Idioma.mensajeSolicitudAmistadAceptada + gamertag;
+
+            VentanaEmergente ventanaEmergente = new VentanaEmergente(
+                tituloVentanaEmergente,
+                descripcionVentanaEmergente
+            );
+            ventanaEmergente.Owner = window;
+            ventanaEmergente.ShowDialog();
+            window.Close();
+        }
+
+        public static void CrearVentanaEmergenteSolicitudRechazada(Window window, string gamertag)
+        {
+            string tituloVentanaEmergente = Properties.Idioma.tituloSolicitudAmistad;
+            string descripcionVentanaEmergente = Properties.Idioma.mensajeSolicitudAmistadRechazada + gamertag;
+
+            VentanaEmergente ventanaEmergente = new VentanaEmergente(
+                tituloVentanaEmergente,
+                descripcionVentanaEmergente
+            );
+            ventanaEmergente.Owner = window;
+            ventanaEmergente.ShowDialog();
+            window.Close();
+        }
     }
 }

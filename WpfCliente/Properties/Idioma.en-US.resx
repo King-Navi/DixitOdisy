@@ -450,4 +450,13 @@
   <data name="mensajeSolicitudAmistadExitosa" xml:space="preserve">
     <value>Friend request sent successfully</value>
   </data>
+  <data name="labelNoHaySolicitudes" xml:space="preserve">
+    <value>There are no pending friend requests</value>
+  </data>
+  <data name="mensajeSolicitudAmistadAceptada" xml:space="preserve">
+    <value>You accepted the friend request from </value>
+  </data>
+  <data name="mensajeSolicitudAmistadRechazada" xml:space="preserve">
+    <value>You rejected the friend request from </value>
+  </data>
 </root>

@@ -26,7 +26,7 @@ namespace WpfCliente.GUI
     public partial class AmigosWindow : Window
     {
         private int contadorClics = 0;
-        private const int LIMITE_CLICS = 3;
+        private const int LIMITE_CLICS = 2;
         public AmigosWindow(MenuWindow menuWindow)
         {
             InitializeComponent();
@@ -45,8 +45,21 @@ namespace WpfCliente.GUI
                 return;
             }
             contadorClics++;
+            RecargarSolicitudes();
+        }
 
-            TryEnviarSolicitud();
+        private void RecargarSolicitudes()
+        {
+            var contenedorPadre = (Panel)listaSolicitudesAmistadUserControl.Parent;
+            if (contenedorPadre != null)
+            {
+                contenedorPadre.Children.Remove(listaSolicitudesAmistadUserControl);
+
+                ListaSolicitudesAmistadUserControl nuevaListaSolicitudes = new ListaSolicitudesAmistadUserControl();
+                contenedorPadre.Children.Add(nuevaListaSolicitudes);
+
+                listaSolicitudesAmistadUserControl = nuevaListaSolicitudes; 
+            }
         }
 
         private void NuevaSolicitud_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -68,6 +81,10 @@ namespace WpfCliente.GUI
                 catch (FaultException<SolicitudAmistadFalla> ex)
                 {
                     VentanasEmergentes.CrearVentanaEmergente(Idioma.mensajeErrorInesperado, ex.Detail.Mensaje, this);
+                }
+                catch (FaultException ex)
+                {
+                    VentanasEmergentes.CrearVentanaEmergente(Idioma.mensajeErrorInesperado, ex.Message, this);
                 }
                 catch (Exception ex)
                 {
@@ -123,9 +140,15 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void HabilitarBotones(bool v)
+        private void HabilitarBotones(bool esHabilitado)
         {
-            //TODO
+            imagenFlechaRecargar.IsEnabled = esHabilitado;
+            imagenFlechaAtras.IsEnabled = esHabilitado;
+            imagenAgregarAmigo.IsEnabled = esHabilitado;
+
+            imagenFlechaRecargar.Opacity = esHabilitado ? 1.0 : 0.5;  
+            imagenFlechaAtras.Opacity = esHabilitado ? 1.0 : 0.5;
+            imagenAgregarAmigo.Opacity = esHabilitado ? 1.0 : 0.5;
         }
     }
 }

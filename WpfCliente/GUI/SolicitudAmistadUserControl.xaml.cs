@@ -22,7 +22,8 @@ namespace WpfCliente.GUI
     /// </summary>
     public partial class SolicitudAmistadUserControl : UserControl
     {
-        SolicitudAmistad solicitudAmistadActual;
+        private SolicitudAmistad solicitudAmistadActual;
+
         public SolicitudAmistadUserControl()
         {
             InitializeComponent();
@@ -32,10 +33,11 @@ namespace WpfCliente.GUI
 
         private void SolicitudAmistadUserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (DataContext is SolicitudAmistad solicitud)
+            if (DataContext is SolicitudAmistad solicitud && solicitud != null)
             {
                 labelNombreAmigo.Content = solicitud.Remitente.Nombre;
                 imageAmigo.Source = Imagen.ConvertirStreamABitmapImagen(solicitud.Remitente.FotoUsuario);
+                solicitudAmistadActual = solicitud;
             }
         }
 
@@ -61,6 +63,13 @@ namespace WpfCliente.GUI
             try
             {
                 var resultado = Conexion.Amigos.AceptarSolicitudAmistad(solicitudAmistadActual.Remitente.IdUsuario, Singleton.Instance.IdUsuario);
+
+                if (resultado)
+                {
+                    VentanasEmergentes.CrearVentanaEmergenteSolicitudAceptada(window, solicitudAmistadActual.Remitente.Nombre);
+                    HabilitarBotones(false);
+                }
+
                 return resultado;
             }
             catch (Exception excepcion)
@@ -88,19 +97,30 @@ namespace WpfCliente.GUI
             try
             {
                 var resultado = Conexion.Amigos.RechazarSolicitudAmistad(solicitudAmistadActual.Remitente.IdUsuario, Singleton.Instance.IdUsuario);
+
+                if (resultado)
+                {
+                    VentanasEmergentes.CrearVentanaEmergenteSolicitudRechazada(window, solicitudAmistadActual.Remitente.Nombre);
+                    HabilitarBotones(false);
+                }
+
                 return resultado;
             }
             catch (Exception excepcion)
             {
-                //TODO manejar excepcion
+                ManejadorExcepciones.ManejarComponentErrorException(excepcion);
                 VentanasEmergentes.CrearVentanaEmergenteCargarDatosAmigosFalla(this);
                 return false;
             }
         }
 
-        private void HabilitarBotones(bool habilitar)
+        private void HabilitarBotones(bool esHabilitado)
         {
+            buttonAceptar.IsEnabled = esHabilitado; 
+            buttonRechazar.IsEnabled = esHabilitado;
 
+            buttonAceptar.Opacity = esHabilitado ? 1.0 : 0.5;
+            buttonRechazar.Opacity = esHabilitado ? 1.0 : 0.5;
         }
     }
 }

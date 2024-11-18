@@ -49,13 +49,10 @@ namespace DAOLibreria.DAO
             {
                 using (var context = new DescribeloEntities())
                 {
-                    int idMayor = Math.Max(idUsuario1, idUsuario2);
-                    int idMenor = Math.Min(idUsuario1, idUsuario2);
-
                     var nuevaSolicitud = new PeticionAmistad
                     {
-                        id_Remitente = idMayor,       
-                        id_Destinatario = idMenor,   
+                        id_Remitente = idUsuario1,       
+                        id_Destinatario = idUsuario2,   
                         fechaPeticion = DateTime.Now, 
                         estado = "Pendiente"
                     };

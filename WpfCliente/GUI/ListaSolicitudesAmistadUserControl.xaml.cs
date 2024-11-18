@@ -40,9 +40,12 @@ namespace WpfCliente.GUI
         {
             try
             {
-                Usuario usuarioActual = new Usuario();
-                usuarioActual.IdUsuario = Singleton.Instance.IdUsuario;
-                usuarioActual.Nombre = Singleton.Instance.NombreUsuario;
+                Usuario usuarioActual = new Usuario
+                {
+                    IdUsuario = Singleton.Instance.IdUsuario,
+                    Nombre = Singleton.Instance.NombreUsuario
+                };
+
                 Window window = Window.GetWindow(this);
 
                 bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, window);
@@ -56,16 +59,16 @@ namespace WpfCliente.GUI
                     var listaSolicitudes = Conexion.Amigos.ObtenerSolicitudesAmistad(usuarioActual);
                     if (listaSolicitudes == null || listaSolicitudes.Count() == 0)
                     {
-                        //MessageBox.Show("No se encontraron solicitudes de amistad.");
+                        labelNoHaySolicitudes.Visibility = Visibility.Visible;
                         return false;
                     }
+                    Solicitudes.Clear();
                     foreach (var solicitud in listaSolicitudes)
                     {
-                        Solicitudes.Add(new SolicitudAmistad
-                        {
-                            Remitente = solicitud
-                        });
+                        var nuevaSolicitud = new SolicitudAmistad { Remitente = solicitud };
+                        Solicitudes.Add(nuevaSolicitud);
                     }
+                    
                     return true;
                 }
                 catch (Exception e)
@@ -94,6 +97,7 @@ namespace WpfCliente.GUI
         public void ActualizarUI()
         {
             labelSolicitudes.Content = Idioma.labelSolicitudesAmistad;
+            labelNoHaySolicitudes.Content = Idioma.labelNoHaySolicitudes;
         }
     }
 }

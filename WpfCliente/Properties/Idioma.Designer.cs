@@ -493,6 +493,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No hay solicitudes de amistad pendientes.
+        /// </summary>
+        public static string labelNoHaySolicitudes {
+            get {
+                return ResourceManager.GetString("labelNoHaySolicitudes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Nueva contraseña.
         /// </summary>
         public static string labelNuevaContrasenia {
@@ -790,11 +799,29 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Aceptaste la solicitud de amistad de .
+        /// </summary>
+        public static string mensajeSolicitudAmistadAceptada {
+            get {
+                return ResourceManager.GetString("mensajeSolicitudAmistadAceptada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Se envió correctamente la solicitud de amistad.
         /// </summary>
         public static string mensajeSolicitudAmistadExitosa {
             get {
                 return ResourceManager.GetString("mensajeSolicitudAmistadExitosa", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Rechazaste la solicitud de amistad de .
+        /// </summary>
+        public static string mensajeSolicitudAmistadRechazada {
+            get {
+                return ResourceManager.GetString("mensajeSolicitudAmistadRechazada", resourceCulture);
             }
         }
         

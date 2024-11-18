@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -290,9 +292,16 @@ namespace WpfCliente.Utilidad
                 ServidorDescribelo.IServicioUsuario ping = new ServicioUsuarioClient();
                 resultado = await ping.PingAsync();
             }
+            catch (EndpointNotFoundException enndpointException)
+            {
+                Window window = null;
+                ManejadorExcepciones.ManejarFatalException(enndpointException, window);
+                return resultado;
+            }
             catch (Exception excepcion)
             {
-                //TODO: Manejar excepcion
+                Window window = null;
+                ManejadorExcepciones.ManejarFatalException(excepcion,window);
                 return resultado;
             }
             return resultado;
@@ -311,7 +320,6 @@ namespace WpfCliente.Utilidad
             if (!await verificarConexion)
             {
                 VentanasEmergentes.CrearVentanaEmergenteErrorServidor(ventana);
-                ventana.Close();
                 return false;
             }
 

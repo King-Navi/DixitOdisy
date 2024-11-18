@@ -28,7 +28,7 @@
         <DockPanel LastChildFill="True">
             <!--Header-->
             <StackPanel DockPanel.Dock="Top" x:Name="stackPaneEncabezado" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <Image Height="48" Width="54" Source="/recursos/notificaciones.png" VerticalAlignment="Top" RenderTransformOrigin="0.556,0.5" Cursor="Hand" MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
+                <Image Height="48" Width="54" Source="/Recursos/amigos.png" VerticalAlignment="Top" RenderTransformOrigin="0.556,0.5" Cursor="Hand" MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
                 <local:PerfilMenuDesplegableUserControl x:Name="perfilMenuDesplegable"/>
             </StackPanel>
             <!--Footer-->
@@ -55,16 +55,26 @@
         </DockPanel>
         <local:ListaAmigosUserControl x:Name="amigosUserControl" HorizontalAlignment="Left" ></local:ListaAmigosUserControl>
 
-        <!-- Notificación de invitación -->
-        <Border x:Name="borderNotificacionInvitacion" Background="Chartreuse"  CornerRadius="8" Padding="10" 
-            VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,20" Width="322" Height="100" 
+        <!-- Notificación Generalizada -->
+        <Border x:Name="borderNotificacionGeneral" Background="Azure" CornerRadius="8" Padding="10"
+            VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,20" Width="322" Height="150"
             Visibility="Collapsed" Opacity="0.9">
             <StackPanel>
-                <TextBlock x:Name="textNotificacionInvitacion" Text="Has recibido una invitación a una sala" 
-                       FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
-                <ProgressBar x:Name="progressTimer" Height="10" Foreground="Green" Margin="0,0,0,10"/>
-                <Button Content="Unirse" Click="UnirseSala_Click" HorizontalAlignment="Right" Width="80"/>
+                <ProgressBar x:Name="progressTimerGeneral" Height="10" Foreground="Green"/>
+                <TextBlock x:Name="textNotificacionGeneral" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" Foreground="Black"/>
+
+                <!-- Imagen de la persona que manda la invitación o solicitud -->
+                <Image x:Name="imagenPerfil" Width="40" Height="40" Margin="0,0,0,10" HorizontalAlignment="Center" Source="{Binding ImagenRuta}"/>
+
+                <!-- Contenedor para los botones: se activan dependiendo del tipo de notificación -->
+                <StackPanel x:Name="botonesPanel" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button x:Name="btnAceptar" Content="Aceptar" Click="Aceptar_Click" Width="80" Visibility="Collapsed"/>
+                    <Button x:Name="btnRechazar" Content="Rechazar" Click="Rechazar_Click" Width="80" Visibility="Collapsed"/>
+                    <Button x:Name="btnUnirse" Content="Unirse" Click="Unirse_Click" Width="80" Visibility="Collapsed"/>
+                </StackPanel>
             </StackPanel>
         </Border>
+
+
     </Grid>
 </Window>

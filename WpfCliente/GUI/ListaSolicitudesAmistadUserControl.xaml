@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:WpfCliente.GUI"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="450">
-    <Grid Width="220" Height="400" >
+    <Grid Width="320" Height="500" >
         <DockPanel LastChildFill="True">
             <!--Header-->
             <StackPanel d:Background="#E0DCC7" DockPanel.Dock="Top">
@@ -26,7 +26,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <!-- Aquí se muestra el SolicitudAmistadUserControl con el DataContext correspondiente -->
-                                <local:SolicitudAmistadUserControl DataContext="{Binding}" />
+                                <local:SolicitudAmistadUserControl DataContext="{Binding}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

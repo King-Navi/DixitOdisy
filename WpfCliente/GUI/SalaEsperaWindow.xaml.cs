@@ -90,7 +90,7 @@ namespace WpfCliente.GUI
             }
             if (!Validacion.ExisteSala(idSala))
             {
-                //No existe la sala ¿¿??
+                VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado(this);
                 this.Close();
                 return;
             }
@@ -328,10 +328,17 @@ namespace WpfCliente.GUI
             {
                 return false;
             }
-            //TODO rodear con un try catch
-            var resultado = Conexion.InvitacionPartida.EnviarInvitacion(Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala, gamertagReceptor); 
-            return resultado;
-            
+
+            try
+            {
+                var resultado = Conexion.InvitacionPartida.EnviarInvitacion(Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala, gamertagReceptor);
+                return resultado;
+            }
+            catch (Exception e)
+            {
+                //TODO MANEJAR EL ERROR
+                return false;
+            }
         }
 
         private void ClicButtonConfigurarPartida(object sender, RoutedEventArgs e)

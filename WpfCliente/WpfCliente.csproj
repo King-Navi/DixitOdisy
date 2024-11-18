@@ -131,9 +131,6 @@
     <Compile Include="GUI\ChatUserControl.xaml.cs">
       <DependentUpon>ChatUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\ConfigurarPartidaWindow.xaml.cs">
-      <DependentUpon>ConfigurarPartidaWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GUI\EditarPerfilWindow.xaml.cs">
       <DependentUpon>EditarPerfilWindow.xaml</DependentUpon>
     </Compile>
@@ -167,8 +164,8 @@
     <Compile Include="GUI\NarradorSeleccionCartaUserControl.xaml.cs">
       <DependentUpon>NarradorSeleccionCartaUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\NotificacionesWindow.xaml.cs">
-      <DependentUpon>NotificacionesWindow.xaml</DependentUpon>
+    <Compile Include="GUI\AmigosWindow.xaml.cs">
+      <DependentUpon>AmigosWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\PartidaWindow.xaml.cs">
       <DependentUpon>PartidaWindow.xaml</DependentUpon>
@@ -348,10 +345,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\ConfigurarPartidaWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="GUI\EditarPerfilWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -396,7 +389,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\NotificacionesWindow.xaml">
+    <Page Include="GUI\AmigosWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -513,7 +506,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Recursos\fondoSala.png" />
-    <Resource Include="Recursos\notificaciones.png" />
     <Resource Include="Recursos\fondoNotificaciones.png" />
     <None Include="Connected Services\ServidorDescribelo\configuration91.svcinfo" />
     <None Include="Connected Services\ServidorDescribelo\configuration.svcinfo" />
@@ -521,6 +513,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Resource Include="Recursos\agregarAmigo.png" />
+    <Resource Include="Recursos\flechaRecargar.png" />
+    <Resource Include="Recursos\amigos.png" />
     <Content Include="Sonidos\musicaFondo.mp3" />
   </ItemGroup>
   <ItemGroup>

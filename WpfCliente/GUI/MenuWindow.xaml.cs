@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
@@ -14,10 +15,11 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class MenuWindow : Window, IServicioUsuarioSesionCallback, IServicioInvitacionPartidaCallback, IActualizacionUI
+    public partial class MenuWindow : Window, IServicioUsuarioSesionCallback, IServicioAmistadCallback,  IServicioInvitacionPartidaCallback, IActualizacionUI
     {
         private DispatcherTimer timerNotificacion;
         private InvitacionPartida invitacionActual;
+        private SolicitudAmistad solicitudAmistadActual;
         public MenuWindow()
         {
             InitializeComponent();
@@ -193,6 +195,7 @@ namespace WpfCliente.GUI
                 Conexion.CerrarUsuarioSesion();
                 Conexion.CerrarConexionesSalaConChat();
                 Conexion.CerrarConexionInvitacionesPartida();
+                Conexion.CerrarAmigos();
             }
             catch (Exception excepcion)
             {
@@ -215,54 +218,141 @@ namespace WpfCliente.GUI
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            NotificacionesWindow notificaciones = new NotificacionesWindow(this);
-            notificaciones.Show();
+            AmigosWindow amigos = new AmigosWindow(this);
+            amigos.Show();
         }
 
         private void ConfigurarTimerNotificacion()
         {
             timerNotificacion = new DispatcherTimer();
-            timerNotificacion.Interval = TimeSpan.FromMilliseconds(50); // Actualización del progreso
+            timerNotificacion.Interval = TimeSpan.FromMilliseconds(50); 
             timerNotificacion.Tick += TimerNotificacion_Tick;
+        }
+
+        private void MostrarNotificacionGeneral(string mensaje, bool esSolicitudAmistad = false, string imagenPath = "")
+        {
+            textNotificacionGeneral.Text = mensaje;
+
+            if (!string.IsNullOrEmpty(imagenPath))
+            {
+                imagenPerfil.Source = new BitmapImage(new Uri(imagenPath));
+            }
+
+            if (esSolicitudAmistad)
+            {
+                btnAceptar.Visibility = Visibility.Visible;
+                btnRechazar.Visibility = Visibility.Visible;
+                btnUnirse.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                btnAceptar.Visibility = Visibility.Collapsed;
+                btnRechazar.Visibility = Visibility.Collapsed;
+                btnUnirse.Visibility = Visibility.Visible;
+            }
+
+            borderNotificacionGeneral.Visibility = Visibility.Visible;
+            progressTimerGeneral.Value = 0;
+            timerNotificacion.Start();
         }
 
         public void RecibirInvitacion(InvitacionPartida invitacion)
         {
             invitacionActual = invitacion;
-            MostrarNotificacion($"Invitación de {invitacion.GamertagEmisor} para unirse a la sala {invitacion.CodigoSala}");
+            MostrarNotificacionGeneral($"Invitación de {invitacion.GamertagEmisor} para unirse a la sala {invitacion.CodigoSala}",
+                esSolicitudAmistad: false);
         }
 
-        private void MostrarNotificacion(string mensaje)
+        public void ObtenerPeticionAmistadCallback(SolicitudAmistad solicitud)
         {
-            textNotificacionInvitacion.Text = mensaje;
-            borderNotificacionInvitacion.Visibility = Visibility.Visible;
-            progressTimer.Value = 0; 
-            timerNotificacion.Start();
+            solicitudAmistadActual = solicitud;
+            MostrarNotificacionGeneral($"Solicitud de {solicitud.Remitente.Nombre}",
+                esSolicitudAmistad: true);
         }
 
         private void OcultarNotificacion()
         {
-            borderNotificacionInvitacion.Visibility = Visibility.Collapsed;
+            borderNotificacionGeneral.Visibility = Visibility.Collapsed;
             timerNotificacion.Stop();
         }
 
         private void TimerNotificacion_Tick(object sender, EventArgs e)
         {
-            progressTimer.Value += 2; 
+            progressTimerGeneral.Value += 2;
 
-            if (progressTimer.Value >= 100)
+            if (progressTimerGeneral.Value >= 100)
             {
                 OcultarNotificacion();
             }
         }
-
-        private void UnirseSala_Click(object sender, RoutedEventArgs e)
+        private void Unirse_Click(object sender, RoutedEventArgs e)
         {
             bool esInvitacion = true;
             UnirseASala(esInvitacion, invitacionActual.CodigoSala);
             OcultarNotificacion();
         }
 
+        private void Aceptar_Click(object sender, RoutedEventArgs e)
+        {
+            _ = AceptarSolicitud(solicitudAmistadActual);
+        }
 
+        private async Task<bool> AceptarSolicitud(SolicitudAmistad solicitud)
+        {
+            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+            if (!conexionExitosa)
+            {
+                return false;
+            }
+
+            try
+            {
+                var resultado = Conexion.Amigos.AceptarSolicitudAmistad(solicitudAmistadActual.Remitente.IdUsuario, Singleton.Instance.IdUsuario);
+                return resultado;
+            }
+            catch (Exception excepcion)
+            {
+                //TODO manejar excepcion
+                VentanasEmergentes.CrearVentanaEmergente(excepcion.InnerException.ToString(), excepcion.StackTrace, this);
+                return false;
+            }
+        }
+
+        private void Rechazar_Click(object sender, RoutedEventArgs e)
+        {
+            _ = _ = RechazarSolicitud(solicitudAmistadActual);
+        }
+
+        private async Task<bool> RechazarSolicitud(SolicitudAmistad solicitud)
+        {
+            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+            if (!conexionExitosa)
+            {
+                return false;
+            }
+
+            try
+            {
+                var resultado = Conexion.Amigos.RechazarSolicitudAmistad(solicitudAmistadActual.Remitente.IdUsuario, Singleton.Instance.IdUsuario);
+                return resultado;
+            }
+            catch (Exception excepcion)
+            {
+                //TODO manejar excepcion
+                VentanasEmergentes.CrearVentanaEmergente(excepcion.InnerException.ToString(), excepcion.StackTrace, this);
+                return false;
+            }
+        }
+
+        //TODO duda sobre interfases
+        public void CambiarEstadoAmigo(Amigo amigo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ObtenerAmigoCallback(Amigo amigo)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

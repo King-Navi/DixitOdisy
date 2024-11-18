@@ -194,6 +194,32 @@ namespace DAOLibreria.DAO
            
             return usuario;
         }
+
+        /// <summary>
+        /// Obtiene el ID de un usuario por su gamertag.
+        /// </summary>
+        /// <param name="gamertag">El gamertag del usuario.</param>
+        /// <returns>El ID del usuario, o 0 si no se encuentra.</returns>
+        public static int ObtenerIdPorNombre(string gamertag)
+        {
+            try
+            {
+                using (var context = new DescribeloEntities())
+                {
+                    var usuario = context.Usuario
+                                         .SingleOrDefault(usuarioFila => usuarioFila.gamertag == gamertag);
+                    if (usuario != null)
+                    {
+                        return usuario.idUsuario; 
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener el ID por nombre: {ex.Message}");
+            }
+            return 0;
+        }
         /// <summary>
         /// 
         /// </summary>

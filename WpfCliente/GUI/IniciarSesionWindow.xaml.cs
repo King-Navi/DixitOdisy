@@ -64,9 +64,11 @@ namespace WpfCliente.GUI
 
         private async void buttonIniciarSesion_Click(object sender, RoutedEventArgs e)
         {
+            bool esValido = true;
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
             {
+                HabilitarBotones(esValido);
                 return;
             }
             if (ValidarCampos())

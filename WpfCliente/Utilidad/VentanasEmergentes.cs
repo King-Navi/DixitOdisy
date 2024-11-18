@@ -175,5 +175,18 @@ namespace WpfCliente.Utilidad
             ventanaEmergente.ShowDialog();
         }
 
+        public static void CrearVentanaEmergenteSolicitudEnviada(Window window)
+        {
+            string tituloVentanaEmergente = Properties.Idioma.tituloSolicitudAmistad;
+            string descripcionVentanaEmergente = Properties.Idioma.mensajeSolicitudAmistadExitosa;
+
+            VentanaEmergente ventanaEmergente = new VentanaEmergente(
+                tituloVentanaEmergente,
+                descripcionVentanaEmergente
+            );
+            ventanaEmergente.Owner = window;
+            ventanaEmergente.ShowDialog();
+        }
+
     }
 }

@@ -441,4 +441,13 @@
   <data name="buttonListo" xml:space="preserve">
     <value>Ready!</value>
   </data>
+  <data name="labelSolicitudesAmistad" xml:space="preserve">
+    <value>Friend Request List</value>
+  </data>
+  <data name="tituloSolicitudAmistad" xml:space="preserve">
+    <value>Friendship request</value>
+  </data>
+  <data name="mensajeSolicitudAmistadExitosa" xml:space="preserve">
+    <value>Friend request sent successfully</value>
+  </data>
 </root>

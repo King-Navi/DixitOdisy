@@ -547,6 +547,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Lista de solicitudes de amistad.
+        /// </summary>
+        public static string labelSolicitudesAmistad {
+            get {
+                return ResourceManager.GetString("labelSolicitudesAmistad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Temática.
         /// </summary>
         public static string labelTematica {
@@ -777,6 +786,15 @@ namespace WpfCliente.Properties {
         public static string mensajeServidorSobrecargado {
             get {
                 return ResourceManager.GetString("mensajeServidorSobrecargado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Se envió correctamente la solicitud de amistad.
+        /// </summary>
+        public static string mensajeSolicitudAmistadExitosa {
+            get {
+                return ResourceManager.GetString("mensajeSolicitudAmistadExitosa", resourceCulture);
             }
         }
         
@@ -1029,6 +1047,15 @@ namespace WpfCliente.Properties {
         public static string tituloSalaEspera {
             get {
                 return ResourceManager.GetString("tituloSalaEspera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Solicitud de amistad.
+        /// </summary>
+        public static string tituloSolicitudAmistad {
+            get {
+                return ResourceManager.GetString("tituloSolicitudAmistad", resourceCulture);
             }
         }
     }

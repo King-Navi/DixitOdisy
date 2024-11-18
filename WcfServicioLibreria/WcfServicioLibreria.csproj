@@ -64,7 +64,6 @@
     <Compile Include="Contratos\IServicioChat.cs" />
     <Compile Include="Contratos\IServicioChatMotor.cs" />
     <Compile Include="Contratos\IServicioPartidaSesion.cs" />
-    <Compile Include="Contratos\IServicioPeticionAmistad.cs" />
     <Compile Include="Contratos\IServicioUsuario.cs" />
     <Compile Include="Contratos\IServicioUsuarioSesion.cs" />
     <Compile Include="Contratos\IServicioRegistro.cs" />
@@ -90,7 +89,7 @@
     <Compile Include="Manejador\Chat.cs" />
     <Compile Include="Manejador\Usuario.cs" />
     <Compile Include="Modelo\Amistad\Amigo.cs" />
-    <Compile Include="Modelo\Excepciones\AmistadFalla.cs" />
+    <Compile Include="Modelo\Excepciones\SolicitudAmistadFalla.cs" />
     <Compile Include="Modelo\Evento\DesconectorEventoManejador.cs" />
     <Compile Include="Modelo\Chat\MultiChat.cs" />
     <Compile Include="Modelo\Chat\Chat.cs" />
@@ -124,7 +123,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ChatGPTLibreria\ChatGPTLibreria\ChatGPTLibreria.csproj">
+    <ProjectReference Include="..\..\ChatGPTLibreria1\ChatGPTLibreria\ChatGPTLibreria.csproj">
       <Project>{1db22d68-dec2-4b15-81bb-19794b7e8000}</Project>
       <Name>ChatGPTLibreria</Name>
     </ProjectReference>

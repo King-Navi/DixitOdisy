@@ -15,6 +15,6 @@
                 <MenuItem x:Name="menuItemCerrarSesion" Header="Cerrar sesión" Click="CerrarSesion" />
             </MenuItem>
         </Menu>
-        <Image Height="50" VerticalAlignment="Top" Source="pack://application:,,,/WpfCliente;component/Recursos/profile.jpg" HorizontalAlignment="Right"/>
+        <Image x:Name="imagenPerfil" Height="50" VerticalAlignment="Top" Source="pack://application:,,,/WpfCliente;component/Recursos/profile.jpg" HorizontalAlignment="Right"/>
     </Grid>
 </UserControl>

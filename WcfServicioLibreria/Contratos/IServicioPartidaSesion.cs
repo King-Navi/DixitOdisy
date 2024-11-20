@@ -20,7 +20,7 @@ namespace WcfServicioLibreria.Contratos
         [OperationContract]
         void TratarAdivinar(string nombreJugador, string idPartida, string claveImagen);
         [OperationContract(IsOneWay = true)]
-        void ExpulsarJugador(string nombreJugador, string idPartida);
+        void ExpulsarJugadorPartida(string nombreJugador, string idPartida);
         [OperationContract]
         Task<bool> SolicitarImagenCartaAsync(string nombreJugador, string idPartida);
         [OperationContract(IsOneWay = true)]

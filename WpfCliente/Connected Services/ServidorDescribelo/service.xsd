@@ -225,7 +225,7 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ExpulsarJugador">
+  <xs:element name="ExpulsarJugadorPartida">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="nombreJugador" nillable="true" type="xs:string" />
@@ -410,6 +410,15 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ExpulsarJugadorSala">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="anfitrion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="jugadorAExpulsar" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="idSala" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="ObtenerJugadorSalaCallback">
     <xs:complexType>
       <xs:sequence>
@@ -576,6 +585,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="invitacion" nillable="true" type="q22:InvitacionPartida" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerEstadisitca">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idUsuario" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerEstadisitcaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="ObtenerEstadisitcaResult" nillable="true" type="q23:Estadistica" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

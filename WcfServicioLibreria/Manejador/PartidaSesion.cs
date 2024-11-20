@@ -93,7 +93,7 @@ namespace WcfServicioLibreria.Manejador
             };
         }
 
-        public void ExpulsarJugador(string nombreJugador, string idPartida)
+        public void ExpulsarJugadorPartida(string nombreJugador, string idPartida)
         {
             throw new NotImplementedException();
         }

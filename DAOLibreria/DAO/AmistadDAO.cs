@@ -38,9 +38,10 @@ namespace DAOLibreria.DAO
             }
             return resultado;
         }
+
         public static bool SonAmigos(int idUsuario1, int idUsuario2)
         {
-            //TODO: Se necessita manejar el error
+            //TODO: Se necessita manejar el error de no BD
             using (var context = new DescribeloEntities())
             {
                 return context.Amigo.Any(a =>

@@ -12,6 +12,7 @@ namespace WcfServicioLibreria.Modelo
 {
     internal partial class Partida
     {
+
         #region Ronda
         public async Task EmpezarPartida()
         {
@@ -50,6 +51,7 @@ namespace WcfServicioLibreria.Modelo
         {
             try
             {
+                estadisticasPartida.AgregarDesdeOtraLista(ObtenerNombresJugadores());
                 await EjecutarRondasAsync();
             }
             catch (Exception ex)
@@ -74,6 +76,7 @@ namespace WcfServicioLibreria.Modelo
         private async Task EvaluarPuntosRondaAsync()  //FIXME
         {
             CalculoPuntosEnSituaciones();
+            estadisticasPartida.CalcularPodio();
             try
             {
                 foreach (var nombre in ObtenerNombresJugadores().ToList())
@@ -262,7 +265,6 @@ namespace WcfServicioLibreria.Modelo
                     }
                 }
             }
-
             foreach (var nombre in ObtenerNombresJugadores().ToList())
             {
                 jugadoresCallback.TryGetValue(nombre.ToString(), out IPartidaCallback callback);
@@ -322,7 +324,7 @@ namespace WcfServicioLibreria.Modelo
         {
             foreach (var nombre in ObtenerNombresJugadores().ToList())
             {
-                if (nombreExcluir != nombre )
+                if (nombreExcluir.Equals(nombre ,StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
@@ -434,8 +436,12 @@ namespace WcfServicioLibreria.Modelo
             }
             lock (JugadorImagenElegida)
             {
-                JugadorImagenElegida = new ConcurrentDictionary<string, List<string>>();
+                JugadorImagenElegida.Clear();
 
+            }
+            lock (JugadorImagenPuesta)
+            {
+                JugadorImagenPuesta.Clear();
             }
             JugadorImagenPuesta = new ConcurrentDictionary<string, List<string>>();
         }
@@ -590,7 +596,7 @@ namespace WcfServicioLibreria.Modelo
             if (RondaActual > RONDAS_MINIMA_PARA_PUNTOS)
             {
                 var listaNoInvitado = jugadoresInformacion.Values
-                    .Where(jugador => jugador.idUsuario > 0)
+                    .Where(jugador => jugador.idUsuario > ID_INVALIDO)
                     .Select(jugador =>
                     {
                         try

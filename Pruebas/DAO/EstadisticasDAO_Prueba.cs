@@ -1,4 +1,5 @@
-﻿using DAOLibreria.DAO;
+﻿using DAOLibreria;
+using DAOLibreria.DAO;
 using DAOLibreria.Excepciones;
 using DAOLibreria.ModeloBD;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -6,12 +7,14 @@ using Moq;
 using Pruebas.DAO.Utilidades;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Pruebas.DAO
 {
+
     [TestClass]
     public class EstadisticasDAO_Prueba : ConfiguracionPruebaBD
     {
@@ -123,35 +126,31 @@ namespace Pruebas.DAO
         }
         #endregion AgregarEstadisticaPartida
 
-
-        public static int ObtenerIdEstadisticaConIdUsuario(int idUsuario)
+        # region ObtenerIdEstadisticaConIdUsuario
+        [TestMethod]
+        public void ObtenerIdEstadisticaConIdUsuario_UsuarioExistente_DeberiaRetornarIdUsuario()
         {
-            try
-            {
-                using (var context = new DescribeloEntities())
-                {
-                    var usuario = context.Estadisticas.SingleOrDefault(fila => fila.idUsuario == idUsuario);
+            // Arrange
+            int idUsuario = 1; // Precondición: este ID debe existir en la base de datos y estar relacionado con una estadística.
 
-                    if (usuario == null)
-                    {
-                        throw new ArgumentException();
-                    }
+            // Act
+            int resultado = EstadisticasDAO.ObtenerIdEstadisticaConIdUsuario(idUsuario);
 
-                    return usuario.idUsuario;
-                }
-            }
-            catch (Exception)
-            {
-            }
-            return -1;
+            // Assert
+            Assert.IsTrue(resultado > 0, "El método debería devolver el ID del usuario existente.");
         }
-        #region ObtenerIdEstadisticaConIdUsuario
-        
+        [TestMethod]
+        public void ObtenerIdEstadisticaConIdUsuario_UsuarioInexistente_DeberiaRetornarMenosUno()
+        {
+            // Arrange
+            int idUsuarioInexistente = -10; // Precondición: este ID no debe existir en la base de datos.
+            //Act 
+            int resultado = DAOLibreria.DAO.EstadisticasDAO.ObtenerIdEstadisticaConIdUsuario(idUsuarioInexistente);
+            //  Assert
+            Assert.AreEqual(resultado, -1, "El método debería devolver -1 para un usuario inexistente.");
+        }
+
 
         #endregion ObtenerIdEstadisticaConIdUsuario
-        #region
-        #endregion
-        #region
-        #endregion
     }
 }

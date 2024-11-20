@@ -92,4 +92,16 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="InvitacionPartida" nillable="true" type="tns:InvitacionPartida" />
+  <xs:complexType name="Estadistica">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PartidasAnimalesJugadas" type="xs:int" />
+      <xs:element minOccurs="0" name="PartidasEspacioJugadas" type="xs:int" />
+      <xs:element minOccurs="0" name="PartidasGanadas" type="xs:int" />
+      <xs:element minOccurs="0" name="PartidasJugadas" type="xs:int" />
+      <xs:element minOccurs="0" name="PartidasMitologiaJugadas" type="xs:int" />
+      <xs:element minOccurs="0" name="PartidasMixtaJugadas" type="xs:int" />
+      <xs:element minOccurs="0" name="PartidasPaisesJugadas" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Estadistica" nillable="true" type="tns:Estadistica" />
 </xs:schema>

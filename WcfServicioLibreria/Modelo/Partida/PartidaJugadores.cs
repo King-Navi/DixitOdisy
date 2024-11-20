@@ -43,7 +43,7 @@ namespace WcfServicioLibreria.Modelo
         #endregion PantallasCliente
         private const int CANTIDAD_MINIMA_JUGADORES = 0; // 2
         private const int TIEMPO_ESPERA_UNIRSE_JUGADORES = 10;// 20
-        private const int TIEMPO_ESPERA_NARRADOR = 20; // 40
+        private const int TIEMPO_ESPERA_NARRADOR = 40; // 40
         private const int TIEMPO_ESPERA_SELECCION = 10; //60
         private const int TIEMPO_ESPERA_PARA_ADIVINAR = 20; //60
         private const int TIEMPO_ESPERA = 5; //5
@@ -58,6 +58,7 @@ namespace WcfServicioLibreria.Modelo
         private const int PUNTOS_PENALIZACION_NARRADOR = 2; //2
         private const int PUNTOS_MAXIMOS_RECIBIDOS_CONFUNDIR = 3; //3
         private const int TIEMPO_MOSTRAR_ESTADISTICAS = 10; //10
+        private const int ID_INVALIDO = 0;
         #endregion Constantes
         #region Atributos
 
@@ -95,8 +96,13 @@ namespace WcfServicioLibreria.Modelo
         public bool SeLlamoEmpezarPartida { get; private set; } = false;
         public bool SeTerminoEsperaUnirse { get; private set; } = false;
         public bool SelecionoCartaNarrador { get; private set; } = false;
-
+        /// <summary>
+        /// Imagenes ya ocupadas
+        /// </summary>
         private ConcurrentBag<string> ImagenesUsadas { get; set; }
+        /// <summary>
+        /// Jugadores que aun no han confirmado su selecion
+        /// </summary>
         public ConcurrentBag<string> JugadoresPendientes { get; private set; }
         /// <summary>
         /// Diccionario para la piscina de cartas

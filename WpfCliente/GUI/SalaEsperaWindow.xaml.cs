@@ -25,7 +25,7 @@ namespace WpfCliente.GUI
         public ObservableCollection<Usuario> JugadoresSala { get; set; } = new ObservableCollection<Usuario>();
         private bool soyAnfitrion = false;
         private bool visibleConfigurarPartida = false;
-        private const int SEGUNDOS_PARA_UNIRSE = 5;
+        private const int SEGUNDOS_PARA_UNIRSE = 6;
         private const int NUMERO_RONDAS_PORDEFECTO = 3;
         private ConfiguracionPartida ConfiguracionPartida { get; set; }
 
@@ -171,6 +171,24 @@ namespace WpfCliente.GUI
 
         }
 
+        private bool CrearChat(string idPartidaParaChat)
+        {
+            try
+            {
+                var manajadorServicio = new ServicioManejador<ServicioChatClient>();
+                return manajadorServicio.EjecutarServicio(proxy =>
+                {
+                    return proxy.CrearChat(idPartidaParaChat);
+                });
+            }
+            catch (Exception excepcion)
+            {
+                NoHayConexion();
+                ManejadorExcepciones.ManejarFatalException(excepcion, this);
+            }
+            return false;
+        }
+
         private void NoHayConexion()
         {
             this.Close();
@@ -273,6 +291,7 @@ namespace WpfCliente.GUI
             {
                 try
                 {
+                    CrearChat(Singleton.Instance.IdPartida);
                     Conexion.SalaJugador.ComenzarPartidaAnfrition(Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala, Singleton.Instance.IdPartida);
                     Task.Delay(TimeSpan.FromSeconds(SEGUNDOS_PARA_UNIRSE));
                     PartidaWindow partida = new PartidaWindow(Singleton.Instance.IdPartida);
@@ -340,13 +359,20 @@ namespace WpfCliente.GUI
 
         private async Task<bool> EnviarInvitacion(string gamertagReceptor)
         {
+            bool resultado = false;
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
             {
                 return false;
             }
-            //TODO rodear con un try catch
-            var resultado = Conexion.InvitacionPartida.EnviarInvitacion(Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala, gamertagReceptor); 
+            try
+            {
+                resultado = Conexion.InvitacionPartida.EnviarInvitacion(Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala, gamertagReceptor);
+            }
+            catch (Exception)
+            {
+                VentanasEmergentes.CrearVentanaEmergenteInvitacionNoEnviada(this);
+            }
             return resultado;
             
         }
@@ -422,7 +448,16 @@ namespace WpfCliente.GUI
             {
                 String id = usuario.Nombre;
                 MessageBox.Show($"IdUsuario: {id}, Nombre: {usuario.Nombre}", "Información del Usuario");
-
+                try
+                {
+                    Conexion.SalaJugador.ExpulsarJugadorSala(
+                        Singleton.Instance.NombreUsuario, 
+                        usuario.Nombre, 
+                        Singleton.Instance.IdSala);
+                }
+                catch (Exception) 
+                {
+                }
             }
         }
 

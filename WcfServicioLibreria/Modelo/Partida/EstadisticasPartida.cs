@@ -2,6 +2,7 @@
 using DAOLibreria.ModeloBD;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -15,6 +16,8 @@ namespace WcfServicioLibreria.Modelo
     [KnownType(typeof(List<JugadorEstadisticas>))]
     public class EstadisticasPartida
     {
+        private const int VICTORIA = 1;
+        private const int DERROTA = 0;
         [DataMember]
         public TematicaPartida Tematica { get; private set; }
         
@@ -42,13 +45,20 @@ namespace WcfServicioLibreria.Modelo
             SegundoLugar = null;
             TercerLugar = null;
         }
-
         public void CalcularPodio()
         {
-            var jugadoresOrdenados = Jugadores.OrderByDescending(j => j.Puntos).ToList();
-            PrimerLugar = jugadoresOrdenados.ElementAtOrDefault(0);
-            SegundoLugar = jugadoresOrdenados.ElementAtOrDefault(1);
-            TercerLugar = jugadoresOrdenados.ElementAtOrDefault(2);
+            // Ordenar los jugadores por puntos de forma descendente
+            var jugadoresOrdenados = Jugadores.OrderByDescending(jugador => jugador.Puntos).ToList();
+
+            // Asignar primer lugar si hay al menos un jugador
+            PrimerLugar = jugadoresOrdenados.FirstOrDefault();
+
+            // Encontrar y asignar el segundo lugar (distinto del primer lugar en caso de empate)
+            SegundoLugar = jugadoresOrdenados.Skip(1).FirstOrDefault(jugador => jugador.Puntos != PrimerLugar?.Puntos);
+
+            // Encontrar y asignar el tercer lugar (distinto del primer y segundo lugar en caso de empate)
+            TercerLugar = jugadoresOrdenados.Skip(2).FirstOrDefault(jugador =>
+                jugador.Puntos != PrimerLugar?.Puntos && jugador.Puntos != SegundoLugar?.Puntos);
         }
 
         internal async Task GuardarPuntajeAsync(List<Tuple<String , int >> listaTuplaNombreIdEstadistica)
@@ -59,10 +69,16 @@ namespace WcfServicioLibreria.Modelo
             {
                 if (tupla.Item1.Equals(PrimerLugar.Nombre, StringComparison.OrdinalIgnoreCase))
                 {
-                    tareasSolicitudes.Add(EstadisticasDAO.AgregarEstadiscaPartidaAsync(tupla.Item2, accion, 1));
+                    tareasSolicitudes.Add(EstadisticasDAO.AgregarEstadiscaPartidaAsync(tupla.Item2, accion, VICTORIA));
 
                 }
+                else
+                {
+                    tareasSolicitudes.Add(EstadisticasDAO.AgregarEstadiscaPartidaAsync(tupla.Item2, accion, DERROTA));
+                }
             }
+            await Task.WhenAll(tareasSolicitudes);
+
         }
 
         private EstadisticasAcciones SelecionarAccion(TematicaPartida tematica)
@@ -81,6 +97,23 @@ namespace WcfServicioLibreria.Modelo
                     return EstadisticasAcciones.IncrementarPartidaPaises;
                 default:
                     return EstadisticasAcciones.IncrementarPartidaMixta;
+            }
+        }
+
+        public void AgregarDesdeOtraLista(IReadOnlyCollection<string> usuariosEnPartida)
+        {
+            if (usuariosEnPartida == null || usuariosEnPartida.Count == 0)
+            {
+                throw new ArgumentException("La lista de usuarios en partida está vacía o es nula.");
+            }
+
+            foreach (var usuario in usuariosEnPartida)
+            {
+                var jugadorExistente = Jugadores.FirstOrDefault(j => j.Nombre == usuario);
+                if (jugadorExistente == null)
+                {
+                    Jugadores.Add(new JugadorEstadisticas(usuario));
+                }
             }
         }
     }

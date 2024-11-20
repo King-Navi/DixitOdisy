@@ -441,4 +441,7 @@
   <data name="buttonListo" xml:space="preserve">
     <value>Listo!</value>
   </data>
+  <data name="labelEsperandoPista" xml:space="preserve">
+    <value>Esperando pista...</value>
+  </data>
 </root>

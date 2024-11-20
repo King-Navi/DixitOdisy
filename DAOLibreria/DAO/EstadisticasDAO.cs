@@ -19,25 +19,34 @@ namespace DAOLibreria.DAO
                 throw new ActividadSospechosaExcepcion() { id = idEstadisticas };
             }
             bool resultado = false;
-            using (var context = new DescribeloEntities())
+            try
             {
-
-                var estadistica = context.Estadisticas.Single(fila => fila.idEstadisticas == idEstadisticas);
-                if (estadistica == null)
+                using (var context = new DescribeloEntities())
                 {
-                    return false;
+
+                    var estadistica = context.Estadisticas.Single(fila => fila.idEstadisticas == idEstadisticas);
+                    if (estadistica == null)
+                    {
+                        return false;
+                    }
+                    if (estadistica != null)
+                    {
+                        context.Entry(estadistica).Reload();
+                    }
+                    estadistica.partidasJugadas = (estadistica.partidasJugadas ?? 0) + 1;
+                    estadistica.partidasGanadas = (estadistica.partidasGanadas ?? 0) + victoria;
+
+                    var accionARealizar = ObtenerAccion(accion);
+                    accionARealizar(estadistica);
+                    await context.SaveChangesAsync();
+
+                    Console.WriteLine("Estadísticas agregadas exitosamente.");
+                    resultado = true;
+
                 }
-                context.Entry(estadistica).Reload();
-                estadistica.partidasJugadas = (estadistica.partidasJugadas ?? 0) + 1;
-                estadistica.partidasGanadas = (estadistica.partidasGanadas ?? 0) + victoria;
-
-                var accionARealizar = ObtenerAccion(accion);
-                accionARealizar(estadistica);
-                await context.SaveChangesAsync();
-
-                Console.WriteLine("Estadísticas agregadas exitosamente.");
-                resultado = true;
-
+            }
+            catch (Exception)
+            {
             }
             return resultado;
         }
@@ -64,7 +73,6 @@ namespace DAOLibreria.DAO
             return null;
         }
 
-
         private static Action<Estadisticas> ObtenerAccion(EstadisticasAcciones accion)
         {
             switch (accion)
@@ -83,6 +91,7 @@ namespace DAOLibreria.DAO
                     throw new ArgumentOutOfRangeException(nameof(accion), "Acción no permitida.");
             }
         }
+
         public static int ObtenerIdEstadisticaConIdUsuario(int idUsuario)
         {
             try

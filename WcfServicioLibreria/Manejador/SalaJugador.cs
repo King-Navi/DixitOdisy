@@ -50,6 +50,27 @@ namespace WcfServicioLibreria.Manejador
             {
             }
         }
-        
+
+        public void ExpulsarJugadorSala(string anfitrion, string jugadorAExpulsar, string idSala)
+        {
+            if (!ValidarSala(idSala))
+            {
+                return;
+            }
+            try
+            {
+                salasDiccionario.TryGetValue(idSala, out Modelo.Sala sala);
+                lock (sala)
+                {
+                    if (sala.Anfitrion.Equals(anfitrion, StringComparison.OrdinalIgnoreCase))
+                    {
+                        sala.DesconectarUsuario(jugadorAExpulsar);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 }

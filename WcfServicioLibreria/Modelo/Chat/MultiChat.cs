@@ -27,6 +27,11 @@ namespace WcfServicioLibreria.Modelo
         }
         #endregion Constructor
         #region Metodos
+        internal IReadOnlyCollection<string> ObtenerNombresJugadoresChat()
+        {
+            return jugadores.Keys.ToList().AsReadOnly();
+        }
+
         private int ContarJugadores()
         {
             return jugadores.Count;
@@ -57,7 +62,7 @@ namespace WcfServicioLibreria.Modelo
         {
             bool seElimino = jugadores.TryRemove(nombreJugador, out IChatCallback jugadorEliminado);
             eventosCommunication.TryRemove(nombreJugador, out DesconectorEventoManejador eventosJugador);
-            eventosJugador.Desechar();
+            eventosJugador?.Desechar();
             if (ContarJugadores() == 0)
             {
                 EliminarChat();

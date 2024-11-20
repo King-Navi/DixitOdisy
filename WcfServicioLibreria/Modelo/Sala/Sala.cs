@@ -19,7 +19,7 @@ namespace WcfServicioLibreria.Modelo
         private const int SALA_VACIA = 0;
         private string idCodigoSala;
         private const int CANTIDAD_MINIMA_JUGADORES = 3;
-        private const int CANTIDAD_MAXIMA_JUGADORES = 12;
+        private const int CANTIDAD_MAXIMA_JUGADORES = 6;
         private readonly ConcurrentDictionary<string, ISalaJugadorCallback> jugadoresSalaCallbacks = new ConcurrentDictionary<string, ISalaJugadorCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
         private ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario> jugadoresInformacion = new ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario>();
@@ -41,7 +41,7 @@ namespace WcfServicioLibreria.Modelo
         {
             this.IdCodigoSala = _idCodigoSala;
             this.Anfitrion = nombreUsuario;
-            jugadoresSalaCallbacks.TryAdd(nombreUsuario, null);
+            //jugadoresSalaCallbacks.TryAdd(nombreUsuario, null);
         }
 
         #endregion Contructores
@@ -61,7 +61,7 @@ namespace WcfServicioLibreria.Modelo
             return jugadoresSalaCallbacks.IsEmpty;
         }
 
-        private IReadOnlyCollection<string> ObtenerNombresJugadoresSala()
+        internal IReadOnlyCollection<string> ObtenerNombresJugadoresSala()
         {
             return jugadoresSalaCallbacks.Keys.ToList().AsReadOnly();
         }

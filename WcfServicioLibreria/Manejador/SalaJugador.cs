@@ -41,6 +41,13 @@ namespace WcfServicioLibreria.Manejador
                 salasDiccionario.TryGetValue(idSala, out Modelo.Sala sala);
                 lock (sala)
                 {
+                    foreach (var nombreJugadorEnSala in sala.ObtenerNombresJugadoresSala())
+                    {
+                        if (nombreJugadorEnSala.Equals(gamertag, StringComparison.OrdinalIgnoreCase))
+                        {
+                            return;
+                        }
+                    }
                     sala.AgregarJugadorSala(gamertag, contexto);
                 }
                 await sala.AvisarNuevoJugador(gamertag);

@@ -19,6 +19,7 @@ namespace WpfCliente.Utilidad
         public static ServicioInvitacionPartidaClient InvitacionPartida { get; private set; }
         public static Task<bool> AbrirConexionUsuarioSesionCallbackAsync(IServicioUsuarioSesionCallback callback)
         {
+            UsuarioSesion = null;
             Task<bool> resultado = Task.FromResult(false);
             if (UsuarioSesion != null)
             {
@@ -40,6 +41,7 @@ namespace WpfCliente.Utilidad
         }
         public static Task<bool> AbrirConexionSalaJugadorCallbackAsync(IServicioSalaJugadorCallback callback)
         {
+            SalaJugador = null;
             Task<bool> resultado = Task.FromResult(false);
             if (SalaJugador != null)
             {
@@ -61,6 +63,7 @@ namespace WpfCliente.Utilidad
         }
         public static Task<bool> AbrirConexionChatMotorCallbackAsync(IServicioChatMotorCallback callback)
         {
+            ChatMotor = null;
             Task<bool> resultado = Task.FromResult(false);
             if (ChatMotor != null)
             {
@@ -82,6 +85,7 @@ namespace WpfCliente.Utilidad
         }
         public static Task<bool> AbrirConexionAmigosCallbackAsync(IServicioAmistadCallback callback)
         {
+            Amigos = null;
             Task<bool> resultado = Task.FromResult(false);
             if (Amigos != null)
             {
@@ -103,6 +107,7 @@ namespace WpfCliente.Utilidad
         }
         public static Task<bool> AbrirConexionPartidaCallbackAsync(IServicioPartidaSesionCallback callback)
         {
+            Partida = null;
             Task<bool> resultado = Task.FromResult(false);
             if (Partida != null)
             {
@@ -125,6 +130,7 @@ namespace WpfCliente.Utilidad
 
         public static Task<bool> AbrirConexionInvitacionPartidaCallbackAsync(IServicioInvitacionPartidaCallback callback)
         {
+            InvitacionPartida = null;
             Task<bool> resultado = Task.FromResult(false);
             if (InvitacionPartida != null)
             {

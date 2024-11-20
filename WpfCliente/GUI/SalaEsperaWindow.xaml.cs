@@ -128,7 +128,12 @@ namespace WpfCliente.GUI
         private void UnirseChat()
         {
             Conexion.AbrirConexionChatMotorCallbackAsync(chatUserControl);
-            Conexion.ChatMotor.AgregarUsuarioChat(Singleton.Instance.IdChat, Singleton.Instance.NombreUsuario);
+            var resultado = Conexion.ChatMotor.AgregarUsuarioChat(Singleton.Instance.IdChat, Singleton.Instance.NombreUsuario);
+            if (!resultado)
+            {
+                //TODO: ventana que indique que no puedes unirte
+                NoHayConexion();
+            }
         }
 
         private void GenerarSalaComoAnfitrion()

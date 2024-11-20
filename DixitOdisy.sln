@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAOLibreria", "DAOLibreria\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pruebas", "Pruebas\Pruebas.csproj", "{7E26BEBC-B34F-4A9E-964E-EDE2D697C5CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatGPTLibreria", "..\ChatGPTLibreria\ChatGPTLibreria\ChatGPTLibreria.csproj", "{1DB22D68-DEC2-4B15-81BB-19794B7E8000}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatGPTLibreria", "D:\Repos\Source\RepoChatGPT\ChatGPTLibreria\ChatGPTLibreria\ChatGPTLibreria.csproj", "{1DB22D68-DEC2-4B15-81BB-19794B7E8000}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

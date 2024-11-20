@@ -283,9 +283,17 @@ namespace WpfCliente.GUI
 
         private void AbrirVentanaMenu()
         {
-            MenuWindow nuevaVentana = new MenuWindow();
-            nuevaVentana.Show();
-            this.Close();
+            try
+            {
+                MenuWindow nuevaVentana = new MenuWindow();
+                nuevaVentana.Show();
+                this.Close();
+            }
+            catch (Exception)
+            {
+
+                
+            }
         }
 
         private void passwordBoxKeyDown(object sender, System.Windows.Input.KeyEventArgs e)

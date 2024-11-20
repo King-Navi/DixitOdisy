@@ -128,7 +128,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ChatGPTLibreria\ChatGPTLibreria\ChatGPTLibreria.csproj">
+    <ProjectReference Include="..\..\ChatGPTLibreria1\ChatGPTLibreria\ChatGPTLibreria.csproj">
       <Project>{1db22d68-dec2-4b15-81bb-19794b7e8000}</Project>
       <Name>ChatGPTLibreria</Name>
     </ProjectReference>

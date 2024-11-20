@@ -88,7 +88,7 @@ namespace WpfCliente.GUI
 
         public void ObtenerPeticionAmistadCallback(SolicitudAmistad nuevaSolicitudAmistad)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void ObtenerAmigoCallback(Amigo amigo)

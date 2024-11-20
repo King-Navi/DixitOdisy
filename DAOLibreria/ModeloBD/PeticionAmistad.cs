@@ -14,8 +14,9 @@ namespace DAOLibreria.ModeloBD
     
     public partial class PeticionAmistad
     {
-        public int id_Remitente { get; set; }
-        public int id_Destinatario { get; set; }
+        public int idPeticion { get; set; }
+        public int idRemitente { get; set; }
+        public int idDestinatario { get; set; }
         public Nullable<System.DateTime> fechaPeticion { get; set; }
         public string estado { get; set; }
     

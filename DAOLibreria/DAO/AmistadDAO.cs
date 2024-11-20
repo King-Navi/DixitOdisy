@@ -51,8 +51,8 @@ namespace DAOLibreria.DAO
                 {
                     var nuevaSolicitud = new PeticionAmistad
                     {
-                        id_Remitente = idUsuario1,       
-                        id_Destinatario = idUsuario2,   
+                        idRemitente = idUsuario1,       
+                        idDestinatario = idUsuario2,   
                         fechaPeticion = DateTime.Now, 
                         estado = "Pendiente"
                     };
@@ -85,8 +85,8 @@ namespace DAOLibreria.DAO
             using (var context = new DescribeloEntities())
             {
                 return context.PeticionAmistad.Any(p =>
-                    (p.id_Remitente == idRemitente && p.id_Destinatario == idDestinatario) ||
-                    (p.id_Remitente == idDestinatario && p.id_Destinatario == idRemitente));
+                    (p.idRemitente == idRemitente && p.idDestinatario == idDestinatario) ||
+                    (p.idRemitente == idDestinatario && p.idDestinatario == idRemitente));
             }
         }
 
@@ -97,11 +97,11 @@ namespace DAOLibreria.DAO
                 using (var context = new DescribeloEntities())
                 {
                     var solicitudesPendientes = context.PeticionAmistad
-                        .Where(s => s.id_Destinatario == idUsuario && s.estado == "Pendiente")
+                        .Where(s => s.idDestinatario == idUsuario && s.estado == "Pendiente")
                         .ToList();
 
                     List<int> idsRemitentes = solicitudesPendientes
-                        .Select(s => s.id_Remitente)
+                        .Select(s => s.idRemitente)
                         .ToList();
 
                     List<Usuario> usuariosRemitentes = context.Usuario
@@ -125,7 +125,7 @@ namespace DAOLibreria.DAO
                 using (var context = new DescribeloEntities())
                 {
                     var solicitud = context.PeticionAmistad
-                        .FirstOrDefault(s => s.id_Remitente == idRemitente && s.id_Destinatario == idDestinatario && s.estado == "Pendiente");
+                        .FirstOrDefault(s => s.idRemitente == idRemitente && s.idDestinatario == idDestinatario && s.estado == "Pendiente");
 
                     if (solicitud != null)
                     {
@@ -163,7 +163,7 @@ namespace DAOLibreria.DAO
                 using (var context = new DescribeloEntities())
                 {
                     var solicitud = context.PeticionAmistad
-                        .FirstOrDefault(s => s.id_Remitente == idRemitente && s.id_Destinatario == idDestinatario && s.estado == "Pendiente");
+                        .FirstOrDefault(s => s.idRemitente == idRemitente && s.idDestinatario == idDestinatario && s.estado == "Pendiente");
 
                     if (solicitud != null)
                     {

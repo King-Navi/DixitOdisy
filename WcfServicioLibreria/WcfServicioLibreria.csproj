@@ -37,6 +37,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ChatGPTLibreria, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Librerias\ChatGPTLibreria.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -44,6 +48,10 @@
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Librerias\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -128,10 +136,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="D:\Repos\Source\RepoChatGPT\ChatGPTLibreria\ChatGPTLibreria\ChatGPTLibreria.csproj">
-      <Project>{1db22d68-dec2-4b15-81bb-19794b7e8000}</Project>
-      <Name>ChatGPTLibreria</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DAOLibreria\DAOLibreria.csproj">
       <Project>{14e9f882-4cc6-4331-a0ac-b31206796294}</Project>
       <Name>DAOLibreria</Name>
@@ -139,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Librerias\ChatGPTLibreria.dll" />
+    <Content Include="Librerias\ChatGPTLibreria.pdb" />
     <Content Include="Librerias\Newtonsoft.Json.dll" />
     <Content Include="Recursos\Animales\0b7806d1-133c-42f2-9c46-cb4021a35748.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

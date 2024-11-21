@@ -1,0 +1,9 @@
+﻿C:\Users\unaay\source\repos\ChatGPTLibreria1\ChatGPTLibreria\Convertidor.cs
+C:\Users\unaay\source\repos\ChatGPTLibreria1\ChatGPTLibreria\Descargar.cs
+C:\Users\unaay\source\repos\ChatGPTLibreria1\ChatGPTLibreria\EnumeradorBuffer.cs
+C:\Users\unaay\source\repos\ChatGPTLibreria1\ChatGPTLibreria\EscrituraDisco.cs
+C:\Users\unaay\source\repos\ChatGPTLibreria1\ChatGPTLibreria\IEscribirDisco.cs
+C:\Users\unaay\source\repos\ChatGPTLibreria1\ChatGPTLibreria\ModelosJSON\ModelosDALL_E.cs
+C:\Users\unaay\source\repos\ChatGPTLibreria1\ChatGPTLibreria\Properties\AssemblyInfo.cs
+C:\Users\unaay\source\repos\ChatGPTLibreria1\ChatGPTLibreria\SolicitarImagen.cs
+C:\Users\unaay\source\repos\ChatGPTLibreria1\ChatGPTLibreria\packages.config

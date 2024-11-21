@@ -291,6 +291,8 @@ namespace WpfCliente.GUI
             }
             catch (Exception)
             {
+
+                
             }
         }
 

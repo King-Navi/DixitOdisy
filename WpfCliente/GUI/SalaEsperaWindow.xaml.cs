@@ -237,7 +237,7 @@ namespace WpfCliente.GUI
             Singleton.Instance.IdPartida = idPartida;
             PartidaWindow partida = new PartidaWindow(idPartida);
             partida.Show();
-            this.Close();
+            this.Hide();
         }
 
         private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
@@ -299,7 +299,7 @@ namespace WpfCliente.GUI
                     Task.Delay(TimeSpan.FromSeconds(SEGUNDOS_PARA_UNIRSE));
                     PartidaWindow partida = new PartidaWindow(Singleton.Instance.IdPartida);
                     partida.Show();
-                    this.Close();
+                    this.Hide();
                 }
                 catch (Exception)
                 {

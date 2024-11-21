@@ -312,7 +312,12 @@ namespace WpfCliente.GUI
 
         private async void buttonOlvidarContrasenia_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: REVISAR RED
+            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+            if (!conexionExitosa)
+            {
+                return;
+            }
+
             OlvidarContrasenia();
         }
 

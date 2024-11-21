@@ -326,6 +326,7 @@ namespace WpfCliente.Utilidad
             if (!await verificarConexion)
             {
                 VentanasEmergentes.CrearVentanaEmergenteErrorServidor(ventana);
+                habilitarAcciones(true);
                 return false;
             }
             Task<bool> verificarConexionBD = HacerPingBD();
@@ -333,7 +334,7 @@ namespace WpfCliente.Utilidad
             if (!await verificarConexionBD)
             {
                 VentanasEmergentes.CrearVentanaEmergenteErrorBD(ventana);
-                ventana.Close();
+                habilitarAcciones(true);
                 return false;
             }
 

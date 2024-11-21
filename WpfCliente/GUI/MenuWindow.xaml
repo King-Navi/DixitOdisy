@@ -1,0 +1,80 @@
+﻿<Window x:Class="WpfCliente.GUI.MenuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfCliente.GUI"
+        mc:Ignorable="d"
+        Title="MenuWindow" Height="770" Width="1200"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize" Closing="CerrandoVentana">
+
+    <Window.Background>
+        <ImageBrush ImageSource="/Recursos/fondoMenu.png" Stretch="Fill"/>
+    </Window.Background>
+
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}" >
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="6" />
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
+
+
+    <Grid>
+        <DockPanel LastChildFill="True">
+            <!--Header-->
+            <StackPanel DockPanel.Dock="Top" x:Name="stackPaneEncabezado" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Image Height="48" Width="54" Source="/Recursos/amigos.png" VerticalAlignment="Top" RenderTransformOrigin="0.556,0.5" Cursor="Hand" MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
+                <local:PerfilMenuDesplegableUserControl x:Name="perfilMenuDesplegable"/>
+            </StackPanel>
+            <!--Footer-->
+            <StackPanel DockPanel.Dock="Bottom" Background="#E0DCC7" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                <Label Content="Copyright Iván y U Náay S.A. de C.V." FontFamily="Lucida Sans Unicode" FontStyle="Italic"></Label>
+            </StackPanel>
+            <!--Middle-->
+            <StackPanel x:Name="stackPanePrincipal" Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel Orientation="Vertical" Background="#E0DCC7" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Label Content="Describelo" HorizontalAlignment="Center" FontFamily="ROG Fonts" VerticalAlignment="Center" 
+               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="60"></Label>
+
+                    <Button x:Name="buttonCrearSala" d:Content="Crear sala de espera" FontFamily="ROG Fonts" 
+                Background="#E0DCC7" Foreground="Black" BorderThickness="4" BorderBrush="Black" Click="ClicBotonCrearSala" 
+                FontSize="24" Margin="0,90,0,10" />
+
+                    <Button x:Name="buttonUniserSala" d:Content="Unirse a sala de espera" FontFamily="ROG Fonts" 
+                Background="#E0DCC7" Foreground="Black" BorderThickness="4" BorderBrush="Black" Click="ClicButtonUnirseSala" 
+                FontSize="24" Margin="0,10,0,10" />
+
+                </StackPanel>
+            </StackPanel>
+
+        </DockPanel>
+        <local:ListaAmigosUserControl x:Name="amigosUserControl" HorizontalAlignment="Left" ></local:ListaAmigosUserControl>
+
+        <!-- Notificación Generalizada -->
+        <Border x:Name="borderNotificacionGeneral" Background="Azure" CornerRadius="8" Padding="10"
+            VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,20" Width="322" Height="150"
+            Visibility="Collapsed" Opacity="0.9">
+            <StackPanel>
+                <ProgressBar x:Name="progressTimerGeneral" Height="10" Foreground="Green"/>
+                <TextBlock x:Name="textNotificacionGeneral" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" Foreground="Black"/>
+
+                <!-- Imagen de la persona que manda la invitación o solicitud -->
+                <Image x:Name="imagenPerfil" Width="40" Height="40" Margin="0,0,0,10" HorizontalAlignment="Center" Source="{Binding ImagenRuta}"/>
+
+                <!-- Contenedor para los botones: se activan dependiendo del tipo de notificación -->
+                <StackPanel x:Name="botonesPanel" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button x:Name="btnAceptar" Content="Aceptar" Click="Aceptar_Click" Width="80" Visibility="Collapsed"/>
+                    <Button x:Name="btnRechazar" Content="Rechazar" Click="Rechazar_Click" Width="80" Visibility="Collapsed"/>
+                    <Button x:Name="btnUnirse" Content="Unirse" Click="Unirse_Click" Width="80" Visibility="Collapsed"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+
+    </Grid>
+</Window>

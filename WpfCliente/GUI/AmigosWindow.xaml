@@ -1,0 +1,27 @@
+﻿<Window x:Class="WpfCliente.GUI.AmigosWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfCliente.GUI"
+        mc:Ignorable="d"
+        Title="AmigosWindow"
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="NoResize" Height="770" Width="1200">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Recursos/fondoNotificaciones.png" />
+        </Grid.Background>
+
+        <!-- Rectángulo semitransparente -->
+        <Rectangle Fill="White" Opacity="0.75" Margin="20" RadiusX="15" RadiusY="15" />
+
+        <!-- Elementos de la ventana -->
+        <Image x:Name="imagenFlechaAtras" Source="/Recursos/flechaAtras.png" Margin="38,37,1066,622" Cursor="Hand" MouseLeftButtonDown="FlechaAtras_MouseLeftButtonDown"/>
+        <Image x:Name="imagenFlechaRecargar" Source="/Recursos/flechaRecargar.png" Margin="1064,37,40,622" Cursor="Hand" MouseLeftButtonDown="FlechaRecargar_MouseLeftButtonDown"/>
+        <Image x:Name="imagenAgregarAmigo" Source="/Recursos/agregarAmigo.png" Margin="50,608,1042,45" Cursor="Hand" MouseLeftButtonDown="NuevaSolicitud_MouseLeftButtonDown"/>
+        <Grid>
+            <local:ListaSolicitudesAmistadUserControl x:Name="listaSolicitudesAmistadUserControl" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,553 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DescribeloModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Amigo">
+          <Key>
+            <PropertyRef Name="idMayor_usuario" />
+            <PropertyRef Name="idMenor_usuario" />
+          </Key>
+          <Property Name="idMayor_usuario" Type="int" Nullable="false" />
+          <Property Name="idMenor_usuario" Type="int" Nullable="false" />
+          <Property Name="fechaInicioAmistad" Type="date" />
+        </EntityType>
+        <EntityType Name="Estadisticas">
+          <Key>
+            <PropertyRef Name="idEstadisticas" />
+          </Key>
+          <Property Name="idEstadisticas" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="partidasJugadas" Type="int" />
+          <Property Name="partidasGanadas" Type="int" />
+          <Property Name="vecesTematicaMixto" Type="int" />
+          <Property Name="vecesTematicaAnimales" Type="int" />
+          <Property Name="vecesTematicaPaises" Type="int" />
+          <Property Name="vecesTematicaMitologia" Type="int" />
+          <Property Name="vecesTematicaEspacio" Type="int" />
+          <Property Name="idUsuario" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Expulsion">
+          <Key>
+            <PropertyRef Name="idExpulsion" />
+          </Key>
+          <Property Name="idExpulsion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="motivo" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="fuePenalizado" Type="bit" Nullable="false" />
+          <Property Name="esHacker" Type="bit" Nullable="false" />
+          <Property Name="idUsuarioCuenta" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PeticionAmistad">
+          <Key>
+            <PropertyRef Name="idPeticion" />
+          </Key>
+          <Property Name="idPeticion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idRemitente" Type="int" Nullable="false" />
+          <Property Name="idDestinatario" Type="int" Nullable="false" />
+          <Property Name="fechaPeticion" Type="datetime" />
+          <Property Name="estado" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="gamertag" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="fotoPerfil" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ultimaConexion" Type="datetime" />
+          <Property Name="idUsuarioCuenta" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsuarioCuenta">
+          <Key>
+            <PropertyRef Name="idUsuarioCuenta" />
+          </Key>
+          <Property Name="idUsuarioCuenta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="gamertag" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="hashContrasenia" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="correo" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Veto">
+          <Key>
+            <PropertyRef Name="idVeto" />
+          </Key>
+          <Property Name="idVeto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fechaInicio" Type="datetime" Nullable="false" />
+          <Property Name="fechaFin" Type="datetime" />
+          <Property Name="esPermanente" Type="bit" Nullable="false" />
+          <Property Name="idUsuarioCuenta" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Amigo_UsuarioMayor">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Amigo" Type="Self.Amigo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Amigo">
+              <PropertyRef Name="idMayor_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Amigo_UsuarioMenor">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Amigo" Type="Self.Amigo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Amigo">
+              <PropertyRef Name="idMenor_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Estadisticas_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Estadisticas" Type="Self.Estadisticas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Estadisticas">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expulsion_UsuarioCuenta">
+          <End Role="UsuarioCuenta" Type="Self.UsuarioCuenta" Multiplicity="1" />
+          <End Role="Expulsion" Type="Self.Expulsion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsuarioCuenta">
+              <PropertyRef Name="idUsuarioCuenta" />
+            </Principal>
+            <Dependent Role="Expulsion">
+              <PropertyRef Name="idUsuarioCuenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PeticionAmistad_Destinatario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="PeticionAmistad" Type="Self.PeticionAmistad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="PeticionAmistad">
+              <PropertyRef Name="idDestinatario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PeticionAmistad_Remitente">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="PeticionAmistad" Type="Self.PeticionAmistad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="PeticionAmistad">
+              <PropertyRef Name="idRemitente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_UsuarioCuenta">
+          <End Role="UsuarioCuenta" Type="Self.UsuarioCuenta" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsuarioCuenta">
+              <PropertyRef Name="idUsuarioCuenta" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="idUsuarioCuenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Veto_UsuarioCuenta">
+          <End Role="UsuarioCuenta" Type="Self.UsuarioCuenta" Multiplicity="1" />
+          <End Role="Veto" Type="Self.Veto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsuarioCuenta">
+              <PropertyRef Name="idUsuarioCuenta" />
+            </Principal>
+            <Dependent Role="Veto">
+              <PropertyRef Name="idUsuarioCuenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DescribeloModelStoreContainer">
+          <EntitySet Name="Amigo" EntityType="Self.Amigo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estadisticas" EntityType="Self.Estadisticas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Expulsion" EntityType="Self.Expulsion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PeticionAmistad" EntityType="Self.PeticionAmistad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsuarioCuenta" EntityType="Self.UsuarioCuenta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Veto" EntityType="Self.Veto" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Amigo_UsuarioMayor" Association="Self.FK_Amigo_UsuarioMayor">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Amigo" EntitySet="Amigo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Amigo_UsuarioMenor" Association="Self.FK_Amigo_UsuarioMenor">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Amigo" EntitySet="Amigo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Estadisticas_Usuario" Association="Self.FK_Estadisticas_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Estadisticas" EntitySet="Estadisticas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expulsion_UsuarioCuenta" Association="Self.FK_Expulsion_UsuarioCuenta">
+            <End Role="UsuarioCuenta" EntitySet="UsuarioCuenta" />
+            <End Role="Expulsion" EntitySet="Expulsion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PeticionAmistad_Destinatario" Association="Self.FK_PeticionAmistad_Destinatario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="PeticionAmistad" EntitySet="PeticionAmistad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PeticionAmistad_Remitente" Association="Self.FK_PeticionAmistad_Remitente">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="PeticionAmistad" EntitySet="PeticionAmistad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_UsuarioCuenta" Association="Self.FK_Usuario_UsuarioCuenta">
+            <End Role="UsuarioCuenta" EntitySet="UsuarioCuenta" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Veto_UsuarioCuenta" Association="Self.FK_Veto_UsuarioCuenta">
+            <End Role="UsuarioCuenta" EntitySet="UsuarioCuenta" />
+            <End Role="Veto" EntitySet="Veto" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DescribeloModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Amigo">
+          <Key>
+            <PropertyRef Name="idMayor_usuario" />
+            <PropertyRef Name="idMenor_usuario" />
+          </Key>
+          <Property Name="idMayor_usuario" Type="Int32" Nullable="false" />
+          <Property Name="idMenor_usuario" Type="Int32" Nullable="false" />
+          <Property Name="fechaInicioAmistad" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Amigo_UsuarioMayor" FromRole="Amigo" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="Self.FK_Amigo_UsuarioMenor" FromRole="Amigo" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Estadisticas">
+          <Key>
+            <PropertyRef Name="idEstadisticas" />
+          </Key>
+          <Property Name="idEstadisticas" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="partidasJugadas" Type="Int32" />
+          <Property Name="partidasGanadas" Type="Int32" />
+          <Property Name="vecesTematicaMixto" Type="Int32" />
+          <Property Name="vecesTematicaAnimales" Type="Int32" />
+          <Property Name="vecesTematicaPaises" Type="Int32" />
+          <Property Name="vecesTematicaMitologia" Type="Int32" />
+          <Property Name="vecesTematicaEspacio" Type="Int32" />
+          <Property Name="idUsuario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Estadisticas_Usuario" FromRole="Estadisticas" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Expulsion">
+          <Key>
+            <PropertyRef Name="idExpulsion" />
+          </Key>
+          <Property Name="idExpulsion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="motivo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fuePenalizado" Type="Boolean" Nullable="false" />
+          <Property Name="esHacker" Type="Boolean" Nullable="false" />
+          <Property Name="idUsuarioCuenta" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UsuarioCuenta" Relationship="Self.FK_Expulsion_UsuarioCuenta" FromRole="Expulsion" ToRole="UsuarioCuenta" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="gamertag" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fotoPerfil" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ultimaConexion" Type="DateTime" Precision="3" />
+          <Property Name="idUsuarioCuenta" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Amigo" Relationship="Self.FK_Amigo_UsuarioMayor" FromRole="Usuario" ToRole="Amigo" />
+          <NavigationProperty Name="Amigo1" Relationship="Self.FK_Amigo_UsuarioMenor" FromRole="Usuario" ToRole="Amigo" />
+          <NavigationProperty Name="Estadisticas" Relationship="Self.FK_Estadisticas_Usuario" FromRole="Usuario" ToRole="Estadisticas" />
+          <NavigationProperty Name="UsuarioCuenta" Relationship="Self.FK_Usuario_UsuarioCuenta" FromRole="Usuario" ToRole="UsuarioCuenta" />
+          <NavigationProperty Name="PeticionAmistad" Relationship="DescribeloModel.FK_PeticionAmistad_Destinatario" FromRole="Usuario" ToRole="PeticionAmistad" />
+          <NavigationProperty Name="PeticionAmistad1" Relationship="DescribeloModel.FK_PeticionAmistad_Remitente" FromRole="Usuario" ToRole="PeticionAmistad" />
+        </EntityType>
+        <EntityType Name="UsuarioCuenta">
+          <Key>
+            <PropertyRef Name="idUsuarioCuenta" />
+          </Key>
+          <Property Name="idUsuarioCuenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="gamertag" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="hashContrasenia" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="correo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Expulsion" Relationship="Self.FK_Expulsion_UsuarioCuenta" FromRole="UsuarioCuenta" ToRole="Expulsion" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_UsuarioCuenta" FromRole="UsuarioCuenta" ToRole="Usuario" />
+          <NavigationProperty Name="Veto" Relationship="Self.FK_Veto_UsuarioCuenta" FromRole="UsuarioCuenta" ToRole="Veto" />
+        </EntityType>
+        <EntityType Name="Veto">
+          <Key>
+            <PropertyRef Name="idVeto" />
+          </Key>
+          <Property Name="idVeto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fechaInicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fechaFin" Type="DateTime" Precision="3" />
+          <Property Name="esPermanente" Type="Boolean" Nullable="false" />
+          <Property Name="idUsuarioCuenta" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UsuarioCuenta" Relationship="Self.FK_Veto_UsuarioCuenta" FromRole="Veto" ToRole="UsuarioCuenta" />
+        </EntityType>
+        <Association Name="FK_Amigo_UsuarioMayor">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Amigo" Type="Self.Amigo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Amigo">
+              <PropertyRef Name="idMayor_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Amigo_UsuarioMenor">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Amigo" Type="Self.Amigo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Amigo">
+              <PropertyRef Name="idMenor_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Estadisticas_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Estadisticas" Type="Self.Estadisticas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Estadisticas">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expulsion_UsuarioCuenta">
+          <End Role="UsuarioCuenta" Type="Self.UsuarioCuenta" Multiplicity="1" />
+          <End Role="Expulsion" Type="Self.Expulsion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsuarioCuenta">
+              <PropertyRef Name="idUsuarioCuenta" />
+            </Principal>
+            <Dependent Role="Expulsion">
+              <PropertyRef Name="idUsuarioCuenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_UsuarioCuenta">
+          <End Role="UsuarioCuenta" Type="Self.UsuarioCuenta" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsuarioCuenta">
+              <PropertyRef Name="idUsuarioCuenta" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="idUsuarioCuenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Veto_UsuarioCuenta">
+          <End Role="UsuarioCuenta" Type="Self.UsuarioCuenta" Multiplicity="1" />
+          <End Role="Veto" Type="Self.Veto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsuarioCuenta">
+              <PropertyRef Name="idUsuarioCuenta" />
+            </Principal>
+            <Dependent Role="Veto">
+              <PropertyRef Name="idUsuarioCuenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DescribeloEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Amigo" EntityType="Self.Amigo" />
+          <EntitySet Name="Estadisticas" EntityType="Self.Estadisticas" />
+          <EntitySet Name="Expulsion" EntityType="Self.Expulsion" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <EntitySet Name="UsuarioCuenta" EntityType="Self.UsuarioCuenta" />
+          <EntitySet Name="Veto" EntityType="Self.Veto" />
+          <AssociationSet Name="FK_Amigo_UsuarioMayor" Association="Self.FK_Amigo_UsuarioMayor">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Amigo" EntitySet="Amigo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Amigo_UsuarioMenor" Association="Self.FK_Amigo_UsuarioMenor">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Amigo" EntitySet="Amigo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Estadisticas_Usuario" Association="Self.FK_Estadisticas_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Estadisticas" EntitySet="Estadisticas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expulsion_UsuarioCuenta" Association="Self.FK_Expulsion_UsuarioCuenta">
+            <End Role="UsuarioCuenta" EntitySet="UsuarioCuenta" />
+            <End Role="Expulsion" EntitySet="Expulsion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_UsuarioCuenta" Association="Self.FK_Usuario_UsuarioCuenta">
+            <End Role="UsuarioCuenta" EntitySet="UsuarioCuenta" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Veto_UsuarioCuenta" Association="Self.FK_Veto_UsuarioCuenta">
+            <End Role="UsuarioCuenta" EntitySet="UsuarioCuenta" />
+            <End Role="Veto" EntitySet="Veto" />
+          </AssociationSet>
+          <EntitySet Name="PeticionAmistad" EntityType="DescribeloModel.PeticionAmistad" />
+          <AssociationSet Name="FK_PeticionAmistad_Destinatario" Association="DescribeloModel.FK_PeticionAmistad_Destinatario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="PeticionAmistad" EntitySet="PeticionAmistad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PeticionAmistad_Remitente" Association="DescribeloModel.FK_PeticionAmistad_Remitente">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="PeticionAmistad" EntitySet="PeticionAmistad" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="PeticionAmistad">
+          <Key>
+            <PropertyRef Name="idPeticion" />
+          </Key>
+          <Property Name="idPeticion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idRemitente" Type="Int32" Nullable="false" />
+          <Property Name="idDestinatario" Type="Int32" Nullable="false" />
+          <Property Name="fechaPeticion" Type="DateTime" Precision="3" />
+          <Property Name="estado" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Usuario" Relationship="DescribeloModel.FK_PeticionAmistad_Destinatario" FromRole="PeticionAmistad" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="DescribeloModel.FK_PeticionAmistad_Remitente" FromRole="PeticionAmistad" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="FK_PeticionAmistad_Destinatario">
+          <End Type="DescribeloModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="DescribeloModel.PeticionAmistad" Role="PeticionAmistad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="PeticionAmistad">
+              <PropertyRef Name="idDestinatario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PeticionAmistad_Remitente">
+          <End Type="DescribeloModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="DescribeloModel.PeticionAmistad" Role="PeticionAmistad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="PeticionAmistad">
+              <PropertyRef Name="idRemitente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DescribeloModelStoreContainer" CdmEntityContainer="DescribeloEntities">
+          <EntitySetMapping Name="Amigo">
+            <EntityTypeMapping TypeName="DescribeloModel.Amigo">
+              <MappingFragment StoreEntitySet="Amigo">
+                <ScalarProperty Name="idMayor_usuario" ColumnName="idMayor_usuario" />
+                <ScalarProperty Name="idMenor_usuario" ColumnName="idMenor_usuario" />
+                <ScalarProperty Name="fechaInicioAmistad" ColumnName="fechaInicioAmistad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estadisticas">
+            <EntityTypeMapping TypeName="DescribeloModel.Estadisticas">
+              <MappingFragment StoreEntitySet="Estadisticas">
+                <ScalarProperty Name="idEstadisticas" ColumnName="idEstadisticas" />
+                <ScalarProperty Name="partidasJugadas" ColumnName="partidasJugadas" />
+                <ScalarProperty Name="partidasGanadas" ColumnName="partidasGanadas" />
+                <ScalarProperty Name="vecesTematicaMixto" ColumnName="vecesTematicaMixto" />
+                <ScalarProperty Name="vecesTematicaAnimales" ColumnName="vecesTematicaAnimales" />
+                <ScalarProperty Name="vecesTematicaPaises" ColumnName="vecesTematicaPaises" />
+                <ScalarProperty Name="vecesTematicaMitologia" ColumnName="vecesTematicaMitologia" />
+                <ScalarProperty Name="vecesTematicaEspacio" ColumnName="vecesTematicaEspacio" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Expulsion">
+            <EntityTypeMapping TypeName="DescribeloModel.Expulsion">
+              <MappingFragment StoreEntitySet="Expulsion">
+                <ScalarProperty Name="idExpulsion" ColumnName="idExpulsion" />
+                <ScalarProperty Name="motivo" ColumnName="motivo" />
+                <ScalarProperty Name="fuePenalizado" ColumnName="fuePenalizado" />
+                <ScalarProperty Name="esHacker" ColumnName="esHacker" />
+                <ScalarProperty Name="idUsuarioCuenta" ColumnName="idUsuarioCuenta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="DescribeloModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="gamertag" ColumnName="gamertag" />
+                <ScalarProperty Name="fotoPerfil" ColumnName="fotoPerfil" />
+                <ScalarProperty Name="ultimaConexion" ColumnName="ultimaConexion" />
+                <ScalarProperty Name="idUsuarioCuenta" ColumnName="idUsuarioCuenta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsuarioCuenta">
+            <EntityTypeMapping TypeName="DescribeloModel.UsuarioCuenta">
+              <MappingFragment StoreEntitySet="UsuarioCuenta">
+                <ScalarProperty Name="idUsuarioCuenta" ColumnName="idUsuarioCuenta" />
+                <ScalarProperty Name="gamertag" ColumnName="gamertag" />
+                <ScalarProperty Name="hashContrasenia" ColumnName="hashContrasenia" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Veto">
+            <EntityTypeMapping TypeName="DescribeloModel.Veto">
+              <MappingFragment StoreEntitySet="Veto">
+                <ScalarProperty Name="idVeto" ColumnName="idVeto" />
+                <ScalarProperty Name="fechaInicio" ColumnName="fechaInicio" />
+                <ScalarProperty Name="fechaFin" ColumnName="fechaFin" />
+                <ScalarProperty Name="esPermanente" ColumnName="esPermanente" />
+                <ScalarProperty Name="idUsuarioCuenta" ColumnName="idUsuarioCuenta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PeticionAmistad">
+            <EntityTypeMapping TypeName="DescribeloModel.PeticionAmistad">
+              <MappingFragment StoreEntitySet="PeticionAmistad">
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fechaPeticion" ColumnName="fechaPeticion" />
+                <ScalarProperty Name="idDestinatario" ColumnName="idDestinatario" />
+                <ScalarProperty Name="idRemitente" ColumnName="idRemitente" />
+                <ScalarProperty Name="idPeticion" ColumnName="idPeticion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

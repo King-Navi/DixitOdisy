@@ -14,6 +14,7 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,7 +27,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -50,8 +50,41 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.135\lib\net462\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.4.0.2\lib\net471\Serilog.dll</HintPath>
+    </Reference>
+    <Reference Include="Serilog.Sinks.File, Version=6.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Sinks.File.6.0.0\lib\net471\Serilog.Sinks.File.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.8.0.1\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Threading.Channels, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Channels.8.0.0\lib\net462\System.Threading.Channels.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -70,39 +103,181 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="Connected Services\ServidorDescribelo\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Estilos\Control\ArcSpinner.cs" />
+    <Compile Include="Estilos\Control\CogwheelSpinner.cs" />
+    <Compile Include="Estilos\Control\DonutSpinner.cs" />
+    <Compile Include="Estilos\Control\DotsRingSpinner.cs" />
+    <Compile Include="Estilos\Control\ThreeDotsAnimation.cs" />
+    <Compile Include="Estilos\Control\WaveAnimation.cs" />
+    <Compile Include="Estilos\Converters\DiameterAndThicknessToStrokeDashArrayConverter.cs" />
+    <Compile Include="GUI\AmigoUserControl.xaml.cs">
+      <DependentUpon>AmigoUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\CambiarContraseniaWindow.xaml.cs">
+      <DependentUpon>CambiarContraseniaWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\CartaUserControl.xaml.cs">
+      <DependentUpon>CartaUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ChatUserControl.xaml.cs">
+      <DependentUpon>ChatUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EditarPerfilWindow.xaml.cs">
+      <DependentUpon>EditarPerfilWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\EsperaRestoJugadoresUserControl.xaml.cs">
+      <DependentUpon>EsperaRestoJugadoresUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\IngresarGamertagModalWindow.xaml.cs">
+      <DependentUpon>IngresarGamertagModalWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\InicioRondaUserControl.xaml.cs">
+      <DependentUpon>InicioRondaUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\InvitacionPartidaUserControl.xaml.cs">
+      <DependentUpon>InvitacionPartidaUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ListaAmigosUserControl.xaml.cs">
+      <DependentUpon>ListaAmigosUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ListaSolicitudesAmistadUserControl.xaml.cs">
+      <DependentUpon>ListaSolicitudesAmistadUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ListaUsuariosSalaUserControl.xaml.cs">
+      <DependentUpon>ListaUsuariosSalaUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\MenuWindow.xaml.cs">
+      <DependentUpon>MenuWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\MostrarCartaModelWindow.xaml.cs">
+      <DependentUpon>MostrarCartaModelWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\NarradorSeleccionCartaUserControl.xaml.cs">
+      <DependentUpon>NarradorSeleccionCartaUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\AmigosWindow.xaml.cs">
+      <DependentUpon>AmigosWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\PartidaWindow.xaml.cs">
+      <DependentUpon>PartidaWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\PerfilMenuDesplegableUserControl.xaml.cs">
+      <DependentUpon>PerfilMenuDesplegableUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\RegistrarUsuarioWindow.xaml.cs">
+      <DependentUpon>RegistrarUsuarioWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ResumenRondaUserControl.xaml.cs">
+      <DependentUpon>ResumenRondaUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\SalaEsperaWindow.xaml.cs">
+      <DependentUpon>SalaEsperaWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\SeleccionCartaUsercontrol.xaml.cs">
+      <DependentUpon>SeleccionCartaUsercontrol.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\SolicitudAmistadUserControl.xaml.cs">
+      <DependentUpon>SolicitudAmistadUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UnirseSalaModalWindow.xaml.cs">
+      <DependentUpon>UnirseSalaModalWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\UsuarioUserControl.xaml.cs">
+      <DependentUpon>UsuarioUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\VentanaEmergente.xaml.cs">
+      <DependentUpon>VentanaEmergente.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\VerificarCorreoModalWindow.xaml.cs">
+      <DependentUpon>VerificarCorreoModalWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\VerTodasCartasUserControl.xaml.cs">
+      <DependentUpon>VerTodasCartasUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaz\IHabilitadorBotones.cs" />
+    <Compile Include="Utilidad\ComandoRele.cs" />
+    <Compile Include="Utilidad\Correo.cs" />
+    <Compile Include="Utilidad\Servidor\ChatMensaje.cs" />
+    <Compile Include="Utilidad\Conexion.cs" />
+    <Compile Include="Utilidad\CambiarIdioma.cs" />
+    <Compile Include="Interfaz\IActualizacionUI.cs" />
+    <Compile Include="Utilidad\Encriptacion.cs" />
+    <Compile Include="Utilidad\IdiomaGuardo.cs" />
+    <Compile Include="Properties\Idioma.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Idioma.resx</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\CambiarIdiomaUserControl.xaml.cs">
+      <DependentUpon>CambiarIdiomaUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\IniciarSesionWindow.xaml.cs">
+      <DependentUpon>IniciarSesionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utilidad\Imagen.cs" />
+    <Compile Include="Utilidad\LoggerManager.cs" />
+    <Compile Include="Utilidad\ManejadorExcepciones.cs" />
+    <Compile Include="Utilidad\Utilidades.cs" />
+    <Compile Include="Utilidad\ServicioManejador.cs" />
+    <Compile Include="Utilidad\Servidor\ImagenCarta.cs" />
+    <Compile Include="Utilidad\Singleton.cs" />
+    <Compile Include="Utilidad\Validacion.cs" />
+    <Compile Include="Utilidad\ValidacionesString.cs" />
+    <Compile Include="Utilidad\VentanaMediador.cs" />
+    <Compile Include="Utilidad\VentanasEmergentes.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    <EmbeddedResource Include="Properties\Idioma.en-US.resx" />
+    <EmbeddedResource Include="Properties\Idioma.es-MX.resx" />
+    <EmbeddedResource Include="Properties\Idioma.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Idioma.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Connected Services\ServidorDescribelo\service.wsdl" />
+    <None Include="Connected Services\ServidorDescribelo\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorDescribelo\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorDescribelo\System.IO.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorDescribelo\System.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Enumerador.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Modelo.Excepciones.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Modelo.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorDescribelo\WpfCliente.ServidorDescribelo.Usuario.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
@@ -120,6 +295,240 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Estilos\ArcSpinner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Estilos\CogwheelSpinner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Estilos\DonutSpinner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Estilos\DotsRingSpinner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Estilos\GeneralEstilo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Estilos\ThreeDotsAnimation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Estilos\WaveAnimation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\AmigoUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\CambiarContraseniaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\CambiarIdiomaUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\CartaUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ChatUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\EditarPerfilWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\EsperaRestoJugadoresUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\IngresarGamertagModalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\InicioRondaUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\InvitacionPartidaUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ListaAmigosUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ListaSolicitudesAmistadUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ListaUsuariosSalaUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\MenuWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\MostrarCartaModelWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\NarradorSeleccionCartaUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\AmigosWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\PartidaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\PerfilMenuDesplegableUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\RegistrarUsuarioWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\IniciarSesionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ResumenRondaUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\SalaEsperaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\SeleccionCartaUsercontrol.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\SolicitudAmistadUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\UnirseSalaModalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\UsuarioUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\VentanaEmergente.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\VerificarCorreoModalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\VerTodasCartasUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\logoIdioma.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\imgButtonChat.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\backgroundGame.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\cajaLogin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\fondoLogin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\mesaJuego.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\fondoJuego.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\leonRegistro.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\flechaAtras.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\pfp1.png" />
+    <Resource Include="Recursos\pfp2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\pfp3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\pfp4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\pfp5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\profile.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Logs\" />
+    <Folder Include="Pesistencia\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\fondoMenu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\fondoSala.png" />
+    <Resource Include="Recursos\fondoNotificaciones.png" />
+    <None Include="Connected Services\ServidorDescribelo\configuration91.svcinfo" />
+    <None Include="Connected Services\ServidorDescribelo\configuration.svcinfo" />
+    <None Include="Connected Services\ServidorDescribelo\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Resource Include="Recursos\agregarAmigo.png" />
+    <Resource Include="Recursos\flechaRecargar.png" />
+    <Resource Include="Recursos\amigos.png" />
+    <Content Include="Sonidos\musicaFondo.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\LogoApp.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\podioJugador.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\cerrarCruz.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\ServidorDescribelo\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

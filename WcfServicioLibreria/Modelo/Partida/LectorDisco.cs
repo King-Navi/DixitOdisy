@@ -45,8 +45,6 @@ namespace WcfServicioLibreria.Modelo
                 {
                     foreach (var lecturaTrabajo in colaLectura.GetConsumingEnumerable())
                     {
-                        Console.WriteLine($"Procesando archivo: {lecturaTrabajo.ArchivoPath}");
-
                         try
                         {
                             // Leer la imagen del disco de forma asíncrona
@@ -75,10 +73,12 @@ namespace WcfServicioLibreria.Modelo
                                     if (lecturaTrabajo.UsarGrupo)
                                     {
                                         lecturaTrabajo.Callback.RecibirGrupoImagenCallback(imagenCarta);
+                                        Console.WriteLine($"El {idLector} envio la imagen {nombreSinExtension}");
                                     }
                                     else
                                     {
                                         lecturaTrabajo.Callback.RecibirImagenCallback(imagenCarta);
+                                        Console.WriteLine($"El {idLector} envio la imagen {nombreSinExtension} en modo grupo");
                                     }
                                 }
                                 catch (Exception ex)

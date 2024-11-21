@@ -289,8 +289,9 @@ namespace WcfServicioLibreria.Modelo
                             {
                                 callback.EmpezarPartidaCallBack(idPartida);
                             }
-                            catch (Exception)
+                            catch (Exception ex)
                             {
+                                Console.WriteLine($"{ex}");
                             }
                         }
                     }

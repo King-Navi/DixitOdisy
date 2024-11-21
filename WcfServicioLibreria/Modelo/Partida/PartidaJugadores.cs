@@ -206,6 +206,7 @@ namespace WcfServicioLibreria.Modelo
                 jugadoresCallback.TryGetValue(nombreSolicitante, out IPartidaCallback callback);
                 lectorDiscoOrquetador.AsignarTrabajo(archivoAleatorio, callback);
                 ImagenesUsadas.Add(nombreSinExtension);
+                Console.WriteLine($"Se asignor {nombreSolicitante} el archivo {nombreSinExtension}");
                 return true;
             }
             catch (Exception)

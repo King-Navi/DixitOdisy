@@ -41,7 +41,7 @@ namespace WcfServicioLibreria.Modelo
         private const int PANTALLA_FIN_PARTIDA = 6;
         private const int PANTALLA_ESPERA = 7;
         #endregion PantallasCliente
-        private const int CANTIDAD_MINIMA_JUGADORES = 0; // 2
+        private const int CANTIDAD_MINIMA_JUGADORES = 1; // 2
         private const int TIEMPO_ESPERA_UNIRSE_JUGADORES = 20;// 20
         private const int TIEMPO_ESPERA_NARRADOR = 40; // 40
         private const int TIEMPO_ESPERA_SELECCION = 10; //60
@@ -69,7 +69,7 @@ namespace WcfServicioLibreria.Modelo
         private readonly ICondicionVictoria condicionVictoria;
         public ConfiguracionPartida Configuracion { get; private set; }
         private readonly EstadisticasPartida estadisticasPartida;
-
+        private CancellationTokenSource cancelacionEjecucionRonda;
         private readonly string rutaImagenes;
         private static readonly Random random = new Random();
         private static readonly SemaphoreSlim semaphoreEscogerNarrador = new SemaphoreSlim(1, 1);
@@ -81,7 +81,10 @@ namespace WcfServicioLibreria.Modelo
         public EventHandler partidaVaciaManejadorEvento;
         private event EventHandler TodosListos;
         private readonly Lazy<string[]> archivosCache;
-        private readonly LectorDisco lectorDisco = new LectorDisco();
+        /// <summary>
+        /// Precausion: Aumentar esto ocupara significativamente mas recursos
+        /// </summary>
+        private readonly LectorDiscoOrquestador lectorDiscoOrquetador = new LectorDiscoOrquestador(2); 
         #endregion Atributos
 
         #region Propiedad
@@ -133,8 +136,11 @@ namespace WcfServicioLibreria.Modelo
             Escritor = _escritorDisco;
             SolicitarImagen = new SolicitarImagen();
             estadisticasPartida = new EstadisticasPartida(_configuracion.Tematica);
-
-            TodosListos += (sender, e) => Task.Run(async () => await IniciarPartidaSeguroAsync());
+            TodosListos += (sender, e) =>
+            {
+                cancelacionEjecucionRonda= new CancellationTokenSource(); 
+                Task.Run(async () => await IniciarPartidaSeguroAsync(cancelacionEjecucionRonda.Token));
+            };
             archivosCache = new Lazy<string[]>(() => Directory.GetFiles(rutaImagenes, "*.jpg"));
 
         }
@@ -198,7 +204,7 @@ namespace WcfServicioLibreria.Modelo
             try
             {
                 jugadoresCallback.TryGetValue(nombreSolicitante, out IPartidaCallback callback);
-                lectorDisco.EncolarLecturaEnvio(archivoAleatorio, callback);
+                lectorDiscoOrquetador.AsignarTrabajo(archivoAleatorio, callback);
                 ImagenesUsadas.Add(nombreSinExtension);
                 return true;
             }
@@ -292,7 +298,7 @@ namespace WcfServicioLibreria.Modelo
                 }
             }
             eventosCommunication.Clear();
-            lectorDisco.DetenerLectura();
+            lectorDiscoOrquetador.DetenerLectores();
             EnPartidaVacia();
         }
 
@@ -466,7 +472,9 @@ namespace WcfServicioLibreria.Modelo
             eventosJugador?.Desechar();
             if (ContarJugadores() == NUM_JUGADOR_PARTIDA_VACIA)
             {
+                cancelacionEjecucionRonda.Cancel();
                 EliminarPartida();
+                lectorDiscoOrquetador.DetenerLectores();
             }
         }
 

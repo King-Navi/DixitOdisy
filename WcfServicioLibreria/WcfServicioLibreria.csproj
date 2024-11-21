@@ -113,6 +113,7 @@
     <Compile Include="Modelo\Partida\ConfiguracionPartida.cs" />
     <Compile Include="Modelo\Partida\EstadisticasPartida.cs" />
     <Compile Include="Modelo\Partida\JugadorEstadisticasBase.cs" />
+    <Compile Include="Modelo\Partida\LectorDiscoOrquestador.cs" />
     <Compile Include="Modelo\Partida\LecturaTrabajo.cs" />
     <Compile Include="Modelo\Partida\PartidaGestorRondas.cs" />
     <Compile Include="Modelo\Partida\ICondicionVictoria.cs" />

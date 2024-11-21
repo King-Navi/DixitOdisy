@@ -47,12 +47,12 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        private async Task IniciarPartidaSeguroAsync()
+        private async Task IniciarPartidaSeguroAsync(CancellationToken cancelacionToke)
         {
             try
             {
                 estadisticasPartida.AgregarDesdeOtraLista(ObtenerNombresJugadores());
-                await EjecutarRondasAsync();
+                await EjecutarRondasAsync(cancelacionToke);
             }
             catch (Exception ex)
             {
@@ -60,15 +60,25 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        private async Task EjecutarRondasAsync()
+        private async Task EjecutarRondasAsync(CancellationToken cancelacionToke)
         {
-            while (!VerificarCondicionVictoria() && ContarJugadores() >= CANTIDAD_MINIMA_JUGADORES)
+            try
             {
-                Console.WriteLine("Ronda: " + RondaActual);
-                await EjecutarRondaAsync();
-                await EvaluarPuntosRondaAsync();
-                CambiarPantalla(PANTALLA_INICIO);
-                ++RondaActual;
+                while (!VerificarCondicionVictoria() && ContarJugadores() >= CANTIDAD_MINIMA_JUGADORES && !cancelacionToke.IsCancellationRequested)
+                {
+                    Console.WriteLine("Ronda: " + RondaActual);
+                    await EjecutarRondaAsync();
+                    await EvaluarPuntosRondaAsync();
+                    CambiarPantalla(PANTALLA_INICIO);
+                    ++RondaActual;
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                Console.WriteLine("La tarea fue cancelada.");
+            }
+            catch (Exception)
+            {
             }
             await TerminarPartidaAsync();
         }
@@ -273,7 +283,7 @@ namespace WcfServicioLibreria.Modelo
 
                     try
                     {
-                        lectorDisco?.EncolarLecturaEnvio(rutaImagen, callback, true);
+                        lectorDiscoOrquetador?.AsignarTrabajo(rutaImagen, callback, true);
                     }
                     catch (Exception)
                     {

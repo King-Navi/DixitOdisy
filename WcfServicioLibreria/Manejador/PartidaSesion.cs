@@ -23,10 +23,6 @@ namespace WcfServicioLibreria.Manejador
             {
                 IPartidaCallback contexto = contextoOperacion.GetCallbackChannel<IPartidaCallback>();
                 partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
-                if (partida.SeTerminoEsperaUnirse) //FIXME: Revisar si funciona
-                {
-                    return;
-                }
                 partida.AgregarJugador(gamertag, contexto);
                 await partida.AvisarNuevoJugadorAsync(gamertag);
                 partida.ConfirmarInclusionPartida(gamertag, contexto);

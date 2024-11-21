@@ -279,7 +279,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void ClicButtonEmpezarPartida(object sender, RoutedEventArgs e)
+        private async void ClicButtonEmpezarPartida(object sender, RoutedEventArgs e)
         {
             EvaluarCantidaRondas();
             EvaluarCondicionVictoria();
@@ -296,7 +296,7 @@ namespace WpfCliente.GUI
                 {
                     CrearChat(Singleton.Instance.IdPartida);
                     Conexion.SalaJugador.ComenzarPartidaAnfrition(Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala, Singleton.Instance.IdPartida);
-                    Task.Delay(TimeSpan.FromSeconds(SEGUNDOS_PARA_UNIRSE));
+                    await Task.Delay(TimeSpan.FromSeconds(SEGUNDOS_PARA_UNIRSE));
                     PartidaWindow partida = new PartidaWindow(Singleton.Instance.IdPartida);
                     partida.Show();
                     this.Hide();

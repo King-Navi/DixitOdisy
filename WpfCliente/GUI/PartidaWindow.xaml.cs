@@ -268,10 +268,13 @@ namespace WpfCliente.GUI
 
         public async void IniciarValoresPartidaCallback(bool seUnio)
         {
-            await SolicitarMazoAsync();
-            Conexion.Partida.EmpezarPartida(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
-            EsconderVentanaMenu();
-            await UnirseChat();
+            await System.Windows.Application.Current.Dispatcher.InvokeAsync(async () =>
+             {
+                await SolicitarMazoAsync();
+                Conexion.Partida.EmpezarPartida(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
+                EsconderVentanaMenu();
+                await UnirseChat();
+             });
         }
 
         public void RecibirGrupoImagenCallback(ImagenCarta imagen)

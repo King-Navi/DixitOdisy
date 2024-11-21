@@ -42,7 +42,7 @@ namespace WcfServicioLibreria.Modelo
         private const int PANTALLA_ESPERA = 7;
         #endregion PantallasCliente
         private const int CANTIDAD_MINIMA_JUGADORES = 1; // 2
-        private const int TIEMPO_ESPERA_UNIRSE_JUGADORES = 10;// 20
+        private const int TIEMPO_ESPERA_UNIRSE_JUGADORES = 20;// 20
         private const int TIEMPO_ESPERA_NARRADOR = 40; // 40
         private const int TIEMPO_ESPERA_SELECCION = 10; //60
         private const int TIEMPO_ESPERA_PARA_ADIVINAR = 10; //60
@@ -50,7 +50,7 @@ namespace WcfServicioLibreria.Modelo
         private const int NUM_JUGADOR_PARTIDA_VACIA = 0; //0
         private const int NUM_JUGADOR_NADIE_ACERTO = 0;//0
         private const int RONDAS_MINIMA_PARA_PUNTOS = 3; //3
-        private const int NUMERO_MINIMO_RONDAS = 6; //6
+        private const int NUMERO_MINIMO_RONDAS = 3; //3
         private const int LIMITE_CARTAS_MINIMO = 0; //0
         private const int NO_ARCHIVOS_RESTANTES = 0; //0
         private const int PUNTOS_RESTADOS_NO_PARTICIPAR = 1; //1
@@ -58,7 +58,7 @@ namespace WcfServicioLibreria.Modelo
         private const int PUNTOS_PENALIZACION_NARRADOR = 2; //2
         private const int PUNTOS_MAXIMOS_RECIBIDOS_CONFUNDIR = 3; //3
         private const int TIEMPO_MOSTRAR_ESTADISTICAS = 15; //10
-        private const int ID_INVALIDO = 0;
+        private const int ID_INVALIDO = 0; //0
         #endregion Constantes
         #region Atributos
 

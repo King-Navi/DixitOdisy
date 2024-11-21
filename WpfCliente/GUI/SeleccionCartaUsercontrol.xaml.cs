@@ -34,6 +34,7 @@ namespace WpfCliente.GUI
             Loaded += LoadedSeleccionCartaUsercontrol;
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             DataContext = this;
+            labelPista.Content = Properties.Idioma.labelEsperandoPista;
         }
 
    

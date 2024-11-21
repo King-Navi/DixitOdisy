@@ -35,47 +35,54 @@ namespace DAOLibreria.DAO
             {
                 return resultado;
             }
-            using (var context = new DescribeloEntities())
+            try
             {
-                using (var transaction = context.Database.BeginTransaction())
+                using (var context = new DescribeloEntities())
                 {
-                    try
+                    using (var transaction = context.Database.BeginTransaction())
                     {
-                        var usuarioCuenta = new UsuarioCuenta
+                        try
                         {
-                            gamertag = _usuarioCuenta.gamertag,
-                            hashContrasenia = _usuarioCuenta.hashContrasenia.ToUpper(),
-                            correo = _usuarioCuenta.correo
-                        };
-                        context.UsuarioCuenta.Add(usuarioCuenta);
-                        context.SaveChanges();
-                        var usuario = new Usuario
+                            var usuarioCuenta = new UsuarioCuenta
+                            {
+                                gamertag = _usuarioCuenta.gamertag,
+                                hashContrasenia = _usuarioCuenta.hashContrasenia.ToUpper(),
+                                correo = _usuarioCuenta.correo
+                            };
+                            context.UsuarioCuenta.Add(usuarioCuenta);
+                            context.SaveChanges();
+                            var usuario = new Usuario
+                            {
+                                gamertag = _usuario.gamertag,
+                                fotoPerfil = _usuario.fotoPerfil,
+                                ultimaConexion = null,
+                                idUsuarioCuenta = usuarioCuenta.idUsuarioCuenta
+                            };
+                            context.Usuario.Add(usuario);
+                            context.SaveChanges();
+                            var estadisticas = new Estadisticas
+                            {
+                                idUsuario = usuario.idUsuario
+                            };
+                            context.Estadisticas.Add(estadisticas);
+                            context.SaveChanges();
+                            transaction.Commit();
+                            resultado = true;
+                        }
+                        catch (Exception)
                         {
-                            gamertag = _usuario.gamertag,
-                            fotoPerfil = _usuario.fotoPerfil,
-                            ultimaConexion = null,
-                            idUsuarioCuenta = usuarioCuenta.idUsuarioCuenta
-                        };
-                        context.Usuario.Add(usuario);
-                        context.SaveChanges();
-                        var estadisticas = new Estadisticas
-                        {
-                            idUsuario = usuario.idUsuario
-                        };
-                        context.Estadisticas.Add(estadisticas);
-                        context.SaveChanges();
-                        transaction.Commit();
-                        resultado = true;
+                            transaction.Rollback();
+                            resultado = false;
+                        }
                     }
-                    catch (Exception)
-                    {
-                        transaction.Rollback();
-                        resultado = false;
-                    }
-                }
 
-                return resultado;
+                    return resultado;
+                }
             }
+            catch (Exception)
+            {
+            }
+            return false;
         }
         /// <summary>
         /// 
@@ -91,47 +98,55 @@ namespace DAOLibreria.DAO
             {
                 return resultado;
             }
-            using (var context = new DescribeloEntities())
+            try
             {
-                using (var transaction = context.Database.BeginTransaction())
+                using (var context = new DescribeloEntities())
                 {
-                    try
+                    using (var transaction = context.Database.BeginTransaction())
                     {
-                        var usuario = context.Usuario.Single(b => b.gamertag == usuarioEditado.NombreUsuario);
-                        var usuarioCuenta = context.UsuarioCuenta.Single(b => b.gamertag == usuarioEditado.NombreUsuario);
-                        if (usuario.idUsuario != usuarioEditado.IdUsuario)
+                        try
                         {
-                            return false;
+                            var usuario = context.Usuario.Single(b => b.gamertag == usuarioEditado.NombreUsuario);
+                            var usuarioCuenta = context.UsuarioCuenta.Single(b => b.gamertag == usuarioEditado.NombreUsuario);
+                            if (usuario.idUsuario != usuarioEditado.IdUsuario)
+                            {
+                                return false;
+                            }
+                            if (usuarioEditado.Correo != null)
+                            {
+                                usuario.UsuarioCuenta.correo = usuarioEditado.Correo;
+                                resultado = true;
+                            }
+                            if (usuarioEditado.FotoPerfil != null)
+                            {
+                                usuario.fotoPerfil = usuarioEditado.FotoPerfil;
+                                resultado = true;
+                            }
+                            if (usuarioEditado.HashContrasenia != null)
+                            {
+                                usuario.UsuarioCuenta.hashContrasenia = usuarioEditado.HashContrasenia;
+                                resultado = true;
+                            }
+                            context.SaveChanges();
+                            transaction.Commit();
                         }
-                        if (usuarioEditado.Correo != null)
+                        catch (Exception excepcion)
                         {
-                            usuario.UsuarioCuenta.correo = usuarioEditado.Correo;
-                            resultado = true;
+                            transaction.Rollback();
+                            //TODO: Manejar el error
+                            Console.WriteLine(excepcion);
+                            Console.WriteLine(excepcion.StackTrace);
                         }
-                        if (usuarioEditado.FotoPerfil != null)
-                        {
-                            usuario.fotoPerfil = usuarioEditado.FotoPerfil;
-                            resultado = true;
-                        }
-                        if (usuarioEditado.HashContrasenia != null)
-                        {
-                            usuario.UsuarioCuenta.hashContrasenia = usuarioEditado.HashContrasenia;
-                            resultado = true;
-                        }
-                        context.SaveChanges();
-                        transaction.Commit();
                     }
-                    catch (Exception excepcion)
-                    {
-                        transaction.Rollback();
-                        //TODO: Manejar el error
-                        Console.WriteLine(excepcion);
-                        Console.WriteLine(excepcion.StackTrace);
-                    }
-                }
 
-                return resultado;
+                    return resultado;
+                }
             }
+            catch (Exception)
+            {
+
+            }
+            return false;
         }
         /// <summary>
         /// 
@@ -163,9 +178,8 @@ namespace DAOLibreria.DAO
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                //TODO manejar excepcion
             }
 
             return resultado;
@@ -353,6 +367,29 @@ namespace DAOLibreria.DAO
                 Console.WriteLine($"Error general en EditarContraseniaPorGamertag: {ex.Message}");
             }
 
+            return resultado;
+        }
+
+        public static bool ColocarUltimaConexion(int idUsuario)
+        {
+            bool resultado = false;
+            try
+            {
+                using (var context = new DescribeloEntities())
+                {
+                    var usuario = context.Usuario.FirstOrDefault(b => b.idUsuario == idUsuario);
+                    if (usuario != null)
+                    {
+                        usuario.ultimaConexion = DateTime.Now;
+                        context.SaveChanges(); 
+                        resultado = true;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
             return resultado;
         }
     }

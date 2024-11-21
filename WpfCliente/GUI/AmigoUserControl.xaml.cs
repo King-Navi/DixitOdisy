@@ -33,6 +33,7 @@ namespace WpfCliente.GUI
             InitializeComponent();
             labelNombreAmigo.Content = amigo.Nombre;
             labelEstadoAmigo.Content = amigo.Estado;
+            labelUltimaConexion.Content = amigo.UltimaConexion;
             imageAmigo.Source = Imagen.ConvertirStreamABitmapImagen(amigo.Foto);
             SetFondoColorAleatorio();
             

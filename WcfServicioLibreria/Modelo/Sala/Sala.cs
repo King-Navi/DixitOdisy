@@ -16,10 +16,10 @@ namespace WcfServicioLibreria.Modelo
     public class Sala : IObservador
     {
         #region Campos
+        private const int SALA_VACIA = 0;
         private string idCodigoSala;
-        private string anfitrion;
         private const int CANTIDAD_MINIMA_JUGADORES = 3;
-        private const int CANTIDAD_MAXIMA_JUGADORES = 12;
+        private const int CANTIDAD_MAXIMA_JUGADORES = 6;
         private readonly ConcurrentDictionary<string, ISalaJugadorCallback> jugadoresSalaCallbacks = new ConcurrentDictionary<string, ISalaJugadorCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
         private ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario> jugadoresInformacion = new ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario>();
@@ -33,14 +33,15 @@ namespace WcfServicioLibreria.Modelo
         public static int CantidadMinimaJugadores => CANTIDAD_MINIMA_JUGADORES;
 
         public string IdCodigoSala { get => idCodigoSala; internal set => idCodigoSala = value; }
+        public string Anfitrion { get; private set; }
         #endregion Propiedades
 
         #region Contructores
         public Sala(string _idCodigoSala, string nombreUsuario)
         {
             this.IdCodigoSala = _idCodigoSala;
-            this.anfitrion = nombreUsuario;
-            jugadoresSalaCallbacks.TryAdd(nombreUsuario, null);
+            this.Anfitrion = nombreUsuario;
+            //jugadoresSalaCallbacks.TryAdd(nombreUsuario, null);
         }
 
         #endregion Contructores
@@ -60,7 +61,7 @@ namespace WcfServicioLibreria.Modelo
             return jugadoresSalaCallbacks.IsEmpty;
         }
 
-        private IReadOnlyCollection<string> ObtenerNombresJugadoresSala()
+        internal IReadOnlyCollection<string> ObtenerNombresJugadoresSala()
         {
             return jugadoresSalaCallbacks.Keys.ToList().AsReadOnly();
         }
@@ -91,11 +92,15 @@ namespace WcfServicioLibreria.Modelo
             jugadoresSalaCallbacks.TryRemove(nombreJugador, out ISalaJugadorCallback _);
             eventosCommunication.TryRemove(nombreJugador, out DesconectorEventoManejador eventosJugador);
             jugadoresInformacion.TryRemove(nombreJugador, out _);
+            if (nombreJugador.Equals(Anfitrion, StringComparison.OrdinalIgnoreCase) && !(SALA_VACIA ==ObtenerNombresJugadoresSala().Count))
+            {
+                DelegarRolAnfitrion();
+            }
             if (eventosJugador != null)
             {
                 eventosJugador.Desechar();
             }
-            if (ContarJugadores() == 0)
+            if (ContarJugadores() == SALA_VACIA)
             {
                 EliminarSala();
             }
@@ -125,18 +130,32 @@ namespace WcfServicioLibreria.Modelo
 
         }
 
-        bool DelegarRolAnfitrion(string nuevoAnfitrionNombre)
+        void DelegarRolAnfitrion()
         {
-            bool existeJugador = jugadoresSalaCallbacks.TryGetValue(nuevoAnfitrionNombre, out _);
-            if (!existeJugador)
+            if (jugadoresSalaCallbacks == null || !jugadoresSalaCallbacks.Any())
             {
-                return false;
+                return;
             }
-            anfitrion = nuevoAnfitrionNombre;
-            return anfitrion == nuevoAnfitrionNombre;
+            var jugadoresKeys = jugadoresSalaCallbacks.Keys.ToList();
+            Random random = new Random();
+            int indiceAleatorio = random.Next(jugadoresKeys.Count);
+            string jugadorClave = jugadoresKeys[indiceAleatorio];
+            Anfitrion = jugadorClave;
+            jugadoresSalaCallbacks.TryGetValue(jugadorClave, out ISalaJugadorCallback callback);
+            try
+            {
+                callback?.DelegacionRolCallback(true);
+            }
+            catch (Exception)
+            {
+                if (this is IObservador observador)
+                {
+                    observador.DesconectarUsuario(jugadorClave);
+                }
+            }
         }
 
-        void IObservador.DesconectarUsuario(string nombreJugador)
+        public void DesconectarUsuario(string nombreJugador)
         {
             AvisarRetiroJugador(nombreJugador);
             RemoverJugadorSala(nombreJugador);
@@ -211,6 +230,7 @@ namespace WcfServicioLibreria.Modelo
                 }
             }
         }
+
         private void AvisarRetiroJugador(string nombreUsuarioEliminado)
         {
             lock (jugadoresSalaCallbacks)
@@ -253,14 +273,14 @@ namespace WcfServicioLibreria.Modelo
         {
             bool resultado = false;
             //El anfitrion debe ir al final por la condicion de carrera
-            if (nombreSolicitante.Equals(anfitrion, StringComparison.OrdinalIgnoreCase))
+            if (nombreSolicitante.Equals(Anfitrion, StringComparison.OrdinalIgnoreCase))
             {
 
                 try
                 {
                     foreach (var nombre in ObtenerNombresJugadoresSala())
                     {
-                        if (!nombre.Equals(anfitrion, StringComparison.OrdinalIgnoreCase))
+                        if (!nombre.Equals(Anfitrion, StringComparison.OrdinalIgnoreCase))
                         {
                             //TODO: Al llamar al callback se salen de la sala lo que provoca que el observador llame a Desconectar()
                             //Y ocurra una null reference aqui

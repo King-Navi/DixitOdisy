@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using DAOLibreria;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -154,6 +155,40 @@ namespace Pruebas.Servidor
 
             // Assert
             Assert.IsFalse(resultado, "El método debería retornar false cuando los valores de gamertag y nuevaContrasenia son nulos.");
+        }
+        [TestMethod]
+        public void PingBD_CuandoHayConexion_RetornaTrue()
+        {
+            //Arrage
+            mockContextoProvedor = new Mock<IContextoOperacion>();
+            manejador = new ManejadorPrincipal(mockContextoProvedor.Object);
+            var resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-");
+            resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
+            if ((bool)fueExitoso)
+            {
+                Assert.Fail("La BD no está configurada.");
+            }
+            //Act
+            var respuesta= Task.Run(async() => await manejador.PingBDAsync());
+            //Assert
+            Assert.IsTrue(respuesta.Result, "El resutlado es true");
+        }
+        [TestMethod]
+        public void PingBD_CuandoNoHayConexion_RetornaFalse()
+        {
+            //Arrage
+            mockContextoProvedor = new Mock<IContextoOperacion>();
+            manejador = new ManejadorPrincipal(mockContextoProvedor.Object);
+            var resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "@-");
+            resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
+            if (!(bool)fueExitoso)
+            {
+                Assert.Fail("La BD no está configurada.");
+            }
+            //Act
+            var respuesta= Task.Run(async() => await manejador.PingBDAsync());
+            //Assert
+            Assert.IsFalse(respuesta.Result, "El resutlado es falase");
         }
     }
 }

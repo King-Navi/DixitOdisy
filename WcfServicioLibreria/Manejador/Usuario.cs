@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Utilidades;
@@ -15,7 +16,7 @@ namespace WcfServicioLibreria.Manejador
     {
         /// <summary>
         /// Metodo que desconecta a un jugador y lo elimna de memoria. 
-        ///  Despues de ejecutar este metodo el usario ya no existe en memoria acausa del dispose()
+        ///  Despues de ejecutar este metodo el usario ya no existe en memoria acausa del desechar()
         /// </summary>
         /// <param name="idJugador"></param>
         public void DesconectarUsuario(int idJugador)
@@ -33,12 +34,11 @@ namespace WcfServicioLibreria.Manejador
                             usuario.Desechar();
                         }
                     }
-
+                    UsuarioDAO.ColocarUltimaConexion(idJugador);
                 }
             }
-            catch (CommunicationException excepcion)
+            catch (Exception)
             {
-                //TODO : Manejar el error
             }
         }
 
@@ -127,6 +127,11 @@ namespace WcfServicioLibreria.Manejador
             return true;
         }
 
+        public async Task<bool> PingBDAsync()
+        {
+            return await DAOLibreria.ModeloBD.Conexion.VerificarConexionAsync();
+        }
+
         public WcfServicioLibreria.Modelo.Usuario ValidarCredenciales(string gamertag, string contrasenia)
         {
             WcfServicioLibreria.Modelo.Usuario usuario = null;
@@ -149,7 +154,6 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (Exception ex)
             {
-                //TODO manejar la excepcion
             }
 
             return usuario;

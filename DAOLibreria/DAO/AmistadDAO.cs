@@ -33,12 +33,8 @@ namespace DAOLibreria.DAO
                     resultado = consultaUsuario;
                 }
             }
-            catch (Exception excepcion)
+            catch (Exception)
             {
-                //TODO: Manejar el error
-                Console.WriteLine(excepcion);
-                Console.WriteLine(excepcion.StackTrace);
-                throw;
             }
             return resultado;
         }
@@ -72,6 +68,7 @@ namespace DAOLibreria.DAO
 
         public static bool SonAmigos(int idUsuario1, int idUsuario2)
         {
+            //TODO: Se necessita manejar el error de no BD
             using (var context = new DescribeloEntities())
             {
                 return context.Amigo.Any(a =>

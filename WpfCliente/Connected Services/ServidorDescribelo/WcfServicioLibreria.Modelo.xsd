@@ -40,6 +40,7 @@
       <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Enumerador" minOccurs="0" name="Estado" type="q2:EstadoAmigo" />
       <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="Foto" nillable="true" type="q3:Stream" />
       <xs:element minOccurs="0" name="Nombre" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UltimaConexion" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Amigo" nillable="true" type="tns:Amigo" />
@@ -111,4 +112,16 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="InvitacionPartida" nillable="true" type="tns:InvitacionPartida" />
+  <xs:complexType name="Estadistica">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PartidasAnimalesJugadas" type="xs:int" />
+      <xs:element minOccurs="0" name="PartidasEspacioJugadas" type="xs:int" />
+      <xs:element minOccurs="0" name="PartidasGanadas" type="xs:int" />
+      <xs:element minOccurs="0" name="PartidasJugadas" type="xs:int" />
+      <xs:element minOccurs="0" name="PartidasMitologiaJugadas" type="xs:int" />
+      <xs:element minOccurs="0" name="PartidasMixtaJugadas" type="xs:int" />
+      <xs:element minOccurs="0" name="PartidasPaisesJugadas" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Estadistica" nillable="true" type="tns:Estadistica" />
 </xs:schema>

@@ -15,6 +15,8 @@ namespace WcfServicioLibreria.Modelo
         [DataMember]
         public string Nombre { get; set; }
         [DataMember]
+        public string UltimaConexion { get; set; }
+        [DataMember]
         public Enumerador.EstadoAmigo Estado { get; set; }
 
 

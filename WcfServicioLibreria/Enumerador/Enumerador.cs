@@ -47,6 +47,8 @@ namespace WcfServicioLibreria.Enumerador
         [EnumMember]
         Paises,
         [EnumMember]
-        Mitologia
+        Mitologia,
+        [EnumMember]
+        Espacio
     }
 }

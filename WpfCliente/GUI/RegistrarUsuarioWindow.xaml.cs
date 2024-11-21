@@ -66,8 +66,13 @@ namespace WpfCliente.GUI
             ActualizarUI();
         }
 
-        private void ButtonClicRegistrarUsuario(object sender, RoutedEventArgs e)
+        private async void ButtonClicRegistrarUsuario(object sender, RoutedEventArgs e)
         {
+            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+            if (!conexionExitosa)
+            {
+                return;
+            }
             CrearCuenta();
         }
 

@@ -17,8 +17,10 @@ namespace WcfServicioLibreria.Contratos
         Task UnirsePartida(string gamertag, string idPartida);
         [OperationContract(IsOneWay = true)]
         void ConfirmarMovimiento(string nombreJugador, string idPartida , string claveImagen, string pista = null);
+        [OperationContract]
+        void TratarAdivinar(string nombreJugador, string idPartida, string claveImagen);
         [OperationContract(IsOneWay = true)]
-        void ExpulsarJugador(string nombreJugador, string idPartida);
+        void ExpulsarJugadorPartida(string nombreJugador, string idPartida);
         [OperationContract]
         Task<bool> SolicitarImagenCartaAsync(string nombreJugador, string idPartida);
         [OperationContract(IsOneWay = true)]

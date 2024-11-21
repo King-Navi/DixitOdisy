@@ -28,7 +28,20 @@
             <Button x:Name="buttonConfigurarPartida" Content="Configurar partida" Margin="5" FontFamily="Lucida Sans Unicode" BorderThickness="2" BorderBrush="Black" Background="AntiqueWhite" Click="ClicButtonConfigurarPartida"/>
             <Button x:Name="buttonEmpezarPartida" Content="Empezar partida" Margin="5" Click="ClicButtonEmpezarPartida" FontFamily="Lucida Sans Unicode" BorderThickness="2" BorderBrush="Black" Background="AntiqueWhite"/>
         </StackPanel>
-        
+        <!-- Botones para expulsar -->
+        <StackPanel x:Name="stakePaneListaExpulsion" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="100,0,0,0" Background="Coral">
+            <Label x:Name="labelExpulsarUsuario" d:Content="Expulsar usuario"></Label>
+            <!-- ItemsControl para generar botones dinámicos -->
+            <ItemsControl ItemsSource="{Binding JugadoresSala}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Botón dinámico -->
+                        <Button FontFamily="Lucida Sans Unicode" BorderThickness="2" BorderBrush="Black" Background="AntiqueWhite" Content="{Binding Nombre}" Margin="5" Click="ClicButtonEliminarUsuario" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+
         <Label x:Name="labelCodigoSala" Content="Código de la sala:" FontFamily="ROG Fonts" FontSize="16" 
                    HorizontalContentAlignment="Left" ToolTip="Haga clic para copiar el código" HorizontalAlignment="Left" VerticalAlignment="Top"
                    MouseLeftButtonUp="LabelCodigoSala_MouseLeftButtonUp" Width="257" Height="73" Margin="0,5,0,0"/>

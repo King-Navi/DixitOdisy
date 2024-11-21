@@ -459,4 +459,7 @@
   <data name="mensajeSolicitudAmistadRechazada" xml:space="preserve">
     <value>Rechazaste la solicitud de amistad de </value>
   </data>
+  <data name="labelEsperandoPista" xml:space="preserve">
+    <value>Esperando pista...</value>
+  </data>
 </root>

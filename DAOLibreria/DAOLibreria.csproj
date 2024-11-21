@@ -81,11 +81,15 @@
   <ItemGroup>
     <Compile Include="ConfiguradorConexion.cs" />
     <Compile Include="DAO\AmistadDAO.cs" />
+    <Compile Include="DAO\EstadisticasDAO.cs" />
     <Compile Include="DAO\UsuarioDAO.cs" />
-    <Compile Include="Excepciones\GamertagDuplicado.cs" />
+    <Compile Include="Excepciones\ActividadSospechosaExcepcion.cs" />
+    <Compile Include="Excepciones\GamertagDuplicadoExcepcion.cs" />
+    <Compile Include="Excepciones\PropiedadesNulasExcepcion.cs" />
     <Compile Include="ModeloBD\Amigo.cs">
       <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModeloBD\Conexion.cs" />
     <Compile Include="ModeloBD\DescribeloBD.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -104,6 +108,7 @@
     <Compile Include="ModeloBD\Estadisticas.cs">
       <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModeloBD\EstadisticasAcciones.cs" />
     <Compile Include="ModeloBD\Expulsion.cs">
       <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>

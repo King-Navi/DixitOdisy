@@ -142,7 +142,7 @@ namespace WpfCliente.GUI
             }
             if (codigoSala != null)
             {
-                if (Validacion.ExisteSala(codigoSala))
+                if (ValidacionExistenciaJuego.ExisteSala(codigoSala))
                 {
                     AbrirVentanaSala(codigoSala);
                     return;

@@ -37,6 +37,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ChatGPTLibreria, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Librerias\ChatGPTLibreria.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -44,6 +48,10 @@
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Librerias\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -58,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contratos\IServicioCorreo.cs" />
+    <Compile Include="Contratos\IServicioEstadisticas.cs" />
     <Compile Include="Contratos\IServicioInvitacionPartida.cs" />
     <Compile Include="Contratos\IServicioPartida.cs" />
     <Compile Include="Contratos\IServicioAmistad.cs" />
@@ -70,9 +79,11 @@
     <Compile Include="Contratos\IServicioSala.cs" />
     <Compile Include="Contratos\IServicioSalaJugador.cs" />
     <Compile Include="Manejador\Correo.cs" />
+    <Compile Include="Manejador\Estadisticas.cs" />
     <Compile Include="Manejador\InvitacionPartida.cs" />
     <Compile Include="Manejador\Partida.cs" />
     <Compile Include="Manejador\PartidaSesion.cs" />
+    <Compile Include="Modelo\Estadisticas\Estadistica.cs" />
     <Compile Include="Modelo\Evento\ActualizarAmgioEventArgs.cs" />
     <Compile Include="Enumerador\Enumerador.cs" />
     <Compile Include="Modelo\Evento\MultiChatVacioEventArgs.cs" />
@@ -101,6 +112,7 @@
     <Compile Include="Modelo\Partida\CondicionVictoriaCartasAgotadas .cs" />
     <Compile Include="Modelo\Partida\ConfiguracionPartida.cs" />
     <Compile Include="Modelo\Partida\EstadisticasPartida.cs" />
+    <Compile Include="Modelo\Partida\JugadorEstadisticasBase.cs" />
     <Compile Include="Modelo\Partida\LecturaTrabajo.cs" />
     <Compile Include="Modelo\Partida\PartidaGestorRondas.cs" />
     <Compile Include="Modelo\Partida\ICondicionVictoria.cs" />
@@ -123,7 +135,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ChatGPTLibreria1\ChatGPTLibreria\ChatGPTLibreria.csproj">
+    <ProjectReference Include="..\..\ChatGPTLibreria\ChatGPTLibreria\ChatGPTLibreria.csproj">
       <Project>{1db22d68-dec2-4b15-81bb-19794b7e8000}</Project>
       <Name>ChatGPTLibreria</Name>
     </ProjectReference>
@@ -134,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Librerias\ChatGPTLibreria.dll" />
+    <Content Include="Librerias\ChatGPTLibreria.pdb" />
     <Content Include="Librerias\Newtonsoft.Json.dll" />
     <Content Include="Recursos\Animales\0b7806d1-133c-42f2-9c46-cb4021a35748.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

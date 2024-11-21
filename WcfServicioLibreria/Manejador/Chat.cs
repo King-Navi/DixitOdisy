@@ -14,12 +14,21 @@ namespace WcfServicioLibreria.Manejador
             try
             {
                 bool existeSala = chatDiccionario.TryGetValue(idChat, out Chat chat);
-                if (existeSala)
+                if (chat is MultiChat multiChat && existeSala)
                 {
-                    MultiChat multiChat = (MultiChat)chat;
+
+                    foreach (var nombreJugadorEnSala in multiChat.ObtenerNombresJugadoresChat())
+                    {
+                        if (nombreJugadorEnSala.Equals(nombreUsuario, StringComparison.OrdinalIgnoreCase))
+                        {
+                            return false;
+                        }
+                    }
                     IChatCallback contexto = contextoOperacion.GetCallbackChannel<IChatCallback>();
-                    return multiChat.AgregarJugadorChat(nombreUsuario, contexto);
+                        return multiChat.AgregarJugadorChat(nombreUsuario, contexto);
+                    
                 }
+               
 
             }
             catch (CommunicationException excepcion)

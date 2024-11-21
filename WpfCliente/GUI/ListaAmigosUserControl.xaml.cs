@@ -88,7 +88,7 @@ namespace WpfCliente.GUI
 
         public void ObtenerPeticionAmistadCallback(SolicitudAmistad nuevaSolicitudAmistad)
         {
-            
+
         }
 
         public void ObtenerAmigoCallback(Amigo amigo)
@@ -99,7 +99,10 @@ namespace WpfCliente.GUI
             }
             else
             {
-                // Agregar el amigo a la colección ObservableCollection, esto actualizará automáticamente el ItemsControl
+                if (amigo.Estado != EstadoAmigo.Desconectado)
+                {
+                    amigo.UltimaConexion = "";
+                }
                 Amigos.Add(amigo);
             }
         }
@@ -114,14 +117,12 @@ namespace WpfCliente.GUI
             var amigoExistente = Amigos.FirstOrDefault(a => a.Nombre == amigo.Nombre);
             if (amigoExistente != null)
             {
-                // Actualizar las propiedades del amigo encontrado
                 amigoExistente.Estado = amigo.Estado;
                 amigoExistente.Foto = amigo.Foto;
-
-                // más propiedades que actualizar aquí
-
-                // Notificar cambios en la colección
-                // Si la clase Amigo implementa INotifyPropertyChanged, el ItemsControl se actualizará automáticamente. (Amigo es partial de WCF y parece que a la implemeta ¿¿??)
+                if (amigoExistente.Estado != EstadoAmigo.Desconectado)
+                {
+                    amigoExistente.UltimaConexion = "";
+                }
             }
             else
             {

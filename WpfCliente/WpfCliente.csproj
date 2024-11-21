@@ -173,6 +173,7 @@
     <Compile Include="GUI\PerfilMenuDesplegableUserControl.xaml.cs">
       <DependentUpon>PerfilMenuDesplegableUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilidad\RecursosCompartidosPartida.cs" />
     <Compile Include="GUI\RegistrarUsuarioWindow.xaml.cs">
       <DependentUpon>RegistrarUsuarioWindow.xaml</DependentUpon>
     </Compile>
@@ -206,6 +207,7 @@
     <Compile Include="Interfaz\IHabilitadorBotones.cs" />
     <Compile Include="Utilidad\ComandoRele.cs" />
     <Compile Include="Utilidad\Correo.cs" />
+    <Compile Include="Utilidad\EstaditicaUsuario.cs" />
     <Compile Include="Utilidad\Servidor\ChatMensaje.cs" />
     <Compile Include="Utilidad\Conexion.cs" />
     <Compile Include="Utilidad\CambiarIdioma.cs" />
@@ -230,7 +232,7 @@
     <Compile Include="Utilidad\ServicioManejador.cs" />
     <Compile Include="Utilidad\Servidor\ImagenCarta.cs" />
     <Compile Include="Utilidad\Singleton.cs" />
-    <Compile Include="Utilidad\Validacion.cs" />
+    <Compile Include="Utilidad\ValidacionExistenciaJuego.cs" />
     <Compile Include="Utilidad\ValidacionesString.cs" />
     <Compile Include="Utilidad\VentanaMediador.cs" />
     <Compile Include="Utilidad\VentanasEmergentes.cs" />
@@ -260,6 +262,9 @@
     <None Include="Connected Services\ServidorDescribelo\System.IO.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\ServidorDescribelo\System.Threading.Tasks.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\ServidorDescribelo\System.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -271,6 +276,9 @@
     </None>
     <None Include="Connected Services\ServidorDescribelo\WcfServicioLibreria.Modelo.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ServidorDescribelo\WpfCliente.ServidorDescribelo.Estadistica.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\ServidorDescribelo\WpfCliente.ServidorDescribelo.Usuario.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>

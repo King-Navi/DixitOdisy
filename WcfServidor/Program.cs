@@ -20,25 +20,15 @@ namespace WcfServidor
         }
         private void IniciarServidor()
         {
-            var manejadorPrincipal = new ManejadorPrincipal(); // Instancia de ManejadorPrincipal
+            var manejadorPrincipal = new ManejadorPrincipal();
 
             using (ServiceHost host = new DescribeloServiceHost(manejadorPrincipal, typeof(WcfServicioLibreria.Manejador.ManejadorPrincipal)))
             {
                 host.Open();
                 Console.WriteLine("Servidor corriendo. Presiona una tecla para mostrar el menú...");
                 Menu();
-                host.Close(); // Se llama a OnClosing y luego a OnClosed automáticamente creo
+                host.Close(); 
             }
-            //using (ServiceHost host = new ServiceHost(typeof(WcfServicioLibreria.Manejador.ManejadorPrincipal)))
-            //{
-            //    host.Open();
-            //    Console.WriteLine("Servidor corriedo");
-            //    Console.WriteLine("Presiona 9 tecla para atraparlo...");
-            //    Menu();
-            //    host.Close();
-
-            //}
-
         }
         private void Menu()
         {

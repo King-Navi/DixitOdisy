@@ -25,6 +25,18 @@ namespace WcfServidor
 
         }
 
+        public List<string> jugadoresConectados()
+        {
+            List<string> strings = new List<string>();
+            //TODO:
+            //foreach (var item in _manejadorPrincipal.)
+            //{
+
+            //}
+
+            return strings;
+        }
+
         protected override void OnClosing()
         {
             _manejadorPrincipal.CerrarAplicacion(); 

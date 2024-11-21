@@ -27,6 +27,7 @@ namespace WpfCliente.GUI
         private string nombre;
         private BitmapImage bitmapImage;
 
+        
         public UsuarioUserControl()
         {
             InitializeComponent();

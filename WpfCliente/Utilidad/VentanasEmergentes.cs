@@ -29,6 +29,7 @@ namespace WpfCliente.Utilidad
             );
             ventanaEmergente.Owner = window;  
             ventanaEmergente.ShowDialog();
+            CerrarSiNoEsInicioSesion(window);
         }
 
         public static void CrearVentanaEmergenteErrorBD(Window window)
@@ -42,6 +43,7 @@ namespace WpfCliente.Utilidad
             );
             ventanaEmergente.Owner = window;
             ventanaEmergente.Show();
+            CerrarSiNoEsInicioSesion(window);
         }
 
 
@@ -214,6 +216,14 @@ namespace WpfCliente.Utilidad
             ventanaEmergente.Owner = window;
             ventanaEmergente.ShowDialog();
             window.Close();
+        }
+
+        private static void CerrarSiNoEsInicioSesion(Window window)
+        {
+            if (!(window is IniciarSesion))
+            {
+                window.Close();
+            }
         }
     }
 }

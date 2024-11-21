@@ -4,6 +4,7 @@ using DAOLibreria.Excepciones;
 using DAOLibreria.ModeloBD;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Pruebas.DAO.Utilidades;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -18,20 +19,8 @@ using WcfServicioLibreria.Modelo.Excepciones;
 namespace Pruebas.DAO
 {
     [TestClass]
-    public class UsuarioDAO_Prueba
+    public class UsuarioDAO_Prueba : ConfiguracionPruebaBD
     {
-        [TestInitialize]
-        public void ConfigurarPruebas()
-        {
-            Dictionary<string, object> resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-");
-            resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje);
-            Console.WriteLine((string)mensaje);
-            resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
-            if ((bool)fueExitoso)
-            {
-                Assert.Fail("La BD no está configurada.");
-            }
-        }
         #region RegistrarNuevoUsuario
         [TestMethod]
         public void RegistrarNuevoUsuario_CuandoLosGamertagsCoinciden_DeberiaRegistrar()
@@ -278,6 +267,8 @@ namespace Pruebas.DAO
         }
         #endregion
 
+        #region VerificarCorreoConGamertag
+
         [TestMethod]
         public void VerificarCorreoConGamertag_CuandoCoinciden_DeberiaRetornarTrue()
         {
@@ -347,5 +338,59 @@ namespace Pruebas.DAO
             // Assert
             Assert.IsFalse(resultado, "El método debería retornar false cuando el gamertag y la nueva contraseña son nulos.");
         }
+        #endregion VerificarCorreoConGamertag
+
+        #region ColocarUltimaConexion
+
+        [TestMethod]
+        public void ColocarUltimaConexion_UsuarioExistente_DeberiaActualizarUltimaConexion()
+        {
+            // Arrange
+            // Precondición: Este ID no debe existir en la base de datos
+            int idUsuarioExistente = 1;
+            DateTime antesDeLlamar = DateTime.Now;
+
+            // Act
+            bool resultado = DAOLibreria.DAO.UsuarioDAO.ColocarUltimaConexion(idUsuarioExistente);
+
+            // Assert
+            Assert.IsTrue(resultado, "El método debería retornar true para un usuario existente.");
+
+            using (var context = new DescribeloEntities())
+            {
+                var usuario = context.Usuario.FirstOrDefault(u => u.idUsuario == idUsuarioExistente);
+                Assert.IsNotNull(usuario, "El usuario debería existir en la base de datos.");
+                Assert.IsTrue(usuario.ultimaConexion >= antesDeLlamar, "La fecha de última conexión no se actualizó correctamente.");
+            }
+        }
+
+        [TestMethod]
+        public void ColocarUltimaConexion_UsuarioInexistente_DeberiaRetornarFalse()
+        {
+            // Arrange
+            // Precondición: Este ID no debe existir en la base de datos
+            int idUsuarioInexistente = -1; 
+
+            // Act
+            bool resultado = DAOLibreria.DAO.UsuarioDAO.ColocarUltimaConexion(idUsuarioInexistente);
+
+            // Assert
+            Assert.IsFalse(resultado, "El método debería retornar false para un usuario inexistente.");
+        }
+        [TestMethod]
+        public void ColocarUltimaConexion_IdCero_DeberiaRetornarFalse()
+        {
+            // Arrange
+            // Precondición: Este ID no debe existir en la base de datos
+            int idUsuarioInexistente = 0; 
+
+            // Act
+            bool resultado = DAOLibreria.DAO.UsuarioDAO.ColocarUltimaConexion(idUsuarioInexistente);
+
+            // Assert
+            Assert.IsFalse(resultado, "El método debería retornar false para un usuario inexistente.");
+        }
+
+        #endregion
     }
 }

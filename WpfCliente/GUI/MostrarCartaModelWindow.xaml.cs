@@ -25,7 +25,6 @@ namespace WpfCliente.GUI
             if (!esNarrador)
             {
                 textBoxPista.Visibility = Visibility.Collapsed;
-                buttonPista.Visibility = Visibility.Collapsed;
             }
 
         }

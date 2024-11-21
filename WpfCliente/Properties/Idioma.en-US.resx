@@ -459,4 +459,7 @@
   <data name="mensajeSolicitudAmistadRechazada" xml:space="preserve">
     <value>You rejected the friend request from </value>
   </data>
+  <data name="labelEsperandoPista" xml:space="preserve">
+    <value>Waiting for clue...</value>
+  </data>
 </root>

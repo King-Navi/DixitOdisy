@@ -53,6 +53,9 @@ namespace WpfCliente.GUI
             textBoxContrasenia.IsEnabled = esValido;
             buttonIniciarSesion.IsEnabled = esValido;
             buttonRegistrar.IsEnabled = esValido;
+            cambiarIdiomaUserControl.IsEnabled = esValido;
+            buttonJugarComoInvitado.IsEnabled = esValido;
+            buttonOlvidarContrasenia.IsEnabled= esValido;
         }
 
         private void buttonRegistrar_Click(object sender, RoutedEventArgs e)
@@ -146,7 +149,7 @@ namespace WpfCliente.GUI
             }
             if (codigoSala != null)
             {
-                if (Validacion.ExisteSala(codigoSala))
+                if (ValidacionExistenciaJuego.ExisteSala(codigoSala))
                 {
                     Singleton.Instance.NombreUsuario = Utilidades.GenerarGamertagInvitado();
                     AbrirVentanaSala(codigoSala);
@@ -285,9 +288,17 @@ namespace WpfCliente.GUI
 
         private void AbrirVentanaMenu()
         {
-            MenuWindow nuevaVentana = new MenuWindow();
-            nuevaVentana.Show();
-            this.Close();
+            try
+            {
+                MenuWindow nuevaVentana = new MenuWindow();
+                nuevaVentana.Show();
+                this.Close();
+            }
+            catch (Exception)
+            {
+
+                
+            }
         }
 
         private void passwordBoxKeyDown(object sender, System.Windows.Input.KeyEventArgs e)

@@ -108,7 +108,7 @@
 
             <Image Source="/Recursos/cajaLogin.png" Stretch="Fill" HorizontalAlignment="Left" Height="66" Margin="953,13,0,0" VerticalAlignment="Top" Width="234"/>
 
-            <local:CambiarIdiomaMenuDesplegable Margin="0,28,32,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <local:CambiarIdiomaMenuDesplegable x:Name="cambiarIdiomaUserControl" Margin="0,28,32,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
 
 
         </Grid>

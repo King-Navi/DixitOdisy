@@ -277,7 +277,6 @@ namespace WpfCliente.GUI
                 this.Close();
                 return;
             }
-            this.Hide();
             ventanaSala.Closed += (s, args) => {
                 if (!Conexion.CerrarConexionesSalaConChat())
                 {
@@ -311,8 +310,9 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void buttonOlvidarContrasenia_Click(object sender, RoutedEventArgs e)
+        private async void buttonOlvidarContrasenia_Click(object sender, RoutedEventArgs e)
         {
+            //TODO: REVISAR RED
             OlvidarContrasenia();
         }
 

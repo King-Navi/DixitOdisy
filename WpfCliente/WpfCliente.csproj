@@ -228,6 +228,7 @@
     <Compile Include="Utilidad\Imagen.cs" />
     <Compile Include="Utilidad\LoggerManager.cs" />
     <Compile Include="Utilidad\ManejadorExcepciones.cs" />
+    <Compile Include="Utilidad\Servidor\Usuario.cs" />
     <Compile Include="Utilidad\Utilidades.cs" />
     <Compile Include="Utilidad\ServicioManejador.cs" />
     <Compile Include="Utilidad\Servidor\ImagenCarta.cs" />

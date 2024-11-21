@@ -23,11 +23,52 @@ namespace WpfCliente.GUI
     /// <summary>
     /// Interaction logic for ResumenRondaUserControl.xaml
     /// </summary>
-    public partial class ResumenRondaUserControl : UserControl
+    public partial class ResumenRondaUserControl : UserControl, INotifyPropertyChanged
     {
         //TODO: esto es solo si no queremos mostrar los nombres
+        private Usuario _primerLugar;
+        public Usuario PrimerLugar
+        {
+            get => _primerLugar;
+            set
+            {
+                _primerLugar = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Usuario _segundoLugar;
+        public Usuario SegundoLugar
+        {
+            get => _segundoLugar;
+            set
+            {
+                _segundoLugar = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Usuario _tercerLugar;
+        public Usuario TercerLugar
+        {
+            get => _tercerLugar;
+            set
+            {
+                _tercerLugar = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ObservableCollection<Usuario> JugadorEstadisticas { get; set; }
         public ObservableCollection<string> Podio { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public ResumenRondaUserControl()
         {
             InitializeComponent();
@@ -42,25 +83,21 @@ namespace WpfCliente.GUI
         }
         public void MostrarEnPodio(Usuario primerLugar, Usuario segundoLugar, Usuario tercerLugar)
         {
-            labelPrimerLugar.Content = "CAMBIIIIIIIIIIIII";
-            if (labelPrimerLugar != null)
+            if (primerLugar != null)
             {
-                labelPrimerLugar.Content = "Podio actualizado"; // Confirmar que el cambio es visible
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    labelPrimerLugar.Content = "Podio actualizado desde Dispatcher";
-                });
+                Podio[0] = primerLugar?.Nombre ?? "No hay primer lugar";
+                PrimerLugar = Imagen.EsImagenValida(primerLugar.FotoUsuario) ? primerLugar : null; 
             }
-            else
+            if (segundoLugar != null)
             {
-                MessageBox.Show("labelPrimerLugar no está inicializado");
+                Podio[1] = segundoLugar?.Nombre ?? "No hay segundo lugar";
+                SegundoLugar = Imagen.EsImagenValida(segundoLugar.FotoUsuario) ? segundoLugar : null; 
             }
-
-
-            //Podio[0] = primerLugar?.Nombre ?? "No hay primer lugar"; // Primer lugar
-            //Podio[1] = segundoLugar?.Nombre ?? "No hay segundo lugar"; // Segundo lugar
-            //Podio[2] = tercerLugar?.Nombre ?? "No hay tercer lugar"; // Tercer lugar
-
+            if (tercerLugar != null)
+            {
+                Podio[2] = tercerLugar?.Nombre ?? "No hay tercer lugar";
+                TercerLugar = Imagen.EsImagenValida(tercerLugar.FotoUsuario) ? tercerLugar : null; 
+            }
         }
     }
 }

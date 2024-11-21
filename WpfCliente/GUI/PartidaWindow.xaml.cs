@@ -141,6 +141,7 @@ namespace WpfCliente.GUI
             gridPantalla2.Children.Add(seleccionCartasUserControl);
             gridPantalla3.Children.Add(narradorSeleccionCartasUserControl);
             gridPantalla4.Children.Add(verTodasCartasUserControl);
+            gridPantalla5.Children.Add(resumenRondaUserControl);
             PantallaActual = PANTALLA_INICIO;
         }
 
@@ -337,7 +338,7 @@ namespace WpfCliente.GUI
         public void HabilitarBotones(bool esVasible)
         {
             seleccionCartasUserControl.IsEnabled = esVasible;
-            userControlResumenRonda.IsEnabled = esVasible;
+            resumenRondaUserControl.IsEnabled = esVasible;
             narradorSeleccionCartasUserControl.IsEnabled = esVasible;
             verTodasCartasUserControl.IsEnabled = esVasible;
         }

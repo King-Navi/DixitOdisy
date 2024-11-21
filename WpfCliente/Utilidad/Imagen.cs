@@ -69,6 +69,24 @@ namespace WpfCliente.Utilidad
                 return false;
             };
         }
+        internal static bool EsImagenValida(Stream image)
+        {
+            try
+            {
+                BitmapImage bitmap = new BitmapImage();
+                
+                    bitmap.BeginInit();
+                    bitmap.StreamSource = image;
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+                
+                return true;
+            }
+            catch
+            {
+                return false;
+            };
+        }
 
         internal static string SelecionarRutaImagen()
         {

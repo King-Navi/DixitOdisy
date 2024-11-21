@@ -77,7 +77,6 @@
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
-            <local:ResumenRondaUserControl x:Name="userControlResumenRonda"></local:ResumenRondaUserControl>
         </Grid>
 
 

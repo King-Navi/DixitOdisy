@@ -13,7 +13,7 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class IniciarSesion : Window, IActualizacionUI
+    public partial class IniciarSesion : Window, IActualizacionUI, IHabilitadorBotones
     {
 
         public IniciarSesion()
@@ -49,7 +49,7 @@ namespace WpfCliente.GUI
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
         }
 
-        private void HabilitarBotones(bool esValido)
+        public void HabilitarBotones(bool esValido)
         {
             textBoxUsuario.IsEnabled = esValido;
             textBoxContrasenia.IsEnabled = esValido;
@@ -69,17 +69,14 @@ namespace WpfCliente.GUI
 
         private async void buttonIniciarSesion_Click(object sender, RoutedEventArgs e)
         {
-            bool esValido = true;
-            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
-            if (!conexionExitosa)
-            {
-                HabilitarBotones(esValido);
-                return;
-            }
             if (ValidarCampos())
             {
+                bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+                if (!conexionExitosa)
+                {
+                    return;
+                }
                 TryIniciarSesion();
-
             }
             else
             {

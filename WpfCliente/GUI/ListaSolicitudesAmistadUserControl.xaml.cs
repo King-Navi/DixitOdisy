@@ -24,7 +24,7 @@ namespace WpfCliente.GUI
     /// <summary>
     /// Lógica de interacción para ListaSolicitudesAmistadUserControl.xaml
     /// </summary>
-    public partial class ListaSolicitudesAmistadUserControl : UserControl, IActualizacionUI
+    public partial class ListaSolicitudesAmistadUserControl : UserControl, IActualizacionUI, IHabilitadorBotones
     {
         public ObservableCollection<SolicitudAmistad> Solicitudes { get; set; } = new ObservableCollection<SolicitudAmistad>();
         public ListaSolicitudesAmistadUserControl()
@@ -84,9 +84,9 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void HabilitarBotones(bool v)
+        public void HabilitarBotones(bool esHabilitado)
         {
-            //TODO
+            
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)

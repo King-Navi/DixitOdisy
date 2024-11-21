@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfCliente.Interfaz;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
@@ -20,7 +21,7 @@ namespace WpfCliente.GUI
     /// <summary>
     /// Lógica de interacción para SolicitudAmistadUserControl.xaml
     /// </summary>
-    public partial class SolicitudAmistadUserControl : UserControl
+    public partial class SolicitudAmistadUserControl : UserControl, IHabilitadorBotones
     {
         private SolicitudAmistad solicitudAmistadActual;
 
@@ -114,7 +115,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void HabilitarBotones(bool esHabilitado)
+        public void HabilitarBotones(bool esHabilitado)
         {
             buttonAceptar.IsEnabled = esHabilitado; 
             buttonRechazar.IsEnabled = esHabilitado;

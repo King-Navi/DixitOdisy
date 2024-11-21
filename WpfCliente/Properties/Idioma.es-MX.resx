@@ -462,4 +462,16 @@
   <data name="labelEsperandoPista" xml:space="preserve">
     <value>Esperando pista...</value>
   </data>
+  <data name="labelNumeroRondas" xml:space="preserve">
+    <value>Número de rondas</value>
+  </data>
+  <data name="buttonGuardarCambios" xml:space="preserve">
+    <value>Guardar cambios</value>
+  </data>
+  <data name="buttonFinCartas" xml:space="preserve">
+    <value>Hasta que se acaben las cartas</value>
+  </data>
+  <data name="buttonFinRondas" xml:space="preserve">
+    <value>Hasta que se acaben las rondas</value>
+  </data>
 </root>

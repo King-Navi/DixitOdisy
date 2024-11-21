@@ -23,7 +23,7 @@ namespace WpfCliente.GUI
     /// <summary>
     /// Lógica de interacción para AmigosWindow.xaml
     /// </summary>
-    public partial class AmigosWindow : Window
+    public partial class AmigosWindow : Window, IHabilitadorBotones
     {
         private int contadorClics = 0;
         private const int LIMITE_CLICS = 2;
@@ -58,18 +58,25 @@ namespace WpfCliente.GUI
                 ListaSolicitudesAmistadUserControl nuevaListaSolicitudes = new ListaSolicitudesAmistadUserControl();
                 contenedorPadre.Children.Add(nuevaListaSolicitudes);
 
-                listaSolicitudesAmistadUserControl = nuevaListaSolicitudes; 
+                listaSolicitudesAmistadUserControl = nuevaListaSolicitudes;
             }
         }
 
         private void NuevaSolicitud_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            TryEnviarSolicitud();            
+            TryEnviarSolicitud();
         }
 
         private async void TryEnviarSolicitud()
         {
             string gamertagSolicitud = AbrirVentanaModalGamertag();
+
+            var resultado = await Conexion.VerificarConexion(HabilitarBotones, this);
+            if (!resultado)
+            {
+                return;
+            }
+
             if (gamertagSolicitud != null && gamertagSolicitud != Singleton.Instance.NombreUsuario)
             {
                 try {
@@ -140,13 +147,13 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void HabilitarBotones(bool esHabilitado)
+        public void HabilitarBotones(bool esHabilitado)
         {
             imagenFlechaRecargar.IsEnabled = esHabilitado;
             imagenFlechaAtras.IsEnabled = esHabilitado;
             imagenAgregarAmigo.IsEnabled = esHabilitado;
 
-            imagenFlechaRecargar.Opacity = esHabilitado ? 1.0 : 0.5;  
+            imagenFlechaRecargar.Opacity = esHabilitado ? 1.0 : 0.5;
             imagenFlechaAtras.Opacity = esHabilitado ? 1.0 : 0.5;
             imagenAgregarAmigo.Opacity = esHabilitado ? 1.0 : 0.5;
         }

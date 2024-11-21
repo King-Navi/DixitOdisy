@@ -55,9 +55,9 @@ namespace WpfCliente.GUI
 
         }
 
-        private void HabilitarBotones(bool habilitado)
+        private void HabilitarBotones(bool esHabilitado)
         {
-            buttonAceptar.IsEnabled = habilitado;
+            buttonAceptar.IsEnabled = esHabilitado;
         }
     }
 }

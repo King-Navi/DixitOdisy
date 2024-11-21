@@ -81,7 +81,7 @@
 
                         <!-- Segunda línea con Label y ComboBox -->
                         <WrapPanel Orientation="Horizontal" Margin="5">
-                            <Label Name="labelNumeroRondas" Content="[Número de rondas]" VerticalAlignment="Center" Margin="5"/>
+                            <Label x:Name="labelNumeroRondas" Content="[Número de rondas]" VerticalAlignment="Center" Margin="5"/>
                             <ComboBox Name="comboBoxNumeroRondas" Width="100" Margin="5">
                                 <ComboBoxItem Content="1"/>
                                 <ComboBoxItem Content="2"/>

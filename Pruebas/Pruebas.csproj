@@ -110,6 +110,10 @@
       <Project>{14e9f882-4cc6-4331-a0ac-b31206796294}</Project>
       <Name>DAOLibreria</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WcfServicioLibreria\WcfServicioLibreria.csproj">
+      <Project>{a07aeff5-b5e9-44c4-87c5-9af85933de44}</Project>
+      <Name>WcfServicioLibreria</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

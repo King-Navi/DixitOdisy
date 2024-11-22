@@ -37,7 +37,7 @@ namespace WpfCliente.GUI
                 var resultadoUsuarioSesion = await Conexion.AbrirConexionUsuarioSesionCallbackAsync(this);
                 if (!resultadoUsuarioSesion)
                 {
-                    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, this);
                     this.Close();
                     return;
                 }
@@ -45,7 +45,7 @@ namespace WpfCliente.GUI
                 var resultadoAmigo = await Conexion.AbrirConexionAmigosCallbackAsync(amigosUserControl);
                 if (!resultadoAmigo)
                 {
-                    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, this);
                     this.Close();
                     return;
                 }
@@ -53,7 +53,7 @@ namespace WpfCliente.GUI
                 var resultadoInvitacion = await Conexion.AbrirConexionInvitacionPartidaCallbackAsync(this);
                 if (!resultadoInvitacion)
                 {
-                    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, this);
                     this.Close();
                     return;
                 }
@@ -89,7 +89,7 @@ namespace WpfCliente.GUI
             }
             catch (InvalidOperationException)
             {
-                VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, this);
                 this.Close();
                 return;
             }
@@ -97,7 +97,7 @@ namespace WpfCliente.GUI
             ventanaSala.Closed += (s, args) => {
                 if (!Conexion.CerrarConexionesSalaConChat())
                 {
-                    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, this);
                     this.Close();   
                 }
                 this.Show(); 

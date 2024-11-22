@@ -325,7 +325,7 @@ namespace WpfCliente.Utilidad
 
             if (!await verificarConexion)
             {
-                VentanasEmergentes.CrearVentanaEmergenteErrorServidor(ventana);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, ventana);
                 habilitarAcciones(true);
                 return false;
             }

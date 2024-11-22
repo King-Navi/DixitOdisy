@@ -314,12 +314,12 @@ namespace WpfCliente.GUI
             partida.Closed += (s, args) => {
                 if (!Conexion.CerrarConexionesPartida())
                 {
-                    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, this);
                     this.Close();
                 }
                 if (!Conexion.CerrarChatMotor())
                 {
-                    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, this);
                     this.Close();
                 }
                 this.Show();

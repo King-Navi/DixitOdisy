@@ -269,14 +269,14 @@ namespace WpfCliente.GUI
             }
             catch (InvalidOperationException)
             {
-                VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, this);
                 this.Close();
                 return;
             }
             ventanaSala.Closed += (s, args) => {
                 if (!Conexion.CerrarConexionesSalaConChat())
                 {
-                    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, this);
                     this.Close();
                 }
                 this.Show();

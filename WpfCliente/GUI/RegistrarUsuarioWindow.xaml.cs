@@ -143,7 +143,7 @@ namespace WpfCliente.GUI
                         }
                         else
                         {
-                            VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                            VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, this);
                         }
                     }
                 }

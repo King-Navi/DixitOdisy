@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.ServiceModel;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WpfCliente.ServidorDescribelo;
-using WpfCliente.Utilidad;
 
 namespace WpfCliente.Utilidad
 {

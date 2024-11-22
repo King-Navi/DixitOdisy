@@ -275,6 +275,9 @@
     <None Include="Connected Services\ServidorDescribelo\WpfCliente.ServidorDescribelo.Estadistica.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\ServidorDescribelo\WpfCliente.ServidorDescribelo.SolicitudAmistad.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\ServidorDescribelo\WpfCliente.ServidorDescribelo.Usuario.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
-using System.Collections.Concurrent;
 
 namespace WcfServicioLibreria.Manejador
 {

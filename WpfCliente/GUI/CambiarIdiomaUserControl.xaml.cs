@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-using WpfCliente.Interfaz;
+﻿using System.Windows.Controls;
 using WpfCliente.Persistencia;
 using WpfCliente.Utilidad;
 

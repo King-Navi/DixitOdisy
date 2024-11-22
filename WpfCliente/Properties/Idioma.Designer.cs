@@ -727,6 +727,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Empezando ronda....
+        /// </summary>
+        public static string mensajeEmpezandoRonda {
+            get {
+                return ResourceManager.GetString("mensajeEmpezandoRonda", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Hubo un error al conectarse con la base de datos.
         /// </summary>
         public static string mensajeErrorBaseDatos {
@@ -750,6 +759,15 @@ namespace WpfCliente.Properties {
         public static string mensajeErrorServidor {
             get {
                 return ResourceManager.GetString("mensajeErrorServidor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Escogiendo narrador....
+        /// </summary>
+        public static string mensajeEscogiendoNarrador {
+            get {
+                return ResourceManager.GetString("mensajeEscogiendoNarrador", resourceCulture);
             }
         }
         

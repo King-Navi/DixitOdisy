@@ -1,11 +1,7 @@
 ﻿using DAOLibreria.Excepciones;
 using DAOLibreria.ModeloBD;
 using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DAOLibreria.DAO

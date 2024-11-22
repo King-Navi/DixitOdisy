@@ -1,7 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-
-namespace Pruebas.Cliente
+﻿namespace Pruebas.Cliente
 {
     //[TestClass]
     //public class ValidarContraseniaPruebas

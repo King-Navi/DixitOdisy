@@ -1,15 +1,6 @@
-﻿using DAOLibreria.DAO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Pruebas.Servidor.Utilidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
-using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Manejador;
 using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Utilidades;

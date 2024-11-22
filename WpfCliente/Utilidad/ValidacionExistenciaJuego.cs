@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows;
-using WpfCliente.GUI;
 using WpfCliente.ServidorDescribelo;
-using WpfCliente.Utilidad;
+
 namespace WpfCliente
 {
     public class ValidacionExistenciaJuego

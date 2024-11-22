@@ -1,21 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
@@ -24,18 +12,13 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Interaction logic for ListaAmigosUserControl.xaml
-    /// 
-    /// </summary>
-    /// <ref>https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.inotifypropertychanged?view=net-8.0</ref>
-    /// <ref>https://learn.microsoft.com/es-es/dotnet/desktop/wpf/data/?view=netdesktop-8.0</ref>
     public partial class ListaAmigosUserControl : UserControl, IServicioAmistadCallback , IActualizacionUI
     {
         public ObservableCollection<Amigo> Amigos { get; set; } = new ObservableCollection<Amigo>();
         private bool desechado = false;
         private DispatcherTimer timer;
         private DateTime ultimaActualizacion;
+        private const string FORMATO_HORA = "HH:mm:ss";
         public ListaAmigosUserControl()
         {
             InitializeComponent();
@@ -58,16 +41,14 @@ namespace WpfCliente.GUI
         private void HoraActual(object sender, EventArgs e)
         {
             DateTime horaActual = DateTime.Now;
-
-            // Compara la hora actual con la última actualización y actualiza solo si ha cambiado el segundo
             if (horaActual.Second != ultimaActualizacion.Second)
             {
-                labelHora.Content = horaActual.ToString("HH:mm:ss");
+                labelHora.Content = horaActual.ToString(FORMATO_HORA);
                 ultimaActualizacion = horaActual;
             }
         }
 
-        protected virtual void Desechar()
+        private void Desechar()
         {
             if (desechado) return;
             if (timer != null)
@@ -83,12 +64,6 @@ namespace WpfCliente.GUI
         private void Cerrado(object sender, RoutedEventArgs e)
         {
             Desechar();
-
-        }
-
-        public void ObtenerPeticionAmistadCallback(SolicitudAmistad nuevaSolicitudAmistad)
-        {
-
         }
 
         public void ObtenerAmigoCallback(Amigo amigo)
@@ -114,7 +89,7 @@ namespace WpfCliente.GUI
 
         public void CambiarEstadoAmigo(Amigo amigo)
         {
-            var amigoExistente = Amigos.FirstOrDefault(a => a.Nombre == amigo.Nombre);
+            var amigoExistente = Amigos.FirstOrDefault(actual => actual.Nombre == amigo.Nombre);
             if (amigoExistente != null)
             {
                 amigoExistente.Estado = amigo.Estado;
@@ -126,7 +101,9 @@ namespace WpfCliente.GUI
             }
             else
             {
-                MessageBox.Show("El amigo no se encontró en la lista.");
+                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloCargarAmigosFalla, 
+                    Properties.Idioma.mensajeCargarAmigosFalla , 
+                    this);
             }
         }
 

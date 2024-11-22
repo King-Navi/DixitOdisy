@@ -227,6 +227,51 @@ namespace WpfCliente.ServidorDescribelo {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SolicitudAmistad", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
+    [System.SerializableAttribute()]
+    public partial class SolicitudAmistad : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private WpfCliente.ServidorDescribelo.Usuario RemitenteField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public WpfCliente.ServidorDescribelo.Usuario Remitente {
+            get {
+                return this.RemitenteField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RemitenteField, value) != true)) {
+                    this.RemitenteField = value;
+                    this.RaisePropertyChanged("Remitente");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Amigo", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.IO.FileStream))]
@@ -335,51 +380,6 @@ namespace WpfCliente.ServidorDescribelo {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         ActualizarEstado = 3,
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SolicitudAmistad", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
-    [System.SerializableAttribute()]
-    public partial class SolicitudAmistad : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private WpfCliente.ServidorDescribelo.Usuario RemitenteField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public WpfCliente.ServidorDescribelo.Usuario Remitente {
-            get {
-                return this.RemitenteField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RemitenteField, value) != true)) {
-                    this.RemitenteField = value;
-                    this.RaisePropertyChanged("Remitente");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1177,10 +1177,10 @@ namespace WpfCliente.ServidorDescribelo {
         System.Threading.Tasks.Task<bool> EnviarSolicitudAmistadAsync(WpfCliente.ServidorDescribelo.Usuario usuarioRemitente, string destinatario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/ObtenerSolicitudesAmistad", ReplyAction="http://tempuri.org/IServicioAmistad/ObtenerSolicitudesAmistadResponse")]
-        WpfCliente.ServidorDescribelo.Usuario[] ObtenerSolicitudesAmistad(WpfCliente.ServidorDescribelo.Usuario usuario);
+        WpfCliente.ServidorDescribelo.SolicitudAmistad[] ObtenerSolicitudesAmistad(WpfCliente.ServidorDescribelo.Usuario usuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/ObtenerSolicitudesAmistad", ReplyAction="http://tempuri.org/IServicioAmistad/ObtenerSolicitudesAmistadResponse")]
-        System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.Usuario[]> ObtenerSolicitudesAmistadAsync(WpfCliente.ServidorDescribelo.Usuario usuario);
+        System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.SolicitudAmistad[]> ObtenerSolicitudesAmistadAsync(WpfCliente.ServidorDescribelo.Usuario usuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/AceptarSolicitudAmistad", ReplyAction="http://tempuri.org/IServicioAmistad/AceptarSolicitudAmistadResponse")]
         bool AceptarSolicitudAmistad(int idRemitente, int idDestinatario);
@@ -1203,9 +1203,6 @@ namespace WpfCliente.ServidorDescribelo {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/ObtenerAmigoCallback", ReplyAction="http://tempuri.org/IServicioAmistad/ObtenerAmigoCallbackResponse")]
         void ObtenerAmigoCallback(WpfCliente.ServidorDescribelo.Amigo amigo);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/ObtenerPeticionAmistadCallback", ReplyAction="http://tempuri.org/IServicioAmistad/ObtenerPeticionAmistadCallbackResponse")]
-        void ObtenerPeticionAmistadCallback(WpfCliente.ServidorDescribelo.SolicitudAmistad nuevaSolicitudAmistad);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1252,11 +1249,11 @@ namespace WpfCliente.ServidorDescribelo {
             return base.Channel.EnviarSolicitudAmistadAsync(usuarioRemitente, destinatario);
         }
         
-        public WpfCliente.ServidorDescribelo.Usuario[] ObtenerSolicitudesAmistad(WpfCliente.ServidorDescribelo.Usuario usuario) {
+        public WpfCliente.ServidorDescribelo.SolicitudAmistad[] ObtenerSolicitudesAmistad(WpfCliente.ServidorDescribelo.Usuario usuario) {
             return base.Channel.ObtenerSolicitudesAmistad(usuario);
         }
         
-        public System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.Usuario[]> ObtenerSolicitudesAmistadAsync(WpfCliente.ServidorDescribelo.Usuario usuario) {
+        public System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.SolicitudAmistad[]> ObtenerSolicitudesAmistadAsync(WpfCliente.ServidorDescribelo.Usuario usuario) {
             return base.Channel.ObtenerSolicitudesAmistadAsync(usuario);
         }
         

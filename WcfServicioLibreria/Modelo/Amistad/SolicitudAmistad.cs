@@ -7,5 +7,9 @@ namespace WcfServicioLibreria.Modelo
     {
         [DataMember]
         public Usuario Remitente { get; set; }
+        public SolicitudAmistad(Usuario remitente)
+        {
+            Remitente = remitente;
+        }
     }
 }

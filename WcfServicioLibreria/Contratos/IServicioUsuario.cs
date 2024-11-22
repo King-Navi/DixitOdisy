@@ -1,5 +1,4 @@
-﻿using System.Net.NetworkInformation;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Modelo;
 

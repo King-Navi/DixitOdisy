@@ -1,17 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
-using WcfServicioLibreria.Contratos;
-using WcfServicioLibreria.Manejador;
-using WcfServicioLibreria.Modelo;
-
-namespace Pruebas.Servidor
+﻿namespace Pruebas.Servidor
 {
     public class ServicioInvitacionPartida
     {

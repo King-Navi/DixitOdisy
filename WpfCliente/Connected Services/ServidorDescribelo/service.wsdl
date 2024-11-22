@@ -184,12 +184,6 @@
   <wsdl:message name="IServicioAmistad_ObtenerAmigoCallback_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ObtenerAmigoCallbackResponse" />
   </wsdl:message>
-  <wsdl:message name="IServicioAmistad_ObtenerPeticionAmistadCallback_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ObtenerPeticionAmistadCallback" />
-  </wsdl:message>
-  <wsdl:message name="IServicioAmistad_ObtenerPeticionAmistadCallback_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ObtenerPeticionAmistadCallbackResponse" />
-  </wsdl:message>
   <wsdl:message name="IServicioChat_CrearChat_InputMessage">
     <wsdl:part name="parameters" element="tns:CrearChat" />
   </wsdl:message>
@@ -468,10 +462,6 @@
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/ObtenerAmigoCallback" message="tns:IServicioAmistad_ObtenerAmigoCallback_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/ObtenerAmigoCallbackResponse" message="tns:IServicioAmistad_ObtenerAmigoCallback_InputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ObtenerPeticionAmistadCallback">
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/ObtenerPeticionAmistadCallback" message="tns:IServicioAmistad_ObtenerPeticionAmistadCallback_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/ObtenerPeticionAmistadCallbackResponse" message="tns:IServicioAmistad_ObtenerPeticionAmistadCallback_InputCallbackMessage" />
-    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioChat">
     <wsdl:operation name="CrearChat">
@@ -742,15 +732,6 @@
     </wsdl:operation>
     <wsdl:operation name="ObtenerAmigoCallback">
       <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/ObtenerAmigoCallback" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="ObtenerPeticionAmistadCallback">
-      <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/ObtenerPeticionAmistadCallback" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

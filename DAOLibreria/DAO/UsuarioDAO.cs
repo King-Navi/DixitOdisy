@@ -1,11 +1,7 @@
 ﻿using DAOLibreria.ModeloBD;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core;
-using System.Data.Entity.Infrastructure;
-using System.Diagnostics;
 using System.Linq;
-using System.Data.SqlClient;
 using DAOLibreria.Excepciones;
 
 namespace DAOLibreria.DAO

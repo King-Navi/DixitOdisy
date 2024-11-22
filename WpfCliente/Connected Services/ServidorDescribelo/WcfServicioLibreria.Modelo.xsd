@@ -29,12 +29,18 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="SolicitudAmistadFalla" nillable="true" type="tns:SolicitudAmistadFalla" />
-  <xs:complexType name="ArrayOfUsuario">
+  <xs:complexType name="ArrayOfSolicitudAmistad">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Usuario" nillable="true" type="tns:Usuario" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SolicitudAmistad" nillable="true" type="tns:SolicitudAmistad" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfUsuario" nillable="true" type="tns:ArrayOfUsuario" />
+  <xs:element name="ArrayOfSolicitudAmistad" nillable="true" type="tns:ArrayOfSolicitudAmistad" />
+  <xs:complexType name="SolicitudAmistad">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Remitente" nillable="true" type="tns:Usuario" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SolicitudAmistad" nillable="true" type="tns:SolicitudAmistad" />
   <xs:complexType name="Amigo">
     <xs:sequence>
       <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Enumerador" minOccurs="0" name="Estado" type="q2:EstadoAmigo" />
@@ -44,12 +50,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Amigo" nillable="true" type="tns:Amigo" />
-  <xs:complexType name="SolicitudAmistad">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Remitente" nillable="true" type="tns:Usuario" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="SolicitudAmistad" nillable="true" type="tns:SolicitudAmistad" />
   <xs:complexType name="UsuarioFalla">
     <xs:sequence>
       <xs:element minOccurs="0" name="EstaConectado" type="xs:boolean" />

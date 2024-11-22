@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
-using System.Text.RegularExpressions;
-using DAOLibreria.DAO;
 using DAOLibreria.Excepciones;
 using DAOLibreria.ModeloBD;
 using WcfServicioLibreria.Contratos;

@@ -1,5 +1,4 @@
 ﻿using System.ServiceModel;
-using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Modelo.Excepciones;
 
 namespace WcfServicioLibreria.Contratos

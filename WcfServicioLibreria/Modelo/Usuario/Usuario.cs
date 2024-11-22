@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization;
-using System.Security.Cryptography;
-using System.ServiceModel;
 using WcfServicioLibreria.Enumerador;
 
 namespace WcfServicioLibreria.Modelo

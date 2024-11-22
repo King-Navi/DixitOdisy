@@ -1,10 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.Threading.Tasks;
-using WcfServicioLibreria.Enumerador;
 using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Contratos
@@ -18,7 +13,7 @@ namespace WcfServicioLibreria.Contratos
         [FaultContract(typeof(SolicitudAmistadFalla))]
         bool EnviarSolicitudAmistad (Usuario usuarioRemitente, string destinatario);
         [OperationContract]
-        List<Usuario> ObtenerSolicitudesAmistad (Usuario usuario);
+        List<SolicitudAmistad> ObtenerSolicitudesAmistad (Usuario usuario);
         [OperationContract]
         bool AceptarSolicitudAmistad(int idRemitente, int idDestinatario);
         [OperationContract]
@@ -31,7 +26,5 @@ namespace WcfServicioLibreria.Contratos
         void CambiarEstadoAmigo(Amigo amigo);
         [OperationContract]
         void ObtenerAmigoCallback(Amigo amigo);
-        [OperationContract]
-        void ObtenerPeticionAmistadCallback(SolicitudAmistad nuevaSolicitudAmistad);
     }
 }

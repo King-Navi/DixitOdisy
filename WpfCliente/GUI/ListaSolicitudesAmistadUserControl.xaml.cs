@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.ServiceModel.Security;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
@@ -63,12 +53,8 @@ namespace WpfCliente.GUI
                         return false;
                     }
                     Solicitudes.Clear();
-                    foreach (var solicitud in listaSolicitudes)
-                    {
-                        var nuevaSolicitud = new SolicitudAmistad { Remitente = solicitud };
-                        Solicitudes.Add(nuevaSolicitud);
-                    }
-                    
+                    Solicitudes = new ObservableCollection<SolicitudAmistad>(listaSolicitudes);
+
                     return true;
                 }
                 catch (Exception e)
@@ -86,7 +72,7 @@ namespace WpfCliente.GUI
 
         public void HabilitarBotones(bool esHabilitado)
         {
-            
+
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)

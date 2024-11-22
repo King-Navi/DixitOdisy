@@ -2,9 +2,8 @@
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
-using WcfServicioLibreria.Utilidades;
 using WcfServicioLibreria.Evento;
-using DAOLibreria.ModeloBD;
+
 namespace WcfServicioLibreria.Modelo
 {
     /// <summary>

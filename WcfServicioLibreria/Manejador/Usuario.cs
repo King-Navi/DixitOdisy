@@ -2,8 +2,6 @@
 using DAOLibreria.ModeloBD;
 using System;
 using System.IO;
-using System.Linq;
-using System.Security.Principal;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;

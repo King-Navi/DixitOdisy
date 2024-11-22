@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.ServiceModel;
 using WcfServicioLibreria;
-using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Manejador;
-using WcfServicioLibreria.Utilidades;
 
 namespace WcfServidor
 {

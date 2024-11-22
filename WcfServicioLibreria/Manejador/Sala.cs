@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Security.Cryptography;
 using System.ServiceModel;
-using System.Text;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Modelo;

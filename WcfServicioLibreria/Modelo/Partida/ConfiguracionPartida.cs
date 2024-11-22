@@ -1,5 +1,4 @@
 ﻿using System.Runtime.Serialization;
-using System.ServiceModel;
 using WcfServicioLibreria.Enumerador;
 
 namespace WcfServicioLibreria.Modelo

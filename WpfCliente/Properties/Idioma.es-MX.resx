@@ -501,4 +501,10 @@
   <data name="mensajeImagenNoSelecionadaEditar" xml:space="preserve">
     <value>No se seleccionaste ninguna imagen.</value>
   </data>
+  <data name="mensajeEscogiendoNarrador" xml:space="preserve">
+    <value>Escogiendo narrador...</value>
+  </data>
+  <data name="mensajeEmpezandoRonda" xml:space="preserve">
+    <value>Empezando ronda...</value>
+  </data>
 </root>

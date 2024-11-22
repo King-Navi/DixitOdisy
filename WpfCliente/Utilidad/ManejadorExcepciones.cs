@@ -1,6 +1,5 @@
 ﻿using System;
 using Serilog;
-using System.Windows.Navigation;
 using WpfCliente.GUI;
 using System.Windows;
 

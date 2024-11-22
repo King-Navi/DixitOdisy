@@ -1,22 +1,12 @@
 ﻿using DAOLibreria.DAO;
-using DAOLibreria.ModeloBD;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.Remoting.Contexts;
 using System.ServiceModel;
-using System.ServiceModel.Configuration;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Enumerador;
 using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Modelo;
-using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
@@ -44,11 +34,6 @@ namespace WcfServicioLibreria.Manejador
                     new SolicitudAmistadFalla(existeAmistad, existePeticion));
             }
 
-            if (jugadoresConectadosDiccionario.ContainsKey(idDestinatario))
-            {
-                EnviarSolicitudJugadorConectado(remitente, idDestinatario);
-            }
-
             if (GuardarSolicitudAmistad(idRemitente, idDestinatario))
             {
                 return true;
@@ -68,13 +53,12 @@ namespace WcfServicioLibreria.Manejador
             try
             {
                 id = UsuarioDAO.ObtenerIdPorNombre(nombre);
-                return id;
             }
             catch (Exception)
             {
-                //Manejar la excepcion
-                throw;
             }
+            return id;
+
         }
 
         private bool SonAmigos(int idMasAlto, int idMasBajo)
@@ -83,12 +67,11 @@ namespace WcfServicioLibreria.Manejador
             {
                 return AmistadDAO.SonAmigos(idMasAlto, idMasBajo);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                //TODO MANEJAR EL ERROR
-                Console.WriteLine($"Error en ValidacionNoAmistad: {ex.Message}");
-                throw;
             }
+            return false;
+
         }
 
         private bool ExisteSolicitudAmistad(int idMasAlto, int idMasBajo)
@@ -97,55 +80,11 @@ namespace WcfServicioLibreria.Manejador
             {
                 return AmistadDAO.ExisteSolicitudAmistad(idMasAlto, idMasBajo);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                //TODO MANEJAR EL ERROR
-                Console.WriteLine($"Error en ExisteSolicitudAmistad: {ex.Message}");
-                throw;
             }
+            return false;
         }
-
-        public bool EnviarSolicitudJugadorConectado(Modelo.Usuario remitente, int idDestinatario)
-        {
-            try
-            {
-                if (jugadoresConectadosDiccionario.TryGetValue(idDestinatario, out UsuarioContexto destinatarioConectado))
-                {
-                    var callback = destinatarioConectado.AmistadSesionCallBack as IAmistadCallBack;
-
-                    if (callback != null)
-                    {
-                        SolicitudAmistad solicitud = new SolicitudAmistad
-                        {
-                            Remitente = remitente
-                        };
-
-                        callback.ObtenerPeticionAmistadCallback(solicitud);
-                        Console.WriteLine($"Solicitud de amistad enviada a {destinatarioConectado.Nombre}");
-                        return true;
-                    }
-                    else
-                    {
-                        //TODO MANEJAR EL ERROR
-                        Console.Error.WriteLine("El callback del receptor no es válido.");
-                        return false;
-                    }
-                }
-                else
-                {
-                    //TODO MANEJAR EL ERROR
-                    Console.Error.WriteLine("El usuario receptor no está conectado.");
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                //TODO MANEJAR EL ERROR
-                Console.Error.WriteLine($"Error al enviar solicitud de amistad: {ex.Message}");
-                return false;
-            }
-        }
-
 
         public  void AbrirCanalParaPeticiones(Modelo.Usuario _usuarioRemitente)
         {
@@ -278,12 +217,12 @@ namespace WcfServicioLibreria.Manejador
             }
         }
 
-        public List<Modelo.Usuario> ObtenerSolicitudesAmistad(Modelo.Usuario usuario)
+        public List<SolicitudAmistad> ObtenerSolicitudesAmistad(Modelo.Usuario usuario)
         {
             try
             {
                 List<DAOLibreria.ModeloBD.Usuario> usuariosSolicitantes = AmistadDAO.ObtenerSolicitudesAmistad(usuario.IdUsuario);
-                List<Modelo.Usuario> usuariosModeloWCF = new List<Modelo.Usuario>();
+                List<SolicitudAmistad> usuariosModeloWCF = new List<SolicitudAmistad>();
                 foreach (DAOLibreria.ModeloBD.Usuario usuarioBD in usuariosSolicitantes)
                 {
                     Modelo.Usuario usuarioWCF = new Modelo.Usuario
@@ -293,8 +232,8 @@ namespace WcfServicioLibreria.Manejador
                         EstadoJugador = EstadoUsuario.Desconectado, 
                         FotoUsuario = new MemoryStream(usuarioBD.fotoPerfil)
                     };
-
-                    usuariosModeloWCF.Add(usuarioWCF);
+                    
+                    usuariosModeloWCF.Add(new SolicitudAmistad(usuarioWCF));
                 }
 
                 return usuariosModeloWCF;

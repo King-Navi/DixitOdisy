@@ -1,10 +1,7 @@
 ﻿using System;
-using System.ServiceModel;
-using System.ServiceModel.Configuration;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
-using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {

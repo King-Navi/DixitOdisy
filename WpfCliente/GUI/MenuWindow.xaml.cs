@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Runtime.Remoting.Contexts;
-using System.ServiceModel;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WpfCliente.Interfaz;

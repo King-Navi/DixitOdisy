@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Contratos

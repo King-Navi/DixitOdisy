@@ -1,7 +1,4 @@
-﻿using System;
-using System.ServiceModel;
-using WcfServicioLibreria.Evento;
-using WcfServicioLibreria.Modelo;
+﻿using System.ServiceModel;
 
 namespace WcfServicioLibreria.Contratos
 {

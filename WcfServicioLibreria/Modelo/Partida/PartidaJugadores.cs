@@ -13,7 +13,6 @@ using System.Threading;
 using ChatGPTLibreria;
 using ChatGPTLibreria.ModelosJSON;
 using System.Net.Http;
-using System.ServiceModel.Security;
 
 namespace WcfServicioLibreria.Modelo
 {

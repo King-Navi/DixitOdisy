@@ -1,5 +1,4 @@
 ﻿using System.Windows.Media.Imaging;
-using WpfCliente.ServidorDescribelo;
 
 namespace WpfCliente.Utilidad
 {

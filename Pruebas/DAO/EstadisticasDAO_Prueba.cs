@@ -1,15 +1,10 @@
-﻿using DAOLibreria;
-using DAOLibreria.DAO;
+﻿using DAOLibreria.DAO;
 using DAOLibreria.Excepciones;
 using DAOLibreria.ModeloBD;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using Pruebas.DAO.Utilidades;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Pruebas.DAO

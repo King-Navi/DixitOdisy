@@ -507,4 +507,16 @@
   <data name="mensajeEmpezandoRonda" xml:space="preserve">
     <value>Starting round...</value>
   </data>
+  <data name="labelPista" xml:space="preserve">
+    <value>Clue: </value>
+  </data>
+  <data name="labelInstruccionPista" xml:space="preserve">
+    <value>Choose the correct card based on the clue!</value>
+  </data>
+  <data name="tituloIngresarCorreo" xml:space="preserve">
+    <value>Enter email</value>
+  </data>
+  <data name="labelInvalido" xml:space="preserve">
+    <value>Invalid</value>
+  </data>
 </root>

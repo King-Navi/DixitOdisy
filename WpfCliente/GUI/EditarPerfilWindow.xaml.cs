@@ -176,7 +176,7 @@ namespace WpfCliente.GUI
 
             if (resultado)
             {
-                VentanasEmergentes.CrearVentanaEmergenteDatosEditadosExito(this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloEditarUsuario, Properties.Idioma.mensajeUsuarioEditadoConExito, this);
                 CerrarSesion();
             }
             else

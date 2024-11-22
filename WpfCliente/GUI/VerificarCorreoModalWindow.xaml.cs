@@ -5,9 +5,6 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Lógica de interacción para VerificarCorreoModalWindow.xaml
-    /// </summary>
     public partial class VerificarCorreoModalWindow : Window, IActualizacionUI
     {
         public string ValorIngresado { get; private set; }
@@ -24,17 +21,17 @@ namespace WpfCliente.GUI
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             ActualizarUI();
             if (olvidoContrasenia) {
-                labelIngresarCodigo.Content = Properties.Idioma.labelIngresarCorreo;
-                textBoxCodigo.MaxLength = 100;
+                MostrarIngresarCorreo();
             }
         }
 
 
         public void ActualizarUI()
         {
+            this.Title = Properties.Idioma.tituloIngresarCodigoCorreo;
             labelIngresarCodigo.Content = Properties.Idioma.labelIngresarCodigoCorreo;
+            labelCodigoInvalido.Content = Properties.Idioma.labelInvalido;
             buttonAceptar.Content = Properties.Idioma.buttonAceptar;
-            Title = Properties.Idioma.tituloIngresarCodigoCorreo;
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
@@ -42,7 +39,7 @@ namespace WpfCliente.GUI
             ActualizarUI();
         }
 
-        private void buttonAceptar_Click(object sender, RoutedEventArgs e)
+        private void ClicButtonAceptar(object sender, RoutedEventArgs e)
         {
             if(ValidarCodigo()){
                 ValorIngresado = textBoxCodigo.Text.ToUpper();
@@ -56,10 +53,16 @@ namespace WpfCliente.GUI
             }
 
         }
-
         private bool ValidarCodigo()
         {
             return !string.IsNullOrWhiteSpace(textBoxCodigo.Text);
+        }
+
+        private void MostrarIngresarCorreo()
+        {
+            this.Title = Properties.Idioma.tituloIngresarCorreo;
+            labelIngresarCodigo.Content = Properties.Idioma.labelIngresarCorreo;
+            textBoxCodigo.MaxLength = 50;
         }
     }
 }

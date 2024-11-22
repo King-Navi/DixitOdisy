@@ -8,14 +8,9 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Interaction logic for VerTodasCartasUserControl.xaml
-    /// </summary>
     public partial class VerTodasCartasUserControl : UserControl , IActualizacionUI
     {
         public ObservableCollection<ImagenCarta> TodasImagenes { get; set; }
-
-
 
         public VerTodasCartasUserControl(ObservableCollection<ImagenCarta> todasImagenes)
         {
@@ -26,14 +21,14 @@ namespace WpfCliente.GUI
         }
 
         public void ActualizarUI()
-        {
-
+        { 
+            textBoxInstruccionPista.Text = Properties.Idioma.labelInstruccionPista;
         }
 
 
         public void ColocarPista(string pista)
         {
-            labelPista.Content = "Pista : " + pista;
+            labelPista.Content = Properties.Idioma.labelPista + pista;
         }
 
 
@@ -41,11 +36,10 @@ namespace WpfCliente.GUI
         {
             ActualizarUI();
         }
-        private void UnloadedVerTodasCartasUsercontrol(object sender, RoutedEventArgs e)
+
+        private void CerrandoUserControl(object sender, RoutedEventArgs e)
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
         }
-
-
     }
 }

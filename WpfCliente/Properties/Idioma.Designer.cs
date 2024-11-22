@@ -520,6 +520,24 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ¡Escoge la carta correcta en base a la pista!.
+        /// </summary>
+        public static string labelInstruccionPista {
+            get {
+                return ResourceManager.GetString("labelInstruccionPista", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Inválido.
+        /// </summary>
+        public static string labelInvalido {
+            get {
+                return ResourceManager.GetString("labelInvalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Envíale a tus amigos una invitación.
         /// </summary>
         public static string labelInvitaAmigos {
@@ -570,6 +588,15 @@ namespace WpfCliente.Properties {
         public static string labelNumeroRondas {
             get {
                 return ResourceManager.GetString("labelNumeroRondas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Pista: .
+        /// </summary>
+        public static string labelPista {
+            get {
+                return ResourceManager.GetString("labelPista", resourceCulture);
             }
         }
         
@@ -1137,6 +1164,15 @@ namespace WpfCliente.Properties {
         public static string tituloIngresarCodigoSala {
             get {
                 return ResourceManager.GetString("tituloIngresarCodigoSala", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ingresar correo.
+        /// </summary>
+        public static string tituloIngresarCorreo {
+            get {
+                return ResourceManager.GetString("tituloIngresarCorreo", resourceCulture);
             }
         }
         

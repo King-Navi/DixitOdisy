@@ -8,10 +8,10 @@ namespace WpfCliente.GUI
     /// <summary>
     /// Se utiliza para reutilizar esta ventana emergente para distintos casos en los que algo falla
     /// </summary>
-    public partial class VentanaEmergente : Window, IActualizacionUI
+    public partial class VentanaEmergenteModalWindow : Window, IActualizacionUI
     {
 
-        public VentanaEmergente(string titulo, string descripcion)
+        public VentanaEmergenteModalWindow(string titulo, string descripcion)
         {
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
@@ -22,7 +22,7 @@ namespace WpfCliente.GUI
 
         }
 
-        public VentanaEmergente()
+        public VentanaEmergenteModalWindow()
         {
             InitializeComponent();
         }
@@ -38,7 +38,7 @@ namespace WpfCliente.GUI
         }
 
 
-        private void buttonAceptar_Click(object sender, RoutedEventArgs e)
+        private void ClicButtonAceptar(object sender, RoutedEventArgs e)
         {
             this.Close();
         }

@@ -79,12 +79,12 @@ namespace WpfCliente.GUI
                 }
                 else
                 {
-                    VentanasEmergentes.CrearVentanaEmergenteImagenInvalida(this);
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, Properties.Idioma.mensajeImagenInvalida, this);
                 }
             }
             else
             {
-                VentanasEmergentes.CrearVentanaEmergenteImagenInvalida(this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, Properties.Idioma.mensajeImagenInvalida, this);
             }
         }
 
@@ -103,7 +103,7 @@ namespace WpfCliente.GUI
             }
             else
             {
-                VentanasEmergentes.CrearVentanaEmergenteErrorInesperado(this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorInesperado, Properties.Idioma.mensajeErrorInesperado, this);
             }
         }
 
@@ -302,7 +302,7 @@ namespace WpfCliente.GUI
             catch (Exception ex)
             {
                 ManejadorExcepciones.ManejarComponentErrorException(ex);
-                VentanasEmergentes.CrearVentanaEmergenteImagenInvalida(this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, Properties.Idioma.mensajeImagenInvalida, this);
             }
         }
 

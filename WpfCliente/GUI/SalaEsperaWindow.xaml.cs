@@ -87,7 +87,7 @@ namespace WpfCliente.GUI
             }
             if (!ValidacionExistenciaJuego.ExisteSala(idSala))
             {
-                VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado(this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloLobbyNoEncontrado, Properties.Idioma.mensajeLobbyNoEncontrado, this);
                 NoHayConexion();
                 return;
             }
@@ -125,7 +125,7 @@ namespace WpfCliente.GUI
             var resultado = Conexion.ChatMotor.AgregarUsuarioChat(Singleton.Instance.IdChat, Singleton.Instance.NombreUsuario);
             if (!resultado)
             {
-                VentanasEmergentes.CrearVentanaEmergenteErrorInesperado(this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorInesperado, Properties.Idioma.mensajeErrorInesperado, this);
                 NoHayConexion();
             }
         }
@@ -223,7 +223,7 @@ namespace WpfCliente.GUI
         {
             if (!ValidacionExistenciaJuego.ExistePartida(idPartida))
             {
-                VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado(this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloLobbyNoEncontrado, Properties.Idioma.mensajeLobbyNoEncontrado, this);
                 NoHayConexion();
                 return;
             }
@@ -328,7 +328,7 @@ namespace WpfCliente.GUI
             {
                 Clipboard.SetText(labelCodigo.Content.ToString());
 
-                VentanasEmergentes.CrearVentanaEmergenteCodigoCopiado(this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCodigoCopiado, Properties.Idioma.mensajeCodigoCopiado, this);
             }
         }
 
@@ -339,16 +339,12 @@ namespace WpfCliente.GUI
             {
                 if (await EnviarInvitacion(gamertagInvitado))
                 {
-                    VentanasEmergentes.CrearVentanaEmergenteInvitacionEnviada(this);
-                }
-                else
-                {
-                    VentanasEmergentes.CrearVentanaEmergenteInvitacionNoEnviada(this);
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloInvitacionPartida, Properties.Idioma.mensajeInvitacionExitosa, this);
                 }
             }
             else
             {
-                VentanasEmergentes.CrearVentanaEmergenteInvitacionNoEnviada(this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloInvitacionPartida, Properties.Idioma.mensajeInvitacionFallida, this);
             }
         }
 
@@ -387,9 +383,10 @@ namespace WpfCliente.GUI
             {
                 resultado = Conexion.InvitacionPartida.EnviarInvitacion(Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala, gamertagReceptor);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                VentanasEmergentes.CrearVentanaEmergenteInvitacionNoEnviada(this);
+                ManejadorExcepciones.ManejarComponentErrorException(ex);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloInvitacionPartida, Properties.Idioma.mensajeInvitacionFallida, this);
             }
             return resultado;
 

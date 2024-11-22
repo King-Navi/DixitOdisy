@@ -21,7 +21,7 @@ namespace WpfCliente.GUI
     /// <summary>
     /// Lógica de interacción para CambiarContraseniaWindow.xaml
     /// </summary>
-    public partial class CambiarContraseniaWindow : Window, IActualizacionUI
+    public partial class CambiarContraseniaWindow : Window, IActualizacionUI, IHabilitadorBotones
     {
         Usuario usuarioEditado = new Usuario();
         public CambiarContraseniaWindow(string gamertag)
@@ -50,11 +50,19 @@ namespace WpfCliente.GUI
             buttonCancelarCambio.Content = Properties.Idioma.buttonCancelar;
         }
 
-        private void clicButtonAceptar(object sender, RoutedEventArgs e)
+        private void ClicButtonAceptar(object sender, RoutedEventArgs e)
         {
-            if (ValidarCampos()){
-                EncriptarContrasenia(textBoxContrasenia.Password);
-                GuardarCambiosUsuario(usuarioEditado);
+            try
+            {
+                if (ValidarCampos())
+                {
+                    EncriptarContrasenia(textBoxContrasenia.Password);
+                    GuardarCambiosUsuario(usuarioEditado);
+                }
+            }
+            catch (Exception ex)
+            {
+                ManejadorExcepciones.ManejarErrorException(ex, this);
             }
         }
 
@@ -129,8 +137,13 @@ namespace WpfCliente.GUI
             usuarioEditado.ContraseniaHASH = Encriptacion.OcuparSHA256(contrasenia);
         }
 
-        private void GuardarCambiosUsuario(Usuario usuarioEditado)
+        private async void GuardarCambiosUsuario(Usuario usuarioEditado)
         {
+            var resultadoConexion = await Conexion.VerificarConexion(HabilitarBotones,this);
+            if (!resultadoConexion)
+            {
+                return;
+            }
 
             var manejadorServicio = new ServicioManejador<ServicioUsuarioClient>();
             bool resultado = manejadorServicio.EjecutarServicio(proxy =>
@@ -149,17 +162,24 @@ namespace WpfCliente.GUI
             }
 
         }
-        private void clicButtonCancelar(object sender, RoutedEventArgs e)
+        private void ClicButtonCancelar(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
-        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ClicButtonFlechaAtras(object sender, MouseButtonEventArgs e)
         {
             this.Close();
         }
 
-        
+        public void HabilitarBotones(bool esHabilitado)
+        {
+            buttonEditarContrasenia.IsEnabled = esHabilitado;
+            buttonCancelarCambio.IsEnabled = esHabilitado;
+
+            buttonEditarContrasenia.Opacity = esHabilitado ? 1.0 : 0.5;
+            buttonCancelarCambio.Opacity = esHabilitado ? 1.0 : 0.5;
+        }
     }
 
 }

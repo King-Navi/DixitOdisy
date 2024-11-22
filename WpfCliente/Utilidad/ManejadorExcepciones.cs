@@ -8,7 +8,7 @@ namespace WpfCliente.Utilidad
 {
     public static class ManejadorExcepciones
     {
-        private static readonly ILogger _logger = LoggerManager.GetLogger();
+        private static readonly ILogger _logger = LoggerManager .GetLogger();
 
         public static void ManejarErrorException(Exception ex, Window window)
         {

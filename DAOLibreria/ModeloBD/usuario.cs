@@ -20,8 +20,8 @@ namespace DAOLibreria.ModeloBD
             this.Amigo = new HashSet<Amigo>();
             this.Amigo1 = new HashSet<Amigo>();
             this.Estadisticas = new HashSet<Estadisticas>();
-            this.PeticionAmistad = new HashSet<PeticionAmistad>();
-            this.PeticionAmistad1 = new HashSet<PeticionAmistad>();
+            this.PeticionAmistad2 = new HashSet<PeticionAmistad1>();
+            this.PeticionAmistad11 = new HashSet<PeticionAmistad1>();
         }
     
         public int idUsuario { get; set; }
@@ -38,7 +38,7 @@ namespace DAOLibreria.ModeloBD
         public virtual ICollection<Estadisticas> Estadisticas { get; set; }
         public virtual UsuarioCuenta UsuarioCuenta { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PeticionAmistad> PeticionAmistad { get; set; }
+        public virtual ICollection<PeticionAmistad1> PeticionAmistad2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PeticionAmistad> PeticionAmistad1 { get; set; }
     }

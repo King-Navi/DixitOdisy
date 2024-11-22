@@ -462,4 +462,28 @@
   <data name="labelEsperandoPista" xml:space="preserve">
     <value>Esperando pista...</value>
   </data>
+  <data name="labelNumeroRondas" xml:space="preserve">
+    <value>Número de rondas</value>
+  </data>
+  <data name="buttonGuardarCambios" xml:space="preserve">
+    <value>Guardar cambios</value>
+  </data>
+  <data name="buttonFinCartas" xml:space="preserve">
+    <value>Hasta que se acaben las cartas</value>
+  </data>
+  <data name="buttonFinRondas" xml:space="preserve">
+    <value>Hasta que se acaben las rondas</value>
+  </data>
+  <data name="mensajeProfe" xml:space="preserve">
+    <value>PROFE ESE TEXTO NO SE VALE</value>
+  </data>
+  <data name="labelEsperandoJugadores" xml:space="preserve">
+    <value>Esperando a los jugadores...</value>
+  </data>
+  <data name="tituloSesionIniciada" xml:space="preserve">
+    <value>Ya has iniciado sesión</value>
+  </data>
+  <data name="mensajeSesionIniciada" xml:space="preserve">
+    <value>Si no eres tú quien inició sesión, por favor contacta a soporte.</value>
+  </data>
 </root>

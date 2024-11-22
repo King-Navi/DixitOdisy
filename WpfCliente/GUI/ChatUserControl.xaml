@@ -45,7 +45,7 @@
                 Foreground="Red"
                 BorderBrush="Black"
                 FontWeight="Bold"
-                Click="ClicButtonCerrarChar" Width="20" Height="20"/>
+                Click="ClicButtonCerrarChat" Width="20" Height="20"/>
         </Grid>
         <!--Boton para abrir el chat-->
         <Button x:Name="buttonAbrirChat" Width="120" Height="120" Click="ClicButtonAbrirChat" Cursor="Hand" VerticalAlignment="Bottom" HorizontalAlignment="Right" >

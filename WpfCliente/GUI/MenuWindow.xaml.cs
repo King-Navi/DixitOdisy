@@ -15,7 +15,7 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class MenuWindow : Window, IServicioUsuarioSesionCallback, IServicioAmistadCallback,  IServicioInvitacionPartidaCallback, IActualizacionUI
+    public partial class MenuWindow : Window, IServicioUsuarioSesionCallback, IServicioAmistadCallback, IServicioInvitacionPartidaCallback, IActualizacionUI, IHabilitadorBotones
     {
         private DispatcherTimer timerNotificacion;
         private InvitacionPartida invitacionActual;
@@ -62,7 +62,6 @@ namespace WpfCliente.GUI
                     IdUsuario = Singleton.Instance.IdUsuario,
                     Nombre = Singleton.Instance.NombreUsuario
                 };
-                //TODO: Hay que verificar que no haya iniciado sesion antes
                 Conexion.UsuarioSesion.ObtenerSessionJugador(user);
             }
             catch (Exception excepcion)
@@ -73,7 +72,6 @@ namespace WpfCliente.GUI
 
         private void ClicBotonCrearSala(object sender, RoutedEventArgs e)
         {
-            //TODO: Hacer la logica para la peticion al servidor de la sala y la respuesta, este es el caso en el que el solicitante es el anfitrion
             AbrirVentanaSala(null);
         }
         private async void AbrirVentanaSala(string idSala)
@@ -155,12 +153,12 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void HabilitarBotones(bool habilitar)
+        public void HabilitarBotones(bool esHabilitado)
         {
-            buttonCrearSala.IsEnabled = habilitar;
-            buttonUniserSala.IsEnabled = habilitar;
-            perfilMenuDesplegable.IsEnabled = habilitar;
-            amigosUserControl.IsEnabled = habilitar;
+            buttonCrearSala.IsEnabled = esHabilitado;
+            buttonUniserSala.IsEnabled = esHabilitado;
+            perfilMenuDesplegable.IsEnabled = esHabilitado;
+            amigosUserControl.IsEnabled = esHabilitado;
         }
 
         private string AbrirVentanaModal()
@@ -263,10 +261,10 @@ namespace WpfCliente.GUI
                 esSolicitudAmistad: false);
         }
 
-        public void ObtenerPeticionAmistadCallback(SolicitudAmistad solicitud)
+        public void ObtenerPeticionAmistadCallback(SolicitudAmistad nuevaSolicitudAmistad)
         {
-            solicitudAmistadActual = solicitud;
-            MostrarNotificacionGeneral($"Solicitud de {solicitud.Remitente.Nombre}",
+            solicitudAmistadActual = nuevaSolicitudAmistad;
+            MostrarNotificacionGeneral($"Solicitud de {nuevaSolicitudAmistad.Remitente.Nombre}",
                 esSolicitudAmistad: true);
         }
 
@@ -320,7 +318,7 @@ namespace WpfCliente.GUI
 
         private void Rechazar_Click(object sender, RoutedEventArgs e)
         {
-            _ = _ = RechazarSolicitud(solicitudAmistadActual);
+            _ = RechazarSolicitud(solicitudAmistadActual);
         }
 
         private async Task<bool> RechazarSolicitud(SolicitudAmistad solicitud)

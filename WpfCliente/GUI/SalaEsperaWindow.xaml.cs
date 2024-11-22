@@ -17,7 +17,7 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class SalaEsperaWindow : Window, IActualizacionUI, IServicioSalaJugadorCallback
+    public partial class SalaEsperaWindow : Window, IActualizacionUI, IServicioSalaJugadorCallback, IHabilitadorBotones
     {
         public ObservableCollection<Usuario> JugadoresSala { get; set; } = new ObservableCollection<Usuario>();
         private bool soyAnfitrion = false;
@@ -110,16 +110,16 @@ namespace WpfCliente.GUI
 
 
 
-        private void HabilitarBotones(bool estaHabilitado)
+        public void HabilitarBotones(bool esHabilitado)
         {
-            buttonConfigurarPartida.IsEnabled = estaHabilitado;
-            buttonEmpezarPartida.IsEnabled = estaHabilitado;
-            buttonGuardarCambios.IsEnabled = estaHabilitado;
-            buttonInvitarAmigos.IsEnabled = estaHabilitado;
-            chatUserControl.IsEnabled = estaHabilitado;
-            stakePaneListaExpulsion.IsEnabled = estaHabilitado;
-            stackPanePartida.IsEnabled = estaHabilitado;
-            gridConfiguracion.IsEnabled = estaHabilitado;
+            buttonConfigurarPartida.IsEnabled = esHabilitado;
+            buttonEmpezarPartida.IsEnabled = esHabilitado;
+            buttonGuardarCambios.IsEnabled = esHabilitado;
+            buttonInvitarAmigos.IsEnabled = esHabilitado;
+            chatUserControl.IsEnabled = esHabilitado;
+            stakePaneListaExpulsion.IsEnabled = esHabilitado;
+            stackPanePartida.IsEnabled = esHabilitado;
+            gridConfiguracion.IsEnabled = esHabilitado;
 
         }
 
@@ -140,9 +140,9 @@ namespace WpfCliente.GUI
             {
                 var manejadorServicio = new ServicioManejador<ServicioSalaClient>();
                 Singleton.Instance.IdSala = manejadorServicio.EjecutarServicio(proxy =>
-                 {
+                {
                      return proxy.CrearSala(Singleton.Instance.NombreUsuario);
-                 });
+                });
                 Singleton.Instance.IdChat = Singleton.Instance.IdSala;
 
                 CrearChat();
@@ -204,26 +204,23 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
-            //TODO: faltan recursos (botones)
             labelCodigoSala.Content = Idioma.labelCodigoSala;
             labelUsuariosLobby.Content = Idioma.labelUsuariosLobby;
             labelInvitaAmigos.Content = Idioma.labelInvitaAmigos;
             buttonInvitarAmigos.Content = Idioma.buttonInvitaAmigos;
             buttonConfigurarPartida.Content = Idioma.buttonConfigurarPartida;
             buttonEmpezarPartida.Content = Idioma.buttonEmpezarPartida;
-            //groupBoxCondicionVicotoria.Header
-            //grouoBoxTematica.Header
-            //radioButtonAnimales
-            //radioButtonMitologia
-            //radioButtonMixta
-            //radioButtonPaises
-            //radioButtonFinCartas
-            //radioButtonFinRondas
-            //buttonConfigurarPartida
-            //buttonEmpezarPartida
-            //labelExpulsarUsuario
-            //buttonGuardarCambios
-            //labelNumeroRondas
+            groupBoxCondicionVictoria.Header = Idioma.labelCondicionDeVictoria;
+            grouoBoxTematica.Header = Idioma.labelTematica;
+            radioButtonAnimales.Content = Idioma.buttonAnimales;
+            radioButtonMitologia.Content = Idioma.buttonMitologia;
+            radioButtonMixta.Content = Idioma.buttonMixta;
+            radioButtonPaises.Content = Idioma.buttonPaises;
+            radioButtonFinCartas.Content = Idioma.buttonFinCartas;
+            radioButtonFinRondas.Content = Idioma.buttonFinRondas;
+            labelExpulsarUsuario.Content = Idioma.buttonExpulsar;
+            buttonGuardarCambios.Content = Idioma.buttonGuardarCambios;
+            labelNumeroRondas.Content = Idioma.labelNumeroRondas;
         }
 
         public void EmpezarPartidaCallBack(string idPartida)
@@ -329,7 +326,7 @@ namespace WpfCliente.GUI
             };
         }
 
-        private void LabelCodigoSala_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void ClicButtonCopiar(object sender, MouseButtonEventArgs e)
         {
             if (labelCodigo.Content != null)
             {
@@ -339,7 +336,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void buttonInvitarAmigos_Click(object sender, RoutedEventArgs e)
+        private async void ClicButtonInvitarAmigos(object sender, RoutedEventArgs e)
         {
             string gamertagInvitado = AbrirVentanaModalGamertag();
             if (gamertagInvitado != null && gamertagInvitado != Singleton.Instance.NombreUsuario)
@@ -419,21 +416,21 @@ namespace WpfCliente.GUI
         private void EvaluarTematicaSelecionada()
         {
 
-            if (radioButtonMixta.IsChecked == true)
+            var tematicas = new Dictionary<RadioButton, TematicaPartida>
             {
-                ConfiguracionPartida.Tematica = TematicaPartida.Mixta;
-            }
-            else if (radioButtonAnimales.IsChecked == true)
+                { radioButtonMixta, TematicaPartida.Mixta },
+                { radioButtonAnimales, TematicaPartida.Animales },
+                { radioButtonPaises, TematicaPartida.Paises },
+                { radioButtonMitologia, TematicaPartida.Mitologia }
+            };
+
+            foreach (var entry in tematicas)
             {
-                ConfiguracionPartida.Tematica = TematicaPartida.Animales;
-            }
-            else if (radioButtonPaises.IsChecked == true)
-            {
-                ConfiguracionPartida.Tematica = TematicaPartida.Paises;
-            }
-            else if (radioButtonMitologia.IsChecked == true)
-            {
-                ConfiguracionPartida.Tematica = TematicaPartida.Mitologia;
+                if (entry.Key.IsChecked == true)
+                {
+                    ConfiguracionPartida.Tematica = entry.Value;
+                    break;
+                }
             }
         }
 

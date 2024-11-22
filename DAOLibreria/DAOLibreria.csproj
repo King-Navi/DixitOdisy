@@ -112,7 +112,7 @@
     <Compile Include="ModeloBD\Expulsion.cs">
       <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModeloBD\PeticionAmistad.cs">
+    <Compile Include="ModeloBD\PeticionAmistad1.cs">
       <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
     <Compile Include="ModeloBD\Usuario.cs">

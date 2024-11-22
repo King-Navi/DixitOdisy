@@ -20,22 +20,14 @@ namespace WpfCliente.GUI
     /// <summary>
     /// Lógica de interacción para RegistrarUsuario.xaml
     /// </summary>
-    public partial class RegistrarUsuarioWindow : IActualizacionUI
+    public partial class RegistrarUsuarioWindow : IActualizacionUI, IHabilitadorBotones
     {
-        private Boolean esInivtado;
         private string rutaAbsolutaImagen;
         public RegistrarUsuarioWindow()
         {
             rutaAbsolutaImagen = null;
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
-            ActualizarUI();
-        }
-        public RegistrarUsuarioWindow(bool esInvitado)
-        {
-            this.esInivtado = esInvitado;
-            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
-            InitializeComponent();
             ActualizarUI();
         }
 
@@ -134,12 +126,9 @@ namespace WpfCliente.GUI
                 {
                     using (MemoryStream memoryStream = new MemoryStream())
                     {
-                        // Copiar el contenido del FileStream al MemoryStream
                         fileStream.CopyTo(memoryStream);
-                        memoryStream.Position = 0; // Restablecer la posición al inicio del MemoryStream
+                        memoryStream.Position = 0;
 
-
-                        // Llamar al servicio con el MemoryStream
                         bool resultado = servicio.RegistrarUsuario(new Usuario()
                         {
                             ContraseniaHASH = contraseniaHash,
@@ -149,7 +138,6 @@ namespace WpfCliente.GUI
                         });
                         if (resultado)
                         {
-                            //TODO: Manejar el error
                             VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloRegistroUsuario, Idioma.mensajeUsuarioRegistradoConExito, this);
                             this.Close();
                         }
@@ -159,10 +147,8 @@ namespace WpfCliente.GUI
                         }
                     }
                 }
-
-
-
-            }catch(FaultException<BaseDatosFalla>)
+            }
+            catch(FaultException<BaseDatosFalla>)
             {
                 VentanasEmergentes.CrearVentanaEmergente("El usuario ya existe", "Ya hay un gamertag, busca otro gamertag",this);
             }
@@ -172,10 +158,10 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void HabilitarBotones(bool habilitado)
+        public void HabilitarBotones (bool esHabilitado)
         {
-            buttonRegistrarUsuario.IsEnabled = habilitado;
-            buttonCambiarFoto.IsEnabled = habilitado;
+            buttonRegistrarUsuario.IsEnabled = esHabilitado;
+            buttonCambiarFoto.IsEnabled = esHabilitado;
             //TODO desuscribir del evento y suscribirse en otro momento miImagen.mouseLeftButtonDown -= event;
         }
 

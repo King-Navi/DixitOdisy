@@ -27,7 +27,7 @@ namespace WpfCliente.GUI
         private string nombre;
         private BitmapImage bitmapImage;
 
-        
+
         public UsuarioUserControl()
         {
             InitializeComponent();
@@ -35,7 +35,7 @@ namespace WpfCliente.GUI
         }
         public UsuarioUserControl(bool _esAmigo, Usuario usuario)
         {
-            esAmigo= _esAmigo;
+            esAmigo = _esAmigo;
             InitializeComponent();
             nombre = usuario.Nombre;
             bitmapImage = Imagen.ConvertirStreamABitmapImagen(usuario.FotoUsuario);

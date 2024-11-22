@@ -5,7 +5,7 @@
   <SonarBinDir>C:\Users\unaay\source\repos\DixitOdisy\.sonarqube\bin</SonarBinDir>
   <SonarScannerWorkingDirectory>C:\Users\unaay\source\repos\DixitOdisy</SonarScannerWorkingDirectory>
   <JavaExePath>C:\Users\unaay\.sonar\cache\4bafe2e94439c8193fc8c68247cb0dbaf4e80265b903288f63f128304f129bbe\OpenJDK17U-jre_x64_windows_hotspot_17.0.11_9.zip_extracted\jdk-17.0.11+9-jre/bin/java.exe</JavaExePath>
-  <ScanAllAnalysis>true</ScanAllAnalysis>
+  <ScanAllAnalysis>false</ScanAllAnalysis>
   <HasBeginStepCommandLineCredentials>true</HasBeginStepCommandLineCredentials>
   <SonarQubeHostUrl>http://localhost:9000</SonarQubeHostUrl>
   <SonarQubeVersion>10.7.0.96327</SonarQubeVersion>
@@ -138,11 +138,12 @@
     <Property Name="sonaranalyzer-vbnet.pluginKey">vbnet</Property>
     <Property Name="sonar.java.jvmframeworkconfig.activate">true</Property>
     <Property Name="sonar.updatecenter.url">https://downloads.sonarsource.com/sonarqube/update/update-center.properties</Property>
-    <Property Name="sonar.core.startTime">20/11/2024 11:46:20 a. m.</Property>
     <Property Name="sonar.core.id">147B411E-AZNKrrF5OCDMX41RTs55</Property>
+    <Property Name="sonar.core.startTime">21/11/2024 03:28:08 p. m.</Property>
   </ServerSettings>
   <LocalSettings>
     <Property Name="sonar.host.url">http://localhost:9000</Property>
+    <Property Name="sonar.scanner.scanAll">false</Property>
   </LocalSettings>
   <AnalyzersSettings>
     <AnalyzerSettings>

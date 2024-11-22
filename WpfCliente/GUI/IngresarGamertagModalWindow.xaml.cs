@@ -41,7 +41,7 @@ namespace WpfCliente.GUI
             ActualizarUI();
         }
 
-        private void buttonAceptar_Click(object sender, RoutedEventArgs e)
+        private void ClicButtonAceptar(object sender, RoutedEventArgs e)
         {
             if (ValidarCodigo())
             {

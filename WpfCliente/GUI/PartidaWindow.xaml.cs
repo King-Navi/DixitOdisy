@@ -326,12 +326,12 @@ namespace WpfCliente.GUI
 
 
 
-        public void HabilitarBotones(bool esVasible)
+        public void HabilitarBotones(bool esHabilitado)
         {
-            seleccionCartasUserControl.IsEnabled = esVasible;
-            resumenRondaUserControl.IsEnabled = esVasible;
-            narradorSeleccionCartasUserControl.IsEnabled = esVasible;
-            verTodasCartasUserControl.IsEnabled = esVasible;
+            seleccionCartasUserControl.IsEnabled = esHabilitado;
+            resumenRondaUserControl.IsEnabled = esHabilitado;
+            narradorSeleccionCartasUserControl.IsEnabled = esHabilitado;
+            verTodasCartasUserControl.IsEnabled = esHabilitado;
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)

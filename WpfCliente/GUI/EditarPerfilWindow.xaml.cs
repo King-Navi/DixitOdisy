@@ -116,12 +116,12 @@ namespace WpfCliente.GUI
             
         }
 
-        private void clicButtonCancelar(object sender, RoutedEventArgs e)
+        private void ClicButtonCancelar(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
-        private void clicButtonAceptar(object sender, RoutedEventArgs e)
+        private void ClicButtonAceptar(object sender, RoutedEventArgs e)
         {
             Usuario usuarioEditado = new Usuario();
 
@@ -297,7 +297,7 @@ namespace WpfCliente.GUI
             this.Close();
         }
 
-        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ClicFlechaAtras(object sender, MouseButtonEventArgs e)
         {
             this.Close();
         }

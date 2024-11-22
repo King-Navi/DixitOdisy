@@ -4,22 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="64b272f573ea4c6dbb45c487fdd822bd" Name="Diagram1" ZoomLevel="94">
-        <EntityTypeShape EntityType="DescribeloModel.Amigo" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DescribeloModel.Estadisticas" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DescribeloModel.Expulsion" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DescribeloModel.Usuario" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DescribeloModel.UsuarioCuenta" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DescribeloModel.Veto" Width="1.5" PointX="3" PointY="13.875" IsExpanded="true" />
-        <AssociationConnector Association="DescribeloModel.FK_Amigo_UsuarioMayor" ManuallyRouted="false" />
-        <AssociationConnector Association="DescribeloModel.FK_Amigo_UsuarioMenor" ManuallyRouted="false" />
-        <AssociationConnector Association="DescribeloModel.FK_Estadisticas_Usuario" ManuallyRouted="false" />
-        <AssociationConnector Association="DescribeloModel.FK_Expulsion_UsuarioCuenta" ManuallyRouted="false" />
-        <AssociationConnector Association="DescribeloModel.FK_Usuario_UsuarioCuenta" ManuallyRouted="false" />
-        <AssociationConnector Association="DescribeloModel.FK_Veto_UsuarioCuenta" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="DescribeloModel.PeticionAmistad" Width="1.5" PointX="5.25" PointY="11.625" />
-        <AssociationConnector Association="DescribeloModel.FK_PeticionAmistad_Destinatario" />
-        <AssociationConnector Association="DescribeloModel.FK_PeticionAmistad_Remitente" />
+      <Diagram DiagramId="9039ad4c41a54b45893f75b7a16e3b9f" Name="Diagram1">
+        <EntityTypeShape EntityType="ModeloBD.Amigo" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloBD.Estadisticas" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloBD.Expulsion" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloBD.PeticionAmistad" Width="1.5" PointX="5.25" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloBD.Usuario" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloBD.UsuarioCuenta" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModeloBD.Veto" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
+        <AssociationConnector Association="ModeloBD.FK_Amigo_UsuarioMayor" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloBD.FK_Amigo_UsuarioMenor" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloBD.FK_Estadisticas_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloBD.FK_Expulsion_UsuarioCuenta" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloBD.FK_PeticionAmistad_Destinatario" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloBD.FK_PeticionAmistad_Remitente" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloBD.FK_Usuario_UsuarioCuenta" ManuallyRouted="false" />
+        <AssociationConnector Association="ModeloBD.FK_Veto_UsuarioCuenta" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

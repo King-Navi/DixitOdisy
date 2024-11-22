@@ -28,9 +28,9 @@ namespace DAOLibreria.ModeloBD
         public virtual DbSet<Amigo> Amigo { get; set; }
         public virtual DbSet<Estadisticas> Estadisticas { get; set; }
         public virtual DbSet<Expulsion> Expulsion { get; set; }
+        public virtual DbSet<PeticionAmistad> PeticionAmistad { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<UsuarioCuenta> UsuarioCuenta { get; set; }
         public virtual DbSet<Veto> Veto { get; set; }
-        public virtual DbSet<PeticionAmistad> PeticionAmistad { get; set; }
     }
 }

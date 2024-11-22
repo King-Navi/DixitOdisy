@@ -17,7 +17,7 @@
                 <GradientStop Color="#FF56014B" Offset="0.484"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <TextBlock Text="Esperando a otros jugadores..." 
+        <TextBlock x:Name="labelEsperandoJugadores" Text="Esperando a otros jugadores..." 
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center" 
                    Width="160" Height="80"

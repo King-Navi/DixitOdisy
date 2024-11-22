@@ -15,6 +15,7 @@ namespace WpfCliente.GUI
         {
             InitializeComponent();
             gridChat.Visibility = Visibility.Collapsed;
+            ActualizarUI();
         }
 
         private void ClicButtonAbrirChat(object sender, RoutedEventArgs e)
@@ -30,8 +31,7 @@ namespace WpfCliente.GUI
             {
                 RecibirMensajeCliente(new ChatMensaje
                 {
-                    //TODO: I18N
-                    Mensaje = "Profe ese texto no vale",
+                    Mensaje = Properties.Idioma.mensajeProfe,
                     HoraFecha = DateTime.Now,
                     Nombre = "Describelo"
                 });
@@ -53,7 +53,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void ClicButtonCerrarChar(object sender, RoutedEventArgs e)
+        private void ClicButtonCerrarChat(object sender, RoutedEventArgs e)
         {
             gridChat.Visibility = Visibility.Collapsed;
             buttonAbrirChat.Visibility = Visibility.Visible;

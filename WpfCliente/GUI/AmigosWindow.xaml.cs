@@ -32,11 +32,11 @@ namespace WpfCliente.GUI
             InitializeComponent();
         }
 
-        private void FlechaAtras_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ClicButtonFlechaAtras(object sender, MouseButtonEventArgs e)
         {
             this.Close();
         }
-        private void FlechaRecargar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ClicButtonFlechaRecargar(object sender, MouseButtonEventArgs e)
         {
             if (contadorClics >= LIMITE_CLICS)
             {
@@ -50,19 +50,26 @@ namespace WpfCliente.GUI
 
         private void RecargarSolicitudes()
         {
-            var contenedorPadre = (Panel)listaSolicitudesAmistadUserControl.Parent;
-            if (contenedorPadre != null)
+            try
             {
-                contenedorPadre.Children.Remove(listaSolicitudesAmistadUserControl);
+                var contenedorPadre = (Panel)listaSolicitudesAmistadUserControl.Parent;
+                if (contenedorPadre != null)
+                {
+                    contenedorPadre.Children.Remove(listaSolicitudesAmistadUserControl);
 
-                ListaSolicitudesAmistadUserControl nuevaListaSolicitudes = new ListaSolicitudesAmistadUserControl();
-                contenedorPadre.Children.Add(nuevaListaSolicitudes);
+                    ListaSolicitudesAmistadUserControl nuevaListaSolicitudes = new ListaSolicitudesAmistadUserControl();
+                    contenedorPadre.Children.Add(nuevaListaSolicitudes);
 
-                listaSolicitudesAmistadUserControl = nuevaListaSolicitudes;
+                    listaSolicitudesAmistadUserControl = nuevaListaSolicitudes;
+                }
+            }
+            catch (Exception ex)
+            {
+                ManejadorExcepciones.ManejarComponentErrorException(ex);
             }
         }
 
-        private void NuevaSolicitud_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ClicButtonNuevaSolicitud(object sender, MouseButtonEventArgs e)
         {
             TryEnviarSolicitud();
         }
@@ -95,7 +102,7 @@ namespace WpfCliente.GUI
                 }
                 catch (Exception ex)
                 {
-                    VentanasEmergentes.CrearVentanaEmergente(Idioma.mensajeErrorInesperado, ex.Message, this);
+                    ManejadorExcepciones.ManejarErrorException(ex, this);
                 }
             }
         }
@@ -109,9 +116,9 @@ namespace WpfCliente.GUI
                 ventanaModal.Owner = this;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //TODO
+                ManejadorExcepciones.ManejarComponentErrorException(ex);
             }
             bool? resultado = ventanaModal.ShowDialog();
 
@@ -140,9 +147,9 @@ namespace WpfCliente.GUI
                 var resultado = Conexion.Amigos.EnviarSolicitudAmistad(usuarioRemitente, gamertagReceptor);
                 return resultado;
             }
-            catch (Exception excepcion)
+            catch (Exception ex)
             {
-                VentanasEmergentes.CrearVentanaEmergente(excepcion.InnerException.ToString(), excepcion.StackTrace, this);
+                ManejadorExcepciones.ManejarComponentFatalException(ex);
                 return false;
             }
         }

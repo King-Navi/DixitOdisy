@@ -474,4 +474,16 @@
   <data name="buttonFinRondas" xml:space="preserve">
     <value>Until the rounds are over</value>
   </data>
+  <data name="mensajeProfe" xml:space="preserve">
+    <value>PROFESSOR THAT TEXT IS NOT VALID</value>
+  </data>
+  <data name="labelEsperandoJugadores" xml:space="preserve">
+    <value>Waiting for the players</value>
+  </data>
+  <data name="tituloSesionIniciada" xml:space="preserve">
+    <value>You are already logged in</value>
+  </data>
+  <data name="mensajeSesionIniciada" xml:space="preserve">
+    <value>If you are not the one logged in, please contact support.</value>
+  </data>
 </root>

@@ -22,9 +22,9 @@ namespace WpfCliente.Utilidad
                 bitmap.EndInit();
                 bitmap.Freeze();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                ManejadorExcepciones.ManejarComponentFatalException(ex);
                 bitmap = null;
             }
             return bitmap;

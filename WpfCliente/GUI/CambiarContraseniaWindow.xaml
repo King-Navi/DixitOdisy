@@ -48,14 +48,14 @@
     </Window.Resources>
 
     <Grid Background="Black">
-        <Image x:Name="imagenAtras" Source="/Recursos/flechaAtras.png" Margin="1,2,1099,652" Cursor="Hand" MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
+        <Image x:Name="imagenAtras" Source="/Recursos/flechaAtras.png" Margin="1,2,1099,652" Cursor="Hand" MouseLeftButtonDown="ClicButtonFlechaAtras"/>
 
         <Label HorizontalAlignment="Center" Foreground="White" Content="Cambiar contraseña" x:Name="labelCambioContrasenia"  FontFamily="Lucida Sans Unicode Bold" FontSize="33" HorizontalContentAlignment="Center" Margin="0,82,0,602" Width="494"/>
 
         <!-- Pie de página -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,673,0,0">
-            <Button Content="Cancelar cambios" x:Name="buttonCancelarCambio" Click="clicButtonCancelar"  Background="#E0DCC7" Width="200" Height="51" FontSize="20"/>
-            <Button Content="Cambiar contraseña" x:Name="buttonEditarContrasenia"  Click="clicButtonAceptar"  Background="#E0DCC7" Height="51" Width="210" FontSize="20"/>
+            <Button Content="Cancelar cambios" x:Name="buttonCancelarCambio" Click="ClicButtonCancelar"  Background="#E0DCC7" Width="200" Height="51" FontSize="20"/>
+            <Button Content="Cambiar contraseña" x:Name="buttonEditarContrasenia"  Click="ClicButtonAceptar"  Background="#E0DCC7" Height="51" Width="210" FontSize="20"/>
         </StackPanel>
 
 

@@ -44,23 +44,8 @@ namespace WpfCliente.GUI
 
             if (imagenCarta?.ImagenStream != null)
             {
-                control.ImagenDisplay.Source = ConvertirStreamABitmapImagen(imagenCarta.ImagenStream);
+                control.ImagenDisplay.Source = Imagen.ConvertirStreamABitmapImagen(imagenCarta.ImagenStream);
             }
-        }
-
-        private static BitmapImage ConvertirStreamABitmapImagen(MemoryStream stream)
-        {
-            if (stream == null) return null;
-            stream.Position = 0;
-
-            var bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.StreamSource = stream;
-            bitmap.CacheOption = BitmapCacheOption.OnLoad;
-            bitmap.EndInit();
-            bitmap.Freeze();
-
-            return bitmap;
         }
     }
 

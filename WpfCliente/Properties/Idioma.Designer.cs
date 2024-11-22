@@ -457,6 +457,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Esperando a los jugadores....
+        /// </summary>
+        public static string labelEsperandoJugadores {
+            get {
+                return ResourceManager.GetString("labelEsperandoJugadores", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Esperando pista....
         /// </summary>
         public static string labelEsperandoPista {
@@ -826,6 +835,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a PROFE ESE TEXTO NO SE VALE.
+        /// </summary>
+        public static string mensajeProfe {
+            get {
+                return ResourceManager.GetString("mensajeProfe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El servidor no se encuentra disponible.
         /// </summary>
         public static string mensajeServidorNoDisponible {
@@ -840,6 +858,15 @@ namespace WpfCliente.Properties {
         public static string mensajeServidorSobrecargado {
             get {
                 return ResourceManager.GetString("mensajeServidorSobrecargado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Si no eres tú quien inició sesión, por favor contacta a soporte..
+        /// </summary>
+        public static string mensajeSesionIniciada {
+            get {
+                return ResourceManager.GetString("mensajeSesionIniciada", resourceCulture);
             }
         }
         
@@ -1119,6 +1146,15 @@ namespace WpfCliente.Properties {
         public static string tituloSalaEspera {
             get {
                 return ResourceManager.GetString("tituloSalaEspera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ya has iniciado sesión.
+        /// </summary>
+        public static string tituloSesionIniciada {
+            get {
+                return ResourceManager.GetString("tituloSesionIniciada", resourceCulture);
             }
         }
         

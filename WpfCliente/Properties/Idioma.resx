@@ -474,4 +474,16 @@
   <data name="buttonFinRondas" xml:space="preserve">
     <value>Hasta que se acaben las rondas</value>
   </data>
+  <data name="mensajeProfe" xml:space="preserve">
+    <value>PROFE ESE TEXTO NO SE VALE</value>
+  </data>
+  <data name="labelEsperandoJugadores" xml:space="preserve">
+    <value>Esperando a los jugadores...</value>
+  </data>
+  <data name="tituloSesionIniciada" xml:space="preserve">
+    <value>Ya has iniciado sesión</value>
+  </data>
+  <data name="mensajeSesionIniciada" xml:space="preserve">
+    <value>Si no eres tú quien inició sesión, por favor contacta a soporte.</value>
+  </data>
 </root>

@@ -17,9 +17,9 @@
         <Rectangle Fill="White" Opacity="0.75" Margin="20" RadiusX="15" RadiusY="15" />
 
         <!-- Elementos de la ventana -->
-        <Image x:Name="imagenFlechaAtras" Source="/Recursos/flechaAtras.png" Margin="38,37,1066,622" Cursor="Hand" MouseLeftButtonDown="FlechaAtras_MouseLeftButtonDown"/>
-        <Image x:Name="imagenFlechaRecargar" Source="/Recursos/flechaRecargar.png" Margin="1064,37,40,622" Cursor="Hand" MouseLeftButtonDown="FlechaRecargar_MouseLeftButtonDown"/>
-        <Image x:Name="imagenAgregarAmigo" Source="/Recursos/agregarAmigo.png" Margin="50,608,1042,45" Cursor="Hand" MouseLeftButtonDown="NuevaSolicitud_MouseLeftButtonDown"/>
+        <Image x:Name="imagenFlechaAtras" Source="/Recursos/flechaAtras.png" Margin="38,37,1066,622" Cursor="Hand" MouseLeftButtonDown="ClicButtonFlechaAtras"/>
+        <Image x:Name="imagenFlechaRecargar" Source="/Recursos/flechaRecargar.png" Margin="1064,37,40,622" Cursor="Hand" MouseLeftButtonDown="ClicButtonFlechaRecargar"/>
+        <Image x:Name="imagenAgregarAmigo" Source="/Recursos/agregarAmigo.png" Margin="50,608,1042,45" Cursor="Hand" MouseLeftButtonDown="ClicButtonNuevaSolicitud"/>
         <Grid>
             <local:ListaSolicitudesAmistadUserControl x:Name="listaSolicitudesAmistadUserControl" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>

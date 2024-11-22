@@ -60,14 +60,14 @@ namespace WpfCliente.GUI
             buttonOlvidarContrasenia.IsEnabled= esValido;
         }
 
-        private void buttonRegistrar_Click(object sender, RoutedEventArgs e)
+        private void ClicRegistrar(object sender, RoutedEventArgs e)
         {
             RegistrarUsuarioWindow registrarWindow = new RegistrarUsuarioWindow();
             registrarWindow.Show();
             this.Close();
         }
 
-        private async void buttonIniciarSesion_Click(object sender, RoutedEventArgs e)
+        private async void ClicIniciarSesion(object sender, RoutedEventArgs e)
         {
             if (ValidarCampos())
             {
@@ -110,8 +110,7 @@ namespace WpfCliente.GUI
             bool yaInicioSesion = servicio.YaIniciadoSesion(textBoxUsuario.Text);
             if (yaInicioSesion)
             {
-                VentanasEmergentes.CrearVentanaEmergente("Ya has iniciado sesion",
-                    "Ya has iniciado sesion, si no eres tu el que inicio sesion porfavor contacta a soporte", this);
+                VentanasEmergentes.CrearVentanaEmergenteSesionIniciada(this);
             }
             else
             {
@@ -138,7 +137,7 @@ namespace WpfCliente.GUI
         }
 
 
-        private async void buttonJugarComoInvitado_Click(object sender, RoutedEventArgs e)
+        private async void ClicJugarComoInvitado(object sender, RoutedEventArgs e)
         {
             string codigoSala = AbrirVentanaModalSala();
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
@@ -299,7 +298,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void passwordBoxKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void ClicEnter(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
@@ -307,7 +306,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void buttonOlvidarContrasenia_Click(object sender, RoutedEventArgs e)
+        private async void ClicOlvidarContrasenia(object sender, RoutedEventArgs e)
         {
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)

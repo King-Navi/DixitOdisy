@@ -44,7 +44,6 @@ namespace WpfCliente.GUI
                     IdiomaGuardo.GuardarInglesUS();
                     break;
                 default:
-                    //TODO manejar el default
                     IdiomaGuardo.GuardarInglesUS();
                     VentanasEmergentes.CrearVentanaEmergenteIdiomaInvalido(this);
                     break;
@@ -67,7 +66,7 @@ namespace WpfCliente.GUI
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
         }
 
-        private void Imagen_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void clicImagenIdioma(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             cambiarIdiomaMenuDesplegable.IsDropDownOpen = true;
         }

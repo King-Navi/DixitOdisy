@@ -12,17 +12,28 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfCliente.Interfaz;
 
 namespace WpfCliente.GUI
 {
     /// <summary>
     /// Interaction logic for EsperaRestoJugadoresUserControl.xaml
     /// </summary>
-    public partial class EsperaRestoJugadoresUserControl : UserControl
+    public partial class EsperaRestoJugadoresUserControl : UserControl, IActualizacionUI
     {
         public EsperaRestoJugadoresUserControl()
         {
             InitializeComponent();
+        }
+
+        public void ActualizarUI()
+        {
+            labelEsperandoJugadores.Text = Properties.Idioma.labelEsperandoJugadores;
+        }
+
+        public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
+        {
+            ActualizarUI();
         }
     }
 }

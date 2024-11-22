@@ -99,6 +99,19 @@ namespace WpfCliente.Utilidad
             ventanaEmergente.ShowDialog();
         }
 
+        public static void CrearVentanaEmergenteSesionIniciada(Window window)
+        {
+            string tituloVentanaEmergente = Properties.Idioma.tituloSesionIniciada; 
+            string descripcionVentanaEmergente = Properties.Idioma.mensajeSesionIniciada;
+
+            VentanaEmergente ventanaEmergente = new VentanaEmergente(
+                tituloVentanaEmergente,
+                descripcionVentanaEmergente
+            );
+            ventanaEmergente.Owner = window;
+            ventanaEmergente.ShowDialog();
+        }
+
         public static void CrearVentanaEmergenteImagenInvalida(Window window)
         {
             string tituloVentanaEmergente = Properties.Idioma.tituloImagenInvalida;

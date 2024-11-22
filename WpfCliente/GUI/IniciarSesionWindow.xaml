@@ -88,21 +88,21 @@
             <Border CornerRadius="10" BorderThickness="1" BorderBrush="Transparent" Margin="416,130,410,377" Grid.Row="2" >
                 <PasswordBox x:Name="textBoxContrasenia" MaxLength="20"  FontSize="22" FontFamily="Lucida Sans Unicode Bold" 
                              Foreground="Black" VerticalContentAlignment="Center" BorderBrush="Transparent" 
-                             Background="Transparent" KeyDown="passwordBoxKeyDown"  />
+                             Background="Transparent" KeyDown="ClicEnter"  />
             </Border>
 
-            <Button x:Name="buttonOlvidarContrasenia" Margin="413,181,631,351" Grid.Row="2" Foreground="#8dadb6" Background="Transparent" BorderThickness="0" Cursor="Hand" Click="buttonOlvidarContrasenia_Click"/>
+            <Button x:Name="buttonOlvidarContrasenia" Margin="413,181,631,351" Grid.Row="2" Foreground="#8dadb6" Background="Transparent" BorderThickness="0" Cursor="Hand" Click="ClicOlvidarContrasenia"/>
 
             <Button x:Name="buttonIniciarSesion" Background="#E0DCC7" Foreground="Black" BorderBrush="Gray" BorderThickness="2"
             FontFamily="Lucida Sans Unicode" FontSize="24" Content="Iniciar sesión" 
-            Margin="416,246,410,260" Grid.Row="2" Cursor="Hand" Click="buttonIniciarSesion_Click" />
+            Margin="416,246,410,260" Grid.Row="2" Cursor="Hand" Click="ClicIniciarSesion" />
 
             <Button x:Name="buttonRegistrar" Background="Transparent" Foreground="#8dadb6" BorderThickness="0"
-            FontFamily="Lucida Sans Unicode" FontSize="18" Content="¿Nuevo en el juego? Registrarse"  Margin="416,298,410,208" Grid.Row="2" Cursor="Hand" Click="buttonRegistrar_Click"/>
+            FontFamily="Lucida Sans Unicode" FontSize="18" Content="¿Nuevo en el juego? Registrarse"  Margin="416,298,410,208" Grid.Row="2" Cursor="Hand" Click="ClicRegistrar"/>
 
             <Button x:Name="buttonJugarComoInvitado" Background="#E0DCC7" Foreground="Black" BorderBrush="Gray" BorderThickness="2" 
                 FontFamily="Lucida Sans Unicode" FontSize="18" 
-                Content="Jugar como invitado" Margin="360,366,643,145" Grid.Row="1" Cursor="Hand" Click="buttonJugarComoInvitado_Click"  />
+                Content="Jugar como invitado" Margin="360,366,643,145" Grid.Row="1" Cursor="Hand" Click="ClicJugarComoInvitado"  />
 
             <Label x:Name="labelCredencialesIncorrectas" Content="Credenciales incorrectas" Visibility="Collapsed" HorizontalAlignment="Left" Margin="416,208,0,0" Grid.Row="1" VerticalAlignment="Top" Width="374" FontFamily="Lucida Sans Unicode Bold" FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="#FFFF5959" Height="33"/>
 

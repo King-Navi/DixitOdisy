@@ -62,7 +62,6 @@ namespace WpfCliente.GUI
         VerTodasCartasUserControl verTodasCartasUserControl;
         ResumenRondaUserControl resumenRondaUserControl;
         private readonly SemaphoreSlim semaphoreRecibirImagenCallback = new SemaphoreSlim(1,1);
-        private Window ventanaMenu;
         private bool esNarrador;
         public bool EsNarrador
         {
@@ -95,7 +94,6 @@ namespace WpfCliente.GUI
 
         public PartidaWindow(string idPartida)
         {
-            ConfigurarVentanaMenu();
             InitializeComponent();
             InicializarComponenetes();
             ActualizarUI();
@@ -103,16 +101,7 @@ namespace WpfCliente.GUI
             UnirsePartida(idPartida);
         }
 
-        private void ConfigurarVentanaMenu()
-        {
-            foreach (Window window in Application.Current.Windows)
-            {
-                if (window is MenuWindow ventanaMenu)
-                {
-                    this.ventanaMenu = ventanaMenu;
-                }
-            }
-        }
+
 
         private async Task SolicitarMazoAsync()
         {
@@ -272,7 +261,6 @@ namespace WpfCliente.GUI
              {
                 await SolicitarMazoAsync();
                 Conexion.Partida.EmpezarPartida(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
-                EsconderVentanaMenu();
                 await UnirseChat();
              });
         }
@@ -362,22 +350,6 @@ namespace WpfCliente.GUI
             AvanzarPantalla(PANTALLA_FIN_PARTIDA);
         }
 
-
-        private void EsconderVentanaMenu()
-        {
-            try
-            {
-                if (ventanaMenu != null)
-                {
-                    ventanaMenu.Hide();
-                }
-            }
-            catch (Exception)
-            {
-                Application.Current.Shutdown();
-            }
-        }
-
         private void CerrandoVentana(object sender, CancelEventArgs e)
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
@@ -388,17 +360,6 @@ namespace WpfCliente.GUI
             }
             catch (Exception)
             {
-            }
-            try
-            {
-                if (ventanaMenu != null)
-                {
-                    ventanaMenu.Show();
-                }
-            }
-            catch (Exception)
-            {
-                Application.Current.Shutdown();
             }
         }
 
@@ -456,6 +417,7 @@ namespace WpfCliente.GUI
         /// <param name="id"></param>
         public async void EscogerImagenNarrador(string id)
         {
+            
             ImagenCarta imagenAEscoger = recursosCompartidos.Imagenes.FirstOrDefault(i => i.IdImagen == id);
             if (imagenAEscoger == null)
                 return;

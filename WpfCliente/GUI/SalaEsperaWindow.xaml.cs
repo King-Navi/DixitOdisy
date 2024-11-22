@@ -235,9 +235,7 @@ namespace WpfCliente.GUI
                 return;
             }
             Singleton.Instance.IdPartida = idPartida;
-            PartidaWindow partida = new PartidaWindow(idPartida);
-            partida.Show();
-            this.Hide();
+            OcultarVetanaHastaCierre();
         }
 
         private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
@@ -279,8 +277,9 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void ClicButtonEmpezarPartida(object sender, RoutedEventArgs e)
+        private void ClicButtonEmpezarPartida(object sender, RoutedEventArgs e)
         {
+            buttonEmpezarPartida.IsEnabled = false;
             EvaluarCantidaRondas();
             EvaluarCondicionVictoria();
             EvaluarTematicaSelecionada();
@@ -296,16 +295,38 @@ namespace WpfCliente.GUI
                 {
                     CrearChat(Singleton.Instance.IdPartida);
                     Conexion.SalaJugador.ComenzarPartidaAnfrition(Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala, Singleton.Instance.IdPartida);
-                    await Task.Delay(TimeSpan.FromSeconds(SEGUNDOS_PARA_UNIRSE));
-                    PartidaWindow partida = new PartidaWindow(Singleton.Instance.IdPartida);
-                    partida.Show();
-                    this.Hide();
+                    OcultarVetanaHastaCierre();
                 }
                 catch (Exception)
                 {
                 }
-
+                buttonEmpezarPartida.IsEnabled = true;
             }
+        }
+
+        private void OcultarVetanaHastaCierre()
+        {
+            if (Singleton.Instance.IdPartida == null)
+            {
+                this.Close();
+                return;
+            }
+            PartidaWindow partida = new PartidaWindow(Singleton.Instance.IdPartida);
+            partida.Show();
+            this.Hide();
+            partida.Closed += (s, args) => {
+                if (!Conexion.CerrarConexionesPartida())
+                {
+                    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                    this.Close();
+                }
+                if (!Conexion.CerrarChatMotor())
+                {
+                    VentanasEmergentes.CrearVentanaEmergenteErrorServidor(this);
+                    this.Close();
+                }
+                this.Show();
+            };
         }
 
         private void LabelCodigoSala_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

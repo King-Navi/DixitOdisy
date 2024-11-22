@@ -45,7 +45,7 @@ namespace WpfCliente.GUI
                     break;
                 default:
                     IdiomaGuardo.GuardarInglesUS();
-                    VentanasEmergentes.CrearVentanaEmergenteIdiomaInvalido(this);
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloIdiomaInvalido, Properties.Idioma.mensajeIdiomaInvalido, this);
                     break;
             }
             WpfCliente.Properties.Settings.Default.Save();

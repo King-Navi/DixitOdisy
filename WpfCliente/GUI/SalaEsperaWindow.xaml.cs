@@ -305,7 +305,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void LabelCodigoSala_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void ClicButtonCopiar(object sender, MouseButtonEventArgs e)
         {
             if (labelCodigo.Content != null)
             {
@@ -315,7 +315,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void buttonInvitarAmigos_Click(object sender, RoutedEventArgs e)
+        private async void ClicButtonInvitarAmigos(object sender, RoutedEventArgs e)
         {
             string gamertagInvitado = AbrirVentanaModalGamertag();
             if (gamertagInvitado != null && gamertagInvitado != Singleton.Instance.NombreUsuario)
@@ -395,21 +395,21 @@ namespace WpfCliente.GUI
         private void EvaluarTematicaSelecionada()
         {
 
-            if (radioButtonMixta.IsChecked == true)
+            var tematicas = new Dictionary<RadioButton, TematicaPartida>
             {
-                ConfiguracionPartida.Tematica = TematicaPartida.Mixta;
-            }
-            else if (radioButtonAnimales.IsChecked == true)
+                { radioButtonMixta, TematicaPartida.Mixta },
+                { radioButtonAnimales, TematicaPartida.Animales },
+                { radioButtonPaises, TematicaPartida.Paises },
+                { radioButtonMitologia, TematicaPartida.Mitologia }
+            };
+
+            foreach (var entry in tematicas)
             {
-                ConfiguracionPartida.Tematica = TematicaPartida.Animales;
-            }
-            else if (radioButtonPaises.IsChecked == true)
-            {
-                ConfiguracionPartida.Tematica = TematicaPartida.Paises;
-            }
-            else if (radioButtonMitologia.IsChecked == true)
-            {
-                ConfiguracionPartida.Tematica = TematicaPartida.Mitologia;
+                if (entry.Key.IsChecked == true)
+                {
+                    ConfiguracionPartida.Tematica = entry.Value;
+                    break;
+                }
             }
         }
 

@@ -23,10 +23,11 @@ namespace WpfCliente.GUI
     public partial class EditarPerfilWindow : Window , IActualizacionUI
     {
         private bool cambioImagen = false;
-        private readonly Window menuWindow;
-        public EditarPerfilWindow(Window menuWindow)
+        private const string RECURSO_ESTILO_CORREO = "NormalTextBoxStyle";
+        private const string RECURSO_ESTILO_CORREO_ERROR = "ErrorTextBoxStyle";
+
+        public EditarPerfilWindow()
         {
-            this.menuWindow = menuWindow;
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             InitializeComponent();
             CargarDatos();
@@ -50,14 +51,19 @@ namespace WpfCliente.GUI
                 }
                 else
                 {
-                    MostrarError("El archivo seleccionado no es una imagen válida. Por favor selecciona una imagen.");
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, 
+                        Properties.Idioma.mensajeImagenInvalida, 
+                        this);
                 }
             }
             else
             {
-                MostrarError("No se seleccionó ninguna imagen.");
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenNoSelecionadaEditar, 
+                    Properties.Idioma.mensajeImagenNoSelecionadaEditar, 
+                    this);
             }
         }
+
         private string AbrirDialogoSeleccionImagen()
         {
             return Imagen.SelecionarRutaImagen();
@@ -73,10 +79,6 @@ namespace WpfCliente.GUI
             imageFotoJugador.Source = nuevaImagen;
             VentanasEmergentes.CrearVentanaEmergente("Imagen seleccionada", rutaImagen, this);
             cambioImagen = true;
-        }
-        private void MostrarError(string mensaje)
-        {
-            VentanasEmergentes.CrearVentanaEmergenteErrorInesperado(this);
         }
 
         private void CargarImagen()
@@ -103,17 +105,15 @@ namespace WpfCliente.GUI
             buttonEditarUsuario.Content = Properties.Idioma.buttonEditarUsuario;
             buttonCancelarCambio.Content = Properties.Idioma.buttonCancelar;
             buttonCambiarFoto.Content = Properties.Idioma.buttonCambiarFotoPerfil;
-
             labelRepetirContrasenia.Content = Properties.Idioma.labelRepitaContraseña;
             labelContrasenia.Content = Properties.Idioma.labelContrasenia;
             labelCorreo.Content = Properties.Idioma.labelCorreoE;
             labelFotoPerfil.Content = Properties.Idioma.labelSeleccionarFotoPerfil;
-
             labelContraseniaInstruccion.Content = Properties.Idioma.labelContraseniaInstruccion;
             labelContraseniaMinimo.Content = Properties.Idioma.labelContraseniaMinimo;
             labelContraseniaMaximo.Content = Properties.Idioma.labelContraseniaMaximo;
             labelContraseniaSimbolos.Content = Properties.Idioma.labelContraseniaSimbolos;
-            
+            this.Title = Properties.Idioma.tituloEditarUsuario;
         }
 
         private void ClicButtonCancelar(object sender, RoutedEventArgs e)
@@ -125,10 +125,9 @@ namespace WpfCliente.GUI
         {
             Usuario usuarioEditado = new Usuario();
 
-            bool realizoCambios = VerificarCambioImagen(usuarioEditado)
-                                  || VerificarCambioCorreo(usuarioEditado)
-                                  || VerificarCambioContrasenia(usuarioEditado);
-
+            bool realizoCambios = VerificarCambioImagen(usuarioEditado) 
+                || VerificarCambioCorreo(usuarioEditado) 
+                || VerificarCambioContrasenia(usuarioEditado);
             if (realizoCambios)
             {
                 if (ValidarCampos())
@@ -179,7 +178,6 @@ namespace WpfCliente.GUI
         {
             usuarioEditado.IdUsuario = Singleton.Instance.IdUsuario;
             usuarioEditado.Nombre = Singleton.Instance.NombreUsuario;
-
             var manejadorServicio = new ServicioManejador<ServicioUsuarioClient>();
             bool resultado = manejadorServicio.EjecutarServicio(proxy =>
             {
@@ -193,19 +191,23 @@ namespace WpfCliente.GUI
             }
             else
             {
-                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloEditarUsuario, Idioma.mensajeUsuarioEditadoFallo, this);
+                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloEditarUsuario, 
+                    Idioma.mensajeUsuarioEditadoFallo, 
+                    this);
             }
         }
 
         private void MostrarMensajeSinCambios()
         {
-            VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloEditarUsuario, Idioma.mensajeNoHuboCambios, this);
+            VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloEditarUsuario, 
+                Idioma.mensajeNoHuboCambios, 
+                this);
         }
 
         private bool ValidarCampos()
         {
             bool isValid = true;
-            SetDefaultStyles();
+            ColocarEstilos();
 
             if (!ValidarCaracteristicasContrasenia())
             {
@@ -214,18 +216,17 @@ namespace WpfCliente.GUI
 
             if (!ValidacionesString.EsCorreoValido(textBoxCorreo.Text.Trim()))
             {
-                textBoxCorreo.Style = (Style)FindResource("ErrorTextBoxStyle");
+                textBoxCorreo.Style = (Style)FindResource(RECURSO_ESTILO_CORREO_ERROR);
                 isValid = false;
             }
 
             return isValid;
         }
 
-        private void SetDefaultStyles()
+        private void ColocarEstilos()
         {
             labelContraseniasNoCoinciden.Visibility = Visibility.Collapsed;
-            textBoxCorreo.Style = (Style)FindResource("NormalTextBoxStyle");
-
+            textBoxCorreo.Style = (Style)FindResource(RECURSO_ESTILO_CORREO);
             labelContraseniaMinimo.Foreground = Brushes.Red;
             labelContraseniaMaximo.Foreground = Brushes.Red;
             labelContraseniaSimbolos.Foreground = Brushes.Red;
@@ -258,7 +259,7 @@ namespace WpfCliente.GUI
                 isValid = false;
             }
 
-            if (ValidacionesString.IsValidSymbol(textBoxContrasenia.Password))
+            if (ValidacionesString.EsSimboloValido(textBoxContrasenia.Password))
             {
                 labelContraseniaSimbolos.Foreground = Brushes.Green;
             }
@@ -293,7 +294,6 @@ namespace WpfCliente.GUI
             }
             IniciarSesion iniciarSesion = new IniciarSesion();
             iniciarSesion.Show();
-            menuWindow?.Close();
             this.Close();
         }
 

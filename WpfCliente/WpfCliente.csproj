@@ -125,9 +125,6 @@
     <Compile Include="GUI\CambiarContraseniaWindow.xaml.cs">
       <DependentUpon>CambiarContraseniaWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\CartaUserControl.xaml.cs">
-      <DependentUpon>CartaUserControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GUI\ChatUserControl.xaml.cs">
       <DependentUpon>ChatUserControl.xaml</DependentUpon>
     </Compile>
@@ -342,10 +339,6 @@
     <Page Include="GUI\CambiarIdiomaUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\CartaUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\ChatUserControl.xaml">
       <SubType>Designer</SubType>

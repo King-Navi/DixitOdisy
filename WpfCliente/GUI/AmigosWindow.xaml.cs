@@ -20,16 +20,16 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Lógica de interacción para AmigosWindow.xaml
-    /// </summary>
-    public partial class AmigosWindow : Window, IHabilitadorBotones
+    public partial class AmigosWindow : Window, IHabilitadorBotones , IActualizacionUI
     {
         private int contadorClics = 0;
         private const int LIMITE_CLICS = 2;
+        private const double OPACIDAD_MAXIAM = 1;
+        private const double OPACIDAD_MINIMA = 0.5;
         public AmigosWindow(MenuWindow menuWindow)
         {
             InitializeComponent();
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
         }
 
         private void ClicButtonFlechaAtras(object sender, MouseButtonEventArgs e)
@@ -40,7 +40,6 @@ namespace WpfCliente.GUI
         {
             if (contadorClics >= LIMITE_CLICS)
             {
-                MessageBox.Show("Ya no puede hacer más solicitudes profe.", "Límite alcanzado", MessageBoxButton.OK, MessageBoxImage.Warning);
                 imagenFlechaRecargar.Visibility = Visibility.Collapsed;
                 return;
             }
@@ -159,10 +158,26 @@ namespace WpfCliente.GUI
             imagenFlechaRecargar.IsEnabled = esHabilitado;
             imagenFlechaAtras.IsEnabled = esHabilitado;
             imagenAgregarAmigo.IsEnabled = esHabilitado;
+            listaSolicitudesAmistadUserControl.IsEnabled = esHabilitado;
+            imagenFlechaRecargar.Opacity = esHabilitado ? OPACIDAD_MAXIAM : OPACIDAD_MINIMA;
+            imagenFlechaAtras.Opacity = esHabilitado ? OPACIDAD_MAXIAM : OPACIDAD_MINIMA;
+            imagenAgregarAmigo.Opacity = esHabilitado ? OPACIDAD_MAXIAM : OPACIDAD_MINIMA;
+            
+        }
 
-            imagenFlechaRecargar.Opacity = esHabilitado ? 1.0 : 0.5;
-            imagenFlechaAtras.Opacity = esHabilitado ? 1.0 : 0.5;
-            imagenAgregarAmigo.Opacity = esHabilitado ? 1.0 : 0.5;
+        public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
+        {
+            ActualizarUI();
+        }
+
+        public void ActualizarUI()
+        {
+            this.Title = Properties.Idioma.tituloAmigos;
+        }
+
+        private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento; 
         }
     }
 }

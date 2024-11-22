@@ -171,7 +171,7 @@ namespace WpfCliente.GUI
             bool isValid = true;
             string errorTextBoxStyle = "ErrorTextBoxStyle";
 
-            SetDefaultStyles();
+            ObtenerEstilos();
             if (!ValidarCaracteristicasContrasenia())
             {
                 isValid = false;
@@ -195,7 +195,7 @@ namespace WpfCliente.GUI
             return isValid;
         }
 
-        private void SetDefaultStyles()
+        private void ObtenerEstilos()
         {
             string normalTextBoxStyle = "NormalTextBoxStyle";
             string normalPasswordBoxStyle = "NormalPasswordBoxStyle";
@@ -229,7 +229,7 @@ namespace WpfCliente.GUI
                 isValid = true;
             }
 
-            if (ValidacionesString.IsValidSymbol(textBoxContrasenia.Password))
+            if (ValidacionesString.EsSimboloValido(textBoxContrasenia.Password))
             {
                 labelContraseniaSimbolos.Foreground = Brushes.Green;
                 isValid = true;
@@ -300,7 +300,7 @@ namespace WpfCliente.GUI
                 bitmap.EndInit();
 
                 // Asignar la imagen cargada al control Image
-                imgPerfil.Source = bitmap;
+                imagePerfil.Source = bitmap;
             }
             catch (Exception ex)
             {

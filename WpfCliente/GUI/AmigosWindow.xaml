@@ -5,9 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfCliente.GUI"
         mc:Ignorable="d"
-        Title="AmigosWindow"
         WindowStartupLocation="CenterScreen" 
-        ResizeMode="NoResize" Height="770" Width="1200">
+        ResizeMode="NoResize" Height="770" Width="1200" Closing="CerrandoVentana">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Recursos/fondoNotificaciones.png" />

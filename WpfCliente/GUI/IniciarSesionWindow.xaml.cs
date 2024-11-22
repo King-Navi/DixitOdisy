@@ -15,14 +15,12 @@ namespace WpfCliente.GUI
 {
     public partial class IniciarSesion : Window, IActualizacionUI, IHabilitadorBotones
     {
-
+        private const string RECURSOS_ESTILO_TEXTBOX_ERROR = "ErrorTextBoxStyle";
         public IniciarSesion()
         {
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             ActualizarUI();
-            System.Diagnostics.PresentationTraceSources.DataBindingSource.Switch.Level = System.Diagnostics.SourceLevels.Error;
-
         }
 
 
@@ -52,7 +50,7 @@ namespace WpfCliente.GUI
         public void HabilitarBotones(bool esValido)
         {
             textBoxUsuario.IsEnabled = esValido;
-            textBoxContrasenia.IsEnabled = esValido;
+            passwordBoxContrasenia.IsEnabled = esValido;
             buttonIniciarSesion.IsEnabled = esValido;
             buttonRegistrar.IsEnabled = esValido;
             cambiarIdiomaUserControl.IsEnabled = esValido;
@@ -76,7 +74,7 @@ namespace WpfCliente.GUI
                 {
                     return;
                 }
-                TryIniciarSesion();
+                IntentarIniciarSesion();
             }
             else
             {
@@ -90,22 +88,22 @@ namespace WpfCliente.GUI
 
             if (string.IsNullOrWhiteSpace(textBoxUsuario.Text) && textBoxUsuario.Text.Contains(" "))
             {
-                textBoxUsuario.Style = (Style)FindResource("ErrorTextBoxStyle");
+                textBoxUsuario.Style = (Style)FindResource(RECURSOS_ESTILO_TEXTBOX_ERROR);
                 camposValidos = false;
             }
 
-            if (string.IsNullOrWhiteSpace(textBoxContrasenia.Password) && textBoxContrasenia.Password.Contains(" "))
+            if (string.IsNullOrWhiteSpace(passwordBoxContrasenia.Password) && passwordBoxContrasenia.Password.Contains(" "))
             {
-                pwBxPasswordMask.Style = (Style)FindResource("ErrorTextBoxStyle");
+                pwBxPasswordMask.Style = (Style)FindResource(RECURSOS_ESTILO_TEXTBOX_ERROR); 
                 camposValidos = false;
             }
             return camposValidos;
         }
 
-        private bool TryIniciarSesion() {
+        private bool IntentarIniciarSesion() {
             bool exito = false;
             ServidorDescribelo.IServicioUsuario servicio = new ServidorDescribelo.ServicioUsuarioClient();
-            string contraseniaHash = Encriptacion.OcuparSHA256(textBoxContrasenia.Password);
+            string contraseniaHash = Encriptacion.OcuparSHA256(passwordBoxContrasenia.Password);
             Usuario resultadoUsuario = servicio.ValidarCredenciales(textBoxUsuario.Text, contraseniaHash);
             bool yaInicioSesion = servicio.YaIniciadoSesion(textBoxUsuario.Text);
             if (yaInicioSesion)
@@ -298,7 +296,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void ClicEnter(object sender, System.Windows.Input.KeyEventArgs e)
+        private void TeclaPresionada(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {

@@ -7,26 +7,20 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Interaction logic for CambiarIdiomaMenuDesplegable.xaml
-    /// </summary>
-    public partial class CambiarIdiomaMenuDesplegable : UserControl , IActualizacionUI
+    public partial class CambiarIdiomaMenuDesplegable : UserControl 
     {
 
         public CambiarIdiomaMenuDesplegable()
         {
             InitializeComponent();
-            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
-
         }
 
         private void SelecionarIdioma(object sender, SelectionChangedEventArgs e)
         {
-            if (cambiarIdiomaMenuDesplegable.SelectedItem is ComboBoxItem itemSeleccionado)
+            if (cambiarIdiomaMenuDesplegable.SelectedItem is ComboBoxItem seleccionado)
             {
-                string lenguajeSelecionado = itemSeleccionado.Tag.ToString();
+                string lenguajeSelecionado = seleccionado.Tag.ToString();
                 IdiomaGuardo.SeleccionarIdioma(lenguajeSelecionado);
-                ActualizarUI();
                 CambiarIdioma.EnCambioIdioma();
                 GuardarConfiguracionIdioma();
             }
@@ -49,21 +43,6 @@ namespace WpfCliente.GUI
                     break;
             }
             WpfCliente.Properties.Settings.Default.Save();
-        }
-
-        public void ActualizarUI()
-        {
-            //TODO: Pedirle a unaay los .resx
-        }
-
-        public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
-        {
-            ActualizarUI();
-        }
-
-        private void CerrarControl(object sender, RoutedEventArgs e)
-        {
-            CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
         }
 
         private void clicImagenIdioma(object sender, System.Windows.Input.MouseButtonEventArgs e)

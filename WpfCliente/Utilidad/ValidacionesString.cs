@@ -63,7 +63,7 @@ namespace WpfCliente.Utilidad
             return regex.IsMatch(correo.Trim()) && validacionCorreo;
         }
 
-        public static bool IsValidSymbol(string password)
+        public static bool EsSimboloValido(string password)
         {
             Regex regex = new Regex(SIMBOLOS_VALIDOS);
 

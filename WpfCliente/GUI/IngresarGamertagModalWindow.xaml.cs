@@ -16,9 +16,6 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Lógica de interacción para IngresarGamertagModalWindow.xaml
-    /// </summary>
     public partial class IngresarGamertagModalWindow : Window, IActualizacionUI
     {
         public string ValorIngresado { get; private set; }

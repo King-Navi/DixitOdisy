@@ -159,6 +159,7 @@ namespace WpfCliente.GUI
             buttonUniserSala.IsEnabled = esHabilitado;
             perfilMenuDesplegable.IsEnabled = esHabilitado;
             amigosUserControl.IsEnabled = esHabilitado;
+            windowMenu.IsEnabled = esHabilitado;
         }
 
         private string AbrirVentanaModal()

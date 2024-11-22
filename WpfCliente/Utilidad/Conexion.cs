@@ -321,12 +321,14 @@ namespace WpfCliente.Utilidad
         public static async Task<bool> VerificarConexion(Action<bool> habilitarAcciones, Window ventana)
         {
             habilitarAcciones(false);
+            DeshabilitarVentana(ventana, false);
             Task<bool> verificarConexion = HacerPing();
 
             if (!await verificarConexion)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, ventana);
                 habilitarAcciones(true);
+                DeshabilitarVentana(ventana, true);
                 return false;
             }
             Task<bool> verificarConexionBD = HacerPingBD();
@@ -335,12 +337,22 @@ namespace WpfCliente.Utilidad
             {
                 VentanasEmergentes.CrearVentanaEmergenteErrorBD(ventana);
                 habilitarAcciones(true);
+                DeshabilitarVentana(ventana, true);
                 return false;
             }
 
             habilitarAcciones(true);
+            DeshabilitarVentana(ventana, true);
             return true;
         }
+        private static void DeshabilitarVentana(Window ventana, bool estado)
+        {
+            if (ventana != null)
+            {
+                ventana.IsEnabled = estado;
+            }
+        }
+
 
         private static async Task<bool> HacerPingBD()
         {

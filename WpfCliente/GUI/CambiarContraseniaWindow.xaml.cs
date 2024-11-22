@@ -18,9 +18,6 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Lógica de interacción para CambiarContraseniaWindow.xaml
-    /// </summary>
     public partial class CambiarContraseniaWindow : Window, IActualizacionUI, IHabilitadorBotones
     {
         Usuario usuarioEditado = new Usuario();
@@ -48,6 +45,7 @@ namespace WpfCliente.GUI
             labelContraseniaSimbolos.Content = Properties.Idioma.labelContraseniaSimbolos;
             buttonEditarContrasenia.Content = Properties.Idioma.buttonCambiarContrasenia;
             buttonCancelarCambio.Content = Properties.Idioma.buttonCancelar;
+            windowCambiarContrasenia.Title = Properties.Idioma.tituloCambiarContrasenia; 
         }
 
         private void ClicButtonAceptar(object sender, RoutedEventArgs e)
@@ -69,7 +67,7 @@ namespace WpfCliente.GUI
         private bool ValidarCampos()
         {
             bool isValid = true;
-            SetDefaultStyles();
+            ColocarEstilos();
 
             if (!ValidarCaracteristicasContrasenia())
             {
@@ -79,7 +77,7 @@ namespace WpfCliente.GUI
             return isValid;
         }
 
-        private void SetDefaultStyles()
+        private void ColocarEstilos()
         {
             labelContraseniasNoCoinciden.Visibility = Visibility.Collapsed;
 
@@ -110,7 +108,7 @@ namespace WpfCliente.GUI
                 isValid = false;
             }
 
-            if (ValidacionesString.IsValidSymbol(textBoxContrasenia.Password))
+            if (ValidacionesString.EsSimboloValido(textBoxContrasenia.Password))
             {
                 labelContraseniaSimbolos.Foreground = Brushes.Green;
             }
@@ -176,7 +174,7 @@ namespace WpfCliente.GUI
         {
             buttonEditarContrasenia.IsEnabled = esHabilitado;
             buttonCancelarCambio.IsEnabled = esHabilitado;
-
+            windowCambiarContrasenia.IsEnabled = esHabilitado;
             buttonEditarContrasenia.Opacity = esHabilitado ? 1.0 : 0.5;
             buttonCancelarCambio.Opacity = esHabilitado ? 1.0 : 0.5;
         }

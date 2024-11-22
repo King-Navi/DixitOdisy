@@ -18,15 +18,12 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Interaction logic for AmigoUserControl.xaml
-    /// </summary>
     public partial class AmigoUserControl : UserControl
     {
         public AmigoUserControl()
         {
             InitializeComponent();
-            SetFondoColorAleatorio();
+            ColocarFondoColorAleatorio();
         }
         public AmigoUserControl( Amigo amigo)
         {
@@ -35,11 +32,11 @@ namespace WpfCliente.GUI
             labelEstadoAmigo.Content = amigo.Estado;
             labelUltimaConexion.Content = amigo.UltimaConexion;
             imageAmigo.Source = Imagen.ConvertirStreamABitmapImagen(amigo.Foto);
-            SetFondoColorAleatorio();
+            ColocarFondoColorAleatorio();
             
         }
 
-        private void SetFondoColorAleatorio()
+        private void ColocarFondoColorAleatorio()
         {
             this.Background = Utilidades.GetColorAleatorio();
         }

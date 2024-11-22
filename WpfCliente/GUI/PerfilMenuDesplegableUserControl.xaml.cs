@@ -31,7 +31,7 @@ namespace WpfCliente.GUI
         private void AbrirEditarVentana(object sender, RoutedEventArgs e)
         {
             Window menuVentana = Window.GetWindow(this);
-            EditarPerfilWindow editarPerfilVentana = new EditarPerfilWindow(menuVentana);
+            EditarPerfilWindow editarPerfilVentana = new EditarPerfilWindow();
             editarPerfilVentana.Show();
             Window MenuVentana = Window.GetWindow(this);  
             if (MenuVentana != null)
@@ -43,7 +43,7 @@ namespace WpfCliente.GUI
                     }
                     catch (Exception)
                     {
-                        //TODO
+                        Application.Current.Shutdown();
                     }
                 };
                 MenuVentana.Hide();

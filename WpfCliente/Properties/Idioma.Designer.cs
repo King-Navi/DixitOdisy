@@ -772,6 +772,24 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No se seleccionaste ninguna imagen..
+        /// </summary>
+        public static string mensajeImagenNoSelecionadaEditar {
+            get {
+                return ResourceManager.GetString("mensajeImagenNoSelecionadaEditar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La imagen que seleccionaste es valida para el reemplazo, porfavor seleciona otra..
+        /// </summary>
+        public static string mensajeImagenReemplazoInvalida {
+            get {
+                return ResourceManager.GetString("mensajeImagenReemplazoInvalida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a La invitación se envió correctamente.
         /// </summary>
         public static string mensajeInvitacionExitosa {
@@ -961,6 +979,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Amigos.
+        /// </summary>
+        public static string tituloAmigos {
+            get {
+                return ResourceManager.GetString("tituloAmigos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Bienvenido a Describelo.
         /// </summary>
         public static string tituloBienvenida {
@@ -1051,11 +1078,29 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Imagen de reemplazo invalida.
+        /// </summary>
+        public static string tituloImagenCambioInvalida {
+            get {
+                return ResourceManager.GetString("tituloImagenCambioInvalida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Imagen inválida.
         /// </summary>
         public static string tituloImagenInvalida {
             get {
                 return ResourceManager.GetString("tituloImagenInvalida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Imagen no seleccionada para edición .
+        /// </summary>
+        public static string tituloImagenNoSelecionadaEditar {
+            get {
+                return ResourceManager.GetString("tituloImagenNoSelecionadaEditar", resourceCulture);
             }
         }
         

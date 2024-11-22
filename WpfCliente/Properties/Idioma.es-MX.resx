@@ -486,4 +486,19 @@
   <data name="mensajeSesionIniciada" xml:space="preserve">
     <value>Si no eres tú quien inició sesión, por favor contacta a soporte.</value>
   </data>
+  <data name="tituloAmigos" xml:space="preserve">
+    <value>Amigos</value>
+  </data>
+  <data name="tituloImagenCambioInvalida" xml:space="preserve">
+    <value>Imagen de reemplazo invalida</value>
+  </data>
+  <data name="mensajeImagenReemplazoInvalida" xml:space="preserve">
+    <value>La imagen que seleccionaste es valida para el reemplazo, porfavor seleciona otra.</value>
+  </data>
+  <data name="tituloImagenNoSelecionadaEditar" xml:space="preserve">
+    <value>Imagen no seleccionada para edición </value>
+  </data>
+  <data name="mensajeImagenNoSelecionadaEditar" xml:space="preserve">
+    <value>No se seleccionaste ninguna imagen.</value>
+  </data>
 </root>

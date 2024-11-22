@@ -486,4 +486,19 @@
   <data name="mensajeSesionIniciada" xml:space="preserve">
     <value>If you are not the one logged in, please contact support.</value>
   </data>
+  <data name="tituloAmigos" xml:space="preserve">
+    <value>Friends</value>
+  </data>
+  <data name="tituloImagenCambioInvalida" xml:space="preserve">
+    <value>Invalid replacement image</value>
+  </data>
+  <data name="mensajeImagenReemplazoInvalida" xml:space="preserve">
+    <value>The image you selected is valid for replacement, please select another one.</value>
+  </data>
+  <data name="tituloImagenNoSelecionadaEditar" xml:space="preserve">
+    <value>Unselected image for editing</value>
+  </data>
+  <data name="mensajeImagenNoSelecionadaEditar" xml:space="preserve">
+    <value>No images were selected.</value>
+  </data>
 </root>

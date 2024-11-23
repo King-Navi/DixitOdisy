@@ -736,6 +736,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Por el momento no se puedieron cargar las solicitudes de amistad, regrese mas tarde..
+        /// </summary>
+        public static string mensajeErrorAlCargarLasSolicitudesAmistad {
+            get {
+                return ResourceManager.GetString("mensajeErrorAlCargarLasSolicitudesAmistad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Hubo un error al conectarse con la base de datos.
         /// </summary>
         public static string mensajeErrorBaseDatos {
@@ -1065,6 +1074,15 @@ namespace WpfCliente.Properties {
         public static string tituloErrorBaseDatos {
             get {
                 return ResourceManager.GetString("tituloErrorBaseDatos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error al cagar solicitudes de amistad.
+        /// </summary>
+        public static string tituloErrorCargarSolicitudesAmistad {
+            get {
+                return ResourceManager.GetString("tituloErrorCargarSolicitudesAmistad", resourceCulture);
             }
         }
         

@@ -22,11 +22,7 @@ namespace WcfServicioLibreria.Enumerador
         [EnumMember]
         Conectado,
         [EnumMember]
-        Desconectado,
-        [EnumMember]
-        Solicitud,
-        [EnumMember]
-        ActualizarEstado
+        Desconectado
     }
     [DataContract]
     public enum CondicionVictoriaPartida

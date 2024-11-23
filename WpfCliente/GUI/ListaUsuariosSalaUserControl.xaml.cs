@@ -7,9 +7,6 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Interaction logic for ListaUsuariosSalaUserControl.xaml
-    /// </summary>
     public partial class ListaUsuariosSalaUserControl : UserControl
     {
         public ObservableCollection<Usuario> JugadoresEnSala { get; set; } = new ObservableCollection<Usuario>();
@@ -20,7 +17,7 @@ namespace WpfCliente.GUI
             DataContext = this;
         }
 
-        public void ObtenerUsuarioSala(Usuario usuario, List<Amigo> amigos) //FIXME: Falta terminar los amigos
+        public void ObtenerUsuarioSala(Usuario usuario)
         {
             if (usuario == null)
             {
@@ -28,7 +25,6 @@ namespace WpfCliente.GUI
             }
             else
             {
-                // Agregar el amigo a la colección ObservableCollection, esto actualizará automáticamente el ItemsControl
                 JugadoresEnSala.Add(usuario);
             }
         }

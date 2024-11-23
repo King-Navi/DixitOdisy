@@ -19,6 +19,7 @@ namespace WpfCliente.GUI
         private DispatcherTimer timer;
         private DateTime ultimaActualizacion;
         private const string FORMATO_HORA = "HH:mm:ss";
+        private const int VALOR_PARA_INTERVALO = 500;
         public ListaAmigosUserControl()
         {
             InitializeComponent();
@@ -32,7 +33,7 @@ namespace WpfCliente.GUI
         private void IniciarHora()
         {
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(500);
+            timer.Interval = TimeSpan.FromMilliseconds(VALOR_PARA_INTERVALO);
             timer.Tick += HoraActual;
             timer.Start();
         }

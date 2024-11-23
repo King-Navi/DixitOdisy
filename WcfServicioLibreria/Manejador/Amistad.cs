@@ -44,7 +44,7 @@ namespace WcfServicioLibreria.Manejador
 
         private bool GuardarSolicitudAmistad(int idRemitente, int idDestinatario)
         {
-            return AmistadDAO.GuardarSolicitudAmistad(idRemitente, idDestinatario);
+            return PeticionAmistadDAO.GuardarSolicitudAmistad(idRemitente, idDestinatario);
         }
 
         private int ObtenerIdPorNombre(string nombre)
@@ -58,6 +58,20 @@ namespace WcfServicioLibreria.Manejador
             {
             }
             return id;
+
+        }
+
+        public bool SonAmigos(string usuarioRemitente, string destinatario)
+        {
+            int idRemitente = ObtenerIdPorNombre(usuarioRemitente);
+            int idDestinatario = ObtenerIdPorNombre(destinatario);
+            int idMayorUsuario = Math.Max(idRemitente, idDestinatario);
+            int idMenorUsuario = Math.Min(idRemitente, idDestinatario);
+            if (!(idDestinatario > 0 || idRemitente > 0))
+            {
+                return true;
+            }
+            return SonAmigos(idMayorUsuario, idMenorUsuario);
 
         }
 
@@ -78,7 +92,7 @@ namespace WcfServicioLibreria.Manejador
         {
             try
             {
-                return AmistadDAO.ExisteSolicitudAmistad(idMasAlto, idMasBajo);
+                return PeticionAmistadDAO.ExisteSolicitudAmistad(idMasAlto, idMasBajo);
             }
             catch (Exception)
             {
@@ -96,8 +110,8 @@ namespace WcfServicioLibreria.Manejador
                 {
                     remitente.AmistadSesionCallBack = contextoRemitente;
                 }
-                //TODO:Talvez esto se pueda dividir en otra llamada, para mejorar la lectura
                 List<Modelo.Usuario> amigosConetados= EnviarListaAmigos(_usuarioRemitente , contextoRemitente);
+
                 foreach (var usuarioDestino in amigosConetados)
                 {
                     AmigoConetado(_usuarioRemitente, usuarioDestino);
@@ -105,23 +119,17 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (Exception)
             {
-                jugadoresConectadosDiccionario.TryGetValue(_usuarioRemitente.IdUsuario, out UsuarioContexto remitente);
-                if (remitente != null)
-                lock (remitente)
-                {
-                    remitente.AmistadSesionCallBack = null;
-                }
-                throw;
             }
             return;
         }
 
         private List<Modelo.Usuario> EnviarListaAmigos(Modelo.Usuario usuario, IAmistadCallBack contextoRemitente)
         {
+            List<Modelo.Usuario> usuariosModeloWCF = new List<Modelo.Usuario>();
+
             try
             {
                 List<DAOLibreria.ModeloBD.Usuario> usuariosModeloBaseDatos = AmistadDAO.RecuperarListaAmigos(usuario.IdUsuario);
-                List<Modelo.Usuario> usuariosModeloWCF = new List<Modelo.Usuario>();
                 foreach (DAOLibreria.ModeloBD.Usuario amigoDestinario in usuariosModeloBaseDatos)
                 {
                     EstadoAmigo estadoJugador;
@@ -143,7 +151,6 @@ namespace WcfServicioLibreria.Manejador
                         UltimaConexion = amigoDestinario.ultimaConexion.ToString()
                         
                     };
-                    
                     contextoRemitente.ObtenerAmigoCallback(amigo);
                     if (amigo.Estado == EstadoAmigo.Conectado)
                     {
@@ -157,15 +164,11 @@ namespace WcfServicioLibreria.Manejador
                         usuariosModeloWCF.Add(usuarioModeloWCF);
                     }
                 }
-
-                return usuariosModeloWCF;
             }
-            catch (Exception excepcion)
+            catch (Exception)
             {
-                Console.Error.WriteLine(excepcion.Message);
-                Console.WriteLine(excepcion.StackTrace);
-                throw;
             }
+            return usuariosModeloWCF;
         }
 
         /// <summary>
@@ -221,7 +224,7 @@ namespace WcfServicioLibreria.Manejador
         {
             try
             {
-                List<DAOLibreria.ModeloBD.Usuario> usuariosSolicitantes = AmistadDAO.ObtenerSolicitudesAmistad(usuario.IdUsuario);
+                List<DAOLibreria.ModeloBD.Usuario> usuariosSolicitantes = PeticionAmistadDAO.ObtenerSolicitudesAmistad(usuario.IdUsuario);
                 List<SolicitudAmistad> usuariosModeloWCF = new List<SolicitudAmistad>();
                 foreach (DAOLibreria.ModeloBD.Usuario usuarioBD in usuariosSolicitantes)
                 {
@@ -232,30 +235,26 @@ namespace WcfServicioLibreria.Manejador
                         EstadoJugador = EstadoUsuario.Desconectado, 
                         FotoUsuario = new MemoryStream(usuarioBD.fotoPerfil)
                     };
-                    
                     usuariosModeloWCF.Add(new SolicitudAmistad(usuarioWCF));
                 }
 
                 return usuariosModeloWCF;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                //TODO
-                Console.Error.WriteLine($"Error en ObtenerSolicitudesAmistad: {ex.Message}");
-                throw;
             }
+            return null;
         }
 
         public bool AceptarSolicitudAmistad(int idRemitente, int idDestinatario)
         {
             try
             {
-                return AmistadDAO.AceptarSolicitudAmistad(idRemitente, idDestinatario);
+                return PeticionAmistadDAO.AceptarSolicitudAmistad(idRemitente, idDestinatario);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.Error.WriteLine($"Error en AceptarSolicitudAmistad: {ex.Message}");
-                throw;
+                return false;
             }
         }
 
@@ -264,12 +263,11 @@ namespace WcfServicioLibreria.Manejador
         {
             try 
             { 
-                return AmistadDAO.RechazarSolicitudAmistad(idRemitente, idDestinatario); ;
+                return PeticionAmistadDAO.RechazarSolicitudAmistad(idRemitente, idDestinatario); ;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.Error.WriteLine($"Error en RechazarSolicitudAmistad: {ex.Message}");
-                throw;
+                return false ;
             }
         }
 

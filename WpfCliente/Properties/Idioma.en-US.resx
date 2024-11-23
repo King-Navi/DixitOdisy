@@ -507,4 +507,10 @@
   <data name="mensajeEmpezandoRonda" xml:space="preserve">
     <value>Starting round...</value>
   </data>
+  <data name="tituloErrorCargarSolicitudesAmistad" xml:space="preserve">
+    <value>Error loading friend requests</value>
+  </data>
+  <data name="mensajeErrorAlCargarLasSolicitudesAmistad" xml:space="preserve">
+    <value>At the moment we could not upload the friend requests, I will come back later.</value>
+  </data>
 </root>

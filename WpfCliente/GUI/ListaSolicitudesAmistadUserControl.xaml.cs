@@ -11,9 +11,6 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Lógica de interacción para ListaSolicitudesAmistadUserControl.xaml
-    /// </summary>
     public partial class ListaSolicitudesAmistadUserControl : UserControl, IActualizacionUI, IHabilitadorBotones
     {
         public ObservableCollection<SolicitudAmistad> Solicitudes { get; set; } = new ObservableCollection<SolicitudAmistad>();
@@ -57,22 +54,21 @@ namespace WpfCliente.GUI
 
                     return true;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
-                    //TODO MANEJAR EL ERROR
                     return false;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show($"Error al cargar solicitudes: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorCargarSolicitudesAmistad, Properties.Idioma.mensajeErrorAlCargarLasSolicitudesAmistad, this);
                 return false;
             }
         }
 
         public void HabilitarBotones(bool esHabilitado)
         {
-
+            itemsControlAmigos.IsEnabled = esHabilitado;
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)

@@ -18,6 +18,8 @@ namespace WcfServicioLibreria.Contratos
         bool AceptarSolicitudAmistad(int idRemitente, int idDestinatario);
         [OperationContract]
         bool RechazarSolicitudAmistad(int idRemitente, int idDestinatario);
+        [OperationContract]
+        bool SonAmigos(string usuarioRemitente, string destinatario);
     }
     [ServiceContract]
     public interface IAmistadCallBack

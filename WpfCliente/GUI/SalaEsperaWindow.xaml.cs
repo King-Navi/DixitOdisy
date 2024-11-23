@@ -252,8 +252,7 @@ namespace WpfCliente.GUI
             {
                 JugadoresSala.Add(jugardoreNuevoEnSala);
             }
-            List<Amigo> amigos = new List<Amigo>();
-            usuariosSalaUserControl.ObtenerUsuarioSala(jugardoreNuevoEnSala, amigos);
+            usuariosSalaUserControl.ObtenerUsuarioSala(jugardoreNuevoEnSala);
         }
 
         public void EliminarJugadorSalaCallback(Usuario jugardoreRetiradoDeSala)

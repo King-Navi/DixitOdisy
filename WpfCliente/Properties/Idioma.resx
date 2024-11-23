@@ -507,4 +507,10 @@
   <data name="mensajeEmpezandoRonda" xml:space="preserve">
     <value>Empezando ronda...</value>
   </data>
+  <data name="tituloErrorCargarSolicitudesAmistad" xml:space="preserve">
+    <value>Error al cagar solicitudes de amistad</value>
+  </data>
+  <data name="mensajeErrorAlCargarLasSolicitudesAmistad" xml:space="preserve">
+    <value>Por el momento no se puedieron cargar las solicitudes de amistad, regrese mas tarde.</value>
+  </data>
 </root>

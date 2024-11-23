@@ -14,8 +14,6 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="Conectado" />
       <xs:enumeration value="Desconectado" />
-      <xs:enumeration value="Solicitud" />
-      <xs:enumeration value="ActualizarEstado" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="EstadoAmigo" nillable="true" type="tns:EstadoAmigo" />

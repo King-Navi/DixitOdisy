@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -12,47 +13,58 @@ namespace WpfCliente.GUI
     /// </summary>
     public partial class UsuarioUserControl : UserControl
     {
-        private bool esAmigo = false;
-        private string nombre;
+        private bool seObtuvoLista = false;
         private BitmapImage bitmapImage;
 
 
         public UsuarioUserControl()
         {
             InitializeComponent();
-            SetFondoColorAleatorio();
-        }
-        public UsuarioUserControl(bool _esAmigo, Usuario usuario)
-        {
-            esAmigo = _esAmigo;
-            InitializeComponent();
-            nombre = usuario.Nombre;
-            bitmapImage = Imagen.ConvertirStreamABitmapImagen(usuario.FotoUsuario);
-            if (bitmapImage != null)
-            {
-                imageAmigo.Source = bitmapImage;
-            }
-            if (gridInvitacionAmistad != null && !esAmigo)
-            {
-                gridPrincipal.Children.Remove(gridInvitacionAmistad);
-            }
+            FondoColorAleatorio();
+            UsuarioRemitenteEsIgualADestino();
         }
 
-        private void clicButtonEnviarSolicitud(object sender, RoutedEventArgs e)
+        private void ClicButtonEnviarSolicitud(object sender, RoutedEventArgs e)
         {
             try
             {
-                //var manejadorServicio = new ServicioManejador<ServicioAmistadClient>();
-                //manejadorServicio.EjecutarServicioAsync(proxy => {
-                //    return proxy.
-                //});
+                if (DataContext is Usuario usuario && !UsuarioRemitenteEsIgualADestino())
+                {
+                    Usuario usuarioActual = new Usuario
+                    {
+                        IdUsuario = Singleton.Instance.IdUsuario,
+                    Nombre = Singleton.Instance.NombreUsuario
+                    };
+                    Conexion.Amigos.EnviarSolicitudAmistad(usuarioActual, usuario.Nombre);
+                    buttonEnviarSolicitud.Visibility = Visibility.Collapsed;
+                }
+
             }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarComponentErrorException(excepcion);
             }
         }
-        private void SetFondoColorAleatorio()
+
+        private bool UsuarioRemitenteEsIgualADestino()
+        {
+            try
+            {
+                if (DataContext is Usuario usuario && Singleton.Instance.NombreUsuario.Equals(usuario.Nombre, StringComparison.OrdinalIgnoreCase))
+                {
+                    buttonEnviarSolicitud.Visibility = Visibility.Collapsed;
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                buttonEnviarSolicitud.Visibility = Visibility.Collapsed;
+            }
+            return false;
+
+        }
+
+        private void FondoColorAleatorio()
         {
             this.Background = Utilidades.GetColorAleatorio();
         }

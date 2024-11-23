@@ -67,6 +67,21 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SonAmigos">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="usuarioRemitente" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="destinatario" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SonAmigosResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SonAmigosResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="CambiarEstadoAmigo">
     <xs:complexType>
       <xs:sequence>

@@ -172,6 +172,12 @@
   <wsdl:message name="IServicioAmistad_RechazarSolicitudAmistad_OutputMessage">
     <wsdl:part name="parameters" element="tns:RechazarSolicitudAmistadResponse" />
   </wsdl:message>
+  <wsdl:message name="IServicioAmistad_SonAmigos_InputMessage">
+    <wsdl:part name="parameters" element="tns:SonAmigos" />
+  </wsdl:message>
+  <wsdl:message name="IServicioAmistad_SonAmigos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SonAmigosResponse" />
+  </wsdl:message>
   <wsdl:message name="IServicioAmistad_CambiarEstadoAmigo_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:CambiarEstadoAmigo" />
   </wsdl:message>
@@ -454,6 +460,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/RechazarSolicitudAmistad" message="tns:IServicioAmistad_RechazarSolicitudAmistad_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/RechazarSolicitudAmistadResponse" message="tns:IServicioAmistad_RechazarSolicitudAmistad_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="SonAmigos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/SonAmigos" message="tns:IServicioAmistad_SonAmigos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/SonAmigosResponse" message="tns:IServicioAmistad_SonAmigos_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="CambiarEstadoAmigo">
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/CambiarEstadoAmigo" message="tns:IServicioAmistad_CambiarEstadoAmigo_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/CambiarEstadoAmigoResponse" message="tns:IServicioAmistad_CambiarEstadoAmigo_InputCallbackMessage" />
@@ -714,6 +724,15 @@
     </wsdl:operation>
     <wsdl:operation name="RechazarSolicitudAmistad">
       <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/RechazarSolicitudAmistad" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SonAmigos">
+      <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/SonAmigos" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

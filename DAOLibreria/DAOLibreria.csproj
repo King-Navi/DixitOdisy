@@ -82,6 +82,7 @@
     <Compile Include="ConfiguradorConexion.cs" />
     <Compile Include="DAO\AmistadDAO.cs" />
     <Compile Include="DAO\EstadisticasDAO.cs" />
+    <Compile Include="DAO\PeticionAmistadDAO.cs" />
     <Compile Include="DAO\UsuarioDAO.cs" />
     <Compile Include="Excepciones\ActividadSospechosaExcepcion.cs" />
     <Compile Include="Excepciones\GamertagDuplicadoExcepcion.cs" />

@@ -374,12 +374,6 @@ namespace WpfCliente.ServidorDescribelo {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         Desconectado = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Solicitud = 2,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        ActualizarEstado = 3,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1193,6 +1187,12 @@ namespace WpfCliente.ServidorDescribelo {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/RechazarSolicitudAmistad", ReplyAction="http://tempuri.org/IServicioAmistad/RechazarSolicitudAmistadResponse")]
         System.Threading.Tasks.Task<bool> RechazarSolicitudAmistadAsync(int idRemitente, int idDestinatario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/SonAmigos", ReplyAction="http://tempuri.org/IServicioAmistad/SonAmigosResponse")]
+        bool SonAmigos(string usuarioRemitente, string destinatario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/SonAmigos", ReplyAction="http://tempuri.org/IServicioAmistad/SonAmigosResponse")]
+        System.Threading.Tasks.Task<bool> SonAmigosAsync(string usuarioRemitente, string destinatario);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1271,6 +1271,14 @@ namespace WpfCliente.ServidorDescribelo {
         
         public System.Threading.Tasks.Task<bool> RechazarSolicitudAmistadAsync(int idRemitente, int idDestinatario) {
             return base.Channel.RechazarSolicitudAmistadAsync(idRemitente, idDestinatario);
+        }
+        
+        public bool SonAmigos(string usuarioRemitente, string destinatario) {
+            return base.Channel.SonAmigos(usuarioRemitente, destinatario);
+        }
+        
+        public System.Threading.Tasks.Task<bool> SonAmigosAsync(string usuarioRemitente, string destinatario) {
+            return base.Channel.SonAmigosAsync(usuarioRemitente, destinatario);
         }
     }
     

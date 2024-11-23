@@ -12,7 +12,7 @@
                 <Label x:Name="labelNombreAmigo" Content="{Binding Nombre}" d:Content="PedroSanchz27" FontFamily="Lucida Sans Unicode" Canvas.Left="85" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="89,0,0,0"></Label>
                 <!--Podemos agregar mas cosas como estisticas-->
                 <Grid x:Name="gridInvitacionAmistad" Margin="81,70,10,10">
-                    <Button d:Content="Enviar solicitud de amistad" Click="clicButtonEnviarSolicitud" Margin="1,-35,-1,35"></Button>
+                    <Button x:Name="buttonEnviarSolicitud" d:Content="Enviar solicitud de amistad" Click="ClicButtonEnviarSolicitud" Margin="1,-35,-1,35"></Button>
                 </Grid>
             </Grid>
         </Border>

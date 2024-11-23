@@ -25,7 +25,6 @@ namespace WcfServicioLibreria.Modelo
         public EventHandler FalloEvento { get; set; }
         public EventHandler DesconexionManejadorEvento;
         public EventHandler ActulizarAmigoManejadorEvento;
-        public string Nombre => nombre;
         /// <summary>
         /// Avisa a todos los sucriptores que se esta desconectando
         /// </summary>
@@ -33,7 +32,6 @@ namespace WcfServicioLibreria.Modelo
         {
             DesconexionManejadorEvento?.Invoke(idUsuario, new UsuarioDesconectadoEventArgs(nombre, DateTime.Now, idUsuario));
         }
-        //FIXME
         public void AmigoDesconectado(object sender, EventArgs e)
         {
             if (e is UsuarioDesconectadoEventArgs desconectadoArgs)

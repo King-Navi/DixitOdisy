@@ -14,7 +14,7 @@ namespace WpfCliente.GUI
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             InitializeComponent();
             ActualizarUI();
-            imagenPerfil.Source = Singleton.Instance.FotoJugador;
+            imagenPerfil.Source = SingletonCliente.Instance.FotoJugador;
         }
 
         private void AbrirEditarVentana(object sender, RoutedEventArgs e)

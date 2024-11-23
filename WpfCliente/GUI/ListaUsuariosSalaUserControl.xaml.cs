@@ -21,7 +21,9 @@ namespace WpfCliente.GUI
         {
             if (usuario == null)
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCargarAmigosFalla, Properties.Idioma.mensajeCargarAmigosFalla, this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCargarAmigosFalla,
+                    Properties.Idioma.mensajeCargarAmigosFalla, 
+                    this);
             }
             else
             {
@@ -36,11 +38,6 @@ namespace WpfCliente.GUI
             {
                 JugadoresEnSala.Remove(usuarioAEliminar);
             }
-        }
-
-        private void LimpiarItemsControl()
-        {
-            JugadoresEnSala.Clear();
         }
     }
 }

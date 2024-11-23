@@ -130,12 +130,12 @@ namespace WpfCliente.GUI
 
         private void ConfigurarSingletonConUsuario(Usuario usuario, BitmapImage imagenUsuario)
         {
-            Singleton.Instance.NombreUsuario = textBoxUsuario.Text;
-            Singleton.Instance.IdUsuario = usuario.IdUsuario;
-            Singleton.Instance.FotoJugador = imagenUsuario;
-            Singleton.Instance.NombreUsuario = usuario.Nombre;
-            Singleton.Instance.Correo = usuario.Correo;
-            Singleton.Instance.ContraniaHash = usuario.ContraseniaHASH;
+            SingletonCliente.Instance.NombreUsuario = textBoxUsuario.Text;
+            SingletonCliente.Instance.IdUsuario = usuario.IdUsuario;
+            SingletonCliente.Instance.FotoJugador = imagenUsuario;
+            SingletonCliente.Instance.NombreUsuario = usuario.Nombre;
+            SingletonCliente.Instance.Correo = usuario.Correo;
+            SingletonCliente.Instance.ContraniaHash = usuario.ContraseniaHASH;
         }
 
         private async void ClicJugarComoInvitado(object sender, RoutedEventArgs e)
@@ -150,7 +150,7 @@ namespace WpfCliente.GUI
             {
                 if (ValidacionExistenciaJuego.ExisteSala(codigoSala))
                 {
-                    Singleton.Instance.NombreUsuario = Utilidades.GenerarGamertagInvitado();
+                    SingletonCliente.Instance.NombreUsuario = Utilidades.GenerarGamertagInvitado();
                     AbrirVentanaSala(codigoSala);
                     return;
                 }

@@ -5,9 +5,6 @@ using WcfServicioLibreria.Enumerador;
 
 namespace WcfServicioLibreria.Modelo
 {
-    /// <summary>
-    /// Esta clase hace referncia al modelo de usurio en nuestro caso va a ser el de base de datos
-    /// </summary>
     [DataContract]
     [KnownType(typeof(Stream))]
     [KnownType(typeof(FileStream))]

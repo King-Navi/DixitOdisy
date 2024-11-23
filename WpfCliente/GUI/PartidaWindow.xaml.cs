@@ -97,7 +97,7 @@ namespace WpfCliente.GUI
             var tareasSolicitudes = new List<Task>();
             for (int i = 0; i < 6; i++)
             {
-                tareasSolicitudes.Add(Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida));
+                tareasSolicitudes.Add(Conexion.Partida.SolicitarImagenCartaAsync(SingletonCliente.Instance.NombreUsuario, SingletonCliente.Instance.IdPartida));
             }
             await Task.WhenAll(tareasSolicitudes);
         }
@@ -126,7 +126,7 @@ namespace WpfCliente.GUI
         private async Task UnirseChat()
         {
             await Conexion.AbrirConexionChatMotorCallbackAsync(chatUserControl);
-            await Conexion.ChatMotor.AgregarUsuarioChatAsync(Singleton.Instance.IdChat, Singleton.Instance.NombreUsuario);
+            await Conexion.ChatMotor.AgregarUsuarioChatAsync(SingletonCliente.Instance.IdChat, SingletonCliente.Instance.NombreUsuario);
             chatUserControl.IsEnabled = true;
         }
 
@@ -142,7 +142,7 @@ namespace WpfCliente.GUI
             {
                 contadorSeleccionAdivinar++;
                 await Conexion.VerificarConexion(HabilitarBotones, this);
-                await Conexion.Partida.TratarAdivinarAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida, idImagen);
+                await Conexion.Partida.TratarAdivinarAsync(SingletonCliente.Instance.NombreUsuario, SingletonCliente.Instance.IdPartida, idImagen);
                 if (contadorSeleccionAdivinar >= ADIVINAR_MAXIMA_JUGADOR)
                 {
                     AvanzarPantalla(PANTALLA_ESPERA);
@@ -249,7 +249,7 @@ namespace WpfCliente.GUI
             await System.Windows.Application.Current.Dispatcher.InvokeAsync(async () =>
              {
                 await SolicitarMazoAsync();
-                Conexion.Partida.EmpezarPartida(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
+                Conexion.Partida.EmpezarPartida(SingletonCliente.Instance.NombreUsuario, SingletonCliente.Instance.IdPartida);
                 await UnirseChat();
              });
         }
@@ -300,7 +300,7 @@ namespace WpfCliente.GUI
                     NoHayConexion();
                     return;
                 }
-                Conexion.Partida.UnirsePartida(Singleton.Instance.NombreUsuario, idPartida);
+                Conexion.Partida.UnirsePartida(SingletonCliente.Instance.NombreUsuario, idPartida);
             }
             catch (Exception)
             {
@@ -385,11 +385,11 @@ namespace WpfCliente.GUI
                 recursosCompartidos.Imagenes.Remove(imagenEscogida);
 
                     await Conexion.VerificarConexion(HabilitarBotones, this);
-                    Conexion.Partida.ConfirmarMovimiento(Singleton.Instance.NombreUsuario,
-                                                                            Singleton.Instance.IdPartida,
+                    Conexion.Partida.ConfirmarMovimiento(SingletonCliente.Instance.NombreUsuario,
+                                                                            SingletonCliente.Instance.IdPartida,
                                                                             imagenEscogida.IdImagen,
                                                                             null);
-                    await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
+                    await Conexion.Partida.SolicitarImagenCartaAsync(SingletonCliente.Instance.NombreUsuario, SingletonCliente.Instance.IdPartida);
                 
                 if (contadorSeleccion >= SELECCION_MAXIMA_JUGADOR)
                 {
@@ -418,11 +418,11 @@ namespace WpfCliente.GUI
                 contadorSeleccion++;
                 recursosCompartidos.Imagenes.Remove(imagenAEscoger);
                 await Conexion.VerificarConexion(HabilitarBotones, this);
-                await Conexion.Partida.ConfirmarMovimientoAsync(Singleton.Instance.NombreUsuario,
-                                                                            Singleton.Instance.IdPartida,
+                await Conexion.Partida.ConfirmarMovimientoAsync(SingletonCliente.Instance.NombreUsuario,
+                                                                            SingletonCliente.Instance.IdPartida,
                                                                             imagenAEscoger.IdImagen,
                                                                             pista);
-                 await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
+                 await Conexion.Partida.SolicitarImagenCartaAsync(SingletonCliente.Instance.NombreUsuario, SingletonCliente.Instance.IdPartida);
                 
                 if (contadorSeleccion >= SELECCION_MAXIMA_NARRADOR)
                 {
@@ -451,7 +451,7 @@ namespace WpfCliente.GUI
 
         private async void BORRAME_SImulacionSolicitarImagen(object sender, RoutedEventArgs e)
         {
-            await Conexion.Partida.SolicitarImagenCartaAsync(Singleton.Instance.NombreUsuario, Singleton.Instance.IdPartida);
+            await Conexion.Partida.SolicitarImagenCartaAsync(SingletonCliente.Instance.NombreUsuario, SingletonCliente.Instance.IdPartida);
 
         }
 

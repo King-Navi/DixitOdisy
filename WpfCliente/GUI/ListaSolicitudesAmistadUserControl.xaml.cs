@@ -29,8 +29,8 @@ namespace WpfCliente.GUI
             {
                 Usuario usuarioActual = new Usuario
                 {
-                    IdUsuario = Singleton.Instance.IdUsuario,
-                    Nombre = Singleton.Instance.NombreUsuario
+                    IdUsuario = SingletonCliente.Instance.IdUsuario,
+                    Nombre = SingletonCliente.Instance.NombreUsuario
                 };
 
                 Window window = Window.GetWindow(this);

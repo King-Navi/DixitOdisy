@@ -3,9 +3,6 @@ using System.Windows.Media.Imaging;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Interaction logic for MostrarCartaModelWindow.xaml
-    /// </summary>
     public partial class MostrarCartaModelWindow : Window
     {
         public string Pista {  get; set; }

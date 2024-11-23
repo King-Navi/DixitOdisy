@@ -4,10 +4,6 @@ using System.Threading.Tasks;
 
 namespace WpfCliente.Utilidad
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
     public sealed class ServicioManejador<T> where T : ICommunicationObject, new()
     {
         /// <summary>
@@ -24,9 +20,7 @@ namespace WpfCliente.Utilidad
             }
             catch
             {
-                //TODO:Manejar el error
                 cliente.Abort(); 
-                throw; 
             }
         }
         /// <summary>
@@ -34,7 +28,7 @@ namespace WpfCliente.Utilidad
         /// </summary>
         /// <typeparam name="TResult"></typeparam>
         /// <param name="action"></param>
-        /// <returns name="resultado"></returns>
+        /// <returns></returns>
         public TResult EjecutarServicio<TResult>(Func<T, TResult> action)
         {
             T cliente = new T();
@@ -48,12 +42,14 @@ namespace WpfCliente.Utilidad
             {
                 ManejadorExcepciones.ManejarComponentErrorException(excepcion);
                 cliente.Abort(); 
-                throw; 
             }
+            return default;
         }
         /// <summary>
         /// Método para ejecutar acciones asíncronas que no devuelven resultado
         /// </summary>
+        /// <param name="action"></param>
+        /// <returns></returns>
         public async Task EjecutarServicioAsync(Func<T, Task> action)
         {
             T cliente = new T();
@@ -72,6 +68,9 @@ namespace WpfCliente.Utilidad
         /// <summary>
         /// Método para ejecutar acciones asíncronas que devuelven un resultado
         /// </summary>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="action"></param>
+        /// <returns></returns>
         public async Task<TResult> EjecutarServicioAsync<TResult>(Func<T, Task<TResult>> action)
         {
             T cliente = new T();

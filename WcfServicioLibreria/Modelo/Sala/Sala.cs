@@ -31,7 +31,6 @@ namespace WcfServicioLibreria.Modelo
         #region Propiedades
         public static int CantidadMaximaJugadores => CANTIDAD_MAXIMA_JUGADORES;
         public static int CantidadMinimaJugadores => CANTIDAD_MINIMA_JUGADORES;
-
         public string IdCodigoSala { get => idCodigoSala; internal set => idCodigoSala = value; }
         public string Anfitrion { get; private set; }
         #endregion Propiedades

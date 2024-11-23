@@ -525,4 +525,16 @@
   <data name="labelInvalido" xml:space="preserve">
     <value>Inválido</value>
   </data>
+  <data name="tituloSeleccionarImagen" xml:space="preserve">
+    <value>Seleccionar imagen</value>
+  </data>
+  <data name="mensajeDescripcionArchivosImagen" xml:space="preserve">
+    <value>Archivos de imagen</value>
+  </data>
+  <data name="mensajeInvitacionPartida" xml:space="preserve">
+    <value>Invitation from:</value>
+  </data>
+  <data name="tituloMenu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
 </root>

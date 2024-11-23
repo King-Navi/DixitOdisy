@@ -88,10 +88,9 @@ namespace WpfCliente.Utilidad
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Title = "Seleccionar una imagen",
-                Filter = "Archivos de imagen (*.jpg; *.jpeg; *.png)|*.jpg;*.jpeg;*.png"
+                Title = Properties.Idioma.tituloSeleccionarImagen, 
+                Filter = string.Format("{0} (*.jpg; *.jpeg; *.png)|*.jpg;*.jpeg;*.png", Properties.Idioma.mensajeDescripcionArchivosImagen)
             };
-
             return openFileDialog.ShowDialog() == true ? openFileDialog.FileName : null;
         }
     }

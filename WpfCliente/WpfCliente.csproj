@@ -226,10 +226,9 @@
     <Compile Include="Utilidad\Utilidades.cs" />
     <Compile Include="Utilidad\ServicioManejador.cs" />
     <Compile Include="Utilidad\Servidor\ImagenCarta.cs" />
-    <Compile Include="Utilidad\Singleton.cs" />
+    <Compile Include="Utilidad\SingletonCliente.cs" />
     <Compile Include="Utilidad\ValidacionExistenciaJuego.cs" />
     <Compile Include="Utilidad\ValidacionesString.cs" />
-    <Compile Include="Utilidad\VentanaMediador.cs" />
     <Compile Include="Utilidad\VentanasEmergentes.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -497,7 +496,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Logs\" />
-    <Folder Include="Pesistencia\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Recursos\fondoMenu.png" />

@@ -36,8 +36,8 @@ namespace WpfCliente.GUI
             }
             else
             {
-                Singleton.Instance.IdSala = idSala;
-                Singleton.Instance.IdChat = idSala;
+                SingletonCliente.Instance.IdSala = idSala;
+                SingletonCliente.Instance.IdChat = idSala;
                 UnirseSala(idSala);
             }
             DataContext = this;
@@ -99,7 +99,7 @@ namespace WpfCliente.GUI
                 NoHayConexion();
                 return;
             }
-            Conexion.SalaJugador.AgregarJugadorSala(Singleton.Instance.NombreUsuario, idSala);
+            Conexion.SalaJugador.AgregarJugadorSala(SingletonCliente.Instance.NombreUsuario, idSala);
             labelCodigo.Content += idSala;
             UnirseChat();
         }
@@ -122,7 +122,7 @@ namespace WpfCliente.GUI
         private void UnirseChat()
         {
             Conexion.AbrirConexionChatMotorCallbackAsync(chatUserControl);
-            var resultado = Conexion.ChatMotor.AgregarUsuarioChat(Singleton.Instance.IdChat, Singleton.Instance.NombreUsuario);
+            var resultado = Conexion.ChatMotor.AgregarUsuarioChat(SingletonCliente.Instance.IdChat, SingletonCliente.Instance.NombreUsuario);
             if (!resultado)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorInesperado, Properties.Idioma.mensajeErrorInesperado, this);
@@ -135,14 +135,14 @@ namespace WpfCliente.GUI
             try
             {
                 var manejadorServicio = new ServicioManejador<ServicioSalaClient>();
-                Singleton.Instance.IdSala = manejadorServicio.EjecutarServicio(proxy =>
+                SingletonCliente.Instance.IdSala = manejadorServicio.EjecutarServicio(proxy =>
                 {
-                     return proxy.CrearSala(Singleton.Instance.NombreUsuario);
+                     return proxy.CrearSala(SingletonCliente.Instance.NombreUsuario);
                 });
-                Singleton.Instance.IdChat = Singleton.Instance.IdSala;
+                SingletonCliente.Instance.IdChat = SingletonCliente.Instance.IdSala;
 
                 CrearChat();
-                UnirseSala(Singleton.Instance.IdSala);
+                UnirseSala(SingletonCliente.Instance.IdSala);
             }
             catch (Exception excepcion)
             {
@@ -159,7 +159,7 @@ namespace WpfCliente.GUI
                 var manajadorServicio = new ServicioManejador<ServicioChatClient>();
                 bool resultado = manajadorServicio.EjecutarServicio(proxy =>
                 {
-                    return proxy.CrearChat(Singleton.Instance.IdChat);
+                    return proxy.CrearChat(SingletonCliente.Instance.IdChat);
                 });
             }
             catch (Exception excepcion)
@@ -227,7 +227,7 @@ namespace WpfCliente.GUI
                 NoHayConexion();
                 return;
             }
-            Singleton.Instance.IdPartida = idPartida;
+            SingletonCliente.Instance.IdPartida = idPartida;
             OcultarVetanaHastaCierre();
         }
 
@@ -248,7 +248,7 @@ namespace WpfCliente.GUI
 
         public void ObtenerJugadorSalaCallback(Usuario jugardoreNuevoEnSala)
         {
-            if (!jugardoreNuevoEnSala.Nombre.Equals(Singleton.Instance.NombreUsuario, StringComparison.OrdinalIgnoreCase))
+            if (!jugardoreNuevoEnSala.Nombre.Equals(SingletonCliente.Instance.NombreUsuario, StringComparison.OrdinalIgnoreCase))
             {
                 JugadoresSala.Add(jugardoreNuevoEnSala);
             }
@@ -263,7 +263,7 @@ namespace WpfCliente.GUI
                 JugadoresSala.Remove(jugadorARemover);
             }
             usuariosSalaUserControl.EliminarUsuarioSala(jugardoreRetiradoDeSala);
-            if (jugardoreRetiradoDeSala.Nombre.Equals(Singleton.Instance.NombreUsuario, StringComparison.OrdinalIgnoreCase))
+            if (jugardoreRetiradoDeSala.Nombre.Equals(SingletonCliente.Instance.NombreUsuario, StringComparison.OrdinalIgnoreCase))
             {
                 this.Close();
             }
@@ -276,17 +276,17 @@ namespace WpfCliente.GUI
             EvaluarCondicionVictoria();
             EvaluarTematicaSelecionada();
             var manejador = new ServicioManejador<ServicioPartidaClient>();
-            Singleton.Instance.IdPartida = manejador.EjecutarServicio(proxy =>
+            SingletonCliente.Instance.IdPartida = manejador.EjecutarServicio(proxy =>
             {
-                return proxy.CrearPartida(Singleton.Instance.NombreUsuario, this.ConfiguracionPartida);
+                return proxy.CrearPartida(SingletonCliente.Instance.NombreUsuario, this.ConfiguracionPartida);
             }
             );
-            if (Singleton.Instance.IdPartida != null)
+            if (SingletonCliente.Instance.IdPartida != null)
             {
                 try
                 {
-                    CrearChat(Singleton.Instance.IdPartida);
-                    Conexion.SalaJugador.ComenzarPartidaAnfrition(Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala, Singleton.Instance.IdPartida);
+                    CrearChat(SingletonCliente.Instance.IdPartida);
+                    Conexion.SalaJugador.ComenzarPartidaAnfrition(SingletonCliente.Instance.NombreUsuario, SingletonCliente.Instance.IdSala, SingletonCliente.Instance.IdPartida);
                     OcultarVetanaHastaCierre();
                 }
                 catch (Exception)
@@ -298,12 +298,12 @@ namespace WpfCliente.GUI
 
         private void OcultarVetanaHastaCierre()
         {
-            if (Singleton.Instance.IdPartida == null)
+            if (SingletonCliente.Instance.IdPartida == null)
             {
                 this.Close();
                 return;
             }
-            PartidaWindow partida = new PartidaWindow(Singleton.Instance.IdPartida);
+            PartidaWindow partida = new PartidaWindow(SingletonCliente.Instance.IdPartida);
             partida.Show();
             this.Hide();
             partida.Closed += (s, args) => {
@@ -334,7 +334,7 @@ namespace WpfCliente.GUI
         private async void ClicButtonInvitarAmigos(object sender, RoutedEventArgs e)
         {
             string gamertagInvitado = AbrirVentanaModalGamertag();
-            if (gamertagInvitado != null && gamertagInvitado != Singleton.Instance.NombreUsuario)
+            if (gamertagInvitado != null && gamertagInvitado != SingletonCliente.Instance.NombreUsuario)
             {
                 if (await EnviarInvitacion(gamertagInvitado))
                 {
@@ -380,7 +380,7 @@ namespace WpfCliente.GUI
             }
             try
             {
-                resultado = Conexion.InvitacionPartida.EnviarInvitacion(Singleton.Instance.NombreUsuario, Singleton.Instance.IdSala, gamertagReceptor);
+                resultado = Conexion.InvitacionPartida.EnviarInvitacion(SingletonCliente.Instance.NombreUsuario, SingletonCliente.Instance.IdSala, gamertagReceptor);
             }
             catch (Exception ex)
             {
@@ -465,9 +465,9 @@ namespace WpfCliente.GUI
                 try
                 {
                     Conexion.SalaJugador.ExpulsarJugadorSala(
-                        Singleton.Instance.NombreUsuario,
+                        SingletonCliente.Instance.NombreUsuario,
                         usuario.Nombre,
-                        Singleton.Instance.IdSala);
+                        SingletonCliente.Instance.IdSala);
                 }
                 catch (Exception)
                 {

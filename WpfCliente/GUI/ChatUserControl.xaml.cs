@@ -39,11 +39,11 @@ namespace WpfCliente.GUI
             }
             try
             {
-                await Conexion.ChatMotor.EnviarMensajeAsync(Singleton.Instance.IdChat, new ChatMensaje
+                await Conexion.ChatMotor.EnviarMensajeAsync(SingletonCliente.Instance.IdChat, new ChatMensaje
                 {
                     Mensaje = textBoxEnviarMensaje.Text,
                     HoraFecha = DateTime.Now,
-                    Nombre = Singleton.Instance.NombreUsuario
+                    Nombre = SingletonCliente.Instance.NombreUsuario
                 });
                 textBoxEnviarMensaje.Text = "";
             }

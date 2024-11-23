@@ -32,8 +32,8 @@ namespace WpfCliente.GUI
                 {
                     Usuario usuarioActual = new Usuario
                     {
-                        IdUsuario = Singleton.Instance.IdUsuario,
-                    Nombre = Singleton.Instance.NombreUsuario
+                        IdUsuario = SingletonCliente.Instance.IdUsuario,
+                    Nombre = SingletonCliente.Instance.NombreUsuario
                     };
                     Conexion.Amigos.EnviarSolicitudAmistad(usuarioActual, usuario.Nombre);
                     buttonEnviarSolicitud.Visibility = Visibility.Collapsed;
@@ -50,7 +50,7 @@ namespace WpfCliente.GUI
         {
             try
             {
-                if (DataContext is Usuario usuario && Singleton.Instance.NombreUsuario.Equals(usuario.Nombre, StringComparison.OrdinalIgnoreCase))
+                if (DataContext is Usuario usuario && SingletonCliente.Instance.NombreUsuario.Equals(usuario.Nombre, StringComparison.OrdinalIgnoreCase))
                 {
                     buttonEnviarSolicitud.Visibility = Visibility.Collapsed;
                     return true;

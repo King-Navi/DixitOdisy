@@ -2,21 +2,21 @@
 
 namespace WpfCliente.Utilidad
 {
-    public sealed class Singleton
+    public sealed class SingletonCliente
     {
-        private static Singleton instance;
-        public static Singleton Instance
+        private static SingletonCliente instance;
+        public static SingletonCliente Instance
         {
             get
             {
                 if (instance == null)
                 {
-                    instance = new Singleton();
+                    instance = new SingletonCliente();
                 }
                 return instance;
             }
         }
-        private Singleton() { }
+        private SingletonCliente() { }
         public int IdUsuario { get; set; }
         public string IdSala { get; set; }
         public string IdChat { get; set; }

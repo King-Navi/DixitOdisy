@@ -9,6 +9,9 @@ namespace WpfCliente.GUI
 {
     public partial class InicioRondaUserControl : UserControl, IActualizacionUI
     {
+        private const int ANGULO_INICIO = 0;
+        private const int ANGULO_FIN = 360;
+        private const int DURACION_SEGUNDO = 1;
         public InicioRondaUserControl()
         {
             InitializeComponent();
@@ -36,9 +39,9 @@ namespace WpfCliente.GUI
         {
             var rotationAnimation = new DoubleAnimation
             {
-                From = 0,
-                To = 360,
-                Duration = new Duration(TimeSpan.FromSeconds(1)),
+                From = ANGULO_INICIO,
+                To = ANGULO_FIN,
+                Duration = new Duration(TimeSpan.FromSeconds(DURACION_SEGUNDO)),
                 RepeatBehavior = RepeatBehavior.Forever
             };
         }

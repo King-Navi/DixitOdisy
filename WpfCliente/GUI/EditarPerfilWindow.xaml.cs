@@ -26,7 +26,7 @@ namespace WpfCliente.GUI
 
         private void CargarDatos()
         {
-            textBoxCorreo.Text = Singleton.Instance.Correo;
+            textBoxCorreo.Text = SingletonCliente.Instance.Correo;
             CargarImagen();
         }
 
@@ -75,7 +75,7 @@ namespace WpfCliente.GUI
         {
             try
             {
-                BitmapImage bitmap = Singleton.Instance.FotoJugador;
+                BitmapImage bitmap = SingletonCliente.Instance.FotoJugador;
                 imageFotoJugador.Source = bitmap;
             }
             catch (Exception ex)
@@ -91,7 +91,7 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
-            labelNombreJugador.Content = Singleton.Instance.NombreUsuario;
+            labelNombreJugador.Content = SingletonCliente.Instance.NombreUsuario;
             buttonEditarUsuario.Content = Properties.Idioma.buttonEditarUsuario;
             buttonCancelarCambio.Content = Properties.Idioma.buttonCancelar;
             buttonCambiarFoto.Content = Properties.Idioma.buttonCambiarFotoPerfil;
@@ -145,7 +145,7 @@ namespace WpfCliente.GUI
         {
             if (!string.IsNullOrWhiteSpace(textBoxCorreo.Text)
                 && !textBoxCorreo.Text.Contains(" ")
-                && textBoxCorreo.Text != Singleton.Instance.Correo)
+                && textBoxCorreo.Text != SingletonCliente.Instance.Correo)
             {
                 usuarioEditado.Correo = textBoxCorreo.Text;
                 return true;
@@ -166,8 +166,8 @@ namespace WpfCliente.GUI
 
         private void GuardarCambiosUsuario(Usuario usuarioEditado)
         {
-            usuarioEditado.IdUsuario = Singleton.Instance.IdUsuario;
-            usuarioEditado.Nombre = Singleton.Instance.NombreUsuario;
+            usuarioEditado.IdUsuario = SingletonCliente.Instance.IdUsuario;
+            usuarioEditado.Nombre = SingletonCliente.Instance.NombreUsuario;
             var manejadorServicio = new ServicioManejador<ServicioUsuarioClient>();
             bool resultado = manejadorServicio.EjecutarServicio(proxy =>
             {

@@ -74,7 +74,7 @@ namespace WpfCliente.GUI
                 return;
             }
 
-            if (gamertagSolicitud != null && gamertagSolicitud != Singleton.Instance.NombreUsuario)
+            if (gamertagSolicitud != null && gamertagSolicitud != SingletonCliente.Instance.NombreUsuario)
             {
                 try {
                     if (await EnviarSolicitud(gamertagSolicitud))
@@ -131,8 +131,8 @@ namespace WpfCliente.GUI
             try
             {
                 Usuario usuarioRemitente = new Usuario();
-                usuarioRemitente.Nombre = Singleton.Instance.NombreUsuario;
-                usuarioRemitente.FotoUsuario = Imagen.ConvertirBitmapImageAMemoryStream(Singleton.Instance.FotoJugador);
+                usuarioRemitente.Nombre = SingletonCliente.Instance.NombreUsuario;
+                usuarioRemitente.FotoUsuario = Imagen.ConvertirBitmapImageAMemoryStream(SingletonCliente.Instance.FotoJugador);
 
                 var resultado = Conexion.Amigos.EnviarSolicitudAmistad(usuarioRemitente, gamertagReceptor);
                 return resultado;

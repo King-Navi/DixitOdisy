@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,9 +30,9 @@ namespace WpfCliente.Utilidad
                     UsuarioSesion = new ServicioUsuarioSesionClient(new System.ServiceModel.InstanceContext(callback));
                     resultado = Task.FromResult(true);
                 }
-                catch (Exception)
+                catch (Exception excepcion)
                 {
-                    //TODO: Manejar el error
+                    ManejadorExcepciones.ManejarFatalException(excepcion, null);
                 }
             }
             return resultado;
@@ -51,9 +52,9 @@ namespace WpfCliente.Utilidad
                     SalaJugador = new ServicioSalaJugadorClient(new System.ServiceModel.InstanceContext(callback));
                     resultado = Task.FromResult(true);
                 }
-                catch (Exception)
+                catch (Exception excepcion)
                 {
-                    //TODO: Manejar el error
+                    ManejadorExcepciones.ManejarFatalException(excepcion, null);
                 }
             }
             return resultado;
@@ -73,9 +74,9 @@ namespace WpfCliente.Utilidad
                     ChatMotor = new ServicioChatMotorClient(new System.ServiceModel.InstanceContext(callback));
                     resultado = Task.FromResult(true);
                 }
-                catch (Exception)
+                catch (Exception excepcion)
                 {
-                    //TODO: Manejar el error
+                    ManejadorExcepciones.ManejarFatalException(excepcion, null);
                 }
             }
             return resultado;
@@ -95,9 +96,9 @@ namespace WpfCliente.Utilidad
                     Amigos = new ServicioAmistadClient(new System.ServiceModel.InstanceContext(callback));
                     resultado = Task.FromResult(true);
                 }
-                catch (Exception)
+                catch (Exception excepcion)
                 {
-                    //TODO: Manejar el error
+                    ManejadorExcepciones.ManejarFatalException(excepcion, null);
                 }
             }
             return resultado;
@@ -119,7 +120,7 @@ namespace WpfCliente.Utilidad
                 }
                 catch (Exception excepcion)
                 {
-                    //TODO: Manejar el error
+                    ManejadorExcepciones.ManejarFatalException(excepcion, null);
                 }
             }
             return resultado;
@@ -140,9 +141,9 @@ namespace WpfCliente.Utilidad
                     InvitacionPartida = new ServicioInvitacionPartidaClient(new System.ServiceModel.InstanceContext(callback));
                     resultado = Task.FromResult(true);
                 }
-                catch (Exception)
+                catch (Exception excepcion)
                 {
-                    //TODO: Manejar el error
+                    ManejadorExcepciones.ManejarFatalException(excepcion, null);
                 }
             }
             return resultado;
@@ -160,7 +161,7 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception excepcion)
             {
-                //TODO Manejar el error
+                ManejadorExcepciones.ManejarFatalException(excepcion, null);
                 return false;
             }
             return true;
@@ -178,7 +179,7 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception excepcion)
             {
-                //TODO Manejar el error
+                ManejadorExcepciones.ManejarFatalException(excepcion, null);
                 return false;
             }
             return true;
@@ -235,7 +236,7 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception excepcion)
             {
-                //TODO Manejar el error
+                ManejadorExcepciones.ManejarFatalException(excepcion, null);
                 return false;
             }
             return true;
@@ -252,12 +253,11 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception excepcion)
             {
-                //TODO Manejar el error
+                ManejadorExcepciones.ManejarFatalException(excepcion, null);
                 return false;
             }
             finally
             {
-                //TODO: Si espera un callback tira un error hay que ver como hacer para evitar eso
                 Partida = null;
             }
             return true;
@@ -275,12 +275,11 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception excepcion)
             {
-                //TODO Manejar el error
+                ManejadorExcepciones.ManejarFatalException(excepcion, null);
                 return false;
             }
             finally
             {
-                //TODO: Si espera un callback tira un error hay que ver como hacer para evitar eso
                 InvitacionPartida = null;
             }
             return true;

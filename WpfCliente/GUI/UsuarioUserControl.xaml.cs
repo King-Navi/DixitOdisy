@@ -8,14 +8,10 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Interaction logic for UsuarioUserControl.xaml
-    /// </summary>
     public partial class UsuarioUserControl : UserControl
     {
         private bool seObtuvoLista = false;
         private BitmapImage bitmapImage;
-
 
         public UsuarioUserControl()
         {

@@ -81,20 +81,20 @@
             <Label   x:Name = "labelGamertag" Content="Gamertag" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="26" Margin="59,241,0,0" />
             <TextBox   x:Name = "textBoxGamertag" MaxLength="20" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top"  BorderBrush="{x:Null}" FontFamily="Arial" Width="298" Height="32" Margin="64,281,0,0" FontWeight="Bold" VerticalContentAlignment="Center" FontSize="22"/>
             <Label   x:Name = "labelCorreo" Content="Correo electrónico" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="26" Margin="430,241,0,0"  />
-            <TextBox   x:Name = "textBoxCorreo" MaxLength="40" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" BorderBrush="{x:Null}" FontFamily="Arial" Width="298" Height="32" Margin="430,281,0,0" FontWeight="Bold" VerticalContentAlignment="Center" FontSize="22"/>
+            <TextBox   x:Name = "textBoxCorreo" MaxLength="50" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" BorderBrush="{x:Null}" FontFamily="Arial" Width="298" Height="32" Margin="430,281,0,0" FontWeight="Bold" VerticalContentAlignment="Center" FontSize="22"/>
             <Label   x:Name = "labelContrasenia" Content="Contraseña" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="26" Margin="67,332,0,0" />
-            <PasswordBox   x:Name ="textBoxContrasenia" MaxLength="20" HorizontalAlignment="Left"  VerticalAlignment="Top"  BorderBrush="{x:Null}" FontFamily="Arial" Width="304" Height="32"  Margin="65,377,0,0" FontWeight="Bold" VerticalContentAlignment="Center" FontSize="20"/>
+            <PasswordBox   x:Name ="passwordBoxContrasenia" MaxLength="20" HorizontalAlignment="Left"  VerticalAlignment="Top"  BorderBrush="{x:Null}" FontFamily="Arial" Width="304" Height="32"  Margin="65,377,0,0" FontWeight="Bold" VerticalContentAlignment="Center" FontSize="20"/>
             <Label x:Name = "labelRepetirContrasenia" Content="Repita su contraseña" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontSize="26" FontFamily="Arial" Margin="429,337,0,0" />
-            <PasswordBox x:Name = "textBoxRepetirContrasenia" MaxLength="20" HorizontalAlignment="Left"   VerticalAlignment="Top" BorderBrush="{x:Null}" FontFamily="Arial" Width="298" Height="32" Margin="429,377,0,0" FontWeight="Bold" VerticalContentAlignment="Center" FontSize="22"/>
+            <PasswordBox x:Name = "passwordBoxRepetirContrasenia" MaxLength="20" HorizontalAlignment="Left"   VerticalAlignment="Top" BorderBrush="{x:Null}" FontFamily="Arial" Width="298" Height="32" Margin="429,377,0,0" FontWeight="Bold" VerticalContentAlignment="Center" FontSize="22"/>
 
             <Label Content="*" HorizontalAlignment="Left" Margin="348,233,0,0" VerticalAlignment="Top" Foreground="Red" Height="24" RenderTransformOrigin="0.426,0.32" Width="22" FontSize="20" FontFamily="Arial"/>
             <Label Content="*" HorizontalAlignment="Left" Margin="707,237,0,0" VerticalAlignment="Top" Foreground="Red" Height="25" RenderTransformOrigin="0.426,0.32" Width="19" FontSize="20" FontFamily="Arial"/>
             <Label Content="*" HorizontalAlignment="Left" Margin="342,333,0,0" VerticalAlignment="Top" Foreground="Red" Height="25" RenderTransformOrigin="0.426,0.32" Width="20" FontSize="20" FontFamily="Arial"/>
             <Label Content="*" HorizontalAlignment="Left" Margin="716,333,0,0" VerticalAlignment="Top" Foreground="Red" Height="25" RenderTransformOrigin="0.426,0.32" Width="18" FontFamily="Arial" FontSize="20"/>
-
+            <Label Content="*" HorizontalAlignment="Left" Margin="628,414,0,0" VerticalAlignment="Top" Foreground="Red" Height="25" RenderTransformOrigin="0.426,0.32" Width="18" FontFamily="Arial" FontSize="20"/>
 
             <Button  x:Name="buttonRegistrarUsuario" Content="Crear cuenta" VerticalAlignment="Top" Background="#E0DCC7" Foreground="Black" BorderBrush="Gray" BorderThickness="2"
-            FontFamily="Lucida Sans Unicode" FontSize="24" Height="59" Margin="950,669,28,0" Click="ButtonClicRegistrarUsuario" Cursor="Hand"/>
+            FontFamily="Lucida Sans Unicode" FontSize="24" Height="59" Margin="950,669,28,0" Click="ClicButtonRegistrarUsuario" Cursor="Hand"/>
 
             <Label x:Name="labelCorreoInvalido" Content="Correo inválido" HorizontalAlignment="Left" Margin="434,315,0,0" VerticalAlignment="Top" Foreground="#FFF40000" Height="28" RenderTransformOrigin="0.426,0.32" Width="300" FontSize="14" FontWeight="Bold" Visibility="Hidden" FontFamily="Arial"/>
             <Label x:Name="labelCorreoExistente" Content="Correo previamnete registrado" HorizontalAlignment="Left" Margin="434,315,0,0" VerticalAlignment="Top" Foreground="#FFF40000" Height="28" RenderTransformOrigin="0.426,0.32" Width="300" FontSize="14" FontWeight="Bold" Visibility="Hidden" FontFamily="Arial"/>
@@ -106,21 +106,22 @@
             <Label x:Name="labelContraseniaSimbolos" Content="Al menos un símbolo (ej. !,#,$,%,&amp;)" HorizontalAlignment="Left" Margin="80,489,0,0" VerticalAlignment="Top" Foreground="#FFF40000" Height="28" RenderTransformOrigin="0.426,0.32" Width="251" FontSize="14" FontWeight="Bold" FontFamily="Arial"/>
 
 
-            <Image   Source="/Recursos/flechaAtras.png" Margin="10,2,1094,657" Cursor="Hand" MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
+            <Image x:Name="imagenFlechaAtras" Source="/Recursos/flechaAtras.png" Margin="10,2,1094,657" Cursor="Hand" MouseLeftButtonDown="ClicFlechaAtras"/>
 
-            <TextBlock x:Name="labelCamposObligatorios" HorizontalAlignment="Right" Margin="0,416,408,0" 
-           VerticalAlignment="Top" FontSize="15" Width="152" Height="32" TextWrapping="Wrap"><!-- Asterisco rojo --><Run Text="*" Foreground="Red"/><Run Text=" "/><!-- Texto blanco --><Run Text="Campos obligatorios" Foreground="White"/></TextBlock>
+            <Label x:Name="labelCamposObligatorios" HorizontalAlignment="Right" Content="Campos obligatorios" Margin="0,416,408,0" 
+            VerticalAlignment="Top" FontSize="15" Width="152" Height="32" Foreground="White"/>
 
 
             <Image   x:Name = "imagePerfil" Source="/Recursos/pfp1.png" Margin="379,581,704,71" />
             <Label   x:Name = "labelFotoPerfil" Content="Foto de perfil" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="26" Margin="357,534,0,0" />
             <Button  x:Name="buttonCambiarFoto" Content="Cambiar foto" VerticalAlignment="Top" Background="#E0DCC7" Foreground="Black" BorderBrush="Gray" BorderThickness="2"
-            FontFamily="Lucida Sans Unicode" FontSize="18"   Height="39" Margin="536,616,532,0"  Cursor="Hand" Click="buttonCambiarFoto_Click" RenderTransformOrigin="0.355,0.519"/>
+            FontFamily="Lucida Sans Unicode" FontSize="18"   Height="39" Margin="536,616,532,0"  Cursor="Hand" Click="ClicButtonCambiarFoto" RenderTransformOrigin="0.355,0.519"/>
 
             <Image Source="/Recursos/cajaLogin.png" Stretch="Fill" HorizontalAlignment="Left" Height="66" Margin="953,13,0,0" VerticalAlignment="Top" Width="234"/>
 
             <local:CambiarIdiomaMenuDesplegable Margin="0,28,32,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
             <Label x:Name="labelContraseniasNoCoinciden" Content="Las contraseñas no coinciden" HorizontalAlignment="Left" Margin="316,414,0,0" VerticalAlignment="Top" Foreground="#FFF40000" Height="28" Visibility="Collapsed" RenderTransformOrigin="0.426,0.32" Width="212" FontSize="14" FontWeight="Bold" FontFamily="Arial"/>
+
 
 
 

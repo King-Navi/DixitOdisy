@@ -30,8 +30,9 @@ namespace WpfCliente.GUI
                     {
                         MenuVentana.Show();
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
+                        ManejadorExcepciones.ManejarComponentErrorException(ex);
                         Application.Current.Shutdown();
                     }
                 };

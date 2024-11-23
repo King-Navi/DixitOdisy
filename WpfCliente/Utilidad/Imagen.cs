@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.IO;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace WpfCliente.Utilidad
@@ -46,27 +47,55 @@ namespace WpfCliente.Utilidad
             return memoryStream;
         }
 
-        internal static bool EsImagenValida(string rutaImagen)
+        public static bool EsImagenValida(string rutaImagen, Window window)
         {
+            bool resultado = false;
             try
             {
-                BitmapImage bitmap = new BitmapImage();
-                using (FileStream stream = new FileStream(rutaImagen, FileMode.Open, FileAccess.Read))
+                FileInfo fileInfo = new FileInfo(rutaImagen);
+                if (fileInfo.Length > 5 * 1024 * 1024)
                 {
-                    bitmap.BeginInit();
-                    bitmap.StreamSource = stream;
-                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmap.EndInit();
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloLimiteImagenSuperado,
+                        Properties.Idioma.mensajeLimiteImagenSuperado, window);
                 }
-                return true;
+                else
+                {
+                    BitmapImage bitmap = new BitmapImage();
+                    using (FileStream stream = new FileStream(rutaImagen, FileMode.Open, FileAccess.Read))
+                    {
+                        bitmap.BeginInit();
+                        bitmap.StreamSource = stream;
+                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmap.EndInit();
+                    }
+                    resultado = true;
+                }
             }
-            catch
+            catch (FileNotFoundException)
             {
-                return false;
-            };
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
+                    Properties.Idioma.mensajeArchivoNoEncontrado, window);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
+                    Properties.Idioma.mensajeAccesoDenegadoArchivo, window);
+            }
+            catch (FileFormatException)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
+                    Properties.Idioma.mensajeArchivoInvalido, window);
+            }
+            catch (Exception ex)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
+                    Properties.Idioma.mensajeErrorInesperado + ex.Message, window);
+            }
+            return resultado;
         }
-        internal static bool EsImagenValida(Stream image)
+        public static bool EsImagenValida(Stream image, Window window)
         {
+            bool resultado = false;
             try
             {
                 BitmapImage bitmap = new BitmapImage();
@@ -76,15 +105,32 @@ namespace WpfCliente.Utilidad
                     bitmap.CacheOption = BitmapCacheOption.OnLoad;
                     bitmap.EndInit();
                 
-                return true;
+                resultado = true;
             }
-            catch
+            catch (FileNotFoundException)
             {
-                return false;
-            };
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
+                    Properties.Idioma.mensajeArchivoNoEncontrado, window);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
+                    Properties.Idioma.mensajeAccesoDenegadoArchivo, window);
+            }
+            catch (FileFormatException)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
+                    Properties.Idioma.mensajeArchivoInvalido, window);
+            }
+            catch (Exception ex)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
+                    Properties.Idioma.mensajeErrorInesperado + ex.Message, window);
+            }
+            return resultado;
         }
 
-        internal static string SelecionarRutaImagen()
+        public static string SelecionarRutaImagen()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {

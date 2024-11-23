@@ -27,7 +27,7 @@ namespace WpfCliente.Utilidad
             string date = currentDate.ToString(dateFormat);
 
             string logFileName = idFileName + characterSeparation + date + fileExtension;
-            string absoluteLogFilePath = Utilidades.ConstruirAbsolutePath(relativeLogFilePath);
+            string absoluteLogFilePath = Utilidades.ConstruirRutaAbsoluta(relativeLogFilePath);
             string logPath = absoluteLogFilePath + logFileName;
 
             return logPath;

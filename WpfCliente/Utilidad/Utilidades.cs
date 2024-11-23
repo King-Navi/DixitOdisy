@@ -7,6 +7,8 @@ namespace WpfCliente.Utilidad
 {
     internal class Utilidades
     {
+        public const double OPACIDAD_MAXIMA = 1;
+        public const double OPACIDAD_MINIMA = 0.5;
         private static Random random = new Random();
 
         private static readonly List<Color> BackgroundColors = new List<Color>
@@ -25,21 +27,20 @@ namespace WpfCliente.Utilidad
 
         public static SolidColorBrush GetColorAleatorio()
         {
-            Random random = new Random();
             Color colorAleatorio = BackgroundColors[random.Next(BackgroundColors.Count)];
             return new SolidColorBrush(colorAleatorio);
         }
 
-        public static string ConstruirAbsolutePath(string relativePath)
+        public static string ConstruirRutaAbsoluta(string rutaRelativa)
         {
-            string absolutePath = "";
+            string rutaAbsoluta = "";
 
-            if (relativePath != null)
+            if (rutaRelativa != null)
             {
-                absolutePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, relativePath);
+                rutaAbsoluta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, rutaRelativa);
             }
 
-            return absolutePath;
+            return rutaAbsoluta;
         }
 
         public static string GenerarGamertagInvitado()

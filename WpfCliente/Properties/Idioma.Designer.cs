@@ -520,11 +520,29 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Escoge una carta y coloca una pista, ¡Que no sea muy sencilla o perderas!.
+        /// </summary>
+        public static string labelInstruccionNarrador {
+            get {
+                return ResourceManager.GetString("labelInstruccionNarrador", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a ¡Escoge la carta correcta en base a la pista!.
         /// </summary>
         public static string labelInstruccionPista {
             get {
                 return ResourceManager.GetString("labelInstruccionPista", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a En base a la pista escoge una carta, ¡Confunde a tus contrincantes!.
+        /// </summary>
+        public static string labelInstruccionPistaConfundir {
+            get {
+                return ResourceManager.GetString("labelInstruccionPistaConfundir", resourceCulture);
             }
         }
         
@@ -556,11 +574,47 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a ¡Eres el narrador!.
+        /// </summary>
+        public static string labelNarrador {
+            get {
+                return ResourceManager.GetString("labelNarrador", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No hay primer lugar.
+        /// </summary>
+        public static string labelNoHayPrimerLugar {
+            get {
+                return ResourceManager.GetString("labelNoHayPrimerLugar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No hay segundo lugar.
+        /// </summary>
+        public static string labelNoHaySegundoLugar {
+            get {
+                return ResourceManager.GetString("labelNoHaySegundoLugar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No hay solicitudes de amistad pendientes.
         /// </summary>
         public static string labelNoHaySolicitudes {
             get {
                 return ResourceManager.GetString("labelNoHaySolicitudes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No hay tercer lugar.
+        /// </summary>
+        public static string labelNoHayTercerLugar {
+            get {
+                return ResourceManager.GetString("labelNoHayTercerLugar", resourceCulture);
             }
         }
         
@@ -592,7 +646,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Pista: .
+        ///   Busca una cadena traducida similar a La pista es .
         /// </summary>
         public static string labelPista {
             get {
@@ -678,6 +732,42 @@ namespace WpfCliente.Properties {
         public static string labelUsuariosLobby {
             get {
                 return ResourceManager.GetString("labelUsuariosLobby", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Acceso denegado al archivo.
+        /// </summary>
+        public static string mensajeAccesoDenegadoArchivo {
+            get {
+                return ResourceManager.GetString("mensajeAccesoDenegadoArchivo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a La pista no puede estar en blanco o contener espacios.
+        /// </summary>
+        public static string mensajeAdvertenciaPista {
+            get {
+                return ResourceManager.GetString("mensajeAdvertenciaPista", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El archivo no es una imagen válida..
+        /// </summary>
+        public static string mensajeArchivoInvalido {
+            get {
+                return ResourceManager.GetString("mensajeArchivoInvalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Archivo no encontrado.
+        /// </summary>
+        public static string mensajeArchivoNoEncontrado {
+            get {
+                return ResourceManager.GetString("mensajeArchivoNoEncontrado", resourceCulture);
             }
         }
         
@@ -871,6 +961,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a La imagen no puede pesar mas de 5MB profe, favor de escoger otra imagen.
+        /// </summary>
+        public static string mensajeLimiteImagenSuperado {
+            get {
+                return ResourceManager.GetString("mensajeLimiteImagenSuperado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Lobby no disponible.
         /// </summary>
         public static string mensajeLobbyNoDisponible {
@@ -1002,6 +1101,15 @@ namespace WpfCliente.Properties {
         public static string mensajeUsuarioRegistradoConExito {
             get {
                 return ResourceManager.GetString("mensajeUsuarioRegistradoConExito", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ya se ha usado ese gamertag, busca otro gamertag.
+        /// </summary>
+        public static string mensajeUsuarioYaExiste {
+            get {
+                return ResourceManager.GetString("mensajeUsuarioYaExiste", resourceCulture);
             }
         }
         
@@ -1177,7 +1285,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Ingresa el código de la sala.
+        ///   Busca una cadena traducida similar a Unirse a sala.
         /// </summary>
         public static string tituloIngresarCodigoSala {
             get {
@@ -1222,11 +1330,29 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Limite de MB superado.
+        /// </summary>
+        public static string tituloLimiteImagenSuperado {
+            get {
+                return ResourceManager.GetString("tituloLimiteImagenSuperado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Lobby no encontrado.
         /// </summary>
         public static string tituloLobbyNoEncontrado {
             get {
                 return ResourceManager.GetString("tituloLobbyNoEncontrado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Mostrar carta.
+        /// </summary>
+        public static string tituloMostrarCarta {
+            get {
+                return ResourceManager.GetString("tituloMostrarCarta", resourceCulture);
             }
         }
         
@@ -1281,6 +1407,24 @@ namespace WpfCliente.Properties {
         public static string tituloSolicitudAmistad {
             get {
                 return ResourceManager.GetString("tituloSolicitudAmistad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El usuario ya existe.
+        /// </summary>
+        public static string tituloUsuarioExiste {
+            get {
+                return ResourceManager.GetString("tituloUsuarioExiste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Ventana emergente.
+        /// </summary>
+        public static string tituloVentanaEmergente {
+            get {
+                return ResourceManager.GetString("tituloVentanaEmergente", resourceCulture);
             }
         }
     }

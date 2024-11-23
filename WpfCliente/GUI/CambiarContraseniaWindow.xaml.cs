@@ -166,8 +166,8 @@ namespace WpfCliente.GUI
             buttonEditarContrasenia.IsEnabled = esHabilitado;
             buttonCancelarCambio.IsEnabled = esHabilitado;
             windowCambiarContrasenia.IsEnabled = esHabilitado;
-            buttonEditarContrasenia.Opacity = esHabilitado ? 1.0 : 0.5;
-            buttonCancelarCambio.Opacity = esHabilitado ? 1.0 : 0.5;
+            buttonEditarContrasenia.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
+            buttonCancelarCambio.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
         }
     }
 

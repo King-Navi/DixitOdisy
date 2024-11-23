@@ -1,15 +1,15 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Media.Imaging;
+using WpfCliente.Interfaz;
+using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Interaction logic for MostrarCartaModelWindow.xaml
-    /// </summary>
-    public partial class MostrarCartaModelWindow : Window
+    public partial class MostrarCartaModalWindow : Window, IActualizacionUI
     {
         public string Pista {  get; set; }
-        public MostrarCartaModelWindow(bool esNarrador, BitmapImage imagen)
+        public MostrarCartaModalWindow(bool esNarrador, BitmapImage imagen)
         {
             InitializeComponent();
             DataContext = this;
@@ -18,7 +18,7 @@ namespace WpfCliente.GUI
             {
                 textBoxPista.Visibility = Visibility.Collapsed;
             }
-
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento; ActualizarUI();
         }
 
         private void ClicButtonEnviarPista(object sender, RoutedEventArgs e)
@@ -26,8 +26,8 @@ namespace WpfCliente.GUI
             Pista = textBoxPista.Text;
             if (!string.IsNullOrWhiteSpace(Pista) && Pista.Contains(" "))
             {
-                //TODO: I18n
-                MessageBox.Show("La pista no puede estar en blanco o contener espacios");
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.labelEsperandoPista,
+                    Properties.Idioma.mensajeAdvertenciaPista, this);
                 DialogResult = false;
                 this.Close();
                 return;
@@ -39,6 +39,17 @@ namespace WpfCliente.GUI
         private void ClicButtonCerrar(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
+        {
+            ActualizarUI();
+        }
+
+        public void ActualizarUI()
+        {
+            this.Title = Properties.Idioma.tituloMostrarCarta;  
+            buttonSeleccionar.Content = Properties.Idioma.buttonAceptar;
         }
     }
 }

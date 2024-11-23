@@ -32,10 +32,10 @@ namespace WpfCliente.GUI
 
         private void ClicButtonCambiarImagen(object sender, RoutedEventArgs e)
         {
-            string rutaImagen = AbrirDialogoSeleccionImagen();
+            string rutaImagen = Imagen.SelecionarRutaImagen();
             if (!string.IsNullOrEmpty(rutaImagen))
             {
-                if (EsImagenValida(rutaImagen))
+                if (Imagen.EsImagenValida(rutaImagen,this))
                 {
                     ProcesarImagen(rutaImagen);
                 }
@@ -54,15 +54,6 @@ namespace WpfCliente.GUI
             }
         }
 
-        private string AbrirDialogoSeleccionImagen()
-        {
-            return Imagen.SelecionarRutaImagen();
-        }
-
-        private bool EsImagenValida(string rutaImagen)
-        {
-            return Imagen.EsImagenValida(rutaImagen);
-        }
         private void ProcesarImagen(string rutaImagen)
         {
             BitmapImage nuevaImagen = new BitmapImage(new Uri(rutaImagen));

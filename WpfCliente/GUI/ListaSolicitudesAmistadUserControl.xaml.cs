@@ -49,7 +49,7 @@ namespace WpfCliente.GUI
                         labelNoHaySolicitudes.Visibility = Visibility.Visible;
                         return false;
                     }
-                    Solicitudes.Clear();
+                    //Solicitudes.Clear();
                     Solicitudes = new ObservableCollection<SolicitudAmistad>(listaSolicitudes);
 
                     return true;

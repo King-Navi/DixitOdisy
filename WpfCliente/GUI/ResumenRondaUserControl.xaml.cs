@@ -1,15 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Controls;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Interaction logic for ResumenRondaUserControl.xaml
-    /// </summary>
     public partial class ResumenRondaUserControl : UserControl, INotifyPropertyChanged
     {
         //TODO: esto es solo si no queremos mostrar los nombres
@@ -70,20 +68,21 @@ namespace WpfCliente.GUI
         }
         public void MostrarEnPodio(Usuario primerLugar, Usuario segundoLugar, Usuario tercerLugar)
         {
+            Window window = Window.GetWindow(this);
             if (primerLugar != null)
             {
-                Podio[0] = primerLugar?.Nombre ?? "No hay primer lugar";
-                PrimerLugar = Imagen.EsImagenValida(primerLugar.FotoUsuario) ? primerLugar : null; 
+                Podio[0] = primerLugar?.Nombre ?? Properties.Idioma.labelNoHayPrimerLugar;
+                PrimerLugar = Imagen.EsImagenValida(primerLugar.FotoUsuario, window) ? primerLugar : null; 
             }
             if (segundoLugar != null)
             {
-                Podio[1] = segundoLugar?.Nombre ?? "No hay segundo lugar";
-                SegundoLugar = Imagen.EsImagenValida(segundoLugar.FotoUsuario) ? segundoLugar : null; 
+                Podio[1] = segundoLugar?.Nombre ?? Properties.Idioma.labelNoHaySegundoLugar;
+                SegundoLugar = Imagen.EsImagenValida(segundoLugar.FotoUsuario, window) ? segundoLugar : null; 
             }
             if (tercerLugar != null)
             {
-                Podio[2] = tercerLugar?.Nombre ?? "No hay tercer lugar";
-                TercerLugar = Imagen.EsImagenValida(tercerLugar.FotoUsuario) ? tercerLugar : null; 
+                Podio[2] = tercerLugar?.Nombre ?? Properties.Idioma.labelNoHayTercerLugar;
+                TercerLugar = Imagen.EsImagenValida(tercerLugar.FotoUsuario, window) ? tercerLugar : null; 
             }
         }
     }

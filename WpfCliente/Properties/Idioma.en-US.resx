@@ -331,7 +331,7 @@
     <value>Required fields</value>
   </data>
   <data name="tituloIngresarCodigoSala" xml:space="preserve">
-    <value>Enter the lobby code</value>
+    <value>Join to lobby</value>
   </data>
   <data name="tituloErrorBaseDatos" xml:space="preserve">
     <value>Database error</value>
@@ -514,7 +514,7 @@
     <value>At the moment we could not upload the friend requests, I will come back later.</value>
   </data>
   <data name="labelPista" xml:space="preserve">
-    <value>Clue: </value>
+    <value>The clue is </value>
   </data>
   <data name="labelInstruccionPista" xml:space="preserve">
     <value>Choose the correct card based on the clue!</value>
@@ -524,6 +524,54 @@
   </data>
   <data name="labelInvalido" xml:space="preserve">
     <value>Invalid</value>
+  </data>
+  <data name="tituloVentanaEmergente" xml:space="preserve">
+    <value>Pop-up window</value>
+  </data>
+  <data name="labelInstruccionPistaConfundir" xml:space="preserve">
+    <value>Based on the clue, choose a card, confuse your opponents!</value>
+  </data>
+  <data name="labelNoHayPrimerLugar" xml:space="preserve">
+    <value>There is no first place</value>
+  </data>
+  <data name="labelNoHaySegundoLugar" xml:space="preserve">
+    <value>There is no second place</value>
+  </data>
+  <data name="labelNoHayTercerLugar" xml:space="preserve">
+    <value>There is no third place</value>
+  </data>
+  <data name="tituloUsuarioExiste" xml:space="preserve">
+    <value>The gamertag already exist</value>
+  </data>
+  <data name="mensajeUsuarioYaExiste" xml:space="preserve">
+    <value>That gamertag has already been used, please find another gamertag.</value>
+  </data>
+  <data name="tituloLimiteImagenSuperado" xml:space="preserve">
+    <value>MB limit exceeded</value>
+  </data>
+  <data name="mensajeLimiteImagenSuperado" xml:space="preserve">
+    <value>The image cannot weigh more than 5MB teacher, please choose another image</value>
+  </data>
+  <data name="mensajeArchivoNoEncontrado" xml:space="preserve">
+    <value>File not found</value>
+  </data>
+  <data name="mensajeAccesoDenegadoArchivo" xml:space="preserve">
+    <value>Access denied to the file</value>
+  </data>
+  <data name="mensajeArchivoInvalido" xml:space="preserve">
+    <value>The file isn´t a valid image</value>
+  </data>
+  <data name="labelNarrador" xml:space="preserve">
+    <value>You are the storyteller!</value>
+  </data>
+  <data name="labelInstruccionNarrador" xml:space="preserve">
+    <value>Choose a card and place a clue. Don't make it too simple or you'll lose!</value>
+  </data>
+  <data name="mensajeAdvertenciaPista" xml:space="preserve">
+    <value>The track cannot be blank or contain spaces</value>
+  </data>
+  <data name="tituloMostrarCarta" xml:space="preserve">
+    <value>Show card</value>
   </data>
   <data name="tituloSeleccionarImagen" xml:space="preserve">
     <value>Select image

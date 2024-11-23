@@ -8,9 +8,6 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Lógica de interacción para SolicitudAmistadUserControl.xaml
-    /// </summary>
     public partial class SolicitudAmistadUserControl : UserControl, IHabilitadorBotones
     {
         private SolicitudAmistad solicitudAmistadActual;
@@ -18,11 +15,11 @@ namespace WpfCliente.GUI
         public SolicitudAmistadUserControl()
         {
             InitializeComponent();
-            SetFondoColorAleatorio();
-            DataContextChanged += SolicitudAmistadUserControl_DataContextChanged;
+            ColocarFondoColorAleatorio();
+            DataContextChanged += SolicitudAmistadUserControlCambioDataContext;
         }
 
-        private void SolicitudAmistadUserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void SolicitudAmistadUserControlCambioDataContext(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (DataContext is SolicitudAmistad solicitud && solicitud != null)
             {
@@ -32,12 +29,12 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void SetFondoColorAleatorio()
+        private void ColocarFondoColorAleatorio()
         {
             this.Background = Utilidades.GetColorAleatorio();
         }
 
-        private void Aceptar_Click(object sender, RoutedEventArgs e)
+        private void ClicButtonAceptar(object sender, RoutedEventArgs e)
         {
             _ = AceptarSolicitud(solicitudAmistadActual);
         }
@@ -63,17 +60,17 @@ namespace WpfCliente.GUI
 
                 return resultado;
             }
-            catch (Exception excepcion)
+            catch (Exception ex)
             {
-                //TODO manejar excepcion
+                ManejadorExcepciones.ManejarComponentFatalException(ex);
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCargarAmigosFalla, Properties.Idioma.mensajeCargarAmigosFalla, this);
                 return false;
             }
         }
 
-        private void Rechazar_Click(object sender, RoutedEventArgs e)
+        private void ClicButtonRechazar(object sender, RoutedEventArgs e)
         {
-            _ = _ = RechazarSolicitud(solicitudAmistadActual);
+            _ = RechazarSolicitud(solicitudAmistadActual);
         }
 
         private async Task<bool> RechazarSolicitud(SolicitudAmistad solicitud)
@@ -97,9 +94,9 @@ namespace WpfCliente.GUI
 
                 return resultado;
             }
-            catch (Exception excepcion)
+            catch (Exception ex)
             {
-                ManejadorExcepciones.ManejarComponentErrorException(excepcion);
+                ManejadorExcepciones.ManejarComponentFatalException(ex);
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCargarAmigosFalla, Properties.Idioma.mensajeCargarAmigosFalla, this);
                 return false;
             }
@@ -110,8 +107,8 @@ namespace WpfCliente.GUI
             buttonAceptar.IsEnabled = esHabilitado; 
             buttonRechazar.IsEnabled = esHabilitado;
 
-            buttonAceptar.Opacity = esHabilitado ? 1.0 : 0.5;
-            buttonRechazar.Opacity = esHabilitado ? 1.0 : 0.5;
+            buttonAceptar.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
+            buttonRechazar.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
         }
     }
 }

@@ -32,7 +32,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void UnloadedNarradorSeleccionCartaUsercontrol(object sender, RoutedEventArgs e)
+        private void CerrandoNarradorSeleccionCartaUsercontrol(object sender, RoutedEventArgs e)
         {
             this.Loaded -= LoadedNarradorSeleccionCartaUsercontrol;
 
@@ -45,7 +45,8 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
-            //TODO
+            labelNarrador.Content = Properties.Idioma.labelNarrador;
+            labelInstruccionNarrador.Text = Properties.Idioma.labelInstruccionNarrador;
         }
 
         private void CerrandoUserControl(object sender, RoutedEventArgs e)

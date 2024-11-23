@@ -15,8 +15,7 @@ namespace WpfCliente.GUI
     {
         private int contadorClics = 0;
         private const int LIMITE_CLICS = 2;
-        private const double OPACIDAD_MAXIAM = 1;
-        private const double OPACIDAD_MINIMA = 0.5;
+
         public AmigosWindow(MenuWindow menuWindow)
         {
             InitializeComponent();
@@ -150,9 +149,9 @@ namespace WpfCliente.GUI
             imagenFlechaAtras.IsEnabled = esHabilitado;
             imagenAgregarAmigo.IsEnabled = esHabilitado;
             listaSolicitudesAmistadUserControl.IsEnabled = esHabilitado;
-            imagenFlechaRecargar.Opacity = esHabilitado ? OPACIDAD_MAXIAM : OPACIDAD_MINIMA;
-            imagenFlechaAtras.Opacity = esHabilitado ? OPACIDAD_MAXIAM : OPACIDAD_MINIMA;
-            imagenAgregarAmigo.Opacity = esHabilitado ? OPACIDAD_MAXIAM : OPACIDAD_MINIMA;
+            imagenFlechaRecargar.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA: Utilidades.OPACIDAD_MINIMA;
+            imagenFlechaAtras.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
+            imagenAgregarAmigo.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
             
         }
 

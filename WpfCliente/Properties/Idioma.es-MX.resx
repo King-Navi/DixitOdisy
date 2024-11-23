@@ -331,7 +331,7 @@
     <value>Campos obligatorios</value>
   </data>
   <data name="tituloIngresarCodigoSala" xml:space="preserve">
-    <value>Ingresa el código de la sala</value>
+    <value>Unirse a sala</value>
   </data>
   <data name="tituloErrorBaseDatos" xml:space="preserve">
     <value>Error con la base de datos</value>
@@ -514,7 +514,7 @@
     <value>Por el momento no se puedieron cargar las solicitudes de amistad, regrese mas tarde.</value>
   </data>
   <data name="labelPista" xml:space="preserve">
-    <value>Pista: </value>
+    <value>La pista es </value>
   </data>
   <data name="labelInstruccionPista" xml:space="preserve">
     <value>¡Escoge la carta correcta en base a la pista!</value>
@@ -524,6 +524,54 @@
   </data>
   <data name="labelInvalido" xml:space="preserve">
     <value>Inválido</value>
+  </data>
+  <data name="tituloVentanaEmergente" xml:space="preserve">
+    <value>Ventana emergente</value>
+  </data>
+  <data name="labelInstruccionPistaConfundir" xml:space="preserve">
+    <value>En base a la pista escoge una carta, ¡Confunde a tus contrincantes!</value>
+  </data>
+  <data name="labelNoHayPrimerLugar" xml:space="preserve">
+    <value>No hay primer lugar</value>
+  </data>
+  <data name="labelNoHaySegundoLugar" xml:space="preserve">
+    <value>No hay segundo lugar</value>
+  </data>
+  <data name="labelNoHayTercerLugar" xml:space="preserve">
+    <value>No hay tercer lugar</value>
+  </data>
+  <data name="tituloUsuarioExiste" xml:space="preserve">
+    <value>El usuario ya existe</value>
+  </data>
+  <data name="mensajeUsuarioYaExiste" xml:space="preserve">
+    <value>Ya se ha usado ese gamertag, busca otro gamertag</value>
+  </data>
+  <data name="tituloLimiteImagenSuperado" xml:space="preserve">
+    <value>Limite de MB superado</value>
+  </data>
+  <data name="mensajeLimiteImagenSuperado" xml:space="preserve">
+    <value>La imagen no puede pesar mas de 5MB profe, favor de escoger otra imagen</value>
+  </data>
+  <data name="mensajeArchivoNoEncontrado" xml:space="preserve">
+    <value>Archivo no encontrado</value>
+  </data>
+  <data name="mensajeAccesoDenegadoArchivo" xml:space="preserve">
+    <value>Acceso denegado al archivo</value>
+  </data>
+  <data name="mensajeArchivoInvalido" xml:space="preserve">
+    <value>El archivo no es una imagen válida.</value>
+  </data>
+  <data name="labelNarrador" xml:space="preserve">
+    <value>¡Eres el narrador!</value>
+  </data>
+  <data name="labelInstruccionNarrador" xml:space="preserve">
+    <value>Escoge una carta y coloca una pista, ¡Que no sea muy sencilla o perderas!</value>
+  </data>
+  <data name="mensajeAdvertenciaPista" xml:space="preserve">
+    <value>La pista no puede estar en blanco o contener espacios</value>
+  </data>
+  <data name="tituloMostrarCarta" xml:space="preserve">
+    <value>Mostrar carta</value>
   </data>
   <data name="tituloSeleccionarImagen" xml:space="preserve">
     <value>Seleccionar imagen</value>

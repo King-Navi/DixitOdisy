@@ -5,9 +5,6 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Interaction logic for UniserSalaModalWindow.xaml
-    /// </summary>
     public partial class UnirseSalaModalWindow : IActualizacionUI
     {
         public string ValorIngresado { get; private set; }
@@ -32,18 +29,12 @@ namespace WpfCliente.GUI
             this.Title = Properties.Idioma.tituloIngresarCodigoSala;
         }
 
-        private async void ClicButtonAceptar(object sender, RoutedEventArgs e)
+        private void ClicButtonAceptar(object sender, RoutedEventArgs e)
         {
-            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
-            if (!conexionExitosa)
-            {
-                return;
-            }
             ValorIngresado = textBoxCodigoSala.Text.ToUpper();
             
             if(!string.IsNullOrWhiteSpace(ValorIngresado))
             {
-
                 DialogResult = true;
                 this.Close();
             }
@@ -52,11 +43,6 @@ namespace WpfCliente.GUI
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloLobbyNoEncontrado, Properties.Idioma.mensajeLobbyNoEncontrado, this);
             }
 
-        }
-
-        private void HabilitarBotones(bool esHabilitado)
-        {
-            buttonAceptar.IsEnabled = esHabilitado;
         }
     }
 }

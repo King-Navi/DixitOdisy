@@ -9,22 +9,22 @@ using WpfCliente.Utilidad;
 namespace WpfCliente.GUI
 {
 
-    public partial class SeleccionCartaUsercontrol : UserControl, IActualizacionUI
+    public partial class SeleccionCartaUserControl : UserControl, IActualizacionUI
     {
         public ObservableCollection<ImagenCarta> Imagenes { get; set; }
 
-        public SeleccionCartaUsercontrol(ObservableCollection<ImagenCarta> imagenCartas)
+        public SeleccionCartaUserControl(ObservableCollection<ImagenCarta> imagenCartas)
         {
             InitializeComponent();
             Imagenes = imagenCartas;
-            Loaded += LoadedSeleccionCartaUsercontrol;
+            Loaded += SeleccionCartaUsercontrolLoaded;
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             DataContext = this;
             labelPista.Content = Properties.Idioma.labelEsperandoPista;
         }
 
    
-        private void LoadedSeleccionCartaUsercontrol(object sender, RoutedEventArgs e)
+        private void SeleccionCartaUsercontrolLoaded(object sender, RoutedEventArgs e)
         {
             if (Window.GetWindow(this) is Window mainWindow)
             {
@@ -33,15 +33,15 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void UnloadedSeleccionCartaUsercontrol(object sender, RoutedEventArgs e)
+        private void CerrandoSeleccionCartaUsercontrol(object sender, RoutedEventArgs e)
         {
-            this.Loaded -= LoadedSeleccionCartaUsercontrol;
+            this.Loaded -= SeleccionCartaUsercontrolLoaded;
 
         }
 
         public void ColocarPista(string pista)
         {
-            labelPista.Content = "Pista : " + pista;
+            labelPista.Content = Properties.Idioma.labelPista + pista;
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
@@ -51,11 +51,12 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
+            labelInstrucciones.Text = Properties.Idioma.labelInstruccionPistaConfundir;
         }
 
         private void UnloadedSeleccionCartasUsercontrol(object sender, RoutedEventArgs e)
         {
-            this.Loaded -= LoadedSeleccionCartaUsercontrol;
+            this.Loaded -= SeleccionCartaUsercontrolLoaded;
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
         }
     }

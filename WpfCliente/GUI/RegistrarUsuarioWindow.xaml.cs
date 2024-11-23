@@ -14,9 +14,6 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    /// <summary>
-    /// Lógica de interacción para RegistrarUsuario.xaml
-    /// </summary>
     public partial class RegistrarUsuarioWindow : IActualizacionUI, IHabilitadorBotones
     {
         private string rutaAbsolutaImagen;
@@ -37,11 +34,7 @@ namespace WpfCliente.GUI
             labelGamertag.Content = Properties.Idioma.labelUsuario;
             labelCorreo.Content = Properties.Idioma.labelCorreoE;
             labelFotoPerfil.Content = Properties.Idioma.labelSeleccionarFotoPerfil;
-
-            labelCamposObligatorios.Inlines.Clear();
-            labelCamposObligatorios.Inlines.Add(new Run("*") { Foreground = Brushes.Red });
-            labelCamposObligatorios.Inlines.Add(new Run(Properties.Idioma.labelCamposObligatorios) { Foreground = Brushes.White });
-
+            labelCamposObligatorios.Content = Properties.Idioma.labelCamposObligatorios;
             labelContraseniaInstruccion.Content = Properties.Idioma.labelContraseniaInstruccion;
             labelContraseniaMinimo.Content = Properties.Idioma.labelContraseniaMinimo;
             labelContraseniaMaximo.Content = Properties.Idioma.labelContraseniaMaximo;
@@ -55,7 +48,7 @@ namespace WpfCliente.GUI
             ActualizarUI();
         }
 
-        private async void ButtonClicRegistrarUsuario(object sender, RoutedEventArgs e)
+        private async void ClicButtonRegistrarUsuario(object sender, RoutedEventArgs e)
         {
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
@@ -66,12 +59,12 @@ namespace WpfCliente.GUI
         }
 
 
-        private void buttonCambiarFoto_Click(object sender, RoutedEventArgs e)
+        private void ClicButtonCambiarFoto(object sender, RoutedEventArgs e)
         {
-            string rutaImagen = AbrirDialogoSeleccionImagen();
+            string rutaImagen = Imagen.SelecionarRutaImagen();
             if (!string.IsNullOrEmpty(rutaImagen))
             {
-                if (EsImagenValida(rutaImagen))
+                if (Imagen.EsImagenValida(rutaImagen,this))
                 {
                     rutaAbsolutaImagen = rutaImagen;
                     CargarImagen(rutaImagen);
@@ -79,17 +72,19 @@ namespace WpfCliente.GUI
                 }
                 else
                 {
-                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, Properties.Idioma.mensajeImagenInvalida, this);
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, 
+                        Properties.Idioma.mensajeImagenInvalida, this);
                 }
             }
             else
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, Properties.Idioma.mensajeImagenInvalida, this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, 
+                    Properties.Idioma.mensajeImagenInvalida, this);
             }
         }
 
 
-        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ClicFlechaAtras(object sender, MouseButtonEventArgs e)
         {
             this.Close();
         }
@@ -103,7 +98,8 @@ namespace WpfCliente.GUI
             }
             else
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorInesperado, Properties.Idioma.mensajeErrorInesperado, this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorInesperado, 
+                    Properties.Idioma.mensajeErrorInesperado, this);
             }
         }
 
@@ -118,7 +114,7 @@ namespace WpfCliente.GUI
             ServidorDescribelo.IServicioRegistro servicio = new ServidorDescribelo.ServicioRegistroClient();
             try
             {
-                string contraseniaHash = Encriptacion.OcuparSHA256(textBoxContrasenia.Password);
+                string contraseniaHash = Encriptacion.OcuparSHA256(passwordBoxContrasenia.Password);
                 using (FileStream fileStream = new FileStream(rutaAbsolutaImagen, FileMode.Open, FileAccess.Read))
                 {
                     using (MemoryStream memoryStream = new MemoryStream())
@@ -135,23 +131,26 @@ namespace WpfCliente.GUI
                         });
                         if (resultado)
                         {
-                            VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloRegistroUsuario, Idioma.mensajeUsuarioRegistradoConExito, this);
+                            VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloRegistroUsuario, 
+                                Idioma.mensajeUsuarioRegistradoConExito, this);
                             this.Close();
                         }
                         else
                         {
-                            VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, this);
+                            VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor, 
+                                Properties.Idioma.mensajeErrorServidor, this);
                         }
                     }
                 }
             }
             catch(FaultException<BaseDatosFalla>)
             {
-                VentanasEmergentes.CrearVentanaEmergente("El usuario ya existe", "Ya hay un gamertag, busca otro gamertag",this);
+                VentanasEmergentes.CrearVentanaEmergenteConCierre(Properties.Idioma.tituloUsuarioExiste, 
+                    Properties.Idioma.mensajeUsuarioYaExiste,this);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                ManejadorExcepciones.ManejarFatalException(e, this);
+                ManejadorExcepciones.ManejarFatalException(ex, this);
             }
         }
 
@@ -159,7 +158,11 @@ namespace WpfCliente.GUI
         {
             buttonRegistrarUsuario.IsEnabled = esHabilitado;
             buttonCambiarFoto.IsEnabled = esHabilitado;
-            //TODO desuscribir del evento y suscribirse en otro momento miImagen.mouseLeftButtonDown -= event;
+            imagenFlechaAtras.IsEnabled = esHabilitado;
+
+            buttonRegistrarUsuario.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
+            buttonCambiarFoto.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
+            imagenFlechaAtras.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
         }
 
 
@@ -199,8 +202,8 @@ namespace WpfCliente.GUI
 
             textBoxGamertag.Style = (Style)FindResource(normalTextBoxStyle);
             textBoxCorreo.Style = (Style)FindResource(normalTextBoxStyle);
-            textBoxContrasenia.Style = (Style)FindResource(normalPasswordBoxStyle);
-            textBoxRepetirContrasenia.Style = (Style)FindResource(normalPasswordBoxStyle);
+            passwordBoxContrasenia.Style = (Style)FindResource(normalPasswordBoxStyle);
+            passwordBoxRepetirContrasenia.Style = (Style)FindResource(normalPasswordBoxStyle);
 
             labelCorreoInvalido.Visibility = Visibility.Hidden;
             labelCorreoExistente.Visibility = Visibility.Hidden;
@@ -214,25 +217,25 @@ namespace WpfCliente.GUI
         private bool ValidarCaracteristicasContrasenia()
         {
             bool isValid = false;
-            if (textBoxContrasenia.Password.Trim().Length >= 5)
+            if (passwordBoxContrasenia.Password.Trim().Length >= 5)
             {
                 labelContraseniaMinimo.Foreground = Brushes.Green;
                 isValid = true;
             }
 
-            if (textBoxContrasenia.Password.Trim().Length <= 20)
+            if (passwordBoxContrasenia.Password.Trim().Length <= 20)
             {
                 labelContraseniaMaximo.Foreground = Brushes.Green;
                 isValid = true;
             }
 
-            if (ValidacionesString.EsSimboloValido(textBoxContrasenia.Password))
+            if (ValidacionesString.EsSimboloValido(passwordBoxContrasenia.Password))
             {
                 labelContraseniaSimbolos.Foreground = Brushes.Green;
                 isValid = true;
             }
 
-            if (textBoxContrasenia.Password != textBoxRepetirContrasenia.Password)
+            if (passwordBoxContrasenia.Password != passwordBoxRepetirContrasenia.Password)
             {
                 labelContraseniasNoCoinciden.Visibility = Visibility.Visible;
                 isValid = false;
@@ -244,65 +247,24 @@ namespace WpfCliente.GUI
             return isValid;
         }
 
-        private string AbrirDialogoSeleccionImagen()
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                Title = "Seleccionar una imagen",
-                Filter = "Archivos de imagen (*.jpg; *.jpeg; *.png)|*.jpg;*.jpeg;*.png"
-            };
-
-            return openFileDialog.ShowDialog() == true ? openFileDialog.FileName : null;
-        }
-
-        private bool EsImagenValida(string rutaImagen)
-        {
-            bool resultado = false;
-            try
-            {
-                FileInfo fileInfo = new FileInfo(rutaImagen);
-                if (fileInfo.Length > 5 * 1024 * 1024) // 5 MB en bytes verificar
-                {
-                    VentanasEmergentes.CrearVentanaEmergente("Limite de MB superado",
-                        "La imagen no puede pesar mas de 5MB profe, favor de escoger otra imagen", this);
-                }
-                else
-                {
-                    BitmapImage bitmap = new BitmapImage();
-                    using (FileStream stream = new FileStream(rutaImagen, FileMode.Open, FileAccess.Read))
-                    {
-                        bitmap.BeginInit();
-                        bitmap.StreamSource = stream;
-                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                        bitmap.EndInit();
-                    }
-                    resultado = true;
-                }
-            }
-            catch
-            {
-
-            }
-            return resultado;
-        }
+        
         private void CargarImagen(string ruta)
         {
             try
             {
-                // Crear un BitmapImage con la ruta proporcionada
                 BitmapImage bitmap = new BitmapImage();
                 bitmap.BeginInit();
-                bitmap.UriSource = new Uri(ruta, UriKind.Absolute); // UriKind.Absolute si la ruta es completa
-                bitmap.CacheOption = BitmapCacheOption.OnLoad; // Cargar la imagen en el momento
+                bitmap.UriSource = new Uri(ruta, UriKind.Absolute);
+                bitmap.CacheOption = BitmapCacheOption.OnLoad; 
                 bitmap.EndInit();
 
-                // Asignar la imagen cargada al control Image
                 imagePerfil.Source = bitmap;
             }
             catch (Exception ex)
             {
                 ManejadorExcepciones.ManejarComponentErrorException(ex);
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, Properties.Idioma.mensajeImagenInvalida, this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, 
+                    Properties.Idioma.mensajeImagenInvalida, this);
             }
         }
 

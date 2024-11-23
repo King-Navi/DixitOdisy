@@ -369,9 +369,6 @@
   <data name="labelListaAmigos" xml:space="preserve">
     <value>Friends</value>
   </data>
-  <data name="menuItemPerfil" xml:space="preserve">
-    <value>Profile</value>
-  </data>
   <data name="menuItemEditarperfil" xml:space="preserve">
     <value>Edit profile</value>
   </data>

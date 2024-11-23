@@ -46,7 +46,7 @@ namespace WpfCliente.GUI
         }
         private RecursosCompartidosPartida recursosCompartidos;
         public event PropertyChangedEventHandler PropertyChanged;
-        SeleccionCartaUsercontrol seleccionCartasUserControl;
+        SeleccionCartaUserControl seleccionCartasUserControl;
         NarradorSeleccionCartaUserControl narradorSeleccionCartasUserControl;
         VerTodasCartasUserControl verTodasCartasUserControl;
         ResumenRondaUserControl resumenRondaUserControl;
@@ -112,7 +112,7 @@ namespace WpfCliente.GUI
                 (param) => ComandoHabilitado // La habilitación depende de la propiedad ComandoHabilitado
             );
             narradorSeleccionCartasUserControl = new NarradorSeleccionCartaUserControl(recursosCompartidos.Imagenes);
-            seleccionCartasUserControl = new SeleccionCartaUsercontrol(recursosCompartidos.Imagenes);
+            seleccionCartasUserControl = new SeleccionCartaUserControl(recursosCompartidos.Imagenes);
             verTodasCartasUserControl = new VerTodasCartasUserControl(recursosCompartidos.GruposDeImagenes);
             resumenRondaUserControl = new ResumenRondaUserControl(recursosCompartidos.UsuarioEnpartida, recursosCompartidos.Podio);
             chatUserControl.IsEnabled = false;
@@ -135,7 +135,7 @@ namespace WpfCliente.GUI
             ImagenCarta imagenAEscoger = recursosCompartidos.GruposDeImagenes.FirstOrDefault(i => i.IdImagen == idImagen);
             if (imagenAEscoger == null)
                 return;
-            MostrarCartaModelWindow ventanaModal = new MostrarCartaModelWindow(false, imagenAEscoger.BitmapImagen);
+            MostrarCartaModalWindow ventanaModal = new MostrarCartaModalWindow(false, imagenAEscoger.BitmapImagen);
             bool? resultado = ventanaModal.ShowDialog();
             string pista = ventanaModal.Pista;
             if ((bool)resultado)
@@ -377,7 +377,7 @@ namespace WpfCliente.GUI
             if (imagenEscogida == null)
                 return;
             string claveImagen = imagenEscogida.IdImagen;
-            MostrarCartaModelWindow ventanaModal = new MostrarCartaModelWindow(false, imagenEscogida.BitmapImagen);
+            MostrarCartaModalWindow ventanaModal = new MostrarCartaModalWindow(false, imagenEscogida.BitmapImagen);
             bool? resultado = ventanaModal.ShowDialog();
             if ((bool)resultado)
             {
@@ -410,7 +410,7 @@ namespace WpfCliente.GUI
             ImagenCarta imagenAEscoger = recursosCompartidos.Imagenes.FirstOrDefault(i => i.IdImagen == id);
             if (imagenAEscoger == null)
                 return;
-            MostrarCartaModelWindow ventanaModal = new MostrarCartaModelWindow(true, imagenAEscoger.BitmapImagen);
+            MostrarCartaModalWindow ventanaModal = new MostrarCartaModalWindow(true, imagenAEscoger.BitmapImagen);
             bool? resultado = ventanaModal.ShowDialog();
             string pista = ventanaModal.Pista;
             if ((bool)resultado)

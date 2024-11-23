@@ -44,8 +44,8 @@ namespace WcfServicioLibreria.Manejador
         #endregion Partida
 
         #region Correo
-        private static readonly string correo = "describeloproyecto@gmail.com";
-        private static readonly string contrasenia = "rbyu noyd vebq adwe";
+        private static readonly string CORREO = "describeloproyecto@gmail.com";
+        private static readonly string CONTRASENIA = "rbyu noyd vebq adwe";
 
         #endregion Correo
 
@@ -74,6 +74,7 @@ namespace WcfServicioLibreria.Manejador
 
 
         #endregion
+
         #region Escritura en disco
         public IEscribirDisco Escritor { get; private set; }
 
@@ -85,6 +86,7 @@ namespace WcfServicioLibreria.Manejador
             
         }
         #endregion
+
         #region PartidaSesion
 
         #endregion 

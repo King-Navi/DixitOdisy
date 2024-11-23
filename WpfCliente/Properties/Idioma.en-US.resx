@@ -601,4 +601,13 @@
   <data name="buttonRefrescar" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="tituloCorreoInvalido" xml:space="preserve">
+    <value>Invalid e-mail</value>
+  </data>
+  <data name="mensajeCorreoInvalido" xml:space="preserve">
+    <value>The email you entered is invalid</value>
+  </data>
+  <data name="labelInstruccionesVerificacionCorreo" xml:space="preserve">
+    <value>We sent you a code to the email you entered.</value>
+  </data>
 </root>

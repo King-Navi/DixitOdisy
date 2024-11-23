@@ -65,7 +65,7 @@ namespace WpfCliente.GUI
 
         private async void TryEnviarSolicitud()
         {
-            string gamertagSolicitud = AbrirVentanaModalGamertag();
+            string gamertagSolicitud = VentanaModal.AbrirVentanaModalGamertag(this);
 
             var resultado = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!resultado)
@@ -73,7 +73,7 @@ namespace WpfCliente.GUI
                 return;
             }
 
-            if (gamertagSolicitud != null && gamertagSolicitud != SingletonCliente.Instance.NombreUsuario)
+            if (ValidacionesString.EsGamertagValido(gamertagSolicitud) && gamertagSolicitud != SingletonCliente.Instance.NombreUsuario)
             {
                 try {
                     if (await EnviarSolicitud(gamertagSolicitud))
@@ -94,29 +94,6 @@ namespace WpfCliente.GUI
                     ManejadorExcepciones.ManejarErrorException(ex, this);
                 }
             }
-        }
-
-        private string AbrirVentanaModalGamertag()
-        {
-            string valorObtenido = null;
-            IngresarGamertagModalWindow ventanaModal = new IngresarGamertagModalWindow();
-            try
-            {
-                ventanaModal.Owner = this;
-
-            }
-            catch (Exception ex)
-            {
-                ManejadorExcepciones.ManejarComponentErrorException(ex);
-            }
-            bool? resultado = ventanaModal.ShowDialog();
-
-            if (resultado == true)
-            {
-                valorObtenido = ventanaModal.ValorIngresado;
-            }
-
-            return valorObtenido;
         }
 
         private async Task<bool> EnviarSolicitud(string gamertagReceptor)

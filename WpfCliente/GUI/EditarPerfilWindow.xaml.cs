@@ -111,6 +111,9 @@ namespace WpfCliente.GUI
                 || VerificarCambioContrasenia(usuarioEditado);
             if (realizoCambios)
             {
+                if (VerificarCambioCorreo(usuarioEditado)){
+                    Correo.VerificarCorreo(usuarioEditado.Correo,this);
+                }
                 if (ValidarCampos())
                 {
                     GuardarCambiosUsuario(usuarioEditado);

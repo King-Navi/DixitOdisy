@@ -600,4 +600,13 @@
   <data name="buttonRefrescar" xml:space="preserve">
     <value>Refrescar</value>
   </data>
+  <data name="tituloCorreoInvalido" xml:space="preserve">
+    <value>Correo inválido</value>
+  </data>
+  <data name="mensajeCorreoInvalido" xml:space="preserve">
+    <value>El correo que ingresaste es inválido</value>
+  </data>
+  <data name="labelInstruccionesVerificacionCorreo" xml:space="preserve">
+    <value>Te enviamos un código al correo que ingresaste</value>
+  </data>
 </root>

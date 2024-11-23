@@ -42,7 +42,6 @@ namespace WpfCliente.GUI
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloLobbyNoEncontrado, Properties.Idioma.mensajeLobbyNoEncontrado, this);
             }
-
         }
     }
 }

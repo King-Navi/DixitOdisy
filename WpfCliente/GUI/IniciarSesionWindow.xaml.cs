@@ -37,8 +37,7 @@ namespace WpfCliente.GUI
             this.Title = Properties.Idioma.tituloInicioSesion;
         }
 
-        
-        private void EnCierre(object sender, EventArgs e)
+        private void CerrandoVentana(object sender, EventArgs e)
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
         }
@@ -140,7 +139,7 @@ namespace WpfCliente.GUI
 
         private async void ClicJugarComoInvitado(object sender, RoutedEventArgs e)
         {
-            string codigoSala = AbrirVentanaModalSala();
+            string codigoSala = VentanaModal.AbrirVentanaModalSala(this);
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
             {
@@ -160,77 +159,6 @@ namespace WpfCliente.GUI
                 }
 
             }
-        }
-        private string AbrirVentanaModalSala()
-        {
-            string valorObtenido = null;
-            UnirseSalaModalWindow ventanaModal = new UnirseSalaModalWindow();
-            try
-            {
-                ventanaModal.Owner = this;
-
-            }
-            catch (Exception)
-            {
-
-            }
-            bool? resultado = ventanaModal.ShowDialog();
-
-            if (resultado == true)
-            {
-                valorObtenido = ventanaModal.ValorIngresado;
-            }
-
-
-            return valorObtenido;
-        }
-
-        private string AbrirVentanaModalCorreo()
-        {
-            string valorObtenido = null;
-            bool olvidarContrasenia = true;
-            VerificarCorreoModalWindow ventanaModal = new VerificarCorreoModalWindow(olvidarContrasenia);
-            try
-            {
-                ventanaModal.Owner = this;
-
-            }
-            catch (Exception)
-            {
-
-            }
-            bool? resultado = ventanaModal.ShowDialog();
-            //TODO: resultado no puede ser null
-            if (resultado == true && !ventanaModal.ValorIngresado.Contains(" ") && ventanaModal.ValorIngresado != null)
-            {
-                valorObtenido = ventanaModal.ValorIngresado;
-            }
-
-
-            return valorObtenido;
-        }
-
-        private string AbrirVentanaModalGamertag()
-        {
-            string valorObtenido = null;
-            IngresarGamertagModalWindow ventanaModal = new IngresarGamertagModalWindow();
-            try
-            {
-                ventanaModal.Owner = this;
-
-            }
-            catch (Exception)
-            {
-
-            }
-            bool? resultado = ventanaModal.ShowDialog();
-
-            if (resultado == true)
-            {
-                valorObtenido = ventanaModal.ValorIngresado;
-            }
-
-            return valorObtenido;
         }
 
         private async void AbrirVentanaSala(string idSala)
@@ -270,14 +198,13 @@ namespace WpfCliente.GUI
                 nuevaVentana.Show();
                 this.Close();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                
+                ManejadorExcepciones.ManejarErrorException(ex,this);   
             }
         }
 
-        private void TeclaPresionada(object sender, System.Windows.Input.KeyEventArgs e)
+        private void TeclaPresionadaEnter(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
@@ -285,25 +212,29 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void ClicOlvidarContrasenia(object sender, RoutedEventArgs e)
+        private void ClicButtonOlvidarContrasenia(object sender, RoutedEventArgs e)
         {
+            OlvidarContrasenia();
+        }
+
+        private async void OlvidarContrasenia()
+        {
+            bool olvidoContrasenia = true;
+            string correoIngresado = VentanaModal.AbrirVentanaModalCorreo(this, olvidoContrasenia);
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
             {
                 return;
             }
-
-            OlvidarContrasenia();
-        }
-
-        private void OlvidarContrasenia()
-        {
-            //TODO avisarle al usuario si el correo es invalido
-            string correoIngresado = AbrirVentanaModalCorreo();
-            if (correoIngresado != null && Correo.VerificarCorreo(correoIngresado,this))
+            if (ValidacionesString.EsCorreoValido(correoIngresado) && Correo.VerificarCorreo(correoIngresado,this))
             {
-                string gamertag = AbrirVentanaModalGamertag();
-                if (gamertag != null && Correo.VerificarCorreoConGamertag(gamertag, correoIngresado))
+                string gamertag = VentanaModal.AbrirVentanaModalGamertag(this);
+                bool _conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+                if (!_conexionExitosa)
+                {
+                    return;
+                }
+                if (ValidacionesString.EsGamertagValido(gamertag) && Correo.VerificarCorreoConGamertag(gamertag, correoIngresado))
                 {
                     AbrirVentanaCambiarContrasenia(gamertag);
                 }
@@ -314,7 +245,7 @@ namespace WpfCliente.GUI
             }
             else
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorInesperado, Properties.Idioma.mensajeErrorInesperado, this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCorreoInvalido, Properties.Idioma.mensajeCorreoInvalido, this);
             }
             
         }

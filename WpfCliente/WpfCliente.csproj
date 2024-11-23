@@ -240,11 +240,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Properties\Idioma.en-US.resx" />
+    <EmbeddedResource Include="Properties\Idioma.en-US.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Idioma.es-MX.resx" />
     <EmbeddedResource Include="Properties\Idioma.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Idioma.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Connected Services\ServidorDescribelo\service.wsdl" />
     <None Include="Connected Services\ServidorDescribelo\service.xsd">

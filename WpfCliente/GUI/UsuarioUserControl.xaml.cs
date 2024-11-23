@@ -10,8 +10,6 @@ namespace WpfCliente.GUI
 {
     public partial class UsuarioUserControl : UserControl
     {
-        private bool seObtuvoLista = false;
-        private BitmapImage bitmapImage;
 
         public UsuarioUserControl()
         {

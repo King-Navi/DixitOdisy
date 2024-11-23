@@ -25,72 +25,91 @@
 
 
     <Grid>
-        <DockPanel LastChildFill="True">
-            <!--Header-->
-            <StackPanel DockPanel.Dock="Top" x:Name="stackPaneEncabezado" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <Image Height="48" Width="54" Source="/Recursos/amigos.png" VerticalAlignment="Top" RenderTransformOrigin="0.556,0.5" Cursor="Hand" MouseLeftButtonDown="ClicImageAmigos"/>
+        <Grid>
+            <!-- Define una estructura más clara -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <!-- Header -->
+                <RowDefinition Height="*" />
+                <!-- Middle -->
+                <RowDefinition Height="Auto" />
+                <!-- Footer -->
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <!-- Espacio Izquierdo -->
+                <ColumnDefinition Width="Auto" />
+                <!-- Middle -->
+                <ColumnDefinition Width="*" />
+                <!-- Espacio Derecho -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Header -->
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Image Height="48" Width="54" Source="/Recursos/amigos.png" VerticalAlignment="Top" Cursor="Hand" MouseLeftButtonDown="ClicImagenAmigos"/>
                 <local:PerfilMenuDesplegableUserControl x:Name="perfilMenuDesplegable"/>
             </StackPanel>
-            <!--Footer-->
-            <StackPanel DockPanel.Dock="Bottom" Background="#E0DCC7" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+
+            <!-- Footer -->
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Background="#E0DCC7" VerticalAlignment="Bottom" HorizontalAlignment="Center">
                 <Label Content="Copyright Iván y U Náay S.A. de C.V." FontFamily="Lucida Sans Unicode" FontStyle="Italic"></Label>
             </StackPanel>
-            <!-- Left-->
-            <Grid x:Name="gridEstadisticas" DockPanel.Dock="Right" Width="200" Height="200" Background="#FFECECEC" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <!-- Título -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- Información -->
-                    <RowDefinition Height="Auto"/>
-                    <!-- Botón -->
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <!-- Etiquetas -->
-                    <ColumnDefinition Width="*"/>
-                    <!-- Valores -->
-                </Grid.ColumnDefinitions>
 
-                <!-- Título -->
-                <Label x:Name="labelEstadisitcasJugador" Grid.Row="0" Grid.ColumnSpan="2" Content="Estadísticas del Jugador" 
-                     FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,10" />
-
-                <!-- Nombre -->
-                <Label x:Name="labelNombreUsuario" Grid.Row="1" Grid.Column="0" Content="Nombre:" FontWeight="SemiBold" VerticalAlignment="Center" Margin="5"/>
-                <TextBlock x:Name="textBlockNombre" Grid.Row="1" Grid.Column="1" Text="{Binding Nombre}" VerticalAlignment="Center" Margin="5" />
-
-                <!-- Partidas Jugadas -->
-                <Label x:Name="labelJugadas" Grid.Row="2" Grid.Column="0" Content="Partidas Jugadas:" FontWeight="SemiBold" VerticalAlignment="Center" Margin="5"/>
-                <TextBlock x:Name="textBlockPartidasJugadas" Grid.Row="2" Grid.Column="1" Text="{Binding PartidasJugadas}" VerticalAlignment="Center" Margin="5" />
-
-                <!-- Partidas Ganadas -->
-                <Label x:Name="labelGanadas" Grid.Row="2" Grid.Column="0" Content="Partidas Ganadas:" FontWeight="SemiBold" VerticalAlignment="Top" Margin="5,3,5,0"/>
-                <TextBlock x:Name="textBlockPartidasGanadas" Grid.Row="2" Grid.Column="1" Text="{Binding PartidasGanadas}" VerticalAlignment="Top" Margin="4,10,5,0" />
-
-                <!-- Botón de refrescar -->
-                <Button x:Name="buttonRefrescar" Grid.Row="2" Grid.ColumnSpan="2" Content="Refrescar" 
-                    HorizontalAlignment="Left" VerticalAlignment="Top" 
-                    Width="100" Margin="50,74,0,0" Click="ClicBottonRefrescarEstadisticas" />
-            </Grid>
-            <!--Middle-->
-            <StackPanel x:Name="stackPanePrincipal" Orientation="Horizontal" HorizontalAlignment="Center">
+            <!-- Middle -->
+            <StackPanel x:Name="stackPanePrincipal" Grid.Row="1" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel Orientation="Vertical" Background="#E0DCC7" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Label Content="Describelo" HorizontalAlignment="Center" FontFamily="ROG Fonts" VerticalAlignment="Center" 
-               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="60"></Label>
+                       HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="60" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Background="#E0DCC7" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,70,0,0">
+                    <Button x:Name="buttonCrearSala" Content="Crear sala de espera" FontFamily="ROG Fonts" 
+                        Background="#E0DCC7" Foreground="Black" BorderThickness="4" BorderBrush="Black" 
+                        FontSize="24" Margin="0,90,0,10" Click="ClicBottonCrearSala" VerticalAlignment="Top" />
 
-                    <Button x:Name="buttonCrearSala" d:Content="Crear sala de espera" FontFamily="ROG Fonts" 
-                Background="#E0DCC7" Foreground="Black" BorderThickness="4" BorderBrush="Black" Click="ClicBottonCrearSala" 
-                FontSize="24" Margin="0,90,0,10" />
-
-                    <Button x:Name="buttonUniserSala" d:Content="Unirse a sala de espera" FontFamily="ROG Fonts" 
-                Background="#E0DCC7" Foreground="Black" BorderThickness="4" BorderBrush="Black" Click="ClicButtonUnirseSala" 
-                FontSize="24" Margin="0,10,0,10" />
-
+                    <Button x:Name="buttonUniserSala" Content="Unirse a sala de espera" FontFamily="ROG Fonts" 
+                        Background="#E0DCC7" Foreground="Black" BorderThickness="4" BorderBrush="Black" 
+                        FontSize="24" Margin="10,10,10,10" Click="ClicButtonUnirseSala" />
                 </StackPanel>
             </StackPanel>
-        </DockPanel>
+        </Grid>
         <local:ListaAmigosUserControl x:Name="amigosUserControl" HorizontalAlignment="Left" ></local:ListaAmigosUserControl>
+        <Grid x:Name="gridEstadisticas" Width="200" Height="200" Background="#FFECECEC" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Título -->
+                <RowDefinition Height="Auto"/>
+                <!-- Información -->
+                <RowDefinition Height="Auto"/>
+                <!-- Botón -->
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <!-- Etiquetas -->
+                <ColumnDefinition Width="*"/>
+                <!-- Valores -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Título -->
+            <Label x:Name="labelEstadisitcasJugador" Grid.Row="0" Grid.ColumnSpan="2" Content="Estadísticas del Jugador" 
+                     FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10,0,10" />
+
+            <!-- Nombre -->
+            <Label x:Name="labelNombreUsuario" Grid.Row="1" Grid.Column="0" Content="Nombre:" FontWeight="SemiBold" VerticalAlignment="Center" Margin="5"/>
+            <TextBlock x:Name="textBlockNombre" Grid.Row="1" Grid.Column="1" Text="{Binding Nombre}" VerticalAlignment="Center" Margin="5" />
+
+            <!-- Partidas Jugadas -->
+            <Label x:Name="labelJugadas" Grid.Row="2" Grid.Column="0" Content="Partidas Jugadas:" FontWeight="SemiBold" VerticalAlignment="Center" Margin="5"/>
+            <TextBlock x:Name="textBlockPartidasJugadas" Grid.Row="2" Grid.Column="1" Text="{Binding PartidasJugadas}" VerticalAlignment="Center" Margin="5" />
+
+            <!-- Partidas Ganadas -->
+            <Label x:Name="labelGanadas" Grid.Row="2" Grid.Column="0" Content="Partidas Ganadas:" FontWeight="SemiBold" VerticalAlignment="Top" Margin="5,3,5,0"/>
+            <TextBlock x:Name="textBlockPartidasGanadas" Grid.Row="2" Grid.Column="1" Text="{Binding PartidasGanadas}" VerticalAlignment="Top" Margin="4,10,5,0" />
+
+            <!-- Botón de refrescar -->
+            <Button x:Name="buttonRefrescar" Grid.Row="2" Grid.ColumnSpan="2" Content="Refrescar" 
+                    HorizontalAlignment="Left" VerticalAlignment="Top" 
+                    Width="100" Margin="50,74,0,0" Click="ClicBottonRefrescarEstadisticas" />
+        </Grid>
 
         <!-- Notificación Generalizada -->
         <Border x:Name="borderNotificacionGeneral" Background="Azure" CornerRadius="8" Padding="10"
@@ -105,7 +124,7 @@
 
                 <!-- Contenedor para los botones: se activan dependiendo del tipo de notificación -->
                 <StackPanel x:Name="botonesPanel" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button x:Name="btnUnirse" Content="Unirse" Click="ClicButtonUnirse" Width="80" Visibility="Collapsed"/>
+                    <Button x:Name="buttonUnirse" Content="Unirse" Click="ClicButtonUnirseInvitacion" Width="80" Visibility="Collapsed"/>
                 </StackPanel>
             </StackPanel>
         </Border>

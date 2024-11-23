@@ -19,6 +19,7 @@ namespace WpfCliente.GUI
         private DispatcherTimer timerNotificacion;
         private InvitacionPartida invitacionActual;
         private EstadisticaUsuario estadisticas;
+        private const int TIEMPO_MAXIMO_PARA_UNIRSE = 75;
         public MenuWindow()
         {
             InitializeComponent();
@@ -250,7 +251,7 @@ namespace WpfCliente.GUI
             this.Title = Properties.Idioma.tituloMenu;
         }
 
-        private void ClicImageAmigos(object sender, MouseButtonEventArgs e)
+        private void ClicImagenAmigos(object sender, MouseButtonEventArgs e)
         {
             AmigosWindow amigos = new AmigosWindow(this);
             amigos.Show();
@@ -259,11 +260,11 @@ namespace WpfCliente.GUI
         private void ConfigurarTemporizadorNotificacion()
         {
             timerNotificacion = new DispatcherTimer();
-            timerNotificacion.Interval = TimeSpan.FromMilliseconds(50); 
-            timerNotificacion.Tick += NotificacionTimer;
+            timerNotificacion.Interval = TimeSpan.FromMilliseconds(TIEMPO_MAXIMO_PARA_UNIRSE); 
+            timerNotificacion.Tick += ContadorNotificacion;
         }
 
-        private void MostrarNotificacionGeneral(string mensaje, bool esSolicitudAmistad = false, string imagenPath = "")
+        private void MostrarNotificacionGeneral(string mensaje, string imagenPath = "")
         {
             textBlockNotificacionGeneral.Text = mensaje;
 
@@ -271,17 +272,7 @@ namespace WpfCliente.GUI
             {
                 imagenPerfil.Source = new BitmapImage(new Uri(imagenPath));
             }
-
-            if (esSolicitudAmistad)
-            {
-
-                btnUnirse.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-
-                btnUnirse.Visibility = Visibility.Visible;
-            }
+            buttonUnirse.Visibility = Visibility.Visible;
 
             borderNotificacionGeneral.Visibility = Visibility.Visible;
             progressTimerGeneral.Value = 0;
@@ -291,8 +282,7 @@ namespace WpfCliente.GUI
         public void RecibirInvitacion(InvitacionPartida invitacion)
         {
             invitacionActual = invitacion;
-            MostrarNotificacionGeneral(Properties.Idioma.mensajeInvitacionPartida + invitacion.GamertagEmisor,
-                esSolicitudAmistad: false);
+            MostrarNotificacionGeneral(Properties.Idioma.mensajeInvitacionPartida + invitacion.GamertagEmisor);
         }
 
         private void OcultarNotificacion()
@@ -301,7 +291,7 @@ namespace WpfCliente.GUI
             timerNotificacion.Stop();
         }
 
-        private void NotificacionTimer(object sender, EventArgs e)
+        private void ContadorNotificacion(object sender, EventArgs e)
         {
             progressTimerGeneral.Value += INCREMENTO_PROGRESO_BARRA;
 
@@ -310,8 +300,7 @@ namespace WpfCliente.GUI
                 OcultarNotificacion();
             }
         }
-
-        private void ClicButtonUnirse(object sender, RoutedEventArgs e)
+        private void ClicButtonUnirseInvitacion(object sender, RoutedEventArgs e)
         {
             bool esInvitacion = true;
             UnirseASala(esInvitacion, invitacionActual.CodigoSala);

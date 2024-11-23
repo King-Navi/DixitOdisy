@@ -8,7 +8,6 @@ namespace WcfServicioLibreria.Modelo
         public bool Verificar(Partida partida)
         {
             bool resultado = false;
-            //TODO : hacer la logica para sbaer que pasa si las cartas se agutaron
             if (partida.CartasRestantes <= 0)
             {
                 resultado = true;

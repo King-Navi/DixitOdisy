@@ -5,19 +5,19 @@ namespace WpfCliente.Utilidad
 {
     public class ComandoRele<T> : ICommand
     {
-        private readonly Action<T> _executar;
-        private readonly Func<T, bool> _seEjecuta;
+        private readonly Action<T> executar;
+        private readonly Func<T, bool> seEjecuta;
         public event EventHandler CanExecuteChanged;
 
-        public ComandoRele(Action<T> execute, Func<T, bool> canExecute = null)
+        public ComandoRele(Action<T> _executar, Func<T, bool> sePuedeEjecutar = null)
         {
-            _executar = execute;
-            _seEjecuta = canExecute;
+            executar = _executar;
+            seEjecuta = sePuedeEjecutar;
         }
 
-        public bool CanExecute(object parameter) => _seEjecuta == null || _seEjecuta((T)parameter);
+        public bool CanExecute(object parametro) => seEjecuta == null || seEjecuta((T)parametro);
 
-        public void Execute(object parameter) => _executar((T)parameter);
+        public void Execute(object parametro) => executar((T)parametro);
 
         public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }

@@ -109,7 +109,7 @@
     <Compile Include="Modelo\Excepciones\BaseDatosFalla.cs" />
     <Compile Include="Modelo\Excepciones\PartidaFalla.cs" />
     <Compile Include="Modelo\Partida\CondicionVictoriaPorRondas.cs" />
-    <Compile Include="Modelo\Partida\CondicionVictoriaCartasAgotadas .cs" />
+    <Compile Include="Modelo\Partida\CondicionVictoriaCartasAgotadas.cs" />
     <Compile Include="Modelo\Partida\ConfiguracionPartida.cs" />
     <Compile Include="Modelo\Partida\EstadisticasPartida.cs" />
     <Compile Include="Modelo\Partida\JugadorEstadisticasBase.cs" />

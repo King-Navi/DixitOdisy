@@ -47,7 +47,7 @@ namespace WpfCliente.Utilidad
             return memoryStream;
         }
 
-        public static bool EsImagenValida(string rutaImagen, Window window)
+        public static bool EsImagenValida(string rutaImagen, Window ventana)
         {
             bool resultado = false;
             try
@@ -56,7 +56,7 @@ namespace WpfCliente.Utilidad
                 if (fileInfo.Length > 5 * 1024 * 1024)
                 {
                     VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloLimiteImagenSuperado,
-                        Properties.Idioma.mensajeLimiteImagenSuperado, window);
+                        Properties.Idioma.mensajeLimiteImagenSuperado, ventana);
                 }
                 else
                 {
@@ -74,26 +74,27 @@ namespace WpfCliente.Utilidad
             catch (FileNotFoundException)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
-                    Properties.Idioma.mensajeArchivoNoEncontrado, window);
+                    Properties.Idioma.mensajeArchivoNoEncontrado, ventana);
             }
             catch (UnauthorizedAccessException)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
-                    Properties.Idioma.mensajeAccesoDenegadoArchivo, window);
+                    Properties.Idioma.mensajeAccesoDenegadoArchivo, ventana);
             }
             catch (FileFormatException)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
-                    Properties.Idioma.mensajeArchivoInvalido, window);
+                    Properties.Idioma.mensajeArchivoInvalido, ventana);
             }
-            catch (Exception ex)
+            catch (Exception excepcion)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
-                    Properties.Idioma.mensajeErrorInesperado + ex.Message, window);
+                    Properties.Idioma.mensajeErrorInesperado + excepcion.Message, ventana);
             }
             return resultado;
         }
-        public static bool EsImagenValida(Stream image, Window window)
+
+        public static bool EsImagenValida(Stream imagen, Window ventana)
         {
             bool resultado = false;
             try
@@ -101,7 +102,7 @@ namespace WpfCliente.Utilidad
                 BitmapImage bitmap = new BitmapImage();
                 
                     bitmap.BeginInit();
-                    bitmap.StreamSource = image;
+                    bitmap.StreamSource = imagen;
                     bitmap.CacheOption = BitmapCacheOption.OnLoad;
                     bitmap.EndInit();
                 
@@ -110,22 +111,22 @@ namespace WpfCliente.Utilidad
             catch (FileNotFoundException)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
-                    Properties.Idioma.mensajeArchivoNoEncontrado, window);
+                    Properties.Idioma.mensajeArchivoNoEncontrado, ventana);
             }
             catch (UnauthorizedAccessException)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
-                    Properties.Idioma.mensajeAccesoDenegadoArchivo, window);
+                    Properties.Idioma.mensajeAccesoDenegadoArchivo, ventana);
             }
             catch (FileFormatException)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
-                    Properties.Idioma.mensajeArchivoInvalido, window);
+                    Properties.Idioma.mensajeArchivoInvalido, ventana);
             }
-            catch (Exception ex)
+            catch (Exception excepcion)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
-                    Properties.Idioma.mensajeErrorInesperado + ex.Message, window);
+                    Properties.Idioma.mensajeErrorInesperado + excepcion.Message, ventana);
             }
             return resultado;
         }

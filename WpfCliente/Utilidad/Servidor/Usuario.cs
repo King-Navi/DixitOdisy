@@ -4,7 +4,6 @@ namespace WpfCliente.ServidorDescribelo
 {
     public partial class Usuario
     {
-        private BitmapImage _bitmapImagen;
         public BitmapImage BitmapImagen
         {
             get

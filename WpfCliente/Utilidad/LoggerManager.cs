@@ -5,7 +5,12 @@ namespace WpfCliente.Utilidad
 {
     public static class LoggerManager
     {
-        private static ILogger _logger;
+        private const string FORMATO_FECHA = "dd-MM-yyyy";
+        private const string NOMBRE_LOG = "Log";
+        private const string SEPARADOR_NOMBRE_FECHA = "_";
+        private const string EXTENSION_LOG = ".txt";
+        private const string RUTA_RELATIVA_LOGS = "../../Logs\\";
+        private static ILogger logger;
 
         private static void ConfigurarLogger(string logFilePath)
         {
@@ -15,34 +20,28 @@ namespace WpfCliente.Utilidad
                 .CreateLogger();
         }
 
-        private static string BuildLogFilePath()
+        private static string ContruirRutaArchivo()
         {
-            string dateFormat = "dd-MM-yyyy";
-            string idFileName = "Log";
-            string characterSeparation = "_";
-            string fileExtension = ".txt";
-            string relativeLogFilePath = "../../Logs\\";
+            DateTime fechaActual = DateTime.Today;
+            string fecha = fechaActual.ToString(FORMATO_FECHA);
 
-            DateTime currentDate = DateTime.Today;
-            string date = currentDate.ToString(dateFormat);
+            string archivoLoggerNombre = NOMBRE_LOG + SEPARADOR_NOMBRE_FECHA + fecha + EXTENSION_LOG;
+            string rutaAbsolutaArchivo = Utilidades.ConstruirRutaAbsoluta(RUTA_RELATIVA_LOGS);
+            string rutaLogger = rutaAbsolutaArchivo + archivoLoggerNombre;
 
-            string logFileName = idFileName + characterSeparation + date + fileExtension;
-            string absoluteLogFilePath = Utilidades.ConstruirRutaAbsoluta(relativeLogFilePath);
-            string logPath = absoluteLogFilePath + logFileName;
-
-            return logPath;
+            return rutaLogger;
         }
 
-        public static ILogger GetLogger()
+        public static ILogger ObtenerLogger()
         {
-            if (_logger == null)
+            if (logger == null)
             {
-                string logPath = BuildLogFilePath();
-                ConfigurarLogger(logPath);
+                string rutaLogger = ContruirRutaArchivo();
+                ConfigurarLogger(rutaLogger);
             }
 
-            _logger = Log.Logger;
-            return _logger;
+            logger = Log.Logger;
+            return logger;
         }
 
     }

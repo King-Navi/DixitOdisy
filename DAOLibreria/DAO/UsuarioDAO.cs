@@ -205,11 +205,9 @@ namespace DAOLibreria.DAO
                 }
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
-                //TODO manejar excepcion
             }
-           
             return usuario;
         }
 

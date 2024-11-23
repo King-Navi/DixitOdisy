@@ -5,7 +5,6 @@ namespace WpfCliente.ServidorDescribelo
 {
     public partial class ImagenCarta
     {
-        private BitmapImage _bitmapImagen;
         public BitmapImage BitmapImagen
         {
             get

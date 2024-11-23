@@ -37,6 +37,7 @@ namespace WpfCliente.Utilidad
             }
             return resultado;
         }
+
         public static Task<bool> AbrirConexionSalaJugadorCallbackAsync(IServicioSalaJugadorCallback callback)
         {
             SalaJugador = null;
@@ -59,6 +60,7 @@ namespace WpfCliente.Utilidad
             }
             return resultado;
         }
+
         public static Task<bool> AbrirConexionChatMotorCallbackAsync(IServicioChatMotorCallback callback)
         {
             ChatMotor = null;
@@ -81,6 +83,7 @@ namespace WpfCliente.Utilidad
             }
             return resultado;
         }
+
         public static Task<bool> AbrirConexionAmigosCallbackAsync(IServicioAmistadCallback callback)
         {
             Amigos = null;
@@ -103,6 +106,7 @@ namespace WpfCliente.Utilidad
             }
             return resultado;
         }
+
         public static Task<bool> AbrirConexionPartidaCallbackAsync(IServicioPartidaSesionCallback callback)
         {
             Partida = null;
@@ -148,6 +152,7 @@ namespace WpfCliente.Utilidad
             }
             return resultado;
         }
+
         public static bool CerrarUsuarioSesion()
         {
             try
@@ -166,6 +171,7 @@ namespace WpfCliente.Utilidad
             }
             return true;
         } 
+      
         public static bool CerrarSalaJugador()
         {
             try
@@ -184,6 +190,7 @@ namespace WpfCliente.Utilidad
             }
             return true;
         } 
+    
         public static bool CerrarChatMotor()
         {
             try
@@ -201,7 +208,9 @@ namespace WpfCliente.Utilidad
                 return false;
             }
             return true;
-        } public static bool CerrarAmigos()
+        } 
+        
+        public static bool CerrarAmigos()
         {
             try
             {
@@ -219,6 +228,7 @@ namespace WpfCliente.Utilidad
             }
             return true;
         }
+      
         public static bool CerrarConexionesSalaConChat()
         {
             try
@@ -241,6 +251,7 @@ namespace WpfCliente.Utilidad
             }
             return true;
         }
+      
         public static bool CerrarConexionesPartida()
         {
             try
@@ -284,6 +295,7 @@ namespace WpfCliente.Utilidad
             }
             return true;
         }
+    
         private static async Task<bool> HacerPing()
         {
             bool resultado = false;
@@ -306,12 +318,7 @@ namespace WpfCliente.Utilidad
             }
             return resultado;
         }
-        /// <summary>
-        /// Espera la funcion si no hay conexion el se encargara de cerrar la ventana con .Close()
-        /// </summary>
-        /// <param name="habilitarAcciones"></param>
-        /// <param name="ventana"></param>
-        /// <returns></returns>
+
         public static async Task<bool> VerificarConexion(Action<bool> habilitarAcciones, Window ventana)
         {
             habilitarAcciones(false);
@@ -339,6 +346,7 @@ namespace WpfCliente.Utilidad
             DeshabilitarVentana(ventana, true);
             return true;
         }
+      
         private static void DeshabilitarVentana(Window ventana, bool estado)
         {
             if (ventana != null)
@@ -346,7 +354,6 @@ namespace WpfCliente.Utilidad
                 ventana.IsEnabled = estado;
             }
         }
-
 
         private static async Task<bool> HacerPingBD()
         {

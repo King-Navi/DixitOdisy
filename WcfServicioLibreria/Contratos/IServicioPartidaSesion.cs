@@ -9,7 +9,7 @@ namespace WcfServicioLibreria.Contratos
     public interface IServicioPartidaSesion
     {
         [OperationContract(IsOneWay = true)]
-        Task UnirsePartida(string gamertag, string idPartida);
+        Task UnirsePartida(string nombreUsuario, string idPartida);
         [OperationContract(IsOneWay = true)]
         void ConfirmarMovimiento(string nombreJugador, string idPartida , string claveImagen, string pista = null);
         [OperationContract]

@@ -6,11 +6,11 @@ namespace WpfCliente.Utilidad
 {
     public class Correo
     {
-        public static bool VerificarCorreo(string correo, Window window)
+        public static bool VerificarCorreo(string correo, Window ventana)
         {
             var manejadorServicio = new ServicioManejador<ServicioCorreoClient>();
-            var resultado = manejadorServicio.EjecutarServicio(proxy => {
-                return proxy.VerificarCorreo(new Usuario()
+            var resultado = manejadorServicio.EjecutarServicio(servicio => {
+                return servicio.VerificarCorreo(new Usuario()
                 {
                     ContraseniaHASH = null,
                     Correo = correo,
@@ -20,10 +20,10 @@ namespace WpfCliente.Utilidad
             });
             if (resultado)
             {
-                string codigoIngresado = AbrirVentanaModal(window);
-                return manejadorServicio.EjecutarServicio(proxy =>
+                string codigoIngresado = AbrirVentanaModal(ventana);
+                return manejadorServicio.EjecutarServicio(servicio =>
                 {
-                    return proxy.VerificarCodigo(codigoIngresado);
+                    return servicio.VerificarCodigo(codigoIngresado);
                 });
             }
             else
@@ -32,11 +32,11 @@ namespace WpfCliente.Utilidad
             }
         }
 
-        private static string AbrirVentanaModal(Window window)
+        private static string AbrirVentanaModal(Window ventana)
         {
             string valorObtenido = null;
             VerificarCorreoModalWindow ventanaModal = new VerificarCorreoModalWindow();
-            ventanaModal.Owner = window;
+            ventanaModal.Owner = ventana;
             bool? resultado = ventanaModal.ShowDialog();
 
             if (resultado == true)
@@ -47,15 +47,15 @@ namespace WpfCliente.Utilidad
             return valorObtenido;
         }
 
-        public static bool VerificarCorreoConGamertag(string correo, string gamertag)
+        public static bool VerificarCorreoConGamertag(string correo, string nombreUsaurio)
         {
             var manejadorServicio = new ServicioManejador<ServicioCorreoClient>();
-            var resultado = manejadorServicio.EjecutarServicio(proxy => {
-                return proxy.VerificarCorreoConGamertag(new Usuario()
+            var resultado = manejadorServicio.EjecutarServicio(servicio => {
+                return servicio.VerificarCorreoConGamertag(new Usuario()
                 {
                     ContraseniaHASH = null,
                     Correo = correo.ToLower(),
-                    Nombre = gamertag,
+                    Nombre = nombreUsaurio,
                     FotoUsuario = null
                 });
             });

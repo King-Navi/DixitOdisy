@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using WpfCliente.GUI;
 
@@ -8,6 +9,10 @@ namespace WpfCliente.Utilidad
     {
         public static void CrearVentanaEmergente(string tituloVentanaEmergente, string descripcionVentanaEmergente, Window window)
         {
+            if (window == null)
+            {
+                return;
+            }
             VentanaEmergenteModalWindow ventanaEmergente = new VentanaEmergenteModalWindow
             (
                 tituloVentanaEmergente,
@@ -18,15 +23,28 @@ namespace WpfCliente.Utilidad
 
         public static void CrearVentanaEmergente(string tituloVentanaEmergente, string descripcionVentanaEmergente, UserControl userControl)
         {
+            if (userControl == null)
+            {
+                return;
+            }
             VentanaEmergenteModalWindow ventanaEmergente = new VentanaEmergenteModalWindow(
                 tituloVentanaEmergente,
                 descripcionVentanaEmergente
             );
-            ventanaEmergente.Owner = Window.GetWindow(userControl);
+            var ownerWindow = Window.GetWindow(userControl);
+            if (ownerWindow != null)
+            {
+                ventanaEmergente.Owner = ownerWindow;
+            }
+
             ventanaEmergente.ShowDialog();
         }
         public static void CrearVentanaEmergenteConCierre(string tituloVentanaEmergente, string descripcionVentanaEmergente, Window window)
         {
+            if (window == null)
+            {
+                return;
+            }
             VentanaEmergenteModalWindow ventanaEmergente = new VentanaEmergenteModalWindow(
                 tituloVentanaEmergente,
                 descripcionVentanaEmergente

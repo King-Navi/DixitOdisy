@@ -55,12 +55,7 @@ namespace DAOLibreria.DAO
                 {
                     var estadistica = context.Estadisticas.SingleOrDefault(fila => fila.idEstadisticas == idEstadisticas);
 
-                    if (estadistica == null)
-                    {
-                        throw new ArgumentException();
-                    }
-
-                    return estadistica;
+                    return estadistica == null ? throw new ArgumentException() : estadistica;
                 }
             }
             catch (Exception)
@@ -97,12 +92,7 @@ namespace DAOLibreria.DAO
                 {
                     var usuario = context.Estadisticas.SingleOrDefault(fila => fila.idUsuario == idUsuario);
 
-                    if (usuario == null)
-                    {
-                        throw new ArgumentException();
-                    }
-
-                    return usuario.idUsuario;
+                    return usuario == null ? throw new ArgumentException() : usuario.idUsuario;
                 }
             }
             catch (Exception)

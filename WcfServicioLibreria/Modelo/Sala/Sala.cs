@@ -198,9 +198,7 @@ namespace WcfServicioLibreria.Modelo
                     {
                         Nombre = informacionUsuario.gamertag,
                         FotoUsuario = new MemoryStream(informacionUsuario.fotoPerfil)
-                        //TODO: Si se necesita algo mas del jugador nuevo colocar aqui
                     };
-                    // Enviar la lista completa de jugadores al nuevo jugador
                     if (jugadoresSalaCallbacks.TryGetValue(nombreJugador, out ISalaJugadorCallback nuevoCallback))
                     {
                         foreach (var jugadorExistente in jugadoresInformacion.Values)
@@ -214,7 +212,6 @@ namespace WcfServicioLibreria.Modelo
                             nuevoCallback.ObtenerJugadorSalaCallback(jugador);
                         }
                     }
-                    // Enviar la información del nuevo jugador a los jugadores existentes
                     foreach (var jugadorConectado in ObtenerNombresJugadoresSala())
                     {
                         if (jugadoresSalaCallbacks.TryGetValue(jugadorConectado, out ISalaJugadorCallback callback))
@@ -270,8 +267,6 @@ namespace WcfServicioLibreria.Modelo
         /// <param name="idPartida"></param>
         internal bool AvisarComienzoPatida(string nombreSolicitante, string idPartida)
         {
-            bool resultado = false;
-            //El anfitrion debe ir al final por la condicion de carrera
             if (nombreSolicitante.Equals(Anfitrion, StringComparison.OrdinalIgnoreCase))
             {
 
@@ -281,8 +276,6 @@ namespace WcfServicioLibreria.Modelo
                     {
                         if (!nombre.Equals(Anfitrion, StringComparison.OrdinalIgnoreCase))
                         {
-                            //TODO: Al llamar al callback se salen de la sala lo que provoca que el observador llame a Desconectar()
-                            //Y ocurra una null reference aqui
                             jugadoresSalaCallbacks.TryGetValue(nombre, out ISalaJugadorCallback callback);
                             try
                             {
@@ -294,16 +287,6 @@ namespace WcfServicioLibreria.Modelo
                             }
                         }
                     }
-
-                    //try
-                    //{
-                    //    jugadoresSalaCallbacks.TryGetValue(anfitrion, out ISalaJugadorCallback callback);
-                    //    callback.EmpezarPartidaCallBack(idPartida);
-                    //}
-                    //catch (Exception)
-                    //{
-                    //}
-
                     return true;
                 }
                 catch (Exception)

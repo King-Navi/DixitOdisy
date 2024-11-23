@@ -6,9 +6,9 @@ namespace WcfServicioLibreria.Modelo
     internal class CondicionVictoriaPorRondas : ICondicionVictoria
     {
         private int NumeroRondasParaFinalizar;
-        public CondicionVictoriaPorRondas(int numRondas) 
+        public CondicionVictoriaPorRondas(int numeroRondas) 
         {
-            NumeroRondasParaFinalizar = numRondas;
+            NumeroRondasParaFinalizar = numeroRondas;
         }
         public bool Verificar(Partida partida)
         {

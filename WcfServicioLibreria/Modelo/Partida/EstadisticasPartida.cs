@@ -45,16 +45,12 @@ namespace WcfServicioLibreria.Modelo
         }
         public void CalcularPodio()
         {
-            // Ordenar los jugadores por puntos de forma descendente
             var jugadoresOrdenados = Jugadores.OrderByDescending(jugador => jugador.Puntos).ToList();
 
-            // Asignar primer lugar si hay al menos un jugador
             PrimerLugar = jugadoresOrdenados.FirstOrDefault();
 
-            // Encontrar y asignar el segundo lugar (distinto del primer lugar en caso de empate)
             SegundoLugar = jugadoresOrdenados.Skip(1).FirstOrDefault(jugador => jugador.Puntos != PrimerLugar?.Puntos);
 
-            // Encontrar y asignar el tercer lugar (distinto del primer y segundo lugar en caso de empate)
             TercerLugar = jugadoresOrdenados.Skip(2).FirstOrDefault(jugador =>
                 jugador.Puntos != PrimerLugar?.Puntos && jugador.Puntos != SegundoLugar?.Puntos);
         }

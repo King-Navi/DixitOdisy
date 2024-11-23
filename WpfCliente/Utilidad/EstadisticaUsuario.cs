@@ -14,8 +14,8 @@ namespace WpfCliente.Utilidad
         public void SolicitarEstadisiticas(int idUsuario)
         {
             var manejadorServicio = new ServicioManejador<ServicioEstadisticasClient>();
-            var resutlado = manejadorServicio.EjecutarServicio(proxy =>
-                proxy.ObtenerEstadisitca(idUsuario
+            var resutlado = manejadorServicio.EjecutarServicio(servicio =>
+                servicio.ObtenerEstadisitca(idUsuario
            ));
             if (resutlado != null)
             {

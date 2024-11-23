@@ -152,8 +152,8 @@
     <Compile Include="GUI\MenuWindow.xaml.cs">
       <DependentUpon>MenuWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\MostrarCartaModelWindow.xaml.cs">
-      <DependentUpon>MostrarCartaModelWindow.xaml</DependentUpon>
+    <Compile Include="GUI\MostrarCartaModalWindow.xaml.cs">
+      <DependentUpon>MostrarCartaModalWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\NarradorSeleccionCartaUserControl.xaml.cs">
       <DependentUpon>NarradorSeleccionCartaUserControl.xaml</DependentUpon>
@@ -169,6 +169,11 @@
     </Compile>
     <Compile Include="GUI\UsuarioUserControl.xaml.cs">
       <DependentUpon>UsuarioUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Idioma.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Idioma.resx</DependentUpon>
     </Compile>
     <Compile Include="Utilidad\RecursosCompartidosPartida.cs" />
     <Compile Include="GUI\RegistrarUsuarioWindow.xaml.cs">
@@ -201,18 +206,13 @@
     <Compile Include="Interfaz\IHabilitadorBotones.cs" />
     <Compile Include="Utilidad\ComandoRele.cs" />
     <Compile Include="Utilidad\Correo.cs" />
-    <Compile Include="Utilidad\EstaditicaUsuario.cs" />
+    <Compile Include="Utilidad\EstadisticaUsuario.cs" />
     <Compile Include="Utilidad\Servidor\ChatMensaje.cs" />
     <Compile Include="Utilidad\Conexion.cs" />
     <Compile Include="Utilidad\CambiarIdioma.cs" />
     <Compile Include="Interfaz\IActualizacionUI.cs" />
     <Compile Include="Utilidad\Encriptacion.cs" />
     <Compile Include="Utilidad\IdiomaGuardo.cs" />
-    <Compile Include="Properties\Idioma.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Idioma.resx</DependentUpon>
-    </Compile>
     <Compile Include="GUI\CambiarIdiomaUserControl.xaml.cs">
       <DependentUpon>CambiarIdiomaUserControl.xaml</DependentUpon>
     </Compile>
@@ -378,7 +378,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\MostrarCartaModelWindow.xaml">
+    <Page Include="GUI\MostrarCartaModalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

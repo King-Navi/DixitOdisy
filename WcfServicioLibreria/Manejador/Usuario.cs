@@ -1,7 +1,9 @@
-﻿using DAOLibreria.DAO;
+﻿using DAOLibreria;
+using DAOLibreria.DAO;
 using DAOLibreria.ModeloBD;
 using System;
 using System.IO;
+using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
@@ -95,27 +97,11 @@ namespace WcfServicioLibreria.Manejador
                     HashContrasenia = usuarioEditado.ContraseniaHASH ?? null,
                 };
                 bool consulta = DAOLibreria.DAO.UsuarioDAO.EditarUsuario(usuarioPerfilDTO);
-                if (consulta)
-                {
-                    //TOOD: Si en memoria cargamso anteriormente valores del usuario cambiarlos por los nuevo
-                    //en teoria bo deberiamos cargar esos datos.
-                    //jugadoresConectadosDiccionario.TryGetValue(usuarioEditado.IdUsuario, out UsuarioContexto usuario );
+                resultado = true;
 
-                    //if (usuarioEditado.Correo != null)
-                    //    ((Modelo.Usuario)usuario).Correo = usuarioEditado.Correo;
-
-                    //if (usuarioEditado.FotoPerfil != null)
-                    //    ((Modelo.Usuario)usuario).fo = usuarioEditado.FotoPerfil;
-
-                    //if (usuarioEditado.HashContrasenia != null)
-                    //    ((Modelo.Usuario)usuario).ContraseniaHASH = usuarioEditado.HashContrasenia;
-
-                    resultado = true;
-                }
             }
-            catch (CommunicationException excepcion)
+            catch (Exception) 
             {
-                //TODO:manejar error
             }
             return resultado;
         }
@@ -145,12 +131,12 @@ namespace WcfServicioLibreria.Manejador
                     }
 
                     usuario.Nombre = usuarioConsulta.NombreUsuario;
-                    usuario.Correo =usuarioConsulta.Correo; 
+                    usuario.Correo = usuarioConsulta.Correo;
                     usuario.ContraseniaHASH = usuarioConsulta.HashContrasenia;
                     usuario.IdUsuario = usuarioConsulta.IdUsuario;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
 
@@ -165,12 +151,30 @@ namespace WcfServicioLibreria.Manejador
         public bool YaIniciadoSesion(string nombreUsuario)
         {
             DAOLibreria.ModeloBD.Usuario usuario = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorNombre(nombreUsuario);
-            if ( usuario == null)
+            if (usuario == null)
             {
                 return false;
             }
             return jugadoresConectadosDiccionario.ContainsKey(usuario.idUsuario);
         }
+
+        public void JugadoresConectado()
+        {
+            foreach (UsuarioContexto jugador in jugadoresConectadosDiccionario.Values)
+            {
+                try
+                {
+                    Modelo.Usuario usuarioActual = jugador as Modelo.Usuario;
+                    Console.WriteLine(usuarioActual.Nombre);
+
+                }
+                catch (Exception)
+                {
+                }
+            }
+        }
+
+        
 
     }
 }

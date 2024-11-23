@@ -10,9 +10,8 @@ namespace WcfServidor
     {
         static void Main(string[] args)
         {
-            Dictionary<string, Object> respuesta = InicializadorConfiguracion.IniciarConexion();
-            respuesta.TryGetValue(Llaves.LLAVE_MENSAJE, out object valor);
-            Console.WriteLine((string)valor);
+            var respuesta = InicializadorConfiguracion.IniciarConexion();
+            Console.WriteLine(respuesta.ToString());
             Program programa = new Program();
             programa.IniciarServidor();
         }
@@ -23,12 +22,12 @@ namespace WcfServidor
             using (ServiceHost host = new DescribeloServiceHost(manejadorPrincipal, typeof(WcfServicioLibreria.Manejador.ManejadorPrincipal)))
             {
                 host.Open();
-                Console.WriteLine("Servidor corriendo. Presiona una tecla para mostrar el menú...");
-                Menu();
+                Console.WriteLine("Servidor corriendo. Presiona una 9 para mostrar el atraparlo...");
+                Menu(manejadorPrincipal);
                 host.Close(); 
             }
         }
-        private void Menu()
+        private void Menu(ManejadorPrincipal manejadorPrincipal)
         {
             bool condicionSalida = true;
 
@@ -41,7 +40,7 @@ namespace WcfServidor
                 switch (respuesta)
                 {
                     case "1":
-                        
+                        manejadorPrincipal.JugadoresConectado();
                         break;
                     case "9":
                         condicionSalida = false;

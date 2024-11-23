@@ -31,6 +31,10 @@ namespace DAOLibreria.DAO
             {
                 return resultado;
             }
+            if (_usuario.gamertag.ToLower().Contains("guest"))
+            {
+                return resultado;
+            }
             try
             {
                 using (var context = new DescribeloEntities())
@@ -91,6 +95,10 @@ namespace DAOLibreria.DAO
             if (usuarioEditado == null
                 || usuarioEditado.IdUsuario <= 0
                 || usuarioEditado.NombreUsuario == null)
+            {
+                return resultado;
+            }
+            if (usuarioEditado.NombreUsuario.ToLower().Contains("guest"))
             {
                 return resultado;
             }

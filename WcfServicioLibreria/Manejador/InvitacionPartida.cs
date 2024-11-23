@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
 
@@ -10,35 +11,30 @@ namespace WcfServicioLibreria.Manejador
         {
             try
             {
-                foreach (var jugador in jugadoresConectadosDiccionario.Values)
+                var jugador = jugadoresConectadosDiccionario.Values
+                    .OfType<Usuario>()
+                    .FirstOrDefault(busqueda => busqueda.Nombre.Equals(gamertagReceptor, StringComparison.OrdinalIgnoreCase));
+
+                if (jugador == null)
                 {
-                    if (jugador.Nombre.Equals(gamertagReceptor, StringComparison.OrdinalIgnoreCase))
-                    {
-                        var callback = jugador.InvitacionPartidaCallBack as IInvitacionPartidaCallback;
-
-                        if (callback != null)
-                        {
-                            InvitacionPartida invitacion = new InvitacionPartida(gamertagEmisor, codigoSala, gamertagReceptor);
-                            callback.RecibirInvitacion(invitacion);
-                            Console.WriteLine($"Invitación enviada a {gamertagReceptor} para unirse a la sala {codigoSala}");
-                            return true;
-                        }
-                        else
-                        {
-                            Console.Error.WriteLine("El callback del receptor no es válido.");
-                            return false;
-                        }
-                    }
+                    Console.Error.WriteLine("El usuario receptor no está conectado.");
+                    return false;
                 }
-
+                if (jugador.InvitacionPartidaCallBack is IInvitacionPartidaCallback callback)
+                {
+                    InvitacionPartida invitacion = new InvitacionPartida(gamertagEmisor, codigoSala, gamertagReceptor);
+                    callback?.RecibirInvitacion(invitacion);
+                    Console.WriteLine($"Invitación enviada a {gamertagReceptor} para unirse a la sala {codigoSala}");
+                    return true;
+                }
                 Console.Error.WriteLine("El usuario receptor no está conectado.");
-                return false;
             }
             catch (Exception ex)
             {
                 Console.Error.WriteLine($"Error al enviar invitación: {ex.Message}");
-                return false;
             }
+            return false;
+
         }
 
         public void AbrirCanalParaInvitaciones(Usuario usuarioRemitente)
@@ -65,7 +61,6 @@ namespace WcfServicioLibreria.Manejador
                     }
                 }
                 Console.Error.WriteLine($"Error al abrir canal de invitaciones para {usuarioRemitente.Nombre}: {ex.Message}");
-                throw;
             }
         }
     }

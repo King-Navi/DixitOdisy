@@ -84,6 +84,7 @@
     <Compile Include="DAO\EstadisticasDAO.cs" />
     <Compile Include="DAO\PeticionAmistadDAO.cs" />
     <Compile Include="DAO\UsuarioDAO.cs" />
+    <Compile Include="EliminadorCadena.cs" />
     <Compile Include="Excepciones\ActividadSospechosaExcepcion.cs" />
     <Compile Include="Excepciones\GamertagDuplicadoExcepcion.cs" />
     <Compile Include="Excepciones\PropiedadesNulasExcepcion.cs" />

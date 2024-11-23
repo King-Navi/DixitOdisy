@@ -42,7 +42,6 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (Exception excepcion)
             {
-                //TODO: Manejar el error
                 Console.WriteLine(excepcion);
                 Console.WriteLine(excepcion.StackTrace);
             }

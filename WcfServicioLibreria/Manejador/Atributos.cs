@@ -1,4 +1,5 @@
 ﻿using ChatGPTLibreria;
+using DAOLibreria;
 using System;
 using System.Collections.Concurrent;
 using System.ServiceModel;
@@ -80,6 +81,8 @@ namespace WcfServicioLibreria.Manejador
         {
             Console.WriteLine("Guardando las ultimas imagenes...");
             Task.Run(async()=> await Escritor.DetenerAsync());
+            EliminadorCadena.EliminarConnectionStringDelArchivo();
+            
         }
         #endregion
         #region PartidaSesion

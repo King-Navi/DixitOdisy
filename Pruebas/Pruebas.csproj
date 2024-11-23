@@ -89,12 +89,8 @@
     <Compile Include="Servidor\Utilidades\PartidaCallbackImpl.cs" />
     <Compile Include="Servidor\Utilidades\SalaCallbackImpl.cs" />
     <Compile Include="Servidor\Utilidades\UsuarioSessionCallbackImpl.cs" />
-    <Compile Include="Cliente\Utilidades\Conexion.cs" />
-    <Compile Include="Cliente\Utilidades\ServicioManejador.cs" />
-    <Compile Include="Cliente\Utilidades\Utilidad.cs" />
     <Compile Include="Servidor\ServicioObtenerSesion.cs" />
     <Compile Include="Servidor\ServicioRegistro.cs" />
-    <Compile Include="Cliente\ValidarContraseniaPruebas.cs" />
     <Compile Include="DAO\UsuarioDAO_Prueba.cs" />
     <Compile Include="DAO\Utilidades\Utilidad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -115,7 +111,9 @@
       <Name>WcfServicioLibreria</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Cliente\" />
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

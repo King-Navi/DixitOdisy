@@ -2,22 +2,20 @@
 
 namespace WpfCliente.Utilidad
 {
-    public class EstaditicaUsuario
+    public class EstadisticaUsuario
     {
-        public static Estadistica Estadistica { get; set; }
+        public Estadistica Estadistica { get; set; }
 
-        public EstaditicaUsuario() { }
-
-        public EstaditicaUsuario(int idEstaidisca)
+        public EstadisticaUsuario(int idUsuario)
         {
-            SolicitarEstadisiticas(idEstaidisca);
+            SolicitarEstadisiticas(idUsuario);
         }
 
-        public void SolicitarEstadisiticas(int idEstadisca)
+        public void SolicitarEstadisiticas(int idUsuario)
         {
             var manejadorServicio = new ServicioManejador<ServicioEstadisticasClient>();
             var resutlado = manejadorServicio.EjecutarServicio(proxy =>
-                proxy.ObtenerEstadisitca(idEstadisca
+                proxy.ObtenerEstadisitca(idUsuario
            ));
             if (resutlado != null)
             {

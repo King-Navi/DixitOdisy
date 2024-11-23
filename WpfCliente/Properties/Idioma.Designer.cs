@@ -295,6 +295,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Refrescar.
+        /// </summary>
+        public static string buttonRefrescar {
+            get {
+                return ResourceManager.GetString("buttonRefrescar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registrarse.
         /// </summary>
         public static string buttonRegistrarse {
@@ -475,6 +484,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Estadísticas del Jugador.
+        /// </summary>
+        public static string labelEstadisticajugador {
+            get {
+                return ResourceManager.GetString("labelEstadisticajugador", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ingrese el código que le enviamos a su correo.
         /// </summary>
         public static string labelIngresarCodigoCorreo {
@@ -520,7 +538,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Escoge una carta y coloca una pista, ¡Que no sea muy sencilla o perderas!.
+        ///   Looks up a localized string similar to Escoge una carta y coloca una pista, ¡Que no sea muy sencilla o perderas!.
         /// </summary>
         public static string labelInstruccionNarrador {
             get {
@@ -529,7 +547,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a ¡Escoge la carta correcta en base a la pista!.
+        ///   Looks up a localized string similar to ¡Escoge la carta correcta en base a la pista!.
         /// </summary>
         public static string labelInstruccionPista {
             get {
@@ -538,7 +556,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a En base a la pista escoge una carta, ¡Confunde a tus contrincantes!.
+        ///   Looks up a localized string similar to En base a la pista escoge una carta, ¡Confunde a tus contrincantes!.
         /// </summary>
         public static string labelInstruccionPistaConfundir {
             get {
@@ -547,7 +565,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Inválido.
+        ///   Looks up a localized string similar to Inválido.
         /// </summary>
         public static string labelInvalido {
             get {
@@ -574,7 +592,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a ¡Eres el narrador!.
+        ///   Looks up a localized string similar to ¡Eres el narrador!.
         /// </summary>
         public static string labelNarrador {
             get {
@@ -583,7 +601,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a No hay primer lugar.
+        ///   Looks up a localized string similar to No hay primer lugar.
         /// </summary>
         public static string labelNoHayPrimerLugar {
             get {
@@ -592,7 +610,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a No hay segundo lugar.
+        ///   Looks up a localized string similar to No hay segundo lugar.
         /// </summary>
         public static string labelNoHaySegundoLugar {
             get {
@@ -610,7 +628,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a No hay tercer lugar.
+        ///   Looks up a localized string similar to No hay tercer lugar.
         /// </summary>
         public static string labelNoHayTercerLugar {
             get {
@@ -619,7 +637,16 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Nueva contraseña.
+        ///   Looks up a localized string similar to Nombre.
+        /// </summary>
+        public static string labelNombre {
+            get {
+                return ResourceManager.GetString("labelNombre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nueva contraseña.
         /// </summary>
         public static string labelNuevaContrasenia {
             get {
@@ -646,7 +673,25 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a La pista es .
+        ///   Looks up a localized string similar to Partidas ganadas.
+        /// </summary>
+        public static string labelPartidasGanadas {
+            get {
+                return ResourceManager.GetString("labelPartidasGanadas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partidas Jugadas.
+        /// </summary>
+        public static string labelPartidasJugadas {
+            get {
+                return ResourceManager.GetString("labelPartidasJugadas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La pista es .
         /// </summary>
         public static string labelPista {
             get {
@@ -736,7 +781,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Acceso denegado al archivo.
+        ///   Looks up a localized string similar to Acceso denegado al archivo.
         /// </summary>
         public static string mensajeAccesoDenegadoArchivo {
             get {
@@ -745,7 +790,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a La pista no puede estar en blanco o contener espacios.
+        ///   Looks up a localized string similar to La pista no puede estar en blanco o contener espacios.
         /// </summary>
         public static string mensajeAdvertenciaPista {
             get {
@@ -754,7 +799,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El archivo no es una imagen válida..
+        ///   Looks up a localized string similar to El archivo no es una imagen válida..
         /// </summary>
         public static string mensajeArchivoInvalido {
             get {
@@ -763,7 +808,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Archivo no encontrado.
+        ///   Looks up a localized string similar to Archivo no encontrado.
         /// </summary>
         public static string mensajeArchivoNoEncontrado {
             get {
@@ -772,7 +817,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Cambios aplicados con éxito.
+        ///   Looks up a localized string similar to Cambios aplicados con éxito.
         /// </summary>
         public static string mensajeCambiosAplicadosExito {
             get {
@@ -979,7 +1024,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a La imagen no puede pesar mas de 5MB profe, favor de escoger otra imagen.
+        ///   Looks up a localized string similar to La imagen no puede pesar mas de 5MB profe, favor de escoger otra imagen.
         /// </summary>
         public static string mensajeLimiteImagenSuperado {
             get {
@@ -988,7 +1033,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Lobby no disponible.
+        ///   Looks up a localized string similar to Lobby no disponible.
         /// </summary>
         public static string mensajeLobbyNoDisponible {
             get {
@@ -1123,7 +1168,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Ya se ha usado ese gamertag, busca otro gamertag.
+        ///   Looks up a localized string similar to Ya se ha usado ese gamertag, busca otro gamertag.
         /// </summary>
         public static string mensajeUsuarioYaExiste {
             get {
@@ -1132,7 +1177,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Editar perfil.
+        ///   Looks up a localized string similar to Editar perfil.
         /// </summary>
         public static string menuItemEditarperfil {
             get {
@@ -1303,7 +1348,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Unirse a sala.
+        ///   Looks up a localized string similar to Unirse a sala.
         /// </summary>
         public static string tituloIngresarCodigoSala {
             get {
@@ -1348,7 +1393,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Limite de MB superado.
+        ///   Looks up a localized string similar to Limite de MB superado.
         /// </summary>
         public static string tituloLimiteImagenSuperado {
             get {
@@ -1357,7 +1402,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Lobby no encontrado.
+        ///   Looks up a localized string similar to Lobby no encontrado.
         /// </summary>
         public static string tituloLobbyNoEncontrado {
             get {
@@ -1366,7 +1411,16 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Mostrar carta.
+        ///   Looks up a localized string similar to Menu.
+        /// </summary>
+        public static string tituloMenu {
+            get {
+                return ResourceManager.GetString("tituloMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mostrar carta.
         /// </summary>
         public static string tituloMostrarCarta {
             get {
@@ -1375,7 +1429,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Recuperar contraseña.
+        ///   Looks up a localized string similar to Recuperar contraseña.
         /// </summary>
         public static string tituloRecuperarContrasenia {
             get {
@@ -1438,7 +1492,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El usuario ya existe.
+        ///   Looks up a localized string similar to El usuario ya existe.
         /// </summary>
         public static string tituloUsuarioExiste {
             get {
@@ -1447,7 +1501,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Ventana emergente.
+        ///   Looks up a localized string similar to Ventana emergente.
         /// </summary>
         public static string tituloVentanaEmergente {
             get {

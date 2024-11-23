@@ -69,6 +69,7 @@ namespace DAOLibreria.DAO
             return null;
         }
 
+        //Pregunar al profe: metodo con alta complejidad ciclomatica
         private static Action<Estadisticas> ObtenerAccion(EstadisticasAcciones accion)
         {
             switch (accion)
@@ -84,7 +85,7 @@ namespace DAOLibreria.DAO
                 case EstadisticasAcciones.IncrementarPartidaPaises:
                     return estadistica => { estadistica.vecesTematicaPaises = (estadistica.vecesTematicaPaises ?? 0) + 1; };
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(accion), "Acción no permitida.");
+                    return estadistica => { estadistica.vecesTematicaMixto = (estadistica.vecesTematicaMixto ?? 0) + 1; };
             }
         }
 

@@ -286,12 +286,6 @@
   <wsdl:message name="IServicioPartidaSesion_IniciarValoresPartidaCallback_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:IniciarValoresPartidaCallbackResponse" />
   </wsdl:message>
-  <wsdl:message name="IServicioPartidaSesion_AvanzarRondaCallback_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:AvanzarRondaCallback" />
-  </wsdl:message>
-  <wsdl:message name="IServicioPartidaSesion_AvanzarRondaCallback_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:AvanzarRondaCallbackResponse" />
-  </wsdl:message>
   <wsdl:message name="IServicioPartidaSesion_TurnoPerdidoCallback_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:TurnoPerdidoCallback" />
   </wsdl:message>
@@ -549,10 +543,6 @@
     <wsdl:operation name="IniciarValoresPartidaCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/IniciarValoresPartidaCallback" message="tns:IServicioPartidaSesion_IniciarValoresPartidaCallback_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioPartidaSesion/IniciarValoresPartidaCallbackResponse" message="tns:IServicioPartidaSesion_IniciarValoresPartidaCallback_InputCallbackMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="AvanzarRondaCallback">
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/AvanzarRondaCallback" message="tns:IServicioPartidaSesion_AvanzarRondaCallback_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioPartidaSesion/AvanzarRondaCallbackResponse" message="tns:IServicioPartidaSesion_AvanzarRondaCallback_InputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation name="TurnoPerdidoCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/TurnoPerdidoCallback" message="tns:IServicioPartidaSesion_TurnoPerdidoCallback_OutputCallbackMessage" />
@@ -926,15 +916,6 @@
     </wsdl:operation>
     <wsdl:operation name="IniciarValoresPartidaCallback">
       <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/IniciarValoresPartidaCallback" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="AvanzarRondaCallback">
-      <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/AvanzarRondaCallback" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
@@ -17,13 +18,31 @@ namespace WpfCliente.GUI
         private const int MAXIMO_TIEMPO_NOTIFICACION = 100;
         private DispatcherTimer timerNotificacion;
         private InvitacionPartida invitacionActual;
+        private EstadisticaUsuario estadisticas;
         public MenuWindow()
         {
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             ActualizarUI();
             AbrirConexiones();
-            ConfigurarTimerNotificacion();
+            ConfigurarTemporizadorNotificacion();
+            InicializarEstadisticas();
+        }
+
+        private void InicializarEstadisticas()
+        {
+            try
+            {
+                estadisticas = new EstadisticaUsuario(SingletonCliente.Instance.IdUsuario);
+                textBlockPartidasGanadas.Text = estadisticas.Estadistica.PartidasGanadas.ToString();
+                textBlockPartidasJugadas.Text = estadisticas.Estadistica.PartidasJugadas.ToString();
+                textBlockNombre.Text = SingletonCliente.Instance.NombreUsuario;
+            }
+            catch (Exception excepcion) 
+            {
+                gridEstadisticas.Visibility = Visibility.Collapsed;
+                ManejadorExcepciones.ManejarErrorException(excepcion, this);
+            }
         }
 
         private async void AbrirConexiones()
@@ -73,10 +92,11 @@ namespace WpfCliente.GUI
             };
         }
 
-        private void ClicBotonCrearSala(object sender, RoutedEventArgs e)
+        private void ClicBottonCrearSala(object sender, RoutedEventArgs e)
         {
             AbrirVentanaSala(null);
         }
+
         private async void AbrirVentanaSala(string idSala)
         {
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
@@ -222,6 +242,11 @@ namespace WpfCliente.GUI
         {
             buttonCrearSala.Content = Idioma.buttonCrearSalaEspera;
             buttonUniserSala.Content = Idioma.buttonUnirseSalaDeEspera;
+            labelEstadisitcasJugador.Content = Idioma.labelEstadisticajugador;
+            labelNombreUsuario.Content = Idioma.labelNombre;
+            labelJugadas.Content = Idioma.labelPartidasJugadas;
+            labelGanadas.Content = Idioma.labelPartidasGanadas;
+            buttonRefrescar.Content = Idioma.buttonRefrescar;
             this.Title = Properties.Idioma.tituloMenu;
         }
 
@@ -231,7 +256,7 @@ namespace WpfCliente.GUI
             amigos.Show();
         }
 
-        private void ConfigurarTimerNotificacion()
+        private void ConfigurarTemporizadorNotificacion()
         {
             timerNotificacion = new DispatcherTimer();
             timerNotificacion.Interval = TimeSpan.FromMilliseconds(50); 
@@ -285,12 +310,28 @@ namespace WpfCliente.GUI
                 OcultarNotificacion();
             }
         }
+
         private void ClicButtonUnirse(object sender, RoutedEventArgs e)
         {
             bool esInvitacion = true;
             UnirseASala(esInvitacion, invitacionActual.CodigoSala);
             OcultarNotificacion();
         }
-   
+
+        private void ClicBottonRefrescarEstadisticas(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                estadisticas.SolicitarEstadisiticas(SingletonCliente.Instance.IdUsuario);
+                textBlockPartidasGanadas.Text = estadisticas.Estadistica.PartidasGanadas.ToString();
+                textBlockPartidasJugadas.Text = estadisticas.Estadistica.PartidasJugadas.ToString();
+                textBlockNombre.Text = SingletonCliente.Instance.NombreUsuario;
+            }
+            catch (Exception excepcion) 
+            {
+                gridEstadisticas.Visibility = Visibility.Collapsed;
+                ManejadorExcepciones.ManejarErrorException(excepcion, this);
+            }
+        }
     }
 }

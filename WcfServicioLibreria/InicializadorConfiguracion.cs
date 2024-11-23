@@ -5,12 +5,11 @@ namespace WcfServicioLibreria
 {
     public static class InicializadorConfiguracion
     {
-
-        public static Dictionary<String, Object> IniciarConexion()
+        public static bool IniciarConexion()
         {
-            bool salir = false;
-            Dictionary<String, Object> resultado = new Dictionary<String, Object>();
-            while (!salir)
+            bool salir = true;
+
+            while (salir)
             {
                 Console.WriteLine("---- Bienvenido al iniciador de conexión ----");
                 Console.WriteLine("¿Qué desea hacer?");
@@ -25,89 +24,80 @@ namespace WcfServicioLibreria
                 switch (opcion)
                 {
                     case "1":
-                        Console.WriteLine("Ingrese el nombre del servidor:");
-                        string servidor = Console.ReadLine();
-                        Console.WriteLine("Ingrese el nombre de la base de datos:");
-                        string nombreBD = Console.ReadLine();
-                        Console.WriteLine("Ingrese el nombre de usuario:");
-                        string usuario = Console.ReadLine();
-                        Console.WriteLine("Ingrese la contraseña:");
-                        string contrasena = Console.ReadLine();
-                        resultado = ConfiguradorConexion.ConfigurarCadenaConexion(servidor, nombreBD, usuario, contrasena);
-                        resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje);
-                        Console.WriteLine((string)mensaje);
-                        resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
-                        try
-                        {
-                            if (!(bool)fueExitoso)
-                            {
-                                salir = true;
-                            }
-                        }
-                        catch (NullReferenceException excepcion)
-                        {
-                            //TODO:Manejar el error
-                        }
-
+                        salir = ConfigurarSinVariable();
                         break;
 
                     case "2":
-                        Console.WriteLine("Ingrese el nombre de la variable de entorno para la conexión:");
-                        string nombreVariableEntorno = Console.ReadLine();
-                        resultado = ConfiguradorConexion.ConfigurarCadenaConexion(nombreVariableEntorno);
-                        resultado.TryGetValue(Llaves.LLAVE_ERROR, out  fueExitoso);
-                        resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out mensaje);
-                        Console.WriteLine((string)mensaje);
-                        try
-                        {
-                            if (!(bool)fueExitoso)
-                            {
-                                salir = true;
-                            }
-                        }
-                        catch (NullReferenceException excepcion)
-                        {
-                            //TODO:Manejar el error
-                        }
+                        salir = ConfigurarConVariableEntorno();
                         break;
+
                     case "3":
-                        Console.WriteLine("Buscando archivo...");
-                        resultado = ConfiguradorConexion.ConfigurarCadenaConexionRuta();
-                        resultado.TryGetValue(Llaves.LLAVE_ERROR, out  fueExitoso);
-                        resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out mensaje);
-                        Console.WriteLine((string)mensaje);
-                        try
-                        {
-                            if (!(bool)fueExitoso)
-                            {
-                                salir = true;
-                            }
-                        }
-                        catch (NullReferenceException excepcion)
-                        {
-                            //TODO:Manejar el error
-                        }
+                        salir = ConfigurarConArchivo();
                         break;
+
                     case "4":
                         Console.WriteLine("Saliendo del programa...");
                         Environment.Exit(0);
                         break;
+
                     default:
                         Console.WriteLine("Opción no válida. Inténtelo de nuevo.");
                         break;
-                        
                 }
             }
-            return resultado;
 
+            return salir;
         }
 
-        //FIXME: Esto es solo para pruebas
-        public static void IniciarConexionRapidaPruebas()
+        private static bool ConfigurarSinVariable()
         {
-            ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnnayIvan2025@-");
+            Console.WriteLine("Ingrese el nombre del servidor:");
+            string servidor = Console.ReadLine();
 
+            Console.WriteLine("Ingrese el nombre de la base de datos:");
+            string nombreBD = Console.ReadLine();
+
+            Console.WriteLine("Ingrese el nombre de usuario:");
+            string usuario = Console.ReadLine();
+
+            Console.WriteLine("Ingrese la contraseña:");
+            string contrasena = Console.ReadLine();
+
+            var resultado = ConfiguradorConexion.ConfigurarCadenaConexion(servidor, nombreBD, usuario, contrasena);
+            return ProcesarResultado(resultado);
         }
-        //-------------------------------------------------------
+
+        private static bool ConfigurarConVariableEntorno()
+        {
+            Console.WriteLine("Ingrese el nombre de la variable de entorno para la conexión:");
+            string nombreVariableEntorno = Console.ReadLine();
+
+            var resultado = ConfiguradorConexion.ConfigurarCadenaConexion(nombreVariableEntorno);
+            return ProcesarResultado(resultado);
+        }
+
+        private static bool ConfigurarConArchivo()
+        {
+            Console.WriteLine("Buscando archivo...");
+            var resultado = ConfiguradorConexion.ConfigurarCadenaConexionRuta();
+            return ProcesarResultado(resultado);
+        }
+
+        private static bool ProcesarResultado(Dictionary<string, object> resultado)
+        {
+            if (resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje))
+            {
+                Console.WriteLine((string)mensaje);
+            }
+
+            if (resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso) && fueExitoso is bool resultadoBool)
+            {
+                return resultadoBool;
+            }
+
+            Console.WriteLine("Ocurrió un error inesperado en la configuración.");
+            return false;
+        }
+
     }
 }

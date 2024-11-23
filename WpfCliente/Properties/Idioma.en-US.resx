@@ -586,4 +586,19 @@
   <data name="tituloMenu" xml:space="preserve">
     <value>Menu</value>
   </data>
+  <data name="labelEstadisticajugador" xml:space="preserve">
+    <value>Player statistics</value>
+  </data>
+  <data name="labelNombre" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="labelPartidasJugadas" xml:space="preserve">
+    <value>Games Played</value>
+  </data>
+  <data name="labelPartidasGanadas" xml:space="preserve">
+    <value>Games won</value>
+  </data>
+  <data name="buttonRefrescar" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
 </root>

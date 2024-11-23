@@ -28,7 +28,7 @@
         <DockPanel LastChildFill="True">
             <!--Header-->
             <StackPanel DockPanel.Dock="Top" x:Name="stackPaneEncabezado" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <Image Height="48" Width="54" Source="/Recursos/amigos.png" VerticalAlignment="Top" RenderTransformOrigin="0.556,0.5" Cursor="Hand" MouseLeftButtonDown="ClicImageAmigos"/>
+                <Image Height="48" Width="54" Source="/Recursos/amigos.png" VerticalAlignment="Top" RenderTransformOrigin="0.556,0.5" Cursor="Hand" MouseLeftButtonDown="ClicImagenAmigos"/>
                 <local:PerfilMenuDesplegableUserControl x:Name="perfilMenuDesplegable"/>
             </StackPanel>
             <!--Footer-->
@@ -74,10 +74,13 @@
                     Width="100" Margin="50,74,0,0" Click="ClicBottonRefrescarEstadisticas" />
             </Grid>
             <!--Middle-->
-            <StackPanel x:Name="stackPanePrincipal" Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel x:Name="stackPanePrincipal" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel Orientation="Vertical" Background="#E0DCC7" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Label Content="Describelo" HorizontalAlignment="Center" FontFamily="ROG Fonts" VerticalAlignment="Center" 
-               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="60"></Label>
+                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="60"></Label>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Background="#E0DCC7" HorizontalAlignment="Center" Margin="0,70,0,0" VerticalAlignment="Center">
+                    
 
                     <Button x:Name="buttonCrearSala" d:Content="Crear sala de espera" FontFamily="ROG Fonts" 
                 Background="#E0DCC7" Foreground="Black" BorderThickness="4" BorderBrush="Black" Click="ClicBottonCrearSala" 
@@ -85,7 +88,7 @@
 
                     <Button x:Name="buttonUniserSala" d:Content="Unirse a sala de espera" FontFamily="ROG Fonts" 
                 Background="#E0DCC7" Foreground="Black" BorderThickness="4" BorderBrush="Black" Click="ClicButtonUnirseSala" 
-                FontSize="24" Margin="0,10,0,10" />
+                FontSize="24" Margin="10,10,10,10" />
 
                 </StackPanel>
             </StackPanel>
@@ -105,7 +108,7 @@
 
                 <!-- Contenedor para los botones: se activan dependiendo del tipo de notificación -->
                 <StackPanel x:Name="botonesPanel" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button x:Name="btnUnirse" Content="Unirse" Click="ClicButtonUnirse" Width="80" Visibility="Collapsed"/>
+                    <Button x:Name="buttonUnirse" Content="Unirse" Click="ClicButtonUnirseInvitacion" Width="80" Visibility="Collapsed"/>
                 </StackPanel>
             </StackPanel>
         </Border>

@@ -239,9 +239,9 @@ namespace WpfCliente.GUI
                 Conexion.CerrarChatMotor();
                 Conexion.CerrarSalaJugador();
             }
-            catch (Exception excepcion)
+            catch (Exception ex)
             {
-                //TODO Manejar excepcion
+                ManejadorExcepciones.ManejarComponentErrorException(ex);
             }
 
         }
@@ -289,8 +289,9 @@ namespace WpfCliente.GUI
                     Conexion.SalaJugador.ComenzarPartidaAnfrition(SingletonCliente.Instance.NombreUsuario, SingletonCliente.Instance.IdSala, SingletonCliente.Instance.IdPartida);
                     OcultarVetanaHastaCierre();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    ManejadorExcepciones.ManejarComponentErrorException(ex);
                 }
                 buttonEmpezarPartida.IsEnabled = true;
             }
@@ -356,9 +357,9 @@ namespace WpfCliente.GUI
                 ventanaModal.Owner = this;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                ManejadorExcepciones.ManejarComponentErrorException(ex);
             }
             bool? resultado = ventanaModal.ShowDialog();
 
@@ -469,8 +470,9 @@ namespace WpfCliente.GUI
                         usuario.Nombre,
                         SingletonCliente.Instance.IdSala);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    ManejadorExcepciones.ManejarComponentErrorException(ex);
                 }
             }
         }

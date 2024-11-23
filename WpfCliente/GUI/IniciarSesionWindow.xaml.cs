@@ -104,32 +104,39 @@ namespace WpfCliente.GUI
             bool yaInicioSesion = servicio.YaIniciadoSesion(textBoxUsuario.Text);
             if (yaInicioSesion)
             {
-                VentanasEmergentes.CrearVentanaEmergenteSesionIniciada(this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSesionIniciada, Properties.Idioma.mensajeSesionIniciada, this);
             }
             else
             {
                 if (resultadoUsuario != null)
                 {
                     exito = true;
-                    Singleton.Instance.NombreUsuario = textBoxUsuario.Text;
-                    Singleton.Instance.IdUsuario = resultadoUsuario.IdUsuario;
                     BitmapImage imagenUsuario = Imagen.ConvertirStreamABitmapImagen(resultadoUsuario.FotoUsuario);
                     if (imagenUsuario == null)
                     {
-                        VentanasEmergentes.CrearVentanaEmergenteImagenInvalida(this);
+                        VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, Properties.Idioma.mensajeImagenInvalida, this);
                         this.Close();
                     }
-                    Singleton.Instance.FotoJugador = imagenUsuario;
-                    Singleton.Instance.NombreUsuario = resultadoUsuario.Nombre;
-                    Singleton.Instance.Correo = resultadoUsuario.Correo;
-                    Singleton.Instance.ContraniaHash = resultadoUsuario.ContraseniaHASH;
-                    AbrirVentanaMenu();
+                    else
+                    {
+                        ConfigurarSingletonConUsuario(resultadoUsuario, imagenUsuario);
+                        AbrirVentanaMenu();
+                    }
                 }
                 labelCredencialesIncorrectas.Visibility = Visibility.Visible;
             }
             return exito;
         }
 
+        private void ConfigurarSingletonConUsuario(Usuario usuario, BitmapImage imagenUsuario)
+        {
+            Singleton.Instance.NombreUsuario = textBoxUsuario.Text;
+            Singleton.Instance.IdUsuario = usuario.IdUsuario;
+            Singleton.Instance.FotoJugador = imagenUsuario;
+            Singleton.Instance.NombreUsuario = usuario.Nombre;
+            Singleton.Instance.Correo = usuario.Correo;
+            Singleton.Instance.ContraniaHash = usuario.ContraseniaHASH;
+        }
 
         private async void ClicJugarComoInvitado(object sender, RoutedEventArgs e)
         {
@@ -149,7 +156,7 @@ namespace WpfCliente.GUI
                 }
                 else
                 {
-                    VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado(this);
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloLobbyNoEncontrado, Properties.Idioma.mensajeLobbyNoEncontrado, this);
                 }
 
             }
@@ -203,28 +210,6 @@ namespace WpfCliente.GUI
             return valorObtenido;
         }
 
-        private string AbrirVentanaModalVerificarCorreo()
-        {
-            string valorObtenido = null;
-            VerificarCorreoModalWindow ventanaModal = new VerificarCorreoModalWindow();
-            try
-            {
-                ventanaModal.Owner = this;
-
-            }
-            catch (Exception)
-            {
-
-            }
-            bool? resultado = ventanaModal.ShowDialog();
-
-            if (resultado == true)
-            {
-                valorObtenido = ventanaModal.ValorIngresado;
-            }
-
-            return valorObtenido;
-        }
         private string AbrirVentanaModalGamertag()
         {
             string valorObtenido = null;
@@ -324,12 +309,12 @@ namespace WpfCliente.GUI
                 }
                 else
                 {
-                    VentanasEmergentes.CrearVentanaEmergenteCorreoYGamertagNoCoinciden(this);
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCorreoYGamertagNoCoinciden, Properties.Idioma.mensajeCorreoYGamertagNoCoinciden, this);
                 }
             }
             else
             {
-                VentanasEmergentes.CrearVentanaEmergenteErrorInesperado(this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorInesperado, Properties.Idioma.mensajeErrorInesperado, this);
             }
             
         }

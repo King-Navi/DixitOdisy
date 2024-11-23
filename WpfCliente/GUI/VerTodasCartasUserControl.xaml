@@ -17,8 +17,8 @@
 
         </Grid.Background>
         <Label x:Name="labelPista" d:Content="Pista: Pizaaa"      Content  = "Pista: "   Background="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="60" FontSize="26" Foreground="White"></Label>
-        <TextBox IsReadOnly="True" Text="¡Escoge la carta correcta en base a la pista!" Background="{x:Null}" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,0,0" FontSize="20" BorderBrush="{x:Null}" Foreground="White"/>
-        <Grid Margin="0,100,0,0" Unloaded="UnloadedVerTodasCartasUsercontrol">
+        <TextBox x:Name="textBoxInstruccionPista" IsReadOnly="True" Text="¡Escoge la carta correcta en base a la pista!" Background="{x:Null}" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,0,0" FontSize="20" BorderBrush="{x:Null}" Foreground="White"/>
+        <Grid Margin="0,100,0,0" Unloaded="CerrandoUserControl">
             <ItemsControl ItemsSource="{Binding TodasImagenes}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

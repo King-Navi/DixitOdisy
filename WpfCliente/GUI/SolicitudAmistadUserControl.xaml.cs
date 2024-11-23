@@ -57,7 +57,7 @@ namespace WpfCliente.GUI
 
                 if (resultado)
                 {
-                    VentanasEmergentes.CrearVentanaEmergenteSolicitudAceptada(window, solicitudAmistadActual.Remitente.Nombre);
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadAceptada + solicitudAmistadActual.Remitente.Nombre, window);
                     HabilitarBotones(false);
                 }
 
@@ -66,7 +66,7 @@ namespace WpfCliente.GUI
             catch (Exception excepcion)
             {
                 //TODO manejar excepcion
-                VentanasEmergentes.CrearVentanaEmergenteCargarDatosAmigosFalla(this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCargarAmigosFalla, Properties.Idioma.mensajeCargarAmigosFalla, this);
                 return false;
             }
         }
@@ -91,7 +91,7 @@ namespace WpfCliente.GUI
 
                 if (resultado)
                 {
-                    VentanasEmergentes.CrearVentanaEmergenteSolicitudRechazada(window, solicitudAmistadActual.Remitente.Nombre);
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadRechazada + solicitudAmistadActual.Remitente.Nombre, window);
                     HabilitarBotones(false);
                 }
 
@@ -100,7 +100,7 @@ namespace WpfCliente.GUI
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarComponentErrorException(excepcion);
-                VentanasEmergentes.CrearVentanaEmergenteCargarDatosAmigosFalla(this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCargarAmigosFalla, Properties.Idioma.mensajeCargarAmigosFalla, this);
                 return false;
             }
         }

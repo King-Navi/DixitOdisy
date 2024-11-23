@@ -321,7 +321,7 @@ namespace WpfCliente.Utilidad
 
             if (!await verificarConexion)
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, ventana);
+                VentanasEmergentes.CrearVentanaEmergenteConCierre(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, ventana);
                 habilitarAcciones(true);
                 DeshabilitarVentana(ventana, true);
                 return false;
@@ -330,7 +330,7 @@ namespace WpfCliente.Utilidad
 
             if (!await verificarConexionBD)
             {
-                VentanasEmergentes.CrearVentanaEmergenteErrorBD(ventana);
+                VentanasEmergentes.CrearVentanaEmergenteConCierre(Properties.Idioma.tituloErrorBaseDatos, Properties.Idioma.mensajeErrorBaseDatos, ventana);
                 habilitarAcciones(true);
                 DeshabilitarVentana(ventana, true);
                 return false;

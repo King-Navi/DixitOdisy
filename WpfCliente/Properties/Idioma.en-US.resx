@@ -513,4 +513,16 @@
   <data name="mensajeErrorAlCargarLasSolicitudesAmistad" xml:space="preserve">
     <value>At the moment we could not upload the friend requests, I will come back later.</value>
   </data>
+  <data name="labelPista" xml:space="preserve">
+    <value>Clue: </value>
+  </data>
+  <data name="labelInstruccionPista" xml:space="preserve">
+    <value>Choose the correct card based on the clue!</value>
+  </data>
+  <data name="tituloIngresarCorreo" xml:space="preserve">
+    <value>Enter email</value>
+  </data>
+  <data name="labelInvalido" xml:space="preserve">
+    <value>Invalid</value>
+  </data>
 </root>

@@ -189,8 +189,8 @@
     <Compile Include="GUI\UnirseSalaModalWindow.xaml.cs">
       <DependentUpon>UnirseSalaModalWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\VentanaEmergente.xaml.cs">
-      <DependentUpon>VentanaEmergente.xaml</DependentUpon>
+    <Compile Include="GUI\VentanaEmergenteModalWindow.xaml.cs">
+      <DependentUpon>VentanaEmergenteModalWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\VerificarCorreoModalWindow.xaml.cs">
       <DependentUpon>VerificarCorreoModalWindow.xaml</DependentUpon>
@@ -430,7 +430,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\VentanaEmergente.xaml">
+    <Page Include="GUI\VentanaEmergenteModalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

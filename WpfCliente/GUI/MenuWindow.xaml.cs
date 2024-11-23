@@ -143,7 +143,7 @@ namespace WpfCliente.GUI
                 }
                 else
                 {
-                    VentanasEmergentes.CrearVentanaEmergenteLobbyNoEncontrado(this);
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloLobbyNoEncontrado, Properties.Idioma.mensajeLobbyNoEncontrado, this);
                 }
 
             }

@@ -79,7 +79,7 @@ namespace WpfCliente.GUI
                 try {
                     if (await EnviarSolicitud(gamertagSolicitud))
                     {
-                        VentanasEmergentes.CrearVentanaEmergenteSolicitudEnviada(this);
+                        VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadExitosa, this);
                     }
                 }
                 catch (FaultException<SolicitudAmistadFalla> ex)

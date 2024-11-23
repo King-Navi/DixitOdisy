@@ -21,7 +21,7 @@ namespace WpfCliente.GUI
         {
             if (usuario == null)
             {
-                VentanasEmergentes.CrearVentanaEmergenteCargarDatosAmigosFalla(this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCargarAmigosFalla, Properties.Idioma.mensajeCargarAmigosFalla, this);
             }
             else
             {

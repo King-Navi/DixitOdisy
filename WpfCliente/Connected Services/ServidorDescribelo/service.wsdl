@@ -394,6 +394,9 @@
   <wsdl:message name="IServicioUsuario_ValidarCredenciales_OutputMessage">
     <wsdl:part name="parameters" element="tns:ValidarCredencialesResponse" />
   </wsdl:message>
+  <wsdl:message name="IServicioUsuario_ValidarCredenciales_VetoFallaFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q5:VetoFalla" />
+  </wsdl:message>
   <wsdl:message name="IServicioUsuario_EditarContraseniaUsuario_InputMessage">
     <wsdl:part name="parameters" element="tns:EditarContraseniaUsuario" />
   </wsdl:message>
@@ -629,6 +632,7 @@
     <wsdl:operation name="ValidarCredenciales">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuario/ValidarCredenciales" message="tns:IServicioUsuario_ValidarCredenciales_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioUsuario/ValidarCredencialesResponse" message="tns:IServicioUsuario_ValidarCredenciales_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioUsuario/ValidarCredencialesVetoFallaFault" name="VetoFallaFault" message="tns:IServicioUsuario_ValidarCredenciales_VetoFallaFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="EditarContraseniaUsuario">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuario/EditarContraseniaUsuario" message="tns:IServicioUsuario_EditarContraseniaUsuario_InputMessage" />
@@ -1112,6 +1116,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="VetoFallaFault">
+        <soap12:fault use="literal" name="VetoFallaFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="EditarContraseniaUsuario">
       <soap12:operation soapAction="http://tempuri.org/IServicioUsuario/EditarContraseniaUsuario" style="document" />

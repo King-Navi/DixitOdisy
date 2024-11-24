@@ -137,6 +137,7 @@
     <Compile Include="Modelo\Amistad\SolicitudAmistad.cs" />
     <Compile Include="Modelo\Excepciones\BaseDatosFalla.cs" />
     <Compile Include="Modelo\Excepciones\PartidaFalla.cs" />
+    <Compile Include="Modelo\Excepciones\VetoFalla.cs" />
     <Compile Include="Modelo\Partida\CondicionVictoriaPorRondas.cs" />
     <Compile Include="Modelo\Partida\CondicionVictoriaCartasAgotadas.cs" />
     <Compile Include="Modelo\Partida\ConfiguracionPartida.cs" />
@@ -180,7 +181,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Librerias\ChatGPTLibreria.dll" />
-    <Content Include="Librerias\ChatGPTLibreria.pdb" />
     <Content Include="Librerias\Newtonsoft.Json.dll" />
     <Content Include="Recursos\Animales\0b7806d1-133c-42f2-9c46-cb4021a35748.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -616,4 +616,13 @@
   <data name="labelDesconectado" xml:space="preserve">
     <value>Offline</value>
   </data>
+  <data name="tituloVetado" xml:space="preserve">
+    <value>Banned</value>
+  </data>
+  <data name="mensajeVetoIndefinido" xml:space="preserve">
+    <value>You are banned indefinitely</value>
+  </data>
+  <data name="mensajeVetoTemporal" xml:space="preserve">
+    <value>You are banned for the moment, come back after thinking about your actions for a while.</value>
+  </data>
 </root>

@@ -6,4 +6,11 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="BaseDatosFalla" nillable="true" type="tns:BaseDatosFalla" />
+  <xs:complexType name="VetoFalla">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EnProgreso" type="xs:boolean" />
+      <xs:element minOccurs="0" name="EsPermanete" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="VetoFalla" nillable="true" type="tns:VetoFalla" />
 </xs:schema>

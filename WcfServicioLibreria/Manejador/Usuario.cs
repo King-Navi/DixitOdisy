@@ -1,13 +1,16 @@
 ﻿using DAOLibreria;
 using DAOLibreria.DAO;
+using DAOLibreria.Excepciones;
 using DAOLibreria.ModeloBD;
 using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Modelo.Excepciones;
 using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
@@ -124,21 +127,38 @@ namespace WcfServicioLibreria.Manejador
                 DAOLibreria.ModeloBD.UsuarioPerfilDTO usuarioConsulta = DAOLibreria.DAO.UsuarioDAO.ValidarCredenciales(gamertag, contrasenia);
                 if (usuarioConsulta != null)
                 {
+                    DAOLibreria.DAO.VetoDAO.VerificarVetoPorIdCuenta(usuarioConsulta.IdUsuarioCuenta);
                     usuario = new WcfServicioLibreria.Modelo.Usuario();
                     if (usuarioConsulta.FotoPerfil != null && usuarioConsulta.FotoPerfil.Length > 0)
                     {
                         usuario.FotoUsuario = new MemoryStream(usuarioConsulta.FotoPerfil, writable: false);
                     }
-
+                    
                     usuario.Nombre = usuarioConsulta.NombreUsuario;
                     usuario.Correo = usuarioConsulta.Correo;
                     usuario.ContraseniaHASH = usuarioConsulta.HashContrasenia;
                     usuario.IdUsuario = usuarioConsulta.IdUsuario;
                 }
+
             }
-            catch (Exception ex)
+            catch(VetoEnProgresoExcepcion )
             {
-                Console.WriteLine($"Error en ValidarCredenciales: {ex.Message}");
+                VetoFalla excepcion = new VetoFalla()
+                {
+                    EnProgreso = true
+                };
+                throw new FaultException<VetoFalla>(excepcion, new FaultReason("Veto en progreso"));
+            }
+            catch (VetoPermanenteExcepcion)
+            {
+                VetoFalla excepcion = new VetoFalla()
+                {
+                    EsPermanete = true
+                };
+                throw new FaultException<VetoFalla>(excepcion, new FaultReason("Veto en permanete, y no vuelvas!!!"));
+            }
+            catch (Exception)
+            {
             }
 
             return usuario;

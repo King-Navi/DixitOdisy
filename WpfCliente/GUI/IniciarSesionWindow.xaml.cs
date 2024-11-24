@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Runtime.InteropServices;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using WpfCliente.Interfaz;
+using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
@@ -97,34 +100,57 @@ namespace WpfCliente.GUI
 
         private bool IntentarIniciarSesion() {
             bool exito = false;
-            ServidorDescribelo.IServicioUsuario servicio = new ServidorDescribelo.ServicioUsuarioClient();
-            string contraseniaHash = Encriptacion.OcuparSHA256(passwordBoxContrasenia.Password);
-            Usuario resultadoUsuario = servicio.ValidarCredenciales(textBoxUsuario.Text, contraseniaHash);
-            bool yaInicioSesion = servicio.YaIniciadoSesion(textBoxUsuario.Text);
-            if (yaInicioSesion)
+            try
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSesionIniciada, Properties.Idioma.mensajeSesionIniciada, this);
-            }
-            else
-            {
-                if (resultadoUsuario != null)
+                ServidorDescribelo.IServicioUsuario servicio = new ServidorDescribelo.ServicioUsuarioClient();
+                string contraseniaHash = Encriptacion.OcuparSHA256(passwordBoxContrasenia.Password);
+                Usuario resultadoUsuario = servicio.ValidarCredenciales(textBoxUsuario.Text, contraseniaHash);
+                bool yaInicioSesion = servicio.YaIniciadoSesion(textBoxUsuario.Text);
+                if (yaInicioSesion)
                 {
-                    exito = true;
-                    BitmapImage imagenUsuario = Imagen.ConvertirStreamABitmapImagen(resultadoUsuario.FotoUsuario);
-                    if (imagenUsuario == null)
-                    {
-                        VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, Properties.Idioma.mensajeImagenInvalida, this);
-                        this.Close();
-                    }
-                    else
-                    {
-                        ConfigurarSingletonConUsuario(resultadoUsuario, imagenUsuario);
-                        AbrirVentanaMenu();
-                    }
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSesionIniciada, Properties.Idioma.mensajeSesionIniciada, this);
                 }
-                labelCredencialesIncorrectas.Visibility = Visibility.Visible;
+                else
+                {
+                    if (resultadoUsuario != null)
+                    {
+                        exito = true;
+                        BitmapImage imagenUsuario = Imagen.ConvertirStreamABitmapImagen(resultadoUsuario.FotoUsuario);
+                        if (imagenUsuario == null)
+                        {
+                            VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, Properties.Idioma.mensajeImagenInvalida, this);
+                            this.Close();
+                        }
+                        else
+                        {
+                            ConfigurarSingletonConUsuario(resultadoUsuario, imagenUsuario);
+                            AbrirVentanaMenu();
+                        }
+                    }
+                    labelCredencialesIncorrectas.Visibility = Visibility.Visible;
+                }
+            }
+            catch (FaultException<VetoFalla> veto)
+            {
+                EvaluarExcepcion(veto);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorExcepcion(excepcion, this);
             }
             return exito;
+        }
+
+        private void EvaluarExcepcion(FaultException<VetoFalla> veto)
+        {
+            if (veto.Detail.EsPermanete)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloVetado, Idioma.mensajeVetoIndefinido, this);
+            }
+            if (veto.Detail.EnProgreso)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloVetado, Idioma.mensajeVetoTemporal, this);
+            }
         }
 
         private void ConfigurarSingletonConUsuario(Usuario usuario, BitmapImage imagenUsuario)

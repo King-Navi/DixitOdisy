@@ -615,4 +615,13 @@
   <data name="labelDesconectado" xml:space="preserve">
     <value>Desconectado </value>
   </data>
+  <data name="tituloVetado" xml:space="preserve">
+    <value>Vetado</value>
+  </data>
+  <data name="mensajeVetoIndefinido" xml:space="preserve">
+    <value>Estas vetado indefinidamente</value>
+  </data>
+  <data name="mensajeVetoTemporal" xml:space="preserve">
+    <value>Estas vetado por el momento, vuelve despues de pensar un rato en tus acciones</value>
+  </data>
 </root>

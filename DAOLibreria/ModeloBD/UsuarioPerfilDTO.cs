@@ -8,6 +8,7 @@
     {
         
             public int IdUsuario { get; set; }
+            public int IdUsuarioCuenta { get; set; }
             public string NombreUsuario { get; set; }
             public string Correo { get; set; }
             public byte[] FotoPerfil { get; set; }
@@ -21,7 +22,8 @@
             Correo = cuenta.correo;
             FotoPerfil = usuario.fotoPerfil;
             HashContrasenia = cuenta.hashContrasenia;
+            IdUsuarioCuenta = cuenta?.idUsuarioCuenta ?? 0;
         }
-        
+
     }
 }

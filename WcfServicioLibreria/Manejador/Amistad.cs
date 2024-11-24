@@ -12,7 +12,6 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioAmistad
     {
-
         public bool EnviarSolicitudAmistad(Modelo.Usuario remitente, string destinatario)
         {
             int idRemitente = ObtenerIdPorNombre(remitente.Nombre);
@@ -41,12 +40,10 @@ namespace WcfServicioLibreria.Manejador
 
             return false;
         }
-
         private bool GuardarSolicitudAmistad(int idRemitente, int idDestinatario)
         {
             return PeticionAmistadDAO.GuardarSolicitudAmistad(idRemitente, idDestinatario);
         }
-
         private int ObtenerIdPorNombre(string nombre)
         {
             int id = 0;
@@ -60,7 +57,6 @@ namespace WcfServicioLibreria.Manejador
             return id;
 
         }
-
         public bool SonAmigos(string usuarioRemitente, string destinatario)
         {
             int idRemitente = ObtenerIdPorNombre(usuarioRemitente);
@@ -100,7 +96,7 @@ namespace WcfServicioLibreria.Manejador
             return false;
         }
 
-        public  void AbrirCanalParaPeticiones(Modelo.Usuario _usuarioRemitente)
+        public void AbrirCanalParaPeticiones(Modelo.Usuario _usuarioRemitente)
         {
             try
             {
@@ -110,7 +106,7 @@ namespace WcfServicioLibreria.Manejador
                 {
                     remitente.AmistadSesionCallBack = contextoRemitente;
                 }
-                List<Modelo.Usuario> amigosConetados= EnviarListaAmigos(_usuarioRemitente , contextoRemitente);
+                List<Modelo.Usuario> amigosConetados = EnviarListaAmigos(_usuarioRemitente, contextoRemitente);
 
                 foreach (var usuarioDestino in amigosConetados)
                 {
@@ -149,7 +145,7 @@ namespace WcfServicioLibreria.Manejador
                         Estado = estadoJugador,
                         Foto = new MemoryStream(amigoDestinario.fotoPerfil),
                         UltimaConexion = amigoDestinario.ultimaConexion.ToString()
-                        
+
                     };
                     contextoRemitente.ObtenerAmigoCallback(amigo);
                     if (amigo.Estado == EstadoAmigo.Conectado)
@@ -206,7 +202,13 @@ namespace WcfServicioLibreria.Manejador
                                 remitente.DesconexionManejadorEvento += desconexionHandlerRemitente;
                                 destinatario.DesconexionManejadorEvento += desconexionHandlerDestinatario;
 
-                                remitente.EnviarAmigoActulizadoCallback(new Modelo.Amigo(((Modelo.Usuario)destinatario).Nombre, EstadoAmigo.Conectado));
+                                remitente.EnviarAmigoActulizadoCallback(new Amigo()
+                                {
+                                    Foto = ((Usuario)destinatario).FotoUsuario,
+                                    Nombre = ((Usuario)destinatario).Nombre,
+                                    Estado = EstadoAmigo.Conectado
+
+                                });
                                 destinatario.EnviarAmigoActulizadoCallback(new Modelo.Amigo(((Modelo.Usuario)remitente).Nombre, EstadoAmigo.Conectado));
                             }
                         }
@@ -232,7 +234,7 @@ namespace WcfServicioLibreria.Manejador
                     {
                         IdUsuario = usuarioBD.idUsuario,
                         Nombre = usuarioBD.gamertag,
-                        EstadoJugador = EstadoUsuario.Desconectado, 
+                        EstadoJugador = EstadoUsuario.Desconectado,
                         FotoUsuario = new MemoryStream(usuarioBD.fotoPerfil)
                     };
                     usuariosModeloWCF.Add(new SolicitudAmistad(usuarioWCF));
@@ -261,13 +263,13 @@ namespace WcfServicioLibreria.Manejador
 
         public bool RechazarSolicitudAmistad(int idRemitente, int idDestinatario)
         {
-            try 
-            { 
+            try
+            {
                 return PeticionAmistadDAO.RechazarSolicitudAmistad(idRemitente, idDestinatario); ;
             }
             catch (Exception)
             {
-                return false ;
+                return false;
             }
         }
 

@@ -1213,6 +1213,24 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Estas vetado indefinidamente.
+        /// </summary>
+        public static string mensajeVetoIndefinido {
+            get {
+                return ResourceManager.GetString("mensajeVetoIndefinido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Estas vetado por el momento, vuelve despues de pensar un rato en tus acciones.
+        /// </summary>
+        public static string mensajeVetoTemporal {
+            get {
+                return ResourceManager.GetString("mensajeVetoTemporal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Editar perfil.
         /// </summary>
         public static string menuItemEditarperfil {
@@ -1551,6 +1569,15 @@ namespace WpfCliente.Properties {
         public static string tituloVentanaEmergente {
             get {
                 return ResourceManager.GetString("tituloVentanaEmergente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vetado.
+        /// </summary>
+        public static string tituloVetado {
+            get {
+                return ResourceManager.GetString("tituloVetado", resourceCulture);
             }
         }
     }

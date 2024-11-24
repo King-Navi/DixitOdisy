@@ -1,6 +1,7 @@
 ﻿using System.ServiceModel;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Modelo.Excepciones;
 
 namespace WcfServicioLibreria.Contratos
 {
@@ -47,7 +48,9 @@ namespace WcfServicioLibreria.Contratos
         /// <param name="gamertag">El gamertag del usuario.</param>
         /// <param name="contrasenia">La contraseña del usuario.</param>
         /// <returns>El usuario validado si las credenciales son correctas; null si las credenciales son incorrectas.</returns>
+        /// <exception cref="VetoFalla">Se lanza si tiene veto.</exception>
         [OperationContract]
+        [FaultContract(typeof(VetoFalla))]
         Usuario ValidarCredenciales(string gamertag, string contrasenia);
 
         /// <summary>

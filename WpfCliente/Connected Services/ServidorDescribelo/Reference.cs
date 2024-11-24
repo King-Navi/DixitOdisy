@@ -1152,6 +1152,67 @@ namespace WpfCliente.ServidorDescribelo {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="VetoFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones")]
+    [System.SerializableAttribute()]
+    public partial class VetoFalla : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool EnProgresoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool EsPermaneteField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool EnProgreso {
+            get {
+                return this.EnProgresoField;
+            }
+            set {
+                if ((this.EnProgresoField.Equals(value) != true)) {
+                    this.EnProgresoField = value;
+                    this.RaisePropertyChanged("EnProgreso");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool EsPermanete {
+            get {
+                return this.EsPermaneteField;
+            }
+            set {
+                if ((this.EsPermaneteField.Equals(value) != true)) {
+                    this.EsPermaneteField = value;
+                    this.RaisePropertyChanged("EsPermanete");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioAmistad", CallbackContract=typeof(WpfCliente.ServidorDescribelo.IServicioAmistadCallback))]
     public interface IServicioAmistad {
@@ -1935,6 +1996,7 @@ namespace WpfCliente.ServidorDescribelo {
         System.Threading.Tasks.Task<bool> PingBDAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/ValidarCredenciales", ReplyAction="http://tempuri.org/IServicioUsuario/ValidarCredencialesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(WpfCliente.ServidorDescribelo.VetoFalla), Action="http://tempuri.org/IServicioUsuario/ValidarCredencialesVetoFallaFault", Name="VetoFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones")]
         WpfCliente.ServidorDescribelo.Usuario ValidarCredenciales(string gamertag, string contrasenia);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuario/ValidarCredenciales", ReplyAction="http://tempuri.org/IServicioUsuario/ValidarCredencialesResponse")]

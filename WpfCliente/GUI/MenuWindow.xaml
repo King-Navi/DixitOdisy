@@ -47,28 +47,46 @@
             <!-- Header -->
             <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                 <!-- Botón para abrir Estadísticas -->
-                <Button x:Name="buttonAbrirEstadisticas" Width="50" Height="50" Click="ClicButtonAbrirEstadisticas" 
-                >
+                <Button x:Name="buttonAbrirEstadisticas" Width="50" Height="50" VerticalAlignment="Top" Margin="0,15,15,0" Click="ClicButtonAbrirEstadisticas">
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
                             <Grid>
-                                <Ellipse x:Name="ellipse" Fill="#FFB3B3B3" />
+                                <Ellipse x:Name="ellipse" Fill="#E0DCC7" />
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                             </Grid>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="ellipse" Property="Fill" Value="green" />
+                                    <Setter TargetName="ellipse" Property="Fill" Value="skyblue" />
                                 </Trigger>
                                 <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="ellipse" Property="Fill" Value="lightgreen" />
+                                    <Setter TargetName="ellipse" Property="Fill" Value="skyblue" />
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
-                    <Image Source="/Recursos/estadisticas.png" Stretch="UniformToFill" Width="40" Height="40" />
+                    <Image Source="/Recursos/estadisticas.png" Stretch="UniformToFill" Width="37" Height="37" />
                 </Button>
-                <Image Height="50" Width="50" Source="/Recursos/amigos.png" VerticalAlignment="Top" Cursor="Hand" MouseLeftButtonDown="ClicImagenAmigos"/>
-                <local:PerfilMenuDesplegableUserControl x:Name="perfilMenuDesplegable"/>
+                <!-- Botón con fondo circular para la imagen de amigos -->
+                <Button Width="50" Height="50" VerticalAlignment="Top" Margin="0,15,15,0" Click="ClicImagenAmigos">
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Grid>
+                                <Ellipse x:Name="ellipse" Fill="#E0DCC7" />
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="ellipse" Property="Fill" Value="skyblue" />
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="ellipse" Property="Fill" Value="skyblue" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Image Source="/Recursos/amigos.png" Stretch="UniformToFill" Width="40" Height="40" />
+                </Button>
+                <local:PerfilMenuDesplegableUserControl x:Name="perfilMenuDesplegable" Margin="0,15,15,0"/>
             </StackPanel>
 
             <!-- Footer -->

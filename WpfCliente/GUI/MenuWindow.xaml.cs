@@ -16,6 +16,8 @@ namespace WpfCliente.GUI
     {
         private const int INCREMENTO_PROGRESO_BARRA = 2;
         private const int MAXIMO_TIEMPO_NOTIFICACION = 100;
+        private const int LIMITE_CLICS = 2;
+        private int contadorClics = 0;
         private DispatcherTimer timerNotificacion;
         private InvitacionPartida invitacionActual;
         private EstadisticaUsuario estadisticas;
@@ -226,7 +228,7 @@ namespace WpfCliente.GUI
             this.Title = Properties.Idioma.tituloMenu;
         }
 
-        private void ClicImagenAmigos(object sender, MouseButtonEventArgs e)
+        private void ClicImagenAmigos(object sender, RoutedEventArgs e)
         {
             AmigosWindow amigos = new AmigosWindow(this);
             amigos.Show();
@@ -285,17 +287,20 @@ namespace WpfCliente.GUI
         private void ClicButtonAbrirEstadisticas(object sender, RoutedEventArgs e)
         {
             gridEstadisticas.Visibility = Visibility.Visible;
-            buttonAbrirEstadisticas.Visibility = Visibility.Collapsed;
         }
 
         private void ClicButtonCerrarEstadisticas(object sender, RoutedEventArgs e)
         {
             gridEstadisticas.Visibility = Visibility.Collapsed;
-            buttonAbrirEstadisticas.Visibility = Visibility.Visible;
         }
 
         private async void ClicButtonRefrescarEstadisticas(object sender, RoutedEventArgs e)
         {
+            if (contadorClics >= LIMITE_CLICS)
+            {
+                buttonRefrescar.Visibility = Visibility.Collapsed;
+                return;
+            }
             buttonRefrescar.IsEnabled = false;
             try
             {
@@ -303,6 +308,7 @@ namespace WpfCliente.GUI
                 textBlockPartidasGanadas.Text = estadisticas.Estadistica.PartidasGanadas.ToString();
                 textBlockPartidasJugadas.Text = estadisticas.Estadistica.PartidasJugadas.ToString();
                 textBlockNombre.Text = SingletonCliente.Instance.NombreUsuario;
+                contadorClics++;
             }
             catch (Exception excepcion) 
             {

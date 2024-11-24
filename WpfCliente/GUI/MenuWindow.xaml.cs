@@ -282,6 +282,18 @@ namespace WpfCliente.GUI
             OcultarNotificacion();
         }
 
+        private void ClicButtonAbrirEstadisticas(object sender, RoutedEventArgs e)
+        {
+            gridEstadisticas.Visibility = Visibility.Visible;
+            buttonAbrirEstadisticas.Visibility = Visibility.Collapsed;
+        }
+
+        private void ClicButtonCerrarEstadisticas(object sender, RoutedEventArgs e)
+        {
+            gridEstadisticas.Visibility = Visibility.Collapsed;
+            buttonAbrirEstadisticas.Visibility = Visibility.Visible;
+        }
+
         private async void ClicButtonRefrescarEstadisticas(object sender, RoutedEventArgs e)
         {
             buttonRefrescar.IsEnabled = false;

@@ -82,6 +82,20 @@ namespace Pruebas.Servidor
         }
 
         [TestMethod]
+        public void EditarContraseniaUsuario_CuandoTodoValido_RetornaTrue()
+        {
+            // Arrange
+            string gamertagValido = "leonardo";
+            string nuevaContraseniaValida = "4327FE7955FF63FCF809A48C130B3546EFF6FEF893A396B4FEE083E853C0BA5C";
+
+            // Act
+            bool resultado = manejador.EditarContraseniaUsuario(gamertagValido, nuevaContraseniaValida);
+
+            // Assert
+            Assert.IsFalse(resultado, "El método debería retornar true cuando la contraseña tiene el formato SHA-256.");
+        }
+
+        [TestMethod]
         public void EditarContraseniaUsuario_CuandoFormatoInvalido_RetornaFalse()
         {
             // Arrange

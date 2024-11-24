@@ -1,116 +1,65 @@
-﻿namespace Pruebas.Servidor
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Manejador;
+using WcfServicioLibreria.Utilidades;
+
+namespace Pruebas.Servidor
 {
-    public class ServicioInvitacionPartida
+    [TestClass]
+    public class ServicioInvitacionPartidaPruebas
     {
-        //private ManejadorPrincipal manejador;
-        //private ConcurrentDictionary<int, UsuarioContexto> jugadoresConectadosDiccionario;
+        private Mock<IContextoOperacion> mockContextoOperacion;
+        private ManejadorPrincipal manejador;
+        [TestInitialize]
+        public void PruebaConfiguracion()
+        {
+            mockContextoOperacion = new Mock<IContextoOperacion>();
+            manejador = new ManejadorPrincipal(mockContextoOperacion.Object);
+        }
 
-        //[TestInitialize]
-        //public void Setup()
-        //{
-        //    jugadoresConectadosDiccionario = new ConcurrentDictionary<int, UsuarioContexto>();
-        //    manejador = new ManejadorPrincipal()
-        //    {
-        //        // Propiedad simulada para permitir pruebas
-        //        jugadoresConectadosDiccionario = jugadoresConectadosDiccionario
-        //    };
-        //}
+        [TestMethod]
+        public void EnviarInvitacion_UsuarioConectado_DeberiaEnviarExitosamente()
+        {
+            // Arrange
+            var callbackInvitacionMock = new Mock<IInvitacionPartidaCallback>();
 
-        //[TestMethod]
-        //public void EnviarInvitacion_UsuarioConectado_CallbackValido_InvitacionExitosa()
-        //{
-        //    // Arrange
-        //    var callbackMock = new Mock<IInvitacionPartidaCallback>();
-        //    var receptor = new UsuarioContexto
-        //    {
-        //        Nombre = "Receptor",
-        //        InvitacionPartidaCallBack = callbackMock.Object
-        //    };
-        //    jugadoresConectadosDiccionario.TryAdd(1, receptor);
+            var receptor = new Usuario
+            {
+                IdUsuario = 1,
+                Nombre = "ReceptorPrueba",
+                InvitacionPartidaCallBack = callbackInvitacionMock.Object
+            };
 
-        //    // Act
-        //    var resultado = manejador.EnviarInvitacion("Emisor", "Sala123", "Receptor");
+            var gamertagEmisor = "EmisorPrueba";
+            var codigoSala = "123456";
+            var gamertagReceptor = "ReceptorPrueba";
 
-        //    // Assert
-        //    Assert.IsTrue(resultado);
-        //    callbackMock.Verify(c => c.RecibirInvitacion(It.IsAny<InvitacionPartida>()), Times.Once);
-        //}
+            // Act
+            _ = manejador.ConectarUsuario(receptor);
+            var resultado = manejador.EnviarInvitacion(gamertagEmisor, codigoSala, gamertagReceptor);
 
-        //[TestMethod]
-        //public void EnviarInvitacion_UsuarioNoConectado_InvitacionFalla()
-        //{
-        //    // Act
-        //    var resultado = manejador.EnviarInvitacion("Emisor", "Sala123", "ReceptorInexistente");
+            // Assert
+            Assert.IsTrue(resultado, "La invitación debería haberse enviado correctamente.");
+            callbackInvitacionMock.Verify(c => c.RecibirInvitacion(It.IsAny<InvitacionPartida>()), Times.Once, "El callback debería haber sido llamado exactamente una vez.");
+            manejador.DesconectarUsuario(receptor.IdUsuario);
+        }
 
-        //    // Assert
-        //    Assert.IsFalse(resultado);
-        //}
 
-        //[TestMethod]
-        //public void EnviarInvitacion_CallbackInvalido_InvitacionFalla()
-        //{
-        //    // Arrange
-        //    var receptor = new UsuarioContexto
-        //    {
-        //        Nombre = "Receptor",
-        //        InvitacionPartidaCallBack = null // Callback inválido
-        //    };
-        //    jugadoresConectadosDiccionario.TryAdd(1, receptor);
+        [TestMethod]
+        public void EnviarInvitacion_UsuarioNoConectado_DeberiaFallar()
+        {
+            // Arrange
+            var gamertagEmisor = "EmisorPrueba";
+            var codigoSala = "Sala123";
+            var gamertagReceptor = "ReceptorNoConectado";
 
-        //    // Act
-        //    var resultado = manejador.EnviarInvitacion("Emisor", "Sala123", "Receptor");
+            // Act
+            var resultado = manejador.EnviarInvitacion(gamertagEmisor, codigoSala, gamertagReceptor);
 
-        //    // Assert
-        //    Assert.IsFalse(resultado);
-        //}
-
-        //[TestMethod]
-        //public void AbrirCanalParaInvitaciones_UsuarioConectado_CanalAbierto()
-        //{
-        //    // Arrange
-        //    var usuario = new Usuario
-        //    {
-        //        IdUsuario = 1,
-        //        Nombre = "UsuarioRemitente"
-        //    };
-        //    var remitente = new UsuarioContexto { Nombre = "UsuarioRemitente" };
-        //    jugadoresConectadosDiccionario.TryAdd(usuario.IdUsuario, remitente);
-
-        //    var callbackMock = new Mock<IInvitacionPartidaCallback>();
-        //    var contextoOperacionMock = new Mock<OperationContext>();
-        //    contextoOperacionMock.Setup(c => c.GetCallbackChannel<IInvitacionPartidaCallback>())
-        //                         .Returns(callbackMock.Object);
-
-        //    manejador.contextoOperacion = contextoOperacionMock.Object;
-
-        //    // Act
-        //    manejador.AbrirCanalParaInvitaciones(usuario);
-
-        //    // Assert
-        //    Assert.AreEqual(callbackMock.Object, remitente.InvitacionPartidaCallBack);
-        //}
-
-        //[TestMethod]
-        //[ExpectedException(typeof(Exception))]
-        //public void AbrirCanalParaInvitaciones_Exception_CanalNoAbierto()
-        //{
-        //    // Arrange
-        //    var usuario = new Usuario
-        //    {
-        //        IdUsuario = 1,
-        //        Nombre = "UsuarioRemitente"
-        //    };
-        //    jugadoresConectadosDiccionario.TryAdd(usuario.IdUsuario, new UsuarioContexto { Nombre = "UsuarioRemitente" });
-
-        //    var contextoOperacionMock = new Mock<OperationContext>();
-        //    contextoOperacionMock.Setup(c => c.GetCallbackChannel<IInvitacionPartidaCallback>())
-        //                         .Throws(new Exception("Error simulado"));
-        //    manejador.contextoOperacion = contextoOperacionMock.Object;
-
-        //    // Act
-        //    manejador.AbrirCanalParaInvitaciones(usuario);
-
-        //    // Assert (Handled by ExpectedException)
-        //}
+            // Assert
+            Assert.IsFalse(resultado, "La invitación no debería haberse enviado porque el receptor no está conectado.");
+        }
     }
 }

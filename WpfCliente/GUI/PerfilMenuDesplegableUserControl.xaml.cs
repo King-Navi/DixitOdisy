@@ -20,7 +20,7 @@ namespace WpfCliente.GUI
         private void AbrirEditarVentana(object sender, RoutedEventArgs e)
         {
             Window menuVentana = Window.GetWindow(this);
-            EditarPerfilWindow editarPerfilVentana = new EditarPerfilWindow();
+            EditarPerfilWindow editarPerfilVentana = new EditarPerfilWindow(menuVentana);
             editarPerfilVentana.Show();
             Window MenuVentana = Window.GetWindow(this);  
             if (MenuVentana != null)

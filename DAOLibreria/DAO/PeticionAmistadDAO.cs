@@ -142,7 +142,7 @@ namespace DAOLibreria.DAO
                 using (var context = new DescribeloEntities())
                 {
                     var solicitud = context.PeticionAmistad
-                        .FirstOrDefault(s => s.idRemitente == idRemitente && s.idDestinatario == idDestinatario && s.estado == ESTADO_SOLICITUD_PENDIENTE);
+                        .FirstOrDefault(fila => fila.idRemitente == idRemitente && fila.idDestinatario == idDestinatario && fila.estado == ESTADO_SOLICITUD_PENDIENTE);
 
                     if (solicitud != null)
                     {

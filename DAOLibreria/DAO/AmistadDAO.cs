@@ -43,9 +43,9 @@ namespace DAOLibreria.DAO
             {
                 using (var context = new DescribeloEntities())
                 {
-                    return context.Amigo.Any(a =>
-                        (a.idMayor_usuario == idUsuarioRemitente && a.idMenor_usuario == idUsuarioDestinatario) ||
-                        (a.idMayor_usuario == idUsuarioDestinatario && a.idMenor_usuario == idUsuarioRemitente));
+                    return context.Amigo.Any(fila =>
+                        (fila.idMayor_usuario == idUsuarioRemitente && fila.idMenor_usuario == idUsuarioDestinatario) ||
+                        (fila.idMayor_usuario == idUsuarioDestinatario && fila.idMenor_usuario == idUsuarioRemitente));
                 }
             }
             catch (Exception)

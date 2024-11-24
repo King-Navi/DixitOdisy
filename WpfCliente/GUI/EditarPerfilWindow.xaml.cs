@@ -16,12 +16,13 @@ namespace WpfCliente.GUI
         private const string RECURSO_ESTILO_CORREO = "NormalTextBoxStyle";
         private const string RECURSO_ESTILO_CORREO_ERROR = "ErrorTextBoxStyle";
 
-        public EditarPerfilWindow()
+        public EditarPerfilWindow(Window menuVentana)
         {
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             InitializeComponent();
             CargarDatos();
             ActualizarUI();
+            this.Owner = menuVentana;
         }
 
         private void CargarDatos()
@@ -106,24 +107,59 @@ namespace WpfCliente.GUI
         {
             Usuario usuarioEditado = new Usuario();
 
-            bool realizoCambios = VerificarCambioImagen(usuarioEditado) 
-                || VerificarCambioCorreo(usuarioEditado) 
-                || VerificarCambioContrasenia(usuarioEditado);
-            if (realizoCambios)
-            {
-                if (VerificarCambioCorreo(usuarioEditado)){
-                    Correo.VerificarCorreo(usuarioEditado.Correo,this);
-                }
-                if (ValidarCampos())
-                {
-                    GuardarCambiosUsuario(usuarioEditado);
-                }
-            }
-            else
+            if (!HayCambiosPendientes(usuarioEditado))
             {
                 MostrarMensajeSinCambios();
+                return;
+            }
+
+            if (HayCambioDeCorreoInvalido(usuarioEditado))
+            {
+                MostrarMensajeCorreoInvalido();
+                return;
+            }
+
+            if (ValidarCampos())
+            {
+                GuardarCambiosUsuario(usuarioEditado);
             }
         }
+
+        private bool HayCambiosPendientes(Usuario usuarioEditado)
+        {
+            return VerificarCambioImagen(usuarioEditado)
+                || VerificarCambioCorreo(usuarioEditado)
+                || VerificarCambioContrasenia(usuarioEditado);
+        }
+
+        private bool HayCambioDeCorreoInvalido(Usuario usuarioEditado)
+        {
+            if (VerificarCambioCorreo(usuarioEditado))
+            {
+                if (!ValidacionesString.EsCorreoValido(textBoxCorreo.Text))
+                {
+                    return false;
+                }
+                return !Correo.VerificarCorreo(usuarioEditado.Correo, this);
+            }
+            return false;
+        }
+
+        private void MostrarMensajeSinCambios()
+        {
+            VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloEditarUsuario,
+                Idioma.mensajeNoHuboCambios,
+                this);
+        }
+
+        private void MostrarMensajeCorreoInvalido()
+        {
+            VentanasEmergentes.CrearVentanaEmergente(
+                Properties.Idioma.tituloCorreoInvalido,
+                Properties.Idioma.mensajeCorreoInvalido,
+                this);
+        }
+
 
         private bool VerificarCambioImagen(Usuario usuarioEditado)
         {
@@ -179,13 +215,6 @@ namespace WpfCliente.GUI
                     Idioma.mensajeUsuarioEditadoFallo, 
                     this);
             }
-        }
-
-        private void MostrarMensajeSinCambios()
-        {
-            VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloEditarUsuario, 
-                Idioma.mensajeNoHuboCambios, 
-                this);
         }
 
         private bool ValidarCampos()
@@ -271,14 +300,15 @@ namespace WpfCliente.GUI
             {
                 Conexion.CerrarUsuarioSesion();
                 Conexion.CerrarConexionesSalaConChat();
+                Conexion.CerrarConexionInvitacionesPartida();
             }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
-            IniciarSesion iniciarSesion = new IniciarSesion();
-            iniciarSesion.Show();
             this.Close();
+            this.Owner.Close();
+
         }
 
         private void ClicFlechaAtras(object sender, MouseButtonEventArgs e)

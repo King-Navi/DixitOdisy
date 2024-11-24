@@ -499,9 +499,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Logs\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Recursos\fondoMenu.png" />
   </ItemGroup>
@@ -517,7 +515,6 @@
     <Resource Include="Recursos\agregarAmigo.png" />
     <Resource Include="Recursos\flechaRecargar.png" />
     <Resource Include="Recursos\amigos.png" />
-    <Content Include="Sonidos\musicaFondo.mp3" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Recursos\LogoApp.ico" />

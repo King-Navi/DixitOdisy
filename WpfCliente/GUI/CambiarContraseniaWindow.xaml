@@ -67,10 +67,10 @@
                 <!-- Columna de información -->
                 <StackPanel Orientation="Vertical" Margin="10,0" Width="794">
                     <Label HorizontalAlignment="Center" Content="Edita tu contraseña" x:Name="labelContrasenia" Width="455" FontFamily="Lucida Sans Unicode" FontSize="33"/>
-                    <PasswordBox x:Name="textBoxContrasenia" Height="62" Width="454" FontSize="33"/>
+                    <PasswordBox x:Name="passwordBoxContrasenia" Height="41" Width="454" FontSize="27"/>
                     <Label x:Name="labelContraseniasNoCoinciden" Visibility="Collapsed" Content="Las contraseñas no coinciden" HorizontalAlignment="Left" Foreground="#FFF40000" Height="28" RenderTransformOrigin="0.426,0.32" Width="422" FontSize="14" FontWeight="Bold" FontFamily="Arial"/>
                     <Label HorizontalAlignment="Center" Content="Confirma tu contraseña" x:Name="labelRepetirContrasenia" FontFamily="Lucida Sans Unicode" FontSize="33" Width="449"/>
-                    <PasswordBox x:Name="textBoxRepetirContrasenia" Height="62" Width="454" FontSize="33"/>
+                    <PasswordBox x:Name="passwordBoxRepetirContrasenia" Height="43" Width="454" FontSize="27"/>
                     <Label x:Name="labelContraseniaInstruccion" Content="La contraseña debe contener:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Black" Height="31" RenderTransformOrigin="0.426,0.32" Width="217" FontSize="14" FontWeight="Bold" FontFamily="Arial"/>
                     <Label x:Name="labelContraseniaMinimo" Content="Al menos 5 caracteres" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF40000" Height="28" RenderTransformOrigin="0.426,0.32" Width="180" FontSize="14" FontWeight="Bold" FontFamily="Arial"/>
                     <Label x:Name="labelContraseniaMaximo" Content="No mas de 20 caracteres" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF40000" Height="28" RenderTransformOrigin="0.426,0.32" Width="233" FontSize="14" FontWeight="Bold" FontFamily="Arial"/>

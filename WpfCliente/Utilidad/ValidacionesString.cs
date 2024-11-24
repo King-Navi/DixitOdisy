@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace WpfCliente.Utilidad
 {
-    internal class ValidacionesString
+    public class ValidacionesString
     {
         private const string GAMERTAG_VALIDO = "^[a-zA-Z0-9_]+$";
         private const string EMAIL_VALIDO = "^(?=.{5,100}$)[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
@@ -20,6 +20,7 @@ namespace WpfCliente.Utilidad
             if (string.IsNullOrWhiteSpace(gamertag))
             {
                 validacionGamertag = false;
+                return validacionGamertag;
             }
             if (gamertag.Contains(" "))
             {

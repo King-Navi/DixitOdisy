@@ -12,6 +12,10 @@ namespace DAOLibreria.DAO
         private const string ESTADO_SOLICITUD_PENDIENTE = "Pendiente";
         public static bool GuardarSolicitudAmistad(int idUsuario1, int idUsuario2)
         {
+            if(idUsuario1 == idUsuario2) 
+            { 
+                return false; 
+            }
             try
             {
                 using (var context = new DescribeloEntities())

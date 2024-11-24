@@ -179,8 +179,9 @@ namespace DAOLibreria.DAO
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error en ValidarCredenciales: {ex.Message}");
             }
 
             return resultado;

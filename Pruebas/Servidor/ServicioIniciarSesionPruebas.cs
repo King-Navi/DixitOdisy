@@ -1,12 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Pruebas.DAO.Utilidades;
 using WcfServicioLibreria.Manejador;
 using WcfServicioLibreria.Utilidades;
 
 namespace Pruebas.Servidor
 {
     [TestClass]
-    public class ServicioIniciarSesionPruebas
+    public class ServicioIniciarSesionPruebas : ConfiguracionPruebaBD
     {
         private Mock<IContextoOperacion> mockContextoProvedor;
         private ManejadorPrincipal manejador;
@@ -23,22 +24,19 @@ namespace Pruebas.Servidor
         {
             // Arrange
             //Pre condicion, el usuario debe exisitir en BD
-            string gamertagValido = "unaay";
-            string contraseniaValida = "4327FE7955FF63FCF809A48C130B3546EFF6FEF893A396B4FEE083E853C0BA5C";
-            var usuarioEsperado = new DAOLibreria.ModeloBD.Usuario
+            string gamertagValido = "elrevo";
+            string contraseniaValida = "83DB3ABE8D166668D1B09657EB82F4E17361DE34BD389BA7B0566811DAA68703";
+            var usuarioEsperado = new DAOLibreria.ModeloBD.UsuarioPerfilDTO
             {
-                gamertag = gamertagValido,
-                idUsuario = 2
+                NombreUsuario = gamertagValido,
             };
-
 
             // Act
             var resultado = manejador.ValidarCredenciales(gamertagValido, contraseniaValida);
 
             // Assert
             Assert.IsNotNull(resultado, "El método debería devolver un usuario válido.");
-            Assert.AreEqual(usuarioEsperado.gamertag, resultado.Nombre, "El nombre del usuario debería coincidir.");
-            Assert.AreEqual(usuarioEsperado.idUsuario, resultado.IdUsuario, "El ID del usuario debería coincidir.");
+            Assert.AreEqual(usuarioEsperado.NombreUsuario, resultado.Nombre, "El nombre del usuario debería coincidir.");
         }
         [TestMethod]
         public void ValidarCredenciales_CredencialesIncorrectas_DeberiaRetornarNulo()

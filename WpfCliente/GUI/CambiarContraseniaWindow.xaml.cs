@@ -45,7 +45,7 @@ namespace WpfCliente.GUI
             {
                 if (ValidarCampos())
                 {
-                    EncriptarContrasenia(textBoxContrasenia.Password);
+                    EncriptarContrasenia(passwordBoxContrasenia.Password);
                     GuardarCambiosUsuario(usuarioEditado);
                 }
             }
@@ -81,7 +81,7 @@ namespace WpfCliente.GUI
         {
             bool isValid = true;
 
-            if (textBoxContrasenia.Password.Trim().Length >= 5)
+            if (passwordBoxContrasenia.Password.Trim().Length >= 5)
             {
                 labelContraseniaMinimo.Foreground = Brushes.Green;
             }
@@ -90,7 +90,7 @@ namespace WpfCliente.GUI
                 isValid = false;
             }
 
-            if (textBoxContrasenia.Password.Trim().Length <= 20)
+            if (passwordBoxContrasenia.Password.Trim().Length <= 20)
             {
                 labelContraseniaMaximo.Foreground = Brushes.Green;
             }
@@ -99,7 +99,7 @@ namespace WpfCliente.GUI
                 isValid = false;
             }
 
-            if (ValidacionesString.EsSimboloValido(textBoxContrasenia.Password))
+            if (ValidacionesString.EsSimboloValido(passwordBoxContrasenia.Password))
             {
                 labelContraseniaSimbolos.Foreground = Brushes.Green;
             }
@@ -108,7 +108,7 @@ namespace WpfCliente.GUI
                 isValid = false;
             }
 
-            if (textBoxContrasenia.Password != textBoxRepetirContrasenia.Password)
+            if (passwordBoxContrasenia.Password != passwordBoxRepetirContrasenia.Password)
             {
                 labelContraseniasNoCoinciden.Visibility = Visibility.Visible;
                 isValid = false;

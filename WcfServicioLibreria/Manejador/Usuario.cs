@@ -136,8 +136,9 @@ namespace WcfServicioLibreria.Manejador
                     usuario.IdUsuario = usuarioConsulta.IdUsuario;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error en ValidarCredenciales: {ex.Message}");
             }
 
             return usuario;

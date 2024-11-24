@@ -20,7 +20,7 @@ namespace WpfCliente.Utilidad
             });
             if (resultado)
             {
-                string codigoIngresado = AbrirVentanaModal(ventana);
+                string codigoIngresado = VentanaModal.AbrirVentanaModalCorreo(ventana);
                 return manejadorServicio.EjecutarServicio(servicio =>
                 {
                     return servicio.VerificarCodigo(codigoIngresado);
@@ -30,21 +30,6 @@ namespace WpfCliente.Utilidad
             {
                 return false;
             }
-        }
-
-        private static string AbrirVentanaModal(Window ventana)
-        {
-            string valorObtenido = null;
-            VerificarCorreoModalWindow ventanaModal = new VerificarCorreoModalWindow();
-            ventanaModal.Owner = ventana;
-            bool? resultado = ventanaModal.ShowDialog();
-
-            if (resultado == true)
-            {
-                valorObtenido = ventanaModal.ValorIngresado;
-            }
-
-            return valorObtenido;
         }
 
         public static bool VerificarCorreoConGamertag(string correo, string nombreUsaurio)

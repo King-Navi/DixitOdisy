@@ -369,6 +369,9 @@
   <data name="labelListaAmigos" xml:space="preserve">
     <value>Friends</value>
   </data>
+  <data name="menuItemPerfil" xml:space="preserve">
+    <value>Profile</value>
+  </data>
   <data name="menuItemEditarperfil" xml:space="preserve">
     <value>Edit profile</value>
   </data>
@@ -597,5 +600,20 @@
   </data>
   <data name="buttonRefrescar" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="tituloCorreoInvalido" xml:space="preserve">
+    <value>Invalid e-mail</value>
+  </data>
+  <data name="mensajeCorreoInvalido" xml:space="preserve">
+    <value>The email you entered is invalid</value>
+  </data>
+  <data name="labelInstruccionesVerificacionCorreo" xml:space="preserve">
+    <value>We sent you a code to the email you entered.</value>
+  </data>
+  <data name="labelConectado" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="labelDesconectado" xml:space="preserve">
+    <value>Offline</value>
   </data>
 </root>

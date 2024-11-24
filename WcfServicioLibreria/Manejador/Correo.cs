@@ -36,12 +36,12 @@ namespace WcfServicioLibreria.Manejador
         {
             using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587))
             {
-                smtpClient.Credentials = new NetworkCredential(correo, contrasenia);
+                smtpClient.Credentials = new NetworkCredential(CORREO, CONTRASENIA);
                 smtpClient.EnableSsl = true;
 
                 string asunto = "Codigo de verificación";
                 string cuerpo = "Tu código es: " + codigo;
-                using (MailMessage mail = new MailMessage(correo, correoUsuario, asunto, cuerpo))
+                using (MailMessage mail = new MailMessage(CORREO, correoUsuario, asunto, cuerpo))
                 {
                     await smtpClient.SendMailAsync(mail);
                 }

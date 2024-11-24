@@ -29,6 +29,7 @@ namespace WpfCliente.GUI
         public void ActualizarUI()
         {
             this.Title = Properties.Idioma.tituloIngresarCodigoCorreo;
+            labelInstruccionesVerificacionCorreo.Content = Properties.Idioma.labelInstruccionesVerificacionCorreo;
             labelIngresarCodigo.Content = Properties.Idioma.labelIngresarCodigoCorreo;
             labelCodigoInvalido.Content = Properties.Idioma.labelInvalido;
             buttonAceptar.Content = Properties.Idioma.buttonAceptar;
@@ -62,7 +63,9 @@ namespace WpfCliente.GUI
         {
             this.Title = Properties.Idioma.tituloIngresarCorreo;
             labelIngresarCodigo.Content = Properties.Idioma.labelIngresarCorreo;
-            textBoxCodigo.MaxLength = 50;
+            labelCodigoInvalido.Visibility = Visibility.Collapsed;
+            labelInstruccionesVerificacionCorreo.Visibility = Visibility.Collapsed;
+            textBoxCodigo.MaxLength = 100;
         }
     }
 }

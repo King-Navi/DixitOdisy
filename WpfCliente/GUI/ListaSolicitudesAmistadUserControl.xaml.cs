@@ -50,7 +50,10 @@ namespace WpfCliente.GUI
                         return false;
                     }
                     Solicitudes.Clear();
-                    Solicitudes = new ObservableCollection<SolicitudAmistad>(listaSolicitudes);
+                    foreach (var solicitud in listaSolicitudes)
+                    {
+                        Solicitudes.Add(solicitud);
+                    }
 
                     return true;
                 }

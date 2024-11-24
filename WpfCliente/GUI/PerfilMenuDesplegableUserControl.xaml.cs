@@ -49,7 +49,6 @@ namespace WpfCliente.GUI
         public void ActualizarUI()
         {
             menuItemEditarPerfil.Header = Idioma.menuItemEditarperfil;
-            menuItemEstadisticas.Header = Idioma.menuItemEstadisticas;
             menuItemCerrarSesion.Header = Idioma.buttonCerrarSesion;
             menuItemPerfil.Header = Idioma.menuItemPerfil;
         }

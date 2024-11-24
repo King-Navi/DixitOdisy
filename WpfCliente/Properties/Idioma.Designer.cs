@@ -385,6 +385,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Conectado.
+        /// </summary>
+        public static string labelConectado {
+            get {
+                return ResourceManager.GetString("labelConectado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configuración de la partida.
         /// </summary>
         public static string labelConfiguracionPartida {
@@ -457,11 +466,20 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Correo electronico.
+        ///   Looks up a localized string similar to Correo electrónico.
         /// </summary>
         public static string labelCorreoE {
             get {
                 return ResourceManager.GetString("labelCorreoE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Desconectado .
+        /// </summary>
+        public static string labelDesconectado {
+            get {
+                return ResourceManager.GetString("labelDesconectado", resourceCulture);
             }
         }
         
@@ -534,6 +552,15 @@ namespace WpfCliente.Properties {
         public static string labelInicioSesion {
             get {
                 return ResourceManager.GetString("labelInicioSesion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Te enviamos un código al correo que ingresaste.
+        /// </summary>
+        public static string labelInstruccionesVerificacionCorreo {
+            get {
+                return ResourceManager.GetString("labelInstruccionesVerificacionCorreo", resourceCulture);
             }
         }
         
@@ -876,6 +903,15 @@ namespace WpfCliente.Properties {
         public static string mensajeContraseniasNoCoinciden {
             get {
                 return ResourceManager.GetString("mensajeContraseniasNoCoinciden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El correo que ingresaste es inválido.
+        /// </summary>
+        public static string mensajeCorreoInvalido {
+            get {
+                return ResourceManager.GetString("mensajeCorreoInvalido", resourceCulture);
             }
         }
         
@@ -1245,6 +1281,15 @@ namespace WpfCliente.Properties {
         public static string tituloCodigoCopiado {
             get {
                 return ResourceManager.GetString("tituloCodigoCopiado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Correo inválido.
+        /// </summary>
+        public static string tituloCorreoInvalido {
+            get {
+                return ResourceManager.GetString("tituloCorreoInvalido", resourceCulture);
             }
         }
         

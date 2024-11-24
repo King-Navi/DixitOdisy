@@ -11,6 +11,7 @@
         WindowStartupLocation="CenterScreen"
         Background="Gray"
         ResizeMode="NoResize"
+        Closing="CerrandoVentana"
         Icon="/Recursos/LogoApp.ico">
 
     <Window.Resources>
@@ -88,10 +89,10 @@
             <Border CornerRadius="10" BorderThickness="1" BorderBrush="Transparent" Margin="416,130,410,377" Grid.Row="2" >
                 <PasswordBox x:Name="passwordBoxContrasenia" MaxLength="20"  FontSize="22" FontFamily="Lucida Sans Unicode Bold" 
                              Foreground="Black" VerticalContentAlignment="Center" BorderBrush="Transparent" 
-                             Background="Transparent" KeyDown="TeclaPresionada"  />
+                             Background="Transparent" KeyDown="TeclaPresionadaEnter"  />
             </Border>
 
-            <Button x:Name="buttonOlvidarContrasenia" Margin="413,181,631,351" Grid.Row="2" Foreground="#8dadb6" Background="Transparent" BorderThickness="0" Cursor="Hand" Click="ClicOlvidarContrasenia"/>
+            <Button x:Name="buttonOlvidarContrasenia" Margin="413,181,631,351" Grid.Row="2" Foreground="#8dadb6" Background="Transparent" BorderThickness="0" Cursor="Hand" Click="ClicButtonOlvidarContrasenia"/>
 
             <Button x:Name="buttonIniciarSesion" Background="#E0DCC7" Foreground="Black" BorderBrush="Gray" BorderThickness="2"
             FontFamily="Lucida Sans Unicode" FontSize="24" Content="Iniciar sesión" 

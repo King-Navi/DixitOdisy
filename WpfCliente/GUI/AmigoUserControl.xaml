@@ -11,7 +11,7 @@
             <Grid Height="80" Width="203" d:Background="Plum">
                 <Image x:Name="imageAmigo" Source="{Binding Foto}"  d:Source="pack://application:,,,/WpfCliente;component/Recursos/profile.jpg" Width="60" Height="60" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,3,0,0" ></Image>
                 <Label x:Name="labelNombreAmigo" Content="{Binding Nombre}" FontFamily="Lucida Sans Unicode Bold" d:Content="PedroSanchz27" Canvas.Left="85" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="81,0,0,0"></Label>
-                <Label x:Name="labelEstadoAmigo" Content="{Binding Estado}" FontFamily="Lucida Sans Unicode" d:Content="En partida" Canvas.Left="85" Canvas.Top="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="81,19,0,0"></Label>
+                <Label x:Name="labelEstadoAmigo" Content="{Binding EstadoActual}" FontFamily="Lucida Sans Unicode" d:Content="En partida" Canvas.Left="85" Canvas.Top="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="81,19,0,0"></Label>
                 <Label x:Name="labelUltimaConexion" d:Content="Ayer" Content="{Binding UltimaConexion}" HorizontalAlignment="Center" Margin="0,40,0,11"  />
             </Grid>
         </Border>

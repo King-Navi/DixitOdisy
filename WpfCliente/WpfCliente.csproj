@@ -207,6 +207,7 @@
     <Compile Include="Utilidad\ComandoRele.cs" />
     <Compile Include="Utilidad\Correo.cs" />
     <Compile Include="Utilidad\EstadisticaUsuario.cs" />
+    <Compile Include="Utilidad\Servidor\Amigo.cs" />
     <Compile Include="Utilidad\Servidor\ChatMensaje.cs" />
     <Compile Include="Utilidad\Conexion.cs" />
     <Compile Include="Utilidad\CambiarIdioma.cs" />
@@ -229,6 +230,7 @@
     <Compile Include="Utilidad\SingletonCliente.cs" />
     <Compile Include="Utilidad\ValidacionExistenciaJuego.cs" />
     <Compile Include="Utilidad\ValidacionesString.cs" />
+    <Compile Include="Utilidad\VentanaModal.cs" />
     <Compile Include="Utilidad\VentanasEmergentes.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -240,10 +242,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Properties\Idioma.en-US.resx" />
+    <EmbeddedResource Include="Properties\Idioma.en-US.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Idioma.es-MX.resx" />
     <EmbeddedResource Include="Properties\Idioma.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
       <LastGenOutput>Idioma.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Connected Services\ServidorDescribelo\service.wsdl" />

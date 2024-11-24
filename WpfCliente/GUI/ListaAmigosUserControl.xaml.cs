@@ -20,7 +20,7 @@ namespace WpfCliente.GUI
         private DateTime ultimaActualizacion;
         private const string FORMATO_HORA = "HH:mm:ss";
         private const int VALOR_PARA_INTERVALO = 500;
-        private const string UTILIMA_CONEXION_POR_DEFECTO = "";
+        private const string UTILIMA_CONEXION_CONECTADO = "";
         public ListaAmigosUserControl()
         {
             InitializeComponent();
@@ -77,9 +77,15 @@ namespace WpfCliente.GUI
             }
             else
             {
-                if (amigo.Estado != EstadoAmigo.Desconectado)
+                if (amigo.Estado == EstadoAmigo.Desconectado)
                 {
-                    amigo.UltimaConexion = UTILIMA_CONEXION_POR_DEFECTO;
+                    amigo.EstadoActual = Properties.Idioma.labelDesconectado;
+                }
+                if (amigo.Estado == EstadoAmigo.Conectado)
+                {
+                    amigo.EstadoActual = Properties.Idioma.labelConectado;
+                    amigo.UltimaConexion = UTILIMA_CONEXION_CONECTADO;
+
                 }
                 Amigos.Add(amigo);
             }
@@ -99,7 +105,7 @@ namespace WpfCliente.GUI
                 amigoExistente.Foto = amigo.Foto;
                 if (amigoExistente.Estado != EstadoAmigo.Desconectado)
                 {
-                    amigoExistente.UltimaConexion = UTILIMA_CONEXION_POR_DEFECTO;
+                    amigoExistente.UltimaConexion = UTILIMA_CONEXION_CONECTADO;
                 }
             }
             else

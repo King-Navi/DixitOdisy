@@ -48,7 +48,8 @@ namespace WpfCliente.Utilidad
             catch (FormatException)
             {
                 validacionCorreo = false;
-            }catch(Exception)
+            }
+            catch(Exception)
             {
                 validacionCorreo = false;
             }

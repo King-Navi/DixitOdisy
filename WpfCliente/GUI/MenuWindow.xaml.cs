@@ -19,7 +19,6 @@ namespace WpfCliente.GUI
         private DispatcherTimer timerNotificacion;
         private InvitacionPartida invitacionActual;
         private EstadisticaUsuario estadisticas;
-        private const int TIEMPO_MAXIMO_PARA_UNIRSE = 75;
         public MenuWindow()
         {
             InitializeComponent();
@@ -159,7 +158,7 @@ namespace WpfCliente.GUI
             }
             else
             {
-                codigoSala = AbrirVentanaModal();
+                codigoSala = VentanaModal.AbrirVentanaModalSala(this);
             }
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
@@ -190,30 +189,6 @@ namespace WpfCliente.GUI
             perfilMenuDesplegable.IsEnabled = esHabilitado;
             amigosUserControl.IsEnabled = esHabilitado;
             windowMenu.IsEnabled = esHabilitado;
-        }
-
-        private string AbrirVentanaModal()
-        {
-            string valorObtenido = null;
-            UnirseSalaModalWindow ventanaModal = new UnirseSalaModalWindow();
-            try
-            {
-                ventanaModal.Owner = this;
-
-            }
-            catch (Exception excepcion)
-            { 
-                ManejadorExcepciones.ManejarComponentErrorException(excepcion);
-            }            
-            bool? resultado = ventanaModal.ShowDialog();
-
-            if (resultado == true)
-            {
-                valorObtenido = ventanaModal.ValorIngresado;
-            }
-            
-
-            return valorObtenido;
         }
 
         private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
@@ -260,7 +235,7 @@ namespace WpfCliente.GUI
         private void ConfigurarTemporizadorNotificacion()
         {
             timerNotificacion = new DispatcherTimer();
-            timerNotificacion.Interval = TimeSpan.FromMilliseconds(TIEMPO_MAXIMO_PARA_UNIRSE); 
+            timerNotificacion.Interval = TimeSpan.FromMilliseconds(MAXIMO_TIEMPO_NOTIFICACION); 
             timerNotificacion.Tick += ContadorNotificacion;
         }
 

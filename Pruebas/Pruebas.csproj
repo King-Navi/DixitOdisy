@@ -77,6 +77,7 @@
     <Compile Include="Cliente\ValidacionesStringPruebas.cs" />
     <Compile Include="DAO\EstadisticasDAONoConexion_Prueba.cs" />
     <Compile Include="DAO\EstadisticasDAO_Prueba.cs" />
+    <Compile Include="DAO\PeticionDAO_Prueba.cs" />
     <Compile Include="DAO\Utilidades\ConfiguracionPruebaBD.cs" />
     <Compile Include="DAO\Utilidades\ConfiguracionPruebaBDInvalida.cs" />
     <Compile Include="Servidor\ServicioCorreo.cs" />

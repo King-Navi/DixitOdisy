@@ -9,7 +9,6 @@ namespace WpfCliente.Utilidad
         private const string NOMBRE_LOG = "Log";
         private const string SEPARADOR_NOMBRE_FECHA = "_";
         private const string EXTENSION_LOG = ".txt";
-        private const string RUTA_RELATIVA_LOGS = "../../Logs\\";
         private static ILogger logger;
 
         private static void ConfigurarLogger(string logFilePath)
@@ -24,10 +23,15 @@ namespace WpfCliente.Utilidad
         {
             DateTime fechaActual = DateTime.Today;
             string fecha = fechaActual.ToString(FORMATO_FECHA);
-
             string archivoLoggerNombre = NOMBRE_LOG + SEPARADOR_NOMBRE_FECHA + fecha + EXTENSION_LOG;
-            string rutaAbsolutaArchivo = Utilidades.ConstruirRutaAbsoluta(RUTA_RELATIVA_LOGS);
-            string rutaLogger = rutaAbsolutaArchivo + archivoLoggerNombre;
+
+            string rutaBase = AppDomain.CurrentDomain.BaseDirectory;
+            string rutaLogs = System.IO.Path.Combine(rutaBase, "Logs");
+            if (!System.IO.Directory.Exists(rutaLogs))
+            {
+                System.IO.Directory.CreateDirectory(rutaLogs);
+            }
+            string rutaLogger = System.IO.Path.Combine(rutaLogs, archivoLoggerNombre);
 
             return rutaLogger;
         }

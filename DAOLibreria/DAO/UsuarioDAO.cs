@@ -169,7 +169,7 @@ namespace DAOLibreria.DAO
                 {
                     datosUsuarioCuenta = context.UsuarioCuenta
                                                  .Include("Usuario")
-                                                 .SingleOrDefault(cuenta => cuenta.gamertag == gamertag); //&& contrasenia.Equals(cuenta.hashContrasenia, StringComparison.OrdinalIgnoreCase) 
+                                                 .SingleOrDefault(cuenta => cuenta.gamertag == gamertag); //&& contrasenia.Equals(cuenta.hashContrasenia, StringComparison.OrdinalIgnoreCase); 
                     if (datosUsuarioCuenta != null)
                     {
                         var contraseniaCuenta = datosUsuarioCuenta.hashContrasenia.ToUpper();
@@ -182,8 +182,9 @@ namespace DAOLibreria.DAO
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine($"Error en ValidarCredenciales: {ex.Message}");
             }
 
             return resultado;

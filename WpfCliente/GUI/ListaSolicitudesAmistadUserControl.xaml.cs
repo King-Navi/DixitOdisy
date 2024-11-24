@@ -44,7 +44,7 @@ namespace WpfCliente.GUI
                 try
                 {
                     var listaSolicitudes = Conexion.Amigos.ObtenerSolicitudesAmistad(usuarioActual);
-                    if (listaSolicitudes == null || listaSolicitudes.Any())
+                    if (listaSolicitudes == null || listaSolicitudes.Count() == 0)
                     {
                         labelNoHaySolicitudes.Visibility = Visibility.Visible;
                         return false;

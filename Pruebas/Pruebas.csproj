@@ -62,8 +62,8 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cliente\ValidacionesStringPruebas.cs" />
+    <Compile Include="DAO\AmigoDAO_Prueba.cs" />
     <Compile Include="DAO\EstadisticasDAONoConexion_Prueba.cs" />
     <Compile Include="DAO\EstadisticasDAO_Prueba.cs" />
     <Compile Include="DAO\ExpulsionDAONoConexion_Prueba.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="DAO\VetoDAONoConexion_Prueba.cs" />
     <Compile Include="DAO\VetoDAO_Prueba.cs" />
     <Compile Include="Servidor\ManejarDeVetos.cs" />
+    <Compile Include="Servidor\ServicioAmigo.cs" />
     <Compile Include="Servidor\ServicioCorreo.cs" />
     <Compile Include="Servidor\ServicioInvitacionPartida.cs" />
     <Compile Include="Servidor\ServicioPartida.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="Servidor\ServicioSala.cs" />
     <Compile Include="Servidor\ServicioSalaJugador.cs" />
     <Compile Include="Servidor\ServicioUsuario.cs" />
+    <Compile Include="Servidor\Utilidades\AmistadCallbackImpl.cs" />
     <Compile Include="Servidor\Utilidades\ICommunicationObjectImpl.cs" />
     <Compile Include="Servidor\Utilidades\PartidaCallbackImpl.cs" />
     <Compile Include="Servidor\Utilidades\SalaCallbackImpl.cs" />

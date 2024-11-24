@@ -37,16 +37,15 @@ namespace DAOLibreria.DAO
             return resultado;
         }
 
-
-        public static bool SonAmigos(int idUsuario1, int idUsuario2)
+        public static bool SonAmigos(int idUsuarioRemitente, int idUsuarioDestinatario)
         {
             try
             {
                 using (var context = new DescribeloEntities())
                 {
                     return context.Amigo.Any(a =>
-                        (a.idMayor_usuario == idUsuario1 && a.idMenor_usuario == idUsuario2) ||
-                        (a.idMayor_usuario == idUsuario2 && a.idMenor_usuario == idUsuario1));
+                        (a.idMayor_usuario == idUsuarioRemitente && a.idMenor_usuario == idUsuarioDestinatario) ||
+                        (a.idMayor_usuario == idUsuarioDestinatario && a.idMenor_usuario == idUsuarioRemitente));
                 }
             }
             catch (Exception)
@@ -55,8 +54,33 @@ namespace DAOLibreria.DAO
             }
         }
 
-
-
+        public static bool EliminarAmigo(int idUsuarioMayor, int idUsuarioMenor)
+        {
+            try
+            {
+                using (var context = new DescribeloEntities())
+                {
+                    int idMayor = Math.Max(idUsuarioMayor, idUsuarioMenor);
+                    int idMenor = Math.Min(idUsuarioMayor, idUsuarioMenor);
+                    var amistad = context.Amigo
+                                         .SingleOrDefault(a => a.idMayor_usuario == idMayor && a.idMenor_usuario == idMenor);
+                    if (amistad != null)
+                    {
+                        context.Amigo.Remove(amistad);
+                        context.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }
 

@@ -1,16 +1,23 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using System.ServiceModel;
+using System.Text;
+using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Modelo;
 
 namespace Pruebas.Servidor.Utilidades
 {
-    public class UsuarioSesionCallbackImpl : IUsuarioSesionCallback, ICommunicationObject
+    public class AmistadCallbackImpl : IAmistadCallBack , ICommunicationObject
     {
+        ConcurrentDictionary<string, Amigo> amigos = new ConcurrentDictionary<string, Amigo>();
         public bool SesionAbierta { get; private set; }
 
         public CommunicationState State { get; private set; } = CommunicationState.Opened;
 
-        public UsuarioSesionCallbackImpl()
+        public AmistadCallbackImpl()
         {
             SesionAbierta = false;
         }
@@ -20,48 +27,53 @@ namespace Pruebas.Servidor.Utilidades
         public event EventHandler Faulted;
         public event EventHandler Opened;
         public event EventHandler Opening;
-
-        public void ObtenerSessionJugadorCallback(bool sesionAbierta)
+        public void CambiarEstadoAmigo(Amigo amigo)
         {
-            SesionAbierta = sesionAbierta;
+            amigos.AddOrUpdate(amigo.Nombre,
+                amigo,                  
+                (clave, viejoValor) => amigo    
+            );
+
         }
+
+        public void EliminarAmigoCallback(Amigo amigo)
+        {
+            amigos.TryRemove(amigo.Nombre, out _);
+        }
+
+        public void ObtenerAmigoCallback(Amigo amigo)
+        {
+            amigos.TryAdd(amigo.Nombre, amigo);
+
+        }
+
 
         public void Abort()
         {
-            State = CommunicationState.Closing;
-            Closing?.Invoke(this, EventArgs.Empty);
-            State = CommunicationState.Closed;
-            Closed?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void Close()
-        {
-            State = CommunicationState.Closing;
-            Closing?.Invoke(this, EventArgs.Empty);
             State = CommunicationState.Closed;
             Closed?.Invoke(this, EventArgs.Empty);
         }
 
         public void Close(TimeSpan timeout)
         {
-            State = CommunicationState.Closing;
-            Closing?.Invoke(this, EventArgs.Empty);
             State = CommunicationState.Closed;
             Closed?.Invoke(this, EventArgs.Empty);
         }
 
-        public void Open()
+        public void Close()
         {
-            State = CommunicationState.Opening;
-            Opening?.Invoke(this, EventArgs.Empty);
-            State = CommunicationState.Opened;
-            Opened?.Invoke(this, EventArgs.Empty);
+            State = CommunicationState.Closed;
+            Closed?.Invoke(this, EventArgs.Empty);
         }
 
         public void Open(TimeSpan timeout)
         {
-            State = CommunicationState.Opening;
-            Opening?.Invoke(this, EventArgs.Empty);
+            State = CommunicationState.Opened;
+            Opened?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void Open()
+        {
             State = CommunicationState.Opened;
             Opened?.Invoke(this, EventArgs.Empty);
         }

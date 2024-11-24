@@ -1,11 +1,11 @@
 ﻿using DAOLibreria;
+using DAOLibreria.DAO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Manejador;
-using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Utilidades;
 
 namespace Pruebas.Servidor
@@ -14,6 +14,9 @@ namespace Pruebas.Servidor
     [TestClass]
     public class ServicioUsuario
     {
+        private const int ID_INVALIDO = -1;
+        private const int ID_INEXISTE = 9999;
+        private const int ID_VALIDO = 1;
         private Mock<IContextoOperacion> mockContextoProvedor;
         private ManejadorPrincipal manejador;
 
@@ -29,7 +32,7 @@ namespace Pruebas.Servidor
         {
             // Arrange
             //Pre condicion, el usuario debe exisitir en BD
-            var usuarioEditado = new Usuario
+            var usuarioEditado = new WcfServicioLibreria.Modelo.Usuario
             {
                 IdUsuario = 4,  //ID de un usuario existente
                 Nombre = "ivan",
@@ -49,9 +52,10 @@ namespace Pruebas.Servidor
         {
             // Arrange
             //Pre condicion, el usuario debe exisitir en BD
-            var usuarioEditado = new Usuario
+            var usuarioEditado = new WcfServicioLibreria.Modelo.Usuario
             {
-                IdUsuario = 1, // ID de un usuario existente
+                // ID de un usuario existente
+                IdUsuario = 1, 
                 Nombre = "egege",
                 Correo = null,
                 FotoUsuario = null,
@@ -68,7 +72,7 @@ namespace Pruebas.Servidor
         public void EditarUsuario_CunadoTodoEsNulo_RetornaFalse()
         {
             // Arrange
-            var usuarioEditado = new Usuario();
+            var usuarioEditado = new WcfServicioLibreria.Modelo.Usuario();
 
             // Act
             bool resultado = manejador.EditarUsuario(usuarioEditado);
@@ -137,6 +141,42 @@ namespace Pruebas.Servidor
             var respuesta= Task.Run(async() => await manejador.PingBDAsync());
             //Assert
             Assert.IsFalse(respuesta.Result, "El resutlado es falase");
+        }
+        [TestMethod]
+        public void ObtenerUsuarioPorId_CuandoIdExiste_DeberiaRetornarUsuario()
+        {
+            // Arrange
+            // Un ID que existe en la base de datos
+
+            // Act
+            DAOLibreria.ModeloBD.Usuario resultado = UsuarioDAO.ObtenerUsuarioPorId(ID_VALIDO);
+
+            // Assert
+            Assert.IsNotNull(resultado, "El método debería devolver un usuario válido.");
+            Assert.AreEqual(ID_VALIDO, resultado.idUsuario, "El ID del usuario debería coincidir.");
+        }
+        [TestMethod]
+        public void ObtenerUsuarioPorId_CuandoIdNoExiste_DeberiaRetornarNull()
+        {
+            // Arrange
+            // Un ID que no existe en la base de datos
+
+            // Act
+            DAOLibreria.ModeloBD.Usuario resultado = UsuarioDAO.ObtenerUsuarioPorId(ID_INEXISTE);
+
+            // Assert
+            Assert.IsNull(resultado, "El método debería devolver null cuando el ID no existe.");
+        }
+        [TestMethod]
+        public void ObtenerUsuarioPorId_CuandoIdEsInvalido_DeberiaRetornarNull()
+        {
+            // Arrange
+            // Un ID inválido
+            // Act
+            DAOLibreria.ModeloBD.Usuario resultado = UsuarioDAO.ObtenerUsuarioPorId(ID_INVALIDO);
+
+            // Assert
+            Assert.IsNull(resultado, "El método debería devolver null cuando el ID es inválido.");
         }
     }
 }

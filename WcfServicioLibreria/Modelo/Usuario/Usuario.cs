@@ -19,6 +19,14 @@ namespace WcfServicioLibreria.Modelo
         private Enumerador.EstadoUsuario estadoJugador;
         private Stream fotoUsuario;
 
+        public Usuario() { }
+
+        public Usuario(string _nombre, Stream _fotoUsuario)
+        {
+            fotoUsuario = _fotoUsuario;
+            nombre = _nombre;
+        }
+
         #endregion Campos
 
         #region Propiedades

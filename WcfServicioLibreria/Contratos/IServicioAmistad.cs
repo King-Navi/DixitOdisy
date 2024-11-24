@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Modelo.Excepciones;
 
 namespace WcfServicioLibreria.Contratos
 {
@@ -36,7 +37,9 @@ namespace WcfServicioLibreria.Contratos
         /// <param name="idRemitente">El identificador del usuario que envió la solicitud.</param>
         /// <param name="idDestinatario">El identificador del usuario que recibe la solicitud.</param>
         /// <returns>True si la solicitud fue aceptada con éxito, False en caso contrario.</returns>
+        /// <exception cref="ServidorFalla">Se lanza si tiene veto.</exception>
         [OperationContract]
+        [FaultContract(typeof(ServidorFalla))]
         bool AceptarSolicitudAmistad(int idRemitente, int idDestinatario);
         /// <summary>
         /// Rechaza una solicitud de amistad.
@@ -54,6 +57,24 @@ namespace WcfServicioLibreria.Contratos
         /// <returns>True si son amigos, False en caso contrario.</returns>
         [OperationContract]
         bool SonAmigos(string usuarioRemitente, string destinatario);
+        /// <summary>
+        /// Elimina un amigo de la lista de contactos del usuario remitente.
+        /// </summary>
+        /// <param name="usuarioRemitente">El identificador o nombre del usuario que solicita la eliminación de un amigo.</param>
+        /// <param name="destinatario">El identificador o nombre del amigo a eliminar.</param>
+        /// <returns>
+        /// True si el amigo fue eliminado exitosamente; False en caso contrario, incluyendo situaciones donde el amigo no existe
+        /// en la lista del usuario remitente o si hay un problema de acceso a la base de datos.
+        /// </returns>
+        /// <remarks>
+        /// Este método procesa la solicitud de eliminación verificando primero que el destinatario exista en la lista de amigos
+        /// del remitente. Posteriormente, procede con la eliminación y retorna un valor booleano para indicar el éxito o fallo de la operación.
+        /// Es importante manejar adecuadamente los errores durante la ejecución para evitar inconsistencias en los datos de usuario.
+        /// </remarks>
+        /// <exception cref="ServidorFalla">Se lanza si tiene veto.</exception>
+        [OperationContract]
+        [FaultContract(typeof(ServidorFalla))]
+        bool EliminarAmigo(string usuarioRemitente, string destinatario);
     }
     [ServiceContract]
     public interface IAmistadCallBack
@@ -70,5 +91,17 @@ namespace WcfServicioLibreria.Contratos
         /// <param name="amigo">El amigo cuya información se está actualizando.</param>
         [OperationContract]
         void ObtenerAmigoCallback(Amigo amigo);
+        /// <summary>
+        /// Notifica al cliente que un amigo ha sido eliminado de la lista de amigos del usuario.
+        /// </summary>
+        /// <param name="amigo">El objeto 'Amigo' que representa al amigo eliminado, conteniendo todos los detalles relevantes como el identificador, nombre, etc.</param>
+        /// <remarks>
+        /// Este método es utilizado como un callback para informar al cliente de la eliminación exitosa de un amigo.
+        /// Debe ser implementado por el cliente para manejar la actualización de su interfaz de usuario o lógica de negocio
+        /// conforme a la eliminación del amigo.
+        /// Es importante asegurar que los datos del objeto 'Amigo' se manejen de manera segura y conforme a las políticas de privacidad.
+        /// </remarks>
+        [OperationContract]
+        void  EliminarAmigoCallback(Amigo amigo);
     }
 }

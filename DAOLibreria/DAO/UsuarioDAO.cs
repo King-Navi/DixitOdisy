@@ -209,6 +209,23 @@ namespace DAOLibreria.DAO
             return usuario;
         }
 
+        public static Usuario ObtenerUsuarioPorId(int idUsuario)
+        {
+            Usuario usuario = null;
+            try
+            {
+                using (var context = new DescribeloEntities())
+                {
+                    usuario = context.Usuario
+                                     .SingleOrDefault(userFila => userFila.idUsuario == idUsuario);
+                }
+            }
+            catch (Exception)
+            {
+            }
+            return usuario;
+        }
+
         /// <summary>
         /// Obtiene el ID de un usuario por su gamertag.
         /// </summary>

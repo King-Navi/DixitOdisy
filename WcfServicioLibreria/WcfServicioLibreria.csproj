@@ -129,6 +129,7 @@
     <Compile Include="Manejador\ChatMotro.cs" />
     <Compile Include="Manejador\Usuario.cs" />
     <Compile Include="Modelo\Amistad\Amigo.cs" />
+    <Compile Include="Modelo\Excepciones\ServidorFalla.cs" />
     <Compile Include="Modelo\Excepciones\SolicitudAmistadFalla.cs" />
     <Compile Include="Modelo\Evento\DesconectorEventoManejador.cs" />
     <Compile Include="Modelo\Chat\MultiChat.cs" />

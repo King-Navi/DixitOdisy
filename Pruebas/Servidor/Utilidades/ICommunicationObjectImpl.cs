@@ -6,8 +6,8 @@ namespace Pruebas.Servidor.Utilidades
 {
     public class ICommunicationObjectImpl : ICommunicationObject
     {
-        private CommunicationState _state = CommunicationState.Opened;
-        public CommunicationState State => _state;
+
+        public CommunicationState State { get; private set; } = CommunicationState.Opened;
         public event EventHandler Closed;
         public event EventHandler Closing;
         public event EventHandler Faulted;
@@ -16,10 +16,33 @@ namespace Pruebas.Servidor.Utilidades
 
         public void Abort()
         {
-            _state = CommunicationState.Faulted;
-            Faulted?.Invoke(this, EventArgs.Empty);
+            State = CommunicationState.Closed;
+            Closed?.Invoke(this, EventArgs.Empty);
         }
 
+        public void Close(TimeSpan timeout)
+        {
+            State = CommunicationState.Closed;
+            Closed?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void Close()
+        {
+            State = CommunicationState.Closed;
+            Closed?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void Open(TimeSpan timeout)
+        {
+            State = CommunicationState.Opened;
+            Opened?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void Open()
+        {
+            State = CommunicationState.Opened;
+            Opened?.Invoke(this, EventArgs.Empty);
+        }
         public IAsyncResult BeginClose(AsyncCallback callback, object state)
         {
             return BeginClose(TimeSpan.FromSeconds(1), callback, state);
@@ -42,23 +65,6 @@ namespace Pruebas.Servidor.Utilidades
             return new CompletedAsyncResult(callback, state);
         }
 
-        public void Close()
-        {
-            _state = CommunicationState.Closing;
-            Closing?.Invoke(this, EventArgs.Empty);
-
-            // Simular retraso de cierre
-            Thread.Sleep(100);
-
-            _state = CommunicationState.Closed;
-            Closed?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void Close(TimeSpan timeout)
-        {
-            Close();
-        }
-
         public void EndClose(IAsyncResult result)
         {
             if (!(result is CompletedAsyncResult))
@@ -71,21 +77,6 @@ namespace Pruebas.Servidor.Utilidades
             if (!(result is CompletedAsyncResult))
                 throw new ArgumentException("El resultado proporcionado no es válido para EndOpen.");
             // Opcional: Incluir lógica adicional si se requiere.
-        }
-
-        public void Open()
-        {
-            _state = CommunicationState.Opening;
-            Opening?.Invoke(this, EventArgs.Empty);
-
-
-            _state = CommunicationState.Opened;
-            Opened?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void Open(TimeSpan timeout)
-        {
-            Open();
         }
 
         private class CompletedAsyncResult : IAsyncResult

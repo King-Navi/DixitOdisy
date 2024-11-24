@@ -10,9 +10,9 @@ namespace DAOLibreria.DAO
     public static class PeticionAmistadDAO
     {
         private const string ESTADO_SOLICITUD_PENDIENTE = "Pendiente";
-        public static bool GuardarSolicitudAmistad(int idUsuario1, int idUsuario2)
+        public static bool GuardarSolicitudAmistad(int idUsuarioRemitente, int idUsuarioDestinatario)
         {
-            if(idUsuario1 == idUsuario2) 
+            if(idUsuarioRemitente == idUsuarioDestinatario) 
             { 
                 return false; 
             }
@@ -22,8 +22,8 @@ namespace DAOLibreria.DAO
                 {
                     var nuevaSolicitud = new PeticionAmistad
                     {
-                        idRemitente = idUsuario1,
-                        idDestinatario = idUsuario2,
+                        idRemitente = idUsuarioRemitente,
+                        idDestinatario = idUsuarioDestinatario,
                         fechaPeticion = DateTime.Now,
                         estado = ESTADO_SOLICITUD_PENDIENTE
                     };
@@ -46,9 +46,9 @@ namespace DAOLibreria.DAO
             {
                 using (var context = new DescribeloEntities())
                 {
-                    return context.PeticionAmistad.Any(p =>
-                        (p.idRemitente == idRemitente && p.idDestinatario == idDestinatario) ||
-                        (p.idRemitente == idDestinatario && p.idDestinatario == idRemitente));
+                    return context.PeticionAmistad.Any(fila =>
+                        (fila.idRemitente == idRemitente && fila.idDestinatario == idDestinatario) ||
+                        (fila.idRemitente == idDestinatario && fila.idDestinatario == idRemitente));
                 }
             }
             catch (Exception)
@@ -64,15 +64,15 @@ namespace DAOLibreria.DAO
                 using (var context = new DescribeloEntities())
                 {
                     var solicitudesPendientes = context.PeticionAmistad
-                        .Where(s => s.idDestinatario == idUsuario && s.estado == ESTADO_SOLICITUD_PENDIENTE)
+                        .Where(fila => fila.idDestinatario == idUsuario && fila.estado == ESTADO_SOLICITUD_PENDIENTE)
                         .ToList();
 
                     List<int> idsRemitentes = solicitudesPendientes
-                        .Select(s => s.idRemitente)
+                        .Select(seleccion => seleccion.idRemitente)
                         .ToList();
 
                     List<Usuario> usuariosRemitentes = context.Usuario
-                        .Where(u => idsRemitentes.Contains(u.idUsuario))
+                        .Where(fila => idsRemitentes.Contains(fila.idUsuario))
                         .ToList();
 
                     return usuariosRemitentes;
@@ -91,27 +91,41 @@ namespace DAOLibreria.DAO
             {
                 using (var context = new DescribeloEntities())
                 {
-                    var solicitud = context.PeticionAmistad
-                        .FirstOrDefault(s => s.idRemitente == idRemitente && s.idDestinatario == idDestinatario && s.estado == ESTADO_SOLICITUD_PENDIENTE);
-
-                    if (solicitud != null)
+                    using (var transaction = context.Database.BeginTransaction())
                     {
-                        var nuevaAmistad = new Amigo
+                        try
                         {
-                            idMayor_usuario = Math.Max(idRemitente, idDestinatario),
-                            idMenor_usuario = Math.Min(idRemitente, idDestinatario),
-                            fechaInicioAmistad = DateTime.Now
-                        };
+                            var solicitud = context.PeticionAmistad
+                                .FirstOrDefault(solicitudBuscada => 
+                                    solicitudBuscada.idRemitente == idRemitente &&
+                                    solicitudBuscada.idDestinatario == idDestinatario &&
+                                    solicitudBuscada.estado == ESTADO_SOLICITUD_PENDIENTE);
 
-                        context.Amigo.Add(nuevaAmistad);
-                        context.PeticionAmistad.Remove(solicitud);
-
-                        context.SaveChanges();
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
+                            if (solicitud != null)
+                            {
+                                var nuevaAmistad = new Amigo
+                                {
+                                    idMayor_usuario = Math.Max(idRemitente, idDestinatario),
+                                    idMenor_usuario = Math.Min(idRemitente, idDestinatario),
+                                    fechaInicioAmistad = DateTime.Now
+                                };
+                                context.Amigo.Add(nuevaAmistad);
+                                context.PeticionAmistad.Remove(solicitud);
+                                context.SaveChanges();
+                                transaction.Commit();
+                                return true;
+                            }
+                            else
+                            {
+                                transaction.Rollback();
+                                return false;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            transaction.Rollback();
+                            throw;
+                        }
                     }
                 }
             }

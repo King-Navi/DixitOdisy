@@ -2,11 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Enumerador;
 using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Modelo.Excepciones;
 
 namespace WcfServicioLibreria.Manejador
 {
@@ -40,10 +42,12 @@ namespace WcfServicioLibreria.Manejador
 
             return false;
         }
+
         private bool GuardarSolicitudAmistad(int idRemitente, int idDestinatario)
         {
             return PeticionAmistadDAO.GuardarSolicitudAmistad(idRemitente, idDestinatario);
         }
+
         private int ObtenerIdPorNombre(string nombre)
         {
             int id = 0;
@@ -57,6 +61,7 @@ namespace WcfServicioLibreria.Manejador
             return id;
 
         }
+
         public bool SonAmigos(string usuarioRemitente, string destinatario)
         {
             int idRemitente = ObtenerIdPorNombre(usuarioRemitente);
@@ -147,7 +152,7 @@ namespace WcfServicioLibreria.Manejador
                         UltimaConexion = amigoDestinario.ultimaConexion.ToString()
 
                     };
-                    contextoRemitente.ObtenerAmigoCallback(amigo);
+                    contextoRemitente?.ObtenerAmigoCallback(amigo);
                     if (amigo.Estado == EstadoAmigo.Conectado)
                     {
                         Modelo.Usuario usuarioModeloWCF = new Modelo.Usuario()
@@ -209,7 +214,12 @@ namespace WcfServicioLibreria.Manejador
                                     Estado = EstadoAmigo.Conectado
 
                                 });
-                                destinatario.EnviarAmigoActulizadoCallback(new Modelo.Amigo(((Modelo.Usuario)remitente).Nombre, EstadoAmigo.Conectado));
+                                destinatario.EnviarAmigoActulizadoCallback(new Modelo.Amigo()
+                                {
+                                    Foto = ((Modelo.Usuario)remitente).FotoUsuario,
+                                    Nombre = ((Modelo.Usuario)remitente).Nombre,
+                                    Estado = EstadoAmigo.Conectado
+                                });
                             }
                         }
                     }
@@ -217,12 +227,10 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (Exception)
             {
-                //TODO MANEJAR LLA EXCEPCion
-
             }
         }
 
-        public List<SolicitudAmistad> ObtenerSolicitudesAmistad(Modelo.Usuario usuario)
+        public List<SolicitudAmistad> ObtenerSolicitudesAmistad(Usuario usuario)
         {
             try
             {
@@ -252,12 +260,56 @@ namespace WcfServicioLibreria.Manejador
         {
             try
             {
-                return PeticionAmistadDAO.AceptarSolicitudAmistad(idRemitente, idDestinatario);
+                EvaluarIdValido(idRemitente);
+                EvaluarIdValido(idDestinatario);
+                if (PeticionAmistadDAO.AceptarSolicitudAmistad(idRemitente, idDestinatario))
+                {
+                    if (jugadoresConectadosDiccionario.ContainsKey(idDestinatario) &&
+                        jugadoresConectadosDiccionario.ContainsKey(idRemitente))
+                    {
+                        var usuarioDestinoConectado = UsuarioDAO.ObtenerUsuarioPorId(idDestinatario);
+                        var usuarioRemitenteConectado = UsuarioDAO.ObtenerUsuarioPorId(idRemitente);
+                        Modelo.Usuario usuarioDestinoModelo = new Usuario(
+                            usuarioDestinoConectado.gamertag,
+                            new MemoryStream(usuarioDestinoConectado.fotoPerfil));
+                        Modelo.Usuario usuarioRemitenteModelo = new Usuario(
+                            usuarioRemitenteConectado.gamertag, 
+                            new MemoryStream(usuarioRemitenteConectado.fotoPerfil));
+                        AmigoConetado(usuarioRemitenteModelo, usuarioDestinoModelo);
+                    }
+                    else if (jugadoresConectadosDiccionario.ContainsKey(idRemitente))
+                    {
+                        jugadoresConectadosDiccionario.TryGetValue(idRemitente, out UsuarioContexto remitente);
+                        var amigoDestinario = UsuarioDAO.ObtenerUsuarioPorId(idDestinatario);
+                        Modelo.Amigo amigo = new Modelo.Amigo()
+                        {
+                            Nombre = amigoDestinario.gamertag,
+                            Estado = EstadoAmigo.Desconectado,
+                            Foto = new MemoryStream(amigoDestinario.fotoPerfil),
+                            UltimaConexion = amigoDestinario.ultimaConexion.ToString()
+
+                        };
+                        remitente.AmistadSesionCallBack?.ObtenerAmigoCallback(amigo);
+                    }
+                    else
+                    {
+                        ServidorFalla excepcion = new ServidorFalla()
+                        {
+                            EstaRemitenteDesconectado = true
+                        };
+                        throw new FaultException<ServidorFalla>(excepcion, new FaultReason("Te encuentras en estado invalido"));
+                    }
+                    return true;
+                }
+            }
+            catch (FaultException<ServidorFalla> excepcion)
+            {
+                throw excepcion;
             }
             catch (Exception)
             {
-                return false;
             }
+            return false;
         }
 
 
@@ -265,6 +317,8 @@ namespace WcfServicioLibreria.Manejador
         {
             try
             {
+                EvaluarIdValido(idRemitente);
+                EvaluarIdValido(idDestinatario);
                 return PeticionAmistadDAO.RechazarSolicitudAmistad(idRemitente, idDestinatario); ;
             }
             catch (Exception)
@@ -273,6 +327,69 @@ namespace WcfServicioLibreria.Manejador
             }
         }
 
+        public bool EliminarAmigo(string usuarioRemitenteNombre, string usuarioDestinatarioNombre)
+        {
 
+            int idRemitente = ObtenerIdPorNombre(usuarioRemitenteNombre);
+            int idDestinatario = ObtenerIdPorNombre(usuarioDestinatarioNombre);
+            int idMayorUsuario = Math.Max(idRemitente, idDestinatario);
+            int idMenorUsuario = Math.Min(idRemitente, idDestinatario);
+            try
+            {
+                EvaluarIdValido(idRemitente);
+                EvaluarIdValido(idDestinatario);
+                if (AmistadDAO.EliminarAmigo(idMayorUsuario, idMenorUsuario))
+                {
+                    if (jugadoresConectadosDiccionario.ContainsKey(idDestinatario) && 
+                        jugadoresConectadosDiccionario.ContainsKey(idRemitente))
+                    {
+                        jugadoresConectadosDiccionario.TryGetValue(idRemitente, out UsuarioContexto remitente);
+                        jugadoresConectadosDiccionario.TryGetValue(idRemitente, out UsuarioContexto destinatario);
+                        remitente.AmistadSesionCallBack?.EliminarAmigoCallback(new Amigo()
+                        {
+                            Nombre = usuarioDestinatarioNombre
+                        });
+                        destinatario.AmistadSesionCallBack?.EliminarAmigoCallback(new Amigo()
+                        {
+                            Nombre = usuarioRemitenteNombre
+                        });
+                    }
+                    else if (jugadoresConectadosDiccionario.ContainsKey(idRemitente))
+                    {
+                        jugadoresConectadosDiccionario.TryGetValue(idRemitente, out UsuarioContexto remitente);
+                        remitente.AmistadSesionCallBack?.EliminarAmigoCallback(new Amigo()
+                        {
+                            Nombre = usuarioDestinatarioNombre
+                        });
+                    }
+                    else
+                    {
+                        ServidorFalla excepcion = new ServidorFalla()
+                        {
+                            EstaRemitenteDesconectado = true
+                        };
+                        throw new FaultException<ServidorFalla>(excepcion, new FaultReason("Te encuentras en estado invalido"));
+                    }
+                    return true;
+                }
+            }
+            catch(FaultException<ServidorFalla> excepcion)
+            {
+                throw excepcion;
+            }
+            catch (Exception)
+            {
+            }
+            return false;
+
+        }
+
+        private void EvaluarIdValido(int identificador)
+        {
+            if (identificador <= 0 || identificador <= 0)
+            {
+                throw new ArgumentException();
+            }
+        }
     }
 }

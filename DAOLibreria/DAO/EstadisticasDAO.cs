@@ -35,8 +35,6 @@ namespace DAOLibreria.DAO
                     var accionARealizar = ObtenerAccion(accion);
                     accionARealizar(estadistica);
                     await context.SaveChangesAsync();
-
-                    Console.WriteLine("Estadísticas agregadas exitosamente.");
                     resultado = true;
 
                 }
@@ -55,7 +53,7 @@ namespace DAOLibreria.DAO
                 {
                     var estadistica = context.Estadisticas.SingleOrDefault(fila => fila.idEstadisticas == idEstadisticas);
 
-                    return estadistica == null ? throw new ArgumentException() : estadistica;
+                    return estadistica ?? throw new ArgumentException();
                 }
             }
             catch (Exception)

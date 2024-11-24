@@ -42,15 +42,15 @@ namespace WpfCliente.GUI
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
         }
 
-        public void HabilitarBotones(bool esValido)
+        public void HabilitarBotones(bool esHabilitado)
         {
-            textBoxUsuario.IsEnabled = esValido;
-            passwordBoxContrasenia.IsEnabled = esValido;
-            buttonIniciarSesion.IsEnabled = esValido;
-            buttonRegistrar.IsEnabled = esValido;
-            cambiarIdiomaUserControl.IsEnabled = esValido;
-            buttonJugarComoInvitado.IsEnabled = esValido;
-            buttonOlvidarContrasenia.IsEnabled= esValido;
+            textBoxUsuario.IsEnabled = esHabilitado;
+            passwordBoxContrasenia.IsEnabled = esHabilitado;
+            buttonIniciarSesion.IsEnabled = esHabilitado;
+            buttonRegistrar.IsEnabled = esHabilitado;
+            cambiarIdiomaUserControl.IsEnabled = esHabilitado;
+            buttonJugarComoInvitado.IsEnabled = esHabilitado;
+            buttonOlvidarContrasenia.IsEnabled= esHabilitado;
         }
 
         private void ClicRegistrar(object sender, RoutedEventArgs e)
@@ -95,8 +95,7 @@ namespace WpfCliente.GUI
             return camposValidos;
         }
 
-        private bool IntentarIniciarSesion() {
-            bool exito = false;
+        private void IntentarIniciarSesion() {
             ServidorDescribelo.IServicioUsuario servicio = new ServidorDescribelo.ServicioUsuarioClient();
             string contraseniaHash = Encriptacion.OcuparSHA256(passwordBoxContrasenia.Password);
             Usuario resultadoUsuario = servicio.ValidarCredenciales(textBoxUsuario.Text, contraseniaHash);
@@ -109,12 +108,12 @@ namespace WpfCliente.GUI
             {
                 if (resultadoUsuario != null)
                 {
-                    exito = true;
                     BitmapImage imagenUsuario = Imagen.ConvertirStreamABitmapImagen(resultadoUsuario.FotoUsuario);
                     if (imagenUsuario == null)
                     {
                         VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, Properties.Idioma.mensajeImagenInvalida, this);
                         this.Close();
+                        return;
                     }
                     else
                     {
@@ -124,7 +123,7 @@ namespace WpfCliente.GUI
                 }
                 labelCredencialesIncorrectas.Visibility = Visibility.Visible;
             }
-            return exito;
+            return;
         }
 
         private void ConfigurarSingletonConUsuario(Usuario usuario, BitmapImage imagenUsuario)

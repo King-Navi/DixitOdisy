@@ -8,7 +8,6 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Estilos\Control\WaveAnimation.
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Estilos\Converters\DiameterAndThicknessToStrokeDashArrayConverter.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\AmigoUserControl.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\CambiarContraseniaWindow.xaml.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\CartaUserControl.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\ChatUserControl.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\EditarPerfilWindow.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\EsperaRestoJugadoresUserControl.xaml.cs
@@ -18,7 +17,7 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\ListaAmigosUserControl.xam
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\ListaSolicitudesAmistadUserControl.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\ListaUsuariosSalaUserControl.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\MenuWindow.xaml.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\MostrarCartaModelWindow.xaml.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\MostrarCartaModalWindow.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\NarradorSeleccionCartaUserControl.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\AmigosWindow.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\PartidaWindow.xaml.cs
@@ -31,13 +30,13 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\SalaEsperaWindow.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\SeleccionCartaUsercontrol.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\SolicitudAmistadUserControl.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\UnirseSalaModalWindow.xaml.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\VentanaEmergente.xaml.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\VentanaEmergenteModalWindow.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\VerificarCorreoModalWindow.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\VerTodasCartasUserControl.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Interfaz\IHabilitadorBotones.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ComandoRele.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Correo.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\EstaditicaUsuario.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\EstadisticaUsuario.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Servidor\ChatMensaje.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Conexion.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\CambiarIdioma.cs
@@ -53,10 +52,10 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Servidor\Usuario.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Utilidades.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ServicioManejador.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Servidor\ImagenCarta.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Singleton.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\SingletonCliente.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ValidacionExistenciaJuego.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ValidacionesString.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\VentanaMediador.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\VentanaModal.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\VentanasEmergentes.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Properties\AssemblyInfo.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Sonidos\musicaFondo.mp3
@@ -73,6 +72,7 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDes
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDescribelo\WcfServicioLibreria.Modelo.Excepciones.xsd
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDescribelo\WcfServicioLibreria.Modelo.xsd
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDescribelo\WpfCliente.ServidorDescribelo.Estadistica.datasource
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDescribelo\WpfCliente.ServidorDescribelo.SolicitudAmistad.datasource
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDescribelo\WpfCliente.ServidorDescribelo.Usuario.datasource
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\packages.config
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Properties\Settings.settings

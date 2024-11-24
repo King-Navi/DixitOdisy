@@ -89,7 +89,7 @@ namespace WpfCliente.GUI
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarFatalException(excepcion,this);
-            };
+            }
         }
 
         private void ClicBottonCrearSala(object sender, RoutedEventArgs e)

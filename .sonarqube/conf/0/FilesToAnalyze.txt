@@ -1,7 +1,9 @@
 ﻿C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\ConfiguradorConexion.cs
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\DAO\AmistadDAO.cs
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\DAO\EstadisticasDAO.cs
+C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\DAO\PeticionAmistadDAO.cs
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\DAO\UsuarioDAO.cs
+C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\EliminadorCadena.cs
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\Excepciones\ActividadSospechosaExcepcion.cs
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\Excepciones\GamertagDuplicadoExcepcion.cs
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\Excepciones\PropiedadesNulasExcepcion.cs

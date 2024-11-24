@@ -9,6 +9,7 @@ namespace DAOLibreria.DAO
 {
     public static class PeticionAmistadDAO
     {
+        private const string ESTADO_SOLICITUD_PENDIENTE = "Pendiente";
         public static bool GuardarSolicitudAmistad(int idUsuario1, int idUsuario2)
         {
             try
@@ -20,7 +21,7 @@ namespace DAOLibreria.DAO
                         idRemitente = idUsuario1,
                         idDestinatario = idUsuario2,
                         fechaPeticion = DateTime.Now,
-                        estado = "Pendiente"
+                        estado = ESTADO_SOLICITUD_PENDIENTE
                     };
 
                     context.PeticionAmistad.Add(nuevaSolicitud);
@@ -59,7 +60,7 @@ namespace DAOLibreria.DAO
                 using (var context = new DescribeloEntities())
                 {
                     var solicitudesPendientes = context.PeticionAmistad
-                        .Where(s => s.idDestinatario == idUsuario && s.estado == "Pendiente")
+                        .Where(s => s.idDestinatario == idUsuario && s.estado == ESTADO_SOLICITUD_PENDIENTE)
                         .ToList();
 
                     List<int> idsRemitentes = solicitudesPendientes
@@ -87,7 +88,7 @@ namespace DAOLibreria.DAO
                 using (var context = new DescribeloEntities())
                 {
                     var solicitud = context.PeticionAmistad
-                        .FirstOrDefault(s => s.idRemitente == idRemitente && s.idDestinatario == idDestinatario && s.estado == "Pendiente");
+                        .FirstOrDefault(s => s.idRemitente == idRemitente && s.idDestinatario == idDestinatario && s.estado == ESTADO_SOLICITUD_PENDIENTE);
 
                     if (solicitud != null)
                     {
@@ -123,7 +124,7 @@ namespace DAOLibreria.DAO
                 using (var context = new DescribeloEntities())
                 {
                     var solicitud = context.PeticionAmistad
-                        .FirstOrDefault(s => s.idRemitente == idRemitente && s.idDestinatario == idDestinatario && s.estado == "Pendiente");
+                        .FirstOrDefault(s => s.idRemitente == idRemitente && s.idDestinatario == idDestinatario && s.estado == ESTADO_SOLICITUD_PENDIENTE);
 
                     if (solicitud != null)
                     {

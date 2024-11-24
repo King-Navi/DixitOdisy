@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cliente\ValidacionesStringPruebas.cs" />
     <Compile Include="DAO\EstadisticasDAONoConexion_Prueba.cs" />
     <Compile Include="DAO\EstadisticasDAO_Prueba.cs" />
     <Compile Include="DAO\Utilidades\ConfiguracionPruebaBD.cs" />
@@ -111,9 +112,7 @@
       <Name>WcfServicioLibreria</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Cliente\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

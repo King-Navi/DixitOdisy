@@ -13,12 +13,8 @@ C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\ICommunicatio
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\PartidaCallbackImpl.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\SalaCallbackImpl.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\UsuarioSessionCallbackImpl.cs
-C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Cliente\Utilidades\Conexion.cs
-C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Cliente\Utilidades\ServicioManejador.cs
-C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Cliente\Utilidades\Utilidad.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\ServicioObtenerSesion.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\ServicioRegistro.cs
-C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Cliente\ValidarContraseniaPruebas.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\DAO\UsuarioDAO_Prueba.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\DAO\Utilidades\Utilidad.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Properties\AssemblyInfo.cs

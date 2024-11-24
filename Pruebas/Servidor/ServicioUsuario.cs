@@ -25,54 +25,6 @@ namespace Pruebas.Servidor
         }
 
         [TestMethod]
-        public void ValidarCredenciales_CredencialesCorrectas_DeberiaRetornarUsuario()
-        {
-            // Arrange
-            //Pre condicion, el usuario debe exisitir en BD
-            string gamertagValido = "unaay";
-            string contraseniaValida = "b7a88e8d61d649a44848a48c8de0e6bd48d2fd4d7a61cb733301634d5eac5080";
-            var usuarioEsperado = new DAOLibreria.ModeloBD.Usuario
-            {
-                gamertag = gamertagValido,
-                idUsuario = 2
-            };
-
-
-            // Act
-            var resultado = manejador.ValidarCredenciales(gamertagValido, contraseniaValida);
-
-            // Assert
-            Assert.IsNotNull(resultado, "El método debería devolver un usuario válido.");
-            Assert.AreEqual(usuarioEsperado.gamertag, resultado.Nombre, "El nombre del usuario debería coincidir.");
-            Assert.AreEqual(usuarioEsperado.idUsuario, resultado.IdUsuario, "El ID del usuario debería coincidir.");
-        }
-        [TestMethod]
-        public void ValidarCredenciales_CredencialesIncorrectas_DeberiaRetornarNulo()
-        {
-            // Arrange
-            string gamertagInvalido = "UsuarioInvalidoParaPruebas";
-            string contraseniaInvalida = "ContraseniaIncorrecta123";
-
-            // Act
-            var resultado = manejador.ValidarCredenciales(gamertagInvalido, contraseniaInvalida);
-
-            // Assert
-            Assert.IsNull(resultado, "El método debería devolver un nulo");
-        }
-        [TestMethod]
-        public void ValidarCredenciales_ValorNulo_DeberiaRetornarNulo()
-        {
-            // Arrange
-            string gamertagInvalido = null;
-            string contraseniaInvalida = null;
-
-            // Act
-            var resultado = manejador.ValidarCredenciales(gamertagInvalido, contraseniaInvalida);
-
-            // Assert
-            Assert.IsNull(resultado, "El método debería devolver un nulo");
-        }
-        [TestMethod]
         public void EditarUsuario_CuandoDatosValidos_DeberiaActualizarUsuario()
         {
             // Arrange

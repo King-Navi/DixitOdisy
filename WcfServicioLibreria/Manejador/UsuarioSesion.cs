@@ -44,7 +44,7 @@ namespace WcfServicioLibreria.Manejador
                     comunicacionObjecto.Closed += usuario.CerradoEvento;
                     comunicacionObjecto.Faulted += usuario.FalloEvento;
                     sesionAbierta = true;
-                    if (jugadoresConectadosDiccionario.TryAdd(usuario.IdUsuario, usuario))
+                    if (ConectarUsuario(usuario))
                     {
                         contexto.ObtenerSessionJugadorCallback(sesionAbierta);
                     }
@@ -64,6 +64,11 @@ namespace WcfServicioLibreria.Manejador
                 };
                 throw new FaultException<UsuarioFalla>(excepcion, new FaultReason("El usuario ya está conectado"));
             }
+        }
+
+        public bool ConectarUsuario(Usuario usuario)
+        {
+            return jugadoresConectadosDiccionario.TryAdd(usuario.IdUsuario, usuario);
         }
     }
 }

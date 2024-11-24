@@ -106,26 +106,60 @@ namespace WpfCliente.GUI
         private void ClicButtonAceptar(object sender, RoutedEventArgs e)
         {
             Usuario usuarioEditado = new Usuario();
-            bool verificacionCorreo = false;
 
-            bool realizoCambios = VerificarCambioImagen(usuarioEditado) 
-                || VerificarCambioCorreo(usuarioEditado) 
-                || VerificarCambioContrasenia(usuarioEditado);
-            if (realizoCambios)
-            {
-                if (VerificarCambioCorreo(usuarioEditado)){
-                    verificacionCorreo = Correo.VerificarCorreo(usuarioEditado.Correo,this);
-                }
-                if (verificacionCorreo && ValidarCampos())
-                {
-                    GuardarCambiosUsuario(usuarioEditado);
-                }
-            }
-            else
+            if (!HayCambiosPendientes(usuarioEditado))
             {
                 MostrarMensajeSinCambios();
+                return;
+            }
+
+            if (HayCambioDeCorreoInvalido(usuarioEditado))
+            {
+                MostrarMensajeCorreoInvalido();
+                return;
+            }
+
+            if (ValidarCampos())
+            {
+                GuardarCambiosUsuario(usuarioEditado);
             }
         }
+
+        private bool HayCambiosPendientes(Usuario usuarioEditado)
+        {
+            return VerificarCambioImagen(usuarioEditado)
+                || VerificarCambioCorreo(usuarioEditado)
+                || VerificarCambioContrasenia(usuarioEditado);
+        }
+
+        private bool HayCambioDeCorreoInvalido(Usuario usuarioEditado)
+        {
+            if (VerificarCambioCorreo(usuarioEditado))
+            {
+                if (!ValidacionesString.EsCorreoValido(textBoxCorreo.Text))
+                {
+                    return false;
+                }
+                return !Correo.VerificarCorreo(usuarioEditado.Correo, this);
+            }
+            return false;
+        }
+
+        private void MostrarMensajeSinCambios()
+        {
+            VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloEditarUsuario,
+                Idioma.mensajeNoHuboCambios,
+                this);
+        }
+
+        private void MostrarMensajeCorreoInvalido()
+        {
+            VentanasEmergentes.CrearVentanaEmergente(
+                Properties.Idioma.tituloCorreoInvalido,
+                Properties.Idioma.mensajeCorreoInvalido,
+                this);
+        }
+
 
         private bool VerificarCambioImagen(Usuario usuarioEditado)
         {
@@ -181,13 +215,6 @@ namespace WpfCliente.GUI
                     Idioma.mensajeUsuarioEditadoFallo, 
                     this);
             }
-        }
-
-        private void MostrarMensajeSinCambios()
-        {
-            VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloEditarUsuario, 
-                Idioma.mensajeNoHuboCambios, 
-                this);
         }
 
         private bool ValidarCampos()

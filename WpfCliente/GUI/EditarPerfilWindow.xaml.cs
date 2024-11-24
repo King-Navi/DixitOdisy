@@ -16,12 +16,13 @@ namespace WpfCliente.GUI
         private const string RECURSO_ESTILO_CORREO = "NormalTextBoxStyle";
         private const string RECURSO_ESTILO_CORREO_ERROR = "ErrorTextBoxStyle";
 
-        public EditarPerfilWindow()
+        public EditarPerfilWindow(Window menuVentana)
         {
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             InitializeComponent();
             CargarDatos();
             ActualizarUI();
+            this.Owner = menuVentana;
         }
 
         private void CargarDatos()
@@ -105,6 +106,7 @@ namespace WpfCliente.GUI
         private void ClicButtonAceptar(object sender, RoutedEventArgs e)
         {
             Usuario usuarioEditado = new Usuario();
+            bool verificacionCorreo = false;
 
             bool realizoCambios = VerificarCambioImagen(usuarioEditado) 
                 || VerificarCambioCorreo(usuarioEditado) 
@@ -112,9 +114,9 @@ namespace WpfCliente.GUI
             if (realizoCambios)
             {
                 if (VerificarCambioCorreo(usuarioEditado)){
-                    Correo.VerificarCorreo(usuarioEditado.Correo,this);
+                    verificacionCorreo = Correo.VerificarCorreo(usuarioEditado.Correo,this);
                 }
-                if (ValidarCampos())
+                if (verificacionCorreo && ValidarCampos())
                 {
                     GuardarCambiosUsuario(usuarioEditado);
                 }
@@ -271,14 +273,15 @@ namespace WpfCliente.GUI
             {
                 Conexion.CerrarUsuarioSesion();
                 Conexion.CerrarConexionesSalaConChat();
+                Conexion.CerrarConexionInvitacionesPartida();
             }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
-            IniciarSesion iniciarSesion = new IniciarSesion();
-            iniciarSesion.Show();
             this.Close();
+            this.Owner.Close();
+
         }
 
         private void ClicFlechaAtras(object sender, MouseButtonEventArgs e)

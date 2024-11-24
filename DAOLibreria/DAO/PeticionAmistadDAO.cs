@@ -46,9 +46,9 @@ namespace DAOLibreria.DAO
             {
                 using (var context = new DescribeloEntities())
                 {
-                    return context.PeticionAmistad.Any(p =>
-                        (p.idRemitente == idRemitente && p.idDestinatario == idDestinatario) ||
-                        (p.idRemitente == idDestinatario && p.idDestinatario == idRemitente));
+                    return context.PeticionAmistad.Any(fila =>
+                        (fila.idRemitente == idRemitente && fila.idDestinatario == idDestinatario) ||
+                        (fila.idRemitente == idDestinatario && fila.idDestinatario == idRemitente));
                 }
             }
             catch (Exception)
@@ -64,7 +64,7 @@ namespace DAOLibreria.DAO
                 using (var context = new DescribeloEntities())
                 {
                     var solicitudesPendientes = context.PeticionAmistad
-                        .Where(s => s.idDestinatario == idUsuario && s.estado == ESTADO_SOLICITUD_PENDIENTE)
+                        .Where(fila => fila.idDestinatario == idUsuario && fila.estado == ESTADO_SOLICITUD_PENDIENTE)
                         .ToList();
 
                     List<int> idsRemitentes = solicitudesPendientes
@@ -92,7 +92,7 @@ namespace DAOLibreria.DAO
                 using (var context = new DescribeloEntities())
                 {
                     var solicitud = context.PeticionAmistad
-                        .FirstOrDefault(s => s.idRemitente == idRemitente && s.idDestinatario == idDestinatario && s.estado == ESTADO_SOLICITUD_PENDIENTE);
+                        .FirstOrDefault(fila => fila.idRemitente == idRemitente && fila.idDestinatario == idDestinatario && fila.estado == ESTADO_SOLICITUD_PENDIENTE);
 
                     if (solicitud != null)
                     {
@@ -128,7 +128,7 @@ namespace DAOLibreria.DAO
                 using (var context = new DescribeloEntities())
                 {
                     var solicitud = context.PeticionAmistad
-                        .FirstOrDefault(s => s.idRemitente == idRemitente && s.idDestinatario == idDestinatario && s.estado == ESTADO_SOLICITUD_PENDIENTE);
+                        .FirstOrDefault(fila => fila.idRemitente == idRemitente && fila.idDestinatario == idDestinatario && fila.estado == ESTADO_SOLICITUD_PENDIENTE);
 
                     if (solicitud != null)
                     {

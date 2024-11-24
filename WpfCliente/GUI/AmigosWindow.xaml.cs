@@ -83,7 +83,7 @@ namespace WpfCliente.GUI
                 }
                 catch (FaultException<SolicitudAmistadFalla> ex)
                 {
-                    VentanasEmergentes.CrearVentanaEmergente(Idioma.mensajeErrorInesperado, ex.Detail.Mensaje, this);
+                    VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloSolicitudAmistad, ex.Detail.Mensaje, this);
                 }
                 catch (FaultException ex)
                 {

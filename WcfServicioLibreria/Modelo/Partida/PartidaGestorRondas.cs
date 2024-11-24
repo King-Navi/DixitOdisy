@@ -259,18 +259,15 @@ namespace WcfServicioLibreria.Modelo
         private void MostrarGrupoCartas()
         {
             string[] archivosCache = ObtenerArchivosCache();
-            //Esto deberia se mas eficiente
             var archivoRutaMap = archivosCache.ToDictionary(ruta => Path.GetFileNameWithoutExtension(ruta), ruta => ruta);
             List<string> rutasCompletas = new List<string>();
-            // Iteramos en el diccionario y añadimos las rutas completas
             foreach (var listaDeNombres in JugadorImagenPuesta.Values)
             {
                 foreach (var nombreArchivo in listaDeNombres)
                 {
-                    // Verificamos si el nombre del archivo está en el diccionario
                     if (archivoRutaMap.TryGetValue(nombreArchivo, out var rutaCompleta))
                     {
-                        rutasCompletas.Add(rutaCompleta); // Añadimos la ruta completa si existe
+                        rutasCompletas.Add(rutaCompleta);
                     }
                 }
             }
@@ -351,7 +348,7 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        private void AvisarQuienEsNarrador()
+        private async void AvisarQuienEsNarrador()
         {
             foreach (var nombre in ObtenerNombresJugadores().ToList())
             {
@@ -365,7 +362,7 @@ namespace WcfServicioLibreria.Modelo
                 }
                 catch (Exception)
                 {
-                    RemoverJugador(nombre);
+                    await RemoverJugadorAsync(nombre);
                 }
             };
         }

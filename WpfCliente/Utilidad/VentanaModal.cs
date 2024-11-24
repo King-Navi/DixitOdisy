@@ -8,17 +8,17 @@ namespace WpfCliente.Utilidad
 {
     public class VentanaModal 
     {
-        public static string AbrirVentanaModalGamertag(Window window)
+        public static string AbrirVentanaModalGamertag(Window ventana)
         {
             string valorObtenido = null;
             IngresarGamertagModalWindow ventanaModal = new IngresarGamertagModalWindow();
             try
             {
-                ventanaModal.Owner = window;
+                ventanaModal.Owner = ventana;
             }
-            catch (Exception ex)
+            catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponentErrorException(ex);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
             bool? resultado = ventanaModal.ShowDialog();
 
@@ -30,17 +30,17 @@ namespace WpfCliente.Utilidad
             return valorObtenido;
         }
 
-        public static string AbrirVentanaModalSala(Window window)
+        public static string AbrirVentanaModalSala(Window ventana)
         {
             string valorObtenido = null;
             UnirseSalaModalWindow ventanaModal = new UnirseSalaModalWindow();
             try
             {
-                ventanaModal.Owner = window;
+                ventanaModal.Owner = ventana;
             }
-            catch (Exception ex)
+            catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponentErrorException(ex);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
             bool? resultado = ventanaModal.ShowDialog();
 
@@ -52,17 +52,17 @@ namespace WpfCliente.Utilidad
             return valorObtenido;
         }
 
-        public static string AbrirVentanaModalCorreo(Window window)
+        public static string AbrirVentanaModalCorreo(Window ventana)
         {
             string valorObtenido = null;
             VerificarCorreoModalWindow ventanaModal = new VerificarCorreoModalWindow();
             try
             {
-                ventanaModal.Owner = window;
+                ventanaModal.Owner = ventana;
             }
-            catch (Exception ex)
+            catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponentErrorException(ex);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
             bool? resultado = ventanaModal.ShowDialog();
             if (resultado == true && !ventanaModal.ValorIngresado.Contains(" ") && ventanaModal.ValorIngresado != null)
@@ -84,7 +84,7 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception ex)
             {
-                ManejadorExcepciones.ManejarComponentErrorException(ex);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
             }
             bool? resultado = ventanaModal.ShowDialog();
             if (resultado == true && !ventanaModal.ValorIngresado.Contains(" "))

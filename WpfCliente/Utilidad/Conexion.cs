@@ -32,7 +32,7 @@ namespace WpfCliente.Utilidad
                 }
                 catch (Exception excepcion)
                 {
-                    ManejadorExcepciones.ManejarFatalException(excepcion, null);
+                    ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
                 }
             }
             return resultado;
@@ -55,7 +55,7 @@ namespace WpfCliente.Utilidad
                 }
                 catch (Exception excepcion)
                 {
-                    ManejadorExcepciones.ManejarFatalException(excepcion, null);
+                    ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
                 }
             }
             return resultado;
@@ -78,7 +78,7 @@ namespace WpfCliente.Utilidad
                 }
                 catch (Exception excepcion)
                 {
-                    ManejadorExcepciones.ManejarFatalException(excepcion, null);
+                    ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
                 }
             }
             return resultado;
@@ -101,7 +101,7 @@ namespace WpfCliente.Utilidad
                 }
                 catch (Exception excepcion)
                 {
-                    ManejadorExcepciones.ManejarFatalException(excepcion, null);
+                    ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
                 }
             }
             return resultado;
@@ -124,7 +124,7 @@ namespace WpfCliente.Utilidad
                 }
                 catch (Exception excepcion)
                 {
-                    ManejadorExcepciones.ManejarFatalException(excepcion, null);
+                    ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
                 }
             }
             return resultado;
@@ -147,7 +147,7 @@ namespace WpfCliente.Utilidad
                 }
                 catch (Exception excepcion)
                 {
-                    ManejadorExcepciones.ManejarFatalException(excepcion, null);
+                    ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
                 }
             }
             return resultado;
@@ -166,7 +166,7 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion, null);
+                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
                 return false;
             }
             return true;
@@ -185,7 +185,7 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion, null);
+                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
                 return false;
             }
             return true;
@@ -204,7 +204,7 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponentErrorException(excepcion);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
                 return false;
             }
             return true;
@@ -223,7 +223,7 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponentErrorException(excepcion);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
                 return false;
             }
             return true;
@@ -246,7 +246,7 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion, null);
+                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
                 return false;
             }
             return true;
@@ -264,7 +264,7 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion, null);
+                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
                 return false;
             }
             finally
@@ -286,7 +286,7 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion, null);
+                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
                 return false;
             }
             finally
@@ -307,13 +307,13 @@ namespace WpfCliente.Utilidad
             catch (EndpointNotFoundException enndpointException)
             {
                 Window window = null;
-                ManejadorExcepciones.ManejarFatalException(enndpointException, window);
+                ManejadorExcepciones.ManejarFatalExcepcion(enndpointException, window);
                 return resultado;
             }
             catch (Exception excepcion)
             {
                 Window window = null;
-                ManejadorExcepciones.ManejarFatalException(excepcion,window);
+                ManejadorExcepciones.ManejarFatalExcepcion(excepcion,window);
                 return resultado;
             }
             return resultado;

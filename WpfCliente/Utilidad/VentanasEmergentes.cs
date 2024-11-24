@@ -7,9 +7,9 @@ namespace WpfCliente.Utilidad
 {
     public class VentanasEmergentes
     {
-        public static void CrearVentanaEmergente(string tituloVentanaEmergente, string descripcionVentanaEmergente, Window window)
+        public static void CrearVentanaEmergente(string tituloVentanaEmergente, string descripcionVentanaEmergente, Window ventana)
         {
-            if (window == null)
+            if (ventana == null)
             {
                 return;
             }
@@ -17,7 +17,7 @@ namespace WpfCliente.Utilidad
             (
                 tituloVentanaEmergente,
                 descripcionVentanaEmergente);
-            ventanaEmergente.Owner = window;
+            ventanaEmergente.Owner = ventana;
             ventanaEmergente.ShowDialog();
         }
 
@@ -39,9 +39,9 @@ namespace WpfCliente.Utilidad
 
             ventanaEmergente.ShowDialog();
         }
-        public static void CrearVentanaEmergenteConCierre(string tituloVentanaEmergente, string descripcionVentanaEmergente, Window window)
+        public static void CrearVentanaEmergenteConCierre(string tituloVentanaEmergente, string descripcionVentanaEmergente, Window ventana)
         {
-            if (window == null)
+            if (ventana == null)
             {
                 return;
             }
@@ -49,16 +49,16 @@ namespace WpfCliente.Utilidad
                 tituloVentanaEmergente,
                 descripcionVentanaEmergente
             );
-            ventanaEmergente.Owner = window;  
+            ventanaEmergente.Owner = ventana;  
             ventanaEmergente.ShowDialog();
-            CerrarSiNoEsInicioSesion(window);
+            CerrarSiNoEsInicioSesion(ventana);
         }
 
-        private static void CerrarSiNoEsInicioSesion(Window window)
+        private static void CerrarSiNoEsInicioSesion(Window ventana)
         {
-            if (!(window is IniciarSesion))
+            if (!(ventana is IniciarSesion))
             {
-                window.Close();
+                ventana.Close();
             }
         }
     }

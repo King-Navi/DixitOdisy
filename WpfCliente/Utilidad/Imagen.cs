@@ -21,7 +21,7 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception ex)
             {
-                ManejadorExcepciones.ManejarComponentFatalException(ex);
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(ex);
                 bitmap = null;
             }
             return bitmap;

@@ -21,6 +21,17 @@ namespace WpfCliente.Utilidad
             {
                 Estadistica = resutlado;
             }
+        }   
+        public async void SolicitarEstadisiticasAsync(int idUsuario)
+        {
+            var manejadorServicio = new ServicioManejador<ServicioEstadisticasClient>();
+            var resutlado = await manejadorServicio.EjecutarServicioAsync(servicio =>
+                servicio.ObtenerEstadisitcaAsync(idUsuario
+           ));
+            if (resutlado != null)
+            {
+                Estadistica = resutlado;
+            }
         }
 
 

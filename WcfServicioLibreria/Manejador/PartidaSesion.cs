@@ -8,7 +8,7 @@ namespace WcfServicioLibreria.Manejador
     public partial class ManejadorPrincipal : IServicioPartidaSesion
     {
 
-        public async Task UnirsePartida(string gamertag, string idPartida)
+        public async Task UnirsePartida(string usuarioNombre, string idPartida)
         {
             if (!ValidarPartida(idPartida))
             {
@@ -18,16 +18,11 @@ namespace WcfServicioLibreria.Manejador
             {
                 IPartidaCallback contexto = contextoOperacion.GetCallbackChannel<IPartidaCallback>();
                 partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
-                partida.AgregarJugador(gamertag, contexto);
-                await partida.AvisarNuevoJugadorAsync(gamertag);
-                partida.ConfirmarInclusionPartida(gamertag, contexto);
+                partida.AgregarJugador(usuarioNombre, contexto);
+                await partida.AvisarNuevoJugadorAsync(usuarioNombre);
+                partida.ConfirmarInclusionPartida(contexto);
             }
             catch (Exception)
-            {
-                //TODO: Manejar el error
-                Console.WriteLine("Error en el metodo  UnirsePartida(string gamertag, string idPartida)");
-            }
-            finally
             {
             }
         }
@@ -58,7 +53,7 @@ namespace WcfServicioLibreria.Manejador
 
         public void ConfirmarMovimiento(string nombreJugador, string idPartida, string claveImagen, string pista = null)
         {
-            if (!ValidarPartida(idPartida)) //
+            if (!ValidarPartida(idPartida)) 
             {
                 return;
             }
@@ -89,7 +84,7 @@ namespace WcfServicioLibreria.Manejador
             throw new NotImplementedException();
         }
 
-        public async Task EmpezarPartida(string nombreJugador, string idPartida) //FIXME: ¿La mehor manera de empezar la partida?
+        public async Task EmpezarPartida(string nombreJugador, string idPartida) 
         {
             if (!ValidarPartida(idPartida))
             {
@@ -102,7 +97,6 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (Exception)
             {
-                //TODO: Manejar el error
             };
         }
 

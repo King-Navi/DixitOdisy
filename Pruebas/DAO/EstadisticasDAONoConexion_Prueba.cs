@@ -39,7 +39,8 @@ namespace Pruebas.DAO
         public void ObtenerIdEstadisticaConIdUsuario_SinConexionBD_DeberiaRetornarMenosUno()
         {
             // Arrange
-            int idUsuario = 1; //Precondcion: El ID debe exisitir en BD.
+            //Precondcion: El ID debe exisitir en BD.
+            int idUsuario = 1; 
 
             // Act
             int resultado = EstadisticasDAO.ObtenerIdEstadisticaConIdUsuario(idUsuario);

@@ -82,12 +82,17 @@
     <Compile Include="ConfiguradorConexion.cs" />
     <Compile Include="DAO\AmistadDAO.cs" />
     <Compile Include="DAO\EstadisticasDAO.cs" />
+    <Compile Include="DAO\ExpulsionDAO.cs" />
     <Compile Include="DAO\PeticionAmistadDAO.cs" />
+    <Compile Include="DAO\UsuarioCuentaDAO.cs" />
     <Compile Include="DAO\UsuarioDAO.cs" />
+    <Compile Include="DAO\VetoDAO.cs" />
     <Compile Include="EliminadorCadena.cs" />
     <Compile Include="Excepciones\ActividadSospechosaExcepcion.cs" />
     <Compile Include="Excepciones\GamertagDuplicadoExcepcion.cs" />
     <Compile Include="Excepciones\PropiedadesNulasExcepcion.cs" />
+    <Compile Include="Excepciones\VetoEnProgresoExcepcion.cs" />
+    <Compile Include="Excepciones\VetoPermanenteExcepcion.cs" />
     <Compile Include="ModeloBD\Amigo.cs">
       <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>

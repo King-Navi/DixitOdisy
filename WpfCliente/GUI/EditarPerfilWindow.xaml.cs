@@ -71,7 +71,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception ex)
             {
-                ManejadorExcepciones.ManejarComponentErrorException(ex);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
             }
         }
 
@@ -274,7 +274,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponentErrorException(excepcion);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
             IniciarSesion iniciarSesion = new IniciarSesion();
             iniciarSesion.Show();

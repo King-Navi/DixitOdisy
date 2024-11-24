@@ -62,7 +62,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception ex)
             {
-                ManejadorExcepciones.ManejarComponentFatalException(ex);
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(ex);
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCargarAmigosFalla, Properties.Idioma.mensajeCargarAmigosFalla, this);
                 return false;
             }
@@ -96,7 +96,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception ex)
             {
-                ManejadorExcepciones.ManejarComponentFatalException(ex);
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(ex);
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCargarAmigosFalla, Properties.Idioma.mensajeCargarAmigosFalla, this);
                 return false;
             }

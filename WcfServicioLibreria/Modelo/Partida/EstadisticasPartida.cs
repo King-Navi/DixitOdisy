@@ -1,4 +1,5 @@
 ﻿using DAOLibreria.DAO;
+using DAOLibreria.Excepciones;
 using DAOLibreria.ModeloBD;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Enumerador;
+using WcfServicioLibreria.Modelo.Vetos;
 
 namespace WcfServicioLibreria.Modelo
 {
@@ -18,22 +20,17 @@ namespace WcfServicioLibreria.Modelo
         private const int DERROTA = 0;
         [DataMember]
         public TematicaPartida Tematica { get; private set; }
-        
         [DataMember]
         public List<JugadorEstadisticas> Jugadores { get; set; } 
-
         [DataMember]
         public int TotalRondas { get; set; } 
-        
         [DataMember]
         public JugadorEstadisticas PrimerLugar { get; set; }
-        
         [DataMember]
         public JugadorEstadisticas SegundoLugar { get; set; }
-        
         [DataMember]
         public JugadorEstadisticas TercerLugar { get; set; }
-
+        private ManejadorDeVetos manejadorVetos { get; set; } = new ManejadorDeVetos();
         public EstadisticasPartida(TematicaPartida tematica)
         {
             Tematica = tematica;
@@ -61,14 +58,24 @@ namespace WcfServicioLibreria.Modelo
             var tareasSolicitudes = new List<Task>();
             foreach (var tupla in listaTuplaNombreIdEstadistica)
             {
-                if (tupla.Item1.Equals(PrimerLugar.Nombre, StringComparison.OrdinalIgnoreCase))
+                try
                 {
-                    tareasSolicitudes.Add(EstadisticasDAO.AgregarEstadiscaPartidaAsync(tupla.Item2, accion, VICTORIA));
+                    if (tupla.Item1.Equals(PrimerLugar.Nombre, StringComparison.OrdinalIgnoreCase))
+                    {
+                        tareasSolicitudes.Add(EstadisticasDAO.AgregarEstadiscaPartidaAsync(tupla.Item2, accion, VICTORIA));
 
+                    }
+                    else
+                    {
+                        tareasSolicitudes.Add(EstadisticasDAO.AgregarEstadiscaPartidaAsync(tupla.Item2, accion, DERROTA));
+                    }
                 }
-                else
+                catch (ActividadSospechosaExcepcion)
                 {
-                    tareasSolicitudes.Add(EstadisticasDAO.AgregarEstadiscaPartidaAsync(tupla.Item2, accion, DERROTA));
+                    await manejadorVetos.VetaJugadorAsync(tupla.Item1);
+                }
+                catch (Exception)
+                {
                 }
             }
             await Task.WhenAll(tareasSolicitudes);

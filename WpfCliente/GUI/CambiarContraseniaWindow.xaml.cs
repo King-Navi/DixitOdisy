@@ -51,7 +51,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception ex)
             {
-                ManejadorExcepciones.ManejarErrorException(ex, this);
+                ManejadorExcepciones.ManejarErrorExcepcion(ex, this);
             }
         }
 

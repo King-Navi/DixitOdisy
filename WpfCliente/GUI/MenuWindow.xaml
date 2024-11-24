@@ -64,7 +64,7 @@
                 <StackPanel Orientation="Vertical" Background="#E0DCC7" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,70,0,0">
                     <Button x:Name="buttonCrearSala" Content="Crear sala de espera" FontFamily="ROG Fonts" 
                         Background="#E0DCC7" Foreground="Black" BorderThickness="4" BorderBrush="Black" 
-                        FontSize="24" Margin="0,10,0,10" Click="ClicBottonCrearSala" VerticalAlignment="Top" />
+                        FontSize="24" Margin="0,10,0,10" Click="ClicButtonCrearSala" VerticalAlignment="Top" />
 
                     <Button x:Name="buttonUniserSala" Content="Unirse a sala de espera" FontFamily="ROG Fonts" 
                         Background="#E0DCC7" Foreground="Black" BorderThickness="4" BorderBrush="Black" 
@@ -108,7 +108,7 @@
             <!-- Botón de refrescar -->
             <Button x:Name="buttonRefrescar" Grid.Row="2" Grid.ColumnSpan="2" Content="Refrescar" 
                     HorizontalAlignment="Left" VerticalAlignment="Top" 
-                    Width="100" Margin="50,74,0,0" Click="ClicBottonRefrescarEstadisticas" />
+                    Width="100" Margin="50,74,0,0" Click="ClicButtonRefrescarEstadisticas" />
         </Grid>
 
         <!-- Notificación Generalizada -->

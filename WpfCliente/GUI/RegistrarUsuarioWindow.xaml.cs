@@ -150,7 +150,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception ex)
             {
-                ManejadorExcepciones.ManejarFatalException(ex, this);
+                ManejadorExcepciones.ManejarFatalExcepcion(ex, this);
             }
         }
 
@@ -262,7 +262,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception ex)
             {
-                ManejadorExcepciones.ManejarComponentErrorException(ex);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, 
                     Properties.Idioma.mensajeImagenInvalida, this);
             }

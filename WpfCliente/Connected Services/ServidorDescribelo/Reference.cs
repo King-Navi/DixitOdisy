@@ -1340,12 +1340,6 @@ namespace WpfCliente.ServidorDescribelo {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChat", ReplyAction="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatResponse")]
         System.Threading.Tasks.Task<bool> AgregarUsuarioChatAsync(string idChat, string nombreUsuario);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChatMotor/DesconectarUsuarioChat", ReplyAction="http://tempuri.org/IServicioChatMotor/DesconectarUsuarioChatResponse")]
-        bool DesconectarUsuarioChat(string nombreUsuario);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChatMotor/DesconectarUsuarioChat", ReplyAction="http://tempuri.org/IServicioChatMotor/DesconectarUsuarioChatResponse")]
-        System.Threading.Tasks.Task<bool> DesconectarUsuarioChatAsync(string nombreUsuario);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioChatMotor/EnviarMensaje", ReplyAction="http://tempuri.org/IServicioChatMotor/EnviarMensajeResponse")]
         void EnviarMensaje(string idChat, WpfCliente.ServidorDescribelo.ChatMensaje mensaje);
         
@@ -1394,14 +1388,6 @@ namespace WpfCliente.ServidorDescribelo {
         
         public System.Threading.Tasks.Task<bool> AgregarUsuarioChatAsync(string idChat, string nombreUsuario) {
             return base.Channel.AgregarUsuarioChatAsync(idChat, nombreUsuario);
-        }
-        
-        public bool DesconectarUsuarioChat(string nombreUsuario) {
-            return base.Channel.DesconectarUsuarioChat(nombreUsuario);
-        }
-        
-        public System.Threading.Tasks.Task<bool> DesconectarUsuarioChatAsync(string nombreUsuario) {
-            return base.Channel.DesconectarUsuarioChatAsync(nombreUsuario);
         }
         
         public void EnviarMensaje(string idChat, WpfCliente.ServidorDescribelo.ChatMensaje mensaje) {
@@ -1568,10 +1554,10 @@ namespace WpfCliente.ServidorDescribelo {
     public interface IServicioPartidaSesion {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioPartidaSesion/UnirsePartida")]
-        void UnirsePartida(string gamertag, string idPartida);
+        void UnirsePartida(string nombreUsuario, string idPartida);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioPartidaSesion/UnirsePartida")]
-        System.Threading.Tasks.Task UnirsePartidaAsync(string gamertag, string idPartida);
+        System.Threading.Tasks.Task UnirsePartidaAsync(string nombreUsuario, string idPartida);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioPartidaSesion/ConfirmarMovimiento")]
         void ConfirmarMovimiento(string nombreJugador, string idPartida, string claveImagen, string pista);
@@ -1669,12 +1655,12 @@ namespace WpfCliente.ServidorDescribelo {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public void UnirsePartida(string gamertag, string idPartida) {
-            base.Channel.UnirsePartida(gamertag, idPartida);
+        public void UnirsePartida(string nombreUsuario, string idPartida) {
+            base.Channel.UnirsePartida(nombreUsuario, idPartida);
         }
         
-        public System.Threading.Tasks.Task UnirsePartidaAsync(string gamertag, string idPartida) {
-            return base.Channel.UnirsePartidaAsync(gamertag, idPartida);
+        public System.Threading.Tasks.Task UnirsePartidaAsync(string nombreUsuario, string idPartida) {
+            return base.Channel.UnirsePartidaAsync(nombreUsuario, idPartida);
         }
         
         public void ConfirmarMovimiento(string nombreJugador, string idPartida, string claveImagen, string pista) {
@@ -1832,10 +1818,10 @@ namespace WpfCliente.ServidorDescribelo {
     public interface IServicioSalaJugador {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSala")]
-        void AgregarJugadorSala(string gamertag, string idSala);
+        void AgregarJugadorSala(string usuario, string idSala);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSala")]
-        System.Threading.Tasks.Task AgregarJugadorSalaAsync(string gamertag, string idSala);
+        System.Threading.Tasks.Task AgregarJugadorSalaAsync(string usuario, string idSala);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfrition")]
         void ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida);
@@ -1894,12 +1880,12 @@ namespace WpfCliente.ServidorDescribelo {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public void AgregarJugadorSala(string gamertag, string idSala) {
-            base.Channel.AgregarJugadorSala(gamertag, idSala);
+        public void AgregarJugadorSala(string usuario, string idSala) {
+            base.Channel.AgregarJugadorSala(usuario, idSala);
         }
         
-        public System.Threading.Tasks.Task AgregarJugadorSalaAsync(string gamertag, string idSala) {
-            return base.Channel.AgregarJugadorSalaAsync(gamertag, idSala);
+        public System.Threading.Tasks.Task AgregarJugadorSalaAsync(string usuario, string idSala) {
+            return base.Channel.AgregarJugadorSalaAsync(usuario, idSala);
         }
         
         public void ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida) {
@@ -2097,10 +2083,10 @@ namespace WpfCliente.ServidorDescribelo {
     public interface IServicioInvitacionPartida {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioInvitacionPartida/EnviarInvitacion", ReplyAction="http://tempuri.org/IServicioInvitacionPartida/EnviarInvitacionResponse")]
-        bool EnviarInvitacion(string gamertagEmisor, string codigoSala, string gamertagReceptor);
+        bool EnviarInvitacion(string usuarioEmisor, string codigoSala, string usuarioReceptor);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioInvitacionPartida/EnviarInvitacion", ReplyAction="http://tempuri.org/IServicioInvitacionPartida/EnviarInvitacionResponse")]
-        System.Threading.Tasks.Task<bool> EnviarInvitacionAsync(string gamertagEmisor, string codigoSala, string gamertagReceptor);
+        System.Threading.Tasks.Task<bool> EnviarInvitacionAsync(string usuarioEmisor, string codigoSala, string usuarioReceptor);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioInvitacionPartida/AbrirCanalParaInvitaciones")]
         void AbrirCanalParaInvitaciones(WpfCliente.ServidorDescribelo.Usuario usuario);
@@ -2144,12 +2130,12 @@ namespace WpfCliente.ServidorDescribelo {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public bool EnviarInvitacion(string gamertagEmisor, string codigoSala, string gamertagReceptor) {
-            return base.Channel.EnviarInvitacion(gamertagEmisor, codigoSala, gamertagReceptor);
+        public bool EnviarInvitacion(string usuarioEmisor, string codigoSala, string usuarioReceptor) {
+            return base.Channel.EnviarInvitacion(usuarioEmisor, codigoSala, usuarioReceptor);
         }
         
-        public System.Threading.Tasks.Task<bool> EnviarInvitacionAsync(string gamertagEmisor, string codigoSala, string gamertagReceptor) {
-            return base.Channel.EnviarInvitacionAsync(gamertagEmisor, codigoSala, gamertagReceptor);
+        public System.Threading.Tasks.Task<bool> EnviarInvitacionAsync(string usuarioEmisor, string codigoSala, string usuarioReceptor) {
+            return base.Channel.EnviarInvitacionAsync(usuarioEmisor, codigoSala, usuarioReceptor);
         }
         
         public void AbrirCanalParaInvitaciones(WpfCliente.ServidorDescribelo.Usuario usuario) {

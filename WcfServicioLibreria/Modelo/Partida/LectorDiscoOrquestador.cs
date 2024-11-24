@@ -10,19 +10,19 @@ namespace WcfServicioLibreria.Modelo
     {
 
         private readonly List<LectorDisco> lectoresDisco = new List<LectorDisco>();
-        private readonly int maxLectores;
+        private readonly int MAXIMO_LECTORESDISCO;
         private int indiceActual = 0;
         private readonly SemaphoreSlim semaforoAsignacion = new SemaphoreSlim(1, 1);
         public bool Desechado { get; private set; } = false;
 
         public LectorDiscoOrquestador(int cantidadLectores)
         {
-            if (cantidadLectores > 6)
+            if (cantidadLectores > MAXIMO_LECTORESDISCO)
             {
-                cantidadLectores = 6;
+                cantidadLectores = MAXIMO_LECTORESDISCO;
             }
-            maxLectores = cantidadLectores;
-            for (int i = 0; i < maxLectores; i++)
+            MAXIMO_LECTORESDISCO = cantidadLectores;
+            for (int i = 0; i < MAXIMO_LECTORESDISCO; i++)
             {
                 lectoresDisco.Add(new LectorDisco(i));
             }
@@ -30,7 +30,7 @@ namespace WcfServicioLibreria.Modelo
 
         public void AsignarTrabajo(string archivoPath, IPartidaCallback callback, bool usarGrupo = false)
         {
-            var lectorMenosOcupado = lectoresDisco.OrderBy(l => l.ColaCount).First();
+            var lectorMenosOcupado = lectoresDisco.OrderBy(busqueda => busqueda.ColaCount).First();
             lectorMenosOcupado.EncolarLecturaEnvio(archivoPath, callback, usarGrupo);
         }
 

@@ -77,8 +77,15 @@
     <Compile Include="Cliente\ValidacionesStringPruebas.cs" />
     <Compile Include="DAO\EstadisticasDAONoConexion_Prueba.cs" />
     <Compile Include="DAO\EstadisticasDAO_Prueba.cs" />
+    <Compile Include="DAO\ExpulsionDAONoConexion_Prueba.cs" />
+    <Compile Include="DAO\ExpulsionDAO_Prueba.cs" />
+    <Compile Include="DAO\UsuarioCuentaDAONoConexion_Prueba.cs" />
+    <Compile Include="DAO\UsuarioCuentaDAO_Prueba.cs" />
     <Compile Include="DAO\Utilidades\ConfiguracionPruebaBD.cs" />
     <Compile Include="DAO\Utilidades\ConfiguracionPruebaBDInvalida.cs" />
+    <Compile Include="DAO\VetoDAONoConexion_Prueba.cs" />
+    <Compile Include="DAO\VetoDAO_Prueba.cs" />
+    <Compile Include="Servidor\ManejarDeVetos.cs" />
     <Compile Include="Servidor\ServicioCorreo.cs" />
     <Compile Include="Servidor\ServicioInvitacionPartida.cs" />
     <Compile Include="Servidor\ServicioPartida.cs" />

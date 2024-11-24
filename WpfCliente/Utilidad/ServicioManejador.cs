@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -18,9 +19,32 @@ namespace WpfCliente.Utilidad
                 action(cliente); 
                 cliente.Close(); 
             }
-            catch
+            catch (FaultException excepcionDeServicio)
             {
-                cliente.Abort(); 
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeServicio);
+            }
+            catch (CommunicationException excepcionDeComunicacion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeComunicacion);
+            }
+            catch (TimeoutException excepcionDeTiempoExcedido)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeTiempoExcedido);
+            }
+            catch (Exception excepcionGeneral)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionGeneral);
+            }
+            finally
+            {
+                try
+                {
+                    cliente.Abort();
+                }
+                catch (Exception excepcionAbortar)
+                {
+                    ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionAbortar);
+                }
             }
         }
         /// <summary>
@@ -38,10 +62,32 @@ namespace WpfCliente.Utilidad
                 cliente.Close(); 
                 return resultado;
             }
-            catch(Exception excepcion)
+            catch (FaultException excepcionDeServicio)
             {
-                ManejadorExcepciones.ManejarComponentErrorException(excepcion);
-                cliente.Abort(); 
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeServicio);
+            }
+            catch (CommunicationException excepcionDeComunicacion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeComunicacion);
+            }
+            catch (TimeoutException excepcionDeTiempoExcedido)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeTiempoExcedido);
+            }
+            catch (Exception excepcionGeneral)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionGeneral);
+            }
+            finally
+            {
+                try
+                {
+                    cliente.Abort();
+                }
+                catch (Exception excepcionAbortar)
+                {
+                    ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionAbortar);
+                }
             }
             return default;
         }
@@ -58,10 +104,32 @@ namespace WpfCliente.Utilidad
                 await action(cliente);
                 cliente.Close();
             }
-            catch
+            catch (FaultException excepcionDeServicio)
             {
-                cliente.Abort();
-                throw;
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeServicio);
+            }
+            catch (CommunicationException excepcionDeComunicacion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeComunicacion);
+            }
+            catch (TimeoutException excepcionDeTiempoExcedido)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeTiempoExcedido);
+            }
+            catch (Exception excepcionGeneral)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionGeneral);
+            }
+            finally
+            {
+                try
+                {
+                    cliente.Abort();
+                }
+                catch (Exception excepcionAbortar)
+                {
+                    ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionAbortar);
+                }
             }
         }
 
@@ -80,11 +148,34 @@ namespace WpfCliente.Utilidad
                 cliente.Close();
                 return resultado;
             }
-            catch
+            catch (FaultException excepcionDeServicio)
             {
-                cliente.Abort();
-                throw;
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeServicio);
             }
+            catch (CommunicationException excepcionDeComunicacion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeComunicacion);
+            }
+            catch (TimeoutException excepcionDeTiempoExcedido)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeTiempoExcedido);
+            }
+            catch (Exception excepcionGeneral)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionGeneral);
+            }
+            finally
+            {
+                try
+                {
+                    cliente.Abort();
+                }
+                catch (Exception excepcionAbortar)
+                {
+                    ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionAbortar);
+                }
+            }
+            return default;
         }
     }
 

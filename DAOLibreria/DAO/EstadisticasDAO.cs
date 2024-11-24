@@ -97,8 +97,8 @@ namespace DAOLibreria.DAO
             }
             catch (Exception)
             {
+                return -1;
             }
-            return -1;
         }
     }
 }

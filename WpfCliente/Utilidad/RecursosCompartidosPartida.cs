@@ -6,7 +6,7 @@ namespace WpfCliente.GUI
 {
     internal class RecursosCompartidosPartida
     {
-        public Usuario primerLuagr;
+        public Usuario primerLugar;
         public Usuario segundoLugar;
         public Usuario tercerLugar;
         public ObservableCollection<ImagenCarta> GruposDeImagenes { get; } = new ObservableCollection<ImagenCarta>();
@@ -25,7 +25,7 @@ namespace WpfCliente.GUI
 
         public void AsignarPodio(JugadorEstadisticas _primerLugar, JugadorEstadisticas _segundoLugar, JugadorEstadisticas _tercerLugar)
         {
-            primerLuagr = _primerLugar != null
+            primerLugar = _primerLugar != null
             ? UsuarioEnpartida.FirstOrDefault(usuario => usuario.Nombre == _primerLugar.Nombre)
             : null;
 

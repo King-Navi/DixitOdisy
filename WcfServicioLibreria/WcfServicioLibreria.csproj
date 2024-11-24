@@ -78,6 +78,7 @@
     <Compile Include="Contratos\IServicioRegistro.cs" />
     <Compile Include="Contratos\IServicioSala.cs" />
     <Compile Include="Contratos\IServicioSalaJugador.cs" />
+    <Compile Include="Manejador\Chat.cs" />
     <Compile Include="Manejador\Correo.cs" />
     <Compile Include="Manejador\Estadisticas.cs" />
     <Compile Include="Manejador\InvitacionPartida.cs" />
@@ -97,7 +98,7 @@
     <Compile Include="Manejador\Registro.cs" />
     <Compile Include="Manejador\Sala.cs" />
     <Compile Include="Manejador\SalaJugador.cs" />
-    <Compile Include="Manejador\Chat.cs" />
+    <Compile Include="Manejador\ChatMotro.cs" />
     <Compile Include="Manejador\Usuario.cs" />
     <Compile Include="Modelo\Amistad\Amigo.cs" />
     <Compile Include="Modelo\Excepciones\SolicitudAmistadFalla.cs" />
@@ -125,6 +126,8 @@
     <Compile Include="Modelo\Partida\PartidaJugadores.cs" />
     <Compile Include="Modelo\Usuario\Usuario.cs" />
     <Compile Include="Modelo\Excepciones\UsuarioFalla.cs" />
+    <Compile Include="Modelo\Vetos\IManejadorVeto.cs" />
+    <Compile Include="Modelo\Vetos\ManejadorDeVetos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilidades\ContextoOperacion.cs" />
     <Compile Include="Utilidades\IContextoOperacion.cs" />

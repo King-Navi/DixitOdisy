@@ -235,7 +235,7 @@ namespace WpfCliente.GUI
         {
             recursosCompartidos.JugadorEstadisticas = new ObservableCollection<JugadorEstadisticas>(estadisticas.Jugadores);
             recursosCompartidos.AsignarPodio(estadisticas.PrimerLugar, estadisticas.SegundoLugar, estadisticas.TercerLugar);
-            resumenRondaUserControl.MostrarEnPodio(recursosCompartidos.primerLuagr, recursosCompartidos.segundoLugar, recursosCompartidos.tercerLugar);
+            resumenRondaUserControl.MostrarEnPodio(recursosCompartidos.primerLugar, recursosCompartidos.segundoLugar, recursosCompartidos.tercerLugar);
 
         }
 

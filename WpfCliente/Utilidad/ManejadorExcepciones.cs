@@ -7,40 +7,40 @@ namespace WpfCliente.Utilidad
 {
     public static class ManejadorExcepciones
     {
-        private static readonly ILogger _logger = LoggerManager .ObtenerLogger();
+        private static readonly ILogger logger = LoggerManagador .ObtenerLogger();
 
-        public static void ManejarErrorException(Exception ex, Window window)
+        public static void ManejarErrorExcepcion(Exception excepcion, Window ventana)
         {
-            _logger.Error(ex.Message + "\n" + ex.StackTrace + "\n");
+            logger.Error(excepcion.Message + "\n" + excepcion.StackTrace + "\n");
 
-            if (window != null)
+            if (ventana != null)
             {
-                window.Close();
+                ventana.Close();
                 IniciarSesion iniciarSesion = new IniciarSesion();
                 iniciarSesion.Show();
             }
         }
 
-        public static void ManejarFatalException(Exception ex, Window window)
+        public static void ManejarFatalExcepcion(Exception excepcion, Window ventana)
         {
-            _logger.Fatal(ex.Message + "\n" + ex.StackTrace + "\n");
+            logger.Fatal(excepcion.Message + "\n" + excepcion.StackTrace + "\n");
 
-            if (window != null)
+            if (ventana != null)
             {
-                window.Close();
+                ventana.Close();
                 IniciarSesion iniciarSesion = new IniciarSesion();
                 iniciarSesion.Show();
             }
         }
 
-        public static void ManejarComponentErrorException(Exception ex)
+        public static void ManejarComponenteErrorExcepcion(Exception excepcion)
         {
-            _logger.Error(ex.Message + "\n" + ex.StackTrace + "\n");
+            logger.Error(excepcion.Message + "\n" + excepcion.StackTrace + "\n");
         }
 
-        public static void ManejarComponentFatalException(Exception ex)
+        public static void ManejarComponenteFatalExcepcion(Exception excepcion)
         {
-            _logger.Fatal(ex.Message + "\n" + ex.StackTrace + "\n");
+            logger.Fatal(excepcion.Message + "\n" + excepcion.StackTrace + "\n");
         }
     }
 }

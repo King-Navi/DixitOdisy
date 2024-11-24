@@ -135,20 +135,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="DesconectarUsuarioChat">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="DesconectarUsuarioChatResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="DesconectarUsuarioChatResult" type="xs:boolean" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="EnviarMensaje">
     <xs:complexType>
       <xs:sequence>
@@ -257,7 +243,7 @@
   <xs:element name="UnirsePartida">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="gamertag" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="idPartida" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -445,7 +431,7 @@
   <xs:element name="AgregarJugadorSala">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="gamertag" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="usuario" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="idSala" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -610,9 +596,9 @@
   <xs:element name="EnviarInvitacion">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="gamertagEmisor" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="usuarioEmisor" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="codigoSala" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="gamertagReceptor" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="usuarioReceptor" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

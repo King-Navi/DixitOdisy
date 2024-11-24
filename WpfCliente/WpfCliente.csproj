@@ -221,7 +221,7 @@
       <DependentUpon>IniciarSesionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilidad\Imagen.cs" />
-    <Compile Include="Utilidad\LoggerManager.cs" />
+    <Compile Include="Utilidad\LoggerManagador.cs" />
     <Compile Include="Utilidad\ManejadorExcepciones.cs" />
     <Compile Include="Utilidad\Servidor\Usuario.cs" />
     <Compile Include="Utilidad\Utilidades.cs" />

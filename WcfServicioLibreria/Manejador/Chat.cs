@@ -1,42 +1,16 @@
 ﻿using System;
-using System.ServiceModel;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Manejador
 {
-    public partial class ManejadorPrincipal : IServicioChatMotor, IServicioChat
+    public partial class ManejadorPrincipal : IServicioChat
     {
-        bool IServicioChatMotor.AgregarUsuarioChat(string idChat, string nombreUsuario)
-        {
-            try
-            {
-                bool existeSala = chatDiccionario.TryGetValue(idChat, out Chat chat);
-                if (chat is MultiChat multiChat && existeSala)
-                {
-
-                    foreach (var nombreJugadorEnSala in multiChat.ObtenerNombresJugadoresChat())
-                    {
-                        if (nombreJugadorEnSala.Equals(nombreUsuario, StringComparison.OrdinalIgnoreCase))
-                        {
-                            return false;
-                        }
-                    }
-                    IChatCallback contexto = contextoOperacion.GetCallbackChannel<IChatCallback>();
-                        return multiChat.AgregarJugadorChat(nombreUsuario, contexto);
-                    
-                }
-               
-
-            }
-            catch (CommunicationException excepcion)
-            {
-                //TODO: Manejar el error
-            }
-            return false;
-        }
-
         bool IServicioChat.CrearChat(string idChat)
         {
             bool resultado = false;
@@ -53,18 +27,11 @@ namespace WcfServicioLibreria.Manejador
                 {
                 }
             }
-            catch (CommunicationException excepcion)
+            catch (Exception)
             {
-                //TODO: Manejar el error
             }
             return resultado;
         }
-
-        bool IServicioChatMotor.DesconectarUsuarioChat(string usuario)
-        {
-            throw new NotImplementedException();
-        }
-
         public void BorrarChat(object sender, System.EventArgs e)
         {
             if (sender is MultiChat chat)
@@ -75,24 +42,7 @@ namespace WcfServicioLibreria.Manejador
                 salasDiccionario.TryRemove(evento.Chat.IdChat, out _);
             }
         }
-
-
-        void IServicioChatMotor.EnviarMensaje(string idChat, ChatMensaje mensaje)
-        {
-            try
-            {
-                ///Problema de concurrencia granular y revisar riesgo de deadlock
-                chatDiccionario.TryGetValue(idChat, out Chat chat);
-                lock (chat)
-                {
-                    MultiChat multiChat = (MultiChat)chat;
-                    multiChat.EnviarMensajeTodos(mensaje);
-                }
-            }
-            catch (CommunicationException excepcion)
-            {
-                //TODO: Manejar el error
-            }
-        }
     }
+
+  
 }

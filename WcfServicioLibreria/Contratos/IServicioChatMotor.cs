@@ -20,20 +20,12 @@ namespace WcfServicioLibreria.Contratos
         [FaultContract(typeof(UsuarioFalla))]
         bool AgregarUsuarioChat(string idChat, string nombreUsuario);
         /// <summary>
-        /// Desconecta a un usuario del chat.
-        /// </summary>
-        /// <param name="usuario">El usuario a desconectar.</param>
-        /// <returns>Verdadero si la desconexión fue exitosa; de lo contrario, falso.</returns>
-        [OperationContract]
-        bool DesconectarUsuarioChat(string nombreUsuario);
-        /// <summary>
         /// Obtiene el estado actual del jugador.
         /// </summary>
         /// <param name="usuario">El usuario cuyo estado se está consultando.</param>
         /// <returns>Verdadero si el jugador está activo; de lo contrario, falso.</returns>
         [OperationContract(IsOneWay = false)]
         void EnviarMensaje(string idChat, ChatMensaje mensaje);
-
     }
     /// <summary>
     /// Define los métodos de callback para los clientes del servicio de chat, permitiendo recibir mensajes.

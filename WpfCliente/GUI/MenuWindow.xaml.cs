@@ -41,7 +41,7 @@ namespace WpfCliente.GUI
             catch (Exception excepcion) 
             {
                 gridEstadisticas.Visibility = Visibility.Collapsed;
-                ManejadorExcepciones.ManejarErrorException(excepcion, this);
+                ManejadorExcepciones.ManejarErrorExcepcion(excepcion, this);
             }
         }
 
@@ -88,11 +88,11 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion,this);
+                ManejadorExcepciones.ManejarFatalExcepcion(excepcion,this);
             }
         }
 
-        private void ClicBottonCrearSala(object sender, RoutedEventArgs e)
+        private void ClicButtonCrearSala(object sender, RoutedEventArgs e)
         {
             AbrirVentanaSala(null);
         }
@@ -203,7 +203,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponentErrorException(excepcion);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
             IniciarSesion iniciarSesion = new IniciarSesion();
             iniciarSesion.Show();
@@ -282,8 +282,9 @@ namespace WpfCliente.GUI
             OcultarNotificacion();
         }
 
-        private void ClicBottonRefrescarEstadisticas(object sender, RoutedEventArgs e)
+        private async void ClicButtonRefrescarEstadisticas(object sender, RoutedEventArgs e)
         {
+            buttonRefrescar.IsEnabled = false;
             try
             {
                 estadisticas.SolicitarEstadisiticas(SingletonCliente.Instance.IdUsuario);
@@ -294,8 +295,15 @@ namespace WpfCliente.GUI
             catch (Exception excepcion) 
             {
                 gridEstadisticas.Visibility = Visibility.Collapsed;
-                ManejadorExcepciones.ManejarErrorException(excepcion, this);
+                ManejadorExcepciones.ManejarErrorExcepcion(excepcion, this);
+                bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+                if (!conexionExitosa)
+                {
+                    return;
+                }
             }
+            buttonRefrescar.IsEnabled = true;
+
         }
     }
 }

@@ -5,10 +5,11 @@ namespace WcfServicioLibreria.Modelo
     [DataContract]
     internal class CondicionVictoriaCartasAgotadas : ICondicionVictoria
     {
+        private const int CARTA_CERO = 0;
         public bool Verificar(Partida partida)
         {
             bool resultado = false;
-            if (partida.CartasRestantes <= 0)
+            if (partida.CartasRestantes <= CARTA_CERO)
             {
                 resultado = true;
             };

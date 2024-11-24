@@ -3,7 +3,7 @@ using System;
 
 namespace WpfCliente.Utilidad
 {
-    public static class LoggerManager
+    public static class LoggerManagador
     {
         private const string FORMATO_FECHA = "dd-MM-yyyy";
         private const string NOMBRE_LOG = "Log";
@@ -12,11 +12,11 @@ namespace WpfCliente.Utilidad
         private const string RUTA_RELATIVA_LOGS = "../../Logs\\";
         private static ILogger logger;
 
-        private static void ConfigurarLogger(string logFilePath)
+        private static void ConfigurarLogger(string archivoRuta)
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
-                .WriteTo.File(@logFilePath)
+                .WriteTo.File(archivoRuta)
                 .CreateLogger();
         }
 

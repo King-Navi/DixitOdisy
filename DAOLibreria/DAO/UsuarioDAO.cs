@@ -134,12 +134,9 @@ namespace DAOLibreria.DAO
                             context.SaveChanges();
                             transaction.Commit();
                         }
-                        catch (Exception excepcion)
+                        catch (Exception)
                         {
                             transaction.Rollback();
-                            //TODO: Manejar el error
-                            Console.WriteLine(excepcion);
-                            Console.WriteLine(excepcion.StackTrace);
                         }
                     }
 
@@ -169,7 +166,7 @@ namespace DAOLibreria.DAO
                 {
                     datosUsuarioCuenta = context.UsuarioCuenta
                                                  .Include("Usuario")
-                                                 .SingleOrDefault(cuenta => cuenta.gamertag == gamertag); //&& contrasenia.Equals(cuenta.hashContrasenia, StringComparison.OrdinalIgnoreCase) 
+                                                 .SingleOrDefault(cuenta => cuenta.gamertag == gamertag);
                     if (datosUsuarioCuenta != null)
                     {
                         var contraseniaCuenta = datosUsuarioCuenta.hashContrasenia.ToUpper();
@@ -230,9 +227,8 @@ namespace DAOLibreria.DAO
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine($"Error al obtener el ID por nombre: {ex.Message}");
             }
             return 0;
         }
@@ -254,11 +250,9 @@ namespace DAOLibreria.DAO
                         .ToList();
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                Console.WriteLine($"Error al obtener la lista de usuarios: {ex.Message}");
             }
-
             return usuarios;
         }
         /// <summary>
@@ -283,9 +277,8 @@ namespace DAOLibreria.DAO
                 }
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
-                //TODO manejar excepcion
             }
 
             if (usuario != null || usuarioCuenta != null)
@@ -314,9 +307,8 @@ namespace DAOLibreria.DAO
                     return (cantidadUsuarios == 1);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine($"Error al verificar usuario único: {ex.Message}");
                 return false;
             }
         }
@@ -355,18 +347,15 @@ namespace DAOLibreria.DAO
                             transaction.Commit();
                             resultado = true;
                         }
-                        catch (Exception excepcion)
+                        catch (Exception)
                         {
                             transaction.Rollback();
-                            Console.WriteLine($"Error al actualizar la contraseña: {excepcion.Message}");
-                            Console.WriteLine(excepcion.StackTrace);
                         }
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine($"Error general en EditarContraseniaPorGamertag: {ex.Message}");
             }
 
             return resultado;
@@ -390,7 +379,6 @@ namespace DAOLibreria.DAO
             }
             catch (Exception)
             {
-
             }
             return resultado;
         }

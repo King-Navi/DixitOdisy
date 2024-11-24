@@ -20,6 +20,7 @@ namespace WpfCliente.GUI
         private bool visibleConfigurarPartida = false;
         private const int SEGUNDOS_PARA_UNIRSE = 6;
         private const int NUMERO_RONDAS_PORDEFECTO = 3;
+        private const int TIEMPO_CLIC_EXPULSION_SEGUNDOS = 5;
         private ConfiguracionPartida ConfiguracionPartida { get; set; }
 
         public SalaEsperaWindow(string idSala)
@@ -146,7 +147,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion, this);
+                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, this);
                 NoHayConexion();
             }
 
@@ -165,7 +166,7 @@ namespace WpfCliente.GUI
             catch (Exception excepcion)
             {
                 NoHayConexion();
-                ManejadorExcepciones.ManejarFatalException(excepcion, this);
+                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, this);
             }
 
         }
@@ -183,7 +184,7 @@ namespace WpfCliente.GUI
             catch (Exception excepcion)
             {
                 NoHayConexion();
-                ManejadorExcepciones.ManejarFatalException(excepcion, this);
+                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, this);
             }
             return false;
         }
@@ -241,7 +242,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception ex)
             {
-                ManejadorExcepciones.ManejarComponentErrorException(ex);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
             }
 
         }
@@ -291,7 +292,7 @@ namespace WpfCliente.GUI
                 }
                 catch (Exception ex)
                 {
-                    ManejadorExcepciones.ManejarComponentErrorException(ex);
+                    ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
                 }
                 buttonEmpezarPartida.IsEnabled = true;
             }
@@ -359,7 +360,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception ex)
             {
-                ManejadorExcepciones.ManejarComponentErrorException(ex);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
             }
             bool? resultado = ventanaModal.ShowDialog();
 
@@ -385,7 +386,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception ex)
             {
-                ManejadorExcepciones.ManejarComponentErrorException(ex);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloInvitacionPartida, Properties.Idioma.mensajeInvitacionFallida, this);
             }
             return resultado;
@@ -457,12 +458,17 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void ClicButtonEliminarUsuario(object sender, RoutedEventArgs e)
+        private async void ClicButtonEliminarUsuario(object sender, RoutedEventArgs e)
         {
+            this.IsEnabled = false;
+            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+            if (!conexionExitosa)
+            {
+                Application.Current.Shutdown();
+                return;
+            }
             if (sender is Button boton && boton.DataContext is Usuario usuario)
             {
-                String id = usuario.Nombre;
-                MessageBox.Show($"IdUsuario: {id}, Nombre: {usuario.Nombre}", "Información del Usuario");
                 try
                 {
                     Conexion.SalaJugador.ExpulsarJugadorSala(
@@ -472,9 +478,12 @@ namespace WpfCliente.GUI
                 }
                 catch (Exception ex)
                 {
-                    ManejadorExcepciones.ManejarComponentErrorException(ex);
+                    ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
                 }
             }
+            await Task.Delay(TimeSpan.FromSeconds(TIEMPO_CLIC_EXPULSION_SEGUNDOS));
+
+            this.IsEnabled = true;
         }
 
         public void DelegacionRolCallback(bool esAnfitrion)

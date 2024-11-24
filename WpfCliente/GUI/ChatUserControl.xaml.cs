@@ -8,7 +8,7 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class ChatUserControl : UserControl , IServicioChatMotorCallback , IActualizacionUI
+    public partial class ChatUserControl : UserControl , IServicioChatMotorCallback , IActualizacionUI , IHabilitadorBotones
     {
         private const int MAXIMO_CARACTERES_PERMITIDOS = 200;
         public ChatUserControl()
@@ -27,6 +27,12 @@ namespace WpfCliente.GUI
 
         private async void ClicButtonEnviar(object sender, RoutedEventArgs e)
         {
+            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, Window.GetWindow(this));
+            if (!conexionExitosa)
+            {
+                Application.Current.Shutdown();
+                return;
+            }
             if (textBoxEnviarMensaje.Text.Length > MAXIMO_CARACTERES_PERMITIDOS || string.IsNullOrWhiteSpace(textBoxEnviarMensaje.Text))
             {
                 RecibirMensajeCliente(new ChatMensaje
@@ -49,7 +55,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponentErrorException(excepcion);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
         }
 
@@ -77,6 +83,11 @@ namespace WpfCliente.GUI
         private void CerrarControl(object sender, RoutedEventArgs e)
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
+        }
+
+        public void HabilitarBotones(bool esHabilitado)
+        {
+            userControlChat.IsEnabled = esHabilitado;
         }
     }
 }

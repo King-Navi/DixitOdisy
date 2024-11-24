@@ -205,12 +205,6 @@
   <wsdl:message name="IServicioChatMotor_AgregarUsuarioChat_UsuarioFallaFault_FaultMessage">
     <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q2:UsuarioFalla" />
   </wsdl:message>
-  <wsdl:message name="IServicioChatMotor_DesconectarUsuarioChat_InputMessage">
-    <wsdl:part name="parameters" element="tns:DesconectarUsuarioChat" />
-  </wsdl:message>
-  <wsdl:message name="IServicioChatMotor_DesconectarUsuarioChat_OutputMessage">
-    <wsdl:part name="parameters" element="tns:DesconectarUsuarioChatResponse" />
-  </wsdl:message>
   <wsdl:message name="IServicioChatMotor_EnviarMensaje_InputMessage">
     <wsdl:part name="parameters" element="tns:EnviarMensaje" />
   </wsdl:message>
@@ -478,10 +472,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChat" message="tns:IServicioChatMotor_AgregarUsuarioChat_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatResponse" message="tns:IServicioChatMotor_AgregarUsuarioChat_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IServicioChatMotor/AgregarUsuarioChatUsuarioFallaFault" name="UsuarioFallaFault" message="tns:IServicioChatMotor_AgregarUsuarioChat_UsuarioFallaFault_FaultMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="DesconectarUsuarioChat">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioChatMotor/DesconectarUsuarioChat" message="tns:IServicioChatMotor_DesconectarUsuarioChat_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioChatMotor/DesconectarUsuarioChatResponse" message="tns:IServicioChatMotor_DesconectarUsuarioChat_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="EnviarMensaje">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioChatMotor/EnviarMensaje" message="tns:IServicioChatMotor_EnviarMensaje_InputMessage" />
@@ -778,15 +768,6 @@
       <wsdl:fault name="UsuarioFallaFault">
         <soap12:fault use="literal" name="UsuarioFallaFault" namespace="" />
       </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="DesconectarUsuarioChat">
-      <soap12:operation soapAction="http://tempuri.org/IServicioChatMotor/DesconectarUsuarioChat" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="EnviarMensaje">
       <soap12:operation soapAction="http://tempuri.org/IServicioChatMotor/EnviarMensaje" style="document" />

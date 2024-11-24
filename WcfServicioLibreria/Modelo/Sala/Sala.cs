@@ -9,12 +9,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Evento;
+using WcfServicioLibreria.Modelo.Vetos;
 using WcfServicioLibreria.Utilidades;
 namespace WcfServicioLibreria.Modelo
 {
     [DataContract]
     public class Sala : IObservador
     {
+        #region Constantes
+        private const string MOTIVO_EXPULSION_SALA="Expulsion de sala";
+        #endregion
         #region Campos
         private const int SALA_VACIA = 0;
         private string idCodigoSala;
@@ -26,13 +30,16 @@ namespace WcfServicioLibreria.Modelo
         private static ThreadLocal<Random> random = new ThreadLocal<Random>(() => new Random());
         public EventHandler salaVaciaManejadorEvento;
         private readonly SemaphoreSlim semaphoreLeerFotoInvitado = new SemaphoreSlim(1, 1);
+        private static readonly SemaphoreSlim semaphoreRemoverJugador = new SemaphoreSlim(1, 1);
 
+        private IManejadorVeto manejadorVeto;
         #endregion Campos
         #region Propiedades
-        public static int CantidadMaximaJugadores => CANTIDAD_MAXIMA_JUGADORES;
+public static int CantidadMaximaJugadores => CANTIDAD_MAXIMA_JUGADORES;
         public static int CantidadMinimaJugadores => CANTIDAD_MINIMA_JUGADORES;
         public string IdCodigoSala { get => idCodigoSala; internal set => idCodigoSala = value; }
         public string Anfitrion { get; private set; }
+
         #endregion Propiedades
 
         #region Contructores
@@ -40,7 +47,7 @@ namespace WcfServicioLibreria.Modelo
         {
             this.IdCodigoSala = _idCodigoSala;
             this.Anfitrion = nombreUsuario;
-            //jugadoresSalaCallbacks.TryAdd(nombreUsuario, null);
+            manejadorVeto = new ManejadorDeVetos();
         }
 
         #endregion Contructores
@@ -86,24 +93,38 @@ namespace WcfServicioLibreria.Modelo
         /// Despues de este metodo cualquier referencia al jugador en sala se pierde
         /// </summary>
         /// <param name="nombreJugador"></param>
-        void RemoverJugadorSala(string nombreJugador)
+        async Task RemoverJugadorSalaAsync(string nombreJugador)
         {
-            jugadoresSalaCallbacks.TryRemove(nombreJugador, out ISalaJugadorCallback _);
-            eventosCommunication.TryRemove(nombreJugador, out DesconectorEventoManejador eventosJugador);
-            jugadoresInformacion.TryRemove(nombreJugador, out _);
-            if (nombreJugador.Equals(Anfitrion, StringComparison.OrdinalIgnoreCase) && !(SALA_VACIA ==ObtenerNombresJugadoresSala().Count))
+            await semaphoreRemoverJugador.WaitAsync();
+            try
             {
-                DelegarRolAnfitrion();
+                jugadoresSalaCallbacks.TryRemove(nombreJugador, out ISalaJugadorCallback _);
+                eventosCommunication.TryRemove(nombreJugador, out DesconectorEventoManejador eventosJugador);
+                jugadoresInformacion.TryRemove(nombreJugador, out _);
+
+                if (nombreJugador.Equals(Anfitrion, StringComparison.OrdinalIgnoreCase) && !(SALA_VACIA == ObtenerNombresJugadoresSala().Count))
+                {
+                    DelegarRolAnfitrion();
+                }
+
+                if (eventosJugador != null)
+                {
+                    eventosJugador.Desechar();
+                    await manejadorVeto.RegistrarExpulsionJugadorAsync(nombreJugador, MOTIVO_EXPULSION_SALA, false);
+                }
+
+                if (ContarJugadores() == SALA_VACIA)
+                {
+                    EliminarSala();
+                }
             }
-            if (eventosJugador != null)
+            finally
             {
-                eventosJugador.Desechar();
-            }
-            if (ContarJugadores() == SALA_VACIA)
-            {
-                EliminarSala();
+                semaphoreRemoverJugador.Release();
             }
         }
+
+
         private void EliminarSala()
         {
             IReadOnlyCollection<string> claveJugadores = ObtenerNombresJugadoresSala();
@@ -154,10 +175,10 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        public void DesconectarUsuario(string nombreJugador)
+        public async void DesconectarUsuario(string nombreJugador)
         {
             AvisarRetiroJugador(nombreJugador);
-            RemoverJugadorSala(nombreJugador);
+            await RemoverJugadorSalaAsync(nombreJugador);
         }
 
         public async Task AvisarNuevoJugador(string nombreJugador)

@@ -19,7 +19,6 @@ namespace WcfServicioLibreria.Utilidades
                 return memoriaStream.ToArray();
             }
         }
-
         /// <summary>
         /// Genera un identificador único de 6 caracteres alfanuméricos para las salas.
         /// </summary>
@@ -44,9 +43,9 @@ namespace WcfServicioLibreria.Utilidades
                     resultado.Append(CARACTERES[indice]);
                 }
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
-                //TODO: Manejar el error
+                ManejadorExcepciones.ManejarFatalException(excepcion);
             }
             return resultado.ToString();
         }

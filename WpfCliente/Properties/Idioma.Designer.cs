@@ -295,6 +295,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rechazar.
+        /// </summary>
+        public static string buttonRechazar {
+            get {
+                return ResourceManager.GetString("buttonRechazar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Refrescar.
         /// </summary>
         public static string buttonRefrescar {

@@ -24,7 +24,7 @@ namespace WpfCliente.GUI
 
         private void ColocarFondoColorAleatorio()
         {
-            this.Background = Utilidades.GetColorAleatorio();
+            this.Background = Utilidades.ObtenerColorAleatorio();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using DAOLibreria;
-using DAOLibreria.DAO;
 using DAOLibreria.ModeloBD;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -7,8 +6,6 @@ using Pruebas.Servidor.Utilidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Manejador;
 using WcfServicioLibreria.Utilidades;

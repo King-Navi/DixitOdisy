@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Windows;
 using WpfCliente.GUI;
-using WpfCliente.Interfaz;
-using WpfCliente.Utilidad;
 
 namespace WpfCliente.Utilidad
 {

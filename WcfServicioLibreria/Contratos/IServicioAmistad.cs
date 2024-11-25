@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Modelo.Excepciones;
 
@@ -12,8 +14,11 @@ namespace WcfServicioLibreria.Contratos
         /// Abre un canal para recibir peticiones de amistad.
         /// </summary>
         /// <param name="usuario">El usuario que abre el canal.</param>
-        [OperationContract(IsOneWay = true)]
-        void AbrirCanalParaPeticiones(Usuario usuario);
+        [OperationContract]
+        [ServiceKnownType(typeof(MemoryStream))]
+        [ServiceKnownType(typeof(Stream))]
+        [ServiceKnownType(typeof(Amigo))]
+        bool AbrirCanalParaPeticiones(Usuario usuario);
         /// <summary>
         /// Envia una solicitud de amistad a otro usuario.
         /// </summary>
@@ -40,6 +45,9 @@ namespace WcfServicioLibreria.Contratos
         /// <exception cref="ServidorFalla">Se lanza si tiene veto.</exception>
         [OperationContract]
         [FaultContract(typeof(ServidorFalla))]
+        [ServiceKnownType(typeof(MemoryStream))]
+        [ServiceKnownType(typeof(Stream))]
+        [ServiceKnownType(typeof(Amigo))]
         bool AceptarSolicitudAmistad(int idRemitente, int idDestinatario);
         /// <summary>
         /// Rechaza una solicitud de amistad.
@@ -56,6 +64,9 @@ namespace WcfServicioLibreria.Contratos
         /// <param name="destinatario">El identificador del otro usuario.</param>
         /// <returns>True si son amigos, False en caso contrario.</returns>
         [OperationContract]
+        [ServiceKnownType(typeof(MemoryStream))]
+        [ServiceKnownType(typeof(Stream))]
+        [ServiceKnownType(typeof(Amigo))]
         bool SonAmigos(string usuarioRemitente, string destinatario);
         /// <summary>
         /// Elimina un amigo de la lista de contactos del usuario remitente.
@@ -74,6 +85,9 @@ namespace WcfServicioLibreria.Contratos
         /// <exception cref="ServidorFalla">Se lanza si tiene veto.</exception>
         [OperationContract]
         [FaultContract(typeof(ServidorFalla))]
+        [ServiceKnownType(typeof(MemoryStream))]
+        [ServiceKnownType(typeof(Stream))]
+        [ServiceKnownType(typeof(Amigo))]
         bool EliminarAmigo(string usuarioRemitente, string destinatario);
     }
     [ServiceContract]
@@ -84,12 +98,18 @@ namespace WcfServicioLibreria.Contratos
         /// </summary>
         /// <param name="amigo">El amigo cuyo estado ha cambiado.</param>
         [OperationContract]
+        [ServiceKnownType(typeof(MemoryStream))]
+        [ServiceKnownType(typeof(Stream))]
+        [ServiceKnownType(typeof(Amigo))]
         void CambiarEstadoAmigo(Amigo amigo);
         /// <summary>
         /// Recibe información actualizada de un amigo como parte de un callback.
         /// </summary>
         /// <param name="amigo">El amigo cuya información se está actualizando.</param>
         [OperationContract]
+        [ServiceKnownType(typeof(MemoryStream))]
+        [ServiceKnownType(typeof(Stream))]
+        [ServiceKnownType(typeof(Amigo))]
         void ObtenerAmigoCallback(Amigo amigo);
         /// <summary>
         /// Notifica al cliente que un amigo ha sido eliminado de la lista de amigos del usuario.
@@ -102,6 +122,9 @@ namespace WcfServicioLibreria.Contratos
         /// Es importante asegurar que los datos del objeto 'Amigo' se manejen de manera segura y conforme a las políticas de privacidad.
         /// </remarks>
         [OperationContract]
+        [ServiceKnownType(typeof(MemoryStream))]
+        [ServiceKnownType(typeof(Stream))]
+        [ServiceKnownType(typeof(Amigo))]
         void  EliminarAmigoCallback(Amigo amigo);
     }
 }

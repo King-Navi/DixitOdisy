@@ -1,11 +1,8 @@
-﻿using DAOLibreria;
-using DAOLibreria.DAO;
+﻿using DAOLibreria.DAO;
 using DAOLibreria.Excepciones;
 using DAOLibreria.ModeloBD;
 using System;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;

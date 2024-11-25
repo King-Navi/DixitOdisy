@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Threading;
@@ -17,7 +18,10 @@ namespace WcfServicioLibreria.Modelo
     public class Sala : IObservador
     {
         #region Constantes
-        private const string MOTIVO_EXPULSION_SALA="Expulsion de sala";
+        private const string MOTIVO_EXPULSION_SALA = "Expulsion de sala";
+        private const string TODOS_ARCHIVOS_EXTENSION_PNG = "*.png";
+        private const string RUTA_RECURSOS = "Recursos";
+        private const string CARPETA_FOTOS_INVITADOS = "FotosInvitados";
         #endregion
         #region Campos
         private const int SALA_VACIA = 0;
@@ -35,7 +39,7 @@ namespace WcfServicioLibreria.Modelo
         private IManejadorVeto manejadorVeto;
         #endregion Campos
         #region Propiedades
-public static int CantidadMaximaJugadores => CANTIDAD_MAXIMA_JUGADORES;
+        public static int CantidadMaximaJugadores => CANTIDAD_MAXIMA_JUGADORES;
         public static int CantidadMinimaJugadores => CANTIDAD_MINIMA_JUGADORES;
         public string IdCodigoSala { get => idCodigoSala; internal set => idCodigoSala = value; }
         public string Anfitrion { get; private set; }
@@ -89,10 +93,7 @@ public static int CantidadMaximaJugadores => CANTIDAD_MAXIMA_JUGADORES;
             }
             return resultado;
         }
-        /// <summary>
-        /// Despues de este metodo cualquier referencia al jugador en sala se pierde
-        /// </summary>
-        /// <param name="nombreJugador"></param>
+
         async Task RemoverJugadorSalaAsync(string nombreJugador)
         {
             await semaphoreRemoverJugador.WaitAsync();
@@ -123,7 +124,6 @@ public static int CantidadMaximaJugadores => CANTIDAD_MAXIMA_JUGADORES;
                 semaphoreRemoverJugador.Release();
             }
         }
-
 
         private void EliminarSala()
         {
@@ -183,67 +183,116 @@ public static int CantidadMaximaJugadores => CANTIDAD_MAXIMA_JUGADORES;
 
         public async Task AvisarNuevoJugador(string nombreJugador)
         {
+            var informacionUsuario = await ObtenerInformacionUsuarioAsync(nombreJugador);
+            var usuario = CrearUsuario(informacionUsuario);
+            bool esInvitado = informacionUsuario == null;
+            ActualizarJugadoresSala(nombreJugador, informacionUsuario);
+            NotificarNuevoJugador(nombreJugador, usuario, esInvitado);
+        }
+
+        private async Task<DAOLibreria.ModeloBD.Usuario> ObtenerInformacionUsuarioAsync(string nombreJugador)
+        {
             DAOLibreria.ModeloBD.Usuario informacionUsuario = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
-            bool esInvitado = false;
             if (informacionUsuario == null)
             {
                 await semaphoreLeerFotoInvitado.WaitAsync();
                 try
                 {
-                    //TODO: Hacer algo si no hay imagenes
-                    string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Recursos", "FotosInvitados");
-                    var archivos = Directory.GetFiles(ruta, "*.png");
-                    string archivoAleatorio = archivos[random.Value.Next(archivos.Length)];
-                    string nombreSinExtension = Path.GetFileNameWithoutExtension(archivoAleatorio);
-                    esInvitado = true;
-                    informacionUsuario = new DAOLibreria.ModeloBD.Usuario
-                    {
-                        gamertag = nombreJugador,
-                        fotoPerfil = File.ReadAllBytes(archivoAleatorio)
-                    };
+                    informacionUsuario = CrearUsuarioInvitado(nombreJugador);
                 }
-                catch (Exception)
+                catch (Exception excepcion)
                 {
+                    ManejadorExcepciones.ManejarFatalException(excepcion);
                 }
                 finally
                 {
                     semaphoreLeerFotoInvitado.Release();
                 }
             }
+            return informacionUsuario;
+        }
+
+        private DAOLibreria.ModeloBD.Usuario CrearUsuarioInvitado(string nombreJugador)
+        {
+            string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, RUTA_RECURSOS, CARPETA_FOTOS_INVITADOS);
+            var archivos = Directory.GetFiles(ruta, TODOS_ARCHIVOS_EXTENSION_PNG);
+            string archivoAleatorio = archivos[random.Value.Next(archivos.Length)];
+            return new DAOLibreria.ModeloBD.Usuario
+            {
+                gamertag = nombreJugador,
+                fotoPerfil = File.ReadAllBytes(archivoAleatorio)
+            };
+        }
+
+        private Usuario CrearUsuario(DAOLibreria.ModeloBD.Usuario informacionUsuario)
+        {
+            return new Usuario
+            {
+                Nombre = informacionUsuario.gamertag,
+                FotoUsuario = new MemoryStream(informacionUsuario.fotoPerfil)
+            };
+        }
+
+        private void ActualizarJugadoresSala(string nombreJugador, DAOLibreria.ModeloBD.Usuario informacionUsuario)
+        {
+            jugadoresInformacion.AddOrUpdate(
+                nombreJugador,
+                informacionUsuario,
+                (key, oldValue) => informacionUsuario
+            );
+        }
+
+        private void NotificarNuevoJugador(string nombreJugador, Usuario usuario, bool esInvitado)
+        {
             lock (jugadoresSalaCallbacks)
             {
-                lock (jugadoresInformacion)
+                if (jugadoresSalaCallbacks.TryGetValue(nombreJugador, out ISalaJugadorCallback nuevoCallback))
                 {
-                    jugadoresInformacion.TryAdd(nombreJugador, informacionUsuario);
-                    Usuario usuario = new Usuario
-                    {
-                        Nombre = informacionUsuario.gamertag,
-                        FotoUsuario = new MemoryStream(informacionUsuario.fotoPerfil)
-                    };
-                    if (jugadoresSalaCallbacks.TryGetValue(nombreJugador, out ISalaJugadorCallback nuevoCallback))
-                    {
-                        foreach (var jugadorExistente in jugadoresInformacion.Values)
-                        {
-                            Usuario jugador = new Usuario
-                            {
-                                Nombre = jugadorExistente.gamertag,
-                                FotoUsuario = new MemoryStream(jugadorExistente.fotoPerfil),
-                                EsInvitado = esInvitado
-                            };
-                            nuevoCallback.ObtenerJugadorSalaCallback(jugador);
-                        }
-                    }
-                    foreach (var jugadorConectado in ObtenerNombresJugadoresSala())
-                    {
-                        if (jugadoresSalaCallbacks.TryGetValue(jugadorConectado, out ISalaJugadorCallback callback))
-                        {
-                            if (jugadorConectado != nombreJugador)
-                            {
-                                callback.ObtenerJugadorSalaCallback(usuario);
-                            }
-                        }
-                    }
+                    NotificarJugadorExistente(nuevoCallback, esInvitado);
+                }
 
+                NotificarJugadoresConectados(nombreJugador, usuario);
+            }
+        }
+
+        private void NotificarJugadorExistente(ISalaJugadorCallback nuevoCallback, bool esInvitado)
+        {
+            foreach (var jugadorExistente in jugadoresInformacion.Values)
+            {
+                Usuario jugador = new Usuario
+                {
+                    Nombre = jugadorExistente.gamertag,
+                    FotoUsuario = new MemoryStream(jugadorExistente.fotoPerfil),
+                    EsInvitado = esInvitado
+                };
+                try
+                {
+                    nuevoCallback?.ObtenerJugadorSalaCallback(jugador);
+                }
+                catch (Exception excepcion)
+                {
+                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                }
+            }
+        }
+
+        private void NotificarJugadoresConectados(string nombreJugador, Usuario usuario)
+        {
+            foreach (var jugadorConectado in ObtenerNombresJugadoresSala())
+            {
+                if (jugadoresSalaCallbacks.TryGetValue(jugadorConectado, out ISalaJugadorCallback callback))
+                {
+                    if (jugadorConectado != nombreJugador)
+                    {
+                        try
+                        {
+                            callback?.ObtenerJugadorSalaCallback(usuario);
+                        }
+                        catch (Exception excepcion)
+                        {
+                            ManejadorExcepciones.ManejarErrorException(excepcion);
+                        }
+                    }
                 }
             }
         }
@@ -271,8 +320,9 @@ public static int CantidadMaximaJugadores => CANTIDAD_MAXIMA_JUGADORES;
                                     callback.EliminarJugadorSalaCallback(usuario);
 
                                 }
-                                catch (Exception)
+                                catch (Exception excepcion)
                                 {
+                                    ManejadorExcepciones.ManejarErrorException(excepcion);
                                 }
                             }
                         }
@@ -302,16 +352,17 @@ public static int CantidadMaximaJugadores => CANTIDAD_MAXIMA_JUGADORES;
                             {
                                 callback.EmpezarPartidaCallBack(idPartida);
                             }
-                            catch (Exception ex)
+                            catch (Exception excepcion)
                             {
-                                Console.WriteLine($"{ex}");
+                                ManejadorExcepciones.ManejarErrorException(excepcion);
                             }
                         }
                     }
                     return true;
                 }
-                catch (Exception)
+                catch (Exception excepcion)
                 {
+                    ManejadorExcepciones.ManejarFatalException(excepcion);
                 }
             }
             return false;

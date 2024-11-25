@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Threading;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
@@ -131,15 +130,20 @@ namespace WpfCliente.GUI
             };
         }
 
-        public void ObtenerSessionJugadorCallback(bool esSesionAbierta)
+        public async void ObtenerSessionJugadorCallback(bool esSesionAbierta)
         {
             Usuario user = new Usuario
             {
                 IdUsuario = SingletonCliente.Instance.IdUsuario,
                 Nombre = SingletonCliente.Instance.NombreUsuario
             };
-            Conexion.Amigos.AbrirCanalParaPeticiones(user);
-            Conexion.InvitacionPartida.AbrirCanalParaInvitaciones(user);
+            var resultado = await Conexion.Amigos.AbrirCanalParaPeticionesAsync(user);
+            if (!resultado)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloCargarAmigosFalla, Idioma.mensajeCargarAmigosFalla, this);
+                Application.Current.Shutdown();
+            }
+            await Conexion.InvitacionPartida.AbrirCanalParaInvitacionesAsync(user);
         }
 
         private void ClicButtonUnirseSala(object sender, RoutedEventArgs e)
@@ -228,7 +232,20 @@ namespace WpfCliente.GUI
 
         private void ClicImagenAmigos(object sender, MouseButtonEventArgs e)
         {
-            AmigosWindow amigos = new AmigosWindow(this);
+            AmigosWindow amigos = new AmigosWindow();
+            amigos.Closed += (s, args) =>
+            {
+                try
+                {
+                    this.Visibility = Visibility.Visible;
+                }
+                catch (Exception excepcion)
+                {       
+                    Application.Current.Shutdown();
+                    ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                }
+            };
+            this.Visibility = Visibility.Hidden;
             amigos.Show();
         }
 

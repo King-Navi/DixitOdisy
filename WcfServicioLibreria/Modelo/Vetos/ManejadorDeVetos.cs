@@ -1,9 +1,6 @@
 ﻿using DAOLibreria.ModeloBD;
 using DAOLibreria.DAO;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace WcfServicioLibreria.Modelo.Vetos
@@ -12,6 +9,7 @@ namespace WcfServicioLibreria.Modelo.Vetos
     {
         private const int ID_INVALIDO = 0;
         private const string NOMBRE_PROHIBIDO = "guest";
+        private const int DIAS_PRIMER_VETO = 30;
         public ManejadorDeVetos() { }
 
         public async Task<bool> VetaJugadorAsync(string nombreJugador)
@@ -51,7 +49,7 @@ namespace WcfServicioLibreria.Modelo.Vetos
             
             if (VetoDAO.ExisteTablaVetoPorIdCuenta((int)idUsuarioCuenta))
             {
-                 return CrearRegistroVeto((int)idUsuarioCuenta, DateTime.Now.AddDays(30), true);
+                 return CrearRegistroVeto((int)idUsuarioCuenta, DateTime.Now.AddDays(DIAS_PRIMER_VETO), true);
             }
             else if (await Conexion.VerificarConexionAsync())
             {

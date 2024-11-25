@@ -16,7 +16,7 @@ namespace WpfCliente.GUI
         private int contadorClics = 0;
         private const int LIMITE_CLICS = 2;
 
-        public AmigosWindow(MenuWindow menuWindow)
+        public AmigosWindow()
         {
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
@@ -144,7 +144,7 @@ namespace WpfCliente.GUI
 
         private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento; 
+            CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
         }
     }
 }

@@ -624,4 +624,7 @@
   <data name="mensajeVetoTemporal" xml:space="preserve">
     <value>Estas vetado por el momento, vuelve despues de pensar un rato en tus acciones</value>
   </data>
+  <data name="buttonRechazar" xml:space="preserve">
+    <value>Rechazar</value>
+  </data>
 </root>

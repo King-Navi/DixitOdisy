@@ -134,9 +134,9 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import namespace="http://tempuri.org/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.IO" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Enumerador" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Threading.Tasks" />
@@ -144,6 +144,9 @@
   </wsdl:types>
   <wsdl:message name="IServicioAmistad_AbrirCanalParaPeticiones_InputMessage">
     <wsdl:part name="parameters" element="tns:AbrirCanalParaPeticiones" />
+  </wsdl:message>
+  <wsdl:message name="IServicioAmistad_AbrirCanalParaPeticiones_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AbrirCanalParaPeticionesResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioAmistad_EnviarSolicitudAmistad_InputMessage">
     <wsdl:part name="parameters" element="tns:EnviarSolicitudAmistad" />
@@ -166,6 +169,9 @@
   <wsdl:message name="IServicioAmistad_AceptarSolicitudAmistad_OutputMessage">
     <wsdl:part name="parameters" element="tns:AceptarSolicitudAmistadResponse" />
   </wsdl:message>
+  <wsdl:message name="IServicioAmistad_AceptarSolicitudAmistad_ServidorFallaFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q2:ServidorFalla" />
+  </wsdl:message>
   <wsdl:message name="IServicioAmistad_RechazarSolicitudAmistad_InputMessage">
     <wsdl:part name="parameters" element="tns:RechazarSolicitudAmistad" />
   </wsdl:message>
@@ -178,6 +184,15 @@
   <wsdl:message name="IServicioAmistad_SonAmigos_OutputMessage">
     <wsdl:part name="parameters" element="tns:SonAmigosResponse" />
   </wsdl:message>
+  <wsdl:message name="IServicioAmistad_EliminarAmigo_InputMessage">
+    <wsdl:part name="parameters" element="tns:EliminarAmigo" />
+  </wsdl:message>
+  <wsdl:message name="IServicioAmistad_EliminarAmigo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EliminarAmigoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioAmistad_EliminarAmigo_ServidorFallaFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q3:ServidorFalla" />
+  </wsdl:message>
   <wsdl:message name="IServicioAmistad_CambiarEstadoAmigo_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:CambiarEstadoAmigo" />
   </wsdl:message>
@@ -189,6 +204,12 @@
   </wsdl:message>
   <wsdl:message name="IServicioAmistad_ObtenerAmigoCallback_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:ObtenerAmigoCallbackResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioAmistad_EliminarAmigoCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:EliminarAmigoCallback" />
+  </wsdl:message>
+  <wsdl:message name="IServicioAmistad_EliminarAmigoCallback_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:EliminarAmigoCallbackResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioChat_CrearChat_InputMessage">
     <wsdl:part name="parameters" element="tns:CrearChat" />
@@ -203,7 +224,7 @@
     <wsdl:part name="parameters" element="tns:AgregarUsuarioChatResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioChatMotor_AgregarUsuarioChat_UsuarioFallaFault_FaultMessage">
-    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q2:UsuarioFalla" />
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q4:UsuarioFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioChatMotor_EnviarMensaje_InputMessage">
     <wsdl:part name="parameters" element="tns:EnviarMensaje" />
@@ -320,7 +341,7 @@
     <wsdl:part name="parameters" element="tns:RegistrarUsuarioResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioRegistro_RegistrarUsuario_BaseDatosFallaFault_FaultMessage">
-    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q3:BaseDatosFalla" />
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q5:BaseDatosFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioSala_CrearSala_InputMessage">
     <wsdl:part name="parameters" element="tns:CrearSala" />
@@ -374,7 +395,7 @@
     <wsdl:part name="parameters" element="tns:YaIniciadoSesionResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioUsuario_YaIniciadoSesion_UsuarioFallaFault_FaultMessage">
-    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q4:UsuarioFalla" />
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q6:UsuarioFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioUsuario_Ping_InputMessage">
     <wsdl:part name="parameters" element="tns:Ping" />
@@ -395,7 +416,7 @@
     <wsdl:part name="parameters" element="tns:ValidarCredencialesResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioUsuario_ValidarCredenciales_VetoFallaFault_FaultMessage">
-    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q5:VetoFalla" />
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q7:VetoFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioUsuario_EditarContraseniaUsuario_InputMessage">
     <wsdl:part name="parameters" element="tns:EditarContraseniaUsuario" />
@@ -433,6 +454,7 @@
   <wsdl:portType name="IServicioAmistad">
     <wsdl:operation name="AbrirCanalParaPeticiones">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticiones" message="tns:IServicioAmistad_AbrirCanalParaPeticiones_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticionesResponse" message="tns:IServicioAmistad_AbrirCanalParaPeticiones_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="EnviarSolicitudAmistad">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistad" message="tns:IServicioAmistad_EnviarSolicitudAmistad_InputMessage" />
@@ -446,6 +468,7 @@
     <wsdl:operation name="AceptarSolicitudAmistad">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/AceptarSolicitudAmistad" message="tns:IServicioAmistad_AceptarSolicitudAmistad_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/AceptarSolicitudAmistadResponse" message="tns:IServicioAmistad_AceptarSolicitudAmistad_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioAmistad/AceptarSolicitudAmistadServidorFallaFault" name="ServidorFallaFault" message="tns:IServicioAmistad_AceptarSolicitudAmistad_ServidorFallaFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RechazarSolicitudAmistad">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/RechazarSolicitudAmistad" message="tns:IServicioAmistad_RechazarSolicitudAmistad_InputMessage" />
@@ -455,6 +478,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/SonAmigos" message="tns:IServicioAmistad_SonAmigos_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/SonAmigosResponse" message="tns:IServicioAmistad_SonAmigos_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="EliminarAmigo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/EliminarAmigo" message="tns:IServicioAmistad_EliminarAmigo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/EliminarAmigoResponse" message="tns:IServicioAmistad_EliminarAmigo_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioAmistad/EliminarAmigoServidorFallaFault" name="ServidorFallaFault" message="tns:IServicioAmistad_EliminarAmigo_ServidorFallaFault_FaultMessage" />
+    </wsdl:operation>
     <wsdl:operation name="CambiarEstadoAmigo">
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/CambiarEstadoAmigo" message="tns:IServicioAmistad_CambiarEstadoAmigo_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/CambiarEstadoAmigoResponse" message="tns:IServicioAmistad_CambiarEstadoAmigo_InputCallbackMessage" />
@@ -462,6 +490,10 @@
     <wsdl:operation name="ObtenerAmigoCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/ObtenerAmigoCallback" message="tns:IServicioAmistad_ObtenerAmigoCallback_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/ObtenerAmigoCallbackResponse" message="tns:IServicioAmistad_ObtenerAmigoCallback_InputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EliminarAmigoCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/EliminarAmigoCallback" message="tns:IServicioAmistad_EliminarAmigoCallback_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/EliminarAmigoCallbackResponse" message="tns:IServicioAmistad_EliminarAmigoCallback_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioChat">
@@ -675,6 +707,9 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="EnviarSolicitudAmistad">
       <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistad" style="document" />
@@ -705,6 +740,9 @@
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="ServidorFallaFault">
+        <soap12:fault use="literal" name="ServidorFallaFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="RechazarSolicitudAmistad">
       <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/RechazarSolicitudAmistad" style="document" />
@@ -724,6 +762,18 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="EliminarAmigo">
+      <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/EliminarAmigo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServidorFallaFault">
+        <soap12:fault use="literal" name="ServidorFallaFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="CambiarEstadoAmigo">
       <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/CambiarEstadoAmigo" style="document" />
       <wsdl:input>
@@ -735,6 +785,15 @@
     </wsdl:operation>
     <wsdl:operation name="ObtenerAmigoCallback">
       <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/ObtenerAmigoCallback" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EliminarAmigoCallback">
+      <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/EliminarAmigoCallback" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

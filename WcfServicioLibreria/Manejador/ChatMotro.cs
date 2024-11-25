@@ -1,7 +1,5 @@
 ﻿using System;
-using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
-using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Manejador

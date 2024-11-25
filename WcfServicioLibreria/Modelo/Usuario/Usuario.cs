@@ -10,7 +10,6 @@ namespace WcfServicioLibreria.Modelo
     [KnownType(typeof(FileStream))]
     [KnownType(typeof(MemoryStream))]
     [KnownType(typeof(EstadoUsuario))]
-
     public class Usuario : UsuarioContexto
     {
         #region Campos

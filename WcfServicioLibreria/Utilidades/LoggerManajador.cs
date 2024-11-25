@@ -3,7 +3,7 @@ using Serilog;
 
 namespace WcfServicioLibreria.Utilidades
 {
-    public static class LoggerManager
+    public static class LoggerManajador
     {
         private const string FORMATO_FECHA = "dd-MM-yyyy";
         private const string NOMBRE_LOG = "Log";

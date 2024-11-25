@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
@@ -7,7 +8,6 @@ using WcfServicioLibreria.Evento;
 namespace WcfServicioLibreria.Modelo
 {
     /// <summary>
-    /// 
     /// </summary>
     /// <ref>https://learn.microsoft.com/en-us/dotnet/api/system.idisposable?view=net-7.0</ref>
     /// <ref>https://learn.microsoft.com/en-us/dotnet/fundamentals/runtime-libraries/system-idisposable</ref>
@@ -34,21 +34,37 @@ namespace WcfServicioLibreria.Modelo
         }
         public void AmigoDesconectado(object sender, EventArgs e)
         {
-            if (e is UsuarioDesconectadoEventArgs desconectadoArgs)
+            if (e is UsuarioDesconectadoEventArgs desconectadoArgs && sender is DAOLibreria.ModeloBD.Usuario usuarioDatos)
             {
-                Amigo amigo = new Amigo
+                try
                 {
-                    Nombre = desconectadoArgs.NombreUsuario,
-                    Estado = desconectadoArgs.EstadoAmigo
-                };
-                AmistadSesionCallBack.CambiarEstadoAmigo(amigo);
+                    Amigo amigo = new Amigo
+                    {
+                        Nombre = usuarioDatos.gamertag,
+                        Estado = Enumerador.EstadoAmigo.Desconectado,
+                        UltimaConexion = usuarioDatos.ultimaConexion.ToString(),
+                        Foto = new MemoryStream(usuarioDatos.fotoPerfil)
+                    };
+               
+                    AmistadSesionCallBack?.CambiarEstadoAmigo(amigo);
+                }
+                catch (Exception excecpion)
+                {
+                    WcfServicioLibreria.Utilidades.ManejadorExcepciones.ManejarErrorException(excecpion);
+                }
             }
         }
 
         public void EnviarAmigoActulizadoCallback(Amigo amigo)
         {
-            AmistadSesionCallBack.CambiarEstadoAmigo(amigo);
-
+            try
+            {
+                AmistadSesionCallBack.CambiarEstadoAmigo(amigo);
+            }
+            catch (Exception excecpion)
+            {
+                WcfServicioLibreria.Utilidades.ManejadorExcepciones.ManejarErrorException(excecpion);
+            }
         }
 
         /// <summary>

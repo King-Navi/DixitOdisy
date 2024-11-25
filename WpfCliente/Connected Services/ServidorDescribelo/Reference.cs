@@ -47,8 +47,8 @@ namespace WpfCliente.ServidorDescribelo {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Usuario", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.IO.FileStream))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.IO.MemoryStream))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.IO.FileStream))]
     public partial class Usuario : WpfCliente.ServidorDescribelo.UsuarioContexto {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -146,6 +146,112 @@ namespace WpfCliente.ServidorDescribelo {
                 }
             }
         }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Amigo", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.IO.MemoryStream))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.IO.FileStream))]
+    public partial class Amigo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private WpfCliente.ServidorDescribelo.EstadoAmigo EstadoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.IO.Stream FotoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NombreField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UltimaConexionField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public WpfCliente.ServidorDescribelo.EstadoAmigo Estado {
+            get {
+                return this.EstadoField;
+            }
+            set {
+                if ((this.EstadoField.Equals(value) != true)) {
+                    this.EstadoField = value;
+                    this.RaisePropertyChanged("Estado");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.IO.Stream Foto {
+            get {
+                return this.FotoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FotoField, value) != true)) {
+                    this.FotoField = value;
+                    this.RaisePropertyChanged("Foto");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Nombre {
+            get {
+                return this.NombreField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NombreField, value) != true)) {
+                    this.NombreField = value;
+                    this.RaisePropertyChanged("Nombre");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UltimaConexion {
+            get {
+                return this.UltimaConexionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UltimaConexionField, value) != true)) {
+                    this.UltimaConexionField = value;
+                    this.RaisePropertyChanged("UltimaConexion");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EstadoAmigo", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Enumerador")]
+    public enum EstadoAmigo : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Conectado = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        Desconectado = 1,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -268,112 +374,6 @@ namespace WpfCliente.ServidorDescribelo {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Amigo", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
-    [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.IO.FileStream))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.IO.MemoryStream))]
-    public partial class Amigo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private WpfCliente.ServidorDescribelo.EstadoAmigo EstadoField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.IO.Stream FotoField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NombreField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UltimaConexionField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public WpfCliente.ServidorDescribelo.EstadoAmigo Estado {
-            get {
-                return this.EstadoField;
-            }
-            set {
-                if ((this.EstadoField.Equals(value) != true)) {
-                    this.EstadoField = value;
-                    this.RaisePropertyChanged("Estado");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.IO.Stream Foto {
-            get {
-                return this.FotoField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FotoField, value) != true)) {
-                    this.FotoField = value;
-                    this.RaisePropertyChanged("Foto");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Nombre {
-            get {
-                return this.NombreField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NombreField, value) != true)) {
-                    this.NombreField = value;
-                    this.RaisePropertyChanged("Nombre");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UltimaConexion {
-            get {
-                return this.UltimaConexionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UltimaConexionField, value) != true)) {
-                    this.UltimaConexionField = value;
-                    this.RaisePropertyChanged("UltimaConexion");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="EstadoAmigo", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Enumerador")]
-    public enum EstadoAmigo : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Conectado = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Desconectado = 1,
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1109,6 +1109,51 @@ namespace WpfCliente.ServidorDescribelo {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServidorFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones")]
+    [System.SerializableAttribute()]
+    public partial class ServidorFalla : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool EstaRemitenteDesconectadoField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool EstaRemitenteDesconectado {
+            get {
+                return this.EstaRemitenteDesconectadoField;
+            }
+            set {
+                if ((this.EstaRemitenteDesconectadoField.Equals(value) != true)) {
+                    this.EstaRemitenteDesconectadoField = value;
+                    this.RaisePropertyChanged("EstaRemitenteDesconectado");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BaseDatosFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones")]
     [System.SerializableAttribute()]
     public partial class BaseDatosFalla : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -1217,11 +1262,11 @@ namespace WpfCliente.ServidorDescribelo {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioAmistad", CallbackContract=typeof(WpfCliente.ServidorDescribelo.IServicioAmistadCallback))]
     public interface IServicioAmistad {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticiones")]
-        void AbrirCanalParaPeticiones(WpfCliente.ServidorDescribelo.Usuario usuario);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticiones", ReplyAction="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticionesResponse")]
+        bool AbrirCanalParaPeticiones(WpfCliente.ServidorDescribelo.Usuario usuario);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticiones")]
-        System.Threading.Tasks.Task AbrirCanalParaPeticionesAsync(WpfCliente.ServidorDescribelo.Usuario usuario);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticiones", ReplyAction="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticionesResponse")]
+        System.Threading.Tasks.Task<bool> AbrirCanalParaPeticionesAsync(WpfCliente.ServidorDescribelo.Usuario usuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistad", ReplyAction="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistadResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(WpfCliente.ServidorDescribelo.SolicitudAmistadFalla), Action="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistadSolicitudAmistadFallaFa" +
@@ -1238,6 +1283,7 @@ namespace WpfCliente.ServidorDescribelo {
         System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.SolicitudAmistad[]> ObtenerSolicitudesAmistadAsync(WpfCliente.ServidorDescribelo.Usuario usuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/AceptarSolicitudAmistad", ReplyAction="http://tempuri.org/IServicioAmistad/AceptarSolicitudAmistadResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(WpfCliente.ServidorDescribelo.ServidorFalla), Action="http://tempuri.org/IServicioAmistad/AceptarSolicitudAmistadServidorFallaFault", Name="ServidorFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones")]
         bool AceptarSolicitudAmistad(int idRemitente, int idDestinatario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/AceptarSolicitudAmistad", ReplyAction="http://tempuri.org/IServicioAmistad/AceptarSolicitudAmistadResponse")]
@@ -1254,6 +1300,13 @@ namespace WpfCliente.ServidorDescribelo {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/SonAmigos", ReplyAction="http://tempuri.org/IServicioAmistad/SonAmigosResponse")]
         System.Threading.Tasks.Task<bool> SonAmigosAsync(string usuarioRemitente, string destinatario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/EliminarAmigo", ReplyAction="http://tempuri.org/IServicioAmistad/EliminarAmigoResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(WpfCliente.ServidorDescribelo.ServidorFalla), Action="http://tempuri.org/IServicioAmistad/EliminarAmigoServidorFallaFault", Name="ServidorFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones")]
+        bool EliminarAmigo(string usuarioRemitente, string destinatario);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/EliminarAmigo", ReplyAction="http://tempuri.org/IServicioAmistad/EliminarAmigoResponse")]
+        System.Threading.Tasks.Task<bool> EliminarAmigoAsync(string usuarioRemitente, string destinatario);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1264,6 +1317,9 @@ namespace WpfCliente.ServidorDescribelo {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/ObtenerAmigoCallback", ReplyAction="http://tempuri.org/IServicioAmistad/ObtenerAmigoCallbackResponse")]
         void ObtenerAmigoCallback(WpfCliente.ServidorDescribelo.Amigo amigo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/EliminarAmigoCallback", ReplyAction="http://tempuri.org/IServicioAmistad/EliminarAmigoCallbackResponse")]
+        void EliminarAmigoCallback(WpfCliente.ServidorDescribelo.Amigo amigo);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1294,11 +1350,11 @@ namespace WpfCliente.ServidorDescribelo {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public void AbrirCanalParaPeticiones(WpfCliente.ServidorDescribelo.Usuario usuario) {
-            base.Channel.AbrirCanalParaPeticiones(usuario);
+        public bool AbrirCanalParaPeticiones(WpfCliente.ServidorDescribelo.Usuario usuario) {
+            return base.Channel.AbrirCanalParaPeticiones(usuario);
         }
         
-        public System.Threading.Tasks.Task AbrirCanalParaPeticionesAsync(WpfCliente.ServidorDescribelo.Usuario usuario) {
+        public System.Threading.Tasks.Task<bool> AbrirCanalParaPeticionesAsync(WpfCliente.ServidorDescribelo.Usuario usuario) {
             return base.Channel.AbrirCanalParaPeticionesAsync(usuario);
         }
         
@@ -1340,6 +1396,14 @@ namespace WpfCliente.ServidorDescribelo {
         
         public System.Threading.Tasks.Task<bool> SonAmigosAsync(string usuarioRemitente, string destinatario) {
             return base.Channel.SonAmigosAsync(usuarioRemitente, destinatario);
+        }
+        
+        public bool EliminarAmigo(string usuarioRemitente, string destinatario) {
+            return base.Channel.EliminarAmigo(usuarioRemitente, destinatario);
+        }
+        
+        public System.Threading.Tasks.Task<bool> EliminarAmigoAsync(string usuarioRemitente, string destinatario) {
+            return base.Channel.EliminarAmigoAsync(usuarioRemitente, destinatario);
         }
     }
     

@@ -23,12 +23,12 @@
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="9f020bff-1ff2-4470-ac69-be1e29813d44" SourceId="1" SourceUrl="net.tcp://servidordescribelo:6969/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="32ffc2f2-198b-4b17-9565-caa639e5ec38" SourceId="1" SourceUrl="net.tcp://servidordescribelo:6969/mex" />
     <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="e6b74308-ea18-42c2-9ea0-eb323ab3e0d2" SourceId="1" SourceUrl="net.tcp://servidordescribelo:6969/mex" />
-    <MetadataFile FileName="WcfServicioLibreria.Modelo.xsd" MetadataType="Schema" ID="b60b3757-18f2-4f98-be4d-7c52b8eb04fd" SourceId="1" SourceUrl="net.tcp://servidordescribelo:6969/mex" />
     <MetadataFile FileName="System.IO.xsd" MetadataType="Schema" ID="7f6f3d72-11aa-4201-b8bf-894bcd2ff623" SourceId="1" SourceUrl="net.tcp://servidordescribelo:6969/mex" />
     <MetadataFile FileName="System.xsd" MetadataType="Schema" ID="01a517fe-1132-476c-b40b-dec48c377c56" SourceId="1" SourceUrl="net.tcp://servidordescribelo:6969/mex" />
+    <MetadataFile FileName="WcfServicioLibreria.Modelo.xsd" MetadataType="Schema" ID="b60b3757-18f2-4f98-be4d-7c52b8eb04fd" SourceId="1" SourceUrl="net.tcp://servidordescribelo:6969/mex" />
     <MetadataFile FileName="WcfServicioLibreria.Enumerador.xsd" MetadataType="Schema" ID="ef1b528b-8eae-46bd-9db0-5b6719637ae9" SourceId="1" SourceUrl="net.tcp://servidordescribelo:6969/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="32ffc2f2-198b-4b17-9565-caa639e5ec38" SourceId="1" SourceUrl="net.tcp://servidordescribelo:6969/mex" />
     <MetadataFile FileName="WcfServicioLibreria.Modelo.Excepciones.xsd" MetadataType="Schema" ID="818f4620-8cab-4f17-bd18-556ebf54742c" SourceId="1" SourceUrl="net.tcp://servidordescribelo:6969/mex" />
     <MetadataFile FileName="System.Threading.Tasks.xsd" MetadataType="Schema" ID="676167d3-03de-4e43-ba46-a13765164263" SourceId="1" SourceUrl="net.tcp://servidordescribelo:6969/mex" />
   </Metadata>

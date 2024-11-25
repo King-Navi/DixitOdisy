@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
@@ -60,7 +58,7 @@ namespace WpfCliente.GUI
 
         private void FondoColorAleatorio()
         {
-            this.Background = Utilidades.GetColorAleatorio();
+            this.Background = Utilidades.ObtenerColorAleatorio();
         }
     }
 }

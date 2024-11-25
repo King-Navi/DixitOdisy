@@ -25,7 +25,7 @@ namespace WpfCliente.Utilidad
             Color.FromRgb(255, 250, 205)  
         };
 
-        public static SolidColorBrush GetColorAleatorio()
+        public static SolidColorBrush ObtenerColorAleatorio()
         {
             Color colorAleatorio = BackgroundColors[random.Next(BackgroundColors.Count)];
             return new SolidColorBrush(colorAleatorio);

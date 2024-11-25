@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Enumerador;
 using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Modelo.Excepciones;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
@@ -101,7 +102,7 @@ namespace WcfServicioLibreria.Manejador
             return false;
         }
 
-        public void AbrirCanalParaPeticiones(Modelo.Usuario _usuarioRemitente)
+        public bool AbrirCanalParaPeticiones(Modelo.Usuario _usuarioRemitente)
         {
             try
             {
@@ -111,22 +112,24 @@ namespace WcfServicioLibreria.Manejador
                 {
                     remitente.AmistadSesionCallBack = contextoRemitente;
                 }
-                List<Modelo.Usuario> amigosConetados = EnviarListaAmigos(_usuarioRemitente, contextoRemitente);
+                DAOLibreria.ModeloBD.Usuario usuarioRemitenteModeloBaseDatos = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorId(_usuarioRemitente.IdUsuario);
+                List<DAOLibreria.ModeloBD.Usuario> amigosConetados = EnviarListaAmigosAsync(_usuarioRemitente, contextoRemitente);
 
                 foreach (var usuarioDestino in amigosConetados)
                 {
-                    AmigoConetado(_usuarioRemitente, usuarioDestino);
+                    AmigoConetado(usuarioRemitenteModeloBaseDatos, usuarioDestino);
                 }
+                return true;
             }
             catch (Exception)
             {
             }
-            return;
+            return false;
         }
 
-        private List<Modelo.Usuario> EnviarListaAmigos(Modelo.Usuario usuario, IAmistadCallBack contextoRemitente)
+        private List<DAOLibreria.ModeloBD.Usuario> EnviarListaAmigosAsync(Modelo.Usuario usuario, IAmistadCallBack contextoRemitente)
         {
-            List<Modelo.Usuario> usuariosModeloWCF = new List<Modelo.Usuario>();
+            List<DAOLibreria.ModeloBD.Usuario> usuariosModeloWCF = new List<DAOLibreria.ModeloBD.Usuario>();
 
             try
             {
@@ -162,9 +165,10 @@ namespace WcfServicioLibreria.Manejador
                             Nombre = amigoDestinario.gamertag,
                             EstadoJugador = amigo.Estado == EstadoAmigo.Conectado ? EstadoUsuario.Conectado : EstadoUsuario.Desconectado
                         };
-                        usuariosModeloWCF.Add(usuarioModeloWCF);
                     }
                 }
+                return usuariosModeloBaseDatos;
+
             }
             catch (Exception)
             {
@@ -172,18 +176,12 @@ namespace WcfServicioLibreria.Manejador
             return usuariosModeloWCF;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <ref>https://learn.microsoft.com/en-us/dotnet/api/system.windows.weakeventmanager?view=windowsdesktop-8.0</ref>
-        /// <param name="_remitente"></param>
-        /// <param name="_destinatario"></param>
-        private void AmigoConetado(Modelo.Usuario _remitente, Modelo.Usuario _destinatario)
+        private void AmigoConetado(DAOLibreria.ModeloBD.Usuario _remitente, DAOLibreria.ModeloBD.Usuario _destinatario)
         {
             try
             {
-                if (jugadoresConectadosDiccionario.TryGetValue(_remitente.IdUsuario, out UsuarioContexto remitente)
-                    && jugadoresConectadosDiccionario.TryGetValue(_destinatario.IdUsuario, out UsuarioContexto destinatario))
+                if (jugadoresConectadosDiccionario.TryGetValue(_remitente.idUsuario, out UsuarioContexto remitente)
+                    && jugadoresConectadosDiccionario.TryGetValue(_destinatario.idUsuario, out UsuarioContexto destinatario))
                 {
                     {
                         lock (remitente)
@@ -194,13 +192,13 @@ namespace WcfServicioLibreria.Manejador
                                 EventHandler desconexionHandlerDestinatario = null;
                                 desconexionHandlerRemitente = (sender, e) =>
                                 {
-                                    destinatario.AmigoDesconectado(remitente, new UsuarioDesconectadoEventArgs(((Modelo.Usuario)remitente).Nombre, DateTime.Now));
+                                    destinatario.AmigoDesconectado(_remitente, new UsuarioDesconectadoEventArgs(((Modelo.Usuario)remitente).Nombre, DateTime.Now));
                                     remitente.DesconexionManejadorEvento -= desconexionHandlerRemitente;
                                 };
 
                                 desconexionHandlerDestinatario = (sender, e) =>
                                 {
-                                    remitente.AmigoDesconectado(destinatario, new UsuarioDesconectadoEventArgs(((Modelo.Usuario)destinatario).Nombre, DateTime.Now));
+                                    remitente.AmigoDesconectado(_destinatario, new UsuarioDesconectadoEventArgs(((Modelo.Usuario)destinatario).Nombre, DateTime.Now));
                                     destinatario.DesconexionManejadorEvento -= desconexionHandlerDestinatario;
                                 };
 
@@ -209,16 +207,18 @@ namespace WcfServicioLibreria.Manejador
 
                                 remitente.EnviarAmigoActulizadoCallback(new Amigo()
                                 {
-                                    Foto = ((Usuario)destinatario).FotoUsuario,
-                                    Nombre = ((Usuario)destinatario).Nombre,
-                                    Estado = EstadoAmigo.Conectado
+                                    Foto = new MemoryStream(_destinatario.fotoPerfil),
+                                    Nombre = _destinatario.gamertag,
+                                    Estado = EstadoAmigo.Conectado,
+                                    UltimaConexion = _destinatario.ultimaConexion.ToString()
 
                                 });
-                                destinatario.EnviarAmigoActulizadoCallback(new Modelo.Amigo()
+                                destinatario.EnviarAmigoActulizadoCallback(new Amigo()
                                 {
-                                    Foto = ((Modelo.Usuario)remitente).FotoUsuario,
-                                    Nombre = ((Modelo.Usuario)remitente).Nombre,
-                                    Estado = EstadoAmigo.Conectado
+                                    Foto = new MemoryStream(_remitente.fotoPerfil),
+                                    Nombre = _remitente.gamertag,
+                                    Estado = EstadoAmigo.Conectado,
+                                    UltimaConexion = _remitente.ultimaConexion.ToString()
                                 });
                             }
                         }
@@ -269,13 +269,7 @@ namespace WcfServicioLibreria.Manejador
                     {
                         var usuarioDestinoConectado = UsuarioDAO.ObtenerUsuarioPorId(idDestinatario);
                         var usuarioRemitenteConectado = UsuarioDAO.ObtenerUsuarioPorId(idRemitente);
-                        Modelo.Usuario usuarioDestinoModelo = new Usuario(
-                            usuarioDestinoConectado.gamertag,
-                            new MemoryStream(usuarioDestinoConectado.fotoPerfil));
-                        Modelo.Usuario usuarioRemitenteModelo = new Usuario(
-                            usuarioRemitenteConectado.gamertag, 
-                            new MemoryStream(usuarioRemitenteConectado.fotoPerfil));
-                        AmigoConetado(usuarioRemitenteModelo, usuarioDestinoModelo);
+                        AmigoConetado(usuarioRemitenteConectado, usuarioDestinoConectado);
                     }
                     else if (jugadoresConectadosDiccionario.ContainsKey(idRemitente))
                     {

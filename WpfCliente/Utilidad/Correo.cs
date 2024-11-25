@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using WpfCliente.GUI;
 using WpfCliente.ServidorDescribelo;
 
 namespace WpfCliente.Utilidad

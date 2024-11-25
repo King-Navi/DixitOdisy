@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Threading;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
@@ -12,7 +13,7 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class ListaAmigosUserControl : UserControl, IServicioAmistadCallback , IActualizacionUI
+    public partial class ListaAmigosUserControl : UserControl, IServicioAmistadCallback, IActualizacionUI
     {
         public ObservableCollection<Amigo> Amigos { get; set; } = new ObservableCollection<Amigo>();
         private bool desechado = false;
@@ -72,7 +73,7 @@ namespace WpfCliente.GUI
         {
             if (amigo == null)
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCargarAmigosFalla, 
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCargarAmigosFalla,
                     Properties.Idioma.mensajeCargarAmigosFalla, this);
             }
             else
@@ -98,21 +99,32 @@ namespace WpfCliente.GUI
 
         public void CambiarEstadoAmigo(Amigo amigo)
         {
-            var amigoExistente = Amigos.FirstOrDefault(actual => actual.Nombre == amigo.Nombre);
-            if (amigoExistente != null)
+            amigo.BitmapImagen = Imagen.ConvertirStreamABitmapImagen(amigo.Foto);
+            if (amigo != null)
             {
-                amigoExistente.Estado = amigo.Estado;
-                amigoExistente.Foto = amigo.Foto;
-                if (amigoExistente.Estado != EstadoAmigo.Desconectado)
+                if (amigo.Estado == EstadoAmigo.Conectado)
                 {
-                    amigoExistente.UltimaConexion = UTILIMA_CONEXION_CONECTADO;
+                    var amigoAEliminar = Amigos.FirstOrDefault(busqueda =>
+                        busqueda.Nombre.Equals(amigo.Nombre, StringComparison.OrdinalIgnoreCase));
+                    if (amigoAEliminar != null)
+                    {
+                        Amigos.Remove(amigoAEliminar);
+                        amigo.UltimaConexion = UTILIMA_CONEXION_CONECTADO;
+                        amigo.EstadoActual = Properties.Idioma.labelConectado;
+                        Amigos.Insert(0, amigo);
+                    }
                 }
-            }
-            else
-            {
-                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloCargarAmigosFalla, 
-                    Properties.Idioma.mensajeCargarAmigosFalla , 
-                    this);
+                else
+                {
+                    var amigoAEliminar = Amigos.FirstOrDefault(busqueda =>
+                        busqueda.Nombre.Equals(amigo.Nombre, StringComparison.OrdinalIgnoreCase));
+                    if (amigoAEliminar != null)
+                    {
+                        Amigos.Remove(amigoAEliminar);
+                        amigo.EstadoActual = Properties.Idioma.labelDesconectado;
+                        Amigos.Insert(0, amigo);
+                    }
+                }
             }
         }
 
@@ -130,6 +142,21 @@ namespace WpfCliente.GUI
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
 
+        }
+
+        public void EliminarAmigoCallback(Amigo amigo)
+        {
+            if (amigo == null)
+            {
+                return;
+            }
+            var amigoAEliminar = Amigos.FirstOrDefault(busqueda =>
+                busqueda.Nombre.Equals(amigo.Nombre, StringComparison.OrdinalIgnoreCase));
+
+            if (amigoAEliminar != null)
+            {
+                Amigos.Remove(amigoAEliminar);
+            }
         }
     }
 }

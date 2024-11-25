@@ -3,12 +3,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using WpfCliente.Interfaz;
+using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class SolicitudAmistadUserControl : UserControl, IHabilitadorBotones
+    public partial class SolicitudAmistadUserControl : UserControl, IHabilitadorBotones, IActualizacionUI
     {
         private SolicitudAmistad solicitudAmistadActual;
 
@@ -17,6 +18,7 @@ namespace WpfCliente.GUI
             InitializeComponent();
             ColocarFondoColorAleatorio();
             DataContextChanged += SolicitudAmistadUserControlCambioDataContext;
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
         }
 
         private void SolicitudAmistadUserControlCambioDataContext(object sender, DependencyPropertyChangedEventArgs e)
@@ -31,7 +33,7 @@ namespace WpfCliente.GUI
 
         private void ColocarFondoColorAleatorio()
         {
-            this.Background = Utilidades.GetColorAleatorio();
+            this.Background = Utilidades.ObtenerColorAleatorio();
         }
 
         private void ClicButtonAceptar(object sender, RoutedEventArgs e)
@@ -70,10 +72,10 @@ namespace WpfCliente.GUI
 
         private void ClicButtonRechazar(object sender, RoutedEventArgs e)
         {
-            _ = RechazarSolicitud(solicitudAmistadActual);
+            _ = RechazarSolicitudAsync(solicitudAmistadActual);
         }
 
-        private async Task<bool> RechazarSolicitud(SolicitudAmistad solicitud)
+        private async Task<bool> RechazarSolicitudAsync(SolicitudAmistad solicitud)
         {
             Window window = Window.GetWindow(this);
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, window);
@@ -109,6 +111,23 @@ namespace WpfCliente.GUI
 
             buttonAceptar.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
             buttonRechazar.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
+        }
+
+        public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
+        {
+            ActualizarUI();
+        }
+
+        public void ActualizarUI()
+        {
+            buttonAceptar.Content = Idioma.buttonAceptar;
+            buttonRechazar.Content = Idioma.buttonRechazar;
+        }
+
+        private void CerrandoUserControl(object sender, RoutedEventArgs e)
+        {
+            CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
+
         }
     }
 }

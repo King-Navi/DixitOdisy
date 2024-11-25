@@ -286,7 +286,14 @@ namespace WpfCliente.GUI
 
         private void ClicButtonAbrirEstadisticas(object sender, RoutedEventArgs e)
         {
-            gridEstadisticas.Visibility = Visibility.Visible;
+            if(gridEstadisticas.Visibility == Visibility.Visible)
+            {
+                gridEstadisticas.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                gridEstadisticas.Visibility = Visibility.Visible;
+            }
         }
 
         private void ClicButtonCerrarEstadisticas(object sender, RoutedEventArgs e)

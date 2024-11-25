@@ -20,6 +20,8 @@ namespace WpfCliente.GUI
         {
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
+            this.Owner = menuWindow;
+            this.Loaded += (sender, e) => menuWindow.Hide();
         }
 
         private void ClicButtonFlechaAtras(object sender, MouseButtonEventArgs e)
@@ -79,6 +81,10 @@ namespace WpfCliente.GUI
                     if (await EnviarSolicitud(gamertagSolicitud))
                     {
                         VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadExitosa, this);
+                    }
+                    else
+                    {
+                        VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadFallida, this);
                     }
                 }
                 catch (FaultException<SolicitudAmistadFalla> ex)
@@ -143,6 +149,7 @@ namespace WpfCliente.GUI
 
         private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            this.Owner.Show();
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento; 
         }
     }

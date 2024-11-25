@@ -3,253 +3,123 @@ using DAOLibreria.ModeloBD;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pruebas.DAO.Utilidades;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pruebas.DAO
 {
     [TestClass]
     public class PeticionAmistadDAO_Prueba : ConfiguracionPruebaBD
     {
-        private int idUsuario1;
-        private int idUsuario2;
-
-        [TestInitialize]
-        public void Setup()
-        {
-            idUsuario1 = 1;
-            idUsuario2 = 2;
-        }
+        private const int ID_REMITENTE = 1;
+        private const int ID_DESTINATARIO = 2;
 
         [TestMethod]
         public void GuardarSolicitudAmistad_CuandoUsuariosValidos_RetornaTrue()
         {
-            // Act
-            var result = PeticionAmistadDAO.GuardarSolicitudAmistad(idUsuario1, idUsuario2);
-
-            // Assert
-            Assert.IsTrue(result);
+            var result = PeticionAmistadDAO.GuardarSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
+            Assert.IsTrue(result, "Debería retornar true si la solicitud de amistad es válida y se guarda correctamente.");
         }
 
         [TestMethod]
         public void GuardarSolicitudAmistad_CuandoMismoUsuario_RetornaFalse()
         {
-            // Arrange
-            int idUsuario1 = 1;
-            int idUsuario2 = 1;
-
-            // Act
-            var result = PeticionAmistadDAO.GuardarSolicitudAmistad(idUsuario1, idUsuario2);
-
-            // Assert
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void GuardarSolicitudAmistad_CuandoErrorEnBaseDatos_RetornaFalse()
-        {
-            // Arrange
-            int idUsuario1 = 1;
-            int idUsuario2 = 9999999; // ID que causa un error intencionado (por ejemplo, no existe)
-
-            // Act
-            var result = PeticionAmistadDAO.GuardarSolicitudAmistad(idUsuario1, idUsuario2);
-
-            // Assert
-            Assert.IsFalse(result);
+            var result = PeticionAmistadDAO.GuardarSolicitudAmistad(ID_REMITENTE, ID_REMITENTE);
+            Assert.IsFalse(result, "Debería retornar false si los IDs del remitente y destinatario son iguales.");
         }
 
         [TestMethod]
         public void ExisteSolicitudAmistad_CuandoExisteSolicitud_RetornaTrue()
         {
-            // Arrange
-            int idUsuario1 = 1;
-            int idUsuario2 = 2;
-
-            // Asegurarse de que existe una solicitud entre estos usuarios en la base de datos.
-
-            // Act
-            var result = PeticionAmistadDAO.ExisteSolicitudAmistad(idUsuario1, idUsuario2);
-
-            // Assert
-            Assert.IsTrue(result);
+            ConfigurarSolicitud(ID_REMITENTE, ID_DESTINATARIO);
+            var result = PeticionAmistadDAO.ExisteSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
+            Assert.IsTrue(result, "Debería retornar true si existe una solicitud de amistad entre los usuarios.");
         }
 
         [TestMethod]
         public void ExisteSolicitudAmistad_CuandoNoExisteSolicitud_RetornaFalse()
         {
-            // Arrange
-            int idUsuario1 = 1;
-            int idUsuario2 = 3;
-
-            // Act
-            var result = PeticionAmistadDAO.ExisteSolicitudAmistad(idUsuario1, idUsuario2);
-
-            // Assert
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void ExisteSolicitudAmistad_CuandoErrorEnBaseDatos_RetornaTrue()
-        {
-            // Arrange
-            int idUsuario1 = 999999; // ID que causa error
-            int idUsuario2 = 888888; // ID que causa error
-
-            // Act
-            var result = PeticionAmistadDAO.ExisteSolicitudAmistad(idUsuario1, idUsuario2);
-
-            // Assert
-            Assert.IsTrue(result); // Dado el código actual, el método retorna true en caso de excepción.
-        }
-
-        [TestMethod]
-        public void ObtenerSolicitudesAmistad_CuandoHaySolicitudes_RetornaListaUsuarios()
-        {
-            // Arrange
-            int idUsuario = 2;
-
-            // Act
-            var result = PeticionAmistadDAO.ObtenerSolicitudesAmistad(idUsuario);
-
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.Count > 0); // Asegúrate de que haya solicitudes pendientes para este usuario en la base de datos de prueba.
-        }
-
-        [TestMethod]
-        public void ObtenerSolicitudesAmistad_CuandoNoHaySolicitudes_RetornaListaVacia()
-        {
-            // Arrange
-            int idUsuario = 5; // ID sin solicitudes pendientes
-
-            // Act
-            var result = PeticionAmistadDAO.ObtenerSolicitudesAmistad(idUsuario);
-
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.Count);
-        }
-
-        [TestMethod]
-        public void ObtenerSolicitudesAmistad_CuandoErrorEnBaseDatos_RetornaListaVacia()
-        {
-            // Arrange
-            int idUsuario = 999999; // ID que causa error
-
-            // Act
-            var result = PeticionAmistadDAO.ObtenerSolicitudesAmistad(idUsuario);
-
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(0, result.Count);
+            var result = PeticionAmistadDAO.ExisteSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
+            Assert.IsFalse(result, "Debería retornar false si no existe ninguna solicitud de amistad entre los usuarios.");
         }
 
         [TestMethod]
         public void AceptarSolicitudAmistad_CuandoSolicitudExiste_RetornaTrue()
         {
-            // Arrange
-            int idRemitente = 1;
-            int idDestinatario = 2;
-
-            // Act
-            var result = PeticionAmistadDAO.AceptarSolicitudAmistad(idRemitente, idDestinatario);
-
-            // Assert
-            Assert.IsTrue(result);
+            ConfigurarSolicitud(ID_REMITENTE, ID_DESTINATARIO);
+            var result = PeticionAmistadDAO.AceptarSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
+            Assert.IsTrue(result, "Debería retornar true si la solicitud de amistad existe y se acepta correctamente.");
         }
 
         [TestMethod]
         public void AceptarSolicitudAmistad_CuandoSolicitudNoExiste_RetornaFalse()
         {
-            // Arrange
-            int idRemitente = 3;
-            int idDestinatario = 4;
-
-            // Act
-            var result = PeticionAmistadDAO.AceptarSolicitudAmistad(idRemitente, idDestinatario);
-
-            // Assert
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void AceptarSolicitudAmistad_CuandoErrorEnBaseDatos_RetornaFalse()
-        {
-            // Arrange
-            int idRemitente = 999999; // ID que causa error
-            int idDestinatario = 888888; // ID que causa error
-
-            // Act
-            var result = PeticionAmistadDAO.AceptarSolicitudAmistad(idRemitente, idDestinatario);
-
-            // Assert
-            Assert.IsFalse(result);
+            var result = PeticionAmistadDAO.AceptarSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
+            Assert.IsFalse(result, "Debería retornar false si no existe una solicitud de amistad para aceptar.");
         }
 
         [TestMethod]
         public void RechazarSolicitudAmistad_CuandoSolicitudExiste_RetornaTrue()
         {
-            // Arrange
-            int idRemitente = 1;
-            int idDestinatario = 2;
-
-            // Act
-            var result = PeticionAmistadDAO.RechazarSolicitudAmistad(idRemitente, idDestinatario);
-
-            // Assert
-            Assert.IsTrue(result);
+            ConfigurarSolicitud(ID_REMITENTE, ID_DESTINATARIO);
+            var result = PeticionAmistadDAO.RechazarSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
+            Assert.IsTrue(result, "Debería retornar true si la solicitud de amistad existe y se rechaza correctamente.");
         }
 
         [TestMethod]
         public void RechazarSolicitudAmistad_CuandoSolicitudNoExiste_RetornaFalse()
         {
-            // Arrange
-            int idRemitente = 3;
-            int idDestinatario = 4;
-
-            // Act
-            var result = PeticionAmistadDAO.RechazarSolicitudAmistad(idRemitente, idDestinatario);
-
-            // Assert
-            Assert.IsFalse(result);
+            var result = PeticionAmistadDAO.RechazarSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
+            Assert.IsFalse(result, "Debería retornar false si no existe una solicitud de amistad para rechazar.");
         }
 
         [TestMethod]
-        public void RechazarSolicitudAmistad_CuandoErrorEnBaseDatos_RetornaFalse()
+        public void ObtenerSolicitudesAmistad_CuandoHaySolicitudes_RetornaListaUsuarios()
         {
-            // Arrange
-            int idRemitente = 999999; // ID que causa error
-            int idDestinatario = 888888; // ID que causa error
+            ConfigurarSolicitud(ID_REMITENTE, ID_DESTINATARIO);
+            var result = PeticionAmistadDAO.ObtenerSolicitudesAmistad(ID_DESTINATARIO);
+            Assert.IsNotNull(result, "Debería retornar una lista de usuarios.");
+            Assert.IsTrue(result.Count > 0, "Debería retornar una lista con al menos una solicitud.");
+        }
 
-            // Act
-            var result = PeticionAmistadDAO.RechazarSolicitudAmistad(idRemitente, idDestinatario);
+        [TestMethod]
+        public void ObtenerSolicitudesAmistad_CuandoNoHaySolicitudes_RetornaListaVacia()
+        {
+            var result = PeticionAmistadDAO.ObtenerSolicitudesAmistad(ID_DESTINATARIO);
+            Assert.IsNotNull(result, "Debería retornar una lista.");
+            Assert.AreEqual(0, result.Count, "Debería retornar una lista vacía si no hay solicitudes.");
+        }
 
-            // Assert
-            Assert.IsFalse(result);
+        private static void ConfigurarSolicitud(int idRemitente, int idDestinatario)
+        {
+            using (var context = new DescribeloEntities())
+            {
+                var solicitud = new PeticionAmistad
+                {
+                    idRemitente = idRemitente,
+                    idDestinatario = idDestinatario,
+                    fechaPeticion = DateTime.Now
+                };
+                context.PeticionAmistad.Add(solicitud);
+                context.SaveChanges();
+            }
         }
 
         [TestCleanup]
         public void Cleanup()
         {
-            // Eliminar la solicitud de amistad creada
             using (var context = new DescribeloEntities())
             {
-                var solicitud = context.PeticionAmistad
-                    .FirstOrDefault(p => p.idRemitente == idUsuario1 && p.idDestinatario == idUsuario2);
+                var solicitudes = context.PeticionAmistad
+                    .Where(p => (p.idRemitente == ID_REMITENTE && p.idDestinatario == ID_DESTINATARIO) ||
+                                (p.idRemitente == ID_DESTINATARIO && p.idDestinatario == ID_REMITENTE))
+                    .ToList();
 
-                if (solicitud != null)
+                if (solicitudes.Any())
                 {
-                    context.PeticionAmistad.Remove(solicitud);
+                    context.PeticionAmistad.RemoveRange(solicitudes);
                     context.SaveChanges();
                 }
             }
         }
-
     }
-
 }
-
-

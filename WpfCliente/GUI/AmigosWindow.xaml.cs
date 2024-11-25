@@ -65,7 +65,7 @@ namespace WpfCliente.GUI
 
         private async void TryEnviarSolicitud()
         {
-            string gamertagSolicitud = VentanaModal.AbrirVentanaModalGamertag(this);
+            string gamertagSolicitud = VentanasEmergentes.AbrirVentanaModalGamertag(this);
 
             var resultado = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!resultado)

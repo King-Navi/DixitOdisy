@@ -164,14 +164,14 @@ namespace WpfCliente.GUI
 
         private async void ClicJugarComoInvitado(object sender, RoutedEventArgs e)
         {
-            string codigoSala = VentanaModal.AbrirVentanaModalSala(this);
-            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
-            if (!conexionExitosa)
-            {
-                return;
-            }
+            string codigoSala = VentanasEmergentes.AbrirVentanaModalSala(this);
             if (codigoSala != null)
             {
+                bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+                if (!conexionExitosa)
+                {
+                    return;
+                }
                 if (ValidacionExistenciaJuego.ExisteSala(codigoSala))
                 {
                     SingletonCliente.Instance.NombreUsuario = Utilidades.GenerarGamertagInvitado();
@@ -183,6 +183,10 @@ namespace WpfCliente.GUI
                     VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloLobbyNoEncontrado, Properties.Idioma.mensajeLobbyNoEncontrado, this);
                 }
 
+            }
+            else
+            {
+                return;
             }
         }
 
@@ -245,7 +249,7 @@ namespace WpfCliente.GUI
         private async void OlvidarContrasenia()
         {
             bool olvidoContrasenia = true;
-            string correoIngresado = VentanaModal.AbrirVentanaModalCorreo(this, olvidoContrasenia);
+            string correoIngresado = VentanasEmergentes.AbrirVentanaModalCorreo(this, olvidoContrasenia);
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
             {
@@ -253,7 +257,7 @@ namespace WpfCliente.GUI
             }
             if (ValidacionesString.EsCorreoValido(correoIngresado) && Correo.VerificarCorreo(correoIngresado,this))
             {
-                string gamertag = VentanaModal.AbrirVentanaModalGamertag(this);
+                string gamertag = VentanasEmergentes.AbrirVentanaModalGamertag(this);
                 bool _conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
                 if (!_conexionExitosa)
                 {

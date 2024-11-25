@@ -230,7 +230,6 @@
     <Compile Include="Utilidad\SingletonCliente.cs" />
     <Compile Include="Utilidad\ValidacionExistenciaJuego.cs" />
     <Compile Include="Utilidad\ValidacionesString.cs" />
-    <Compile Include="Utilidad\VentanaModal.cs" />
     <Compile Include="Utilidad\VentanasEmergentes.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -529,6 +528,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\ServidorDescribelo\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\logoJuego.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

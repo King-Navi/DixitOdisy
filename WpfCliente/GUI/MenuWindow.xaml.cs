@@ -164,7 +164,7 @@ namespace WpfCliente.GUI
             }
             else
             {
-                codigoSala = VentanaModal.AbrirVentanaModalSala(this);
+                codigoSala = VentanasEmergentes.AbrirVentanaModalSala(this);
             }
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)

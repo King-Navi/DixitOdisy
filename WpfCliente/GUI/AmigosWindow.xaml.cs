@@ -80,6 +80,10 @@ namespace WpfCliente.GUI
                     {
                         VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadExitosa, this);
                     }
+                    else
+                    {
+                        VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadFallida, this);
+                    }
                 }
                 catch (FaultException<SolicitudAmistadFalla> ex)
                 {
@@ -129,7 +133,6 @@ namespace WpfCliente.GUI
             imagenFlechaRecargar.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA: Utilidades.OPACIDAD_MINIMA;
             imagenFlechaAtras.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
             imagenAgregarAmigo.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
-            
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)

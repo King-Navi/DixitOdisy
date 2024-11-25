@@ -16,10 +16,10 @@
                                               HorizontalAlignment="Center" />
                                 <!-- Popup para los submenús -->
                                 <Popup IsOpen="{TemplateBinding IsSubmenuOpen}"
-                                   Placement="Bottom"
+                                   Placement="Left"
                                    AllowsTransparency="True"
                                    Focusable="False">
-                                    <Border Background="#FF132365" Padding="5" CornerRadius="4">
+                                    <Border Background="SkyBlue" Padding="5" CornerRadius="4">
                                         <StackPanel>
                                             <!-- ItemsPresenter para mostrar los ítems del submenú -->
                                             <ItemsPresenter />
@@ -33,7 +33,7 @@
                         <ControlTemplate.Triggers>
                             <!-- Trigger cuando el ratón está sobre el MenuItem -->
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#FF132365" />
+                                <Setter TargetName="Border" Property="Background" Value="skyblue" />
                             </Trigger>
 
                             <!-- Trigger cuando el submenú está abierto -->

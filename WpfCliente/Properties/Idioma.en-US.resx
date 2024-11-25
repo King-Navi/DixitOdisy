@@ -625,6 +625,9 @@
   <data name="mensajeVetoTemporal" xml:space="preserve">
     <value>You are banned for the moment, come back after thinking about your actions for a while.</value>
   </data>
+  <data name="mensajeSolicitudAmistadFallida" xml:space="preserve">
+    <value>There was an error sending the request, please try again</value>
+  </data>
   <data name="buttonRechazar" xml:space="preserve">
     <value>Decline</value>
   </data>

@@ -58,10 +58,12 @@ namespace WpfCliente.Utilidad
             if (string.IsNullOrWhiteSpace(correo))
             {
                 validacionCorreo = false;
+                return validacionCorreo;
             }
             if(correo.Contains(" "))
             {
                 validacionCorreo = false;
+                return validacionCorreo;
             }
 
             return regex.IsMatch(correo.Trim()) && validacionCorreo;

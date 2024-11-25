@@ -31,6 +31,7 @@ namespace WcfServicioLibreria.Modelo
         private const string CARPETA_PAISES = "Paises";
         private const string CARPETA_FOTOS_INVITADOS = "FotosInvitados";
         #endregion Carpetas
+
         #region PantallasCliente
         private const int PANTALLA_INICIO = 1;
         private const int PANTALLA_NARRADOR_SELECION = 2;
@@ -40,6 +41,8 @@ namespace WcfServicioLibreria.Modelo
         private const int PANTALLA_FIN_PARTIDA = 6;
         private const int PANTALLA_ESPERA = 7;
         #endregion PantallasCliente
+
+        #region NumerosPartida
         private const int CANTIDAD_MINIMA_JUGADORES = 1; // 2
         private const int TIEMPO_ESPERA_UNIRSE_JUGADORES = 20;// 20
         private const int TIEMPO_ESPERA_NARRADOR = 40; // 40
@@ -57,8 +60,10 @@ namespace WcfServicioLibreria.Modelo
         private const int PUNTOS_PENALIZACION_NARRADOR = 2; //2
         private const int PUNTOS_MAXIMOS_RECIBIDOS_CONFUNDIR = 3; //3
         private const int TIEMPO_MOSTRAR_ESTADISTICAS = 15; //10
-        private const int ID_INVALIDO = 0; //0
+        private const int ID_INVALIDO = 0; //0 
+        #endregion NumerosPartida
         #endregion Constantes
+
         #region Atributos
         private readonly ConcurrentDictionary<string, IPartidaCallback> jugadoresCallback = new ConcurrentDictionary<string, IPartidaCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
@@ -130,8 +135,6 @@ namespace WcfServicioLibreria.Modelo
             archivosCache = new Lazy<string[]>(() => Directory.GetFiles(rutaImagenes, "*.jpg"));
 
         }
-
-
         #endregion Contructor
 
         #region Metodos
@@ -178,7 +181,7 @@ namespace WcfServicioLibreria.Modelo
         {
             string[] archivosCache = ObtenerArchivosCache();
 
-            var archivosRestantes = archivosCache.Where(a => !ImagenesUsadas.Contains(Path.GetFileNameWithoutExtension(a))).ToArray();
+            var archivosRestantes = archivosCache.Where(archivo => !ImagenesUsadas.Contains(Path.GetFileNameWithoutExtension(archivo))).ToArray();
 
             if (archivosRestantes.Length == NO_ARCHIVOS_RESTANTES)
             {
@@ -488,11 +491,8 @@ namespace WcfServicioLibreria.Modelo
 
         #endregion ManejoJugadores
 
-
         #endregion Metodos
     }
-
-
-
 }
+
 

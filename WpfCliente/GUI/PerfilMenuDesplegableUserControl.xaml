@@ -8,8 +8,8 @@
              d:DesignHeight="300" d:DesignWidth="200">
     <Grid>
         <!-- Menú Desplegable -->
-        <Menu Width="45" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,50,0,0" Background="{x:Null}">
-            <MenuItem x:Name="menuItemPerfil" Header="Perfil">
+        <Menu Width="50" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,50,0,0" Background="{x:Null}">
+            <MenuItem x:Name="menuItemPerfil" Header="Perfil" HorizontalAlignment="Center">
                 <MenuItem x:Name="menuItemEditarPerfil" Header="Editar Perfil" Click="AbrirEditarVentana" />
                 <MenuItem x:Name="menuItemCerrarSesion" Header="Cerrar sesión" Click="CerrarSesion" />
             </MenuItem>

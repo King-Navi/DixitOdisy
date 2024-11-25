@@ -624,6 +624,9 @@
   <data name="mensajeVetoTemporal" xml:space="preserve">
     <value>Estas vetado por el momento, vuelve despues de pensar un rato en tus acciones</value>
   </data>
+  <data name="mensajeSolicitudAmistadFallida" xml:space="preserve">
+    <value>Hubo un error al enviar la solicitud, intente de nuevo</value>
+  </data>
   <data name="buttonRechazar" xml:space="preserve">
     <value>Rechazar</value>
   </data>

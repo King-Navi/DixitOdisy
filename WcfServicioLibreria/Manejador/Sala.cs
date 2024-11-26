@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Evento;
@@ -78,10 +79,10 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (CommunicationException excepcion)
             {
-                   //TODO manejar el error
-            }catch (NullReferenceException)
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }catch (NullReferenceException excepcion)
             {
-
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return result;
         }

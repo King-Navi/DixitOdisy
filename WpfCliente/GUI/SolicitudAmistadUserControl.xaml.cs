@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -62,12 +63,17 @@ namespace WpfCliente.GUI
 
                 return resultado;
             }
-            catch (Exception ex)
+            catch (FaultException<ServidorFalla>)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(ex);
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCargarAmigosFalla, Properties.Idioma.mensajeCargarAmigosFalla, this);
-                return false;
+                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloErrorInesperado, Idioma.mensajeSeNecesitaReiniciar, this);
+                Application.Current.Shutdown();
             }
+            catch (Exception Excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(Excepcion);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCargarAmigosFalla, Properties.Idioma.mensajeCargarAmigosFalla, this);
+            }
+            return false;
         }
 
         private void ClicButtonRechazar(object sender, RoutedEventArgs e)

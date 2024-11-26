@@ -126,7 +126,7 @@
     <Compile Include="Manejador\Registro.cs" />
     <Compile Include="Manejador\Sala.cs" />
     <Compile Include="Manejador\SalaJugador.cs" />
-    <Compile Include="Manejador\ChatMotro.cs" />
+    <Compile Include="Manejador\ChatMotor.cs" />
     <Compile Include="Manejador\Usuario.cs" />
     <Compile Include="Modelo\Amistad\Amigo.cs" />
     <Compile Include="Modelo\Excepciones\ServidorFalla.cs" />

@@ -20,11 +20,11 @@ namespace WcfServicioLibreria.Manejador
                 Task.Run(() => EnviarCorreoAsync(codigo, correoUsuario));
                 return true;
             }
-            catch(Exception ex) 
+            catch (Exception excepcion)
             {
-                Console.WriteLine("Error al enviar el correo: " + ex.Message);
-                return false;
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+            return false;
         }
 
         public string GenerarCodigo()
@@ -60,11 +60,12 @@ namespace WcfServicioLibreria.Manejador
             {
                 return DAOLibreria.DAO.UsuarioDAO.ExisteUnicoUsuarioConGamertagYCorreo(usuario.Correo, usuario.Nombre);
             }
-            catch (Exception ex)
+            catch (Exception excepcion)
             {
-                Console.WriteLine("Error al enviar el correo: " + ex.Message);
-                return false;
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+            return false;
+
         }
     }
 }

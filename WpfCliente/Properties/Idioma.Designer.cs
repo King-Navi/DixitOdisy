@@ -295,7 +295,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rechazar.
+        ///   Busca una cadena traducida similar a Rechazar.
         /// </summary>
         public static string buttonRechazar {
             get {
@@ -304,7 +304,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Refrescar.
+        ///   Busca una cadena traducida similar a Refrescar.
         /// </summary>
         public static string buttonRefrescar {
             get {
@@ -1119,6 +1119,15 @@ namespace WpfCliente.Properties {
         public static string mensajeProfe {
             get {
                 return ResourceManager.GetString("mensajeProfe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Necesitas reiniciar, porfavor vuelva a iniciar sesion..
+        /// </summary>
+        public static string mensajeSeNecesitaReiniciar {
+            get {
+                return ResourceManager.GetString("mensajeSeNecesitaReiniciar", resourceCulture);
             }
         }
         

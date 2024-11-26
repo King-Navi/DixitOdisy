@@ -9,9 +9,9 @@ namespace WpfCliente.Utilidad
     {
         public const double OPACIDAD_MAXIMA = 1;
         public const double OPACIDAD_MINIMA = 0.5;
-        private static Random random = new Random();
+        private static Random aleatorio = new Random();
 
-        private static readonly List<Color> BackgroundColors = new List<Color>
+        private static readonly List<Color> ColoresFondo = new List<Color>
         {
             Color.FromRgb(245, 245, 220), 
             Color.FromRgb(255, 239, 219),
@@ -27,7 +27,7 @@ namespace WpfCliente.Utilidad
 
         public static SolidColorBrush ObtenerColorAleatorio()
         {
-            Color colorAleatorio = BackgroundColors[random.Next(BackgroundColors.Count)];
+            Color colorAleatorio = ColoresFondo[aleatorio.Next(ColoresFondo.Count)];
             return new SolidColorBrush(colorAleatorio);
         }
 
@@ -45,7 +45,7 @@ namespace WpfCliente.Utilidad
 
         public static string GenerarGamertagInvitado()
         {
-            int numeroAleatorio = random.Next(10000, 99999);
+            int numeroAleatorio = aleatorio.Next(10000, 99999);
             return $"guest-{numeroAleatorio}";
         }
     }

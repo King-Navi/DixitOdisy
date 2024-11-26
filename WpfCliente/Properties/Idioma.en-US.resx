@@ -631,4 +631,7 @@
   <data name="buttonRechazar" xml:space="preserve">
     <value>Decline</value>
   </data>
+  <data name="mensajeSeNecesitaReiniciar" xml:space="preserve">
+    <value>You need to restart, please log back in.</value>
+  </data>
 </root>

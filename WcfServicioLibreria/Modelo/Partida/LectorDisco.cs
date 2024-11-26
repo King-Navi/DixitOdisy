@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Modelo
 {
@@ -44,18 +45,13 @@ namespace WcfServicioLibreria.Modelo
                     {
                         try
                         {
-                            // Leer la imagen del disco de forma asíncrona
                             byte[] imagenBytes;
                             using (var fileStream = new FileStream(lecturaTrabajo.ArchivoPath, FileMode.Open, FileAccess.Read, FileShare.Read, 16384, useAsync: true))
                             {
                                 imagenBytes = new byte[fileStream.Length];
                                 await fileStream.ReadAsync(imagenBytes, 0, (int)fileStream.Length);
                             }
-
-                            // Obtener el nombre del archivo sin la extensión
                             string nombreSinExtension = Path.GetFileNameWithoutExtension(lecturaTrabajo.ArchivoPath);
-
-                            // Crear el objeto de la imagen
                             using (var imagenStream = new MemoryStream(imagenBytes))
                             {
                                 var imagenCarta = new ImagenCarta
@@ -63,8 +59,6 @@ namespace WcfServicioLibreria.Modelo
                                     IdImagen = nombreSinExtension,
                                     ImagenStream = imagenStream
                                 };
-
-                                // Intentar enviar la imagen al callback
                                 try
                                 {
                                     if (lecturaTrabajo.UsarGrupo)
@@ -78,15 +72,17 @@ namespace WcfServicioLibreria.Modelo
                                         Console.WriteLine($"El {idLector} envio la imagen {nombreSinExtension} en modo grupo");
                                     }
                                 }
-                                catch (Exception ex)
+                                catch (Exception excecpione)
                                 {
-                                    Console.WriteLine($"Error en callback: {ex.Message}");
+                                    ManejadorExcepciones.ManejarErrorException(excecpione);
+                                    Console.WriteLine($"Error en callback: {excecpione.Message}");
                                 }
                             }
                         }
-                        catch (Exception ex)
+                        catch (Exception excecpione)
                         {
-                            Console.WriteLine($"Error al leer la imagen: {ex.Message}");
+                            ManejadorExcepciones.ManejarErrorException(excecpione);
+                            Console.WriteLine($"Error al leer la imagen: {excecpione.Message}");
                         }
                         finally
                         {
@@ -94,8 +90,9 @@ namespace WcfServicioLibreria.Modelo
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception excecpiones)
             {
+                ManejadorExcepciones.ManejarFatalException( excecpiones);
                 Console.WriteLine($"[{idLector}] Procesamiento cancelado.");
             }
             finally

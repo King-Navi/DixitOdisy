@@ -52,7 +52,6 @@ namespace WpfCliente.GUI
         NarradorSeleccionCartaUserControl narradorSeleccionCartasUserControl;
         VerTodasCartasUserControl verTodasCartasUserControl;
         ResumenRondaUserControl resumenRondaUserControl;
-        private readonly SemaphoreSlim semaphoreRecibirImagenCallback = new SemaphoreSlim(1,1);
         private bool esNarrador;
         public bool EsNarrador
         {
@@ -81,7 +80,6 @@ namespace WpfCliente.GUI
                 OnPropertyChanged();
             }
         }
-
         public PartidaWindow(string idPartida)
         {
             InitializeComponent();
@@ -197,18 +195,7 @@ namespace WpfCliente.GUI
 
         public void RecibirImagenCallback(ImagenCarta imagen)
         {
-            if (System.Windows.Application.Current.Dispatcher.CheckAccess())
-            {
-                recursosCompartidos.Imagenes.Add(imagen);
-            }
-            else
-            {
-                System.Windows.Application.Current.Dispatcher.Invoke(() =>
-                {
-                    recursosCompartidos.Imagenes.Add(imagen);
-                });
-            }
-            
+            recursosCompartidos.RecibirImagen(imagen);
         }
 
         public void NotificarNarradorCallback(bool esNarrador)
@@ -241,27 +228,22 @@ namespace WpfCliente.GUI
 
         public async void IniciarValoresPartidaCallback(bool seUnio)
         {
-            await System.Windows.Application.Current.Dispatcher.InvokeAsync(async () =>
-             {
-                await SolicitarMazoAsync();
-                Conexion.Partida.EmpezarPartida(SingletonCliente.Instance.NombreUsuario, SingletonCliente.Instance.IdPartida);
+            try
+            {
+                await Task.Delay(TimeSpan.FromSeconds(3));
                 await UnirseChat();
-             });
+                await SolicitarMazoAsync();
+                await Conexion.Partida.EmpezarPartidaAsync(SingletonCliente.Instance.NombreUsuario, SingletonCliente.Instance.IdPartida);
+            }
+            catch (Exception exccepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(exccepcion);
+            }
         }
 
         public void RecibirGrupoImagenCallback(ImagenCarta imagen)
         {
-            if (System.Windows.Application.Current.Dispatcher.CheckAccess())
-            {
-                recursosCompartidos.GruposDeImagenes.Add(imagen);
-            }
-            else
-            {
-                System.Windows.Application.Current.Dispatcher.Invoke(() =>
-                {
-                    recursosCompartidos.GruposDeImagenes.Add(imagen);
-                });
-            }
+            recursosCompartidos.RecibirGrupoImagen(imagen);
         }
 
         #endregion IServicioPartidaSesionCallback
@@ -296,7 +278,7 @@ namespace WpfCliente.GUI
                     NoHayConexion();
                     return;
                 }
-                Conexion.Partida.UnirsePartida(SingletonCliente.Instance.NombreUsuario, idPartida);
+                await Conexion.Partida.UnirsePartidaAsync(SingletonCliente.Instance.NombreUsuario, idPartida);
             }
             catch (Exception)
             {

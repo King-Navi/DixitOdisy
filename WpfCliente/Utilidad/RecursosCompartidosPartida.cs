@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
 using System.Linq;
 using WpfCliente.ServidorDescribelo;
 
@@ -9,12 +10,13 @@ namespace WpfCliente.GUI
         public Usuario primerLugar;
         public Usuario segundoLugar;
         public Usuario tercerLugar;
+        private readonly ConcurrentQueue<ImagenCarta> imagenesGrupoPendientes = new ConcurrentQueue<ImagenCarta>();
         public ObservableCollection<ImagenCarta> GruposDeImagenes { get; } = new ObservableCollection<ImagenCarta>();
+        private readonly ConcurrentQueue<ImagenCarta> imagenesPendientes = new ConcurrentQueue<ImagenCarta>();
         public ObservableCollection<ImagenCarta> Imagenes { get; } = new ObservableCollection<ImagenCarta>();
         public ObservableCollection<JugadorEstadisticas> JugadorEstadisticas { get; set; } = new ObservableCollection<JugadorEstadisticas>();
         public ObservableCollection<Usuario> UsuarioEnpartida { get; set; } = new ObservableCollection<Usuario>();
         public ObservableCollection<string> Podio { get; set; } = new ObservableCollection<string>();
-
 
         public RecursosCompartidosPartida()
         {
@@ -56,6 +58,45 @@ namespace WpfCliente.GUI
             else
             {
                 UsuarioEnpartida.Add(usuario);
+            }
+        }
+        public void RecibirImagen(ImagenCarta imagen)
+        {
+            imagenesPendientes.Enqueue(imagen);
+            ProcesarImagenesPendientes();
+        }
+
+        private void ProcesarImagenesPendientes()
+        {
+            if (System.Windows.Application.Current.Dispatcher.CheckAccess())
+            {
+                while (imagenesPendientes.TryDequeue(out var imagen))
+                {
+                    Imagenes.Add(imagen);
+                }
+            }
+            else
+            {
+                System.Windows.Application.Current.Dispatcher.Invoke(ProcesarImagenesPendientes);
+            }
+        }
+        public void RecibirGrupoImagen(ImagenCarta imagen)
+        {
+            imagenesGrupoPendientes.Enqueue(imagen);
+            ProcesarGrupoImagenesPendientes();
+        }
+        private void ProcesarGrupoImagenesPendientes()
+        {
+            if (System.Windows.Application.Current.Dispatcher.CheckAccess())
+            {
+                while (imagenesGrupoPendientes.TryDequeue(out var imagen))
+                {
+                    GruposDeImagenes.Add(imagen);
+                }
+            }
+            else
+            {
+                System.Windows.Application.Current.Dispatcher.Invoke(ProcesarGrupoImagenesPendientes);
             }
         }
     }

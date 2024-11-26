@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Modelo
 {
@@ -10,7 +12,7 @@ namespace WcfServicioLibreria.Modelo
     {
 
         private readonly List<LectorDisco> lectoresDisco = new List<LectorDisco>();
-        private readonly int MAXIMO_LECTORESDISCO;
+        private const int MAXIMO_LECTORESDISCO = 6;
         private int indiceActual = 0;
         private readonly SemaphoreSlim semaforoAsignacion = new SemaphoreSlim(1, 1);
         public bool Desechado { get; private set; } = false;
@@ -21,24 +23,23 @@ namespace WcfServicioLibreria.Modelo
             {
                 cantidadLectores = MAXIMO_LECTORESDISCO;
             }
-            MAXIMO_LECTORESDISCO = cantidadLectores;
-            for (int i = 0; i < MAXIMO_LECTORESDISCO; i++)
+            for (int i = 0; i < cantidadLectores; i++)
             {
                 lectoresDisco.Add(new LectorDisco(i));
             }
         }
-
-        public void AsignarTrabajo(string archivoPath, IPartidaCallback callback, bool usarGrupo = false)
-        {
-            var lectorMenosOcupado = lectoresDisco.OrderBy(busqueda => busqueda.ColaCount).First();
-            lectorMenosOcupado.EncolarLecturaEnvio(archivoPath, callback, usarGrupo);
-        }
-
         public async Task AsignarTrabajoRoundRobinAsync(string archivoPath, IPartidaCallback callback)
         {
-            await semaforoAsignacion.WaitAsync(); 
+            await semaforoAsignacion.WaitAsync();
             try
             {
+                if (lectoresDisco.Count == 0)
+                {
+                    ManejadorExcepciones.ManejarFatalException(new InvalidOperationException("No hay lectores disponibles para asignar el trabajo."));
+                    throw new InvalidOperationException();
+                }
+
+                indiceActual = indiceActual % lectoresDisco.Count;
                 var lectorSeleccionado = lectoresDisco[indiceActual];
                 indiceActual = (indiceActual + 1) % lectoresDisco.Count;
                 lectorSeleccionado.EncolarLecturaEnvio(archivoPath, callback);
@@ -49,23 +50,25 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        public void DetenerLectores()
-        {
-            foreach (var lector in lectoresDisco)
-            {
-                lector.DetenerLectura();
-            }
-        }
-
         public void LiberarRecursos()
         {
-            if (!Desechado)
+            semaforoAsignacion.Wait();
+            try
             {
-                DetenerLectores();
-                lectoresDisco.Clear();
-                Desechado = true;
+                if (!Desechado)
+                {
+                    foreach (var lector in lectoresDisco)
+                    {
+                        lector.DetenerLectura();
+                    }
+                    lectoresDisco.Clear();
+                    Desechado = true;
+                }
             }
-
+            finally
+            {
+                semaforoAsignacion.Release();
+            }
         }
     }
 }

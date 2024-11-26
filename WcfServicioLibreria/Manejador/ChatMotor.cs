@@ -1,6 +1,7 @@
 ﻿using System;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
@@ -28,8 +29,9 @@ namespace WcfServicioLibreria.Manejador
                
 
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
         }
@@ -46,8 +48,9 @@ namespace WcfServicioLibreria.Manejador
                     multiChat.EnviarMensajeTodos(mensaje);
                 }
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
         }
     }

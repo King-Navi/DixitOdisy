@@ -630,4 +630,7 @@
   <data name="buttonRechazar" xml:space="preserve">
     <value>Rechazar</value>
   </data>
+  <data name="mensajeSeNecesitaReiniciar" xml:space="preserve">
+    <value>Necesitas reiniciar, porfavor vuelva a iniciar sesion.</value>
+  </data>
 </root>

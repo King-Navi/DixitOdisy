@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Evento;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Modelo
 {
@@ -50,7 +51,7 @@ namespace WcfServicioLibreria.Modelo
                 }
                 catch (Exception excecpion)
                 {
-                    WcfServicioLibreria.Utilidades.ManejadorExcepciones.ManejarErrorException(excecpion);
+                    ManejadorExcepciones.ManejarErrorException(excecpion);
                 }
             }
         }
@@ -63,7 +64,7 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (Exception excecpion)
             {
-                WcfServicioLibreria.Utilidades.ManejadorExcepciones.ManejarErrorException(excecpion);
+                ManejadorExcepciones.ManejarErrorException(excecpion);
             }
         }
 

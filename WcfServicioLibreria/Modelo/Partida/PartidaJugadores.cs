@@ -20,7 +20,7 @@ namespace WcfServicioLibreria.Modelo
     /// 
     /// </summary>
     /// <ref>https://refactoring.guru/es/design-patterns/strategy</ref>
-    internal partial class Partida : IObservador//FIXME: Faltan muchas funcionalidades y pruebas
+    internal partial class Partida : IObservador
     {
         #region Constantes
         #region Carpetas
@@ -165,9 +165,9 @@ namespace WcfServicioLibreria.Modelo
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
-                Console.Write("Error en el metodo CalcularNuevaImagen(string nombreSolicitante)");
+                ManejadorExcepciones.ManejarFatalException(excepcion);
             }
             return true;
         }
@@ -193,16 +193,17 @@ namespace WcfServicioLibreria.Modelo
             try
             {
                 jugadoresCallback.TryGetValue(nombreSolicitante, out IPartidaCallback callback);
-                lectorDiscoOrquetador.AsignarTrabajo(archivoAleatorio, callback);
+                await lectorDiscoOrquetador.AsignarTrabajoRoundRobinAsync(archivoAleatorio, callback);
                 ImagenesUsadas.Add(nombreSinExtension);
                 Console.WriteLine($"Se asignor {nombreSolicitante} el archivo {nombreSinExtension}");
                 return true;
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarFatalException(excepcion);
+                await TerminarPartidaAsync();
+                return false;
             }
-            return false;
-
         }
 
         private async Task<bool> SolicitarImagenChatGPTAsync(string nombreSolicitante)
@@ -288,7 +289,7 @@ namespace WcfServicioLibreria.Modelo
                 }
             }
             eventosCommunication.Clear();
-            lectorDiscoOrquetador.DetenerLectores();
+            lectorDiscoOrquetador.LiberarRecursos();
             EnPartidaVacia();
         }
 
@@ -456,9 +457,17 @@ namespace WcfServicioLibreria.Modelo
 
                 if (ContarJugadores() == NUM_JUGADOR_PARTIDA_VACIA)
                 {
-                    cancelacionEjecucionRonda.Cancel();
+                    try
+                    {
+                        cancelacionEjecucionRonda.Cancel();
+
+                    }
+                    catch (Exception excepcion)
+                    {
+                        ManejadorExcepciones.ManejarErrorException(excepcion);
+                    }                    
                     EliminarPartida();
-                    lectorDiscoOrquetador.DetenerLectores();
+                    lectorDiscoOrquetador.LiberarRecursos();
                 }
             }
             finally

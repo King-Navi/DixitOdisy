@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
@@ -15,6 +16,7 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioAmistad
     {
+        private const int ID_INVALIDO = 0;
         public bool EnviarSolicitudAmistad(Modelo.Usuario remitente, string destinatario)
         {
             int idRemitente = ObtenerIdPorNombre(remitente.Nombre);
@@ -56,8 +58,9 @@ namespace WcfServicioLibreria.Manejador
             {
                 id = UsuarioDAO.ObtenerIdPorNombre(nombre);
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return id;
 
@@ -69,7 +72,7 @@ namespace WcfServicioLibreria.Manejador
             int idDestinatario = ObtenerIdPorNombre(destinatario);
             int idMayorUsuario = Math.Max(idRemitente, idDestinatario);
             int idMenorUsuario = Math.Min(idRemitente, idDestinatario);
-            if (!(idDestinatario > 0 || idRemitente > 0))
+            if (!(idDestinatario > ID_INVALIDO && idRemitente > ID_INVALIDO))
             {
                 return true;
             }
@@ -83,8 +86,9 @@ namespace WcfServicioLibreria.Manejador
             {
                 return AmistadDAO.SonAmigos(idMasAlto, idMasBajo);
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
 
@@ -96,8 +100,9 @@ namespace WcfServicioLibreria.Manejador
             {
                 return PeticionAmistadDAO.ExisteSolicitudAmistad(idMasAlto, idMasBajo);
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
         }
@@ -112,7 +117,8 @@ namespace WcfServicioLibreria.Manejador
                 {
                     remitente.AmistadSesionCallBack = contextoRemitente;
                 }
-                DAOLibreria.ModeloBD.Usuario usuarioRemitenteModeloBaseDatos = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorId(_usuarioRemitente.IdUsuario);
+                DAOLibreria.ModeloBD.Usuario usuarioRemitenteModeloBaseDatos = 
+                    UsuarioDAO.ObtenerUsuarioPorId(_usuarioRemitente.IdUsuario);
                 List<DAOLibreria.ModeloBD.Usuario> amigosConetados = EnviarListaAmigosAsync(_usuarioRemitente, contextoRemitente);
 
                 foreach (var usuarioDestino in amigosConetados)
@@ -121,8 +127,9 @@ namespace WcfServicioLibreria.Manejador
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
         }
@@ -170,8 +177,9 @@ namespace WcfServicioLibreria.Manejador
                 return usuariosModeloBaseDatos;
 
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return usuariosModeloWCF;
         }
@@ -192,13 +200,17 @@ namespace WcfServicioLibreria.Manejador
                                 EventHandler desconexionHandlerDestinatario = null;
                                 desconexionHandlerRemitente = (sender, e) =>
                                 {
-                                    destinatario.AmigoDesconectado(_remitente, new UsuarioDesconectadoEventArgs(((Modelo.Usuario)remitente).Nombre, DateTime.Now));
+                                    destinatario.AmigoDesconectado(_remitente, new UsuarioDesconectadoEventArgs(
+                                        ((Modelo.Usuario)remitente).Nombre, 
+                                        DateTime.Now));
                                     remitente.DesconexionManejadorEvento -= desconexionHandlerRemitente;
                                 };
 
                                 desconexionHandlerDestinatario = (sender, e) =>
                                 {
-                                    remitente.AmigoDesconectado(_destinatario, new UsuarioDesconectadoEventArgs(((Modelo.Usuario)destinatario).Nombre, DateTime.Now));
+                                    remitente.AmigoDesconectado(_destinatario, new UsuarioDesconectadoEventArgs(
+                                        ((Modelo.Usuario)destinatario).Nombre, 
+                                        DateTime.Now));
                                     destinatario.DesconexionManejadorEvento -= desconexionHandlerDestinatario;
                                 };
 
@@ -225,8 +237,9 @@ namespace WcfServicioLibreria.Manejador
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
         }
 
@@ -250,8 +263,9 @@ namespace WcfServicioLibreria.Manejador
 
                 return usuariosModeloWCF;
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return null;
         }
@@ -300,10 +314,12 @@ namespace WcfServicioLibreria.Manejador
             {
                 throw excepcion;
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarFatalException(excepcion);
             }
             return false;
+
         }
 
 
@@ -371,8 +387,9 @@ namespace WcfServicioLibreria.Manejador
             {
                 throw excepcion;
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarFatalException(excepcion);
             }
             return false;
 

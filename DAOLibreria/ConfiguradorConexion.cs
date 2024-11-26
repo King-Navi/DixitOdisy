@@ -19,8 +19,8 @@ namespace DAOLibreria
         /// Configura la cadena de conexión solicitando al usuario los parámetros de conexión (servidor, base de datos, usuario y contraseña),
         /// actualiza la cadena de conexión en el archivo App.config y prueba la conexión.
         /// </summary>
-        /// <returns>Un diccionario con los resultados de la operación, incluyendo un mensaje y un indicador de éxito o error.</returns>
-        public static Dictionary<string, Object> ConfigurarCadenaConexion(string servidor, string nombreBD, string usuario, string contrasena)
+        /// <returns>True or Fasle, indicando si  fue exitosa TRUE o si ocurrió un error FALSE.</returns>
+        public static bool ConfigurarCadenaConexion(string servidor, string nombreBD, string usuario, string contrasena)
         {
             string nuevaCadenaConexion = $"metadata=res://*/{carpeta}.{nombreArchivo}.csdl|res://*/{carpeta}.{nombreArchivo}.ssdl|res://*/{carpeta}.{nombreArchivo}.msl;" +
                                          $"provider=System.Data.SqlClient;provider connection string=\"Server={servidor};Database={nombreBD};User Id={usuario};Password={contrasena};MultipleActiveResultSets=True;App=EntityFramework\";";
@@ -33,17 +33,15 @@ namespace DAOLibreria
         /// Solo funciona con SQL Autentication
         /// </summary>
         /// <param name="nombreVariableEntorno">Nombre de la variable de entorno que contiene la cadena de conexión.</param>
-        /// <returns>Un diccionario con los resultados de la operación, incluyendo un mensaje y un indicador de éxito o error.</returns>
-        public static Dictionary<string, Object> ConfigurarCadenaConexion(string nombreVariableEntorno)
+        /// <returns>True or Fasle, indicando si  fue exitosa TRUE o si ocurrió un error FALSE.</returns>
+        public static bool ConfigurarCadenaConexion(string nombreVariableEntorno)
         {
-            Dictionary<string, Object> resultado = new Dictionary<string, Object>();
+            bool resultado = false;
             try
             {
                 string valoresVariableEntorno = Environment.GetEnvironmentVariable(nombreVariableEntorno, EnvironmentVariableTarget.Machine);
                 if (string.IsNullOrEmpty(valoresVariableEntorno))
                 {
-                    resultado.Add(Llaves.LLAVE_ERROR, true);
-                    resultado.Add(Llaves.LLAVE_MENSAJE, $"Error: La variable de entorno '{nombreVariableEntorno}' no está configurada o está vacía.");
                     return resultado;
                 }
                 string[] valoresLista = ExtraerValoresDeCadenaConexion(valoresVariableEntorno);
@@ -63,39 +61,27 @@ namespace DAOLibreria
 
                 resultado = ProbarConexion(valoresLista[0], valoresLista[1], valoresLista[2], valoresLista[3]);
             }
-            catch (ArgumentNullException ex)
+            catch (ArgumentNullException)
             {
-                // TODO Manejar la excepción si el nombre de la variable de entorno es nulo
-                resultado.Add(Llaves.LLAVE_ERROR, true);
-                resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexion(1)) [ArgumentNullException].  {ex.Message}");
+                resultado = false;
             }
-            catch (SecurityException ex)
+            catch (SecurityException)
             {
-                //TODO Manejar la excepción si no se tiene permiso para acceder a la variable de entorno
-                resultado.Add(Llaves.LLAVE_ERROR, true);
-                resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos (ConfigurarCadenaConexion(1)) [SecurityException].  {ex.Message}");
+                resultado = false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                //TODO Manejar cualquier otra excepción 
-                resultado.Add(Llaves.LLAVE_ERROR, true);
-                resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexion(1)) [Exception].  {ex.Message}");
+                resultado = false;   
             }
             return resultado;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="ruta"></param>
-        /// <returns></returns>
-        public static Dictionary<string, Object> ConfigurarCadenaConexionRuta() 
+        public static bool ConfigurarCadenaConexionRuta()
         {
-            Dictionary<string, Object> resultado = new Dictionary<string, Object>();
+            bool resultado;
             try
             {
                 Console.WriteLine("Ingrese la ruta absoluta del archivo:");
                 string ruta = Console.ReadLine();
-                //string ruta = "E:\\config.txt";
                 if (File.Exists(ruta))
                 {
                     string contenidoArchivo = File.ReadAllText(ruta);
@@ -106,14 +92,12 @@ namespace DAOLibreria
                 }
                 else
                 {
-                    resultado.Add(Llaves.LLAVE_ERROR, true);
-                    resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexionruta()) [Exception]. {ruta}");
+                    resultado = true;
                 }
             }
             catch (Exception)
             {
-                resultado.Add(Llaves.LLAVE_ERROR, true);
-                resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexionRuta()) [Exception].");
+                resultado = false;
             }
             return resultado;
 
@@ -148,29 +132,32 @@ namespace DAOLibreria
         /// <param name="nombreBD">Nombre de la base de datos.</param>
         /// <param name="usuario">Nombre de usuario para la conexión.</param>
         /// <param name="contrasena">Contraseña para la conexión.</param>
-        /// <returns>Un diccionario con los resultados de la operación, indicando si la conexión fue exitosa o si ocurrió un error.</returns>
-        private static Dictionary<String, Object> ProbarConexion(string servidor, string nombreBD, string usuario, string contrasena)
+        /// <returns>True or Fasle, indicando si la conexión fue exitosa TRUE o si ocurrió un error FALSE.</returns>
+        private static bool ProbarConexion(string servidor, string nombreBD, string usuario, string contrasena)
         {
-            Dictionary<String, Object> resultado = new Dictionary<string, object>();
+            // Construir la cadena de conexión
             string cadenaConexionSQL = $"Server={servidor};Database={nombreBD};User Id={usuario};Password={contrasena};";
+
             try
             {
                 using (SqlConnection conexion = new SqlConnection(cadenaConexionSQL))
                 {
                     conexion.Open();
-                    resultado.Add(Llaves.LLAVE_ERROR, false);
-                    resultado.Add(Llaves.LLAVE_MENSAJE, "La conexión a la base de datos fue configurada y establecida exitosamente.");
+                    Console.WriteLine("Conexión exitosa.");
+                    return true;
                 }
             }
-            catch (SqlException ex)
+            catch (SqlException)
             {
-                //TODO Manejar el error
-                resultado.Add(Llaves.LLAVE_ERROR, true);
-                resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos. (ProbarConexion(4))  {ex.Message}");
+                Console.WriteLine($"Error de conexión");
+                return false;
             }
-            return resultado;
-
+            catch (Exception)
+            {
+                return false;
+            }
         }
+
         /// <summary>
         /// Extrae los valores individuales de una cadena los retorna en un array.
         /// </summary>
@@ -189,10 +176,6 @@ namespace DAOLibreria
             string[] partes = valoresVariableGlobal.Split(';');
             if (partes.Length == 5)
             {
-                string servidor = partes[0];  
-                string nombreBD = partes[1];  
-                string usuario = partes[2];    
-                string contrasena = partes[3]; 
                 return partes;
             }
             else
@@ -200,11 +183,5 @@ namespace DAOLibreria
                 return null;
             }
         }
-    }
-    public static class Llaves
-    {
-        public const string LLAVE_ERROR = "error";
-        public const string LLAVE_MENSAJE = "mensaje";
-        public const string LLAVE_BOOLEANO = "bool";
     }
 }

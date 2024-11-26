@@ -256,7 +256,7 @@ namespace WcfServicioLibreria.Modelo
 
         }
 
-        private void MostrarGrupoCartas()
+        private async void MostrarGrupoCartas()
         {
             string[] archivosCache = ObtenerArchivosCache();
             var archivoRutaMap = archivosCache.ToDictionary(ruta => Path.GetFileNameWithoutExtension(ruta), ruta => ruta);
@@ -279,7 +279,7 @@ namespace WcfServicioLibreria.Modelo
 
                     try
                     {
-                        lectorDiscoOrquetador?.AsignarTrabajo(rutaImagen, callback, true);
+                        await lectorDiscoOrquetador?.AsignarTrabajoRoundRobinAsync(rutaImagen, callback);
                     }
                     catch (Exception)
                     {

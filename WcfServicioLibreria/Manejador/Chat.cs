@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
@@ -19,12 +21,10 @@ namespace WcfServicioLibreria.Manejador
                     resultado = true;
                     multiChat.EliminarChatManejadorEvento += BorrarChat;
                 }
-                else
-                {
-                }
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarFatalException(excepcion);
             }
             return resultado;
         }

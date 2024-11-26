@@ -129,8 +129,7 @@ namespace Pruebas.Servidor
             mockContextoProvedor = new Mock<IContextoOperacion>();
             manejador = new ManejadorPrincipal(mockContextoProvedor.Object);
             var resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-");
-            resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
-            if ((bool)fueExitoso)
+            if (resultado)
             {
                 Assert.Fail("La BD no está configurada.");
             }
@@ -146,8 +145,7 @@ namespace Pruebas.Servidor
             mockContextoProvedor = new Mock<IContextoOperacion>();
             manejador = new ManejadorPrincipal(mockContextoProvedor.Object);
             var resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "@-");
-            resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
-            if (!(bool)fueExitoso)
+            if (!resultado)
             {
                 Assert.Fail("La BD no está configurada.");
             }

@@ -305,9 +305,8 @@ namespace WpfCliente.GUI
                     ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
                 }
 
-                buttonEmpezarPartida.IsEnabled = true;
             }
-
+            buttonEmpezarPartida.IsEnabled = true;
             this.IsEnabled = true;
         }
 
@@ -340,10 +339,10 @@ namespace WpfCliente.GUI
             );
         }
 
-        private void IniciarPartida(string idPartida)
+        private async void IniciarPartida(string idPartida)
         {
             CrearChat(idPartida);
-            Conexion.SalaJugador.ComenzarPartidaAnfrition(
+            await Conexion.SalaJugador.ComenzarPartidaAnfritionAsync(
                 SingletonCliente.Instance.NombreUsuario,
                 SingletonCliente.Instance.IdSala,
                 idPartida

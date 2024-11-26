@@ -151,7 +151,7 @@ namespace WpfCliente.Utilidad
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
                     Properties.Idioma.mensajeArchivoInvalido, ventana);
             }
-            catch (Exception excepcion)
+            catch (Exception)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
                     Properties.Idioma.mensajeErrorInesperado, ventana);

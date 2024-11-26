@@ -35,13 +35,12 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (CommunicationException excepcion)
             {
-                //TODO: Manejar el error
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             catch (Exception excepcion)
             {
-                //TODO: Manejar el error
+                ManejadorExcepciones.ManejarFatalException(excepcion);
             }
-
             return idPartida;
         }
 

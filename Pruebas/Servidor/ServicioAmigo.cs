@@ -29,11 +29,8 @@ namespace Pruebas.Servidor
         [TestInitialize]
         public virtual void PruebaConfiguracion()
         {
-            Dictionary<string, object> resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-");
-            resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje);
-            Console.WriteLine((string)mensaje);
-            resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
-            if ((bool)fueExitoso)
+            var resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-");
+            if (!resultado)
             {
                 Assert.Fail("La BD no está configurada.");
             }
@@ -67,7 +64,6 @@ namespace Pruebas.Servidor
                 context.SaveChanges();
             }
         }
-
         private static void AgregarAmistad(int idMayor, int idMenor)
         {
             using (var context = new DescribeloEntities())
@@ -103,7 +99,6 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void AceptarSolicitudAmistad_CuandoIdsSonValidosYAmbosConectados_DeberiaRetornarTrue()
         {
-
             // Arrange
             var implementacionCallbackAmistad = new AmistadCallbackImpl();
 
@@ -114,7 +109,6 @@ namespace Pruebas.Servidor
             mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IUsuarioSesionCallback>())
                                .Returns(implementacionCallbackUsarioSeion);
 
-            // Agregar ambos usuarios a la lista de jugadores conectados deben esta en BD
             GuardarSolicitudAmistad(ID_USUARIO_MAYOR, ID_USUARIO_MENOR);
             manejador.ObtenerSessionJugador(new WcfServicioLibreria.Modelo.Usuario()
             {

@@ -8,13 +8,7 @@ namespace WcfServicioLibreria.Enumerador
         [EnumMember]
         Desconectado,
         [EnumMember]
-        Conectado,
-        [EnumMember]
-        Disponible,
-        [EnumMember]
-        EnSala,
-        [EnumMember]
-        EnPartida,
+        Conectado
     }
     [DataContract]
     public enum EstadoAmigo

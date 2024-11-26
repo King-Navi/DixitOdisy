@@ -13,7 +13,11 @@ namespace WpfCliente.Utilidad
         private const string EXTENSION_IMAGEN_PNG = ".png";
         private const int LIMITE_TAMANO_ARCHIVO_5MB = 5 * 1024 * 1024;
         private const string FILTRO_ARCHIVOS_IMAGEN = "*.jpg;*.jpeg;*.png";
-        private const string DESCRIPCION_ARCHIVOS_IMAGEN = "Image Files";
+        private const int RANGO_MINIMO_IMAGENES = 1;
+        private const int RANGO_MAXIMO_IMAGENES = 6;
+        private const int BITS_POR_BYTE = 8;
+        private const int DESPLAZAMIENTO = 0;
+
         public static BitmapImage ConvertirStreamABitmapImagen(Stream stream)
         {
 
@@ -64,8 +68,8 @@ namespace WpfCliente.Utilidad
                 WriteableBitmap escritorBitmap = new WriteableBitmap(bitmap);
                 int ancho = escritorBitmap.PixelWidth;
                 int altura = escritorBitmap.PixelHeight;
-                var pixel = new byte[ancho * altura * (escritorBitmap.Format.BitsPerPixel / 8)];
-                escritorBitmap.CopyPixels(pixel, ancho * (escritorBitmap.Format.BitsPerPixel / 8), 0);
+                var pixel = new byte[ancho * altura * (escritorBitmap.Format.BitsPerPixel / BITS_POR_BYTE)];
+                escritorBitmap.CopyPixels(pixel, ancho * (escritorBitmap.Format.BitsPerPixel / BITS_POR_BYTE), DESPLAZAMIENTO);
                 return true;
             }
             catch (Exception excepcion)
@@ -78,7 +82,7 @@ namespace WpfCliente.Utilidad
         public static string ObtenerRutaImagenAleatoria()
         {
             Random random = new Random();
-            int numeroImagen = random.Next(1, 6);
+            int numeroImagen = random.Next(RANGO_MINIMO_IMAGENES, RANGO_MAXIMO_IMAGENES);
             return $"{RUTA_BASE_IMAGEN}{numeroImagen}{EXTENSION_IMAGEN_PNG}";
         }
 

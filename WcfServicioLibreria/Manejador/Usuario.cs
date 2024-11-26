@@ -14,11 +14,6 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioUsuario
     {
-        /// <summary>
-        /// Metodo que desconecta a un jugador y lo elimna de memoria. 
-        ///  Despues de ejecutar este metodo el usario ya no existe en memoria acausa del desechar()
-        /// </summary>
-        /// <param name="idJugador"></param>
         public void DesconectarUsuario(int idJugador)
         {
             try
@@ -60,13 +55,13 @@ namespace WcfServicioLibreria.Manejador
             {
                 resultado = UsuarioDAO.EditarContraseniaPorGamertag(gamertag, nuevaContrasenia);
             }
-            catch (CommunicationException ex)
+            catch (CommunicationException excepcion)
             {
-                Console.WriteLine($"Error al editar contraseña para el usuario {gamertag}: {ex.Message}");
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
-            catch (Exception ex)
+            catch (Exception execepcion)
             {
-                Console.WriteLine($"Error general al editar contraseña para el usuario {gamertag}: {ex.Message}");
+                ManejadorExcepciones.ManejarErrorException(execepcion);
             }
 
             return resultado;
@@ -138,7 +133,7 @@ namespace WcfServicioLibreria.Manejador
                 }
 
             }
-            catch(VetoEnProgresoExcepcion )
+            catch(VetoEnProgresoExcepcion)
             {
                 VetoFalla excepcion = new VetoFalla()
                 {
@@ -160,12 +155,6 @@ namespace WcfServicioLibreria.Manejador
 
             return usuario;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="nombreUsuario"></param>
-        /// <returns>retorna true si contiene un usuario con el nombre, en caso contrario retorna false</returns>
         public bool YaIniciadoSesion(string nombreUsuario)
         {
             DAOLibreria.ModeloBD.Usuario usuario = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorNombre(nombreUsuario);

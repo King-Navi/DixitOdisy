@@ -51,7 +51,6 @@ namespace WpfCliente.Contexto
                 {
                     manejadoresEventos.TryGetValue(nombre, out VentanaEventoManejador ventanaBuscada); 
                     ventanaBuscada.Ventana?.Close();
-                    return true;
                 }
                 catch (Exception excepcion)
                 {
@@ -59,7 +58,7 @@ namespace WpfCliente.Contexto
                 }
                 manejadoresEventos.TryRemove(nombre, out _);
             }
-            return false;
+            return true;
         }
         public bool MostrarVentana(Ventana nombre)
         {
@@ -107,6 +106,22 @@ namespace WpfCliente.Contexto
             return false;
         }
 
+        public void MostrarVentanasAnterioresConCierreActual(Ventana ventanaActual)
+        {
+            if (manejadoresEventos.Keys.Count == 0)
+            {
+                var inicioSesion = new IniciarSesion();
+                AbrirNuevaVentana(Ventana.IniciarSesion , inicioSesion);
+                MessageBox.Show("Error no se encontraron mas ventanas se te llevara a inicio");
+            }
+            CerrarVentana(ventanaActual);
+            foreach (Ventana enumerador in manejadoresEventos.Keys)
+            {
+                MostrarVentana(enumerador);
+            }   
+        }
+
+
         public bool AbrirNuevaVentana(Ventana nombre, Window ventana)
         {
             try
@@ -126,33 +141,6 @@ namespace WpfCliente.Contexto
             catch (Exception excepcion)
             {
                 manejadoresEventos.TryRemove(nombre, out _);
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
-            }
-            return false;
-        }
-
-        public bool AbrirNuevaVentanaConVuelta(Ventana nombreNueva, Window ventanaNueva, Ventana nombreRegreso)
-        {
-            try
-            {
-                EvaluarVentanaNulo(ventanaNueva);
-                if (manejadoresEventos.TryAdd(nombreNueva, new VentanaEventoManejador(ventanaNueva) ))
-                {
-                    SuscribirsaCierre(ventanaNueva, nombreRegreso);
-                    manejadoresEventos.TryGetValue(nombreNueva, out VentanaEventoManejador ventanaBuscada);
-                    ventanaBuscada.Ventana?.Show();
-                    OcultarVentana(nombreRegreso);
-                    return true;
-                }
-                else
-                {
-                    throw new ArgumentException();
-                }
-            }
-            catch (Exception excepcion)
-            {
-                MostrarVentana(nombreRegreso);
-                manejadoresEventos.TryRemove(nombreNueva, out _);
                 ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
             return false;
@@ -200,7 +188,9 @@ namespace WpfCliente.Contexto
             {
                 if (!MostrarVentana(ventanaRegreso))
                 {
-                    AbrirNuevaVentana(Ventana.IniciarSesion, new IniciarSesion());
+                    IniciarSesion inicioSesion = new IniciarSesion();
+                    AbrirNuevaVentana(Ventana.IniciarSesion, inicioSesion);
+                    MessageBox.Show("La ventana de vuelta no estaba disponible");
                     EvaluarCierresConexion(ventanaNueva);
                 }
             };

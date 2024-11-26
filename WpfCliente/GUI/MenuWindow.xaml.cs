@@ -24,7 +24,7 @@ namespace WpfCliente.GUI
         private EstadisticaUsuario estadisticas;
         public MenuWindow()
         {
-            ////InicializarHiloConexion();
+            InicializarHiloConexion();
             InitializeComponent();
             //CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             //ActualizarUI();

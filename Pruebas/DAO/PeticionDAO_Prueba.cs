@@ -13,6 +13,7 @@ namespace Pruebas.DAO
         private const int ID_REMITENTE = 1;
         private const int ID_DESTINATARIO = 2;
 
+        #region GuardarSolicitudAmistad
         [TestMethod]
         public void GuardarSolicitudAmistad_CuandoUsuariosValidos_RetornaTrue()
         {
@@ -26,7 +27,9 @@ namespace Pruebas.DAO
             var result = PeticionAmistadDAO.GuardarSolicitudAmistad(ID_REMITENTE, ID_REMITENTE);
             Assert.IsFalse(result, "Debería retornar false si los IDs del remitente y destinatario son iguales.");
         }
+        #endregion
 
+        #region ExisteSolicitudAmistad
         [TestMethod]
         public void ExisteSolicitudAmistad_CuandoExisteSolicitud_RetornaTrue()
         {
@@ -41,7 +44,9 @@ namespace Pruebas.DAO
             var result = PeticionAmistadDAO.ExisteSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
             Assert.IsFalse(result, "Debería retornar false si no existe ninguna solicitud de amistad entre los usuarios.");
         }
+        #endregion
 
+        #region AceptarSolicitudAmistad
         [TestMethod]
         public void AceptarSolicitudAmistad_CuandoSolicitudExiste_RetornaTrue()
         {
@@ -56,7 +61,9 @@ namespace Pruebas.DAO
             var result = PeticionAmistadDAO.AceptarSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
             Assert.IsFalse(result, "Debería retornar false si no existe una solicitud de amistad para aceptar.");
         }
+        #endregion
 
+        #region RechazarSolicitudAmistad
         [TestMethod]
         public void RechazarSolicitudAmistad_CuandoSolicitudExiste_RetornaTrue()
         {
@@ -71,7 +78,9 @@ namespace Pruebas.DAO
             var result = PeticionAmistadDAO.RechazarSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
             Assert.IsFalse(result, "Debería retornar false si no existe una solicitud de amistad para rechazar.");
         }
+        #endregion
 
+        #region ObtenerSolicitudesAmistad
         [TestMethod]
         public void ObtenerSolicitudesAmistad_CuandoHaySolicitudes_RetornaListaUsuarios()
         {
@@ -87,7 +96,8 @@ namespace Pruebas.DAO
             var result = PeticionAmistadDAO.ObtenerSolicitudesAmistad(ID_DESTINATARIO);
             Assert.IsNotNull(result, "Debería retornar una lista.");
             Assert.AreEqual(0, result.Count, "Debería retornar una lista vacía si no hay solicitudes.");
-        }
+        } 
+        #endregion
 
         private static void ConfigurarSolicitud(int idRemitente, int idDestinatario)
         {

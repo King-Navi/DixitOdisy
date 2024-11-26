@@ -24,6 +24,7 @@ namespace Pruebas.DAO
                 context.SaveChanges();
             }
         }
+        #region CrearRegistroExpulsion
         [TestMethod]
         public void CrearRegistroExpulsion_CuandoDatosValidos_DeberiaRetornarTrue()
         {
@@ -46,13 +47,15 @@ namespace Pruebas.DAO
 
             // Assert
             Assert.IsFalse(resultado, "El método debería devolver false cuando el ID del usuario es inválido.");
-        }
+        } 
+        #endregion
 
+        #region TieneMasDeDiezExpulsionesSinPenalizar
         [TestMethod]
         public void TieneMasDeDiezExpulsionesSinPenalizar_CuandoTieneMasDeDiez_DeberiaRetornarTrue()
         {
             // Arrange
-            PrepararExpulsionesSinPenalizar(IDUSUARIOCUENTA_PRUEBA, 12); 
+            PrepararExpulsionesSinPenalizar(IDUSUARIOCUENTA_PRUEBA, 12);
 
             // Act
             bool resultado = ExpulsionDAO.TieneMasDeDiezExpulsionesSinPenalizar(IDUSUARIOCUENTA_PRUEBA);
@@ -72,6 +75,17 @@ namespace Pruebas.DAO
             // Assert
             Assert.IsFalse(resultado, "El método debería retornar false cuando el usuario tiene menos de 10 expulsiones sin penalizar.");
         }
+        [TestMethod]
+        public void TieneMasDeDiezExpulsionesSinPenalizar_CuandoNoTieneRegistros_DeberiaRetornarFalse()
+        {
+            // Arrange
+            // Act
+            bool resultado = ExpulsionDAO.TieneMasDeDiezExpulsionesSinPenalizar(IDUSUARIOCUENTA_PRUEBA);
+
+            // Assert
+            Assert.IsFalse(resultado, "El método debería retornar false cuando el usuario no tiene registros de expulsión.");
+        } 
+        #endregion
 
         private void PrepararExpulsionesSinPenalizar(int idUsuarioCuenta, int cantidad)
         {
@@ -92,17 +106,8 @@ namespace Pruebas.DAO
             }
         }
 
-        [TestMethod]
-        public void TieneMasDeDiezExpulsionesSinPenalizar_CuandoNoTieneRegistros_DeberiaRetornarFalse()
-        {
-            // Arrange
-            // Act
-            bool resultado = ExpulsionDAO.TieneMasDeDiezExpulsionesSinPenalizar(IDUSUARIOCUENTA_PRUEBA);
-
-            // Assert
-            Assert.IsFalse(resultado, "El método debería retornar false cuando el usuario no tiene registros de expulsión.");
-        }
-
+       
+        #region CambiarExpulsionesAFueronPenalizadas
         [TestMethod]
         public void CambiarExpulsionesAFueronPenalizadas_CuandoHayExpulsionesSinPenalizar_DeberiaActualizarEstado()
         {
@@ -149,5 +154,6 @@ namespace Pruebas.DAO
             // Assert
             Assert.IsFalse(resultado, "El método debería devolver false cuando el ID del usuario no es válido.");
         }
+        #endregion
     }
 }

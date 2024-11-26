@@ -555,6 +555,12 @@ namespace WpfCliente.GUI
         {
             VerDiposicionAnfitrion();
         }
+
+        private void ClicFlechaAtras(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+            this.Owner.Show();
+        }
     }
 } 
 

@@ -23,6 +23,7 @@ namespace WpfCliente.GUI
             CargarDatos();
             ActualizarUI();
             this.Owner = menuVentana;
+            this.Owner.Hide();
         }
 
         private void CargarDatos()
@@ -314,6 +315,7 @@ namespace WpfCliente.GUI
         private void ClicFlechaAtras(object sender, MouseButtonEventArgs e)
         {
             this.Close();
+            this.Owner.Show();
         }
     }
 }

@@ -31,13 +31,12 @@ namespace WpfCliente.GUI
         {
             if (ValidarCodigo())
             {
-                ValorIngresado = textBoxCodigo.Text;
+                ValorIngresado = textBoxGamertag.Text;
                 DialogResult = true;
                 this.Close();
             }
             else
             {
-                labelGamertagInvalido.Visibility = Visibility.Visible;
                 DialogResult = false;
             }
 
@@ -45,7 +44,7 @@ namespace WpfCliente.GUI
 
         private bool ValidarCodigo()
         {
-            return !string.IsNullOrWhiteSpace(textBoxCodigo.Text);
+            return !string.IsNullOrWhiteSpace(textBoxGamertag.Text);
         }
 
     }

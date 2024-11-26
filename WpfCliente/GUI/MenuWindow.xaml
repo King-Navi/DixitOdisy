@@ -67,7 +67,7 @@
                     <Image Source="/Recursos/estadisticas.png" Stretch="UniformToFill" Width="37" Height="37" />
                 </Button>
                 <!-- Botón con fondo circular para la imagen de amigos -->
-                <Button Width="50" Height="50" VerticalAlignment="Top" Margin="0,15,15,0" Click="ClicImagenAmigos">
+                <Button Width="50" Height="50" VerticalAlignment="Top" Margin="0,15,15,0" Click="ClicButtonImagenAmigos">
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
                             <Grid>

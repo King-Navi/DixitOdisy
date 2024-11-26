@@ -9,8 +9,8 @@ namespace WcfServidor
     {
         static void Main(string[] args)
         {
-            var respuesta = InicializadorConfiguracion.IniciarConexion();
-            Console.WriteLine(respuesta.ToString());
+            //var respuesta = InicializadorConfiguracion.IniciarConexion();
+            //Console.WriteLine(respuesta.ToString());
             Program programa = new Program();
             programa.IniciarServidor();
         }

@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using WpfCliente.Contexto;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
@@ -20,7 +21,6 @@ namespace WpfCliente.GUI
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             ActualizarUI();
         }
-
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
         {
@@ -55,30 +55,31 @@ namespace WpfCliente.GUI
             buttonOlvidarContrasenia.IsEnabled= esValido;
         }
 
-        private void ClicRegistrar(object sender, RoutedEventArgs e)
+        private void ClicButtonRegistrar(object sender, RoutedEventArgs e)
         {
-            RegistrarUsuarioWindow registrarWindow = new RegistrarUsuarioWindow();
-            registrarWindow.Show();
-            this.Close();
+            SingletonGestorVentana.Instancia.AbrirNuevaVentanaConVuelta(Ventana.RegistrarUsuario,new RegistrarUsuarioWindow() ,Ventana.IniciarSesion);
         }
 
-        private async void ClicIniciarSesion(object sender, RoutedEventArgs e)
+        private async void CliButtonIniciarSesion(object sender, RoutedEventArgs e)
         {
             if (ValidarCampos())
             {
-                bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+                bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, this);
                 if (!conexionExitosa)
                 {
                     return;
                 }
-                IntentarIniciarSesion();
+                if (IntentarIniciarSesion())
+                {
+                    SingletonGestorVentana.Instancia.CerrarVentana(Ventana.IniciarSesion);
+                    return;
+                }
             }
             else
             {
                 labelCredencialesIncorrectas.Visibility = Visibility.Visible;
             }
         }
-
         private bool ValidarCampos()
         {
             bool camposValidos = true;
@@ -98,7 +99,6 @@ namespace WpfCliente.GUI
         }
 
         private bool IntentarIniciarSesion() {
-            bool exito = false;
             try
             {
                 ServidorDescribelo.IServicioUsuario servicio = new ServidorDescribelo.ServicioUsuarioClient();
@@ -113,17 +113,15 @@ namespace WpfCliente.GUI
                 {
                     if (resultadoUsuario != null)
                     {
-                        exito = true;
                         BitmapImage imagenUsuario = Imagen.ConvertirStreamABitmapImagen(resultadoUsuario.FotoUsuario);
                         if (imagenUsuario == null)
                         {
                             VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, Properties.Idioma.mensajeImagenInvalida, this);
-                            this.Close();
                         }
                         else
                         {
                             ConfigurarSingletonConUsuario(resultadoUsuario, imagenUsuario);
-                            AbrirVentanaMenu();
+                            return AbrirVentanaMenu();
                         }
                     }
                     labelCredencialesIncorrectas.Visibility = Visibility.Visible;
@@ -137,7 +135,7 @@ namespace WpfCliente.GUI
             {
                 ManejadorExcepciones.ManejarErrorExcepcion(excepcion, this);
             }
-            return exito;
+            return false;
         }
 
         private void EvaluarExcepcion(FaultException<VetoFalla> veto)
@@ -162,12 +160,12 @@ namespace WpfCliente.GUI
             SingletonCliente.Instance.ContraniaHash = usuario.ContraseniaHASH;
         }
 
-        private async void ClicJugarComoInvitado(object sender, RoutedEventArgs e)
+        private async void ClicButtonJugarComoInvitado(object sender, RoutedEventArgs e)
         {
             string codigoSala = VentanasEmergentes.AbrirVentanaModalSala(this);
             if (codigoSala != null)
             {
-                bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+                bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, this);
                 if (!conexionExitosa)
                 {
                     return;
@@ -192,45 +190,24 @@ namespace WpfCliente.GUI
 
         private async void AbrirVentanaSala(string idSala)
         {
-            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, this);
             if (!conexionExitosa)
             {
                 return;
             }
             SalaEsperaWindow ventanaSala = new SalaEsperaWindow(idSala);
-            try
-            {
-                ventanaSala.Show();
-
-            }
-            catch (InvalidOperationException)
+            var resultado = SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.SalaEspera, ventanaSala);
+            if (!resultado)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, this);
-                this.Close();
                 return;
             }
-            ventanaSala.Closed += (s, args) => {
-                if (!Conexion.CerrarConexionesSalaConChat())
-                {
-                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, this);
-                    this.Close();
-                }
-                this.Show();
-            };
+            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.IniciarSesion);
         }
 
-        private void AbrirVentanaMenu()
+        private bool AbrirVentanaMenu()
         {
-            try
-            {
-                MenuWindow nuevaVentana = new MenuWindow();
-                nuevaVentana.Show();
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                ManejadorExcepciones.ManejarErrorExcepcion(ex,this);   
-            }
+            return SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.SalaEspera, new MenuWindow());
         }
 
         private void TeclaPresionadaEnter(object sender, System.Windows.Input.KeyEventArgs e)
@@ -250,7 +227,7 @@ namespace WpfCliente.GUI
         {
             bool olvidoContrasenia = true;
             string correoIngresado = VentanasEmergentes.AbrirVentanaModalCorreo(this, olvidoContrasenia);
-            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, this);
             if (!conexionExitosa)
             {
                 return;
@@ -258,7 +235,7 @@ namespace WpfCliente.GUI
             if (ValidacionesString.EsCorreoValido(correoIngresado) && Correo.VerificarCorreo(correoIngresado,this))
             {
                 string gamertag = VentanasEmergentes.AbrirVentanaModalGamertag(this);
-                bool _conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+                bool _conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, this);
                 if (!_conexionExitosa)
                 {
                     return;
@@ -282,7 +259,7 @@ namespace WpfCliente.GUI
         private void AbrirVentanaCambiarContrasenia(string gamertag)
         {
             CambiarContraseniaWindow cambiarContraseniaWindow = new CambiarContraseniaWindow(gamertag);
-            cambiarContraseniaWindow.Show();
+            SingletonGestorVentana.Instancia.AbrirNuevaVentanaConVuelta(Ventana.CambiarContrasenia, cambiarContraseniaWindow, Ventana.IniciarSesion);
         }
     }
 }

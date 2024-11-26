@@ -20,9 +20,8 @@ namespace WcfServicioLibreria.Contratos
         /// <summary>
         /// Recibe la notificación sobre el estado de la sesión de un usuario.
         /// </summary>
-        /// <param name="esSesionAbierta">Indica si la sesión del usuario está actualmente abierta (true) o cerrada (false).</param>
         [OperationContract]
-        void ObtenerSessionJugadorCallback(bool esSesionAbierta);
+        void ObtenerSessionJugadorCallback();
     }
 
 }

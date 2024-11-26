@@ -142,11 +142,11 @@
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Threading.Tasks" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IServicioAmistad_AbrirCanalParaPeticiones_InputMessage">
-    <wsdl:part name="parameters" element="tns:AbrirCanalParaPeticiones" />
+  <wsdl:message name="IServicioAmistad_AbrirCanalParaAmigos_InputMessage">
+    <wsdl:part name="parameters" element="tns:AbrirCanalParaAmigos" />
   </wsdl:message>
-  <wsdl:message name="IServicioAmistad_AbrirCanalParaPeticiones_OutputMessage">
-    <wsdl:part name="parameters" element="tns:AbrirCanalParaPeticionesResponse" />
+  <wsdl:message name="IServicioAmistad_AbrirCanalParaAmigos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AbrirCanalParaAmigosResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioAmistad_EnviarSolicitudAmistad_InputMessage">
     <wsdl:part name="parameters" element="tns:EnviarSolicitudAmistad" />
@@ -452,9 +452,9 @@
     <wsdl:part name="parameters" element="tns:ObtenerEstadisitcaResponse" />
   </wsdl:message>
   <wsdl:portType name="IServicioAmistad">
-    <wsdl:operation name="AbrirCanalParaPeticiones">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticiones" message="tns:IServicioAmistad_AbrirCanalParaPeticiones_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticionesResponse" message="tns:IServicioAmistad_AbrirCanalParaPeticiones_OutputMessage" />
+    <wsdl:operation name="AbrirCanalParaAmigos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/AbrirCanalParaAmigos" message="tns:IServicioAmistad_AbrirCanalParaAmigos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/AbrirCanalParaAmigosResponse" message="tns:IServicioAmistad_AbrirCanalParaAmigos_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="EnviarSolicitudAmistad">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistad" message="tns:IServicioAmistad_EnviarSolicitudAmistad_InputMessage" />
@@ -702,8 +702,8 @@
     <wsp:PolicyReference URI="#NetTcpBinding_IServicioAmistad_policy">
     </wsp:PolicyReference>
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="AbrirCanalParaPeticiones">
-      <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticiones" style="document" />
+    <wsdl:operation name="AbrirCanalParaAmigos">
+      <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/AbrirCanalParaAmigos" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

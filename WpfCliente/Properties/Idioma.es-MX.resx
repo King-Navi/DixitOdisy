@@ -630,4 +630,13 @@
   <data name="buttonRechazar" xml:space="preserve">
     <value>Rechazar</value>
   </data>
+  <data name="buttonReconectar" xml:space="preserve">
+    <value>Reconectar</value>
+  </data>
+  <data name="tituloReconexionFallida" xml:space="preserve">
+    <value>Reconexion fallida</value>
+  </data>
+  <data name="mensajeIntentoReconexion" xml:space="preserve">
+    <value>El intento de reconectartefallo, vuelve mas tarde.</value>
+  </data>
 </root>

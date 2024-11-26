@@ -102,7 +102,7 @@ namespace WcfServicioLibreria.Manejador
             return false;
         }
 
-        public bool AbrirCanalParaPeticiones(Modelo.Usuario _usuarioRemitente)
+        public bool AbrirCanalParaAmigos(Modelo.Usuario _usuarioRemitente)
         {
             try
             {

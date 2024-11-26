@@ -32,10 +32,7 @@ namespace WpfCliente.GUI
                     IdUsuario = SingletonCliente.Instance.IdUsuario,
                     Nombre = SingletonCliente.Instance.NombreUsuario
                 };
-
-                Window window = Window.GetWindow(this);
-
-                bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, window);
+                bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
                 if (!conexionExitosa)
                 {
                     return false;

@@ -144,7 +144,7 @@ namespace WpfCliente.GUI
             if ((bool)resultado)
             {
                 contadorSeleccionAdivinar++;
-                await Conexion.VerificarConexion(HabilitarBotones, this);
+                await Conexion.VerificarConexionAsync(HabilitarBotones, this);
                 await Conexion.Partida.TratarAdivinarAsync(SingletonCliente.Instance.NombreUsuario, SingletonCliente.Instance.IdPartida, idImagen);
                 if (contadorSeleccionAdivinar >= ADIVINAR_MAXIMA_JUGADOR)
                 {
@@ -275,7 +275,7 @@ namespace WpfCliente.GUI
         {
             try
             {
-                bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+                bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, this);
                 if (!conexionExitosa)
                 {
                     return;
@@ -330,7 +330,7 @@ namespace WpfCliente.GUI
             try
             {
                 Conexion.CerrarChatMotor();
-                Conexion.CerrarConexionesPartida();
+                Conexion.CerrarPartida();
             }
             catch (Exception)
             {
@@ -362,7 +362,7 @@ namespace WpfCliente.GUI
                 contadorSeleccion++;
                 recursosCompartidos.Imagenes.Remove(imagenEscogida);
 
-                    await Conexion.VerificarConexion(HabilitarBotones, this);
+                    await Conexion.VerificarConexionAsync(HabilitarBotones, this);
                     Conexion.Partida.ConfirmarMovimiento(SingletonCliente.Instance.NombreUsuario,
                                                                             SingletonCliente.Instance.IdPartida,
                                                                             imagenEscogida.IdImagen,
@@ -392,7 +392,7 @@ namespace WpfCliente.GUI
             {
                 contadorSeleccion++;
                 recursosCompartidos.Imagenes.Remove(imagenAEscoger);
-                await Conexion.VerificarConexion(HabilitarBotones, this);
+                await Conexion.VerificarConexionAsync(HabilitarBotones, this);
                 await Conexion.Partida.ConfirmarMovimientoAsync(SingletonCliente.Instance.NombreUsuario,
                                                                             SingletonCliente.Instance.IdPartida,
                                                                             imagenAEscoger.IdImagen,

@@ -10,7 +10,6 @@ namespace WpfCliente.GUI
 {
     public partial class ResumenRondaUserControl : UserControl, INotifyPropertyChanged
     {
-        //TODO: esto es solo si no queremos mostrar los nombres
         private Usuario _primerLugar;
         public Usuario PrimerLugar
         {

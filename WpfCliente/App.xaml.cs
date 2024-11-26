@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using WpfCliente.Contexto;
+using WpfCliente.GUI;
 using WpfCliente.Persistencia;
 
 namespace WpfCliente
@@ -9,6 +11,11 @@ namespace WpfCliente
         {
             IdiomaGuardo.CargarIdiomaGuardado();
 
+        }
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            SingletonGestorVentana.Instancia.Iniciar();
         }
     }
 }

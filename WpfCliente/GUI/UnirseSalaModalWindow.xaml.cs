@@ -36,11 +36,23 @@ namespace WpfCliente.GUI
             if(!string.IsNullOrWhiteSpace(ValorIngresado))
             {
                 DialogResult = true;
-                this.Close();
+                TratarCerrarVentana();
             }
             else
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloLobbyNoEncontrado, Properties.Idioma.mensajeLobbyNoEncontrado, this);
+            }
+        }
+
+        private void TratarCerrarVentana()
+        {
+            try
+            {
+                this.Close();
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
         }
     }

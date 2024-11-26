@@ -15,10 +15,17 @@ namespace WpfCliente.GUI
 
         public SolicitudAmistadUserControl()
         {
-            InitializeComponent();
-            ColocarFondoColorAleatorio();
-            DataContextChanged += SolicitudAmistadUserControlCambioDataContext;
-            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
+            try
+            {
+                InitializeComponent();
+                ColocarFondoColorAleatorio();
+                DataContextChanged += SolicitudAmistadUserControlCambioDataContext;
+                CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+            }
         }
 
         private void SolicitudAmistadUserControlCambioDataContext(object sender, DependencyPropertyChangedEventArgs e)
@@ -44,7 +51,7 @@ namespace WpfCliente.GUI
         private async Task<bool> AceptarSolicitud(SolicitudAmistad solicitud)
         {
             Window window = Window.GetWindow(this);
-            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, window);
+            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, window);
             if (!conexionExitosa)
             {
                 return false;
@@ -78,7 +85,7 @@ namespace WpfCliente.GUI
         private async Task<bool> RechazarSolicitudAsync(SolicitudAmistad solicitud)
         {
             Window window = Window.GetWindow(this);
-            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, window);
+            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, window);
             if (!conexionExitosa)
             {
                 return false;
@@ -106,9 +113,8 @@ namespace WpfCliente.GUI
 
         public void HabilitarBotones(bool esHabilitado)
         {
-            buttonAceptar.IsEnabled = esHabilitado; 
+            buttonAceptar.IsEnabled = esHabilitado;
             buttonRechazar.IsEnabled = esHabilitado;
-
             buttonAceptar.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
             buttonRechazar.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
         }

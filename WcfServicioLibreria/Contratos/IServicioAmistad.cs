@@ -18,7 +18,7 @@ namespace WcfServicioLibreria.Contratos
         [ServiceKnownType(typeof(MemoryStream))]
         [ServiceKnownType(typeof(Stream))]
         [ServiceKnownType(typeof(Amigo))]
-        bool AbrirCanalParaPeticiones(Usuario usuario);
+        bool AbrirCanalParaAmigos(Usuario usuario);
         /// <summary>
         /// Envia una solicitud de amistad a otro usuario.
         /// </summary>

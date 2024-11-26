@@ -46,13 +46,12 @@ namespace WcfServicioLibreria.Manejador
                     sesionAbierta = true;
                     if (ConectarUsuario(usuario))
                     {
-                        contexto.ObtenerSessionJugadorCallback(sesionAbierta);
+                        contexto.ObtenerSessionJugadorCallback();
                     }
-
-
                 }
                 catch (CommunicationException)
                 {
+                    jugadoresConectadosDiccionario.TryRemove(usuario.IdUsuario, out _);
                 }
 
             }

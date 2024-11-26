@@ -27,7 +27,7 @@ namespace WpfCliente.GUI
 
         private async void ClicButtonEnviar(object sender, RoutedEventArgs e)
         {
-            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, Window.GetWindow(this));
+            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)
             {
                 Application.Current.Shutdown();

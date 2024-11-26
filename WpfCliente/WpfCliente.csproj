@@ -112,6 +112,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="ManejadorAplicacion\SingletonGestorVentana.cs" />
+    <Compile Include="ManejadorAplicacion\VentajasEventoManejador.cs" />
+    <Compile Include="ManejadorAplicacion\Ventana.cs" />
     <Compile Include="Estilos\Control\ArcSpinner.cs" />
     <Compile Include="Estilos\Control\CogwheelSpinner.cs" />
     <Compile Include="Estilos\Control\DonutSpinner.cs" />
@@ -167,6 +170,9 @@
     <Compile Include="GUI\PerfilMenuDesplegableUserControl.xaml.cs">
       <DependentUpon>PerfilMenuDesplegableUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\ReconectandoWindow.xaml.cs">
+      <DependentUpon>ReconectandoWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\UsuarioUserControl.xaml.cs">
       <DependentUpon>UsuarioUserControl.xaml</DependentUpon>
     </Compile>
@@ -175,6 +181,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Idioma.resx</DependentUpon>
     </Compile>
+    <Compile Include="ImplementacionesCallbacks\SingletonUsuarioSessionJugador.cs" />
     <Compile Include="Utilidad\RecursosCompartidosPartida.cs" />
     <Compile Include="GUI\RegistrarUsuarioWindow.xaml.cs">
       <DependentUpon>RegistrarUsuarioWindow.xaml</DependentUpon>
@@ -207,8 +214,8 @@
     <Compile Include="Utilidad\ComandoRele.cs" />
     <Compile Include="Utilidad\Correo.cs" />
     <Compile Include="Utilidad\EstadisticaUsuario.cs" />
-    <Compile Include="Utilidad\Servidor\Amigo.cs" />
-    <Compile Include="Utilidad\Servidor\ChatMensaje.cs" />
+    <Compile Include="Servidor\Amigo.cs" />
+    <Compile Include="Servidor\ChatMensaje.cs" />
     <Compile Include="Utilidad\Conexion.cs" />
     <Compile Include="Utilidad\CambiarIdioma.cs" />
     <Compile Include="Interfaz\IActualizacionUI.cs" />
@@ -223,10 +230,12 @@
     <Compile Include="Utilidad\Imagen.cs" />
     <Compile Include="Utilidad\LoggerManagador.cs" />
     <Compile Include="Utilidad\ManejadorExcepciones.cs" />
-    <Compile Include="Utilidad\Servidor\Usuario.cs" />
+    <Compile Include="Servidor\Usuario.cs" />
+    <Compile Include="Utilidad\SingletonAmigos.cs" />
+    <Compile Include="Utilidad\SingletonConexion.cs" />
     <Compile Include="Utilidad\Utilidades.cs" />
     <Compile Include="Utilidad\ServicioManejador.cs" />
-    <Compile Include="Utilidad\Servidor\ImagenCarta.cs" />
+    <Compile Include="Servidor\ImagenCarta.cs" />
     <Compile Include="Utilidad\SingletonCliente.cs" />
     <Compile Include="Utilidad\ValidacionExistenciaJuego.cs" />
     <Compile Include="Utilidad\ValidacionesString.cs" />
@@ -402,6 +411,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="GUI\ReconectandoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\RegistrarUsuarioWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -532,5 +545,6 @@
   <ItemGroup>
     <Resource Include="Recursos\logoJuego.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

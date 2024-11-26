@@ -1262,11 +1262,11 @@ namespace WpfCliente.ServidorDescribelo {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioAmistad", CallbackContract=typeof(WpfCliente.ServidorDescribelo.IServicioAmistadCallback))]
     public interface IServicioAmistad {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticiones", ReplyAction="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticionesResponse")]
-        bool AbrirCanalParaPeticiones(WpfCliente.ServidorDescribelo.Usuario usuario);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/AbrirCanalParaAmigos", ReplyAction="http://tempuri.org/IServicioAmistad/AbrirCanalParaAmigosResponse")]
+        bool AbrirCanalParaAmigos(WpfCliente.ServidorDescribelo.Usuario usuario);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticiones", ReplyAction="http://tempuri.org/IServicioAmistad/AbrirCanalParaPeticionesResponse")]
-        System.Threading.Tasks.Task<bool> AbrirCanalParaPeticionesAsync(WpfCliente.ServidorDescribelo.Usuario usuario);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/AbrirCanalParaAmigos", ReplyAction="http://tempuri.org/IServicioAmistad/AbrirCanalParaAmigosResponse")]
+        System.Threading.Tasks.Task<bool> AbrirCanalParaAmigosAsync(WpfCliente.ServidorDescribelo.Usuario usuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistad", ReplyAction="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistadResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(WpfCliente.ServidorDescribelo.SolicitudAmistadFalla), Action="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistadSolicitudAmistadFallaFa" +
@@ -1350,12 +1350,12 @@ namespace WpfCliente.ServidorDescribelo {
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public bool AbrirCanalParaPeticiones(WpfCliente.ServidorDescribelo.Usuario usuario) {
-            return base.Channel.AbrirCanalParaPeticiones(usuario);
+        public bool AbrirCanalParaAmigos(WpfCliente.ServidorDescribelo.Usuario usuario) {
+            return base.Channel.AbrirCanalParaAmigos(usuario);
         }
         
-        public System.Threading.Tasks.Task<bool> AbrirCanalParaPeticionesAsync(WpfCliente.ServidorDescribelo.Usuario usuario) {
-            return base.Channel.AbrirCanalParaPeticionesAsync(usuario);
+        public System.Threading.Tasks.Task<bool> AbrirCanalParaAmigosAsync(WpfCliente.ServidorDescribelo.Usuario usuario) {
+            return base.Channel.AbrirCanalParaAmigosAsync(usuario);
         }
         
         public bool EnviarSolicitudAmistad(WpfCliente.ServidorDescribelo.Usuario usuarioRemitente, string destinatario) {
@@ -2164,7 +2164,7 @@ namespace WpfCliente.ServidorDescribelo {
     public interface IServicioUsuarioSesionCallback {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioUsuarioSesion/ObtenerSessionJugadorCallback", ReplyAction="http://tempuri.org/IServicioUsuarioSesion/ObtenerSessionJugadorCallbackResponse")]
-        void ObtenerSessionJugadorCallback(bool esSesionAbierta);
+        void ObtenerSessionJugadorCallback();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

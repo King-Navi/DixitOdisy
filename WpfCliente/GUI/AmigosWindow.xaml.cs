@@ -67,7 +67,7 @@ namespace WpfCliente.GUI
         {
             string gamertagSolicitud = VentanasEmergentes.AbrirVentanaModalGamertag(this);
 
-            var resultado = await Conexion.VerificarConexion(HabilitarBotones, this);
+            var resultado = await Conexion.VerificarConexionAsync(HabilitarBotones, this);
             if (!resultado)
             {
                 return;
@@ -102,7 +102,7 @@ namespace WpfCliente.GUI
 
         private async Task<bool> EnviarSolicitud(string gamertagReceptor)
         {
-            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, this);
             if (!conexionExitosa)
             {
                 return false;

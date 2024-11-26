@@ -45,7 +45,7 @@ namespace WpfCliente.GUI
             if(ValidarCodigo()){
                 ValorIngresado = textBoxCodigo.Text.ToUpper();
                 DialogResult = true;
-                this.Close();
+                TratarCerrarVentana();
             }
             else
             {
@@ -66,6 +66,17 @@ namespace WpfCliente.GUI
             labelCodigoInvalido.Visibility = Visibility.Collapsed;
             labelInstruccionesVerificacionCorreo.Visibility = Visibility.Collapsed;
             textBoxCodigo.MaxLength = 100;
+        }
+        private void TratarCerrarVentana()
+        {
+            try
+            {
+                this.Close();
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+            }
         }
     }
 }

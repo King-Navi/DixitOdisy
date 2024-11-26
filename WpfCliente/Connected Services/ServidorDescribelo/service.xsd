@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" />
-  <xs:element name="AbrirCanalParaPeticiones">
+  <xs:element name="AbrirCanalParaAmigos">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q1:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="AbrirCanalParaPeticionesResponse">
+  <xs:element name="AbrirCanalParaAmigosResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="AbrirCanalParaPeticionesResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="AbrirCanalParaAmigosResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -617,9 +617,7 @@
   </xs:element>
   <xs:element name="ObtenerSessionJugadorCallback">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="esSesionAbierta" type="xs:boolean" />
-      </xs:sequence>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="ObtenerSessionJugadorCallbackResponse">

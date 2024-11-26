@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
@@ -16,13 +17,12 @@ namespace WpfCliente.GUI
         private const string RECURSO_ESTILO_CORREO = "NormalTextBoxStyle";
         private const string RECURSO_ESTILO_CORREO_ERROR = "ErrorTextBoxStyle";
 
-        public EditarPerfilWindow(Window menuVentana)
+        public EditarPerfilWindow()
         {
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             InitializeComponent();
             CargarDatos();
             ActualizarUI();
-            this.Owner = menuVentana;
         }
 
         private void CargarDatos()
@@ -298,7 +298,6 @@ namespace WpfCliente.GUI
         {
             try
             {
-                Conexion.CerrarUsuarioSesion();
                 Conexion.CerrarConexionesSalaConChat();
                 Conexion.CerrarConexionInvitacionesPartida();
             }

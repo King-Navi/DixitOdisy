@@ -8,35 +8,11 @@ namespace WpfCliente.Utilidad
 {
     public static class Conexion
     {
-        public static ServicioUsuarioSesionClient UsuarioSesion { get; private set; }
         public static ServicioSalaJugadorClient SalaJugador { get; private set; }
         public static ServicioChatMotorClient ChatMotor { get; private set; }
         public static ServicioAmistadClient Amigos { get; private set; }
         public static ServicioPartidaSesionClient Partida { get; private set; }
         public static ServicioInvitacionPartidaClient InvitacionPartida { get; private set; }
-        public static Task<bool> AbrirConexionUsuarioSesionCallbackAsync(IServicioUsuarioSesionCallback callback)
-        {
-            UsuarioSesion = null;
-            Task<bool> resultado = Task.FromResult(false);
-            if (UsuarioSesion != null)
-            {
-                resultado = Task.FromResult(true);
-            }
-            else
-            {
-                try
-                {
-                    UsuarioSesion = new ServicioUsuarioSesionClient(new System.ServiceModel.InstanceContext(callback));
-                    resultado = Task.FromResult(true);
-                }
-                catch (Exception excepcion)
-                {
-                    ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
-                }
-            }
-            return resultado;
-        }
-
         public static Task<bool> AbrirConexionSalaJugadorCallbackAsync(IServicioSalaJugadorCallback callback)
         {
             SalaJugador = null;
@@ -152,106 +128,92 @@ namespace WpfCliente.Utilidad
             return resultado;
         }
 
-        public static bool CerrarUsuarioSesion()
-        {
-            try
-            {
-                if (UsuarioSesion != null)
-                {
-                    UsuarioSesion.Close();
-                    UsuarioSesion = null;
-                }
-
-            }
-            catch (Exception excepcion)
-            {
-                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
-                return false;
-            }
-            return true;
-        } 
-      
-        public static bool CerrarSalaJugador()
+        public static void CerrarSalaJugador()
         {
             try
             {
                 if (SalaJugador != null)
                 {
                     SalaJugador.Close();
-                    SalaJugador = null;
                 }
 
             }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
-                return false;
             }
-            return true;
+            finally
+            {
+                SalaJugador = null;
+            }
         } 
     
-        public static bool CerrarChatMotor()
+        public static void CerrarChatMotor()
         {
             try
             {
                 if (ChatMotor != null)
                 {
                     ChatMotor.Close();
-                    ChatMotor = null;
                 }
 
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
-                return false;
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
-            return true;
+            finally
+            {
+                ChatMotor = null;
+            }
         } 
         
-        public static bool CerrarAmigos()
+        public static void CerrarAmigos()
         {
             try
             {
                 if (Amigos != null)
                 {
                     Amigos.Close();
-                    Amigos = null;
                 }
 
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
-                return false;
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
-            return true;
+            finally
+            {
+                Amigos = null;
+
+            }
         }
       
-        public static bool CerrarConexionesSalaConChat()
+        public static void CerrarConexionesSalaConChat()
         {
             try
             {
                 if (ChatMotor != null)
                 {
                     ChatMotor.Close();
-                    ChatMotor = null;
                 }
                 if (SalaJugador != null)
                 {
                     SalaJugador.Close();
-                    SalaJugador = null;
                 }
             }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
-                return false;
             }
-            return true;
+            finally
+            {
+                ChatMotor = null;
+                SalaJugador = null;
+            }
         }
       
-        public static bool CerrarConexionesPartida()
+        public static bool CerrarPartida()
         {
             try
             {
@@ -295,7 +257,7 @@ namespace WpfCliente.Utilidad
             return true;
         }
     
-        private static async Task<bool> HacerPing()
+        private static async Task<bool> HacerPingAsync()
         {
             bool resultado = false;
             try
@@ -305,47 +267,56 @@ namespace WpfCliente.Utilidad
             }
             catch (EndpointNotFoundException enndpointException)
             {
-                Window window = null;
-                ManejadorExcepciones.ManejarFatalExcepcion(enndpointException, window);
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(enndpointException);
                 return resultado;
             }
             catch (Exception excepcion)
             {
-                Window window = null;
-                ManejadorExcepciones.ManejarFatalExcepcion(excepcion,window);
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
                 return resultado;
             }
             return resultado;
         }
 
-        public static async Task<bool> VerificarConexion(Action<bool> habilitarAcciones, Window ventana)
+        public static async Task<bool> VerificarConexionAsync(Action<bool> habilitarAcciones, Window ventana)
         {
-            habilitarAcciones(false);
+            habilitarAcciones?.Invoke(false);
             DeshabilitarVentana(ventana, false);
-            Task<bool> verificarConexion = HacerPing();
+            Task<bool> verificarConexion = HacerPingAsync();
 
             if (!await verificarConexion)
             {
                 VentanasEmergentes.CrearVentanaEmergenteConCierre(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, ventana);
-                habilitarAcciones(true);
+                habilitarAcciones?.Invoke(true);
                 DeshabilitarVentana(ventana, true);
                 return false;
             }
-            Task<bool> verificarConexionBD = HacerPingBD();
+            Task<bool> verificarConexionBD = HacerPingBaseDatosAsync();
 
             if (!await verificarConexionBD)
             {
                 VentanasEmergentes.CrearVentanaEmergenteConCierre(Properties.Idioma.tituloErrorBaseDatos, Properties.Idioma.mensajeErrorBaseDatos, ventana);
-                habilitarAcciones(true);
+                habilitarAcciones?.Invoke(true);
                 DeshabilitarVentana(ventana, true);
                 return false;
             }
 
-            habilitarAcciones(true);
+            habilitarAcciones?.Invoke(true);
             DeshabilitarVentana(ventana, true);
             return true;
         }
-      
+
+        public static async Task<bool> VerificarConexionSinBaseDatosAsync()
+        {
+            Task<bool> verificarConexion = HacerPingAsync();
+            if (!await verificarConexion)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
         private static void DeshabilitarVentana(Window ventana, bool estado)
         {
             if (ventana != null)
@@ -354,7 +325,7 @@ namespace WpfCliente.Utilidad
             }
         }
 
-        private static async Task<bool> HacerPingBD()
+        private static async Task<bool> HacerPingBaseDatosAsync()
         {
             bool resultado = false;
             try

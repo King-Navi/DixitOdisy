@@ -482,16 +482,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Recursos\pfp1.png" />
-    <Resource Include="Recursos\pfp2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Recursos\pfp3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Recursos\pfp4.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Recursos\pfp5.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Recursos\profile.jpg">
@@ -531,6 +521,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Recursos\logoJuego.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\pfp2.png" />
+    <Resource Include="Recursos\pfp3.png" />
+    <Resource Include="Recursos\pfp4.png" />
+    <Resource Include="Recursos\pfp5.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

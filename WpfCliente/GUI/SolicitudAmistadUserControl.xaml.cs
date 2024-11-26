@@ -120,8 +120,8 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
-            buttonAceptar.Content = Idioma.buttonAceptar;
-            buttonRechazar.Content = Idioma.buttonRechazar;
+            buttonAceptar.Content = Properties.Idioma.buttonAceptar;
+            buttonRechazar.Content = Properties.Idioma.buttonRechazar;
         }
 
         private void CerrandoUserControl(object sender, RoutedEventArgs e)

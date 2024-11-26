@@ -91,6 +91,7 @@
     <Compile Include="Excepciones\ActividadSospechosaExcepcion.cs" />
     <Compile Include="Excepciones\GamertagDuplicadoExcepcion.cs" />
     <Compile Include="Excepciones\PropiedadesNulasExcepcion.cs" />
+    <Compile Include="Excepciones\SolicitudAmistadExcepcion.cs" />
     <Compile Include="Excepciones\VetoEnProgresoExcepcion.cs" />
     <Compile Include="Excepciones\VetoPermanenteExcepcion.cs" />
     <Compile Include="ModeloBD\Amigo.cs">

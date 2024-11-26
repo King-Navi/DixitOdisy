@@ -9,7 +9,7 @@ namespace WcfServicioLibreria.Contratos
         /// <summary>
         /// Registra un nuevo usuario en el sistema.
         /// </summary>
-        /// <param name="usuario">El objeto Usuario que contiene toda la información necesaria para registrar al usuario, como nombre, correo electrónico, contraseña, etc.</param>
+        /// <param name="usuario">El objeto Usuario que contiene toda la información necesaria para registrar al usuario, los cuales son nombre, correo electrónico, contraseña y foto de perfil</param>
         /// <returns>
         /// True si el usuario se registra correctamente.
         /// False si el registro falla debido a datos inválidos o problemas al acceder a la base de datos.

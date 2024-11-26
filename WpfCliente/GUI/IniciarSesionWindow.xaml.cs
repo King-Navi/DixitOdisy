@@ -176,6 +176,7 @@ namespace WpfCliente.GUI
                 {
                     SingletonCliente.Instance.NombreUsuario = Utilidades.GenerarGamertagInvitado();
                     AbrirVentanaSala(codigoSala);
+                    this.Hide();
                     return;
                 }
                 else
@@ -250,6 +251,9 @@ namespace WpfCliente.GUI
         {
             bool olvidoContrasenia = true;
             string correoIngresado = VentanasEmergentes.AbrirVentanaModalCorreo(this, olvidoContrasenia);
+            if (correoIngresado == null) {
+                return;
+            }
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
             {

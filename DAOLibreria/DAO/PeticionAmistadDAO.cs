@@ -1,4 +1,5 @@
-﻿using DAOLibreria.ModeloBD;
+﻿using DAOLibreria.Excepciones;
+using DAOLibreria.ModeloBD;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,22 @@ namespace DAOLibreria.DAO
         private const string ESTADO_SOLICITUD_PENDIENTE = "Pendiente";
         public static bool GuardarSolicitudAmistad(int idUsuarioRemitente, int idUsuarioDestinatario)
         {
-            if(idUsuarioRemitente == idUsuarioDestinatario) 
-            { 
-                return false; 
+            if (idUsuarioRemitente == idUsuarioDestinatario)
+            {
+                return false;
+            }
+            if (SonAmigos(idUsuarioRemitente, idUsuarioDestinatario))
+            {
+                bool existeAmistad = true;
+                bool existePeticion = false;
+                throw new SolicitudAmistadExcepcion(existeAmistad, existePeticion);
+            }
+
+            if (ExisteSolicitudAmistad(idUsuarioRemitente, idUsuarioDestinatario))
+            {
+                bool existeAmistad = false;
+                bool existePeticion = true;
+                throw new SolicitudAmistadExcepcion(existeAmistad, existePeticion);
             }
             try
             {
@@ -31,12 +45,30 @@ namespace DAOLibreria.DAO
                     return true;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                throw new InvalidOperationException("Error al guardar la solicitud de amistad.", ex);
             }
         }
 
+        private static bool SonAmigos(int idUsuarioRemitente, int idUsuarioDestinatario)
+        {
+            int idMayorUsuario = Math.Max(idUsuarioRemitente, idUsuarioDestinatario);
+            int idMenorUsuario = Math.Min(idUsuarioRemitente, idUsuarioDestinatario);
+            if (!(idUsuarioDestinatario > 0 || idUsuarioRemitente > 0))
+            {
+                return true;
+            }
+            try
+            {
+                return AmistadDAO.SonAmigos(idMayorUsuario, idMenorUsuario);
+            }
+            catch (Exception)
+            {
+            }
+            return false;
+
+        }
 
         public static bool ExisteSolicitudAmistad(int idRemitente, int idDestinatario)
         {
@@ -49,11 +81,12 @@ namespace DAOLibreria.DAO
                         (fila.idRemitente == idDestinatario && fila.idDestinatario == idRemitente));
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return true;
+                throw new InvalidOperationException("Error al verificar la existencia de la solicitud de amistad.", ex);
             }
         }
+
 
         public static List<Usuario> ObtenerSolicitudesAmistad(int idUsuario)
         {
@@ -94,44 +127,43 @@ namespace DAOLibreria.DAO
                         try
                         {
                             var solicitud = context.PeticionAmistad
-                                .FirstOrDefault(solicitudBuscada => 
+                                .FirstOrDefault(solicitudBuscada =>
                                     solicitudBuscada.idRemitente == idRemitente &&
                                     solicitudBuscada.idDestinatario == idDestinatario &&
                                     solicitudBuscada.estado == ESTADO_SOLICITUD_PENDIENTE);
 
-                            if (solicitud != null)
+                            if (solicitud == null)
                             {
-                                var nuevaAmistad = new Amigo
-                                {
-                                    idMayor_usuario = Math.Max(idRemitente, idDestinatario),
-                                    idMenor_usuario = Math.Min(idRemitente, idDestinatario),
-                                    fechaInicioAmistad = DateTime.Now
-                                };
-                                context.Amigo.Add(nuevaAmistad);
-                                context.PeticionAmistad.Remove(solicitud);
-                                context.SaveChanges();
-                                transaction.Commit();
-                                return true;
-                            }
-                            else
-                            {
-                                transaction.Rollback();
                                 return false;
                             }
+
+                            var nuevaAmistad = new Amigo
+                            {
+                                idMayor_usuario = Math.Max(idRemitente, idDestinatario),
+                                idMenor_usuario = Math.Min(idRemitente, idDestinatario),
+                                fechaInicioAmistad = DateTime.Now
+                            };
+
+                            context.Amigo.Add(nuevaAmistad);
+                            context.PeticionAmistad.Remove(solicitud);
+                            context.SaveChanges();
+                            transaction.Commit();
+                            return true;
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
                             transaction.Rollback();
-                            throw;
+                            throw new InvalidOperationException("Error al aceptar la solicitud de amistad.", ex);
                         }
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                throw new InvalidOperationException("Error en la operación de aceptación de solicitud de amistad.", ex);
             }
         }
+
 
         public static bool RechazarSolicitudAmistad(int idRemitente, int idDestinatario)
         {
@@ -142,25 +174,20 @@ namespace DAOLibreria.DAO
                     var solicitud = context.PeticionAmistad
                         .FirstOrDefault(fila => fila.idRemitente == idRemitente && fila.idDestinatario == idDestinatario && fila.estado == ESTADO_SOLICITUD_PENDIENTE);
 
-                    if (solicitud != null)
-                    {
-                        context.PeticionAmistad.Remove(solicitud);
-
-                        context.SaveChanges();
-                        return true;
-                    }
-                    else
+                    if (solicitud == null)
                     {
                         return false;
                     }
+
+                    context.PeticionAmistad.Remove(solicitud);
+                    context.SaveChanges();
+                    return true;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                throw new InvalidOperationException("Error al rechazar la solicitud de amistad.", ex);
             }
         }
-
-
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DAOLibreria.DAO;
+using DAOLibreria.Excepciones;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,31 +18,32 @@ namespace WcfServicioLibreria.Manejador
     {
         public bool EnviarSolicitudAmistad(Modelo.Usuario remitente, string destinatario)
         {
-            int idRemitente = ObtenerIdPorNombre(remitente.Nombre);
-            int idDestinatario = ObtenerIdPorNombre(destinatario);
-
-            if (SonAmigos(idRemitente, idDestinatario))
+            try
             {
-                bool existeAmistad = true;
-                bool existePeticion = false;
+                int idRemitente = ObtenerIdPorNombre(remitente.Nombre);
+                int idDestinatario = ObtenerIdPorNombre(destinatario);
+
+                if(idRemitente == 0 || idDestinatario == 0)
+                {   
+                    return false;
+                }
+
+                if (GuardarSolicitudAmistad(idRemitente, idDestinatario))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch (SolicitudAmistadExcepcion ex)
+            {
                 throw new FaultException<SolicitudAmistadFalla>(
-                    new SolicitudAmistadFalla(existeAmistad, existePeticion));
+                    new SolicitudAmistadFalla(ex.ExisteAmistad, ex.ExistePeticion));
             }
-
-            if (ExisteSolicitudAmistad(idRemitente, idDestinatario))
+            catch (Exception ex)
             {
-                bool existeAmistad = false;
-                bool existePeticion = true;
-                throw new FaultException<SolicitudAmistadFalla>(
-                    new SolicitudAmistadFalla(existeAmistad, existePeticion));
+                throw new FaultException("Ocurrió un error inesperado al enviar la solicitud de amistad.");
             }
-
-            if (GuardarSolicitudAmistad(idRemitente, idDestinatario))
-            {
-                return true;
-            }
-
-            return false;
         }
 
         private bool GuardarSolicitudAmistad(int idRemitente, int idDestinatario)

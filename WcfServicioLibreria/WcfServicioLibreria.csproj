@@ -273,6 +273,11 @@
     <Content Include="Recursos\FotosInvitados\perfil4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\FotosInvitados\perfil5.png" />
+    <Content Include="Recursos\FotosInvitados\perfil6.png" />
+    <Content Include="Recursos\FotosInvitados\perfil7.png" />
+    <Content Include="Recursos\FotosInvitados\perfil8.png" />
+    <Content Include="Recursos\FotosInvitados\perfil9.png" />
     <Content Include="Recursos\Mitologia\057284a6-924e-4e0e-84c9-9e566efe31ca.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

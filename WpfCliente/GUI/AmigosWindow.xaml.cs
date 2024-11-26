@@ -80,18 +80,6 @@ namespace WpfCliente.GUI
                     {
                         VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadExitosa, this);
                     }
-                    else
-                    {
-                        VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadFallida, this);
-                    }
-                }
-                catch (FaultException<SolicitudAmistadFalla> ex)
-                {
-                    VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloSolicitudAmistad, ex.Detail.Mensaje, this);
-                }
-                catch (FaultException ex)
-                {
-                    VentanasEmergentes.CrearVentanaEmergente(Idioma.mensajeErrorInesperado, ex.Message, this);
                 }
                 catch (Exception ex)
                 {
@@ -115,7 +103,21 @@ namespace WpfCliente.GUI
                 usuarioRemitente.FotoUsuario = Imagen.ConvertirBitmapImageAMemoryStream(SingletonCliente.Instance.FotoJugador);
 
                 var resultado = Conexion.Amigos.EnviarSolicitudAmistad(usuarioRemitente, gamertagReceptor);
+                if (!resultado)
+                {
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadFallida, this);
+                }
                 return resultado;
+            }
+            catch (FaultException<SolicitudAmistadFalla> ex)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloSolicitudAmistad, ex.Detail.Mensaje, this);
+                return false;
+            }
+            catch (FaultException ex)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Idioma.mensajeErrorInesperado, ex.Message, this);
+                return false;
             }
             catch (Exception ex)
             {

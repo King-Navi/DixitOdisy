@@ -18,12 +18,12 @@ namespace WpfCliente.GUI
         {
             InitializeComponent();
             DataContext = this;
-            _ = CargarSolicitudes();
+            _ = CargarSolicitudesAsync();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             ActualizarUI();
         }
 
-        private async Task<bool> CargarSolicitudes()
+        private async Task<bool> CargarSolicitudesAsync()
         {
             try
             {

@@ -27,7 +27,7 @@ namespace WcfServicioLibreria.Manejador
 
         #region Correo
         private static readonly string CORREO = "describeloproyecto@gmail.com";
-        private static readonly string CONTRASENIA = "rbyu noyd vebq adwe";
+        private static readonly string CONTRASENIA = ManejadorPrincipal.ObtenerContraseniaCorreo();
         #endregion Correo
 
         #region Inyeccion de depdendencias

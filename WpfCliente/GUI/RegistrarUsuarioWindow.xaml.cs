@@ -46,7 +46,7 @@ namespace WpfCliente.GUI
             ActualizarUI();
         }
 
-        private async void ClicButtonRegistrarUsuario(object sender, RoutedEventArgs e)
+        private async void ClicButtonRegistrarUsuarioAsync(object sender, RoutedEventArgs e)
         {
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
@@ -92,7 +92,7 @@ namespace WpfCliente.GUI
         {
             if (ValidarCampos() && Correo.VerificarCorreo(textBoxCorreo.Text,this) && rutaAbsolutaImagen != null)
             {
-                RegistrarUsuario();
+                RegistrarUsuarioAsync();
             }
             else
             {
@@ -101,7 +101,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void RegistrarUsuario()
+        private async void RegistrarUsuarioAsync()
         {
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)

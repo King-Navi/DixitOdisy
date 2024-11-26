@@ -56,7 +56,6 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Servidor\ImagenCarta.
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\SingletonCliente.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ValidacionExistenciaJuego.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ValidacionesString.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\VentanaModal.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\VentanasEmergentes.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Properties\AssemblyInfo.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Properties\Idioma.en-US.resx

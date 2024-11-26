@@ -57,7 +57,6 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Servidor\ImagenCarta.
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\SingletonCliente.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ValidacionExistenciaJuego.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ValidacionesString.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\VentanaModal.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\VentanasEmergentes.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Properties\AssemblyInfo.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Properties\Idioma.resx
@@ -126,10 +125,6 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\fondoJuego.png
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\leonRegistro.png
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\flechaAtras.png
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\pfp1.png
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\pfp2.png
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\pfp3.png
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\pfp4.png
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\pfp5.png
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\profile.jpg
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\estadisticas.png
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\fondoMenu.png
@@ -141,3 +136,8 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\amigos.png
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\LogoApp.ico
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\podioJugador.png
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\cerrarCruz.png
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\logoJuego.png
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\pfp2.png
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\pfp3.png
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\pfp4.png
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\pfp5.png

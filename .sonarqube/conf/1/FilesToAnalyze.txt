@@ -67,7 +67,7 @@ C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Properties\AssemblyIn
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\ContextoOperacion.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\IContextoOperacion.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\IObservador.cs
-C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\LoggerManager.cs
+C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\LoggerManajador.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\ManejadorExcepciones.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\Utilidad.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Librerias\ChatGPTLibreria.dll
@@ -102,6 +102,11 @@ C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Recursos\FotosInvitad
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Recursos\FotosInvitados\perfil2.png
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Recursos\FotosInvitados\perfil3.png
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Recursos\FotosInvitados\perfil4.png
+C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Recursos\FotosInvitados\perfil5.png
+C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Recursos\FotosInvitados\perfil6.png
+C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Recursos\FotosInvitados\perfil7.png
+C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Recursos\FotosInvitados\perfil8.png
+C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Recursos\FotosInvitados\perfil9.png
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Recursos\Mitologia\057284a6-924e-4e0e-84c9-9e566efe31ca.jpg
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Recursos\Mitologia\0bfb30c5-74dc-4524-820b-c928756974d2.jpg
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Recursos\Mitologia\156d62bf-42cb-471a-bef8-ed8337dff11a.jpg

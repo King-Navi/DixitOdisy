@@ -60,10 +60,10 @@ namespace WpfCliente.GUI
 
         private void ClicButtonNuevaSolicitud(object sender, MouseButtonEventArgs e)
         {
-            TryEnviarSolicitud();
+            IntentarEnviarSolicitudAsync();
         }
 
-        private async void TryEnviarSolicitud()
+        private async void IntentarEnviarSolicitudAsync()
         {
             string gamertagSolicitud = VentanasEmergentes.AbrirVentanaModalGamertag(this);
 
@@ -76,7 +76,7 @@ namespace WpfCliente.GUI
             if (ValidacionesString.EsGamertagValido(gamertagSolicitud) && gamertagSolicitud != SingletonCliente.Instance.NombreUsuario)
             {
                 try {
-                    if (await EnviarSolicitud(gamertagSolicitud))
+                    if (await EnviarSolicitudAsync(gamertagSolicitud))
                     {
                         VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadExitosa, this);
                     }
@@ -88,7 +88,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async Task<bool> EnviarSolicitud(string gamertagReceptor)
+        private async Task<bool> EnviarSolicitudAsync(string gamertagReceptor)
         {
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)

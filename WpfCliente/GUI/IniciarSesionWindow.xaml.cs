@@ -63,7 +63,7 @@ namespace WpfCliente.GUI
             this.Close();
         }
 
-        private async void ClicIniciarSesion(object sender, RoutedEventArgs e)
+        private async void ClicIniciarSesionAsync(object sender, RoutedEventArgs e)
         {
             if (ValidarCampos())
             {
@@ -100,7 +100,7 @@ namespace WpfCliente.GUI
 
         private async Task<bool> IntentarIniciarSesionAsync()
         {
-            if (!await VerificarConexion(HabilitarBotones, this))
+            if (!await VerificarConexionAsync())
             {
                 return false;
             }
@@ -124,9 +124,9 @@ namespace WpfCliente.GUI
             return ConfigurarSesionYMostrarMenu(usuario);
         }
 
-        private async Task<bool> VerificarConexion(Action<bool> habilitarAcciones, Window ventana)
+        private async Task<bool> VerificarConexionAsync()
         {
-            return await Conexion.VerificarConexion(habilitarAcciones, ventana);
+            return await Conexion.VerificarConexion(HabilitarBotones, this);
         }
 
         private Usuario ValidarCredenciales()
@@ -201,7 +201,7 @@ namespace WpfCliente.GUI
             SingletonCliente.Instance.ContraniaHash = usuario.ContraseniaHASH;
         }
 
-        private async void ClicJugarComoInvitado(object sender, RoutedEventArgs e)
+        private async void ClicJugarComoInvitadoAsync(object sender, RoutedEventArgs e)
         {
             string codigoSala = VentanasEmergentes.AbrirVentanaModalSala(this);
             if (codigoSala != null)
@@ -214,7 +214,7 @@ namespace WpfCliente.GUI
                 if (ValidacionExistenciaJuego.ExisteSala(codigoSala))
                 {
                     SingletonCliente.Instance.NombreUsuario = Utilidades.GenerarGamertagInvitado();
-                    AbrirVentanaSala(codigoSala);
+                    AbrirVentanaSalaAsync(codigoSala);
                     this.Hide();
                     return;
                 }
@@ -230,7 +230,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void AbrirVentanaSala(string idSala)
+        private async void AbrirVentanaSalaAsync(string idSala)
         {
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
@@ -283,15 +283,15 @@ namespace WpfCliente.GUI
 
         private void ClicButtonOlvidarContrasenia(object sender, RoutedEventArgs e)
         {
-            OlvidarContrasenia();
+            OlvidarContraseniaAsync();
         }
 
-        private async void OlvidarContrasenia()
+        private async void OlvidarContraseniaAsync()
         {
             string correoIngresado = SolicitarCorreo();
             if (correoIngresado == null) return;
 
-            if (!await VerificarConexion()) return;
+            if (!await VerificarConexionAsync()) return;
 
             if (!EsCorreoValido(correoIngresado))
             {
@@ -302,7 +302,7 @@ namespace WpfCliente.GUI
             string gamertag = SolicitarGamertag();
             if (gamertag == null) return;
 
-            if (!await VerificarConexion()) return;
+            if (!await VerificarConexionAsync()) return;
 
             if (!EsGamertagYCorreoValidos(gamertag, correoIngresado))
             {
@@ -317,11 +317,6 @@ namespace WpfCliente.GUI
         {
             bool olvidoContrasenia = true;
             return VentanasEmergentes.AbrirVentanaModalCorreo(this, olvidoContrasenia);
-        }
-
-        private async Task<bool> VerificarConexion()
-        {
-            return await Conexion.VerificarConexion(HabilitarBotones, this);
         }
 
         private bool EsCorreoValido(string correoIngresado)

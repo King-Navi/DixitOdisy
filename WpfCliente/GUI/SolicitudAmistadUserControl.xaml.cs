@@ -38,10 +38,10 @@ namespace WpfCliente.GUI
 
         private void ClicButtonAceptar(object sender, RoutedEventArgs e)
         {
-            _ = AceptarSolicitud(solicitudAmistadActual);
+            _ = AceptarSolicitudAsync(solicitudAmistadActual);
         }
 
-        private async Task<bool> AceptarSolicitud(SolicitudAmistad solicitud)
+        private async Task<bool> AceptarSolicitudAsync(SolicitudAmistad solicitud)
         {
             Window window = Window.GetWindow(this);
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, window);

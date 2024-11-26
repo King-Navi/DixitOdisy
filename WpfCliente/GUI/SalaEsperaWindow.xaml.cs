@@ -26,7 +26,7 @@ namespace WpfCliente.GUI
         {
             InitializeComponent();
             EsconderOpciones();
-            VerificarConexion();
+            VerificarConexionAsync();
             ConfiguracionPartidaPorDefecto();
             if (idSala == null)
             {
@@ -37,7 +37,7 @@ namespace WpfCliente.GUI
             {
                 SingletonCliente.Instance.IdSala = idSala;
                 SingletonCliente.Instance.IdChat = idSala;
-                UnirseSala(idSala);
+                UnirseSalaAsync(idSala);
             }
             DataContext = this;
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
@@ -67,7 +67,7 @@ namespace WpfCliente.GUI
             stakePaneListaExpulsion.Visibility = Visibility.Visible;
         }
 
-        private async void VerificarConexion()
+        private async void VerificarConexionAsync()
         {
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
@@ -77,7 +77,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void UnirseSala(string idSala)
+        private async void UnirseSalaAsync(string idSala)
         {
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
@@ -141,7 +141,7 @@ namespace WpfCliente.GUI
                 SingletonCliente.Instance.IdChat = SingletonCliente.Instance.IdSala;
 
                 CrearChat();
-                UnirseSala(SingletonCliente.Instance.IdSala);
+                UnirseSalaAsync(SingletonCliente.Instance.IdSala);
             }
             catch (Exception excepcion)
             {
@@ -273,7 +273,7 @@ namespace WpfCliente.GUI
 
 
 
-        private async void ClicButtonEmpezarPartida(object sender, RoutedEventArgs e)
+        private async void ClicButtonEmpezarPartidaAsync(object sender, RoutedEventArgs e)
         {
             this.IsEnabled = false;
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
@@ -390,12 +390,12 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void ClicButtonInvitarAmigos(object sender, RoutedEventArgs e)
+        private async void ClicButtonInvitarAmigosAsync(object sender, RoutedEventArgs e)
         {
             string gamertagInvitado = AbrirVentanaModalGamertag();
             if (gamertagInvitado != null && gamertagInvitado != SingletonCliente.Instance.NombreUsuario)
             {
-                if (await EnviarInvitacion(gamertagInvitado))
+                if (await EnviarInvitacionAsync(gamertagInvitado))
                 {
                     VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloInvitacionPartida, 
                         Properties.Idioma.mensajeInvitacionExitosa, 
@@ -433,7 +433,7 @@ namespace WpfCliente.GUI
             return valorObtenido;
         }
 
-        private async Task<bool> EnviarInvitacion(string gamertagReceptor)
+        private async Task<bool> EnviarInvitacionAsync(string gamertagReceptor)
         {
             bool resultado = false;
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
@@ -523,7 +523,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void ClicButtonEliminarUsuario(object sender, RoutedEventArgs e)
+        private async void ClicButtonEliminarUsuarioAsync(object sender, RoutedEventArgs e)
         {
             this.IsEnabled = false;
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);

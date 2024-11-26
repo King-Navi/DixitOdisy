@@ -46,7 +46,7 @@ namespace WpfCliente.GUI
                 if (ValidarCampos())
                 {
                     EncriptarContrasenia(passwordBoxContrasenia.Password);
-                    GuardarCambiosUsuario(usuarioEditado);
+                    GuardarCambiosUsuarioAsync(usuarioEditado);
                 }
             }
             catch (Exception ex)
@@ -126,7 +126,7 @@ namespace WpfCliente.GUI
             usuarioEditado.ContraseniaHASH = Encriptacion.OcuparSHA256(contrasenia);
         }
 
-        private async void GuardarCambiosUsuario(Usuario usuarioEditado)
+        private async void GuardarCambiosUsuarioAsync(Usuario usuarioEditado)
         {
             var resultadoConexion = await Conexion.VerificarConexion(HabilitarBotones,this);
             if (!resultadoConexion)

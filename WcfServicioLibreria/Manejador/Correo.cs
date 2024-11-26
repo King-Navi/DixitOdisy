@@ -66,5 +66,15 @@ namespace WcfServicioLibreria.Manejador
                 return false;
             }
         }
+
+        private static string ObtenerContraseniaCorreo()
+        {
+            string contrasenia = Environment.GetEnvironmentVariable("CONTRASENIA_CORREO");
+            if (string.IsNullOrEmpty(contrasenia))
+            {
+                throw new InvalidOperationException("La variable de entorno 'CONTRASENIA_CORREO' no está definida.");
+            }
+            return contrasenia;
+        }
     }
 }

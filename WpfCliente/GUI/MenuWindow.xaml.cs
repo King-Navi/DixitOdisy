@@ -25,7 +25,7 @@ namespace WpfCliente.GUI
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             ActualizarUI();
-            AbrirConexiones();
+            AbrirConexionesAsync();
             ConfigurarTemporizadorNotificacion();
             InicializarEstadisticas();
         }
@@ -46,7 +46,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void AbrirConexiones()
+        private async void AbrirConexionesAsync()
         {
             try
             {
@@ -95,10 +95,10 @@ namespace WpfCliente.GUI
 
         private void ClicButtonCrearSala(object sender, RoutedEventArgs e)
         {
-            AbrirVentanaSala(null);
+            AbrirVentanaSalaAsync(null);
         }
 
-        private async void AbrirVentanaSala(string idSala)
+        private async void AbrirVentanaSalaAsync(string idSala)
         {
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
@@ -152,10 +152,10 @@ namespace WpfCliente.GUI
         {
             bool esInvitacion = false;
             string _codigoSala = null;
-            UnirseASala(esInvitacion, _codigoSala);
+            UnirseASalaAsync(esInvitacion, _codigoSala);
         }
 
-        private async void UnirseASala(bool esInvitacion, string _codigoSala)
+        private async void UnirseASalaAsync(bool esInvitacion, string _codigoSala)
         {
             string codigoSala = "";
             if (esInvitacion)
@@ -175,7 +175,7 @@ namespace WpfCliente.GUI
             {
                 if (ValidacionExistenciaJuego.ExisteSala(codigoSala))
                 {
-                    AbrirVentanaSala(codigoSala);
+                    AbrirVentanaSalaAsync(codigoSala);
                     return;
                 }
                 else
@@ -297,7 +297,7 @@ namespace WpfCliente.GUI
         private void ClicButtonUnirseInvitacion(object sender, RoutedEventArgs e)
         {
             bool esInvitacion = true;
-            UnirseASala(esInvitacion, invitacionActual.CodigoSala);
+            UnirseASalaAsync(esInvitacion, invitacionActual.CodigoSala);
             OcultarNotificacion();
         }
 
@@ -318,7 +318,7 @@ namespace WpfCliente.GUI
             gridEstadisticas.Visibility = Visibility.Collapsed;
         }
 
-        private async void ClicButtonRefrescarEstadisticas(object sender, RoutedEventArgs e)
+        private async void ClicButtonRefrescarEstadisticasAsync(object sender, RoutedEventArgs e)
         {
             if (contadorClics >= LIMITE_CLICS)
             {

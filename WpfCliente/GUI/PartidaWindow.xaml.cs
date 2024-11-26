@@ -87,7 +87,7 @@ namespace WpfCliente.GUI
             InitializeComponent();
             InicializarComponenetes();
             DataContext = this;
-            UnirsePartida(idPartida);
+            UnirsePartidaAsync(idPartida);
         }
 
 
@@ -109,7 +109,7 @@ namespace WpfCliente.GUI
             recursosCompartidos = new RecursosCompartidosPartida();
             ComandoImagenGlobal = new ComandoRele<string>(ComandoImagenPorId);
             ComandoImagenSelecionCorrecta = new ComandoRele<string>(
-                ComandoSeleccionCorrecta,
+                ComandoSeleccionCorrectaAsync,
                 (param) => ComandoHabilitado
             );
             narradorSeleccionCartasUserControl = new NarradorSeleccionCartaUserControl(recursosCompartidos.Imagenes);
@@ -133,7 +133,7 @@ namespace WpfCliente.GUI
             chatUserControl.IsEnabled = true;
         }
 
-        private async void ComandoSeleccionCorrecta(string idImagen)
+        private async void ComandoSeleccionCorrectaAsync(string idImagen)
         {
             ImagenCarta imagenAEscoger = recursosCompartidos.GruposDeImagenes.FirstOrDefault(busqueda => busqueda.IdImagen == idImagen);
             if (imagenAEscoger == null)
@@ -271,7 +271,7 @@ namespace WpfCliente.GUI
             PantallaActual = numeroPantallla;
         }
 
-        private async void UnirsePartida(string idPartida)
+        private async void UnirsePartidaAsync(string idPartida)
         {
             try
             {
@@ -341,15 +341,15 @@ namespace WpfCliente.GUI
         {
             if (EsNarrador)
             {
-                EscogerImagenNarrador(id);
+                EscogerImagenNarradorAsync(id);
             }
             else
             {
-                EscogerImagenPorId(id);
+                EscogerImagenPorIdAsync(id);
             }
         }
 
-        public async void EscogerImagenPorId(string id)
+        public async void EscogerImagenPorIdAsync(string id)
         {
             ImagenCarta imagenEscogida = recursosCompartidos.Imagenes.FirstOrDefault(i => i.IdImagen == id);
             if (imagenEscogida == null)
@@ -379,7 +379,7 @@ namespace WpfCliente.GUI
 
         }
 
-        public async void EscogerImagenNarrador(string id)
+        public async void EscogerImagenNarradorAsync(string id)
         {
             
             ImagenCarta imagenAEscoger = recursosCompartidos.Imagenes.FirstOrDefault(i => i.IdImagen == id);

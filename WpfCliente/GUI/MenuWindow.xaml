@@ -142,7 +142,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                     <Button Content="Cerrar" Click="ClicButtonCerrarEstadisticas" Margin="5" />
-                    <Button x:Name="buttonRefrescar" Content="Refrescar" Click="ClicButtonRefrescarEstadisticas" Margin="5" />
+                    <Button x:Name="buttonRefrescar" Content="Refrescar" Click="ClicButtonRefrescarEstadisticasAsync" Margin="5" />
                 </StackPanel>
             </StackPanel>
         </Grid>

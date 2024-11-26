@@ -10,6 +10,7 @@ C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\EliminadorCadena.cs
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\Excepciones\ActividadSospechosaExcepcion.cs
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\Excepciones\GamertagDuplicadoExcepcion.cs
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\Excepciones\PropiedadesNulasExcepcion.cs
+C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\Excepciones\SolicitudAmistadExcepcion.cs
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\Excepciones\VetoEnProgresoExcepcion.cs
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\Excepciones\VetoPermanenteExcepcion.cs
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\ModeloBD\Amigo.cs

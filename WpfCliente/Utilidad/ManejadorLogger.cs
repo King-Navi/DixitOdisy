@@ -3,7 +3,7 @@ using System;
 
 namespace WpfCliente.Utilidad
 {
-    public static class LoggerManagador
+    public static class ManejadorLogger
     {
         private const string FORMATO_FECHA = "dd-MM-yyyy";
         private const string NOMBRE_LOG = "Log";

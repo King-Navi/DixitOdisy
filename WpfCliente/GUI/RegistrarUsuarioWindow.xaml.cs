@@ -18,8 +18,10 @@ namespace WpfCliente.GUI
     public partial class RegistrarUsuarioWindow : IActualizacionUI, IHabilitadorBotones
     {
         private string rutaAbsolutaImagen;
-        private const string ESTILO_NORMAL = "NormalTextBoxStyle";
+        private const string ESTILO_NORMAL_TEXTO = "NormalTextBoxStyle";
         private const string ESTILO_NORMAL_CONTRASENIA = "NormalPasswordBoxStyle";
+        private const string ERROR_ESTILO_TEXTO = "ErrorTextBoxStyle";
+        private const string PALABRA_PROHIBIDA_GUEST = "guest";
         public RegistrarUsuarioWindow()
         {
             rutaAbsolutaImagen = null;
@@ -46,6 +48,7 @@ namespace WpfCliente.GUI
                 labelContraseniaSimbolos.Content = Properties.Idioma.labelContraseniaSimbolos;
                 buttonRegistrarUsuario.Content = Properties.Idioma.buttonRegistrarse;
                 buttonCambiarFoto.Content = Properties.Idioma.buttonCambiarFotoPerfil;
+                labelContraseniasNoCoinciden.Content = Properties.Idioma.labelContraseniaNoCoincide;
             }
             catch (Exception excepcion)
             {
@@ -94,29 +97,38 @@ namespace WpfCliente.GUI
         }
 
 
-        private void ClicFlechaAtras(object sender, MouseButtonEventArgs e)
+        private void ClicImagenFlechaAtras(object sender, MouseButtonEventArgs e)
         {
-            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.EditarPerfil);
+            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.RegistrarUsuario);
         }
 
         private async void CrearCuenta()
         {
             if (ValidarCampos() && Correo.VerificarCorreo(textBoxCorreo.Text, this) && rutaAbsolutaImagen != null)
             {
-                var resultado = await RegistrarUsuario();
+                var resultado = await RegistrarUsuarioAsync();
                 if (resultado)
                 {
-                    SingletonGestorVentana.Instancia.CerrarVentana(Ventana.EditarPerfil);
+                    SingletonGestorVentana.Instancia.CerrarVentana(Ventana.RegistrarUsuario);
                 }
             }
             else
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloRegistroUsuario,
-                    Properties.Idioma.mensajeErrorInesperado, this);
+                if (rutaAbsolutaImagen == null)
+                {
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloRegistroUsuario,
+                        Properties.Idioma.mensajeImagenNoSelecionadaEditar, this);
+                }
+                else
+                {
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloRegistroUsuario,
+                        Properties.Idioma.mensajeCamposIntroducidosInvalidos, this);
+                }
+
             }
         }
 
-        private async Task<bool> RegistrarUsuario()
+        private async Task<bool> RegistrarUsuarioAsync()
         {
             bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, this);
             if (!conexionExitosa)
@@ -125,6 +137,7 @@ namespace WpfCliente.GUI
             }
             try
             {
+                EvaluarPalabrasProhibidas();
                 ServidorDescribelo.IServicioRegistro servicio = new ServidorDescribelo.ServicioRegistroClient();
                 string contraseniaHash = Encriptacion.OcuparSHA256(passwordBoxContrasenia.Password);
                 using (FileStream fileStream = new FileStream(rutaAbsolutaImagen, FileMode.Open, FileAccess.Read))
@@ -138,7 +151,7 @@ namespace WpfCliente.GUI
                         {
                             ContraseniaHASH = contraseniaHash,
                             Correo = textBoxCorreo.Text,
-                            Nombre = textBoxGamertag.Text,
+                            Nombre = textBoxNombreUsuario.Text,
                             FotoUsuario = memoryStream
                         });
                         if (resultado)
@@ -167,6 +180,14 @@ namespace WpfCliente.GUI
             return false;
         }
 
+        private void EvaluarPalabrasProhibidas()
+        {
+            if (textBoxNombreUsuario.Text?.ToLower().Contains(PALABRA_PROHIBIDA_GUEST) == true)
+            {
+                throw new FaultException<BaseDatosFalla>(new BaseDatosFalla());
+            };
+        }
+
         public void HabilitarBotones(bool esHabilitado)
         {
             try
@@ -188,8 +209,6 @@ namespace WpfCliente.GUI
         public bool ValidarCampos()
         {
             bool isValid = true;
-            string errorTextBoxStyle = "ErrorTextBoxStyle";
-
             ObtenerEstilos();
             if (!ValidarCaracteristicasContrasenia())
             {
@@ -198,15 +217,15 @@ namespace WpfCliente.GUI
 
             if (!ValidacionesString.EsCorreoValido(textBoxCorreo.Text.Trim()))
             {
-                textBoxCorreo.Style = (Style)FindResource(errorTextBoxStyle);
+                textBoxCorreo.Style = (Style)FindResource(ERROR_ESTILO_TEXTO);
                 labelCorreoInvalido.Visibility = Visibility.Visible;
 
                 isValid = false;
             }
 
-            if (!ValidacionesString.EsGamertagValido(textBoxGamertag.Text.Trim()))
+            if (!ValidacionesString.EsGamertagValido(textBoxNombreUsuario.Text.Trim()))
             {
-                textBoxGamertag.Style = (Style)FindResource(errorTextBoxStyle);
+                textBoxNombreUsuario.Style = (Style)FindResource(ERROR_ESTILO_TEXTO);
 
                 isValid = false;
             }
@@ -216,8 +235,8 @@ namespace WpfCliente.GUI
 
         private void ObtenerEstilos()
         {
-            textBoxGamertag.Style = (Style)FindResource(ESTILO_NORMAL);
-            textBoxCorreo.Style = (Style)FindResource(ESTILO_NORMAL);
+            textBoxNombreUsuario.Style = (Style)FindResource(ESTILO_NORMAL_TEXTO);
+            textBoxCorreo.Style = (Style)FindResource(ESTILO_NORMAL_TEXTO);
             passwordBoxContrasenia.Style = (Style)FindResource(ESTILO_NORMAL_CONTRASENIA);
             passwordBoxRepetirContrasenia.Style = (Style)FindResource(ESTILO_NORMAL_CONTRASENIA);
             labelCorreoInvalido.Visibility = Visibility.Hidden;
@@ -284,6 +303,7 @@ namespace WpfCliente.GUI
         private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
+            SingletonGestorVentana.Instancia.IntentarRegresarInicio();
         }
     }
 }

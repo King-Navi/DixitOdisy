@@ -22,7 +22,7 @@ namespace WpfCliente.Utilidad
                 string codigoIngresado = VentanasEmergentes.AbrirVentanaModalCorreo(ventana);
                 return manejadorServicio.EjecutarServicio(servicio =>
                 {
-                    return servicio.VerificarCodigo(codigoIngresado);
+                    return servicio.VerificarCodigo(codigoIngresado, correo);
                 });
             }
             else

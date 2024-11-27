@@ -31,6 +31,6 @@ namespace WcfServicioLibreria.Contratos
         /// </summary>
         /// <param name="invitacion">El objeto invitación que contiene detalles de la partida a la que se está invitando al usuario.</param>
         [OperationContract(IsOneWay = true)]
-        void RecibirInvitacion(InvitacionPartida invitacion);
+        void RecibirInvitacionCallback(InvitacionPartida invitacion);
     }
 }

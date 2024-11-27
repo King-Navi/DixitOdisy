@@ -9,7 +9,7 @@ namespace WcfServicioLibreria.Contratos
     public interface IServicioPartidaSesion
     {
         [OperationContract(IsOneWay = true)]
-        Task UnirsePartida(string nombreUsuario, string idPartida);
+        Task UnirsePartidaAsync(string nombreUsuario, string idPartida);
         [OperationContract(IsOneWay = true)]
         void ConfirmarMovimiento(string nombreJugador, string idPartida , string claveImagen, string pista = null);
         [OperationContract]
@@ -19,7 +19,7 @@ namespace WcfServicioLibreria.Contratos
         [OperationContract]
         Task<bool> SolicitarImagenCartaAsync(string nombreJugador, string idPartida);
         [OperationContract(IsOneWay = true)]
-        Task EmpezarPartida(string nombreJugador, string idPartida);
+        Task EmpezarPartidaAsync(string nombreJugador, string idPartida);
     }
     [ServiceContract]
     public interface IPartidaCallback

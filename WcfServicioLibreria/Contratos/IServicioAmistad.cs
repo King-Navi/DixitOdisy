@@ -101,7 +101,7 @@ namespace WcfServicioLibreria.Contratos
         [ServiceKnownType(typeof(MemoryStream))]
         [ServiceKnownType(typeof(Stream))]
         [ServiceKnownType(typeof(Amigo))]
-        void CambiarEstadoAmigo(Amigo amigo);
+        void CambiarEstadoAmigoCallback(Amigo amigo);
         /// <summary>
         /// Recibe información actualizada de un amigo como parte de un callback.
         /// </summary>

@@ -1,9 +1,5 @@
 ﻿namespace DAOLibreria.ModeloBD
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <ref>https://dotnetteach.com/blog/why-we-use-dto-in-c-sharp</ref>
     public class UsuarioPerfilDTO
     {
         

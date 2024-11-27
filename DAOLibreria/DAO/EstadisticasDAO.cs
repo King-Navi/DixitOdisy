@@ -12,7 +12,7 @@ namespace DAOLibreria.DAO
         {
             if (victoria > 1)
             {
-                throw new ActividadSospechosaExcepcion() { id = idEstadisticas };
+                throw new ActividadSospechosaExcepcion() { Identificador = idEstadisticas };
             }
             bool resultado = false;
             try

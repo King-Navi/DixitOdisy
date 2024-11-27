@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen" 
         Title="RegistrarUsuario" 
-        ResizeMode="NoResize" Height="770" Width="1200">
+        ResizeMode="NoResize" Height="770" Width="1200" Closing="CerrandoVentana">
 
     <Window.Resources>
         <Style TargetType="{x:Type TextBox}">

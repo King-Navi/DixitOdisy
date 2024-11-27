@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WpfCliente.Contexto;
+using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
@@ -15,11 +16,10 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class SalaEsperaWindow : Window, IActualizacionUI, IServicioSalaJugadorCallback, IHabilitadorBotones
+    public partial class SalaEsperaWindow : Window, IActualizacionUI, IHabilitadorBotones
     {
         public ObservableCollection<Usuario> JugadoresSala { get; set; } = new ObservableCollection<Usuario>();
         private bool visibleConfigurarPartida = false;
-        private const int SEGUNDOS_PARA_UNIRSE = 6;
         private const int NUMERO_RONDAS_PORDEFECTO = 3;
         private const int TIEMPO_CLIC_EXPULSION_SEGUNDOS = 5;
         private ConfiguracionPartida ConfiguracionPartida { get; set; }
@@ -46,6 +46,9 @@ namespace WpfCliente.GUI
                 DataContext = this;
                 CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
                 ActualizarUI();
+                JugadoresSala = SingletonSalaJugador.Instancia.JugadoresSala;
+                SingletonSalaJugador.Instancia.DelegacionRolAnfitrion += DelegacionRol;
+                SingletonSalaJugador.Instancia.EmepzarPartida += EmpezarPartidaCallback;
             }
             catch (Exception excepcion)
             {
@@ -114,15 +117,13 @@ namespace WpfCliente.GUI
                 SingletonGestorVentana.Instancia.CerrarVentana(Ventana.SalaEspera);
                 return;
             }
-            var resultadoTask = Conexion.AbrirConexionSalaJugadorCallbackAsync(this);
-            bool resultado = resultadoTask.Result;
-
+            var resultado = SingletonSalaJugador.Instancia.AbrirConexion();
             if (!resultado)
             {
                 SingletonGestorVentana.Instancia.CerrarVentana(Ventana.SalaEspera);
                 return;
             }
-            Conexion.SalaJugador.AgregarJugadorSala(SingletonCliente.Instance.NombreUsuario, idSala);
+            SingletonSalaJugador.Instancia.Sala.AgregarJugadorSala(SingletonCliente.Instance.NombreUsuario, idSala);
             labelCodigo.Content += idSala;
             UnirseChatAsync();
         }
@@ -251,7 +252,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        public void EmpezarPartidaCallBack(string idPartida)
+        public void EmpezarPartidaCallback(string idPartida)
         {
             if (!ValidacionExistenciaJuego.ExistePartida(idPartida))
             {
@@ -266,31 +267,7 @@ namespace WpfCliente.GUI
         private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
-            Conexion.CerrarChatMotor();
-            Conexion.CerrarSalaJugador();
-        }
-
-        public void ObtenerJugadorSalaCallback(Usuario jugardoreNuevoEnSala)
-        {
-            if (!jugardoreNuevoEnSala.Nombre.Equals(SingletonCliente.Instance.NombreUsuario, StringComparison.OrdinalIgnoreCase))
-            {
-                JugadoresSala?.Add(jugardoreNuevoEnSala);
-            }
-            usuariosSalaUserControl?.ObtenerUsuarioSala(jugardoreNuevoEnSala);
-        }
-
-        public void EliminarJugadorSalaCallback(Usuario jugardoreRetiradoDeSala)
-        {
-            var jugadorARemover = JugadoresSala?.FirstOrDefault(jugador => jugador.Nombre == jugardoreRetiradoDeSala.Nombre);
-            if (jugadorARemover != null)
-            {
-                JugadoresSala.Remove(jugadorARemover);
-            }
-            usuariosSalaUserControl?.EliminarUsuarioSala(jugardoreRetiradoDeSala);
-            if (jugardoreRetiradoDeSala.Nombre.Equals(SingletonCliente.Instance.NombreUsuario, StringComparison.OrdinalIgnoreCase))
-            {
-                this.Close();
-            }
+            SingletonGestorVentana.Instancia.IntentarRegresarMenu();
         }
 
         private async void ClicButtonEmpezarPartidaAsync(object sender, RoutedEventArgs e)
@@ -315,8 +292,11 @@ namespace WpfCliente.GUI
 
                 try
                 {
-                    IniciarPartida(idPartida);
-                    OcultarVentanaHastaCierre();
+                    var resultado = IniciarPartida(idPartida);
+                    if (resultado)
+                    {
+                        OcultarVentanaHastaCierre();
+                    }
                 }
                 catch (Exception excepcion)
                 {
@@ -364,10 +344,10 @@ namespace WpfCliente.GUI
             );
         }
 
-        private void IniciarPartida(string idPartida)
+        private bool IniciarPartida(string idPartida)
         {
             CrearChat(idPartida);
-            Conexion.SalaJugador.ComenzarPartidaAnfrition(
+            return SingletonSalaJugador.Instancia.Sala.ComenzarPartidaAnfrition(
                 SingletonCliente.Instance.NombreUsuario,
                 SingletonCliente.Instance.IdSala,
                 idPartida
@@ -452,13 +432,13 @@ namespace WpfCliente.GUI
             }
             try
             {
-                resultado = Conexion.InvitacionPartida.EnviarInvitacion(SingletonCliente.Instance.NombreUsuario,
+                resultado = SingletonInvitacionPartida.Instancia.InvitacionPartida.EnviarInvitacion(SingletonCliente.Instance.NombreUsuario,
                     SingletonCliente.Instance.IdSala,
                     gamertagReceptor);
             }
-            catch (Exception ex)
+            catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloInvitacionPartida,
                     Properties.Idioma.mensajeInvitacionFallida,
                     this);
@@ -492,11 +472,11 @@ namespace WpfCliente.GUI
                 { radioButtonMitologia, TematicaPartida.Mitologia }
             };
 
-            foreach (var entry in tematicas)
+            foreach (var entrada in tematicas)
             {
-                if (entry.Key.IsChecked == true)
+                if (entrada.Key.IsChecked == true)
                 {
-                    ConfiguracionPartida.Tematica = entry.Value;
+                    ConfiguracionPartida.Tematica = entrada.Value;
                     break;
                 }
             }
@@ -545,7 +525,7 @@ namespace WpfCliente.GUI
             {
                 try
                 {
-                    Conexion.SalaJugador.ExpulsarJugadorSala(
+                    SingletonSalaJugador.Instancia.Sala.ExpulsarJugadorSala(
                         SingletonCliente.Instance.NombreUsuario,
                         usuario.Nombre,
                         SingletonCliente.Instance.IdSala);
@@ -559,7 +539,11 @@ namespace WpfCliente.GUI
             this.IsEnabled = true;
         }
 
-        public void DelegacionRolCallback(bool esAnfitrion)
+        private void ClicImagenFlechaAtras(object sender, MouseButtonEventArgs e)
+        {
+            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.SalaEspera);
+        }
+        public void DelegacionRol(bool esAnfitrion)
         {
             VerDiposicionAnfitrion();
         }

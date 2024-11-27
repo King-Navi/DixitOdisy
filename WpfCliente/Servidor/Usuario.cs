@@ -16,16 +16,16 @@ namespace WpfCliente.ServidorDescribelo
                     if (FotoUsuario == null)
                         return Imagen.CargarImagenDesdeRecursos();
 
-                    var bitmap = new BitmapImage();
-                    bitmap.BeginInit();
+                    var imagen = new BitmapImage();
+                    imagen.BeginInit();
                     if (FotoUsuario.CanSeek)
                         FotoUsuario.Position = 0;
-                    bitmap.StreamSource = FotoUsuario;
-                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmap.EndInit();
-                    bitmap.Freeze();
-                    Imagen.EsImagenValida(bitmap);
-                    return bitmap;
+                    imagen.StreamSource = FotoUsuario;
+                    imagen.CacheOption = BitmapCacheOption.OnLoad;
+                    imagen.EndInit();
+                    imagen.Freeze();
+                    Imagen.EsImagenValida(imagen);
+                    return imagen;
                 }
                 catch (FileFormatException excepcion)
                 {

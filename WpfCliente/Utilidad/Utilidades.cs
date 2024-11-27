@@ -9,6 +9,8 @@ namespace WpfCliente.Utilidad
     {
         public const double OPACIDAD_MAXIMA = 1;
         public const double OPACIDAD_MINIMA = 0.5;
+        public const int RANGO_INVITADO_MINIMA = 10000;
+        public const int RANGO_INVITADO_MAXIMO = 99999;
         private static Random random = new Random();
 
         private static readonly List<Color> BackgroundColors = new List<Color>
@@ -45,7 +47,7 @@ namespace WpfCliente.Utilidad
 
         public static string GenerarGamertagInvitado()
         {
-            int numeroAleatorio = random.Next(10000, 99999);
+            int numeroAleatorio = random.Next(RANGO_INVITADO_MINIMA, RANGO_INVITADO_MAXIMO);
             return $"guest-{numeroAleatorio}";
         }
     }

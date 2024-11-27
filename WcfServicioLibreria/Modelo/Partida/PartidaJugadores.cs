@@ -16,10 +16,6 @@ using System.Net.Http;
 
 namespace WcfServicioLibreria.Modelo
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <ref>https://refactoring.guru/es/design-patterns/strategy</ref>
     internal partial class Partida : IObservador//FIXME: Faltan muchas funcionalidades y pruebas
     {
         #region Constantes

@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
+using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
@@ -14,29 +15,7 @@ namespace WpfCliente.GUI
         {
             InitializeComponent();
             DataContext = this;
-        }
-
-        public void ObtenerUsuarioSala(Usuario usuario)
-        {
-            if (usuario == null)
-            {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCargarAmigosFalla,
-                    Properties.Idioma.mensajeCargarAmigosFalla, 
-                    this);
-            }
-            else
-            {
-                JugadoresEnSala.Add(usuario);
-            }
-        }
-
-        public void EliminarUsuarioSala(Usuario usuario)
-        {
-            var usuarioAEliminar = JugadoresEnSala.FirstOrDefault(busqueda => busqueda.Nombre == usuario.Nombre);
-            if (usuarioAEliminar != null)
-            {
-                JugadoresEnSala.Remove(usuarioAEliminar);
-            }
+            JugadoresEnSala = SingletonSalaJugador.Instancia.JugadoresSala;
         }
     }
 }

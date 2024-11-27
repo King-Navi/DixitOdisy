@@ -112,6 +112,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="ImplementacionesCallbacks\SingletonSalaJugador.cs" />
+    <Compile Include="Interfaz\IImplementacionCallback.cs" />
+    <Compile Include="ImplementacionesCallbacks\SingletonInvitacionPartida.cs" />
+    <Compile Include="Interfaz\IObservadorVentana.cs" />
     <Compile Include="ManejadorAplicacion\SingletonGestorVentana.cs" />
     <Compile Include="ManejadorAplicacion\VentajasEventoManejador.cs" />
     <Compile Include="ManejadorAplicacion\Ventana.cs" />
@@ -231,7 +235,7 @@
     <Compile Include="Utilidad\LoggerManagador.cs" />
     <Compile Include="Utilidad\ManejadorExcepciones.cs" />
     <Compile Include="Servidor\Usuario.cs" />
-    <Compile Include="Utilidad\SingletonAmigos.cs" />
+    <Compile Include="ImplementacionesCallbacks\SingletonAmigos.cs" />
     <Compile Include="Utilidad\SingletonConexion.cs" />
     <Compile Include="Utilidad\Utilidades.cs" />
     <Compile Include="Utilidad\ServicioManejador.cs" />
@@ -477,12 +481,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Recursos\cajaLogin.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Recursos\fondoLogin.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Recursos\mesaJuego.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Recursos\fondoJuego.png" />

@@ -56,7 +56,7 @@ namespace Pruebas.Servidor
        
             // Act
             var idPartida = manejador.CrearPartida(usuario.Nombre, configuracionGenerica);
-            await manejador.UnirsePartida(usuario.Nombre, idPartida);
+            await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
 
             // Assert
             Assert.IsTrue(implementacionCallback.JugadoresEnPartida.Any(jugador => jugador.Key == usuario.Nombre), "El callback debería haber sido llamado y la sesión debería estar activa.");
@@ -73,7 +73,7 @@ namespace Pruebas.Servidor
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             // Act
-            await manejador.UnirsePartida(gamertag, idPartidaInexistente);
+            await manejador.UnirsePartidaAsync(gamertag, idPartidaInexistente);
 
             // Assert
             Assert.IsFalse(implementacionCallback.JugadoresEnPartida.Any(j => j.Key == gamertag), "El jugador no debería haberse agregado ya que la partida no es válida.");
@@ -93,7 +93,7 @@ namespace Pruebas.Servidor
 
             // Act
             var idPartida = manejador.CrearPartida(usuario.Nombre, configuracionGenerica);
-            await manejador.UnirsePartida(usuario.Nombre, idPartida);
+            await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
 
             // Assert
             if (implementacionCallback != null)
@@ -114,8 +114,8 @@ namespace Pruebas.Servidor
 
             // Act
             var idPartida = manejador.CrearPartida(usuarioExistente.Nombre, configuracionGenerica);
-            await manejador.UnirsePartida(usuarioExistente.Nombre, idPartida);
-            await manejador.UnirsePartida(usuarioNuevo.Nombre, idPartida);
+            await manejador.UnirsePartidaAsync(usuarioExistente.Nombre, idPartida);
+            await manejador.UnirsePartidaAsync(usuarioNuevo.Nombre, idPartida);
 
             // Assert
             Assert.IsTrue(implementacionCallback.JugadoresEnPartida.Count < 2, "El jugador debería haberse agregado (total jugadores 2).");
@@ -136,8 +136,8 @@ namespace Pruebas.Servidor
 
             // Act
             var idPartida = manejador.CrearPartida(usuarioExistente.Nombre, configuracionGenerica);
-            await manejador.UnirsePartida(usuarioExistente.Nombre, idPartida);
-            await manejador.UnirsePartida(usuarioNuevo.Nombre, idPartida);
+            await manejador.UnirsePartidaAsync(usuarioExistente.Nombre, idPartida);
+            await manejador.UnirsePartidaAsync(usuarioNuevo.Nombre, idPartida);
 
             // Assert
             Console.WriteLine(implementacionCallback.JugadoresEnPartida.Count);
@@ -160,8 +160,8 @@ namespace Pruebas.Servidor
 
             // Act
             var idPartida = manejador.CrearPartida(usuarioExistente.Nombre, configuracionGenerica);
-            await manejador.UnirsePartida(usuarioExistente.Nombre, idPartida);
-            await manejador.UnirsePartida(invitado.Nombre, idPartida);
+            await manejador.UnirsePartidaAsync(usuarioExistente.Nombre, idPartida);
+            await manejador.UnirsePartidaAsync(invitado.Nombre, idPartida);
 
             // Assert
             Console.WriteLine(implementacionCallback.JugadoresEnPartida.Count);
@@ -187,7 +187,7 @@ namespace Pruebas.Servidor
             var configuracionGenerica = new ConfiguracionPartida(TematicaPartida.Mixta, CondicionVictoriaPartida.PorCantidadRondas, 6);
             var idPartida = manejador.CrearPartida(usuario.Nombre, configuracionGenerica);
 
-            await manejador.UnirsePartida(usuario.Nombre, idPartida);
+            await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
 
             // Act: Llamar a SolicitarImagenCarta
             await manejador.SolicitarImagenCartaAsync(usuario.Nombre, idPartida);
@@ -211,7 +211,7 @@ namespace Pruebas.Servidor
             var configuracionGenerica = new ConfiguracionPartida(TematicaPartida.Mixta, CondicionVictoriaPartida.PorCantidadRondas, 6);
             var idPartida = manejador.CrearPartida(usuario.Nombre, configuracionGenerica);
 
-            await manejador.UnirsePartida(usuario.Nombre, idPartida);
+            await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
 
             // Act: Llamar a SolicitarImagenCarta
             await manejador.SolicitarImagenCartaAsync(usuario.Nombre, idPartida);
@@ -239,7 +239,7 @@ namespace Pruebas.Servidor
             var configuracionGenerica = new ConfiguracionPartida(TematicaPartida.Mixta, CondicionVictoriaPartida.PorCantidadRondas, 6);
             var idPartida = manejador.CrearPartida(usuario.Nombre, configuracionGenerica);
 
-            await manejador.UnirsePartida(usuario.Nombre, idPartida);
+            await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
 
             // Act: Llamar a SolicitarImagenCarta
             // Lista de tareas para realizar las solicitudes en paralelo
@@ -285,7 +285,7 @@ namespace Pruebas.Servidor
             var configuracionGenerica = new ConfiguracionPartida(TematicaPartida.Mitologia, CondicionVictoriaPartida.PorCantidadRondas, 6);
             var idPartida = manejador.CrearPartida(usuario.Nombre, configuracionGenerica);
 
-            await manejador.UnirsePartida(usuario.Nombre, idPartida);
+            await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
 
             // Act: Llamar a SolicitarImagenCarta hasta que aparesca dios
             foreach (var archivo in archivosJpg)
@@ -318,8 +318,8 @@ namespace Pruebas.Servidor
             var anfitrion = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var idPartida = manejador.CrearPartida(anfitrion.Nombre, configuracionGenerica);
 
-            await manejador.UnirsePartida(anfitrion.Nombre, idPartida);
-            await manejador.EmpezarPartida(anfitrion.Nombre, idPartida);
+            await manejador.UnirsePartidaAsync(anfitrion.Nombre, idPartida);
+            await manejador.EmpezarPartidaAsync(anfitrion.Nombre, idPartida);
             await Task.Delay(TimeSpan.FromSeconds(EsperaJugadores));
             Assert.IsFalse(manejador.ValidarPartida(idPartida), "La partida no deberia exisitir");
             if (implementacionCallback != null)
@@ -338,8 +338,8 @@ namespace Pruebas.Servidor
             var anfitrion = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var idPartida = manejador.CrearPartida(anfitrion.Nombre, configuracionGenerica);
 
-            await manejador.UnirsePartida(anfitrion.Nombre, idPartida);
-            await manejador.EmpezarPartida(anfitrion.Nombre, idPartida);
+            await manejador.UnirsePartidaAsync(anfitrion.Nombre, idPartida);
+            await manejador.EmpezarPartidaAsync(anfitrion.Nombre, idPartida);
             Assert.IsFalse(manejador.ValidarPartida(idPartida), "La partida no deberia exisitir");
             if (implementacionCallback != null)
             {
@@ -355,8 +355,8 @@ namespace Pruebas.Servidor
             var anfitrion = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var idPartida = manejador.CrearPartida(anfitrion.Nombre, configuracionGenerica);
 
-            await manejador.UnirsePartida(anfitrion.Nombre, idPartida);
-            await manejador.EmpezarPartida(anfitrion.Nombre,null);
+            await manejador.UnirsePartidaAsync(anfitrion.Nombre, idPartida);
+            await manejador.EmpezarPartidaAsync(anfitrion.Nombre,null);
             Assert.IsTrue(manejador.ValidarPartida(idPartida), "La partida deberia exisitir");
             if (implementacionCallback != null)
             {

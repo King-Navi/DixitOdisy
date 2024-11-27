@@ -9,6 +9,7 @@ namespace WpfCliente.Utilidad
     using System;
     using System.Threading;
     using System.Windows;
+    using WpfCliente.Contexto;
     using WpfCliente.GUI;
 
     public class SingletonHilo
@@ -18,7 +19,6 @@ namespace WpfCliente.Utilidad
         private bool ejecutando = false;
         private readonly ManualResetEvent detenerEvento = new ManualResetEvent(false);
         private const int INTERVALO_EJECUCION_SEGUNDOS = 5;
-        public event Action ServidorCaido;
         public static SingletonHilo Instancia => instancia.Value;
         private SingletonHilo() { }
         public bool Iniciar()
@@ -26,8 +26,10 @@ namespace WpfCliente.Utilidad
             Detener();
             ejecutando = true;
             detenerEvento.Reset();
-            hilo = new Thread(Ejecutar);
-            hilo.IsBackground = true;
+            hilo = new Thread(Ejecutar)
+            {
+                IsBackground = true
+            };
             hilo.Start();
             return true;
         }
@@ -45,7 +47,6 @@ namespace WpfCliente.Utilidad
 
         private async void Ejecutar()
         {
-            Console.WriteLine("Hilo en ejecución...");
             try
             {
                 while (ejecutando)
@@ -57,14 +58,7 @@ namespace WpfCliente.Utilidad
                     bool conexionExitosa = await Conexion.VerificarConexionSinBaseDatosAsync();
                     if (!conexionExitosa)
                     {
-                        if (ServidorCaido != null)
-                        {
-                            ServidorCaido.Invoke();
-                        }
-                        else
-                        {
-                            Console.WriteLine("No hay suscriptores para ServidorCaido.");
-                        }
+                        SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.Reconectado, new ReconectandoWindow());
                         Detener();
                         return;
                     }
@@ -74,7 +68,6 @@ namespace WpfCliente.Utilidad
             {
                 ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
-            Console.WriteLine("Hilo finalizado.");
         }
     }
 

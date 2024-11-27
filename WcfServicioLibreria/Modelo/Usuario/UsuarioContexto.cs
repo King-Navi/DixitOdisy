@@ -46,7 +46,7 @@ namespace WcfServicioLibreria.Modelo
                         Foto = new MemoryStream(usuarioDatos.fotoPerfil)
                     };
                
-                    AmistadSesionCallBack?.CambiarEstadoAmigo(amigo);
+                    AmistadSesionCallBack?.CambiarEstadoAmigoCallback(amigo);
                 }
                 catch (Exception excecpion)
                 {
@@ -59,7 +59,7 @@ namespace WcfServicioLibreria.Modelo
         {
             try
             {
-                AmistadSesionCallBack.CambiarEstadoAmigo(amigo);
+                AmistadSesionCallBack.CambiarEstadoAmigoCallback(amigo);
             }
             catch (Exception excecpion)
             {

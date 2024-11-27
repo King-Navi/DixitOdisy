@@ -23,7 +23,7 @@ namespace Pruebas.Servidor.Utilidades
         public event EventHandler Faulted;
         public event EventHandler Opened;
         public event EventHandler Opening;
-        public void CambiarEstadoAmigo(Amigo amigo)
+        public void CambiarEstadoAmigoCallback(Amigo amigo)
         {
             amigos.AddOrUpdate(amigo.Nombre,
                 amigo,                  

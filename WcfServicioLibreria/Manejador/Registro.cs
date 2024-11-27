@@ -11,7 +11,7 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioRegistro
     {
-
+        private const string NOMBRE_EN_USO = "Gamertag en uso";
         public bool RegistrarUsuario(Modelo.Usuario _usuario)
         {
             bool resultado = false;
@@ -38,7 +38,7 @@ namespace WcfServicioLibreria.Manejador
                 {
                     EsGamertagDuplicado = true
                 };
-                throw new FaultException<BaseDatosFalla>(excepcion, new FaultReason("Gamertag en uso"));
+                throw new FaultException<BaseDatosFalla>(excepcion, new FaultReason(NOMBRE_EN_USO));
             }
             catch (Exception excepcion)
             {
@@ -48,11 +48,7 @@ namespace WcfServicioLibreria.Manejador
 
             return resultado;
         }
-        /// <summary>
-        /// Metodo para evaluar si cumple con nuestro criterio de encriptacion por SHA256
-        /// </summary>
-        /// <param name="hash"></param>
-        /// <returns>Si es valido retorna true, en caso contraio false</returns>
+
         public bool EsSha256Valido(string hash)
         {
             if (hash.Length != 64) return false;

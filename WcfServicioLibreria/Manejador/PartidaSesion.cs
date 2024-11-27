@@ -8,7 +8,7 @@ namespace WcfServicioLibreria.Manejador
     public partial class ManejadorPrincipal : IServicioPartidaSesion
     {
 
-        public async Task UnirsePartida(string usuarioNombre, string idPartida)
+        public async Task UnirsePartidaAsync(string usuarioNombre, string idPartida)
         {
             if (!ValidarPartida(idPartida))
             {
@@ -84,7 +84,7 @@ namespace WcfServicioLibreria.Manejador
             throw new NotImplementedException();
         }
 
-        public async Task EmpezarPartida(string nombreJugador, string idPartida) 
+        public async Task EmpezarPartidaAsync(string nombreJugador, string idPartida) 
         {
             if (!ValidarPartida(idPartida))
             {

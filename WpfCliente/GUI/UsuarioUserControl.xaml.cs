@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
@@ -27,7 +28,7 @@ namespace WpfCliente.GUI
                         IdUsuario = SingletonCliente.Instance.IdUsuario,
                     Nombre = SingletonCliente.Instance.NombreUsuario
                     };
-                    Conexion.Amigos.EnviarSolicitudAmistad(usuarioActual, usuario.Nombre);
+                    SingletonAmigos.Instancia.Amigos.EnviarSolicitudAmistad(usuarioActual, usuario.Nombre);
                     buttonEnviarSolicitud.Visibility = Visibility.Collapsed;
                 }
 

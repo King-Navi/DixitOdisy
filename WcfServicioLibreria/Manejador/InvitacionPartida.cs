@@ -23,7 +23,7 @@ namespace WcfServicioLibreria.Manejador
                 if (jugador.InvitacionPartidaCallBack is IInvitacionPartidaCallback callback)
                 {
                     InvitacionPartida invitacion = new InvitacionPartida(gamertagEmisor, codigoSala, gamertagReceptor);
-                    callback?.RecibirInvitacion(invitacion);
+                    callback?.RecibirInvitacionCallback(invitacion);
                     Console.WriteLine($"Invitación enviada a {gamertagReceptor} para unirse a la sala {codigoSala}");
                     return true;
                 }

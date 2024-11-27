@@ -9,6 +9,7 @@ namespace WcfServicioLibreria.Utilidades
         private const string NOMBRE_LOG = "Log";
         private const string SEPARADOR_NOMBRE_FECHA = "_";
         private const string EXTENSION_LOG = ".txt";
+        private const string NOMBRE_CARPETA_INCIDENTES = "Logs";
         private static ILogger logger;
 
         private static void ConfigurarLogger(string logFilePath)
@@ -26,7 +27,7 @@ namespace WcfServicioLibreria.Utilidades
             string archivoLoggerNombre = NOMBRE_LOG + SEPARADOR_NOMBRE_FECHA + fecha + EXTENSION_LOG;
 
             string rutaBase = AppDomain.CurrentDomain.BaseDirectory;
-            string rutaLogs = System.IO.Path.Combine(rutaBase, "Logs");
+            string rutaLogs = System.IO.Path.Combine(rutaBase, NOMBRE_CARPETA_INCIDENTES);
             if (!System.IO.Directory.Exists(rutaLogs))
             {
                 System.IO.Directory.CreateDirectory(rutaLogs);

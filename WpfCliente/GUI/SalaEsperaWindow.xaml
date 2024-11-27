@@ -13,14 +13,23 @@
             <ImageBrush ImageSource="/Recursos/fondoSala.png" Stretch="Fill"/>
         </Grid.Background>
 
+        <Image x:Name="imagenFlechaAtras" Source="/Recursos/flechaAtras.png" Margin="10,0,0,0" Cursor="Hand" MouseLeftButtonDown="ClicImagenFlechaAtras" Width="78" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
         <!-- Código de la sala a la izquierda -->
-        <StackPanel Background="AntiqueWhite" HorizontalAlignment="Left" VerticalAlignment="Top" Height="123" Width="257" Margin="0,5,0,0"/>
+        <StackPanel Background="AntiqueWhite" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,90,0,0">
+            <Label x:Name="labelCodigoSala" Content="Código de la sala:" FontFamily="ROG Fonts" FontSize="16" 
+                HorizontalContentAlignment="Left" ToolTip="Haga clic para copiar el código" HorizontalAlignment="Left" VerticalAlignment="Top"
+                MouseLeftButtonUp="ClicButtonCopiar" Width="257" Height="73" Margin="0,5,0,0"/>
+            <Label x:Name="labelCodigo" Content="" FontFamily="ROG Fonts" FontSize="16" 
+                HorizontalContentAlignment="Center" ToolTip="Haga clic para copiar el código" HorizontalAlignment="Left" VerticalAlignment="Top"
+                MouseLeftButtonUp="ClicButtonCopiar" Width="257" Height="50" RenderTransformOrigin="0.5,0.585" Margin="0,2,0,0"/>
+
+        </StackPanel>
 
         <!-- Lista de usuarios en el centro -->
         <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="701" Width="300">
             <Label x:Name="labelUsuariosLobby" Content="Usuarios en el lobby" FontFamily="Lucida Sans Unicode" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Background="#FFD8D2AB"/>
-            <local:ListaUsuariosSalaUserControl x:Name="usuariosSalaUserControl" Height="692" />
+            <local:ListaUsuariosSalaUserControl Height="692" />
         </StackPanel>
 
         <!-- Botones a la derecha -->
@@ -42,13 +51,7 @@
             </ItemsControl>
         </StackPanel>
 
-        <Label x:Name="labelCodigoSala" Content="Código de la sala:" FontFamily="ROG Fonts" FontSize="16" 
-                   HorizontalContentAlignment="Left" ToolTip="Haga clic para copiar el código" HorizontalAlignment="Left" VerticalAlignment="Top"
-                   MouseLeftButtonUp="ClicButtonCopiar" Width="257" Height="73" Margin="0,5,0,0"/>
-        <Label x:Name="labelCodigo" Content="" FontFamily="ROG Fonts" FontSize="16" 
-                HorizontalContentAlignment="Center" ToolTip="Haga clic para copiar el código" HorizontalAlignment="Left" VerticalAlignment="Top"
-                MouseLeftButtonUp="ClicButtonCopiar" Width="257" Height="50" RenderTransformOrigin="0.5,0.585" Margin="0,78,0,0"/>
-
+        
         <Grid>
             <local:ChatUserControl x:Name="chatUserControl" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" />
         </Grid>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
@@ -40,7 +41,7 @@ namespace WpfCliente.GUI
 
                 try
                 {
-                    var listaSolicitudes = Conexion.Amigos.ObtenerSolicitudesAmistad(usuarioActual);
+                    var listaSolicitudes = SingletonAmigos.Instancia.Amigos.ObtenerSolicitudesAmistad(usuarioActual);
                     if (listaSolicitudes == null || listaSolicitudes.Count() == 0)
                     {
                         labelNoHaySolicitudes.Visibility = Visibility.Visible;

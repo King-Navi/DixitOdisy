@@ -639,4 +639,16 @@
   <data name="mensajeIntentoReconexion" xml:space="preserve">
     <value>El intento de reconectartefallo, vuelve mas tarde.</value>
   </data>
+  <data name="tituloGraciaPorJugar" xml:space="preserve">
+    <value>Gracias por jugar</value>
+  </data>
+  <data name="mensajeConsideraRegistrarteInvitado" xml:space="preserve">
+    <value>¡Considera registrarse para mas funciones!</value>
+  </data>
+  <data name="mensajeCamposIntroducidosInvalidos" xml:space="preserve">
+    <value>Los campos introducidos no son valido, reviselos</value>
+  </data>
+  <data name="labelContraseniaNoCoincide" xml:space="preserve">
+    <value>Las contraseñas no coinciden</value>
+  </data>
 </root>

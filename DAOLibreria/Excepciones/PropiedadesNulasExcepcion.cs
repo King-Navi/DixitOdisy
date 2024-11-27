@@ -3,10 +3,6 @@ using System.Linq;
 
 namespace DAOLibreria.Excepciones
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <ref>https://learn.microsoft.com/es-es/dotnet/csharp/fundamentals/exceptions/creating-and-throwing-exceptions#define-exception-classes</ref>
     public class PropiedadesNulasExcepcion : Exception
     {
         public PropiedadesNulasExcepcion() { }

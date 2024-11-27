@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using WpfCliente.Contexto;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
@@ -143,7 +144,7 @@ namespace WpfCliente.GUI
             if (resultado)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloEditarUsuario, Properties.Idioma.mensajeUsuarioEditadoConExito, this);
-                this.Close();
+                SingletonGestorVentana.Instancia.IntentarRegresarInicio();
             }
             else
             {
@@ -153,12 +154,12 @@ namespace WpfCliente.GUI
         }
         private void ClicButtonCancelar(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            SingletonGestorVentana.Instancia.IntentarRegresarInicio();
         }
 
         private void ClicButtonFlechaAtras(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            SingletonGestorVentana.Instancia.IntentarRegresarInicio();
         }
 
         public void HabilitarBotones(bool esHabilitado)

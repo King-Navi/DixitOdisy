@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -57,7 +58,8 @@ namespace WpfCliente.GUI
 
         private void ClicButtonRegistrar(object sender, RoutedEventArgs e)
         {
-            SingletonGestorVentana.Instancia.AbrirNuevaVentanaConVuelta(Ventana.RegistrarUsuario,new RegistrarUsuarioWindow() ,Ventana.IniciarSesion);
+            SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.RegistrarUsuario,new RegistrarUsuarioWindow());
+            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.IniciarSesion);
         }
 
         private async void CliButtonIniciarSesion(object sender, RoutedEventArgs e)
@@ -101,6 +103,7 @@ namespace WpfCliente.GUI
         private bool IntentarIniciarSesion() {
             try
             {
+                EvaluarConexionAsync();
                 ServidorDescribelo.IServicioUsuario servicio = new ServidorDescribelo.ServicioUsuarioClient();
                 string contraseniaHash = Encriptacion.OcuparSHA256(passwordBoxContrasenia.Password);
                 Usuario resultadoUsuario = servicio.ValidarCredenciales(textBoxUsuario.Text, contraseniaHash);
@@ -136,6 +139,15 @@ namespace WpfCliente.GUI
                 ManejadorExcepciones.ManejarErrorExcepcion(excepcion, this);
             }
             return false;
+        }
+
+        private async void EvaluarConexionAsync()
+        {
+            var resultado = await Conexion.VerificarConexionAsync(HabilitarBotones, this);
+            if (!resultado)
+            {
+                throw new InvalidOperationException(nameof(EvaluarConexionAsync));
+            }
         }
 
         private void EvaluarExcepcion(FaultException<VetoFalla> veto)
@@ -207,9 +219,10 @@ namespace WpfCliente.GUI
 
         private bool AbrirVentanaMenu()
         {
-            return SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.SalaEspera, new MenuWindow());
+            return SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.Menu, new MenuWindow());
         }
 
+        [DebuggerStepThrough]
         private void TeclaPresionadaEnter(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -259,7 +272,8 @@ namespace WpfCliente.GUI
         private void AbrirVentanaCambiarContrasenia(string gamertag)
         {
             CambiarContraseniaWindow cambiarContraseniaWindow = new CambiarContraseniaWindow(gamertag);
-            SingletonGestorVentana.Instancia.AbrirNuevaVentanaConVuelta(Ventana.CambiarContrasenia, cambiarContraseniaWindow, Ventana.IniciarSesion);
+            SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.CambiarContrasenia, cambiarContraseniaWindow);
+            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.IniciarSesion);
         }
     }
 }

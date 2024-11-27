@@ -40,7 +40,7 @@ namespace WcfServicioLibreria.Manejador
             {
                 do
                 {
-                    idSala = Utilidad.GenerarIdUnico();
+                    idSala = Utilidad.Generar6Caracteres();
                 } while (salasDiccionario.ContainsKey(idSala));
                 Sala salaNueva = new Sala(idSala, nombreUsuarioAnfitrion);
                 bool existeSala = salasDiccionario.TryAdd(idSala, salaNueva);

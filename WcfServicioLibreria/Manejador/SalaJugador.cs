@@ -7,18 +7,21 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioSalaJugador
     {
-        public void ComenzarPartidaAnfrition(string nombre, string idSala , string idPartida)
+        public bool ComenzarPartidaAnfrition(string nombre, string idSala , string idPartida)
         {
+            var resultado = false;
             try
             {
                 salasDiccionario.TryGetValue(idSala, out Sala sala);
                 lock (sala)
                 {
-                    sala.AvisarComienzoPatida(nombre, idPartida);
+                    resultado = sala.AvisarComienzoPatida(nombre, idPartida);
                 }
+                return resultado;
             }
             catch (Exception)
             {
+                return false;
             };
         }
         /// <summary>
@@ -26,7 +29,7 @@ namespace WcfServicioLibreria.Manejador
         /// </summary>
         /// <param name="gamertag"></param>
         /// <param name="idSala"></param>
-        public async Task AgregarJugadorSala(string gamertag, string idSala)
+        public async Task AgregarJugadorSalaAsync(string gamertag, string idSala)
         {
             if (!ValidarSala(idSala))
             {

@@ -42,14 +42,18 @@ namespace WcfServicioLibreria.Modelo
         }
         public void CalcularPodio()
         {
-            var jugadoresOrdenados = Jugadores.OrderByDescending(jugador => jugador.Puntos).ToList();
+            var jugadoresOrdenados = Jugadores
+                .OrderByDescending(jugador => jugador.Puntos).ToList();
 
             PrimerLugar = jugadoresOrdenados.FirstOrDefault();
 
-            SegundoLugar = jugadoresOrdenados.Skip(1).FirstOrDefault(jugador => jugador.Puntos != PrimerLugar?.Puntos);
+            SegundoLugar = jugadoresOrdenados
+                .Skip(1)
+                .FirstOrDefault(jugador => jugador.Puntos != PrimerLugar?.Puntos);
 
-            TercerLugar = jugadoresOrdenados.Skip(2).FirstOrDefault(jugador =>
-                jugador.Puntos != PrimerLugar?.Puntos && jugador.Puntos != SegundoLugar?.Puntos);
+            TercerLugar = jugadoresOrdenados
+                .Skip(2)
+                .FirstOrDefault(jugador => jugador.Puntos != PrimerLugar?.Puntos && jugador.Puntos != SegundoLugar?.Puntos);
         }
 
         internal async Task GuardarPuntajeAsync(List<Tuple<String , int >> listaTuplaNombreIdEstadistica)
@@ -105,7 +109,7 @@ namespace WcfServicioLibreria.Modelo
         {
             if (usuariosEnPartida == null || usuariosEnPartida.Count == 0)
             {
-                throw new ArgumentException("La lista de usuarios en partida está vacía o es nula.");
+                throw new ArgumentException(nameof(AgregarDesdeOtraLista));
             }
 
             foreach (var usuario in usuariosEnPartida)

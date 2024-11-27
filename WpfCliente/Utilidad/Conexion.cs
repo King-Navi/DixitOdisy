@@ -8,34 +8,9 @@ namespace WpfCliente.Utilidad
 {
     public static class Conexion
     {
-        public static ServicioSalaJugadorClient SalaJugador { get; private set; }
         public static ServicioChatMotorClient ChatMotor { get; private set; }
-        public static ServicioAmistadClient Amigos { get; private set; }
         public static ServicioPartidaSesionClient Partida { get; private set; }
         public static ServicioInvitacionPartidaClient InvitacionPartida { get; private set; }
-        public static Task<bool> AbrirConexionSalaJugadorCallbackAsync(IServicioSalaJugadorCallback callback)
-        {
-            SalaJugador = null;
-            Task<bool> resultado = Task.FromResult(false);
-            if (SalaJugador != null)
-            {
-                resultado = Task.FromResult(true);
-            }
-            else
-            {
-                try
-                {
-                    SalaJugador = new ServicioSalaJugadorClient(new System.ServiceModel.InstanceContext(callback));
-                    resultado = Task.FromResult(true);
-                }
-                catch (Exception excepcion)
-                {
-                    ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
-                }
-            }
-            return resultado;
-        }
-
         public static Task<bool> AbrirConexionChatMotorCallbackAsync(IServicioChatMotorCallback callback)
         {
             ChatMotor = null;
@@ -49,29 +24,6 @@ namespace WpfCliente.Utilidad
                 try
                 {
                     ChatMotor = new ServicioChatMotorClient(new System.ServiceModel.InstanceContext(callback));
-                    resultado = Task.FromResult(true);
-                }
-                catch (Exception excepcion)
-                {
-                    ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
-                }
-            }
-            return resultado;
-        }
-
-        public static Task<bool> AbrirConexionAmigosCallbackAsync(IServicioAmistadCallback callback)
-        {
-            Amigos = null;
-            Task<bool> resultado = Task.FromResult(false);
-            if (Amigos != null)
-            {
-                resultado = Task.FromResult(true);
-            }
-            else
-            {
-                try
-                {
-                    Amigos = new ServicioAmistadClient(new System.ServiceModel.InstanceContext(callback));
                     resultado = Task.FromResult(true);
                 }
                 catch (Exception excepcion)
@@ -104,49 +56,6 @@ namespace WpfCliente.Utilidad
             }
             return resultado;
         }
-
-        public static Task<bool> AbrirConexionInvitacionPartidaCallbackAsync(IServicioInvitacionPartidaCallback callback)
-        {
-            InvitacionPartida = null;
-            Task<bool> resultado = Task.FromResult(false);
-            if (InvitacionPartida != null)
-            {
-                resultado = Task.FromResult(true);
-            }
-            else
-            {
-                try
-                {
-                    InvitacionPartida = new ServicioInvitacionPartidaClient(new System.ServiceModel.InstanceContext(callback));
-                    resultado = Task.FromResult(true);
-                }
-                catch (Exception excepcion)
-                {
-                    ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
-                }
-            }
-            return resultado;
-        }
-
-        public static void CerrarSalaJugador()
-        {
-            try
-            {
-                if (SalaJugador != null)
-                {
-                    SalaJugador.Close();
-                }
-
-            }
-            catch (Exception excepcion)
-            {
-                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
-            }
-            finally
-            {
-                SalaJugador = null;
-            }
-        } 
     
         public static void CerrarChatMotor()
         {
@@ -154,7 +63,7 @@ namespace WpfCliente.Utilidad
             {
                 if (ChatMotor != null)
                 {
-                    ChatMotor.Close();
+                    ChatMotor?.Close();
                 }
 
             }
@@ -167,51 +76,6 @@ namespace WpfCliente.Utilidad
                 ChatMotor = null;
             }
         } 
-        
-        public static void CerrarAmigos()
-        {
-            try
-            {
-                if (Amigos != null)
-                {
-                    Amigos.Close();
-                }
-
-            }
-            catch (Exception excepcion)
-            {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
-            }
-            finally
-            {
-                Amigos = null;
-
-            }
-        }
-      
-        public static void CerrarConexionesSalaConChat()
-        {
-            try
-            {
-                if (ChatMotor != null)
-                {
-                    ChatMotor.Close();
-                }
-                if (SalaJugador != null)
-                {
-                    SalaJugador.Close();
-                }
-            }
-            catch (Exception excepcion)
-            {
-                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
-            }
-            finally
-            {
-                ChatMotor = null;
-                SalaJugador = null;
-            }
-        }
       
         public static bool CerrarPartida()
         {
@@ -235,27 +99,6 @@ namespace WpfCliente.Utilidad
             return true;
         }
 
-        public static bool CerrarConexionInvitacionesPartida()
-        {
-            try
-            {
-                if (InvitacionPartida != null)
-                {
-                    InvitacionPartida.Close();
-                    InvitacionPartida = null;
-                }
-            }
-            catch (Exception excepcion)
-            {
-                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
-                return false;
-            }
-            finally
-            {
-                InvitacionPartida = null;
-            }
-            return true;
-        }
     
         private static async Task<bool> HacerPingAsync()
         {
@@ -269,6 +112,22 @@ namespace WpfCliente.Utilidad
             {
                 ManejadorExcepciones.ManejarComponenteFatalExcepcion(enndpointException);
                 return resultado;
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                return resultado;
+            }
+            return resultado;
+        }
+        public static bool HacerPing()
+        {
+            bool resultado = false;
+            try
+            {
+                ServidorDescribelo.IServicioUsuario ping = new ServicioUsuarioClient();
+                resultado = ping.Ping() && ping.PingBD();
+
             }
             catch (Exception excepcion)
             {

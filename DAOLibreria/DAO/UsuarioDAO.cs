@@ -84,11 +84,6 @@ namespace DAOLibreria.DAO
             }
             return false;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="usuarioEditado"></param>
-        /// <returns></returns>
         public static bool EditarUsuario(UsuarioPerfilDTO usuarioEditado)
         {
             bool resultado = false;
@@ -149,12 +144,6 @@ namespace DAOLibreria.DAO
             }
             return false;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="gamertag"></param>
-        /// <param name="contrasenia"></param>
-        /// <returns></returns>
         public static UsuarioPerfilDTO ValidarCredenciales(string gamertag, string contrasenia)
         {
             UsuarioCuenta datosUsuarioCuenta = null;
@@ -165,8 +154,8 @@ namespace DAOLibreria.DAO
                 using (var context = new DescribeloEntities())
                 {
                     datosUsuarioCuenta = context.UsuarioCuenta
-                                                 .Include("Usuario")
-                                                 .SingleOrDefault(cuenta => cuenta.gamertag == gamertag);
+                        .Include("Usuario")
+                        .SingleOrDefault(cuenta => cuenta.gamertag == gamertag);
                     if (datosUsuarioCuenta != null)
                     {
                         var contraseniaCuenta = datosUsuarioCuenta.hashContrasenia.ToUpper();
@@ -179,18 +168,13 @@ namespace DAOLibreria.DAO
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine($"Error en ValidarCredenciales: {ex.Message}");
+
             }
 
             return resultado;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="gamertag"></param>
-        /// <returns></returns>
         public static Usuario ObtenerUsuarioPorNombre(string gamertag)
         {
             Usuario usuario = null;
@@ -199,7 +183,7 @@ namespace DAOLibreria.DAO
                 using (var context = new DescribeloEntities())
                 {
                     usuario = context.Usuario
-                                   .SingleOrDefault(userioFila => userioFila.gamertag == gamertag);
+                        .SingleOrDefault(userioFila => userioFila.gamertag == gamertag);
                 }
             }
 
@@ -217,7 +201,7 @@ namespace DAOLibreria.DAO
                 using (var context = new DescribeloEntities())
                 {
                     usuario = context.Usuario
-                                     .SingleOrDefault(userFila => userFila.idUsuario == idUsuario);
+                        .SingleOrDefault(userFila => userFila.idUsuario == idUsuario);
                 }
             }
             catch (Exception)
@@ -226,11 +210,6 @@ namespace DAOLibreria.DAO
             return usuario;
         }
 
-        /// <summary>
-        /// Obtiene el ID de un usuario por su gamertag.
-        /// </summary>
-        /// <param name="gamertag">El gamertag del usuario.</param>
-        /// <returns>El ID del usuario, o 0 si no se encuentra.</returns>
         public static int ObtenerIdPorNombre(string gamertag)
         {
             try
@@ -238,7 +217,7 @@ namespace DAOLibreria.DAO
                 using (var context = new DescribeloEntities())
                 {
                     var usuario = context.Usuario
-                                         .SingleOrDefault(usuarioFila => usuarioFila.gamertag == gamertag);
+                        .SingleOrDefault(usuarioFila => usuarioFila.gamertag == gamertag);
                     if (usuario != null)
                     {
                         return usuario.idUsuario; 
@@ -250,11 +229,7 @@ namespace DAOLibreria.DAO
             }
             return 0;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="nombres"></param>
-        /// <returns></returns>
+
         public static List<Usuario> ObtenerListaUsuariosPorNombres(List<string> nombres)
         {
             List<Usuario> usuarios = new List<Usuario>();
@@ -273,45 +248,33 @@ namespace DAOLibreria.DAO
             }
             return usuarios;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="gamertag"></param>
-        /// <returns></returns>
-        /// <exception cref="GamertagDuplicadoException"></exception>
         public static bool VerificarNombreUnico(string gamertag)
         {
-            bool resultado = true;
-            Usuario usuario = null;
-            UsuarioCuenta usuarioCuenta = null;
             try
             {
                 using (var context = new DescribeloEntities())
                 {
-                    usuario = context.Usuario
-                                   .SingleOrDefault(userioFila => userioFila.gamertag == gamertag);
-                    usuarioCuenta = context.UsuarioCuenta
-                                   .SingleOrDefault(userioFila => userioFila.gamertag == gamertag);
+                    bool existeEnUsuario = context.Usuario.Any(usuarioFila => usuarioFila.gamertag == gamertag);
+                    bool existeEnUsuarioCuenta = context.UsuarioCuenta.Any(usuarioCuentaFila => usuarioCuentaFila.gamertag == gamertag);
+
+                    if (existeEnUsuario || existeEnUsuarioCuenta)
+                    {
+                        throw new GamertagDuplicadoException(nameof(VerificarNombreUnico));
+                    }
                 }
             }
-
+            catch (GamertagDuplicadoException)
+            {
+                throw;
+            }
             catch (Exception)
             {
+                return false; 
             }
-
-            if (usuario != null || usuarioCuenta != null)
-            {
-                throw new GamertagDuplicadoException($"El gamertag '{gamertag}' ya está en uso.");
-            }
-            return resultado;
+            return true;
         }
 
-        /// <summary>
-        /// Verifica si existe únicamente un usuario con el gamertag y el correo especificados.
-        /// </summary>
-        /// <param name="gamertag">El gamertag del usuario.</param>
-        /// <param name="correo">El correo electrónico del usuario.</param>
-        /// <returns>True si existe exactamente un usuario con ese gamertag y correo, de lo contrario, false.</returns>
+
         public static bool ExisteUnicoUsuarioConGamertagYCorreo(string gamertag, string correo)
         {
             try
@@ -322,7 +285,7 @@ namespace DAOLibreria.DAO
                         .Where(u => u.gamertag == gamertag && u.correo == correo)
                         .Count();
 
-                    return (cantidadUsuarios == 1);
+                    return (cantidadUsuarios >= 1);
                 }
             }
             catch (Exception)
@@ -331,12 +294,7 @@ namespace DAOLibreria.DAO
             }
         }
 
-        /// <summary>
-        /// Edita la contraseña de un usuario especificado por su gamertag.
-        /// </summary>
-        /// <param name="gamertag">El gamertag del usuario.</param>
-        /// <param name="nuevoHashContrasenia">El nuevo hash de la contraseña.</param>
-        /// <returns>True si la contraseña se actualizó correctamente, de lo contrario, false.</returns>
+        
         public static bool EditarContraseniaPorGamertag(string gamertag, string nuevoHashContrasenia)
         {
             bool resultado = false;

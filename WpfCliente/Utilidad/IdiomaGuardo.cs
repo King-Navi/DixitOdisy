@@ -7,12 +7,14 @@ namespace WpfCliente.Persistencia
 {
     public sealed class IdiomaGuardo
     {
+        private const string ESPANOL_TAG_MX = "EspañolTag";
+        private const string ESPANOL_TAG_US = "EnglishTag";
         /// <summary>
         /// Guarda el idioma de la aplicación en español (mexico)
         /// </summary>
         public static void GuardarEspañolMX()
         { 
-            var espanolTag = Application.Current.Resources["EspañolTag"] as string;
+            var espanolTag = Application.Current.Resources[ESPANOL_TAG_MX] as string;
             Properties.Settings.Default.codigoLenguaje = espanolTag;
         }
         /// <summary>
@@ -20,7 +22,7 @@ namespace WpfCliente.Persistencia
         /// </summary>
         public static void GuardarInglesUS()
         {
-            var englishTag = Application.Current.Resources["EnglishTag"] as string;
+            var englishTag = Application.Current.Resources[ESPANOL_TAG_US] as string;
             Properties.Settings.Default.codigoLenguaje = englishTag;
         }
         /// <summary>
@@ -28,7 +30,7 @@ namespace WpfCliente.Persistencia
         /// </summary>
         public static void GuardarIdiomaPredeterminado()
         {
-            var englishTag = Application.Current.Resources["EnglishTag"] as string;
+            var englishTag = Application.Current.Resources[ESPANOL_TAG_US] as string;
             Properties.Settings.Default.codigoLenguaje = englishTag;
         }
         /// <summary>
@@ -40,7 +42,7 @@ namespace WpfCliente.Persistencia
 
             if (string.IsNullOrEmpty(codigoLenguaje))
             {
-                var englishTag = Application.Current.Resources["EnglishTag"] as string;
+                var englishTag = Application.Current.Resources[ESPANOL_TAG_US] as string;
                 Properties.Settings.Default.codigoLenguaje = englishTag;
                 Properties.Settings.Default.Save();
             }

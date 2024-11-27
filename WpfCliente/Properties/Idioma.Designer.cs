@@ -475,6 +475,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Las contraseñas no coinciden.
+        /// </summary>
+        public static string labelContraseniaNoCoincide {
+            get {
+                return ResourceManager.GetString("labelContraseniaNoCoincide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Al menos 1 símbolo (!@#$%^&amp;*()).
         /// </summary>
         public static string labelContraseniaSimbolos {
@@ -871,6 +880,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Los campos introducidos no son valido, reviselos.
+        /// </summary>
+        public static string mensajeCamposIntroducidosInvalidos {
+            get {
+                return ResourceManager.GetString("mensajeCamposIntroducidosInvalidos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No se pueden dejar campos vacíos.
         /// </summary>
         public static string mensajeCamposVacios {
@@ -903,6 +921,15 @@ namespace WpfCliente.Properties {
         public static string mensajeConfirmacionExpulsion {
             get {
                 return ResourceManager.GetString("mensajeConfirmacionExpulsion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¡Considera registrarse para mas funciones!.
+        /// </summary>
+        public static string mensajeConsideraRegistrarteInvitado {
+            get {
+                return ResourceManager.GetString("mensajeConsideraRegistrarteInvitado", resourceCulture);
             }
         }
         
@@ -1398,6 +1425,15 @@ namespace WpfCliente.Properties {
         public static string tituloErrorServidor {
             get {
                 return ResourceManager.GetString("tituloErrorServidor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gracias por jugar.
+        /// </summary>
+        public static string tituloGraciaPorJugar {
+            get {
+                return ResourceManager.GetString("tituloGraciaPorJugar", resourceCulture);
             }
         }
         

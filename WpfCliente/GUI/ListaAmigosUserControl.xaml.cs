@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Threading;
+using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
@@ -13,7 +14,7 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class ListaAmigosUserControl : UserControl, IServicioAmistadCallback, IActualizacionUI
+    public partial class ListaAmigosUserControl : UserControl, IActualizacionUI
     {
         public ObservableCollection<Amigo> Amigos { get; set; } = new ObservableCollection<Amigo>();
         private bool desechado = false;
@@ -21,7 +22,6 @@ namespace WpfCliente.GUI
         private DateTime ultimaActualizacion;
         private const string FORMATO_HORA = "HH:mm:ss";
         private const int VALOR_PARA_INTERVALO = 500;
-        private const string UTILIMA_CONEXION_CONECTADO = "";
         public ListaAmigosUserControl()
         {
             InitializeComponent();
@@ -29,7 +29,7 @@ namespace WpfCliente.GUI
             DataContext = this;
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             ActualizarUI();
-
+            Amigos = SingletonAmigos.Instancia.ListaAmigos;
         }
 
         private void IniciarHora()
@@ -69,63 +69,9 @@ namespace WpfCliente.GUI
             Desechar();
         }
 
-        public void ObtenerAmigoCallback(Amigo amigo)
-        {
-            if (amigo == null)
-            {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCargarAmigosFalla,
-                    Properties.Idioma.mensajeCargarAmigosFalla, this);
-            }
-            else
-            {
-                if (amigo.Estado == EstadoAmigo.Desconectado)
-                {
-                    amigo.EstadoActual = Properties.Idioma.labelDesconectado;
-                }
-                if (amigo.Estado == EstadoAmigo.Conectado)
-                {
-                    amigo.EstadoActual = Properties.Idioma.labelConectado;
-                    amigo.UltimaConexion = UTILIMA_CONEXION_CONECTADO;
-
-                }
-                Amigos.Add(amigo);
-            }
-        }
-
         private void LimpiarItemsControl()
         {
             Amigos.Clear();
-        }
-
-        public void CambiarEstadoAmigo(Amigo amigo)
-        {
-            amigo.BitmapImagen = Imagen.ConvertirStreamABitmapImagen(amigo.Foto);
-            if (amigo != null)
-            {
-                if (amigo.Estado == EstadoAmigo.Conectado)
-                {
-                    var amigoAEliminar = Amigos.FirstOrDefault(busqueda =>
-                        busqueda.Nombre.Equals(amigo.Nombre, StringComparison.OrdinalIgnoreCase));
-                    if (amigoAEliminar != null)
-                    {
-                        Amigos.Remove(amigoAEliminar);
-                        amigo.UltimaConexion = UTILIMA_CONEXION_CONECTADO;
-                        amigo.EstadoActual = Properties.Idioma.labelConectado;
-                        Amigos.Insert(0, amigo);
-                    }
-                }
-                else
-                {
-                    var amigoAEliminar = Amigos.FirstOrDefault(busqueda =>
-                        busqueda.Nombre.Equals(amigo.Nombre, StringComparison.OrdinalIgnoreCase));
-                    if (amigoAEliminar != null)
-                    {
-                        Amigos.Remove(amigoAEliminar);
-                        amigo.EstadoActual = Properties.Idioma.labelDesconectado;
-                        Amigos.Insert(0, amigo);
-                    }
-                }
-            }
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
@@ -144,19 +90,5 @@ namespace WpfCliente.GUI
 
         }
 
-        public void EliminarAmigoCallback(Amigo amigo)
-        {
-            if (amigo == null)
-            {
-                return;
-            }
-            var amigoAEliminar = Amigos.FirstOrDefault(busqueda =>
-                busqueda.Nombre.Equals(amigo.Nombre, StringComparison.OrdinalIgnoreCase));
-
-            if (amigoAEliminar != null)
-            {
-                Amigos.Remove(amigoAEliminar);
-            }
-        }
     }
 }

@@ -16,7 +16,7 @@ namespace WcfServicioLibreria.Contratos
         /// Este método es unidireccional y no devuelve una respuesta directa al llamador.
         /// </remarks>
         [OperationContract(IsOneWay = true)]
-        Task AgregarJugadorSala(string usuario, string idSala);
+        Task AgregarJugadorSalaAsync(string usuario, string idSala);
 
         /// <summary>
         /// Permite al anfitrión de una sala comenzar una partida.
@@ -24,8 +24,9 @@ namespace WcfServicioLibreria.Contratos
         /// <param name="nombre">El nombre del anfitrión que inicia la partida.</param>
         /// <param name="idSala">El identificador de la sala donde se inicia la partida.</param>
         /// <param name="idPartida">El identificador de la partida que se va a iniciar.</param>
-        [OperationContract(IsOneWay = true)]
-        void ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida);
+        /// <returns>True si empezo, false si no empezo</returns>
+        [OperationContract]
+        bool ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida);
 
         /// <summary>
         /// Expulsa a un jugador de una sala.
@@ -58,7 +59,7 @@ namespace WcfServicioLibreria.Contratos
         /// </summary>
         /// <param name="idPartida">El identificador de la partida que ha comenzado.</param>
         [OperationContract(IsOneWay = true)]
-        void EmpezarPartidaCallBack(string idPartida);
+        void EmpezarPartidaCallback(string idPartida);
 
         /// <summary>
         /// Notifica a un jugador si ha sido asignado como anfitrión de la sala.

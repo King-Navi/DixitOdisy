@@ -21,9 +21,9 @@ namespace Pruebas.Servidor.Utilidades
         public event EventHandler Opened;
         public event EventHandler Opening;
 
-        public void ObtenerSessionJugadorCallback(bool sesionAbierta)
+        public void ObtenerSessionJugadorCallback()
         {
-            SesionAbierta = sesionAbierta;
+            SesionAbierta = true;
         }
 
         public void Abort()
@@ -95,5 +95,7 @@ namespace Pruebas.Servidor.Utilidades
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }

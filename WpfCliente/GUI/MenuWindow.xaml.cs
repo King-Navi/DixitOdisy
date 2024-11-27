@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -13,7 +14,7 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class MenuWindow : Window, IServicioInvitacionPartidaCallback, IActualizacionUI, IHabilitadorBotones
+    public partial class MenuWindow : Window, IActualizacionUI, IHabilitadorBotones
     {
         private const int INCREMENTO_PROGRESO_BARRA = 2;
         private const int MAXIMO_TIEMPO_NOTIFICACION = 100;
@@ -24,50 +25,23 @@ namespace WpfCliente.GUI
         private EstadisticaUsuario estadisticas;
         public MenuWindow()
         {
-            InicializarHiloConexion();
             InitializeComponent();
-            //CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
-            //ActualizarUI();
-            ////AbrirConexiones();
-            //ConfigurarTemporizadorNotificacion();
-            //InicializarEstadisticasAsync();
+            SingletonInvitacionPartida.Instancia.InvitacionRecibida += RecibirInvitacion;
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
+            ActualizarUI();
+            AbrirConexiones();
+            ConfigurarTemporizadorNotificacion();
+            InicializarEstadisticasAsync();
 
-        }
-
-        private void InicializarHiloConexion()
-        {
-            SingletonHilo.Instancia.ServidorCaido += EnServidorCaido;
-            bool hiloIniciado = SingletonHilo.Instancia.Iniciar();
-            if (!hiloIniciado)
-            {
-                Console.WriteLine("El hilo ya estaba iniciado.");
-            }
-        }
-        private void EnServidorCaido()
-        {
-            Dispatcher.Invoke(() =>
-            {
-                try
-                {
-                    this.IsEnabled = false;
-                    SingletonGestorVentana.Instancia.CerrarVentana(Ventana.Menu);
-                    SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.Reconectado, new ReconectandoWindow());
-                }
-                catch (Exception excepcion)
-                {
-                    Application.Current.Shutdown();
-                    ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
-                }
-            });
         }
 
         private async void InicializarEstadisticasAsync()
         {
             var resutlado = await Conexion.VerificarConexionAsync(null, null);
-            if (resutlado)
+            if (!resutlado)
             {
                 SingletonGestorVentana.Instancia.CerrarVentana(Ventana.Menu);
-                SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.Reconectado, new IniciarSesion());
+                SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.Reconectado, new ReconectandoWindow());
                 return;
             }
             try
@@ -85,11 +59,11 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void AbrirConexiones()
+        private void AbrirConexiones()
         {
             try
             {
-                var resultadoUsuarioSesion = SingletonUsuarioSessionJugador.Instancia.AbrirConexionUsuarioSesionCallback();
+                var resultadoUsuarioSesion = SingletonUsuarioSessionJugador.Instancia.AbrirConexion();
                 if (!resultadoUsuarioSesion)
                 {
                     VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor,
@@ -98,45 +72,63 @@ namespace WpfCliente.GUI
                     SingletonGestorVentana.Instancia.CerrarVentana(Ventana.Menu);
                     return;
                 }
-                Usuario user = new Usuario
-                {
-                    IdUsuario = SingletonCliente.Instance.IdUsuario,
-                    Nombre = SingletonCliente.Instance.NombreUsuario
-                };
-                SingletonUsuarioSessionJugador.Instancia.UsuarioSesion.ObtenerSessionJugador(user);
-
-                var resultadoAmigo = await Conexion.AbrirConexionAmigosCallbackAsync(amigosUserControl);
-                if (!resultadoAmigo)
-                {
-                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor,
-                        Properties.Idioma.mensajeErrorServidor,
-                        this);
-                    SingletonGestorVentana.Instancia.CerrarVentana(Ventana.Menu);
-                    return;
-                }
-
-                var resultado = await Conexion.Amigos?.AbrirCanalParaAmigosAsync(user);
-                if (!resultado)
-                {
-                    VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloCargarAmigosFalla, Idioma.mensajeCargarAmigosFalla, this);
-                    Application.Current.Shutdown();
-                }
-
-                var resultadoInvitacion = await Conexion.AbrirConexionInvitacionPartidaCallbackAsync(this);
-                if (!resultadoInvitacion)
-                {
-                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor,
-                        Properties.Idioma.mensajeErrorServidor,
-                        this);
-                    SingletonGestorVentana.Instancia.CerrarVentana(Ventana.Menu);
-                    return;
-                }
-                await Conexion.InvitacionPartida.AbrirCanalParaInvitacionesAsync(user);
+                EvaluarAperturaDeCanales(resultadoUsuarioSesion);
             }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarFatalExcepcion(excepcion, this);
             }
+        }
+
+        private void EvaluarAperturaDeCanales(bool esNecesarioAbrir)
+        {
+            if (!esNecesarioAbrir)
+                return;
+            var manejadorServico = new ServicioManejador<ServicioUsuarioClient>();
+            var YaInicioSesion = manejadorServico.EjecutarServicio(llamadaServidor=> 
+                llamadaServidor.YaIniciadoSesion(SingletonCliente.Instance.NombreUsuario));
+            if (YaInicioSesion)
+            {
+                return;
+            }
+            EvaluarAperturaDeCanalesAsync();
+        }
+
+        private async void EvaluarAperturaDeCanalesAsync()
+        {
+            Usuario user = new Usuario
+            {
+                IdUsuario = SingletonCliente.Instance.IdUsuario,
+                Nombre = SingletonCliente.Instance.NombreUsuario
+            };
+            SingletonUsuarioSessionJugador.Instancia.UsuarioSesion.ObtenerSessionJugador(user);
+
+            var resultadoAmigo = SingletonAmigos.Instancia.AbrirConexion();
+            if (!resultadoAmigo)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor,
+                    Properties.Idioma.mensajeErrorServidor,
+                    this);
+                SingletonGestorVentana.Instancia.CerrarVentana(Ventana.Menu);
+                return;
+            }
+            var resultado = await SingletonAmigos.Instancia.Amigos.AbrirCanalParaAmigosAsync(user);
+            if (!resultado)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloCargarAmigosFalla, Idioma.mensajeCargarAmigosFalla, this);
+                Application.Current.Shutdown();
+            }
+
+            var resultadoInvitacion = SingletonInvitacionPartida.Instancia.AbrirConexion();
+            if (!resultadoInvitacion)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor,
+                    Properties.Idioma.mensajeErrorServidor,
+                    this);
+                SingletonGestorVentana.Instancia.CerrarVentana(Ventana.Menu);
+                return;
+            }
+            await SingletonInvitacionPartida.Instancia.InvitacionPartida.AbrirCanalParaInvitacionesAsync(user);
         }
 
         private void ClicButtonCrearSala(object sender, RoutedEventArgs e)
@@ -152,12 +144,7 @@ namespace WpfCliente.GUI
                 return;
             }
             SalaEsperaWindow ventanaSala = new SalaEsperaWindow(idSala);
-            try
-            {
-                ventanaSala.Show();
-
-            }
-            catch (InvalidOperationException)
+            if (!SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.SalaEspera, ventanaSala))
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor,
                     Properties.Idioma.mensajeErrorServidor,
@@ -165,7 +152,7 @@ namespace WpfCliente.GUI
                 SingletonGestorVentana.Instancia.CerrarVentana(Ventana.Menu);
                 return;
             }
-            SingletonGestorVentana.Instancia.OcultarVentana(Ventana.Menu);
+            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.Menu);
         }
 
 
@@ -221,26 +208,6 @@ namespace WpfCliente.GUI
         private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
-            try
-            {
-                try
-                {
-                    SingletonUsuarioSessionJugador.Instancia.CerrarUsuarioSesion();
-                    Conexion.CerrarConexionesSalaConChat();
-                    Conexion.CerrarConexionInvitacionesPartida();
-                    Conexion.CerrarAmigos();
-                }
-                catch (Exception excepcion)
-                {
-                    ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
-                }
-                IniciarSesion iniciarSesion = new IniciarSesion();
-                iniciarSesion.Show();
-            }
-            catch (Exception excepcion)
-            {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
-            }
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
@@ -262,9 +229,11 @@ namespace WpfCliente.GUI
 
         private void ClicButtonImagenAmigos(object sender, RoutedEventArgs e)
         {
-            SingletonGestorVentana.Instancia.AbrirNuevaVentanaConVuelta(Ventana.Amigos, new AmigosWindow(), Ventana.Menu);
+            SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.Amigos, new AmigosWindow());
+            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.Menu);
         }
 
+        [DebuggerStepThrough]
         private void ConfigurarTemporizadorNotificacion()
         {
             timerNotificacion = new DispatcherTimer();
@@ -298,7 +267,7 @@ namespace WpfCliente.GUI
             borderNotificacionGeneral.Visibility = Visibility.Collapsed;
             timerNotificacion.Stop();
         }
-
+        [DebuggerStepThrough]
         private void ContadorNotificacion(object sender, EventArgs e)
         {
             progressTimerGeneral.Value += INCREMENTO_PROGRESO_BARRA;
@@ -361,39 +330,5 @@ namespace WpfCliente.GUI
             buttonRefrescar.IsEnabled = true;
 
         }
-        //private void TratarCerrarVentana()
-        //{
-        //    try
-        //    {
-        //        this.Close();
-        //    }
-        //    catch (Exception excepcion)
-        //    {
-        //        ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
-        //    }
-        //}
-        //private void TratarEsconderVentana()
-        //{
-        //    try
-        //    {
-        //        this.Hide();
-        //    }
-        //    catch (Exception excepcion)
-        //    {
-        //        ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
-        //    }
-        //}
-
-        //private void TratarMostrarVentana()
-        //{
-        //    try
-        //    {
-        //        this.Show();
-        //    }
-        //    catch (Exception excepcion)
-        //    {
-        //        ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
-        //    }
-        //}
     }
 }

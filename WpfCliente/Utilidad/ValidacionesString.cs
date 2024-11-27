@@ -6,15 +6,17 @@ namespace WpfCliente.Utilidad
 {
     public class ValidacionesString
     {
-        private const string GAMERTAG_VALIDO = "^[a-zA-Z0-9_]+$";
+        private const string CARACTERES_VALIDOS = "^[a-zA-Z0-9_]+$";
         private const string EMAIL_VALIDO = "^(?=.{5,100}$)[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         private const string SIMBOLOS_VALIDOS = "^(?=.*[\\W_])";
+        private const string NOMBRE_INVITADO = "guest";
+        private const string ESPACIO_CARACTER = " ";
 
 
 
         public static bool EsGamertagValido(string gamertag)
         {
-            Regex regex = new Regex(GAMERTAG_VALIDO);
+            Regex regex = new Regex(CARACTERES_VALIDOS);
             bool validacionGamertag = true;
 
             if (string.IsNullOrWhiteSpace(gamertag))
@@ -22,15 +24,15 @@ namespace WpfCliente.Utilidad
                 validacionGamertag = false;
                 return validacionGamertag;
             }
-            if (gamertag.Contains(" "))
+            if (gamertag.Contains(ESPACIO_CARACTER))
             {
                 validacionGamertag = false;
             }
-            if (gamertag.Contains("guest"))
+            if (gamertag.Contains(NOMBRE_INVITADO))
             {
                 validacionGamertag = false;
             }
-            if (gamertag.IndexOf("guest", StringComparison.OrdinalIgnoreCase) >= 0)
+            if (gamertag.IndexOf(NOMBRE_INVITADO, StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 validacionGamertag = false;
             }

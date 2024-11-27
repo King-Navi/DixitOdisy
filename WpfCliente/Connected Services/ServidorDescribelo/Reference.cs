@@ -1312,8 +1312,8 @@ namespace WpfCliente.ServidorDescribelo {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IServicioAmistadCallback {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/CambiarEstadoAmigo", ReplyAction="http://tempuri.org/IServicioAmistad/CambiarEstadoAmigoResponse")]
-        void CambiarEstadoAmigo(WpfCliente.ServidorDescribelo.Amigo amigo);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/CambiarEstadoAmigoCallback", ReplyAction="http://tempuri.org/IServicioAmistad/CambiarEstadoAmigoCallbackResponse")]
+        void CambiarEstadoAmigoCallback(WpfCliente.ServidorDescribelo.Amigo amigo);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/ObtenerAmigoCallback", ReplyAction="http://tempuri.org/IServicioAmistad/ObtenerAmigoCallbackResponse")]
         void ObtenerAmigoCallback(WpfCliente.ServidorDescribelo.Amigo amigo);
@@ -1475,8 +1475,8 @@ namespace WpfCliente.ServidorDescribelo {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IServicioChatMotorCallback {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioChatMotor/RecibirMensajeCliente")]
-        void RecibirMensajeCliente(WpfCliente.ServidorDescribelo.ChatMensaje mensaje);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioChatMotor/RecibirMensajeClienteCallback")]
+        void RecibirMensajeClienteCallback(WpfCliente.ServidorDescribelo.ChatMensaje mensaje);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1535,10 +1535,10 @@ namespace WpfCliente.ServidorDescribelo {
         System.Threading.Tasks.Task<bool> VerificarCorreoAsync(WpfCliente.ServidorDescribelo.Usuario usuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioCorreo/VerificarCodigo", ReplyAction="http://tempuri.org/IServicioCorreo/VerificarCodigoResponse")]
-        bool VerificarCodigo(string codigo);
+        bool VerificarCodigo(string codigo, string correoUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioCorreo/VerificarCodigo", ReplyAction="http://tempuri.org/IServicioCorreo/VerificarCodigoResponse")]
-        System.Threading.Tasks.Task<bool> VerificarCodigoAsync(string codigo);
+        System.Threading.Tasks.Task<bool> VerificarCodigoAsync(string codigo, string correoUsuario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioCorreo/VerificarCorreoConGamertag", ReplyAction="http://tempuri.org/IServicioCorreo/VerificarCorreoConGamertagResponse")]
         bool VerificarCorreoConGamertag(WpfCliente.ServidorDescribelo.Usuario usuario);
@@ -1582,12 +1582,12 @@ namespace WpfCliente.ServidorDescribelo {
             return base.Channel.VerificarCorreoAsync(usuario);
         }
         
-        public bool VerificarCodigo(string codigo) {
-            return base.Channel.VerificarCodigo(codigo);
+        public bool VerificarCodigo(string codigo, string correoUsuario) {
+            return base.Channel.VerificarCodigo(codigo, correoUsuario);
         }
         
-        public System.Threading.Tasks.Task<bool> VerificarCodigoAsync(string codigo) {
-            return base.Channel.VerificarCodigoAsync(codigo);
+        public System.Threading.Tasks.Task<bool> VerificarCodigoAsync(string codigo, string correoUsuario) {
+            return base.Channel.VerificarCodigoAsync(codigo, correoUsuario);
         }
         
         public bool VerificarCorreoConGamertag(WpfCliente.ServidorDescribelo.Usuario usuario) {
@@ -1948,11 +1948,11 @@ namespace WpfCliente.ServidorDescribelo {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/AgregarJugadorSala")]
         System.Threading.Tasks.Task AgregarJugadorSalaAsync(string usuario, string idSala);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfrition")]
-        void ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfrition", ReplyAction="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfritionResponse")]
+        bool ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfrition")]
-        System.Threading.Tasks.Task ComenzarPartidaAnfritionAsync(string nombre, string idSala, string idPartida);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfrition", ReplyAction="http://tempuri.org/IServicioSalaJugador/ComenzarPartidaAnfritionResponse")]
+        System.Threading.Tasks.Task<bool> ComenzarPartidaAnfritionAsync(string nombre, string idSala, string idPartida);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/ExpulsarJugadorSala")]
         void ExpulsarJugadorSala(string anfitrion, string jugadorAExpulsar, string idSala);
@@ -1970,8 +1970,8 @@ namespace WpfCliente.ServidorDescribelo {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioSalaJugador/EliminarJugadorSalaCallback", ReplyAction="http://tempuri.org/IServicioSalaJugador/EliminarJugadorSalaCallbackResponse")]
         void EliminarJugadorSalaCallback(WpfCliente.ServidorDescribelo.Usuario jugardoreRetiradoDeSala);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/EmpezarPartidaCallBack")]
-        void EmpezarPartidaCallBack(string idPartida);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/EmpezarPartidaCallback")]
+        void EmpezarPartidaCallback(string idPartida);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioSalaJugador/DelegacionRolCallback")]
         void DelegacionRolCallback(bool esAnfitrion);
@@ -2013,11 +2013,11 @@ namespace WpfCliente.ServidorDescribelo {
             return base.Channel.AgregarJugadorSalaAsync(usuario, idSala);
         }
         
-        public void ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida) {
-            base.Channel.ComenzarPartidaAnfrition(nombre, idSala, idPartida);
+        public bool ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida) {
+            return base.Channel.ComenzarPartidaAnfrition(nombre, idSala, idPartida);
         }
         
-        public System.Threading.Tasks.Task ComenzarPartidaAnfritionAsync(string nombre, string idSala, string idPartida) {
+        public System.Threading.Tasks.Task<bool> ComenzarPartidaAnfritionAsync(string nombre, string idSala, string idPartida) {
             return base.Channel.ComenzarPartidaAnfritionAsync(nombre, idSala, idPartida);
         }
         
@@ -2224,8 +2224,8 @@ namespace WpfCliente.ServidorDescribelo {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IServicioInvitacionPartidaCallback {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioInvitacionPartida/RecibirInvitacion")]
-        void RecibirInvitacion(WpfCliente.ServidorDescribelo.InvitacionPartida invitacion);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioInvitacionPartida/RecibirInvitacionCallback")]
+        void RecibirInvitacionCallback(WpfCliente.ServidorDescribelo.InvitacionPartida invitacion);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

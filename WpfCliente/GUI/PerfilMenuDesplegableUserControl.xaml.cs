@@ -20,9 +20,8 @@ namespace WpfCliente.GUI
 
         private void AbrirEditarVentana(object sender, RoutedEventArgs e)
         {
-            SingletonGestorVentana.Instancia.AbrirNuevaVentanaConVuelta(Ventana.EditarPerfil, 
-                new EditarPerfilWindow(), 
-                Ventana.Menu);
+            SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.EditarPerfil, new EditarPerfilWindow());
+            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.Menu);
         }
 
         private void CerrarSesion(object sender, RoutedEventArgs e)

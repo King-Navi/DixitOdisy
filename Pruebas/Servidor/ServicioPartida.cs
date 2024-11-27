@@ -176,8 +176,8 @@ namespace Pruebas.Servidor
 
             // Arrange
             var idPartida = manejador.CrearPartida(usuarioAnfritrion.Nombre, configuracionGenerica);
-            manejador.UnirsePartida(usuarioAnfritrion.Nombre, idPartida);
-            manejador.UnirsePartida(usuarioNuevo.Nombre, idPartida);
+            manejador.UnirsePartidaAsync(usuarioAnfritrion.Nombre, idPartida);
+            manejador.UnirsePartidaAsync(usuarioNuevo.Nombre, idPartida);
 
             implementacionCallback?.Close();
 

@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WpfCliente.Contexto;
+using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
@@ -24,7 +26,7 @@ namespace WpfCliente.GUI
 
         private void ClicButtonFlechaAtras(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.Amigos);
         }
         private void ClicButtonFlechaRecargar(object sender, MouseButtonEventArgs e)
         {
@@ -114,7 +116,7 @@ namespace WpfCliente.GUI
                 usuarioRemitente.Nombre = SingletonCliente.Instance.NombreUsuario;
                 usuarioRemitente.FotoUsuario = Imagen.ConvertirBitmapImageAMemoryStream(SingletonCliente.Instance.FotoJugador);
 
-                var resultado = Conexion.Amigos.EnviarSolicitudAmistad(usuarioRemitente, gamertagReceptor);
+                var resultado = SingletonAmigos.Instancia.Amigos.EnviarSolicitudAmistad(usuarioRemitente, gamertagReceptor);
                 return resultado;
             }
             catch (Exception ex)
@@ -148,6 +150,7 @@ namespace WpfCliente.GUI
         private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
+            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.Menu);
         }
     }
 }

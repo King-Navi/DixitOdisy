@@ -37,7 +37,7 @@ namespace WpfCliente.GUI
 
         private void ComenzarAnimacionIncioRonda()
         {
-            var rotationAnimation = new DoubleAnimation
+            _ = new DoubleAnimation
             {
                 From = ANGULO_INICIO,
                 To = ANGULO_FIN,

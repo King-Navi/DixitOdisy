@@ -26,7 +26,7 @@ namespace WcfServicioLibreria.Modelo
         #region Campos
         private const int SALA_VACIA = 0;
         private string idCodigoSala;
-        private const int CANTIDAD_MINIMA_JUGADORES = 3;
+        private const int CANTIDAD_MINIMA_JUGADORES = 1;
         private const int CANTIDAD_MAXIMA_JUGADORES = 6;
         private readonly ConcurrentDictionary<string, ISalaJugadorCallback> jugadoresSalaCallbacks = new ConcurrentDictionary<string, ISalaJugadorCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
@@ -39,8 +39,6 @@ namespace WcfServicioLibreria.Modelo
         private IManejadorVeto manejadorVeto;
         #endregion Campos
         #region Propiedades
-        public static int CantidadMaximaJugadores => CANTIDAD_MAXIMA_JUGADORES;
-        public static int CantidadMinimaJugadores => CANTIDAD_MINIMA_JUGADORES;
         public string IdCodigoSala { get => idCodigoSala; internal set => idCodigoSala = value; }
         public string Anfitrion { get; private set; }
 
@@ -331,13 +329,12 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        /// <summary>
-        /// El 
-        /// </summary>
-        /// <param name="nombreSolicitante"></param>
-        /// <param name="idPartida"></param>
         internal bool AvisarComienzoPatida(string nombreSolicitante, string idPartida)
         {
+            if (ContarJugadores() < CANTIDAD_MINIMA_JUGADORES)
+            {
+                return false;
+            }
             if (nombreSolicitante.Equals(Anfitrion, StringComparison.OrdinalIgnoreCase))
             {
 
@@ -350,7 +347,7 @@ namespace WcfServicioLibreria.Modelo
                             jugadoresSalaCallbacks.TryGetValue(nombre, out ISalaJugadorCallback callback);
                             try
                             {
-                                callback.EmpezarPartidaCallBack(idPartida);
+                                callback.EmpezarPartidaCallback(idPartida);
                             }
                             catch (Exception excepcion)
                             {

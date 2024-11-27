@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
+using WpfCliente.Interfaz;
 
 namespace WpfCliente.ImplementacionesCallbacks
 {
-    public sealed class SingletonUsuarioSessionJugador : IServicioUsuarioSesionCallback
+    public sealed class SingletonUsuarioSessionJugador : IServicioUsuarioSesionCallback, IImplementacionCallback
     {
         private static readonly Lazy<SingletonUsuarioSessionJugador> instancia =
             new Lazy<SingletonUsuarioSessionJugador>(() => new SingletonUsuarioSessionJugador());
@@ -21,21 +23,32 @@ namespace WpfCliente.ImplementacionesCallbacks
         {
             InicioSesionEvento?.Invoke(this, EventArgs.Empty);
         }
-        public bool AbrirConexionUsuarioSesionCallback()
+        public bool AbrirConexion()
         {
-            CerrarUsuarioSesion();
+
             try
             {
+                var objectoComunicacion = UsuarioSesion as ICommunicationObject;
+                if (objectoComunicacion?.State == CommunicationState.Opened ||
+                    objectoComunicacion?.State == CommunicationState.Opening)
+                {
+                    return true;
+                }
+                if (objectoComunicacion?.State == CommunicationState.Faulted)
+                {
+                    CerrarConexion();
+                }
                 UsuarioSesion = new ServicioUsuarioSesionClient(new System.ServiceModel.InstanceContext(this));
                 return true;
             }
             catch (Exception excepcion)
             {
+                CerrarConexion();
                 ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
                 return false;
             }
         }
-        public bool CerrarUsuarioSesion()
+        public bool CerrarConexion()
         {
             try
             {

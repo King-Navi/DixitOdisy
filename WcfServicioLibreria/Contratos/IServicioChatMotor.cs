@@ -39,7 +39,7 @@ namespace WcfServicioLibreria.Contratos
         /// </summary>
         /// <param name="mensaje">El mensaje de chat a enviar al cliente.</param>
         [OperationContract(IsOneWay = true)]
-        void RecibirMensajeCliente(ChatMensaje mensaje);
+        void RecibirMensajeClienteCallback(ChatMensaje mensaje);
 
     }
 }

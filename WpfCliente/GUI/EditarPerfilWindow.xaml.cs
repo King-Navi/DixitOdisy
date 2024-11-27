@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using WpfCliente.Contexto;
 using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
@@ -100,7 +101,7 @@ namespace WpfCliente.GUI
 
         private void ClicButtonCancelar(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.EditarPerfil);
         }
 
         private void ClicButtonAceptar(object sender, RoutedEventArgs e)
@@ -296,23 +297,20 @@ namespace WpfCliente.GUI
 
         private void CerrarSesion()
         {
-            try
-            {
-                Conexion.CerrarConexionesSalaConChat();
-                Conexion.CerrarConexionInvitacionesPartida();
-            }
-            catch (Exception excepcion)
-            {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
-            }
-            this.Close();
-            this.Owner.Close();
-
+            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.EditarPerfil);
+            SingletonGestorVentana.Instancia.IntentarRegresarInicio();
         }
 
         private void ClicFlechaAtras(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.EditarPerfil);
+            SingletonGestorVentana.Instancia.IntentarRegresarMenu();
+
+        }
+
+        private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
         }
     }
 }

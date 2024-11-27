@@ -42,7 +42,7 @@ namespace Pruebas.Servidor
 
             // Assert
             Assert.IsTrue(resultado, "La invitación debería haberse enviado correctamente.");
-            callbackInvitacionMock.Verify(c => c.RecibirInvitacion(It.IsAny<InvitacionPartida>()), Times.Once, "El callback debería haber sido llamado exactamente una vez.");
+            callbackInvitacionMock.Verify(c => c.RecibirInvitacionCallback(It.IsAny<InvitacionPartida>()), Times.Once, "El callback debería haber sido llamado exactamente una vez.");
             manejador.DesconectarUsuario(receptor.IdUsuario);
         }
 

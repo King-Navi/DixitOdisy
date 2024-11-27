@@ -16,14 +16,14 @@ namespace WpfCliente.ServidorDescribelo
                     if (ImagenStream == null)
                         return Imagen.CargarImagenDesdeRecursos();
 
-                    var bitmap = new BitmapImage();
-                    bitmap.BeginInit();
-                    bitmap.StreamSource = new MemoryStream(ImagenStream.ToArray());
-                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmap.EndInit();
-                    bitmap.Freeze();
-                    Imagen.EsImagenValida(bitmap);
-                    return bitmap;
+                    var imagen = new BitmapImage();
+                    imagen.BeginInit();
+                    imagen.StreamSource = new MemoryStream(ImagenStream.ToArray());
+                    imagen.CacheOption = BitmapCacheOption.OnLoad;
+                    imagen.EndInit();
+                    imagen.Freeze();
+                    Imagen.EsImagenValida(imagen);
+                    return imagen;
                 }
                 catch (FileFormatException excepcion)
                 {

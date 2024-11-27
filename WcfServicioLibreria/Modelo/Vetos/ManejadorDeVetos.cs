@@ -23,7 +23,7 @@ namespace WcfServicioLibreria.Modelo.Vetos
             {
                 return false;
             }
-            return await BuscarJugadorVeto(usuarioModeloBaseDatos);
+            return await BuscarJugadorVetoAsync(usuarioModeloBaseDatos);
         }
         public async Task<bool> RegistrarExpulsionJugadorAsync(string nombreJugador, string motivo, bool esHacker)
         {
@@ -36,10 +36,10 @@ namespace WcfServicioLibreria.Modelo.Vetos
             {
                 return false;
             }
-            return await BuscarJugadorRegistrarExpulsion(usuarioModeloBaseDatos, motivo, esHacker);
+            return await BuscarJugadorRegistrarExpulsionAsync(usuarioModeloBaseDatos, motivo, esHacker);
         }
 
-        private async Task<bool> BuscarJugadorVeto(DAOLibreria.ModeloBD.Usuario usuarioModeloBaseDatos)
+        private async Task<bool> BuscarJugadorVetoAsync(DAOLibreria.ModeloBD.Usuario usuarioModeloBaseDatos)
         {
             var idUsuarioCuenta = UsuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(usuarioModeloBaseDatos.idUsuarioCuenta);
             if (idUsuarioCuenta == null || idUsuarioCuenta <= ID_INVALIDO)
@@ -61,7 +61,7 @@ namespace WcfServicioLibreria.Modelo.Vetos
             }
 
         }
-        private async Task<bool> BuscarJugadorRegistrarExpulsion(DAOLibreria.ModeloBD.Usuario usuarioModeloBaseDatos , string motivo, bool esHacker)
+        private async Task<bool> BuscarJugadorRegistrarExpulsionAsync(DAOLibreria.ModeloBD.Usuario usuarioModeloBaseDatos , string motivo, bool esHacker)
         {
             var idUsuarioCuenta = UsuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(usuarioModeloBaseDatos.idUsuarioCuenta);
             if (idUsuarioCuenta == null || idUsuarioCuenta <= ID_INVALIDO)

@@ -19,11 +19,8 @@ namespace WcfServicioLibreria.Utilidades
                 return memoriaStream.ToArray();
             }
         }
-        /// <summary>
-        /// Genera un identificador único de 6 caracteres alfanuméricos para las salas.
-        /// </summary>
-        /// <returns>Un identificador de sala único.</returns>
-        public static string GenerarIdUnico()
+
+        public static string Generar6Caracteres()
         {
             const string CARACTERES = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             const int LONGITUD_ID = 6;

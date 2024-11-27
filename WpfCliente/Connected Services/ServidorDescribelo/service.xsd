@@ -104,14 +104,14 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="CambiarEstadoAmigo">
+  <xs:element name="CambiarEstadoAmigoCallback">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="amigo" nillable="true" type="q5:Amigo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="CambiarEstadoAmigoResponse">
+  <xs:element name="CambiarEstadoAmigoCallbackResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
@@ -182,7 +182,7 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="RecibirMensajeCliente">
+  <xs:element name="RecibirMensajeClienteCallback">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="mensaje" nillable="true" type="q9:ChatMensaje" />
@@ -207,6 +207,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="codigo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="correoUsuario" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -479,6 +480,13 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ComenzarPartidaAnfritionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ComenzarPartidaAnfritionResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="ExpulsarJugadorSala">
     <xs:complexType>
       <xs:sequence>
@@ -512,7 +520,7 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="EmpezarPartidaCallBack">
+  <xs:element name="EmpezarPartidaCallback">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="idPartida" nillable="true" type="xs:string" />
@@ -648,7 +656,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RecibirInvitacion">
+  <xs:element name="RecibirInvitacionCallback">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="invitacion" nillable="true" type="q25:InvitacionPartida" />

@@ -35,7 +35,7 @@ namespace WpfCliente.GUI
             }
             if (textBoxEnviarMensaje.Text.Length > MAXIMO_CARACTERES_PERMITIDOS || string.IsNullOrWhiteSpace(textBoxEnviarMensaje.Text))
             {
-                RecibirMensajeCliente(new ChatMensaje
+                RecibirMensajeClienteCallback(new ChatMensaje
                 {
                     Mensaje = Properties.Idioma.mensajeProfe,
                     HoraFecha = DateTime.Now,
@@ -65,7 +65,7 @@ namespace WpfCliente.GUI
             buttonAbrirChat.Visibility = Visibility.Visible;
         }
 
-        public void RecibirMensajeCliente(ChatMensaje mensaje)
+        public void RecibirMensajeClienteCallback(ChatMensaje mensaje)
         {
             textBoxReceptorMensaje.Text += $"{Environment.NewLine} {mensaje.ToString()}";
         }

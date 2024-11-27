@@ -5,66 +5,106 @@ using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Utilidades;
+using System.Runtime.InteropServices;
 
 namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioCorreo
     {
-        public static string codigo;
-        public bool VerificarCorreo(Usuario usuario)
+        public async Task<bool> VerificarCorreoAsync(Usuario usuario)
         {
             try
             {
-                codigo = GenerarCodigo();
+                VerificarUsuarioCorreoNoNulo(usuario);
                 string correoUsuario = usuario.Correo;
-                Task.Run(() => EnviarCorreoAsync(codigo, correoUsuario));
+                string codigo = GenerarCodigo();
+                codigosVerificacion.AddOrUpdate(correoUsuario, (codigo, DateTime.UtcNow), 
+                    (llave, valorViejo) => (codigo, DateTime.UtcNow));
+                return await EnviarCorreoAsync(codigo, correoUsuario);
+            }
+            catch(Exception excepcion) 
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            return false;
+        }
+
+        public async Task<bool> EnviarCorreoAsync(string codigo, string correoUsuario)
+        {
+            try
+            {
+                using (SmtpClient smtpClient = new SmtpClient(SERVIDOR_SMTP, PUERTO_SMTP))
+                {
+                    smtpClient.Credentials = new NetworkCredential(CORREO, CONTRASENIA);
+                    smtpClient.EnableSsl = true;
+
+                    string asunto = "--------------------------";
+                    string cuerpo = "-----> " + codigo + "<-----";
+                    using (MailMessage mail = new MailMessage(CORREO, correoUsuario, asunto, cuerpo))
+                    {
+                        await smtpClient.SendMailAsync(mail);
+                    }
+                }
                 return true;
             }
-            catch(Exception ex) 
+            catch (Exception excepcion)
             {
-                Console.WriteLine("Error al enviar el correo: " + ex.Message);
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+
+            }
+            return false;
+        }
+
+        public bool VerificarCodigo(string codigoRecibido ,string correoUsuario)
+        {
+            if (String.IsNullOrEmpty(codigoRecibido) ||
+                String.IsNullOrEmpty(correoUsuario))
+            {
                 return false;
             }
-        }
-
-        public string GenerarCodigo()
-        {
-            string codigo = Utilidad.GenerarIdUnico();
-            return codigo;
-        }
-        public async Task EnviarCorreoAsync(string codigo, string correoUsuario)
-        {
-            using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587))
+            if (codigosVerificacion.TryRemove(correoUsuario, out var codigoGuardado))
             {
-                smtpClient.Credentials = new NetworkCredential(CORREO, CONTRASENIA);
-                smtpClient.EnableSsl = true;
-
-                string asunto = "Codigo de verificación";
-                string cuerpo = "Tu código es: " + codigo;
-                using (MailMessage mail = new MailMessage(CORREO, correoUsuario, asunto, cuerpo))
-                {
-                    await smtpClient.SendMailAsync(mail);
-                }
+                return codigoGuardado.Codigo == codigoRecibido;
             }
-        }
-
-        public bool VerificarCodigo(string codigoRecibido)
-        {
-            Console.WriteLine($"Código esperado: '{codigo}', Código recibido: '{codigoRecibido}'");
-            return codigo == codigoRecibido;
+            return false;
         }
 
         public bool VerificarCorreoConGamertag(Usuario usuario)
         {
             try
             {
+                VerificarUsuarioCorreoNoNulo(usuario);
                 return DAOLibreria.DAO.UsuarioDAO.ExisteUnicoUsuarioConGamertagYCorreo(usuario.Correo, usuario.Nombre);
             }
-            catch (Exception ex)
+            catch (Exception excepcion)
             {
-                Console.WriteLine("Error al enviar el correo: " + ex.Message);
+                ManejadorExcepciones.ManejarErrorException(excepcion);
                 return false;
             }
+        }
+
+        private static void EliminarCodigosExpirados(object state)
+        {
+            var ahora = DateTime.UtcNow;
+            foreach (var codigo in codigosVerificacion)
+            {
+                if ((ahora - codigo.Value.Creacion).TotalMinutes >= TIEMPO_EXPIRACION_CODIGO_SEGUNDOS)
+                {
+                    codigosVerificacion.TryRemove(codigo.Key, out _);
+                }
+            }
+        }
+        private void VerificarUsuarioCorreoNoNulo(Usuario usuario)
+        {
+            if (usuario == null || String.IsNullOrEmpty(usuario.Correo))
+            {
+                throw new ArgumentNullException(nameof(usuario));
+            }
+        }
+        private string GenerarCodigo()
+        {
+            string codigo = Utilidad.Generar6Caracteres();
+            return codigo;
         }
     }
 }

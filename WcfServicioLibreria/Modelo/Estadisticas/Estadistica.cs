@@ -5,6 +5,7 @@ namespace WcfServicioLibreria.Modelo
     [DataContract]
     public class Estadistica
     {
+        private const int VALOR_POR_DEFECTO = 0;
         [DataMember]
         public int PartidasJugadas { get; set; }
         [DataMember]
@@ -24,13 +25,13 @@ namespace WcfServicioLibreria.Modelo
 
         public Estadistica(DAOLibreria.ModeloBD.Estadisticas estadisticas)
         {
-            PartidasJugadas = estadisticas.partidasJugadas ?? 0;
-            PartidasGanadas = estadisticas.partidasGanadas ?? 0;
-            PartidasMixtaJugadas = estadisticas.vecesTematicaMixto ?? 0;
-            PartidasEspacioJugadas = estadisticas.vecesTematicaEspacio ?? 0;
-            PartidasMitologiaJugadas = estadisticas.vecesTematicaMitologia ?? 0;
-            PartidasAnimalesJugadas = estadisticas.vecesTematicaAnimales ?? 0;
-            PartidasPaisesJugadas = estadisticas.vecesTematicaPaises ?? 0;
+            PartidasJugadas = estadisticas.partidasJugadas ?? VALOR_POR_DEFECTO;
+            PartidasGanadas = estadisticas.partidasGanadas ?? VALOR_POR_DEFECTO;
+            PartidasMixtaJugadas = estadisticas.vecesTematicaMixto ?? VALOR_POR_DEFECTO;
+            PartidasEspacioJugadas = estadisticas.vecesTematicaEspacio ?? VALOR_POR_DEFECTO;
+            PartidasMitologiaJugadas = estadisticas.vecesTematicaMitologia ?? VALOR_POR_DEFECTO;
+            PartidasAnimalesJugadas = estadisticas.vecesTematicaAnimales ?? VALOR_POR_DEFECTO;
+            PartidasPaisesJugadas = estadisticas.vecesTematicaPaises ?? VALOR_POR_DEFECTO;
         }
     }
 }

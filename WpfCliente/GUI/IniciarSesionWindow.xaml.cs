@@ -14,7 +14,7 @@ namespace WpfCliente.GUI
 {
     public partial class IniciarSesion : Window, IActualizacionUI, IHabilitadorBotones
     {
-        private const string RECURSOS_ESTILO_TEXTBOX_ERROR = "ErrorTextBoxStyle";
+        private const string RECURSOS_ESTILO_TEXTBOX_ERROR = "TextBoxEstiloError";
         public IniciarSesion()
         {
             InitializeComponent();
@@ -84,15 +84,15 @@ namespace WpfCliente.GUI
         {
             bool camposValidos = true;
 
-            if (string.IsNullOrWhiteSpace(textBoxUsuario.Text) && textBoxUsuario.Text.Contains(" "))
+            if (!ValidacionesString.EsGamertagValido(textBoxUsuario.Text))
             {
                 textBoxUsuario.Style = (Style)FindResource(RECURSOS_ESTILO_TEXTBOX_ERROR);
                 camposValidos = false;
             }
 
-            if (string.IsNullOrWhiteSpace(passwordBoxContrasenia.Password) && passwordBoxContrasenia.Password.Contains(" "))
+            if (string.IsNullOrWhiteSpace(passwordBoxContrasenia.Password) || passwordBoxContrasenia.Password.Contains(" "))
             {
-                pwBxPasswordMask.Style = (Style)FindResource(RECURSOS_ESTILO_TEXTBOX_ERROR); 
+                textBoxContrasenia.Style = (Style)FindResource(RECURSOS_ESTILO_TEXTBOX_ERROR); 
                 camposValidos = false;
             }
             return camposValidos;
@@ -214,7 +214,7 @@ namespace WpfCliente.GUI
                 if (ValidacionExistenciaJuego.ExisteSala(codigoSala))
                 {
                     SingletonCliente.Instance.NombreUsuario = Utilidades.GenerarGamertagInvitado();
-                    AbrirVentanaSalaAsync(codigoSala);
+                    await AbrirVentanaSalaAsync(codigoSala);
                     this.Hide();
                     return;
                 }
@@ -230,7 +230,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void AbrirVentanaSalaAsync(string idSala)
+        private async Task AbrirVentanaSalaAsync(string idSala)
         {
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
@@ -281,12 +281,12 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void ClicButtonOlvidarContrasenia(object sender, RoutedEventArgs e)
+        private async void ClicButtonOlvidarContrasenia(object sender, RoutedEventArgs e)
         {
-            OlvidarContraseniaAsync();
+            await OlvidarContraseniaAsync();
         }
 
-        private async void OlvidarContraseniaAsync()
+        private async Task OlvidarContraseniaAsync()
         {
             string correoIngresado = SolicitarCorreo();
             if (correoIngresado == null) return;

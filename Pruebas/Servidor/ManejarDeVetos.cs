@@ -10,8 +10,8 @@ namespace Pruebas.Servidor
     [TestClass]
     public class ManejarDeVetos
     {
-        private const string NOMBRE_PROHIBIDO = "guest";
-        private const string NOMBRE_PROHIBIDO_MAYUSCULAS = "GUest";
+        private const string NOMBRE_RESERVADO = "guest";
+        private const string NOMBRE_RESERVADO_MAYUSCULAS = "GUEST";
 
         [TestInitialize]
         public void PruebaConfiguracion()
@@ -28,20 +28,20 @@ namespace Pruebas.Servidor
         }
 
         [TestMethod]
-        public async Task VetaJugador_CuandoNombreProhibido_DeberiaRetornarFalse()
+        public async Task VetaJugador_CuandoNombreReservado_DeberiaRetornarFalse()
         {
             // Arrange
             var manejadorDeVetos = new ManejadorDeVetos();
-            string nombreJugador = "Player" + NOMBRE_PROHIBIDO;
-            string nombreJugadorMayusculasProhido =  NOMBRE_PROHIBIDO_MAYUSCULAS + "Player" ;
+            string nombreJugador = "Player" + NOMBRE_RESERVADO;
+            string nombreJugadorMayusculasReservado =  NOMBRE_RESERVADO_MAYUSCULAS + "Player" ;
 
             // Act
             bool resultado = await manejadorDeVetos.VetaJugadorAsync(nombreJugador);
-            bool resultadoMayusculas = await manejadorDeVetos.VetaJugadorAsync(nombreJugadorMayusculasProhido);
+            bool resultadoMayusculas = await manejadorDeVetos.VetaJugadorAsync(nombreJugadorMayusculasReservado);
 
             // Assert
-            Assert.IsFalse(resultado, "El método debería retornar false cuando el nombre del jugador contiene palabras prohibidas.");
-            Assert.IsFalse(resultadoMayusculas, "El método debería retornar false cuando el nombre del jugador contiene palabras prohibidas.");
+            Assert.IsFalse(resultado, "El método debería retornar false cuando el nombre del jugador contiene palabras reservadas.");
+            Assert.IsFalse(resultadoMayusculas, "El método debería retornar false cuando el nombre del jugador contiene palabras reservadas.");
         }
 
         [TestMethod]
@@ -72,7 +72,7 @@ namespace Pruebas.Servidor
         }
 
         [TestMethod]
-        public async Task RegistrarExpulsionJugador_CuandoNombreProhibido_DeberiaRetornarFalse()
+        public async Task RegistrarExpulsionJugador_CuandoNombreReservado_DeberiaRetornarFalse()
         {
             // Arrange
             var manejadorDeVetos = new ManejadorDeVetos();
@@ -84,7 +84,7 @@ namespace Pruebas.Servidor
             bool resultado = await manejadorDeVetos.RegistrarExpulsionJugadorAsync(nombreJugador, motivo, esHacker);
 
             // Assert
-            Assert.IsFalse(resultado, "El método debería retornar false cuando el nombre del jugador contiene palabras prohibidas.");
+            Assert.IsFalse(resultado, "El método debería retornar false cuando el nombre del jugador contiene palabras reservadas.");
         }
         [TestMethod]
         public async Task RegistrarExpulsionJugador_CuandoJugadorNoExiste_DeberiaRetornarFalse()

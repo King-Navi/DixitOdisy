@@ -30,7 +30,7 @@
             </Style.Resources>
         </Style>
 
-        <Style TargetType="{x:Type TextBox}" x:Key="NormalTextBoxStyle">
+        <Style TargetType="{x:Type TextBox}" x:Key="TextBoxNormal">
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="7" />
@@ -41,7 +41,7 @@
             <Setter Property="Tag" Value="UserName" />
         </Style>
 
-        <Style TargetType="{x:Type TextBox}" x:Key="ErrorTextBoxStyle">
+        <Style TargetType="{x:Type TextBox}" x:Key="TextBoxEstiloError">
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="7" />
@@ -81,7 +81,7 @@
             <Label x:Name="labelContrasenia" FontFamily="Lucida Sans Unicode" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="24" Foreground="Black" 
             Content="Contraseña" Margin="416,0,0,428" Grid.Row="1" Height="38" Width="153"/>
 
-            <TextBox x:Name="pwBxPasswordMask" MaxLength="20" FontFamily="Lucida Sans Unicode Bold" FontSize="22" Foreground="Black"
+            <TextBox x:Name="textBoxContrasenia" MaxLength="20" FontFamily="Lucida Sans Unicode Bold" FontSize="22" Foreground="Black"
             VerticalContentAlignment="Center" Margin="416,130,410,377" Grid.Row="2"
             Focusable="False" BorderBrush="Gray" BorderThickness="2" Background="White"/>
 

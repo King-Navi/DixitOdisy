@@ -67,7 +67,7 @@ namespace WpfCliente.GUI
             stakePaneListaExpulsion.Visibility = Visibility.Visible;
         }
 
-        private async void VerificarConexionAsync()
+        private async Task VerificarConexionAsync()
         {
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
@@ -77,7 +77,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void UnirseSalaAsync(string idSala)
+        private async Task UnirseSalaAsync(string idSala)
         {
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
@@ -98,7 +98,7 @@ namespace WpfCliente.GUI
                 NoHayConexion();
                 return;
             }
-            Conexion.SalaJugador.AgregarJugadorSala(SingletonCliente.Instance.NombreUsuario, idSala);
+            await Conexion.SalaJugador.AgregarJugadorSalaAsync(SingletonCliente.Instance.NombreUsuario, idSala);
             labelCodigo.Content += idSala;
             UnirseChat();
         }
@@ -443,7 +443,7 @@ namespace WpfCliente.GUI
             }
             try
             {
-                resultado = Conexion.InvitacionPartida.EnviarInvitacion(SingletonCliente.Instance.NombreUsuario, 
+                resultado = await Conexion.InvitacionPartida.EnviarInvitacionAsync(SingletonCliente.Instance.NombreUsuario, 
                     SingletonCliente.Instance.IdSala, 
                     gamertagReceptor);
             }
@@ -536,7 +536,7 @@ namespace WpfCliente.GUI
             {
                 try
                 {
-                    Conexion.SalaJugador.ExpulsarJugadorSala(
+                    await Conexion.SalaJugador.ExpulsarJugadorSalaAsync(
                         SingletonCliente.Instance.NombreUsuario,
                         usuario.Nombre,
                         SingletonCliente.Instance.IdSala);

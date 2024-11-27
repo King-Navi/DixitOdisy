@@ -382,7 +382,7 @@ namespace WcfServicioLibreria.Manejador
 
         private void EvaluarIdValido(int identificador)
         {
-            if (identificador <= 0 || identificador <= 0)
+            if (identificador <= 0)
             {
                 throw new ArgumentException();
             }

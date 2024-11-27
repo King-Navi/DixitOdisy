@@ -7,19 +7,12 @@ using System.Security;
 
 namespace DAOLibreria
 {
-    /// <summary>
-    /// Clase estática que proporciona métodos para configurar y probar la cadena de conexión a la base de datos.
-    /// </summary>
     public static class ConfiguradorConexion
     {
         private static string nombreArchivoContext = "DescribeloEntities";
         private static string carpeta = "ModeloBD";
         private static string nombreArchivo = "DescribeloBD";
-        /// <summary>
-        /// Configura la cadena de conexión solicitando al usuario los parámetros de conexión (servidor, base de datos, usuario y contraseña),
-        /// actualiza la cadena de conexión en el archivo App.config y prueba la conexión.
-        /// </summary>
-        /// <returns>Un diccionario con los resultados de la operación, incluyendo un mensaje y un indicador de éxito o error.</returns>
+
         public static Dictionary<string, Object> ConfigurarCadenaConexion(string servidor, string nombreBD, string usuario, string contrasena)
         {
             string nuevaCadenaConexion = $"metadata=res://*/{carpeta}.{nombreArchivo}.csdl|res://*/{carpeta}.{nombreArchivo}.ssdl|res://*/{carpeta}.{nombreArchivo}.msl;" +
@@ -27,13 +20,7 @@ namespace DAOLibreria
             ActualizarCadenaConexionEnAppConfig(nombreArchivoContext, nuevaCadenaConexion);
             return ProbarConexion(servidor, nombreBD, usuario, contrasena);
         }
-        /// <summary>
-        /// Configura la cadena de conexión utilizando una variable de entorno que contiene el servidor, nombre de la base de datos, nombre del usuario y contraseña del usuario;
-        ///  despues actualiza la cadena de conexión en el archivo App.config y prueba la conexión.
-        /// Solo funciona con SQL Autentication
-        /// </summary>
-        /// <param name="nombreVariableEntorno">Nombre de la variable de entorno que contiene la cadena de conexión.</param>
-        /// <returns>Un diccionario con los resultados de la operación, incluyendo un mensaje y un indicador de éxito o error.</returns>
+
         public static Dictionary<string, Object> ConfigurarCadenaConexion(string nombreVariableEntorno)
         {
             Dictionary<string, Object> resultado = new Dictionary<string, Object>();
@@ -46,48 +33,41 @@ namespace DAOLibreria
                     resultado.Add(Llaves.LLAVE_MENSAJE, $"Error: La variable de entorno '{nombreVariableEntorno}' no está configurada o está vacía.");
                     return resultado;
                 }
-                string[] valoresLista = ExtraerValoresDeCadenaConexion(valoresVariableEntorno);
-                if (valoresLista == null)
+                string[] valores = ExtraerYValidarValoresDeVariableEntorno(valoresVariableEntorno);
+                if (valores == null)
                 {
                     throw new Exception("Es vacio al recuperar los valores de ExtraerValoresDeCadenaConexion");
                 }
-                string servidor = valoresLista[0];
-                string nombreBD = valoresLista[1];
-                string usuario = valoresLista[2];
-                string contrasena = valoresLista[3];
-                // Crear la nueva cadena de conexión utilizando los valores obtenidos
+                string servidor = valores[0];
+                string nombreBD = valores[1];
+                string usuario = valores[2];
+                string contrasena = valores[3];
                 string nuevaCadenaConexion = $"metadata=res://*/{carpeta}.{nombreArchivo}.csdl|res://*/{carpeta}.{nombreArchivo}.ssdl|res://*/{carpeta}.{nombreArchivo}.msl;" +
-                                             $"provider=System.Data.SqlClient;provider connection string=\"Server={servidor};Database={nombreBD};User Id={usuario};Password={contrasena};MultipleActiveResultSets=True;App=EntityFramework\";";
+                                             $"provider=System.Data.SqlClient;provider connection string=\"Server={servidor};Database={nombreBD};User Id={usuario};Password={contrasena};" +
+                                             $"MultipleActiveResultSets=True;App=EntityFramework\";";
 
                 ActualizarCadenaConexionEnAppConfig(nombreArchivoContext, nuevaCadenaConexion);
 
-                resultado = ProbarConexion(valoresLista[0], valoresLista[1], valoresLista[2], valoresLista[3]);
+                resultado = ProbarConexion(servidor, nombreBD, usuario, contrasena);
             }
-            catch (ArgumentNullException ex)
+            catch (ArgumentNullException excepcion)
             {
-                // TODO Manejar la excepción si el nombre de la variable de entorno es nulo
                 resultado.Add(Llaves.LLAVE_ERROR, true);
-                resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexion(1)) [ArgumentNullException].  {ex.Message}");
+                resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexion(1)) [ArgumentNullException].  {excepcion.Message}");
             }
-            catch (SecurityException ex)
+            catch (SecurityException excepcion)
             {
-                //TODO Manejar la excepción si no se tiene permiso para acceder a la variable de entorno
                 resultado.Add(Llaves.LLAVE_ERROR, true);
-                resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos (ConfigurarCadenaConexion(1)) [SecurityException].  {ex.Message}");
+                resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos (ConfigurarCadenaConexion(1)) [SecurityException].  {excepcion.Message}");
             }
-            catch (Exception ex)
+            catch (Exception excepcion)
             {
-                //TODO Manejar cualquier otra excepción 
                 resultado.Add(Llaves.LLAVE_ERROR, true);
-                resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexion(1)) [Exception].  {ex.Message}");
+                resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexion(1)) [Exception].  {excepcion.Message}");
             }
             return resultado;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="ruta"></param>
-        /// <returns></returns>
+
         public static Dictionary<string, Object> ConfigurarCadenaConexionRuta() 
         {
             Dictionary<string, Object> resultado = new Dictionary<string, Object>();
@@ -95,35 +75,38 @@ namespace DAOLibreria
             {
                 Console.WriteLine("Ingrese la ruta absoluta del archivo:");
                 string ruta = Console.ReadLine();
-                //string ruta = "E:\\config.txt";
-                if (File.Exists(ruta))
+
+                string[] valores = ExtraerYValidarValoresDeArchivo(ruta);
+
+                if (valores != null)
                 {
-                    string contenidoArchivo = File.ReadAllText(ruta);
+                    string servidor = valores[0];
+                    string nombreBD = valores[1];
+                    string usuario = valores[2];
+                    string contrasena = valores[3];
 
+                    string nuevaCadenaConexion = $"metadata=res://*/{carpeta}.{nombreArchivo}.csdl|res://*/{carpeta}.{nombreArchivo}.ssdl|res://*/{carpeta}.{nombreArchivo}.msl;" +
+                                             $"provider=System.Data.SqlClient;provider connection string=\"Server={servidor};Database={nombreBD};User Id={usuario};Password={contrasena};MultipleActiveResultSets=True;App=EntityFramework\";";
 
-                    ActualizarCadenaConexionEnAppConfig(nombreArchivoContext, contenidoArchivo);
-                    resultado = ProbarConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-"); //FIXME
+                    ActualizarCadenaConexionEnAppConfig(nombreArchivoContext, nuevaCadenaConexion);
+
+                    resultado = ProbarConexion(servidor, nombreBD, usuario, contrasena);
                 }
                 else
                 {
                     resultado.Add(Llaves.LLAVE_ERROR, true);
-                    resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexionruta()) [Exception]. {ruta}");
+                    resultado.Add(Llaves.LLAVE_MENSAJE, $"El archivo no tiene el formato correcto: {ruta}");
                 }
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
                 resultado.Add(Llaves.LLAVE_ERROR, true);
-                resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexionRuta()) [Exception].");
+                resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexionRuta()) [Exception]. {excepcion.Message}");
             }
             return resultado;
 
         }
-        /// <summary>
-        /// Actualiza la cadena de conexión en el archivo App.config.
-        /// Si la cadena de conexión ya existe, la actualiza; si no existe, la crea.
-        /// </summary>
-        /// <param name="nombreCadena">El nombre de la cadena de conexión en el archivo de configuración.</param>
-        /// <param name="nuevaCadena">La nueva cadena de conexión a ser guardada.</param>
+
         private static void ActualizarCadenaConexionEnAppConfig(string nombreCadena, string nuevaCadena)
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
@@ -141,14 +124,6 @@ namespace DAOLibreria
             ConfigurationManager.RefreshSection("connectionStrings");
         }
 
-        /// <summary>
-        /// Prueba la conexión con la base de datos utilizando los parámetros proporcionados (servidor, base de datos, usuario y contraseña).
-        /// </summary>
-        /// <param name="servidor">Nombre del servidor de base de datos.</param>
-        /// <param name="nombreBD">Nombre de la base de datos.</param>
-        /// <param name="usuario">Nombre de usuario para la conexión.</param>
-        /// <param name="contrasena">Contraseña para la conexión.</param>
-        /// <returns>Un diccionario con los resultados de la operación, indicando si la conexión fue exitosa o si ocurrió un error.</returns>
         private static Dictionary<String, Object> ProbarConexion(string servidor, string nombreBD, string usuario, string contrasena)
         {
             Dictionary<String, Object> resultado = new Dictionary<string, object>();
@@ -162,43 +137,70 @@ namespace DAOLibreria
                     resultado.Add(Llaves.LLAVE_MENSAJE, "La conexión a la base de datos fue configurada y establecida exitosamente.");
                 }
             }
-            catch (SqlException ex)
+            catch (SqlException excepcion)
             {
-                //TODO Manejar el error
                 resultado.Add(Llaves.LLAVE_ERROR, true);
-                resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos. (ProbarConexion(4))  {ex.Message}");
+                resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos. (ProbarConexion(4))  {excepcion.Message}");
             }
             return resultado;
 
         }
-        /// <summary>
-        /// Extrae los valores individuales de una cadena los retorna en un array.
-        /// </summary>
-        /// <param name="valoresVariableGlobal">La cadena debe estar separada por " ; " (Codigo ASCII 59)</param>
-        /// <returns>
-        /// Un array de strings conteniendo los componentes de la cadena de conexión: servidor, nombre de base de datos,
-        /// usuario y contraseña terminando con " ; " (Codigo ASCII 59), en ese orden; o null si la cadena no cumple con el formato esperado.
-        /// </returns>
-        /// <remarks>
-        /// La cadena de conexión esperada debe estar en el formato "servidor;nombreBD;usuario;contraseña;".
-        /// Este método asume que la cadena de conexión contiene exactamente cinco componentes separados por punto y coma.
-        /// Si la cantidad de componentes es diferente a cinco, el método retorna null.
-        /// </remarks>
-        private static string[] ExtraerValoresDeCadenaConexion(string valoresVariableGlobal)
+
+        private static string[] ExtraerYValidarValoresDeVariableEntorno(string valoresVariableGlobal)
         {
             string[] partes = valoresVariableGlobal.Split(';');
-            if (partes.Length == 5)
+            try
             {
-                string servidor = partes[0];  
-                string nombreBD = partes[1];  
-                string usuario = partes[2];    
-                string contrasena = partes[3]; 
-                return partes;
+                if (partes.Length == 4)
+                {
+                    foreach (string parte in partes)
+                    {
+                        if (string.IsNullOrWhiteSpace(parte))
+                        {
+                            return null;
+                        }
+                    }
+                    return partes;
+                }
             }
-            else
+
+            catch (Exception excepcion)
             {
-                return null;
+                Console.WriteLine($"Error al procesar la variable de entorno: {excepcion.Message}");
             }
+
+            return null;
+        }
+
+        private static string[] ExtraerYValidarValoresDeArchivo(string rutaArchivo)
+        {
+            if (!File.Exists(rutaArchivo))
+            {
+                throw new FileNotFoundException($"El archivo no existe: {rutaArchivo}");
+            }
+
+            try
+            {
+                string contenidoArchivo = File.ReadAllText(rutaArchivo);
+                string[] partes = contenidoArchivo.Split(';');
+                if (partes.Length == 4)
+                {
+                    foreach (string parte in partes)
+                    {
+                        if (string.IsNullOrWhiteSpace(parte))
+                        {
+                            return null;
+                        }
+                    }
+                    return partes;
+                }
+            }
+            catch (Exception excepcion)
+            {
+                Console.WriteLine($"Error al procesar el archivo: {excepcion.Message}");
+            }
+
+            return null;
         }
     }
     public static class Llaves

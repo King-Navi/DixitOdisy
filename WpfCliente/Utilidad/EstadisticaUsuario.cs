@@ -1,4 +1,5 @@
-﻿using WpfCliente.ServidorDescribelo;
+﻿using System.Threading.Tasks;
+using WpfCliente.ServidorDescribelo;
 
 namespace WpfCliente.Utilidad
 {
@@ -8,29 +9,29 @@ namespace WpfCliente.Utilidad
 
         public EstadisticaUsuario(int idUsuario)
         {
-            SolicitarEstadisiticas(idUsuario);
+            SolicitarEstadisticas(idUsuario);
         }
 
-        public void SolicitarEstadisiticas(int idUsuario)
+        public void SolicitarEstadisticas(int idUsuario)
         {
             var manejadorServicio = new ServicioManejador<ServicioEstadisticasClient>();
-            var resutlado = manejadorServicio.EjecutarServicio(servicio =>
+            var resultado = manejadorServicio.EjecutarServicio(servicio =>
                 servicio.ObtenerEstadisitca(idUsuario
            ));
-            if (resutlado != null)
+            if (resultado != null)
             {
-                Estadistica = resutlado;
+                Estadistica = resultado;
             }
         }   
-        public async void SolicitarEstadisiticasAsync(int idUsuario)
+        public async Task SolicitarEstadisticasAsync(int idUsuario)
         {
             var manejadorServicio = new ServicioManejador<ServicioEstadisticasClient>();
-            var resutlado = await manejadorServicio.EjecutarServicioAsync(servicio =>
+            var resultado = await manejadorServicio.EjecutarServicioAsync(servicio =>
                 servicio.ObtenerEstadisitcaAsync(idUsuario
            ));
-            if (resutlado != null)
+            if (resultado != null)
             {
-                Estadistica = resutlado;
+                Estadistica = resultado;
             }
         }
 

@@ -48,7 +48,7 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\IdiomaGuardo.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\CambiarIdiomaUserControl.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\IniciarSesionWindow.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Imagen.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\LoggerManagador.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ManejadorLogger.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ManejadorExcepciones.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Servidor\Usuario.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Utilidades.cs

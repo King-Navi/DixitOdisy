@@ -94,7 +94,7 @@
             <Label Content="*" HorizontalAlignment="Left" Margin="628,414,0,0" VerticalAlignment="Top" Foreground="Red" Height="25" RenderTransformOrigin="0.426,0.32" Width="18" FontFamily="Arial" FontSize="20"/>
 
             <Button  x:Name="buttonRegistrarUsuario" Content="Crear cuenta" VerticalAlignment="Top" Background="#E0DCC7" Foreground="Black" BorderBrush="Gray" BorderThickness="2"
-            FontFamily="Lucida Sans Unicode" FontSize="24" Height="59" Margin="950,669,28,0" Click="ClicButtonRegistrarUsuarioAsync" Cursor="Hand"/>
+            FontFamily="Lucida Sans Unicode" FontSize="24" Height="59" Margin="950,669,28,0" Click="ClicButtonRegistrarUsuario" Cursor="Hand"/>
 
             <Label x:Name="labelCorreoInvalido" Content="Correo inválido" HorizontalAlignment="Left" Margin="434,315,0,0" VerticalAlignment="Top" Foreground="#FFF40000" Height="28" RenderTransformOrigin="0.426,0.32" Width="300" FontSize="14" FontWeight="Bold" Visibility="Hidden" FontFamily="Arial"/>
             <Label x:Name="labelCorreoExistente" Content="Correo previamnete registrado" HorizontalAlignment="Left" Margin="434,315,0,0" VerticalAlignment="Top" Foreground="#FFF40000" Height="28" RenderTransformOrigin="0.426,0.32" Width="300" FontSize="14" FontWeight="Bold" Visibility="Hidden" FontFamily="Arial"/>

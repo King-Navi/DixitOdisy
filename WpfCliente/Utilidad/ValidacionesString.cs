@@ -6,74 +6,93 @@ namespace WpfCliente.Utilidad
 {
     public class ValidacionesString
     {
-        private const string GAMERTAG_VALIDO = "^[a-zA-Z0-9_]+$";
+        private const string GAMERTAG_VALIDO = "^[a-zA-Z0-9_]{5,20}$";
         private const string EMAIL_VALIDO = "^(?=.{5,100}$)[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         private const string SIMBOLOS_VALIDOS = "^(?=.*[\\W_])";
-
+        private const string PALABRA_RESERVADA_GUEST = "guest";
 
 
         public static bool EsGamertagValido(string gamertag)
         {
-            Regex regex = new Regex(GAMERTAG_VALIDO);
-            bool validacionGamertag = true;
+            bool validacionGamertag = false;
 
             if (string.IsNullOrWhiteSpace(gamertag))
             {
-                validacionGamertag = false;
                 return validacionGamertag;
             }
             if (gamertag.Contains(" "))
             {
-                validacionGamertag = false;
+                return validacionGamertag;
             }
-            if (gamertag.Contains("guest"))
+            if (gamertag.Contains(PALABRA_RESERVADA_GUEST))
             {
-                validacionGamertag = false;
+                return validacionGamertag;
             }
-            if (gamertag.IndexOf("guest", StringComparison.OrdinalIgnoreCase) >= 0)
+            if (gamertag.IndexOf(PALABRA_RESERVADA_GUEST, StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                validacionGamertag = false;
+                return validacionGamertag;
             }
 
-            return regex.IsMatch(gamertag.Trim()) && validacionGamertag;
+            try
+            {
+                Regex regex = new Regex(GAMERTAG_VALIDO, RegexOptions.None, TimeSpan.FromMilliseconds(50));
+                return regex.IsMatch(gamertag.Trim());
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return validacionGamertag;
+            }
+
         }
 
         public static bool EsCorreoValido(string correo)
         {
-            Regex regex = new Regex(EMAIL_VALIDO);
-            bool validacionCorreo = true;
+            bool validacionCorreo = false;
+
+            if (string.IsNullOrWhiteSpace(correo))
+            {
+                return validacionCorreo;
+            }
+            if (correo.Contains(" "))
+            {
+                return validacionCorreo;
+            }
             try
             {
                 MailAddress mail = new MailAddress(correo);
             }
             catch (FormatException)
             {
-                validacionCorreo = false;
+                return validacionCorreo;
             }
             catch(Exception)
             {
-                validacionCorreo = false;
-            }
-
-            if (string.IsNullOrWhiteSpace(correo))
-            {
-                validacionCorreo = false;
-                return validacionCorreo;
-            }
-            if(correo.Contains(" "))
-            {
-                validacionCorreo = false;
                 return validacionCorreo;
             }
 
-            return regex.IsMatch(correo.Trim()) && validacionCorreo;
+            try
+            {
+                Regex regex = new Regex(EMAIL_VALIDO, RegexOptions.None, TimeSpan.FromMilliseconds(50));
+                return regex.IsMatch(correo.Trim());
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return validacionCorreo;
+            }
         }
 
         public static bool EsSimboloValido(string password)
         {
-            Regex regex = new Regex(SIMBOLOS_VALIDOS);
+            try
+            {
+                Regex regex = new Regex(SIMBOLOS_VALIDOS, RegexOptions.None, TimeSpan.FromMilliseconds(50));
 
-            return regex.IsMatch(password.Trim());
+                return regex.IsMatch(password.Trim());
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
         }
     }
 }

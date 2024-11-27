@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -126,7 +127,7 @@ namespace WpfCliente.GUI
             usuarioEditado.ContraseniaHASH = Encriptacion.OcuparSHA256(contrasenia);
         }
 
-        private async void GuardarCambiosUsuarioAsync(Usuario usuarioEditado)
+        private async Task GuardarCambiosUsuarioAsync(Usuario usuarioEditado)
         {
             var resultadoConexion = await Conexion.VerificarConexion(HabilitarBotones,this);
             if (!resultadoConexion)
@@ -144,12 +145,13 @@ namespace WpfCliente.GUI
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloEditarUsuario, Properties.Idioma.mensajeUsuarioEditadoConExito, this);
                 this.Close();
+                return;
             }
             else
             {
                 VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloEditarUsuario, Idioma.mensajeUsuarioEditadoFallo, this);
+                return;
             }
-
         }
         private void ClicButtonCancelar(object sender, RoutedEventArgs e)
         {

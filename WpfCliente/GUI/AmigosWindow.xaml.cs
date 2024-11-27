@@ -58,12 +58,12 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void ClicButtonNuevaSolicitud(object sender, MouseButtonEventArgs e)
+        private async void ClicButtonNuevaSolicitudAsync(object sender, MouseButtonEventArgs e)
         {
-            IntentarEnviarSolicitudAsync();
+            await IntentarEnviarSolicitudAsync();
         }
 
-        private async void IntentarEnviarSolicitudAsync()
+        private async Task IntentarEnviarSolicitudAsync()
         {
             string gamertagSolicitud = VentanasEmergentes.AbrirVentanaModalGamertag(this);
 
@@ -102,7 +102,7 @@ namespace WpfCliente.GUI
                 usuarioRemitente.Nombre = SingletonCliente.Instance.NombreUsuario;
                 usuarioRemitente.FotoUsuario = Imagen.ConvertirBitmapImageAMemoryStream(SingletonCliente.Instance.FotoJugador);
 
-                var resultado = Conexion.Amigos.EnviarSolicitudAmistad(usuarioRemitente, gamertagReceptor);
+                var resultado = await Conexion.Amigos.EnviarSolicitudAmistadAsync(usuarioRemitente, gamertagReceptor);
                 if (!resultado)
                 {
                     VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadFallida, this);

@@ -18,7 +18,7 @@
         <!-- Elementos de la ventana -->
         <Image x:Name="imagenFlechaAtras" Source="/Recursos/flechaAtras.png" Margin="38,37,1066,622" Cursor="Hand" MouseLeftButtonDown="ClicButtonFlechaAtras"/>
         <Image x:Name="imagenFlechaRecargar" Source="/Recursos/flechaRecargar.png" Margin="1064,37,40,622" Cursor="Hand" MouseLeftButtonDown="ClicButtonFlechaRecargar"/>
-        <Image x:Name="imagenAgregarAmigo" Source="/Recursos/agregarAmigo.png" Margin="50,608,1042,45" Cursor="Hand" MouseLeftButtonDown="ClicButtonNuevaSolicitud"/>
+        <Image x:Name="imagenAgregarAmigo" Source="/Recursos/agregarAmigo.png" Margin="50,608,1042,45" Cursor="Hand" MouseLeftButtonDown="ClicButtonNuevaSolicitudAsync"/>
         <Grid>
             <local:ListaSolicitudesAmistadUserControl x:Name="listaSolicitudesAmistadUserControl" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>

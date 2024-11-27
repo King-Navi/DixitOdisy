@@ -46,7 +46,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void AbrirConexionesAsync()
+        private async Task AbrirConexionesAsync()
         {
             try
             {
@@ -85,7 +85,7 @@ namespace WpfCliente.GUI
                     IdUsuario = SingletonCliente.Instance.IdUsuario,
                     Nombre = SingletonCliente.Instance.NombreUsuario
                 };
-                Conexion.UsuarioSesion.ObtenerSessionJugador(user);
+                await Conexion.UsuarioSesion.ObtenerSessionJugadorAsync(user);
             }
             catch (Exception excepcion)
             {
@@ -93,12 +93,12 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void ClicButtonCrearSala(object sender, RoutedEventArgs e)
+        private async void ClicButtonCrearSalaAsync(object sender, RoutedEventArgs e)
         {
-            AbrirVentanaSalaAsync(null);
+            await AbrirVentanaSalaAsync(null);
         }
 
-        private async void AbrirVentanaSalaAsync(string idSala)
+        private async Task AbrirVentanaSalaAsync(string idSala)
         {
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
@@ -148,14 +148,14 @@ namespace WpfCliente.GUI
             await Conexion.InvitacionPartida.AbrirCanalParaInvitacionesAsync(user);
         }
 
-        private void ClicButtonUnirseSala(object sender, RoutedEventArgs e)
+        private async void ClicButtonUnirseSalaAsync(object sender, RoutedEventArgs e)
         {
             bool esInvitacion = false;
             string _codigoSala = null;
-            UnirseASalaAsync(esInvitacion, _codigoSala);
+            await UnirseASalaAsync(esInvitacion, _codigoSala);
         }
 
-        private async void UnirseASalaAsync(bool esInvitacion, string _codigoSala)
+        private async Task UnirseASalaAsync(bool esInvitacion, string _codigoSala)
         {
             string codigoSala = "";
             if (esInvitacion)
@@ -175,7 +175,7 @@ namespace WpfCliente.GUI
             {
                 if (ValidacionExistenciaJuego.ExisteSala(codigoSala))
                 {
-                    AbrirVentanaSalaAsync(codigoSala);
+                    await AbrirVentanaSalaAsync(codigoSala);
                     return;
                 }
                 else
@@ -328,7 +328,7 @@ namespace WpfCliente.GUI
             buttonRefrescar.IsEnabled = false;
             try
             {
-                estadisticas.SolicitarEstadisiticas(SingletonCliente.Instance.IdUsuario);
+                estadisticas.SolicitarEstadisticas(SingletonCliente.Instance.IdUsuario);
                 textBlockPartidasGanadas.Text = estadisticas.Estadistica.PartidasGanadas.ToString();
                 textBlockPartidasJugadas.Text = estadisticas.Estadistica.PartidasJugadas.ToString();
                 textBlockNombre.Text = SingletonCliente.Instance.NombreUsuario;

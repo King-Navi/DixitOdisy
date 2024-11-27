@@ -5,12 +5,6 @@ using WcfServicioLibreria.Manejador;
 
 namespace WcfServidor
 {
-    /// <summary>
-    /// Si lee esto profe que sepa que estuvo muy dificil esto (no me baje puntos por el comentario).
-    /// </summary>
-    /// <ref>https://learn.microsoft.com/en-us/dotnet/framework/wcf/samples/custom-service-host</ref>
-    /// <ref>https://learn.microsoft.com/en-us/dotnet/api/system.servicemodel.servicehost?view=netframework-4.8.1</ref>
-    /// <ref>https://learn.microsoft.com/en-us/dotnet/api/system.servicemodel.channels.communicationobject.onopening?view=netframework-4.8.1#system-servicemodel-channels-communicationobject-onopening</ref>
     internal class DescribeloServiceHost : ServiceHost
     {
         private readonly ManejadorPrincipal _manejadorPrincipal;

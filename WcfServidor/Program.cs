@@ -10,7 +10,7 @@ namespace WcfServidor
         static void Main(string[] args)
         {
             var respuesta = InicializadorConfiguracion.IniciarConexion();
-            Console.WriteLine(respuesta.ToString());
+            Console.WriteLine("Error en la conexión: " + respuesta.ToString());
             Program programa = new Program();
             programa.IniciarServidor();
         }

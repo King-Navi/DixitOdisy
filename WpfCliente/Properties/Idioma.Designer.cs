@@ -295,7 +295,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rechazar.
+        ///   Busca una cadena traducida similar a Rechazar.
         /// </summary>
         public static string buttonRechazar {
             get {
@@ -304,7 +304,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Refrescar.
+        ///   Busca una cadena traducida similar a Refrescar.
         /// </summary>
         public static string buttonRefrescar {
             get {
@@ -862,6 +862,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Los campos que ingresaste son inválidos.
+        /// </summary>
+        public static string mensajeCamposInvalidos {
+            get {
+                return ResourceManager.GetString("mensajeCamposInvalidos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No se pueden dejar campos vacíos.
         /// </summary>
         public static string mensajeCamposVacios {
@@ -1299,6 +1308,15 @@ namespace WpfCliente.Properties {
         public static string tituloCambiarContrasenia {
             get {
                 return ResourceManager.GetString("tituloCambiarContrasenia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Campos inválidos.
+        /// </summary>
+        public static string tituloCamposInvalidos {
+            get {
+                return ResourceManager.GetString("tituloCamposInvalidos", resourceCulture);
             }
         }
         

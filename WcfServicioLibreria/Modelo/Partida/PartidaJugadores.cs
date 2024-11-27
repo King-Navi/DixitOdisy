@@ -350,7 +350,7 @@ namespace WcfServicioLibreria.Modelo
                     esInvitado = true;
                     informacionUsuario = new DAOLibreria.ModeloBD.Usuario
                     {
-                        gamertag =nombreJugador, 
+                        gamertag = nombreJugador, 
                         fotoPerfil = File.ReadAllBytes(archivoAleatorio)
                     };
                 }

@@ -8,7 +8,7 @@ namespace DAOLibreria.DAO
 {
     public static class UsuarioDAO
     {
-        private const string PALABRA_PROHIBIDA_GUEST = "guest";
+        private const string PALABRA_RESERVADA_GUEST = "guest";
         /// <summary>
         /// Registra un nuevo usuario en el sistema junto con su cuenta asociada y estadísticas iniciales.
         /// Asegura la coherencia entre el gamertag del usuario y el de la cuenta.
@@ -31,7 +31,7 @@ namespace DAOLibreria.DAO
             {
                 return resultado;
             }
-            if (_usuario.gamertag.ToLower().Contains(PALABRA_PROHIBIDA_GUEST))
+            if (_usuario.gamertag.ToLower().Contains(PALABRA_RESERVADA_GUEST))
             {
                 return resultado;
             }
@@ -98,7 +98,7 @@ namespace DAOLibreria.DAO
             {
                 return resultado;
             }
-            if (usuarioEditado.NombreUsuario.ToLower().Contains(PALABRA_PROHIBIDA_GUEST))
+            if (usuarioEditado.NombreUsuario.ToLower().Contains(PALABRA_RESERVADA_GUEST))
             {
                 return resultado;
             }

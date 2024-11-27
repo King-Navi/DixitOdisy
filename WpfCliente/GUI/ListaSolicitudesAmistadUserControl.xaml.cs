@@ -18,9 +18,9 @@ namespace WpfCliente.GUI
         {
             InitializeComponent();
             DataContext = this;
-            _ = CargarSolicitudesAsync();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             ActualizarUI();
+            _ = CargarSolicitudesAsync();
         }
 
         private async Task<bool> CargarSolicitudesAsync()
@@ -34,7 +34,6 @@ namespace WpfCliente.GUI
                 };
 
                 Window window = Window.GetWindow(this);
-
                 bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, window);
                 if (!conexionExitosa)
                 {
@@ -43,12 +42,14 @@ namespace WpfCliente.GUI
 
                 try
                 {
-                    var listaSolicitudes = Conexion.Amigos.ObtenerSolicitudesAmistad(usuarioActual);
-                    if (listaSolicitudes == null || listaSolicitudes.Count() == 0)
+                    var listaSolicitudes = await Conexion.Amigos.ObtenerSolicitudesAmistadAsync(usuarioActual);
+
+                    if (listaSolicitudes == null || !listaSolicitudes.Any())
                     {
                         labelNoHaySolicitudes.Visibility = Visibility.Visible;
                         return false;
                     }
+
                     Solicitudes.Clear();
                     foreach (var solicitud in listaSolicitudes)
                     {
@@ -64,7 +65,11 @@ namespace WpfCliente.GUI
             }
             catch (Exception)
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorCargarSolicitudesAmistad, Properties.Idioma.mensajeErrorAlCargarLasSolicitudesAmistad, this);
+                VentanasEmergentes.CrearVentanaEmergente(
+                    Properties.Idioma.tituloErrorCargarSolicitudesAmistad,
+                    Properties.Idioma.mensajeErrorAlCargarLasSolicitudesAmistad,
+                    this
+                );
                 return false;
             }
         }

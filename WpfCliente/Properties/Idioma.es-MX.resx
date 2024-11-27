@@ -630,4 +630,10 @@
   <data name="buttonRechazar" xml:space="preserve">
     <value>Rechazar</value>
   </data>
+  <data name="tituloCamposInvalidos" xml:space="preserve">
+    <value>Campos inválidos</value>
+  </data>
+  <data name="mensajeCamposInvalidos" xml:space="preserve">
+    <value>Los campos que ingresaste son inválidos</value>
+  </data>
 </root>

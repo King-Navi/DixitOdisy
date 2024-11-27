@@ -19,6 +19,7 @@ namespace WpfCliente.GUI
             ColocarFondoColorAleatorio();
             DataContextChanged += SolicitudAmistadUserControlCambioDataContext;
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
+            ActualizarUI();
         }
 
         private void SolicitudAmistadUserControlCambioDataContext(object sender, DependencyPropertyChangedEventArgs e)
@@ -52,7 +53,7 @@ namespace WpfCliente.GUI
 
             try
             {
-                var resultado = Conexion.Amigos.AceptarSolicitudAmistad(solicitudAmistadActual.Remitente.IdUsuario, SingletonCliente.Instance.IdUsuario);
+                var resultado = await Conexion.Amigos.AceptarSolicitudAmistadAsync(solicitudAmistadActual.Remitente.IdUsuario, SingletonCliente.Instance.IdUsuario);
 
                 if (resultado)
                 {
@@ -86,7 +87,7 @@ namespace WpfCliente.GUI
 
             try
             {
-                var resultado = Conexion.Amigos.RechazarSolicitudAmistad(solicitudAmistadActual.Remitente.IdUsuario, SingletonCliente.Instance.IdUsuario);
+                var resultado = await Conexion.Amigos.RechazarSolicitudAmistadAsync(solicitudAmistadActual.Remitente.IdUsuario, SingletonCliente.Instance.IdUsuario);
 
                 if (resultado)
                 {

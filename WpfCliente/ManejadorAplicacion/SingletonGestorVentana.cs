@@ -1,34 +1,30 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using WpfCliente.GUI;
 using WpfCliente.ImplementacionesCallbacks;
-using WpfCliente.ManejadorAplicacion;
-using WpfCliente.Utilidad;
 using WpfCliente.Interfaz;
+using WpfCliente.ManejadorAplicacion;
 using WpfCliente.Properties;
-using WpfCliente.ServidorDescribelo;
-using System.Windows.Input;
+using WpfCliente.Utilidad;
 
 namespace WpfCliente.Contexto
 {
     public class SingletonGestorVentana : IObservadorVentana
     {
         private const string NOMBRE_INVITADO = "guest";
+        private const int NO_HAY_VENTANAS = 0;
         private static readonly Lazy<SingletonGestorVentana> instancia =
             new Lazy<SingletonGestorVentana>(() => new SingletonGestorVentana());
         private readonly ConcurrentDictionary<Ventana, VentanaEventoManejador> manejadoresEventos = new ConcurrentDictionary<Ventana, VentanaEventoManejador>();
-
+        private Ventana ventanaAnterior;
+        private readonly Stack<Ventana> ventanaPila = new Stack<Ventana>();   
         public static SingletonGestorVentana Instancia => instancia.Value;
-        private SingletonGestorVentana() 
+        private SingletonGestorVentana()
         {
         }
-        public void Iniciar() 
+        public void Iniciar()
         {
             foreach (var llave in manejadoresEventos.Keys)
             {
@@ -42,9 +38,11 @@ namespace WpfCliente.Contexto
                     ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
                 }
             }
-            IniciarSesion ventanaPrinciapl = new IniciarSesion();
+            IniciarSesionWindow ventanaPrinciapl = new IniciarSesionWindow();
             manejadoresEventos.TryAdd(Ventana.IniciarSesion, new VentanaEventoManejador(ventanaPrinciapl, this, Ventana.IniciarSesion));
             ventanaPrinciapl.Show();
+            ventanaAnterior = Ventana.IniciarSesion;
+            ventanaPila.Push(ventanaAnterior);
         }
 
         public bool CerrarVentana(Ventana nombre)
@@ -66,36 +64,22 @@ namespace WpfCliente.Contexto
             return true;
         }
 
-        
+        //public void IntentarRegresarMenu(Ventana ventanaQueL)
+        //{
+        //    if (CierreInvitado())
+        //    {
+        //        return;
+        //    }
+        //    CerrarTodaVentana();
+        //    AbrirNuevaVentana(Ventana.Menu, new MenuWindow());
+        //}
 
-        public void MostrarTodasVentanas()
-        {
-            if (manejadoresEventos.Keys.Count == 0)
-            {
-                var inicioSesion = new IniciarSesion();
-                AbrirNuevaVentana(Ventana.IniciarSesion, inicioSesion);
-                MessageBox.Show("Error no se encontraron mas ventanas se te llevara a inicio");
-            }
-            Console.WriteLine(manejadoresEventos.Keys.Count);
-            Console.WriteLine(manejadoresEventos.Values.Count);
-        }
-
-        public void IntentarRegresarMenu()
-        {
-            if (CierreInvitado())
-            {
-                return;
-            }
-            CerrarTodaVentana();
-            AbrirNuevaVentana(Ventana.Menu , new MenuWindow());
-        }
-
-        public void IntentarRegresarInicio()
-        {
-            CerrarTodaConexion();
-            CerrarTodaVentana();
-            AbrirNuevaVentana(Ventana.IniciarSesion, new IniciarSesion());
-        }
+        //public void IntentarRegresarInicio()
+        //{
+        //    CerrarTodaConexion();
+        //    CerrarTodaVentana();
+        //    AbrirNuevaVentana(Ventana.IniciarSesion, new IniciarSesion());
+        //}
 
 
         public bool AbrirNuevaVentana(Ventana nombre, Window ventana)
@@ -105,6 +89,7 @@ namespace WpfCliente.Contexto
                 EvaluarVentanaNulo(ventana);
                 if (manejadoresEventos.TryAdd(nombre, new VentanaEventoManejador(ventana, this, nombre)))
                 {
+                    ventanaPila.Push(nombre);
                     manejadoresEventos.TryGetValue(nombre, out VentanaEventoManejador ventanaBuscada);
                     if (nombre == Ventana.IniciarSesion)
                     {
@@ -121,20 +106,12 @@ namespace WpfCliente.Contexto
             catch (Exception excepcion)
             {
                 manejadoresEventos.TryRemove(nombre, out _);
-                MostrarTodasVentanas();
                 EnCierre(nombre);
                 ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
             return false;
         }
 
-        private void EvaluarVentanaNulo(Window ventana)
-        {
-            if (ventana == null)
-            {
-                throw new ArgumentNullException();
-            }
-        }
 
         private void EvaluarCierresConexionAlCerrar(Ventana ventanaCerrada)
         {
@@ -142,29 +119,45 @@ namespace WpfCliente.Contexto
             {
                 Conexion.CerrarChatMotor();
                 SingletonSalaJugador.Instancia.CerrarConexion();
-                CierreInvitado();
                 return;
             }
-            if (Ventana.Partida== ventanaCerrada)
+            else if (Ventana.Partida == ventanaCerrada)
             {
                 Conexion.CerrarPartida();
                 Conexion.CerrarChatMotor();
-                CierreInvitado();
                 return;
             }
-            if (Ventana.EditarPerfil== ventanaCerrada)
-            {
-                return;
-            }
-            if (manejadoresEventos.ContainsKey(Ventana.IniciarSesion) &&
+            else if (manejadoresEventos.ContainsKey(Ventana.IniciarSesion) &&
                 manejadoresEventos.Count <= 1)
             {
                 CerrarTodaConexion();
                 return;
             }
-            if (manejadoresEventos.Count <= 0)
+            else if (manejadoresEventos.Count <= NO_HAY_VENTANAS)
             {
                 CerrarTodaConexion();
+                return;
+            }
+        }
+
+        private void EvaluarSiguienteVentanaNoInvitado(Ventana actualCerrada)
+        {
+            if (Ventana.EditarPerfil == actualCerrada &&
+                Ventana.Menu == ventanaAnterior)
+            {
+                AbrirNuevaVentana(ventanaAnterior, new MenuWindow());
+                return;
+            }
+            if (Ventana.CambiarContrasenia == actualCerrada &&
+                Ventana.IniciarSesion == ventanaAnterior)
+            {
+                AbrirNuevaVentana(ventanaAnterior, new IniciarSesionWindow());
+                return;
+            }
+            if (Ventana.RegistrarUsuario == actualCerrada &&
+                Ventana.IniciarSesion == ventanaAnterior)
+            {
+                AbrirNuevaVentana(ventanaAnterior, new IniciarSesionWindow());
                 return;
             }
         }
@@ -174,12 +167,7 @@ namespace WpfCliente.Contexto
             if (!string.IsNullOrEmpty(SingletonCliente.Instance.NombreUsuario) &&
                     SingletonCliente.Instance.NombreUsuario.ToLower().Contains(NOMBRE_INVITADO))
             {
-                CerrarTodaConexion();
-                CerrarTodaVentana();
-                IniciarSesion iniciarSesion = new IniciarSesion();
-                AbrirNuevaVentana(Ventana.IniciarSesion,iniciarSesion);
-                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloGraciaPorJugar, Idioma.mensajeConsideraRegistrarteInvitado, iniciarSesion);
-                return true;
+                 return true;
             }
             return false;
         }
@@ -211,10 +199,53 @@ namespace WpfCliente.Contexto
             SingletonSalaJugador.Instancia.CerrarConexion();
         }
 
-        public void EnCierre(Ventana nombre)
+        public void EnCierre(Ventana ventanaActualCerrada)
         {
-            manejadoresEventos.TryRemove(nombre, out _);
-            EvaluarCierresConexionAlCerrar(nombre);
+            ventanaAnterior =ventanaPila.Pop();
+            manejadoresEventos.TryRemove(ventanaActualCerrada, out _);
+            EvaluarCierresConexionAlCerrar(ventanaActualCerrada);
+            if (!CierreInvitado())
+            {
+                EvaluarSiguienteVentanaNoInvitado(ventanaActualCerrada);
+            }
+            else
+            {
+                EvaluarSiguienteVentanaInvitado();
+            };
         }
+
+        private void EvaluarSiguienteVentanaInvitado()
+        {
+            if (Ventana.SalaEspera == ventanaAnterior)
+            {
+                Conexion.CerrarChatMotor();
+                SingletonSalaJugador.Instancia.CerrarConexion();
+                CerrarTodaConexion();
+                CerrarTodaVentana();
+                IniciarSesionWindow iniciarSesion = new IniciarSesionWindow();
+                AbrirNuevaVentana(Ventana.IniciarSesion, iniciarSesion);
+                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloGraciaPorJugar, Idioma.mensajeConsideraRegistrarteInvitado, iniciarSesion);
+                return;
+            }
+            else if (Ventana.Partida == ventanaAnterior)
+            {
+                Conexion.CerrarPartida();
+                Conexion.CerrarChatMotor();
+                CerrarTodaConexion();
+                CerrarTodaVentana();
+                IniciarSesionWindow iniciarSesion = new IniciarSesionWindow();
+                AbrirNuevaVentana(Ventana.IniciarSesion, iniciarSesion);
+                return;
+            }
+        }
+
+        private void EvaluarVentanaNulo(Window ventana)
+        {
+            if (ventana == null)
+            {
+                throw new ArgumentNullException();
+            }
+        }
+
     }
 }

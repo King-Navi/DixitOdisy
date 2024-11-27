@@ -267,7 +267,6 @@ namespace WpfCliente.GUI
         private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
-            SingletonGestorVentana.Instancia.IntentarRegresarMenu();
         }
 
         private async void ClicButtonEmpezarPartidaAsync(object sender, RoutedEventArgs e)

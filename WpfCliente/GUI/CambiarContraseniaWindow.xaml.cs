@@ -28,7 +28,7 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
-            
+
             labelRepetirContrasenia.Content = Properties.Idioma.labelRepitaContraseña;
             labelContrasenia.Content = Properties.Idioma.labelContrasenia;
             labelContraseniaInstruccion.Content = Properties.Idioma.labelContraseniaInstruccion;
@@ -37,7 +37,7 @@ namespace WpfCliente.GUI
             labelContraseniaSimbolos.Content = Properties.Idioma.labelContraseniaSimbolos;
             buttonEditarContrasenia.Content = Properties.Idioma.buttonCambiarContrasenia;
             buttonCancelarCambio.Content = Properties.Idioma.buttonCancelar;
-            windowCambiarContrasenia.Title = Properties.Idioma.tituloCambiarContrasenia; 
+            windowCambiarContrasenia.Title = Properties.Idioma.tituloCambiarContrasenia;
         }
 
         private void ClicButtonAceptar(object sender, RoutedEventArgs e)
@@ -129,7 +129,7 @@ namespace WpfCliente.GUI
 
         private async void GuardarCambiosUsuario(Usuario usuarioEditado)
         {
-            var resultadoConexion = await Conexion.VerificarConexionAsync(HabilitarBotones,this);
+            var resultadoConexion = await Conexion.VerificarConexionAsync(HabilitarBotones, this);
             if (!resultadoConexion)
             {
                 return;
@@ -138,13 +138,13 @@ namespace WpfCliente.GUI
             var manejadorServicio = new ServicioManejador<ServicioUsuarioClient>();
             bool resultado = manejadorServicio.EjecutarServicio(proxy =>
             {
-                return proxy.EditarContraseniaUsuario(usuarioEditado.Nombre,usuarioEditado.ContraseniaHASH);
+                return proxy.EditarContraseniaUsuario(usuarioEditado.Nombre, usuarioEditado.ContraseniaHASH);
             });
 
             if (resultado)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloEditarUsuario, Properties.Idioma.mensajeUsuarioEditadoConExito, this);
-                SingletonGestorVentana.Instancia.IntentarRegresarInicio();
+                this.Close();
             }
             else
             {
@@ -154,12 +154,12 @@ namespace WpfCliente.GUI
         }
         private void ClicButtonCancelar(object sender, RoutedEventArgs e)
         {
-            SingletonGestorVentana.Instancia.IntentarRegresarInicio();
+            this.Close();
         }
 
         private void ClicButtonFlechaAtras(object sender, MouseButtonEventArgs e)
         {
-            SingletonGestorVentana.Instancia.IntentarRegresarInicio();
+            this.Close();
         }
 
         public void HabilitarBotones(bool esHabilitado)
@@ -169,6 +169,11 @@ namespace WpfCliente.GUI
             windowCambiarContrasenia.IsEnabled = esHabilitado;
             buttonEditarContrasenia.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
             buttonCancelarCambio.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
+        }
+
+        private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
         }
     }
 

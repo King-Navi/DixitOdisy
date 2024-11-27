@@ -26,7 +26,7 @@ namespace WpfCliente.GUI
 
         private void CerrarSesion(object sender, RoutedEventArgs e)
         {
-            SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.IniciarSesion, new IniciarSesion());
+            SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.IniciarSesion, new IniciarSesionWindow());
             SingletonGestorVentana.Instancia.CerrarVentana(Ventana.Menu);
         }
 

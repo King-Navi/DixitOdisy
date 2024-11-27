@@ -99,7 +99,8 @@ namespace WpfCliente.GUI
 
         private void ClicImagenFlechaAtras(object sender, MouseButtonEventArgs e)
         {
-            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.RegistrarUsuario);
+            this.Close();
+            //SingletonGestorVentana.Instancia.CerrarVentana(Ventana.RegistrarUsuario);
         }
 
         private async void CrearCuenta()
@@ -303,7 +304,6 @@ namespace WpfCliente.GUI
         private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
-            SingletonGestorVentana.Instancia.IntentarRegresarInicio();
         }
     }
 }

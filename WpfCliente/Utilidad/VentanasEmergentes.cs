@@ -76,7 +76,7 @@ namespace WpfCliente.Utilidad
 
         private static void CerrarSiNoEsInicioSesion(Window ventana)
         {
-            if (!(ventana is IniciarSesion))
+            if (!(ventana is IniciarSesionWindow))
             {
                 ventana?.Close();
             }

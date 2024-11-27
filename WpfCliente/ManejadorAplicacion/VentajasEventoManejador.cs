@@ -16,6 +16,7 @@ namespace WpfCliente.ManejadorAplicacion
         private bool desechado;
         private readonly Ventana nombre;
         private readonly IObservadorVentana observador;
+        private readonly object bloqueoObjecto = new object(); 
         public VentanaEventoManejador(Window _ventana , IObservadorVentana _observador , Ventana _nombre)
         {
             Ventana = _ventana ?? throw new ArgumentNullException(nameof(_ventana));
@@ -26,21 +27,12 @@ namespace WpfCliente.ManejadorAplicacion
         }
         private void OnClosed(object sender, EventArgs e)
         {
-            if (!desechado)
+            lock (bloqueoObjecto) 
             {
-                if (EnProcesoDeCierre) return;
-                EnProcesoDeCierre = true;
-
-                observador?.EnCierre(nombre);
-                DesuscribirEventos();
-            }
-        }
-        public void DesuscribirEventos()
-        {
-            if (!desechado)
-            {
-                Ventana.Closed -= OnClosed;
+                if (desechado) return; 
                 desechado = true;
+                observador?.EnCierre(nombre);
+                Ventana.Closed -= OnClosed; 
             }
         }
     }

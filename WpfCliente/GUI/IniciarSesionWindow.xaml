@@ -1,4 +1,4 @@
-﻿<Window x:Class="WpfCliente.GUI.IniciarSesion"
+﻿<Window x:Class="WpfCliente.GUI.IniciarSesionWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

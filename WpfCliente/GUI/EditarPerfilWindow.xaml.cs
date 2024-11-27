@@ -297,15 +297,14 @@ namespace WpfCliente.GUI
 
         private void CerrarSesion()
         {
+            SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.IniciarSesion , new IniciarSesionWindow());
             SingletonGestorVentana.Instancia.CerrarVentana(Ventana.EditarPerfil);
-            SingletonGestorVentana.Instancia.IntentarRegresarInicio();
         }
 
         private void ClicFlechaAtras(object sender, MouseButtonEventArgs e)
         {
+            SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.Menu , new MenuWindow());
             SingletonGestorVentana.Instancia.CerrarVentana(Ventana.EditarPerfil);
-            SingletonGestorVentana.Instancia.IntentarRegresarMenu();
-
         }
 
         private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)

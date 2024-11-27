@@ -13,12 +13,14 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class IniciarSesion : Window, IActualizacionUI, IHabilitadorBotones
+    public partial class IniciarSesionWindow : Window, IActualizacionUI, IHabilitadorBotones
     {
         private const string RECURSOS_ESTILO_TEXTBOX_ERROR = "ErrorTextBoxStyle";
-        public IniciarSesion()
+        public IniciarSesionWindow()
         {
             InitializeComponent();
+            passwordBoxContrasenia.Password = "1";
+            textBoxUsuario.Text = "u1";
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             ActualizarUI();
         }

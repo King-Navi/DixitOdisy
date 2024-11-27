@@ -16,7 +16,7 @@ namespace WpfCliente.Utilidad
             if (ventana != null)
             {
                 ventana.Close();
-                IniciarSesion iniciarSesion = new IniciarSesion();
+                IniciarSesionWindow iniciarSesion = new IniciarSesionWindow();
                 iniciarSesion.Show();
             }
         }
@@ -28,7 +28,7 @@ namespace WpfCliente.Utilidad
             if (ventana != null)
             {
                 ventana.Close();
-                IniciarSesion iniciarSesion = new IniciarSesion();
+                IniciarSesionWindow iniciarSesion = new IniciarSesionWindow();
                 iniciarSesion.Show();
             }
         }

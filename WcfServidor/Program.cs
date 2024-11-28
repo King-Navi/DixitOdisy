@@ -10,7 +10,6 @@ namespace WcfServidor
         static void Main(string[] args)
         {
             var respuesta = InicializadorConfiguracion.ConfigurarConVariableEntorno("a");
-            //Console.WriteLine(respuesta.ToString());
             Program programa = new Program();
             programa.IniciarServidor();
         }

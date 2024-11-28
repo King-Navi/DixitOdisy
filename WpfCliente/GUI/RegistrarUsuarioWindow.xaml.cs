@@ -181,7 +181,7 @@ namespace WpfCliente.GUI
         public bool ValidarCampos()
         {
             bool isValid = true;
-            string errorTextBoxStyle = "ErrorTextBoxStyle";
+            string errorTextBoxStyle = "TextBoxEstiloError";
 
             ObtenerEstilos();
             if (!ValidarCaracteristicasContrasenia())
@@ -209,13 +209,10 @@ namespace WpfCliente.GUI
 
         private void ObtenerEstilos()
         {
-            string normalTextBoxStyle = "NormalTextBoxStyle";
-            string normalPasswordBoxStyle = "NormalPasswordBoxStyle";
+            string normalTextBoxStyle = "TextBoxEstiloNormal";
 
             textBoxGamertag.Style = (Style)FindResource(normalTextBoxStyle);
             textBoxCorreo.Style = (Style)FindResource(normalTextBoxStyle);
-            passwordBoxContrasenia.Style = (Style)FindResource(normalPasswordBoxStyle);
-            passwordBoxRepetirContrasenia.Style = (Style)FindResource(normalPasswordBoxStyle);
 
             labelCorreoInvalido.Visibility = Visibility.Hidden;
             labelCorreoExistente.Visibility = Visibility.Hidden;

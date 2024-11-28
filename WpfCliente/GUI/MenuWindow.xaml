@@ -26,27 +26,18 @@
 
     <Grid>
         <Grid>
-            <!-- Define una estructura más clara -->
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <!-- Header -->
                 <RowDefinition Height="*" />
-                <!-- Middle -->
                 <RowDefinition Height="Auto" />
-                <!-- Footer -->
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <!-- Espacio Izquierdo -->
                 <ColumnDefinition Width="Auto" />
-                <!-- Middle -->
                 <ColumnDefinition Width="*" />
-                <!-- Espacio Derecho -->
             </Grid.ColumnDefinitions>
 
-            <!-- Header -->
             <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                <!-- Botón para abrir Estadísticas -->
                 <Button x:Name="buttonAbrirEstadisticas" Width="50" Height="50" VerticalAlignment="Top" Margin="0,15,15,0" Click="ClicButtonAbrirEstadisticas">
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
@@ -64,9 +55,9 @@
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
-                    <Image Source="/Recursos/estadisticas.png" Stretch="UniformToFill" Width="37" Height="37" />
+                    <Image Source="pack://application:,,,/WpfCliente;component/Recursos/estadisticas.png" Stretch="UniformToFill" Width="37" Height="37" />
                 </Button>
-                <!-- Botón con fondo circular para la imagen de amigos -->
+
                 <Button Width="50" Height="50" VerticalAlignment="Top" Margin="0,15,15,0" Click="ClicImagenAmigos">
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
@@ -84,22 +75,19 @@
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Button.Template>
-                    <Image Source="/Recursos/amigos.png" Stretch="UniformToFill" Width="40" Height="40" />
+                    <Image Source="pack://application:,,,/WpfCliente;component/Recursos/amigos.png" Stretch="UniformToFill" Width="40" Height="40" />
                 </Button>
                 <local:PerfilMenuDesplegableUserControl x:Name="perfilMenuDesplegable" Margin="0,15,15,0"/>
             </StackPanel>
 
-            <!-- Footer -->
             <StackPanel Grid.Row="2" Grid.ColumnSpan="3" Background="#E0DCC7" VerticalAlignment="Bottom" HorizontalAlignment="Center">
                 <Label Content="Copyright Iván y U Náay S.A. de C.V." FontFamily="Lucida Sans Unicode" FontStyle="Italic"></Label>
             </StackPanel>
 
-            <!-- Middle -->
+
             <StackPanel x:Name="stackPanePrincipal" Grid.Row="1" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top">
                 <StackPanel Orientation="Vertical"  HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Image Source="/Recursos/logoJuego.png" Height="359" Width="402"/>
-                    <!--<Label Content="Describelo" HorizontalAlignment="Center" FontFamily="ROG Fonts" VerticalAlignment="Center" 
-                       HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="60" Opacity="1" />-->
+                    <Image Source="pack://application:,,,/WpfCliente;component/Recursos/logoJuego.png" Height="359" Width="402"/>
                 </StackPanel>
                 <StackPanel Orientation="Vertical" Opacity="0.76" Background="#E0DCC7" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,55,0,0">
                     <Button x:Name="buttonCrearSala" Content="Crear sala de espera" FontFamily="ROG Fonts" 
@@ -115,7 +103,6 @@
         </Grid>
         <local:ListaAmigosUserControl x:Name="amigosUserControl" HorizontalAlignment="Left" ></local:ListaAmigosUserControl>
 
-        <!-- Grid de Estadísticas -->
         <Grid x:Name="gridEstadisticas" Width="300" Height="300" Background="#FFECECEC" 
                   HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed" Margin="890,0,0,0">
             <Grid.RowDefinitions>
@@ -147,26 +134,16 @@
             </StackPanel>
         </Grid>
 
-
-
-        <!-- Notificación Generalizada -->
-        <Border x:Name="borderNotificacionGeneral" Background="Azure" CornerRadius="8" Padding="10"
-            VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,20" Width="322" Height="150"
+        <Border x:Name="borderNotificacion" Background="Azure" CornerRadius="8" Padding="10"
+            VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,20,20" Width="322" Height="87"
             Visibility="Collapsed" Opacity="0.9">
             <StackPanel>
                 <ProgressBar x:Name="progressTimerGeneral" Height="10" Foreground="Green"/>
-                <TextBlock x:Name="textBlockNotificacionGeneral" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" Foreground="Black"/>
-
-                <!-- Imagen de la persona que manda la invitación o solicitud -->
-                <Image x:Name="imagenPerfil" Width="40" Height="40" Margin="0,0,0,10" HorizontalAlignment="Center" Source="{Binding ImagenRuta}"/>
-
-                <!-- Contenedor para los botones: se activan dependiendo del tipo de notificación -->
+                <TextBlock x:Name="textBlockNotificacion" Text="Invitación a partida de: " FontSize="16" FontWeight="Bold" Margin="0,0,0,10" Foreground="Black"/>
                 <StackPanel x:Name="botonesPanel" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button x:Name="buttonUnirse" Content="Unirse" Click="ClicButtonUnirseInvitacion" Width="80" Visibility="Collapsed"/>
+                    <Button x:Name="buttonUnirse" Content="Unirse" Click="ClicButtonUnirseInvitacionAsync" Width="80" Visibility="Collapsed"/>
                 </StackPanel>
             </StackPanel>
         </Border>
-
-
     </Grid>
 </Window>

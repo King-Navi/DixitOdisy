@@ -1060,7 +1060,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Invitation from:.
+        ///   Busca una cadena traducida similar a Invitación a partida de: .
         /// </summary>
         public static string mensajeInvitacionPartida {
             get {

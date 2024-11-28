@@ -258,17 +258,12 @@ namespace WpfCliente.GUI
             timerNotificacion.Tick += ContadorNotificacion;
         }
 
-        private void MostrarNotificacionGeneral(string mensaje, string imagenPath = "")
+        private void MostrarNotificacion(string mensaje)
         {
-            textBlockNotificacionGeneral.Text = mensaje;
-
-            if (!string.IsNullOrEmpty(imagenPath))
-            {
-                imagenPerfil.Source = new BitmapImage(new Uri(imagenPath));
-            }
+            textBlockNotificacion.Text = mensaje;
             buttonUnirse.Visibility = Visibility.Visible;
 
-            borderNotificacionGeneral.Visibility = Visibility.Visible;
+            borderNotificacion.Visibility = Visibility.Visible;
             progressTimerGeneral.Value = 0;
             timerNotificacion.Start();
         }
@@ -276,12 +271,12 @@ namespace WpfCliente.GUI
         public void RecibirInvitacion(InvitacionPartida invitacion)
         {
             invitacionActual = invitacion;
-            MostrarNotificacionGeneral(Properties.Idioma.mensajeInvitacionPartida + invitacion.GamertagEmisor);
+            MostrarNotificacion(Properties.Idioma.mensajeInvitacionPartida + " " + invitacion.GamertagEmisor);
         }
 
         private void OcultarNotificacion()
         {
-            borderNotificacionGeneral.Visibility = Visibility.Collapsed;
+            borderNotificacion.Visibility = Visibility.Collapsed;
             timerNotificacion.Stop();
         }
 
@@ -294,10 +289,10 @@ namespace WpfCliente.GUI
                 OcultarNotificacion();
             }
         }
-        private void ClicButtonUnirseInvitacion(object sender, RoutedEventArgs e)
+        private async void ClicButtonUnirseInvitacionAsync(object sender, RoutedEventArgs e)
         {
             bool esInvitacion = true;
-            UnirseASalaAsync(esInvitacion, invitacionActual.CodigoSala);
+            await UnirseASalaAsync(esInvitacion, invitacionActual.CodigoSala);
             OcultarNotificacion();
         }
 

@@ -40,14 +40,14 @@ namespace WpfCliente.GUI
             windowCambiarContrasenia.Title = Properties.Idioma.tituloCambiarContrasenia; 
         }
 
-        private void ClicButtonAceptar(object sender, RoutedEventArgs e)
+        private async void ClicButtonEditarContraseniaAsync(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (ValidarCampos())
                 {
                     EncriptarContrasenia(passwordBoxContrasenia.Password);
-                    GuardarCambiosUsuarioAsync(usuarioEditado);
+                    await GuardarCambiosUsuarioAsync(usuarioEditado);
                 }
             }
             catch (Exception ex)

@@ -10,32 +10,25 @@
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="/Recursos/fondoSala.png" Stretch="Fill"/>
+            <ImageBrush ImageSource="pack://application:,,,/WpfCliente;component/Recursos/fondoSala.png" Stretch="Fill"/>
         </Grid.Background>
 
-
-        <!-- Código de la sala a la izquierda -->
         <StackPanel Background="AntiqueWhite" HorizontalAlignment="Left" VerticalAlignment="Top" Height="123" Width="257" Margin="0,5,0,0"/>
 
-        <!-- Lista de usuarios en el centro -->
         <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="701" Width="300">
             <Label x:Name="labelUsuariosLobby" Content="Usuarios en el lobby" FontFamily="Lucida Sans Unicode" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Background="#FFD8D2AB"/>
             <local:ListaUsuariosSalaUserControl x:Name="usuariosSalaUserControl" Height="692" />
         </StackPanel>
 
-        <!-- Botones a la derecha -->
         <StackPanel x:Name="stackPanePartida" Visibility="Visible" Orientation="Vertical" Background="Coral" HorizontalAlignment="Right" VerticalAlignment="Top"  Width="223" Margin="0,400,100,0">
             <Button x:Name="buttonConfigurarPartida" Content="Configurar partida" Margin="5" FontFamily="Lucida Sans Unicode" BorderThickness="2" BorderBrush="Black" Background="AntiqueWhite" Click="ClicButtonConfigurarPartida"/>
             <Button x:Name="buttonEmpezarPartida" Content="Empezar partida" Margin="5" Click="ClicButtonEmpezarPartidaAsync" FontFamily="Lucida Sans Unicode" BorderThickness="2" BorderBrush="Black" Background="AntiqueWhite"/>
         </StackPanel>
-        <!-- Botones para expulsar -->
         <StackPanel x:Name="stakePaneListaExpulsion" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="100,0,0,0" Background="Coral">
             <Label x:Name="labelExpulsarUsuario" d:Content="Expulsar usuario"></Label>
-            <!-- ItemsControl para generar botones dinámicos -->
             <ItemsControl ItemsSource="{Binding JugadoresSala}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <!-- Botón dinámico -->
                         <Button FontFamily="Lucida Sans Unicode" BorderThickness="2" BorderBrush="Black" Background="AntiqueWhite" Content="{Binding Nombre}" Margin="5" Click="ClicButtonEliminarUsuarioAsync" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
@@ -60,7 +53,6 @@
         
         <Grid x:Name="gridConfiguracion" Visibility="Visible" Width="400" HorizontalAlignment="Right" Margin="0,40,20,0" VerticalAlignment="Top" Background="Coral">
             <StackPanel Orientation="Vertical">
-                <!-- GroupBox para Selección de Temática -->
                 <GroupBox x:Name="grouoBoxTematica" Header="Selección de Temática" Margin="10">
                     <WrapPanel Orientation="Horizontal" Margin="5">
                         <RadioButton Name="radioButtonMixta" Content="[Mixta]" Margin="5" GroupName="Tematica"/>
@@ -70,16 +62,13 @@
                     </WrapPanel>
                 </GroupBox>
 
-                <!-- GroupBox para Condición de Victoria -->
                 <GroupBox x:Name="groupBoxCondicionVictoria" Header="Condición de Victoria" Margin="10">
                     <StackPanel Margin="5">
-                        <!-- Primera línea de botones -->
                         <WrapPanel Orientation="Horizontal" Margin="5">
                             <RadioButton Name="radioButtonFinRondas" Content="[Hasta que se acaben las rondas]" Margin="5" GroupName="CondicionVictoria" />
                             <RadioButton Name="radioButtonFinCartas" Content="[Hasta que se acaben las cartas]" Margin="5" GroupName="CondicionVictoria" />
                          </WrapPanel>
 
-                        <!-- Segunda línea con Label y ComboBox -->
                         <WrapPanel Orientation="Horizontal" Margin="5">
                             <Label x:Name="labelNumeroRondas" Content="[Número de rondas]" VerticalAlignment="Center" Margin="5"/>
                             <ComboBox Name="comboBoxNumeroRondas" Width="100" Margin="5">

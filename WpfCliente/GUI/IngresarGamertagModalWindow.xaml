@@ -9,7 +9,7 @@
         ResizeMode="NoResize"
         Title="Ingresar gamertag" Height="148" Width="400">
     <Window.Background>
-        <ImageBrush ImageSource="/Recursos/cajaLogin.png" Stretch="UniformToFill"/>
+        <ImageBrush ImageSource="pack://application:,,,/WpfCliente;component/Recursos/cajaLogin.png" Stretch="UniformToFill"/>
     </Window.Background>
     <Window.Resources>
         <Style TargetType="{x:Type TextBox}" >

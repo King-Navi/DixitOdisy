@@ -25,7 +25,7 @@
             </Style.Resources>
         </Style>
 
-        <Style TargetType="{x:Type TextBox}" x:Key="NormalTextBoxStyle">
+        <Style TargetType="{x:Type TextBox}" x:Key="TextBoxEstiloNormal">
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="4" />
@@ -36,7 +36,7 @@
             <Setter Property="Tag" Value="UserName" />
         </Style>
 
-        <Style TargetType="{x:Type TextBox}" x:Key="ErrorTextBoxStyle">
+        <Style TargetType="{x:Type TextBox}" x:Key="TextBoxEstiloError">
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="4" />
@@ -49,24 +49,17 @@
     </Window.Resources>
 
     <Grid Background="Black">
-        <Image x:Name="imagenAtras" Source="/Recursos/flechaAtras.png" Margin="1,2,1099,652" Cursor="Hand" MouseLeftButtonDown="ClicFlechaAtras"/>
-        <!-- Encabezado -->
+        <Image x:Name="imagenAtras" Source="pack://application:,,,/WpfCliente;component/Recursos/flechaAtras.png" Margin="1,2,1099,652" Cursor="Hand" MouseLeftButtonDown="ClicFlechaAtras"/>
         <StackPanel Orientation="Horizontal" Background="Aqua" HorizontalAlignment="Right" Margin="0,10,0,0">
-            <!-- Encabezado personalizado aquí si es necesario -->
         </StackPanel>
 
-        <!-- Pie de página -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,673,0,0">
             <Button Content="Cancelar cambios" x:Name="buttonCancelarCambio" Click="ClicButtonCancelar"  Background="#E0DCC7" Width="200" Height="51" FontSize="20"/>
             <Button Content="Editar perfil" x:Name="buttonEditarUsuario"  Click="ClicButtonAceptar"  Background="#E0DCC7" Height="51" Width="175" FontSize="20"/>
         </StackPanel>
 
-
-
-        <!-- Contenido principal -->
         <Border Background="#E0DCC7" HorizontalAlignment="Center" VerticalAlignment="Top" Width="913" Height="639" CornerRadius="20">
             <StackPanel Orientation="Horizontal" Background="#E0DCC7" HorizontalAlignment="Center" VerticalAlignment="Top" Width="893" Height="479" Margin="0,118,0,0">
-                <!-- Columna de foto -->
                 <StackPanel Orientation="Vertical" Margin="10,0">
                     <Label Content="Edita tu foto" x:Name="labelFotoPerfil" FontFamily="Lucida Sans Unicode" FontSize="33"/>
                     <Border BorderBrush="Red" BorderThickness="10">
@@ -75,7 +68,6 @@
                     <Button Content="Cambiar foto" x:Name="buttonCambiarFoto" Click="ClicButtonCambiarImagen" FontFamily="Lucida Sans Unicode" FontSize="20" Background="#E0DCC7" BorderBrush="Black" BorderThickness="3" Height="54" Width="183"/>
                 </StackPanel>
 
-                <!-- Columna de información -->
                 <StackPanel Orientation="Vertical" Margin="10,0">
                     <Label Content="Edita tu correo" x:Name="labelCorreo" FontFamily="Lucida Sans Unicode" FontSize="33"/>
                     <TextBox x:Name="textBoxCorreo" Height="62" Width="454" FontSize="33"/>

@@ -27,7 +27,7 @@
             </Style.Resources>
         </Style>
 
-        <Style TargetType="{x:Type TextBox}" x:Key="ErrorTextBoxStyle">
+        <Style TargetType="{x:Type TextBox}" x:Key="TextBoxEstiloError">
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5" />
@@ -39,7 +39,7 @@
             <Setter Property="Height" Value="32"/>
         </Style>
 
-        <Style TargetType="{x:Type TextBox}" x:Key="NormalTextBoxStyle">
+        <Style TargetType="{x:Type TextBox}" x:Key="TextBoxEstiloNormal">
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5" />
@@ -50,19 +50,6 @@
             <Setter Property="Width" Value="298"/>
             <Setter Property="Height" Value="32"/>
         </Style>
-
-        <Style TargetType="{x:Type PasswordBox}" x:Key="ErrorPasswordBoxStyle">
-            <Setter Property="BorderBrush" Value="Red"/>
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="Background" Value="#FFE57E7E"/>
-        </Style>
-
-        <Style TargetType="{x:Type PasswordBox}" x:Key="NormalPasswordBoxStyle">
-            <Setter Property="BorderBrush" Value="#FFFFFF"/>
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="Background" Value="#FFFFFF"/>
-        </Style>
-
     </Window.Resources>
 
     <Viewbox Stretch="Fill">
@@ -76,7 +63,7 @@
             <Menu Width="45" Height="30"  Margin="0,50,0,0" Background="{x:Null}"/>
 
             <Label   x:Name = "labelRegistro" Content="Registrar nuevo usuario" Foreground="White" FontSize="62"  FontWeight="Bold"  FontFamily="Arial" HorizontalAlignment="Left"  Width="738" Margin="170,28,0,653"/>
-            <Image   Source="/Recursos/leonRegistro.png" Margin="807,184,-35,200"/>
+            <Image   Source="pack://application:,,,/WpfCliente;component/Recursos/leonRegistro.png" Margin="807,184,-35,200"/>
 
             <Label   x:Name = "labelGamertag" Content="Gamertag" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="26" Margin="59,241,0,0" />
             <TextBox   x:Name = "textBoxGamertag" MaxLength="20" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top"  BorderBrush="{x:Null}" FontFamily="Arial" Width="298" Height="32" Margin="64,281,0,0" FontWeight="Bold" VerticalContentAlignment="Center" FontSize="22"/>
@@ -106,26 +93,22 @@
             <Label x:Name="labelContraseniaSimbolos" Content="Al menos un símbolo (ej. !,#,$,%,&amp;)" HorizontalAlignment="Left" Margin="80,489,0,0" VerticalAlignment="Top" Foreground="#FFF40000" Height="28" RenderTransformOrigin="0.426,0.32" Width="251" FontSize="14" FontWeight="Bold" FontFamily="Arial"/>
 
 
-            <Image x:Name="imagenFlechaAtras" Source="/Recursos/flechaAtras.png" Margin="10,2,1094,657" Cursor="Hand" MouseLeftButtonDown="ClicFlechaAtras"/>
+            <Image x:Name="imagenFlechaAtras" Source="pack://application:,,,/WpfCliente;component/Recursos/flechaAtras.png" Margin="10,2,1094,657" Cursor="Hand" MouseLeftButtonDown="ClicFlechaAtras"/>
 
             <Label x:Name="labelCamposObligatorios" HorizontalAlignment="Right" Content="Campos obligatorios" Margin="0,416,408,0" 
             VerticalAlignment="Top" FontSize="15" Width="152" Height="32" Foreground="White"/>
 
 
-            <Image   x:Name = "imagePerfil" Source="/Recursos/pfp1.png" Margin="379,581,704,71" />
+            <Image   x:Name = "imagePerfil" Source="pack://application:,,,/WpfCliente;component/Recursos/pfp2.png" Margin="379,581,704,71" />
             <Label   x:Name = "labelFotoPerfil" Content="Foto de perfil" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" FontFamily="Arial" FontSize="26" Margin="357,534,0,0" />
             <Button  x:Name="buttonCambiarFoto" Content="Cambiar foto" VerticalAlignment="Top" Background="#E0DCC7" Foreground="Black" BorderBrush="Gray" BorderThickness="2"
             FontFamily="Lucida Sans Unicode" FontSize="18"   Height="39" Margin="536,616,532,0"  Cursor="Hand" Click="ClicButtonCambiarFoto" RenderTransformOrigin="0.355,0.519"/>
 
-            <Image Source="/Recursos/cajaLogin.png" Stretch="Fill" HorizontalAlignment="Left" Height="66" Margin="953,13,0,0" VerticalAlignment="Top" Width="234"/>
+            <Image Source="pack://application:,,,/WpfCliente;component/Recursos/cajaLogin.png" Stretch="Fill" HorizontalAlignment="Left" Height="66" Margin="953,13,0,0" VerticalAlignment="Top" Width="234"/>
 
             <local:CambiarIdiomaMenuDesplegable Margin="0,28,32,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
             <Label x:Name="labelContraseniasNoCoinciden" Content="Las contraseñas no coinciden" HorizontalAlignment="Left" Margin="316,414,0,0" VerticalAlignment="Top" Foreground="#FFF40000" Height="28" Visibility="Collapsed" RenderTransformOrigin="0.426,0.32" Width="212" FontSize="14" FontWeight="Bold" FontFamily="Arial"/>
 
-
-
-
         </Grid>
     </Viewbox>
-
 </Window>

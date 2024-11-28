@@ -580,7 +580,7 @@
     <value>Archivos de imagen</value>
   </data>
   <data name="mensajeInvitacionPartida" xml:space="preserve">
-    <value>Invitation from:</value>
+    <value>Invitación a partida de: </value>
   </data>
   <data name="tituloMenu" xml:space="preserve">
     <value>Menu</value>

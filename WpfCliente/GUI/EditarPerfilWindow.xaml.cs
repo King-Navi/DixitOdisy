@@ -13,8 +13,8 @@ namespace WpfCliente.GUI
     public partial class EditarPerfilWindow : Window , IActualizacionUI
     {
         private bool cambioImagen = false;
-        private const string RECURSO_ESTILO_CORREO = "NormalTextBoxStyle";
-        private const string RECURSO_ESTILO_CORREO_ERROR = "ErrorTextBoxStyle";
+        private const string RECURSO_ESTILO_CORREO = "TextBoxEstiloNormal";
+        private const string RECURSO_ESTILO_CORREO_ERROR = "TextBoxEstiloError";
 
         public EditarPerfilWindow(Window menuVentana)
         {

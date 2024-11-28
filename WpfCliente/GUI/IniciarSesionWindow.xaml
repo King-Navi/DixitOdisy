@@ -63,12 +63,12 @@
                 <RowDefinition Height="79*"/>
             </Grid.RowDefinitions>
             <Grid.Background>
-                <ImageBrush ImageSource="/Recursos/fondoJuego.png"/>
+                <ImageBrush ImageSource="pack://application:,,,/WpfCliente;component/Recursos/fondoJuego.png"/>
             </Grid.Background>
 
-            <Image Source="/Recursos/cajaLogin.png" HorizontalAlignment="Left" VerticalAlignment="Top"  Stretch="Fill" Height="574" Width="511" Margin="337,71,0,0" Grid.RowSpan="3"/>
+            <Image Source="pack://application:,,,/WpfCliente;component/Recursos/cajaLogin.png" HorizontalAlignment="Left" VerticalAlignment="Top"  Stretch="Fill" Height="574" Width="511" Margin="337,71,0,0" Grid.RowSpan="3"/>
 
-            <Label x:Name="labelTitulo" FontFamily="Lucida Sans Unicode Bold Itallic"  ToolTip="Autores: Iván y U Náay" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="68" Foreground="Black" Margin="0,87,0,0" Content="Descríbelo" Height="114" Width="372" />
+            <Label x:Name="labelTitulo" FontFamily="ROG Fonts Bold"  ToolTip="Autores: Iván y U Náay" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="58" Foreground="Black" Margin="354,95,0,0" Content="Descríbelo" Height="114" Width="480" />
 
 
             <Label x:Name="labelUsuario" FontFamily="Lucida Sans Unicode" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="24" Foreground="Black" 

@@ -29,7 +29,6 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical" >
-                            <!--Por cada Width x 1.75 = Height -->
                             <Image Source="{Binding BitmapImagen}" Width="130">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseLeftButtonDown">

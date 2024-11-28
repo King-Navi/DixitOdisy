@@ -25,7 +25,7 @@ namespace WpfCliente.GUI
 
         private void CerrarSesion(object sender, RoutedEventArgs e)
         {
-            SingletonGestorVentana.Instancia.Regresar();
+            SingletonGestorVentana.Instancia.NavegarA(new IniciarSesionPage());
         }
 
         public void ActualizarUI()

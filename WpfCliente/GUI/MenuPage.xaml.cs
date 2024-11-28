@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,6 +26,7 @@ namespace WpfCliente.GUI
         private EstadisticaUsuario estadisticas;
         public MenuPage()
         {
+            SingletonHilo.Instancia.Iniciar();
             KeepAlive = true;
             this.Loaded += CargarNuevoContexto;
             InitializeComponent();
@@ -83,6 +85,11 @@ namespace WpfCliente.GUI
                     return;
                 }
                 EvaluarAperturaDeCanalesAsync(resultadoUsuarioSesion);
+            }
+            catch(CommunicationException excepcion)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor,Properties.Idioma.mensajeErrorServidor, Window.GetWindow(this));
+                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, Window.GetWindow(this));
             }
             catch (Exception excepcion)
             {

@@ -33,13 +33,9 @@ namespace WcfServicioLibreria.Manejador
                     throw new Exception("No se creo la Partida");
                 }
             }
-            catch (CommunicationException excepcion)
-            {
-                //TODO: Manejar el error
-            }
             catch (Exception excepcion)
             {
-                //TODO: Manejar el error
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
 
             return idPartida;
@@ -80,10 +76,9 @@ namespace WcfServicioLibreria.Manejador
                     }
 
                 }
-                catch (Exception)
+                catch (Exception excepcion)
                 {
-
-                    throw;
+                    ManejadorExcepciones.ManejarErrorException(excepcion);
                 }
             }
             return resultado;

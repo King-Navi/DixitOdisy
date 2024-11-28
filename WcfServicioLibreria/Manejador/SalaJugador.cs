@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
@@ -19,10 +20,11 @@ namespace WcfServicioLibreria.Manejador
                 }
                 return resultado;
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
-                return false;
-            };
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            return false;
         }
         /// <summary>
         /// Agrega a un jugador a una sala ya existente
@@ -53,14 +55,19 @@ namespace WcfServicioLibreria.Manejador
                 await sala.AvisarNuevoJugador(gamertag);
 
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
         }
 
         public void ExpulsarJugadorSala(string anfitrion, string jugadorAExpulsar, string idSala)
         {
             if (!ValidarSala(idSala))
+            {
+                return;
+            }
+            if (anfitrion.Equals(jugadorAExpulsar, StringComparison.OrdinalIgnoreCase))
             {
                 return;
             }
@@ -75,8 +82,9 @@ namespace WcfServicioLibreria.Manejador
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
         }
     }

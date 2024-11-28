@@ -98,7 +98,7 @@ namespace WpfCliente.ImplementacionesCallbacks
             }
             if (jugardoreRetiradoDeSala.Nombre.Equals(SingletonCliente.Instance.NombreUsuario, StringComparison.OrdinalIgnoreCase))
             {
-                SingletonGestorVentana.Instancia.CerrarVentana(Ventana.SalaEspera);
+                SingletonGestorVentana.Instancia.Regresar();
             }
         }
 

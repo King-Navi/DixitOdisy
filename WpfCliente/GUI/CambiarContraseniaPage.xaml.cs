@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using WpfCliente.Contexto;
@@ -10,11 +11,14 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class CambiarContraseniaWindow : Window, IActualizacionUI, IHabilitadorBotones
+    public partial class CambiarContraseniaPage : Page, IActualizacionUI, IHabilitadorBotones
     {
+        private const int MINIMO_CARACTERES = 5;
+        private const int MAXIMO_CARACTERES = 20;
         Usuario usuarioEditado = new Usuario();
-        public CambiarContraseniaWindow(string gamertag)
+        public CambiarContraseniaPage(string gamertag)
         {
+            KeepAlive = false;
             InitializeComponent();
             usuarioEditado.Nombre = gamertag;
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
@@ -28,7 +32,7 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
-
+            
             labelRepetirContrasenia.Content = Properties.Idioma.labelRepitaContraseña;
             labelContrasenia.Content = Properties.Idioma.labelContrasenia;
             labelContraseniaInstruccion.Content = Properties.Idioma.labelContraseniaInstruccion;
@@ -37,7 +41,7 @@ namespace WpfCliente.GUI
             labelContraseniaSimbolos.Content = Properties.Idioma.labelContraseniaSimbolos;
             buttonEditarContrasenia.Content = Properties.Idioma.buttonCambiarContrasenia;
             buttonCancelarCambio.Content = Properties.Idioma.buttonCancelar;
-            windowCambiarContrasenia.Title = Properties.Idioma.tituloCambiarContrasenia;
+            pageCambiarContrasenia.Title = Properties.Idioma.tituloCambiarContrasenia; 
         }
 
         private void ClicButtonAceptar(object sender, RoutedEventArgs e)
@@ -50,9 +54,9 @@ namespace WpfCliente.GUI
                     GuardarCambiosUsuario(usuarioEditado);
                 }
             }
-            catch (Exception ex)
+            catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorExcepcion(ex, this);
+                ManejadorExcepciones.ManejarErrorExcepcion(excepcion, Window.GetWindow(this));
             }
         }
 
@@ -82,7 +86,7 @@ namespace WpfCliente.GUI
         {
             bool isValid = true;
 
-            if (passwordBoxContrasenia.Password.Trim().Length >= 5)
+            if (passwordBoxContrasenia.Password.Trim().Length >= MINIMO_CARACTERES)
             {
                 labelContraseniaMinimo.Foreground = Brushes.Green;
             }
@@ -91,7 +95,7 @@ namespace WpfCliente.GUI
                 isValid = false;
             }
 
-            if (passwordBoxContrasenia.Password.Trim().Length <= 20)
+            if (passwordBoxContrasenia.Password.Trim().Length <= MAXIMO_CARACTERES)
             {
                 labelContraseniaMaximo.Foreground = Brushes.Green;
             }
@@ -129,7 +133,7 @@ namespace WpfCliente.GUI
 
         private async void GuardarCambiosUsuario(Usuario usuarioEditado)
         {
-            var resultadoConexion = await Conexion.VerificarConexionAsync(HabilitarBotones, this);
+            var resultadoConexion = await Conexion.VerificarConexionAsync(HabilitarBotones,Window.GetWindow(this));
             if (!resultadoConexion)
             {
                 return;
@@ -138,42 +142,41 @@ namespace WpfCliente.GUI
             var manejadorServicio = new ServicioManejador<ServicioUsuarioClient>();
             bool resultado = manejadorServicio.EjecutarServicio(proxy =>
             {
-                return proxy.EditarContraseniaUsuario(usuarioEditado.Nombre, usuarioEditado.ContraseniaHASH);
+                return proxy.EditarContraseniaUsuario(usuarioEditado.Nombre,usuarioEditado.ContraseniaHASH);
             });
 
             if (resultado)
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloEditarUsuario, Properties.Idioma.mensajeUsuarioEditadoConExito, this);
-                this.Close();
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloEditarUsuario, 
+                    Properties.Idioma.mensajeUsuarioEditadoConExito, 
+                    Window.GetWindow(this));
+                SingletonGestorVentana.Instancia.Regresar();
             }
             else
             {
-                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloEditarUsuario, Idioma.mensajeUsuarioEditadoFallo, this);
+                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloEditarUsuario, 
+                    Idioma.mensajeUsuarioEditadoFallo,
+                    Window.GetWindow(this));
             }
 
         }
         private void ClicButtonCancelar(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            SingletonGestorVentana.Instancia.Regresar();
         }
 
         private void ClicButtonFlechaAtras(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            SingletonGestorVentana.Instancia.Regresar();
         }
 
         public void HabilitarBotones(bool esHabilitado)
         {
             buttonEditarContrasenia.IsEnabled = esHabilitado;
             buttonCancelarCambio.IsEnabled = esHabilitado;
-            windowCambiarContrasenia.IsEnabled = esHabilitado;
+            pageCambiarContrasenia.IsEnabled = esHabilitado;
             buttonEditarContrasenia.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
             buttonCancelarCambio.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
-        }
-
-        private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
         }
     }
 

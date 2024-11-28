@@ -1141,6 +1141,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No te puedes expulsar a ti mismo.
+        /// </summary>
+        public static string mensajeNoAutoExpulsion {
+            get {
+                return ResourceManager.GetString("mensajeNoAutoExpulsion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No puedes registrarte sin foto de perfil.
         /// </summary>
         public static string mensajeNoHayFotoDePerfil {
@@ -1429,6 +1438,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expulsion invalida.
+        /// </summary>
+        public static string tituloExpulsionInvalida {
+            get {
+                return ResourceManager.GetString("tituloExpulsionInvalida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gracias por jugar.
         /// </summary>
         public static string tituloGraciaPorJugar {
@@ -1470,6 +1488,15 @@ namespace WpfCliente.Properties {
         public static string tituloImagenNoSelecionadaEditar {
             get {
                 return ResourceManager.GetString("tituloImagenNoSelecionadaEditar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imagen selecionada.
+        /// </summary>
+        public static string tituloImagenSelecionada {
+            get {
+                return ResourceManager.GetString("tituloImagenSelecionada", resourceCulture);
             }
         }
         
@@ -1560,6 +1587,15 @@ namespace WpfCliente.Properties {
         public static string tituloMostrarCarta {
             get {
                 return ResourceManager.GetString("tituloMostrarCarta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reconectando.
+        /// </summary>
+        public static string tituloReconectando {
+            get {
+                return ResourceManager.GetString("tituloReconectando", resourceCulture);
             }
         }
         

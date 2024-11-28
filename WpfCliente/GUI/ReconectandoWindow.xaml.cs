@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfCliente.Contexto;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
 using WpfCliente.Utilidad;
@@ -28,6 +29,7 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
+            Title =Idioma.tituloReconectando;
             buttonReconectar.Content = Idioma.buttonReconectar;
         }
 
@@ -72,9 +74,7 @@ namespace WpfCliente.GUI
         {
             try
             {
-                MenuWindow nuevaVentana = new MenuWindow();
-                nuevaVentana.Show();
-                return true;
+                return SingletonGestorVentana.Instancia.NavegarA(new MenuPage());
             }
             catch (Exception ex)
             {

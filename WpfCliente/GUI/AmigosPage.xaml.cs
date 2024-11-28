@@ -13,20 +13,21 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class AmigosWindow : Window, IHabilitadorBotones , IActualizacionUI
+    public partial class AmigosPage : Page, IHabilitadorBotones , IActualizacionUI
     {
         private int contadorClics = 0;
         private const int LIMITE_CLICS = 2;
 
-        public AmigosWindow()
+        public AmigosPage()
         {
+            KeepAlive = false;
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
         }
 
         private void ClicButtonFlechaAtras(object sender, MouseButtonEventArgs e)
         {
-            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.Amigos);
+            SingletonGestorVentana.Instancia.Regresar();
         }
         private void ClicButtonFlechaRecargar(object sender, MouseButtonEventArgs e)
         {
@@ -67,9 +68,9 @@ namespace WpfCliente.GUI
 
         private async void TryEnviarSolicitud()
         {
-            string gamertagSolicitud = VentanasEmergentes.AbrirVentanaModalGamertag(this);
+            string gamertagSolicitud = VentanasEmergentes.AbrirVentanaModalGamertag(Window.GetWindow(this));
 
-            var resultado = await Conexion.VerificarConexionAsync(HabilitarBotones, this);
+            var resultado = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
             if (!resultado)
             {
                 return;
@@ -80,31 +81,31 @@ namespace WpfCliente.GUI
                 try {
                     if (await EnviarSolicitud(gamertagSolicitud))
                     {
-                        VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadExitosa, this);
+                        VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadExitosa, Window.GetWindow(this));
                     }
                     else
                     {
-                        VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadFallida, this);
+                        VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadFallida, Window.GetWindow(this));
                     }
                 }
-                catch (FaultException<SolicitudAmistadFalla> ex)
+                catch (FaultException<SolicitudAmistadFalla> excepcion)
                 {
-                    VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloSolicitudAmistad, ex.Detail.Mensaje, this);
+                    VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloSolicitudAmistad, excepcion.Detail.Mensaje, Window.GetWindow(this));
                 }
-                catch (FaultException ex)
+                catch (FaultException excepcion)
                 {
-                    VentanasEmergentes.CrearVentanaEmergente(Idioma.mensajeErrorInesperado, ex.Message, this);
+                    VentanasEmergentes.CrearVentanaEmergente(Idioma.mensajeErrorInesperado, excepcion.Message, Window.GetWindow(this));
                 }
-                catch (Exception ex)
+                catch (Exception excepcion)
                 {
-                    ManejadorExcepciones.ManejarErrorExcepcion(ex, this);
+                    ManejadorExcepciones.ManejarErrorExcepcion(excepcion, Window.GetWindow(this));
                 }
             }
         }
 
         private async Task<bool> EnviarSolicitud(string gamertagReceptor)
         {
-            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, this);
+            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)
             {
                 return false;
@@ -145,12 +146,6 @@ namespace WpfCliente.GUI
         public void ActualizarUI()
         {
             this.Title = Properties.Idioma.tituloAmigos;
-        }
-
-        private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
-            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.Menu);
         }
     }
 }

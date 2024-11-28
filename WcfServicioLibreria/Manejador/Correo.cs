@@ -50,7 +50,6 @@ namespace WcfServicioLibreria.Manejador
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
-
             }
             return false;
         }

@@ -59,20 +59,9 @@ namespace WpfCliente.GUI
                 timer.Stop();
                 timer.Tick -= HoraActual;
                 timer = null;
-                LimpiarItemsControl();
             }
             desechado = true;
-        }
-
-        private void Cerrado(object sender, RoutedEventArgs e)
-        {
-            Desechar();
-        }
-
-        private void LimpiarItemsControl()
-        {
-            Amigos.Clear();
-        }
+        }   
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
         {
@@ -87,6 +76,7 @@ namespace WpfCliente.GUI
         private void CerrandoUserControl(object sender, RoutedEventArgs e)
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
+            Desechar();
 
         }
 

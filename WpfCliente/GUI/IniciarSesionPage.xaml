@@ -1,4 +1,4 @@
-﻿<Window x:Class="WpfCliente.GUI.IniciarSesionWindow"
+﻿<Page x:Class="WpfCliente.GUI.IniciarSesionPage"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,13 +8,9 @@
         mc:Ignorable="d" 
         d:Title="Login"
         Height="770" Width="1200"
-        WindowStartupLocation="CenterScreen"
-        Background="Gray"
-        ResizeMode="NoResize"
-        Closing="CerrandoVentana"
-        Icon="/Recursos/LogoApp.ico">
+        Background="Gray">
 
-    <Window.Resources>
+    <Page.Resources>
         <Style TargetType="{x:Type TextBox}" >
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
@@ -53,7 +49,7 @@
             <Setter Property="Tag" Value="UserName" />
         </Style>
 
-    </Window.Resources>
+    </Page.Resources>
 
     <Viewbox Stretch="Fill">
 
@@ -96,7 +92,7 @@
 
             <Button x:Name="buttonIniciarSesion" Background="#E0DCC7" Foreground="Black" BorderBrush="Gray" BorderThickness="2"
             FontFamily="Lucida Sans Unicode" FontSize="24" Content="Iniciar sesión" 
-            Margin="416,246,410,260" Grid.Row="2" Cursor="Hand" Click="CliButtonIniciarSesion" />
+            Margin="416,246,410,260" Grid.Row="2" Cursor="Hand" Click="CliButtonIniciarSesionAsync" />
 
             <Button x:Name="buttonRegistrar" Background="Transparent" Foreground="#8dadb6" BorderThickness="0"
             FontFamily="Lucida Sans Unicode" FontSize="18" Content="¿Nuevo en el juego? Registrarse"  Margin="416,298,410,208" Grid.Row="2" Cursor="Hand" Click="ClicButtonRegistrar"/>
@@ -115,4 +111,4 @@
         </Grid>
     </Viewbox>
 
-</Window>
+</Page>

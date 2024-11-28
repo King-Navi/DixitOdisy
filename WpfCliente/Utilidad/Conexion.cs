@@ -2,6 +2,7 @@
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using WpfCliente.ServidorDescribelo;
 
 namespace WpfCliente.Utilidad
@@ -10,7 +11,6 @@ namespace WpfCliente.Utilidad
     {
         public static ServicioChatMotorClient ChatMotor { get; private set; }
         public static ServicioPartidaSesionClient Partida { get; private set; }
-        public static ServicioInvitacionPartidaClient InvitacionPartida { get; private set; }
         public static Task<bool> AbrirConexionChatMotorCallbackAsync(IServicioChatMotorCallback callback)
         {
             ChatMotor = null;

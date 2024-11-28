@@ -1,4 +1,4 @@
-﻿<Window x:Class="WpfCliente.GUI.PartidaWindow"
+﻿<Page x:Class="WpfCliente.GUI.PartidaPage"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,7 @@
         xmlns:bc="clr-namespace:WpfCliente.Estilos"
         mc:Ignorable="d"
          MinHeight="670" MinWidth="520"
-        Title="Partida" Height="683" Width="1131" Closing="CerrandoVentana">
+        Title="Partida" Height="683" Width="1131">
     <Grid x:Name="gridPantalla1">
         <!-- Pantalla 1 Inicio de ronda-->
         <Grid>
@@ -120,4 +120,4 @@
 
 
 
-</Window>
+</Page>

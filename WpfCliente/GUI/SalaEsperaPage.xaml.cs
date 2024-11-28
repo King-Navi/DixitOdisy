@@ -16,7 +16,7 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class SalaEsperaWindow : Window, IActualizacionUI, IHabilitadorBotones
+    public partial class SalaEsperaPage : Page, IActualizacionUI, IHabilitadorBotones
     {
         public ObservableCollection<Usuario> JugadoresSala { get; set; } = new ObservableCollection<Usuario>();
         private bool visibleConfigurarPartida = false;
@@ -24,8 +24,9 @@ namespace WpfCliente.GUI
         private const int TIEMPO_CLIC_EXPULSION_SEGUNDOS = 5;
         private ConfiguracionPartida ConfiguracionPartida { get; set; }
 
-        public SalaEsperaWindow(string idSala)
+        public SalaEsperaPage(string idSala)
         {
+            KeepAlive = false;
             try
             {
                 InitializeComponent();
@@ -53,7 +54,7 @@ namespace WpfCliente.GUI
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
-                SingletonGestorVentana.Instancia.CerrarVentana(Ventana.SalaEspera);
+                SingletonGestorVentana.Instancia.Regresar();
             }
         }
 
@@ -96,31 +97,31 @@ namespace WpfCliente.GUI
 
         private async void VerificarConexion()
         {
-            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, this);
+            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)
             {
-                SingletonGestorVentana.Instancia.CerrarVentana(Ventana.SalaEspera);
+                SingletonGestorVentana.Instancia.Regresar();
                 return;
             }
         }
 
         private async void UnirseSala(string idSala)
         {
-            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, this);
+            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)
             {
                 return;
             }
             if (!ValidacionExistenciaJuego.ExisteSala(idSala))
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloLobbyNoEncontrado, Properties.Idioma.mensajeLobbyNoEncontrado, this);
-                SingletonGestorVentana.Instancia.CerrarVentana(Ventana.SalaEspera);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloLobbyNoEncontrado, Properties.Idioma.mensajeLobbyNoEncontrado, Window.GetWindow(this));
+                SingletonGestorVentana.Instancia.Regresar();
                 return;
             }
             var resultado = SingletonSalaJugador.Instancia.AbrirConexion();
             if (!resultado)
             {
-                SingletonGestorVentana.Instancia.CerrarVentana(Ventana.SalaEspera);
+                SingletonGestorVentana.Instancia.Regresar();
                 return;
             }
             SingletonSalaJugador.Instancia.Sala.AgregarJugadorSala(SingletonCliente.Instance.NombreUsuario, idSala);
@@ -156,8 +157,8 @@ namespace WpfCliente.GUI
             var resultado = Conexion.ChatMotor.AgregarUsuarioChat(SingletonCliente.Instance.IdChat, SingletonCliente.Instance.NombreUsuario);
             if (!resultado)
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorInesperado, Properties.Idioma.mensajeErrorInesperado, this);
-                SingletonGestorVentana.Instancia.CerrarVentana(Ventana.SalaEspera);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorInesperado, Properties.Idioma.mensajeErrorInesperado, Window.GetWindow(this));
+                SingletonGestorVentana.Instancia.Regresar();
             }
         }
 
@@ -177,8 +178,8 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, this);
-                SingletonGestorVentana.Instancia.CerrarVentana(Ventana.SalaEspera);
+                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, Window.GetWindow(this));
+                SingletonGestorVentana.Instancia.Regresar();
             }
 
         }
@@ -195,8 +196,8 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                SingletonGestorVentana.Instancia.CerrarVentana(Ventana.SalaEspera);
-                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, this);
+                SingletonGestorVentana.Instancia.Regresar();
+                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, Window.GetWindow(this));
             }
 
         }
@@ -213,8 +214,8 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                SingletonGestorVentana.Instancia.CerrarVentana(Ventana.SalaEspera);
-                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, this);
+                SingletonGestorVentana.Instancia.Regresar();
+                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, Window.GetWindow(this));
             }
             return false;
         }
@@ -256,26 +257,22 @@ namespace WpfCliente.GUI
         {
             if (!ValidacionExistenciaJuego.ExistePartida(idPartida))
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloLobbyNoEncontrado, Properties.Idioma.mensajeLobbyNoEncontrado, this);
-                SingletonGestorVentana.Instancia.CerrarVentana(Ventana.SalaEspera);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloLobbyNoEncontrado, Properties.Idioma.mensajeLobbyNoEncontrado, Window.GetWindow(this));
+                SingletonGestorVentana.Instancia.Regresar();
                 return;
             }
             SingletonCliente.Instance.IdPartida = idPartida;
             OcultarVentanaHastaCierre();
         }
 
-        private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
-        }
 
         private async void ClicButtonEmpezarPartidaAsync(object sender, RoutedEventArgs e)
         {
             this.IsEnabled = false;
-            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, this);
+            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)
             {
-                SingletonGestorVentana.Instancia.CerrarVentana(Ventana.SalaEspera);
+                SingletonGestorVentana.Instancia.Regresar();
                 return;
             }
             if (!ValidarExistenciaSala())
@@ -316,7 +313,7 @@ namespace WpfCliente.GUI
             VentanasEmergentes.CrearVentanaEmergenteConCierre(
                 Properties.Idioma.tituloLobbyNoEncontrado,
                 Idioma.mensajeLobbyNoDisponible,
-                this
+                Window.GetWindow(this)
             );
         }
 
@@ -356,13 +353,13 @@ namespace WpfCliente.GUI
         {
             if (SingletonCliente.Instance.IdPartida == null)
             {
-                SingletonGestorVentana.Instancia.CerrarVentana(Ventana.Partida);
+                SingletonGestorVentana.Instancia.Regresar();
                 return;
             }
-            PartidaWindow partida = new PartidaWindow(SingletonCliente.Instance.IdPartida);
+            PartidaPage partida = new PartidaPage(SingletonCliente.Instance.IdPartida);
             if (partida != null)
             {
-                SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.Partida, partida);
+                SingletonGestorVentana.Instancia.NavegarA(partida);
             }
         }
 
@@ -374,7 +371,7 @@ namespace WpfCliente.GUI
 
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCodigoCopiado,
                     Properties.Idioma.mensajeCodigoCopiado,
-                    this);
+                    Window.GetWindow(this));
             }
         }
 
@@ -387,14 +384,14 @@ namespace WpfCliente.GUI
                 {
                     VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloInvitacionPartida,
                         Properties.Idioma.mensajeInvitacionExitosa,
-                        this);
+                        Window.GetWindow(this));
                 }
             }
             else
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloInvitacionPartida,
                     Properties.Idioma.mensajeInvitacionFallida,
-                    this);
+                    Window.GetWindow(this));
             }
         }
 
@@ -404,7 +401,7 @@ namespace WpfCliente.GUI
             IngresarGamertagModalWindow ventanaModal = new IngresarGamertagModalWindow();
             try
             {
-                ventanaModal.Owner = this;
+                ventanaModal.Owner = Window.GetWindow(this);
 
             }
             catch (Exception ex)
@@ -424,7 +421,7 @@ namespace WpfCliente.GUI
         private async Task<bool> EnviarInvitacion(string gamertagReceptor)
         {
             bool resultado = false;
-            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, this);
+            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)
             {
                 return false;
@@ -440,7 +437,7 @@ namespace WpfCliente.GUI
                 ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloInvitacionPartida,
                     Properties.Idioma.mensajeInvitacionFallida,
-                    this);
+                    Window.GetWindow(this));
             }
             return resultado;
 
@@ -514,7 +511,7 @@ namespace WpfCliente.GUI
         private async void ClicButtonEliminarUsuario(object sender, RoutedEventArgs e)
         {
             this.IsEnabled = false;
-            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, this);
+            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)
             {
                 Application.Current.Shutdown();
@@ -524,10 +521,18 @@ namespace WpfCliente.GUI
             {
                 try
                 {
+                    if (SingletonCliente.Instance.NombreUsuario.Equals(usuario.Nombre, StringComparison.OrdinalIgnoreCase))
+                    {
+                        throw new ArgumentException();
+                    }
                     SingletonSalaJugador.Instancia.Sala.ExpulsarJugadorSala(
                         SingletonCliente.Instance.NombreUsuario,
                         usuario.Nombre,
                         SingletonCliente.Instance.IdSala);
+                }
+                catch(ArgumentException)
+                {
+                    VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloExpulsionInvalida, Idioma.mensajeNoAutoExpulsion, Window.GetWindow(this));
                 }
                 catch (Exception excepcion)
                 {
@@ -540,7 +545,7 @@ namespace WpfCliente.GUI
 
         private void ClicImagenFlechaAtras(object sender, MouseButtonEventArgs e)
         {
-            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.SalaEspera);
+            SingletonGestorVentana.Instancia.Regresar();
         }
         public void DelegacionRol(bool esAnfitrion)
         {

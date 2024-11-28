@@ -164,7 +164,6 @@ namespace WpfCliente.GUI
             }
         }
 
-
         private void ClicButtonUnirseSala(object sender, RoutedEventArgs e)
         {
             bool esInvitacion = false;

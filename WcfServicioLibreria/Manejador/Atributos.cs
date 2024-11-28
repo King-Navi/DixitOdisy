@@ -45,9 +45,13 @@ namespace WcfServicioLibreria.Manejador
         #region Escritura en disco
         public IEscribirDisco Escritor { get; private set; }
 
-      
+
         #endregion
 
+        #region Amistad
+        private readonly SemaphoreSlim semaphorAbrirSesionAmigo= new SemaphoreSlim(1, 1);
+
+        #endregion
 
         public ManejadorPrincipal(IContextoOperacion _contextoOperacion, IEscribirDisco _escribirDisco)
         {

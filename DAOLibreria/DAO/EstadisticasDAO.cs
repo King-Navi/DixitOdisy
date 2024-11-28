@@ -62,7 +62,6 @@ namespace DAOLibreria.DAO
             return null;
         }
 
-        //Pregunar al profe: metodo con alta complejidad ciclomatica
         private static Action<Estadisticas> ObtenerAccion(EstadisticasAcciones accion)
         {
             switch (accion)

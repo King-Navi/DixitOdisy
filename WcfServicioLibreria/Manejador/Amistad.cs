@@ -105,8 +105,9 @@ namespace WcfServicioLibreria.Manejador
             return false;
         }
 
-        public bool AbrirCanalParaAmigos(Modelo.Usuario _usuarioRemitente)
+        public async  Task<bool> AbrirCanalParaAmigos(Modelo.Usuario _usuarioRemitente)
         {
+            await semaphorAbrirSesionAmigo.WaitAsync();
             try
             {
                 IAmistadCallBack contextoRemitente = contextoOperacion.GetCallbackChannel<IAmistadCallBack>();
@@ -127,6 +128,10 @@ namespace WcfServicioLibreria.Manejador
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            finally
+            {
+                semaphorAbrirSesionAmigo.Release();
             }
             return false;
         }
@@ -178,6 +183,7 @@ namespace WcfServicioLibreria.Manejador
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+            
             return usuariosModeloWCF;
         }
 

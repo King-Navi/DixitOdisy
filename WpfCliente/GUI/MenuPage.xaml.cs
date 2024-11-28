@@ -30,7 +30,7 @@ namespace WpfCliente.GUI
             KeepAlive = true;
             this.Loaded += CargarNuevoContexto;
             InitializeComponent();
-            SingletonInvitacionPartida.Instancia.InvitacionRecibida += RecibirInvitacion;
+            SingletonCanles.Instancia.InvitacionRecibida += RecibirInvitacion;
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             ActualizarUI();
             AbrirConexiones();
@@ -75,7 +75,7 @@ namespace WpfCliente.GUI
         {
             try
             {
-                var resultadoUsuarioSesion = SingletonUsuarioSessionJugador.Instancia.AbrirConexion();
+                var resultadoUsuarioSesion = SingletonCanles.Instancia.AbrirTodaConexion();
                 if (!resultadoUsuarioSesion)
                 {
                     VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor,
@@ -118,9 +118,9 @@ namespace WpfCliente.GUI
                 IdUsuario = SingletonCliente.Instance.IdUsuario,
                 Nombre = SingletonCliente.Instance.NombreUsuario
             };
-            SingletonUsuarioSessionJugador.Instancia.UsuarioSesion.ObtenerSessionJugador(user);
+            SingletonCanles.Instancia.UsuarioSesion.ObtenerSessionJugador(user);
 
-            var resultadoAmigo = SingletonAmigos.Instancia.AbrirConexion();
+            var resultadoAmigo = SingletonCanles.Instancia.AbrirConexion();
             if (!resultadoAmigo)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor,
@@ -129,14 +129,15 @@ namespace WpfCliente.GUI
                 SingletonGestorVentana.Instancia.Regresar();
                 return;
             }
-            var resultado = await SingletonAmigos.Instancia.Amigos.AbrirCanalParaAmigosAsync(user);
+            return;
+            var resultado = await SingletonCanles.Instancia.Amigos.AbrirCanalParaAmigosAsync(user);
             if (!resultado)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloCargarAmigosFalla, Idioma.mensajeCargarAmigosFalla, Window.GetWindow(this));
                 Application.Current.Shutdown();
             }
 
-            var resultadoInvitacion = SingletonInvitacionPartida.Instancia.AbrirConexion();
+            var resultadoInvitacion = SingletonCanles.Instancia.AbrirConexion();
             if (!resultadoInvitacion)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor,
@@ -145,7 +146,7 @@ namespace WpfCliente.GUI
                 SingletonGestorVentana.Instancia.Regresar();
                 return;
             }
-            await SingletonInvitacionPartida.Instancia.InvitacionPartida.AbrirCanalParaInvitacionesAsync(user);
+            await SingletonCanles.Instancia.InvitacionPartida.AbrirCanalParaInvitacionesAsync(user);
         }
 
         private void ClicButtonCrearSala(object sender, RoutedEventArgs e)

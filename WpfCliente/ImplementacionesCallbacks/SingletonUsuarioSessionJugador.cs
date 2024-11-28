@@ -10,14 +10,10 @@ using WpfCliente.Interfaz;
 
 namespace WpfCliente.ImplementacionesCallbacks
 {
-    public sealed class SingletonUsuarioSessionJugador : IServicioUsuarioSesionCallback, IImplementacionCallback
+    public partial class SingletonCanles: IServicioUsuarioSesionCallback, IImplementacionCallback
     {
-        private static readonly Lazy<SingletonUsuarioSessionJugador> instancia =
-            new Lazy<SingletonUsuarioSessionJugador>(() => new SingletonUsuarioSessionJugador());
-        public static SingletonUsuarioSessionJugador Instancia => instancia.Value;
         public ServicioUsuarioSesionClient UsuarioSesion { get; private set; }
         public EventHandler InicioSesionEvento;
-        private SingletonUsuarioSessionJugador() { }
 
         public void ObtenerSessionJugadorCallback()
         {

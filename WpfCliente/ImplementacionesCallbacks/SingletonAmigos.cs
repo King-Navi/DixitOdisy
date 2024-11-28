@@ -12,32 +12,24 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.ImplementacionesCallbacks 
 {
-    public class SingletonAmigos : IServicioAmistadCallback, IImplementacionCallback
+    public partial class SingletonCanles : IServicioAmistadCallback, IImplementacionCallback
     {
         private const string UTILIMA_CONEXION_CONECTADO = "";
-        private static readonly Lazy<SingletonAmigos> instancia = new Lazy<SingletonAmigos>(() => new SingletonAmigos());
-        public static SingletonAmigos Instancia => instancia.Value;
+        private static readonly Lazy<SingletonCanles> instancia = new Lazy<SingletonCanles>(() => new SingletonCanles());
+        public static SingletonCanles Instancia => instancia.Value;
         public ServicioAmistadClient Amigos { get; private set; }
         public ObservableCollection<Amigo> ListaAmigos { get;  private set; } = new ObservableCollection<Amigo>();
 
 
-        private SingletonAmigos() { }
+        private SingletonCanles() { }
 
-        public bool AbrirConexion()
+        public bool AbrirTodaConexion()
         {
             try
             {
-                var objectoComunicacion = Amigos as ICommunicationObject;
-                if (objectoComunicacion?.State == CommunicationState.Opened ||
-                    objectoComunicacion?.State == CommunicationState.Opening)
-                {
-                    return true;
-                }
-                if (objectoComunicacion?.State == CommunicationState.Faulted)
-                {
-                    CerrarConexion();
-                }
+                InvitacionPartida = new ServicioInvitacionPartidaClient(new InstanceContext(this));
                 Amigos = new ServicioAmistadClient(new System.ServiceModel.InstanceContext(this));
+                UsuarioSesion = new ServicioUsuarioSesionClient(new System.ServiceModel.InstanceContext(this));
                 LimpiarRecursos();
                 return true;
 
@@ -55,24 +47,24 @@ namespace WpfCliente.ImplementacionesCallbacks
             ListaAmigos.Clear();
         }
 
-        public bool CerrarConexion()
-        {
-            try
-            {
-                if (Amigos != null)
-                {
-                    Amigos.Close();
-                    Amigos = null;
-                }
-            }
-            catch (Exception excepcion)
-            {
-                Amigos = null;
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
-                return false;
-            }
-            return true;
-        }
+        //public bool CerrarConexion()
+        //{
+        //    try
+        //    {
+        //        if (Amigos != null)
+        //        {
+        //            Amigos.Close();
+        //            Amigos = null;
+        //        }
+        //    }
+        //    catch (Exception excepcion)
+        //    {
+        //        Amigos = null;
+        //        ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+        //        return false;
+        //    }
+        //    return true;
+        //}
 
         public void CambiarEstadoAmigoCallback(Amigo amigo)
         {

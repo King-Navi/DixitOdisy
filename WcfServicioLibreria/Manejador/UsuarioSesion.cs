@@ -18,9 +18,13 @@ namespace WcfServicioLibreria.Manejador
             {
                 try
                 {
-                    IUsuarioSesionCallback contexto = contextoOperacion.GetCallbackChannel<IUsuarioSesionCallback>();
-                    usuario.UsuarioSesionCallBack = contexto;
-                    ICommunicationObject comunicacionObjecto = (ICommunicationObject)contexto;
+                    IUsuarioSesionCallback contextoUsuario = contextoOperacion.GetCallbackChannel<IUsuarioSesionCallback>();
+                    IAmistadCallBack contextoAmigos = contextoOperacion.GetCallbackChannel<IAmistadCallBack>();
+                    IInvitacionPartidaCallback contextoInvitacionPartida = contextoOperacion.GetCallbackChannel<IInvitacionPartidaCallback>();
+                    usuario.UsuarioSesionCallBack = contextoUsuario;
+                    usuario.AmistadSesionCallBack = contextoAmigos;
+                    usuario.InvitacionPartidaCallBack = contextoInvitacionPartida;
+                    ICommunicationObject comunicacionObjecto = (ICommunicationObject)contextoUsuario;
                     usuario.CerrandoEvento = (emisor, e) =>
                     {
                         Console.WriteLine(usuario.Nombre + " | "+ usuario.IdUsuario + " se está yendo. Clase" + emisor);
@@ -46,12 +50,13 @@ namespace WcfServicioLibreria.Manejador
                     sesionAbierta = true;
                     if (ConectarUsuario(usuario))
                     {
-                        contexto.ObtenerSessionJugadorCallback();
+                        contextoUsuario.ObtenerSessionJugadorCallback();
                     }
                 }
                 catch (CommunicationException)
                 {
                     jugadoresConectadosDiccionario.TryRemove(usuario.IdUsuario, out _);
+                    Console.WriteLine("Incio");
                 }
 
             }

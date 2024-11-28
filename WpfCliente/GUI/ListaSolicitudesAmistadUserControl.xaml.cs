@@ -41,7 +41,7 @@ namespace WpfCliente.GUI
 
                 try
                 {
-                    var listaSolicitudes = SingletonAmigos.Instancia.Amigos.ObtenerSolicitudesAmistad(usuarioActual);
+                    var listaSolicitudes = SingletonCanles.Instancia.Amigos.ObtenerSolicitudesAmistad(usuarioActual);
                     if (listaSolicitudes == null || listaSolicitudes.Count() == 0)
                     {
                         labelNoHaySolicitudes.Visibility = Visibility.Visible;

@@ -29,7 +29,7 @@ namespace WpfCliente.GUI
             DataContext = this;
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             ActualizarUI();
-            Amigos = SingletonAmigos.Instancia.ListaAmigos;
+            Amigos = SingletonCanles.Instancia.ListaAmigos;
         }
 
         private void IniciarHora()

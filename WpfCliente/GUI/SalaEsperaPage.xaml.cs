@@ -118,7 +118,7 @@ namespace WpfCliente.GUI
                 SingletonGestorVentana.Instancia.Regresar();
                 return;
             }
-            var resultado = SingletonSalaJugador.Instancia.AbrirConexion();
+            var resultado = SingletonSalaJugador.Instancia.AbrirConexionInvitacionPartida();
             if (!resultado)
             {
                 SingletonGestorVentana.Instancia.Regresar();
@@ -428,7 +428,7 @@ namespace WpfCliente.GUI
             }
             try
             {
-                resultado = SingletonInvitacionPartida.Instancia.InvitacionPartida.EnviarInvitacion(SingletonCliente.Instance.NombreUsuario,
+                resultado = SingletonCanles.Instancia.InvitacionPartida.EnviarInvitacion(SingletonCliente.Instance.NombreUsuario,
                     SingletonCliente.Instance.IdSala,
                     gamertagReceptor);
             }

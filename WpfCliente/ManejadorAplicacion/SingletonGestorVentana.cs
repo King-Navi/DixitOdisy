@@ -263,11 +263,12 @@ namespace WpfCliente.Contexto
 
         private void CerrarTodaConexion()
         {
-            SingletonUsuarioSessionJugador.Instancia.CerrarConexion();
+            //TODO:
+            SingletonCanles.Instancia.CerrarConexion();
             Conexion.CerrarPartida();
             Conexion.CerrarChatMotor();
-            SingletonAmigos.Instancia.CerrarConexion();
-            SingletonInvitacionPartida.Instancia.CerrarConexion();
+            SingletonCanles.Instancia.CerrarConexion();
+            SingletonCanles.Instancia.CerrarConexion();
             SingletonSalaJugador.Instancia.CerrarConexion();
         }
         private void CerrarConexionSalaPartida()

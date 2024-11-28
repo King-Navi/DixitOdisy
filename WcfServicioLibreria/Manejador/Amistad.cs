@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.ServiceModel;
+using System.Threading;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Enumerador;
@@ -112,6 +113,7 @@ namespace WcfServicioLibreria.Manejador
             {
                 IAmistadCallBack contextoRemitente = contextoOperacion.GetCallbackChannel<IAmistadCallBack>();
                 jugadoresConectadosDiccionario.TryGetValue(_usuarioRemitente.IdUsuario, out UsuarioContexto remitente);
+                Thread.Sleep(TimeSpan.FromSeconds(1));
                 lock (remitente)
                 {
                     remitente.AmistadSesionCallBack = contextoRemitente;

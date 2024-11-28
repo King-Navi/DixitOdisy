@@ -10,15 +10,10 @@ using System.ServiceModel;
 
 namespace WpfCliente.ImplementacionesCallbacks
 {
-    public class SingletonInvitacionPartida : IServicioInvitacionPartidaCallback , IImplementacionCallback
+    public partial class SingletonCanles : IServicioInvitacionPartidaCallback , IImplementacionCallback
     {
         public event Action<InvitacionPartida> InvitacionRecibida;
-        private static readonly Lazy<SingletonInvitacionPartida> instancia =
-            new Lazy<SingletonInvitacionPartida>(() => new SingletonInvitacionPartida());
-        public static SingletonInvitacionPartida Instancia => instancia.Value;
         public ServicioInvitacionPartidaClient InvitacionPartida { get; private set; }
-
-        private SingletonInvitacionPartida() { }
         public void RecibirInvitacionCallback(InvitacionPartida invitacion)
         {
             if (invitacion == null)
@@ -28,7 +23,7 @@ namespace WpfCliente.ImplementacionesCallbacks
             InvitacionRecibida?.Invoke(invitacion);
         }
 
-        public bool AbrirConexion()
+        public bool AbrirConexionInvitacionPartida()
         {
             try
             {
@@ -40,7 +35,7 @@ namespace WpfCliente.ImplementacionesCallbacks
                 }
                 if (objectoComunicacion?.State == CommunicationState.Faulted)
                 {
-                    CerrarConexion();
+                    CerrarConexionInvitacion();
                 }
                 InvitacionPartida = new ServicioInvitacionPartidaClient(new System.ServiceModel.InstanceContext(this));
                 return true;
@@ -48,13 +43,13 @@ namespace WpfCliente.ImplementacionesCallbacks
             }
             catch (Exception excepcion)
             {
-                CerrarConexion();
+                CerrarConexionInvitacion();
                 ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
                 return false;
             }
         }
 
-        public bool CerrarConexion()
+        public bool CerrarConexionInvitacion()
         {
             try
             {

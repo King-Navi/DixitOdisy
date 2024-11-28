@@ -8,7 +8,7 @@ namespace WpfCliente.Interfaz
 {
     public interface IImplementacionCallback
     {
-        bool AbrirConexion();
+        bool AbrirConexionInvitacionPartida();
         bool CerrarConexion();
     }
 }

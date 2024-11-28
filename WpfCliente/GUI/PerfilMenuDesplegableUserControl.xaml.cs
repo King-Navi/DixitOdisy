@@ -20,14 +20,12 @@ namespace WpfCliente.GUI
 
         private void AbrirEditarVentana(object sender, RoutedEventArgs e)
         {
-            SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.EditarPerfil, new EditarPerfilWindow());
-            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.Menu);
+            SingletonGestorVentana.Instancia.NavegarA(new EditarPerfilPage());
         }
 
         private void CerrarSesion(object sender, RoutedEventArgs e)
         {
-            SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.IniciarSesion, new IniciarSesionWindow());
-            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.Menu);
+            SingletonGestorVentana.Instancia.Regresar();
         }
 
         public void ActualizarUI()

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
@@ -22,8 +23,9 @@ namespace WcfServicioLibreria.Manejador
                 await partida.AvisarNuevoJugadorAsync(usuarioNombre);
                 partida.ConfirmarInclusionPartida(contexto);
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
         }
 
@@ -46,9 +48,10 @@ namespace WcfServicioLibreria.Manejador
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
-            };
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
         }
 
         public void ConfirmarMovimiento(string nombreJugador, string idPartida, string claveImagen, string pista = null)
@@ -74,9 +77,10 @@ namespace WcfServicioLibreria.Manejador
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
-            };
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
         }
 
         public void ExpulsarJugadorPartida(string nombreJugador, string idPartida)
@@ -95,9 +99,10 @@ namespace WcfServicioLibreria.Manejador
                 partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
                 await partida.EmpezarPartida();
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
-            };
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
         }
 
         public async Task<bool> SolicitarImagenCartaAsync(string nombreJugador, string idPartida)
@@ -111,8 +116,9 @@ namespace WcfServicioLibreria.Manejador
                 partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
                 return await partida.EnviarImagen(nombreJugador);
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
         }

@@ -32,8 +32,9 @@ namespace WcfServicioLibreria.Manejador
                     UsuarioDAO.ColocarUltimaConexion(idJugador);
                 }
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
         }
 
@@ -95,8 +96,9 @@ namespace WcfServicioLibreria.Manejador
                 resultado = true;
 
             }
-            catch (Exception) 
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return resultado;
         }
@@ -149,8 +151,9 @@ namespace WcfServicioLibreria.Manejador
                 };
                 throw new FaultException<VetoFalla>(excepcion, new FaultReason("Veto en permanete, y no vuelvas!!!"));
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
 
             return usuario;
@@ -175,8 +178,9 @@ namespace WcfServicioLibreria.Manejador
                     Console.WriteLine(usuarioActual.Nombre);
 
                 }
-                catch (Exception)
+                catch (Exception excepcion)
                 {
+                    ManejadorExcepciones.ManejarErrorException(excepcion);
                 }
             }
         }

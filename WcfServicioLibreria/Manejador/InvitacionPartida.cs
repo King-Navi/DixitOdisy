@@ -2,6 +2,7 @@
 using System.Linq;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
@@ -17,21 +18,18 @@ namespace WcfServicioLibreria.Manejador
 
                 if (jugador == null)
                 {
-                    Console.Error.WriteLine("El usuario receptor no está conectado.");
                     return false;
                 }
                 if (jugador.InvitacionPartidaCallBack is IInvitacionPartidaCallback callback)
                 {
                     InvitacionPartida invitacion = new InvitacionPartida(gamertagEmisor, codigoSala, gamertagReceptor);
                     callback?.RecibirInvitacionCallback(invitacion);
-                    Console.WriteLine($"Invitación enviada a {gamertagReceptor} para unirse a la sala {codigoSala}");
                     return true;
                 }
-                Console.Error.WriteLine("El usuario receptor no está conectado.");
             }
-            catch (Exception ex)
+            catch (Exception excepcion)
             {
-                Console.Error.WriteLine($"Error al enviar invitación: {ex.Message}");
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
 
@@ -48,10 +46,9 @@ namespace WcfServicioLibreria.Manejador
                     {
                         remitente.InvitacionPartidaCallBack = contextoRemitente;
                     }
-                    Console.WriteLine($"Canal de invitaciones abierto para el usuario {usuarioRemitente.Nombre}");
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 if (jugadoresConectadosDiccionario.TryGetValue(usuarioRemitente.IdUsuario, out UsuarioContexto remitente))
                 {
@@ -60,7 +57,6 @@ namespace WcfServicioLibreria.Manejador
                         remitente.InvitacionPartidaCallBack = null;
                     }
                 }
-                Console.Error.WriteLine($"Error al abrir canal de invitaciones para {usuarioRemitente.Nombre}: {ex.Message}");
             }
         }
     }

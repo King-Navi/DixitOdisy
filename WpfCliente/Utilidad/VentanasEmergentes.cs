@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using WpfCliente.Contexto;
 using WpfCliente.GUI;
 
 namespace WpfCliente.Utilidad
@@ -66,19 +67,11 @@ namespace WpfCliente.Utilidad
             {
                 ventanaEmergente.Owner = ventana;
                 ventanaEmergente.ShowDialog();
-                CerrarSiNoEsInicioSesion(ventana);
+                SingletonGestorVentana.Instancia.RegresarSiNoEsInicio(ventana);
             }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
-            }
-        }
-
-        private static void CerrarSiNoEsInicioSesion(Window ventana)
-        {
-            if (!(ventana is IniciarSesionWindow))
-            {
-                ventana?.Close();
             }
         }
 

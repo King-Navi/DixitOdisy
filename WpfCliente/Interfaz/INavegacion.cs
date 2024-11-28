@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WpfCliente.Contexto;
+using System.Windows.Controls;
 
 namespace WpfCliente.Interfaz
 {
-    public interface IObservadorVentana
+    internal interface INavegacion
     {
-        void EnCierre(Ventana nombre);
+        Frame MarcoNavegacion { get; set; }
     }
 }

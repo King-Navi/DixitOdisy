@@ -652,4 +652,16 @@
   <data name="labelContraseniaNoCoincide" xml:space="preserve">
     <value>Passwords do not match</value>
   </data>
+  <data name="tituloImagenSelecionada" xml:space="preserve">
+    <value>Selected image</value>
+  </data>
+  <data name="tituloReconectando" xml:space="preserve">
+    <value>Reconnecting</value>
+  </data>
+  <data name="tituloExpulsionInvalida" xml:space="preserve">
+    <value>Invalid expulsion</value>
+  </data>
+  <data name="mensajeNoAutoExpulsion" xml:space="preserve">
+    <value>You can't expel yourself</value>
+  </data>
 </root>

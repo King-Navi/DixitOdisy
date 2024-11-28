@@ -1,12 +1,10 @@
-﻿<Window x:Class="WpfCliente.GUI.AmigosWindow"
+﻿<Page x:Class="WpfCliente.GUI.AmigosPage"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfCliente.GUI"
-        mc:Ignorable="d"
-        WindowStartupLocation="CenterScreen" 
-        ResizeMode="NoResize" Height="770" Width="1200" Closing="CerrandoVentana">
+        mc:Ignorable="d" Height="770" Width="1200">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Recursos/fondoNotificaciones.png" />
@@ -23,4 +21,4 @@
             <local:ListaSolicitudesAmistadUserControl x:Name="listaSolicitudesAmistadUserControl" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
     </Grid>
-</Window>
+</Page>

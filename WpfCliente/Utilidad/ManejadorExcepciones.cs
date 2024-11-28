@@ -2,6 +2,7 @@
 using Serilog;
 using WpfCliente.GUI;
 using System.Windows;
+using WpfCliente.Contexto;
 
 namespace WpfCliente.Utilidad
 {
@@ -16,8 +17,7 @@ namespace WpfCliente.Utilidad
             if (ventana != null)
             {
                 ventana.Close();
-                IniciarSesionWindow iniciarSesion = new IniciarSesionWindow();
-                iniciarSesion.Show();
+                SingletonGestorVentana.Instancia.AbrirNuevaVentanaPrincipal(new PrincipalWindow());
             }
         }
 
@@ -28,8 +28,7 @@ namespace WpfCliente.Utilidad
             if (ventana != null)
             {
                 ventana.Close();
-                IniciarSesionWindow iniciarSesion = new IniciarSesionWindow();
-                iniciarSesion.Show();
+                SingletonGestorVentana.Instancia.AbrirNuevaVentanaPrincipal(new PrincipalWindow());
             }
         }
 

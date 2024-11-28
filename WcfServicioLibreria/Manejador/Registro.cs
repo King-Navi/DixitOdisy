@@ -32,7 +32,8 @@ namespace WcfServicioLibreria.Manejador
                     };
                     resultado = DAOLibreria.DAO.UsuarioDAO.RegistrarNuevoUsuario(usuario, usuarioCuenta);
                 }
-            }catch (GamertagDuplicadoException)
+            }
+            catch (GamertagDuplicadoException)
             {
                 BaseDatosFalla excepcion = new BaseDatosFalla()
                 {
@@ -42,8 +43,7 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (Exception excepcion)
             {
-                Console.WriteLine(excepcion);
-                Console.WriteLine(excepcion.StackTrace);
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
 
             return resultado;

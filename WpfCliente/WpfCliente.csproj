@@ -112,13 +112,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="GUI\PrincipalWindow.xaml.cs">
+      <DependentUpon>PrincipalWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ImplementacionesCallbacks\SingletonSalaJugador.cs" />
     <Compile Include="Interfaz\IImplementacionCallback.cs" />
     <Compile Include="ImplementacionesCallbacks\SingletonInvitacionPartida.cs" />
-    <Compile Include="Interfaz\IObservadorVentana.cs" />
+    <Compile Include="Interfaz\INavegacion.cs" />
     <Compile Include="ManejadorAplicacion\SingletonGestorVentana.cs" />
-    <Compile Include="ManejadorAplicacion\VentajasEventoManejador.cs" />
-    <Compile Include="ManejadorAplicacion\Ventana.cs" />
     <Compile Include="Estilos\Control\ArcSpinner.cs" />
     <Compile Include="Estilos\Control\CogwheelSpinner.cs" />
     <Compile Include="Estilos\Control\DonutSpinner.cs" />
@@ -129,14 +130,14 @@
     <Compile Include="GUI\AmigoUserControl.xaml.cs">
       <DependentUpon>AmigoUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\CambiarContraseniaWindow.xaml.cs">
-      <DependentUpon>CambiarContraseniaWindow.xaml</DependentUpon>
+    <Compile Include="GUI\CambiarContraseniaPage.xaml.cs">
+      <DependentUpon>CambiarContraseniaPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\ChatUserControl.xaml.cs">
       <DependentUpon>ChatUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\EditarPerfilWindow.xaml.cs">
-      <DependentUpon>EditarPerfilWindow.xaml</DependentUpon>
+    <Compile Include="GUI\EditarPerfilPage.xaml.cs">
+      <DependentUpon>EditarPerfilPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\EsperaRestoJugadoresUserControl.xaml.cs">
       <DependentUpon>EsperaRestoJugadoresUserControl.xaml</DependentUpon>
@@ -156,8 +157,8 @@
     <Compile Include="GUI\ListaUsuariosSalaUserControl.xaml.cs">
       <DependentUpon>ListaUsuariosSalaUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\MenuWindow.xaml.cs">
-      <DependentUpon>MenuWindow.xaml</DependentUpon>
+    <Compile Include="GUI\MenuPage.xaml.cs">
+      <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\MostrarCartaModalWindow.xaml.cs">
       <DependentUpon>MostrarCartaModalWindow.xaml</DependentUpon>
@@ -165,11 +166,11 @@
     <Compile Include="GUI\NarradorSeleccionCartaUserControl.xaml.cs">
       <DependentUpon>NarradorSeleccionCartaUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\AmigosWindow.xaml.cs">
-      <DependentUpon>AmigosWindow.xaml</DependentUpon>
+    <Compile Include="GUI\AmigosPage.xaml.cs">
+      <DependentUpon>AmigosPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\PartidaWindow.xaml.cs">
-      <DependentUpon>PartidaWindow.xaml</DependentUpon>
+    <Compile Include="GUI\PartidaPage.xaml.cs">
+      <DependentUpon>PartidaPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\PerfilMenuDesplegableUserControl.xaml.cs">
       <DependentUpon>PerfilMenuDesplegableUserControl.xaml</DependentUpon>
@@ -187,14 +188,14 @@
     </Compile>
     <Compile Include="ImplementacionesCallbacks\SingletonUsuarioSessionJugador.cs" />
     <Compile Include="Utilidad\RecursosCompartidosPartida.cs" />
-    <Compile Include="GUI\RegistrarUsuarioWindow.xaml.cs">
-      <DependentUpon>RegistrarUsuarioWindow.xaml</DependentUpon>
+    <Compile Include="GUI\RegistrarUsuarioPage.xaml.cs">
+      <DependentUpon>RegistrarUsuarioPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\ResumenRondaUserControl.xaml.cs">
       <DependentUpon>ResumenRondaUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\SalaEsperaWindow.xaml.cs">
-      <DependentUpon>SalaEsperaWindow.xaml</DependentUpon>
+    <Compile Include="GUI\SalaEsperaPage.xaml.cs">
+      <DependentUpon>SalaEsperaPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\SeleccionCartaUsercontrol.xaml.cs">
       <DependentUpon>SeleccionCartaUsercontrol.xaml</DependentUpon>
@@ -228,8 +229,8 @@
     <Compile Include="GUI\CambiarIdiomaUserControl.xaml.cs">
       <DependentUpon>CambiarIdiomaUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\IniciarSesionWindow.xaml.cs">
-      <DependentUpon>IniciarSesionWindow.xaml</DependentUpon>
+    <Compile Include="GUI\IniciarSesionPage.xaml.cs">
+      <DependentUpon>IniciarSesionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilidad\Imagen.cs" />
     <Compile Include="Utilidad\LoggerManagador.cs" />
@@ -351,7 +352,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\CambiarContraseniaWindow.xaml">
+    <Page Include="GUI\CambiarContraseniaPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -363,7 +364,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\EditarPerfilWindow.xaml">
+    <Page Include="GUI\EditarPerfilPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -391,7 +392,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\MenuWindow.xaml">
+    <Page Include="GUI\MenuPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -403,11 +404,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\AmigosWindow.xaml">
+    <Page Include="GUI\AmigosPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\PartidaWindow.xaml">
+    <Page Include="GUI\PartidaPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -415,14 +416,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="GUI\PrincipalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\ReconectandoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\RegistrarUsuarioWindow.xaml">
+    <Page Include="GUI\RegistrarUsuarioPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\IniciarSesionWindow.xaml">
+    <Page Include="GUI\IniciarSesionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -430,7 +435,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\SalaEsperaWindow.xaml">
+    <Page Include="GUI\SalaEsperaPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

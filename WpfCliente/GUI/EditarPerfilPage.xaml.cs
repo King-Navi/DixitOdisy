@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -12,14 +13,15 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class EditarPerfilWindow : Window , IActualizacionUI
+    public partial class EditarPerfilPage : Page, IActualizacionUI
     {
         private bool cambioImagen = false;
         private const string RECURSO_ESTILO_CORREO = "NormalTextBoxStyle";
         private const string RECURSO_ESTILO_CORREO_ERROR = "ErrorTextBoxStyle";
 
-        public EditarPerfilWindow()
+        public EditarPerfilPage()
         {
+            KeepAlive = false;
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             InitializeComponent();
             CargarDatos();
@@ -37,7 +39,7 @@ namespace WpfCliente.GUI
             string rutaImagen = Imagen.SelecionarRutaImagen();
             if (!string.IsNullOrEmpty(rutaImagen))
             {
-                if (Imagen.EsImagenValida(rutaImagen,this))
+                if (Imagen.EsImagenValida(rutaImagen,Window.GetWindow(this)))
                 {
                     ProcesarImagen(rutaImagen);
                 }
@@ -45,14 +47,14 @@ namespace WpfCliente.GUI
                 {
                     VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, 
                         Properties.Idioma.mensajeImagenInvalida, 
-                        this);
+                        Window.GetWindow(this));
                 }
             }
             else
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenNoSelecionadaEditar, 
                     Properties.Idioma.mensajeImagenNoSelecionadaEditar, 
-                    this);
+                    Window.GetWindow(this));
             }
         }
 
@@ -60,7 +62,9 @@ namespace WpfCliente.GUI
         {
             BitmapImage nuevaImagen = new BitmapImage(new Uri(rutaImagen));
             imageFotoJugador.Source = nuevaImagen;
-            VentanasEmergentes.CrearVentanaEmergente("Imagen seleccionada", rutaImagen, this);
+            VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenSelecionada, 
+                rutaImagen, 
+                Window.GetWindow(this));
             cambioImagen = true;
         }
 
@@ -101,7 +105,7 @@ namespace WpfCliente.GUI
 
         private void ClicButtonCancelar(object sender, RoutedEventArgs e)
         {
-            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.EditarPerfil);
+            SingletonGestorVentana.Instancia.Regresar();
         }
 
         private void ClicButtonAceptar(object sender, RoutedEventArgs e)
@@ -141,7 +145,7 @@ namespace WpfCliente.GUI
                 {
                     return false;
                 }
-                return !Correo.VerificarCorreo(usuarioEditado.Correo, this);
+                return !Correo.VerificarCorreo(usuarioEditado.Correo, Window.GetWindow(this));
             }
             return false;
         }
@@ -150,7 +154,7 @@ namespace WpfCliente.GUI
         {
             VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloEditarUsuario,
                 Idioma.mensajeNoHuboCambios,
-                this);
+                Window.GetWindow(this));
         }
 
         private void MostrarMensajeCorreoInvalido()
@@ -158,7 +162,7 @@ namespace WpfCliente.GUI
             VentanasEmergentes.CrearVentanaEmergente(
                 Properties.Idioma.tituloCorreoInvalido,
                 Properties.Idioma.mensajeCorreoInvalido,
-                this);
+                Window.GetWindow(this));
         }
 
 
@@ -207,14 +211,16 @@ namespace WpfCliente.GUI
 
             if (resultado)
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloEditarUsuario, Properties.Idioma.mensajeUsuarioEditadoConExito, this);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloEditarUsuario, 
+                    Properties.Idioma.mensajeUsuarioEditadoConExito, 
+                    Window.GetWindow(this));
                 CerrarSesion();
             }
             else
             {
                 VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloEditarUsuario, 
                     Idioma.mensajeUsuarioEditadoFallo, 
-                    this);
+                    Window.GetWindow(this));
             }
         }
 
@@ -297,19 +303,14 @@ namespace WpfCliente.GUI
 
         private void CerrarSesion()
         {
-            SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.IniciarSesion , new IniciarSesionWindow());
-            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.EditarPerfil);
+            SingletonGestorVentana.Instancia.LimpiarHistorial();
+            SingletonGestorVentana.Instancia.NavegarA(new IniciarSesionPage());
         }
 
         private void ClicFlechaAtras(object sender, MouseButtonEventArgs e)
         {
-            SingletonGestorVentana.Instancia.AbrirNuevaVentana(Ventana.Menu , new MenuWindow());
-            SingletonGestorVentana.Instancia.CerrarVentana(Ventana.EditarPerfil);
+            SingletonGestorVentana.Instancia.Regresar();
         }
 
-        private void CerrandoVentana(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
-        }
     }
 }

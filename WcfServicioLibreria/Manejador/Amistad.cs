@@ -56,8 +56,9 @@ namespace WcfServicioLibreria.Manejador
             {
                 id = UsuarioDAO.ObtenerIdPorNombre(nombre);
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return id;
 
@@ -83,8 +84,9 @@ namespace WcfServicioLibreria.Manejador
             {
                 return AmistadDAO.SonAmigos(idMasAlto, idMasBajo);
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
 
@@ -96,8 +98,9 @@ namespace WcfServicioLibreria.Manejador
             {
                 return PeticionAmistadDAO.ExisteSolicitudAmistad(idMasAlto, idMasBajo);
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
         }
@@ -121,8 +124,9 @@ namespace WcfServicioLibreria.Manejador
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
         }
@@ -170,8 +174,9 @@ namespace WcfServicioLibreria.Manejador
                 return usuariosModeloBaseDatos;
 
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return usuariosModeloWCF;
         }
@@ -250,8 +255,9 @@ namespace WcfServicioLibreria.Manejador
 
                 return usuariosModeloWCF;
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return null;
         }
@@ -300,8 +306,9 @@ namespace WcfServicioLibreria.Manejador
             {
                 throw excepcion;
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
         }
@@ -371,8 +378,9 @@ namespace WcfServicioLibreria.Manejador
             {
                 throw excepcion;
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
 

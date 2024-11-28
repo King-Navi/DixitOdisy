@@ -12,7 +12,7 @@
                 <ComboBoxItem Content="Español" Tag="{StaticResource EspañolTag}"/>
                 <ComboBoxItem Content="English" Tag="{StaticResource EnglishTag}"/>
             </ComboBox>
-            <Image  Height="33" VerticalAlignment="Top"  ToolTip="Haz clic aquí para cambiar el idioma" Source="pack://application:,,,/WpfCliente;component/Recursos/logoIdioma.png" Width="43" MouseLeftButtonDown="clicImagenIdioma"/>
+            <Image  Height="33" VerticalAlignment="Top"  ToolTip="Haz clic aquí para cambiar el idioma" Source="pack://application:,,,/WpfCliente;component/Recursos/logoIdioma.png" Width="43" MouseLeftButtonDown="ClicImagenIdioma"/>
         </StackPanel>
     </Grid> 
 </UserControl>

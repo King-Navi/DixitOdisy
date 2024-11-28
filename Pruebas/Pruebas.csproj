@@ -80,9 +80,10 @@
     <Compile Include="DAO\EstadisticasDAO_Prueba.cs" />
     <Compile Include="DAO\ExpulsionDAONoConexion_Prueba.cs" />
     <Compile Include="DAO\ExpulsionDAO_Prueba.cs" />
+    <Compile Include="DAO\PeticionAmistadDAONoConexion_Pruebas.cs" />
     <Compile Include="DAO\UsuarioCuentaDAONoConexion_Prueba.cs" />
     <Compile Include="DAO\UsuarioCuentaDAO_Prueba.cs" />
-    <Compile Include="DAO\PeticionDAO_Prueba.cs" />
+    <Compile Include="DAO\PeticionAmistadDAO_Prueba.cs" />
     <Compile Include="DAO\Utilidades\ConfiguracionPruebaBD.cs" />
     <Compile Include="DAO\Utilidades\ConfiguracionPruebaBDInvalida.cs" />
     <Compile Include="DAO\VetoDAONoConexion_Prueba.cs" />

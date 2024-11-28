@@ -14,7 +14,7 @@
             </StackPanel>
             <!--Footer-->
             <StackPanel Background="#E0DCC7" DockPanel.Dock="Bottom">
-                <Label x:Name="labelHora" d:Content="Son las 18:17" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="3" FontFamily="Lucida Sans Unicode Bold" Unloaded="Cerrado">
+                <Label x:Name="labelHora" d:Content="Son las 18:17" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="3" FontFamily="Lucida Sans Unicode Bold">
                     <Image Height="100" Width="100"/>
                 </Label>
             </StackPanel>

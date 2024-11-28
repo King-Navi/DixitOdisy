@@ -1,19 +1,17 @@
-﻿<Window x:Name="windowMenu" x:Class="WpfCliente.GUI.MenuWindow"
+﻿<Page x:Class="WpfCliente.GUI.MenuPage"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfCliente.GUI"
         mc:Ignorable="d"
-        Height="770" Width="1200"
-        WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize" Closing="CerrandoVentana">
+        Height="770" Width="1200">
 
-    <Window.Background>
+    <Page.Background>
         <ImageBrush ImageSource="/Recursos/fondoMenu.png" Stretch="Fill"/>
-    </Window.Background>
+    </Page.Background>
 
-    <Window.Resources>
+    <Page.Resources>
         <Style TargetType="{x:Type Button}" >
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
@@ -21,7 +19,7 @@
                 </Style>
             </Style.Resources>
         </Style>
-    </Window.Resources>
+    </Page.Resources>
 
 
     <Grid>
@@ -130,19 +128,19 @@
                 <Label x:Name="labelEstadisitcasJugador" Content="Estadísticas del Jugador" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="10" />
                 <StackPanel Orientation="Horizontal" Margin="10">
                     <Label  x:Name="labelNombreUsuario"  Content="Nombre:" FontWeight="SemiBold" Margin="5" />
-                    <TextBlock x:Name="textBlockNombre" Text="{Binding Nombre}" Margin="5" />
+                    <TextBlock x:Name="textBlockNombre" Text="" Margin="5" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="10">
                     <Label x:Name="labelJugadas" Content="Partidas Jugadas:" FontWeight="SemiBold" Margin="5" />
-                    <TextBlock x:Name="textBlockPartidasJugadas" Text="{Binding PartidasJugadas}" Margin="5" />
+                    <TextBlock x:Name="textBlockPartidasJugadas" Text="" Margin="5" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="10">
                     <Label x:Name="labelGanadas" Content="Partidas Ganadas:" FontWeight="SemiBold" Margin="5" />
-                    <TextBlock x:Name="textBlockPartidasGanadas" Text="{Binding PartidasGanadas}" Margin="5" />
+                    <TextBlock x:Name="textBlockPartidasGanadas" Text="" Margin="5" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                     <Button Content="Cerrar" Click="ClicButtonCerrarEstadisticas" Margin="5" />
-                    <Button x:Name="buttonRefrescar" Content="Refrescar" Click="ClicButtonRefrescarEstadisticas" Margin="5" />
+                    <Button x:Name="buttonRefrescar" Content="Refrescar" Click="ClicButtonRefrescarEstadisticasAsync" Margin="5" />
                 </StackPanel>
             </StackPanel>
         </Grid>
@@ -157,9 +155,6 @@
                 <ProgressBar x:Name="progressTimerGeneral" Height="10" Foreground="Green"/>
                 <TextBlock x:Name="textBlockNotificacionGeneral" FontSize="16" FontWeight="Bold" Margin="0,0,0,10" Foreground="Black"/>
 
-                <!-- Imagen de la persona que manda la invitación o solicitud -->
-                <Image x:Name="imagenPerfil" Width="40" Height="40" Margin="0,0,0,10" HorizontalAlignment="Center" Source="{Binding ImagenRuta}"/>
-
                 <!-- Contenedor para los botones: se activan dependiendo del tipo de notificación -->
                 <StackPanel x:Name="botonesPanel" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button x:Name="buttonUnirse" Content="Unirse" Click="ClicButtonUnirseInvitacion" Width="80" Visibility="Collapsed"/>
@@ -169,4 +164,4 @@
 
 
     </Grid>
-</Window>
+</Page>

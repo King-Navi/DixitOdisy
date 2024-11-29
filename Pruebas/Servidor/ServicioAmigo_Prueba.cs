@@ -13,7 +13,7 @@ using WcfServicioLibreria.Utilidades;
 namespace Pruebas.Servidor
 {
     [TestClass]
-    public class ServicioAmigo 
+    public class ServicioAmigo_Prueba 
     {
         private const int ID_USUARIO_MENOR = 1;
         private const int ID_USUARIO_MAYOR = 2;
@@ -105,25 +105,25 @@ namespace Pruebas.Servidor
         {
 
             // Arrange
-            var implementacionCallbackAmistad = new AmistadCallbackImpl();
+            var implementacionCallbackAmistad = new Utilidades.UsuarioSesionCallbackImplementacion();
 
-            mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IAmistadCallBack>())
+            mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IUsuarioSesionCallback>())
                                .Returns(implementacionCallbackAmistad);
-            var implementacionCallbackUsarioSeion = new UsuarioSesionCallbackImpl();
+            var implementacionCallbackUsarioSeion = new Utilidades.UsuarioSesionCallbackImplementacion();
 
             mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IUsuarioSesionCallback>())
                                .Returns(implementacionCallbackUsarioSeion);
 
             // Agregar ambos usuarios a la lista de jugadores conectados deben esta en BD
             GuardarSolicitudAmistad(ID_USUARIO_MAYOR, ID_USUARIO_MENOR);
-            manejador.ObtenerSessionJugador(new WcfServicioLibreria.Modelo.Usuario()
+            manejador.ObtenerSesionJugador(new WcfServicioLibreria.Modelo.Usuario()
             {
                 IdUsuario = ID_USUARIO_MENOR,
                 Nombre = NOMBRE_ID_MENOR,
                 ContraseniaHASH = CONTRASNIAHASH_ID_MENOR
             });
 
-            manejador.ObtenerSessionJugador(new WcfServicioLibreria.Modelo.Usuario()
+            manejador.ObtenerSesionJugador(new WcfServicioLibreria.Modelo.Usuario()
             {
                 IdUsuario =ID_USUARIO_MAYOR,
                 Nombre = NOMBRE_ID_MAYOR,

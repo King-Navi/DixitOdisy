@@ -4,13 +4,13 @@ using WcfServicioLibreria.Contratos;
 
 namespace Pruebas.Servidor.Utilidades
 {
-    public class UsuarioSesionCallbackImpl : IUsuarioSesionCallback, ICommunicationObject
+    public partial class UsuarioSesionCallbackImplementacion : IUsuarioSesionCallback, ICommunicationObject
     {
         public bool SesionAbierta { get; private set; }
 
         public CommunicationState State { get; private set; } = CommunicationState.Opened;
 
-        public UsuarioSesionCallbackImpl()
+        public UsuarioSesionCallbackImplementacion()
         {
             SesionAbierta = false;
         }
@@ -21,7 +21,7 @@ namespace Pruebas.Servidor.Utilidades
         public event EventHandler Opened;
         public event EventHandler Opening;
 
-        public void ObtenerSessionJugadorCallback()
+        public void ObtenerSesionJugadorCallback()
         {
             SesionAbierta = true;
         }

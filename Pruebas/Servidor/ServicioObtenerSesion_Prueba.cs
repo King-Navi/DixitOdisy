@@ -27,7 +27,7 @@ namespace Pruebas.Servidor
         {
             // Arrange
             //Precondicion: el Usuario deberia estar en BD
-            var implementacionCallback = new UsuarioSesionCallbackImpl();
+            var implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
 
             mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IUsuarioSesionCallback>())
                                .Returns(implementacionCallback);
@@ -35,7 +35,7 @@ namespace Pruebas.Servidor
             var usuario = new Usuario { IdUsuario = 1, Nombre = "PruebaUsuario" };
 
             // Act
-            manejador.ObtenerSessionJugador(usuario);
+            manejador.ObtenerSesionJugador(usuario);
 
             // Assert
             Assert.IsTrue(implementacionCallback.SesionAbierta, "El callback debería haber sido llamado y la sesión debería estar activa.");
@@ -50,7 +50,7 @@ namespace Pruebas.Servidor
         {
             // Arrange
 
-            var implementacionCallback = new UsuarioSesionCallbackImpl();
+            var implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
 
             mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IUsuarioSesionCallback>())
                                .Returns(implementacionCallback);
@@ -59,10 +59,10 @@ namespace Pruebas.Servidor
             var usuarioRepetido = new Usuario { IdUsuario = 1, Nombre = "PruebaUsuario" };
 
             // Act: 
-            manejador.ObtenerSessionJugador(usuario);
+            manejador.ObtenerSesionJugador(usuario);
 
             //Assert
-            var excepcion = Assert.ThrowsException<FaultException<UsuarioFalla>>(() => manejador.ObtenerSessionJugador(usuarioRepetido));
+            var excepcion = Assert.ThrowsException<FaultException<UsuarioFalla>>(() => manejador.ObtenerSesionJugador(usuarioRepetido));
             Assert.IsTrue(excepcion.Detail.EstaConectado, "La excepción debería indicar que el usuario ya está conectado.");
             implementacionCallback.Close();
         }
@@ -72,7 +72,7 @@ namespace Pruebas.Servidor
         {
             // Arrange
 
-            var implementacionCallback = new UsuarioSesionCallbackImpl();
+            var implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
 
             mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IUsuarioSesionCallback>())
                                .Returns(implementacionCallback);
@@ -80,7 +80,7 @@ namespace Pruebas.Servidor
             var usuario = new Usuario { IdUsuario = 1, Nombre = "PruebaUsuario" };
 
             // Act: Llamar a ObtenerSessionJugador una vez para establecer la sesión
-            manejador.ObtenerSessionJugador(usuario);
+            manejador.ObtenerSesionJugador(usuario);
             implementacionCallback.Abort();
 
             //Assert
@@ -96,7 +96,7 @@ namespace Pruebas.Servidor
         {
             // Arrange
 
-            var implementacionCallback = new UsuarioSesionCallbackImpl();
+            var implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
 
             mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IUsuarioSesionCallback>())
                                .Returns(implementacionCallback);
@@ -104,7 +104,7 @@ namespace Pruebas.Servidor
             Usuario usuario = null;
 
             // Act: Llamar a ObtenerSessionJugador una vez para establecer la sesión
-            manejador.ObtenerSessionJugador(usuario);
+            manejador.ObtenerSesionJugador(usuario);
 
             //Assert
             Assert.IsFalse(implementacionCallback.SesionAbierta, "El callback no debería haber sido llamado");

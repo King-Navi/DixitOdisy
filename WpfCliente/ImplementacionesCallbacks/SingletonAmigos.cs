@@ -12,59 +12,65 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.ImplementacionesCallbacks 
 {
-    public partial class SingletonCanles : IServicioAmistadCallback, IImplementacionCallback
+    public partial class SingletonCanal : IServicioAmistadCallback
     {
         private const string UTILIMA_CONEXION_CONECTADO = "";
-        private static readonly Lazy<SingletonCanles> instancia = new Lazy<SingletonCanles>(() => new SingletonCanles());
-        public static SingletonCanles Instancia => instancia.Value;
         public ServicioAmistadClient Amigos { get; private set; }
+        
         public ObservableCollection<Amigo> ListaAmigos { get;  private set; } = new ObservableCollection<Amigo>();
 
+  
 
-        private SingletonCanles() { }
+        private void LimpiarRecursosAmigos()
+        {
+            ListaAmigos?.Clear();
+        }
 
-        public bool AbrirTodaConexion()
+        public bool AbrirConexionAmistad()
         {
             try
             {
-                InvitacionPartida = new ServicioInvitacionPartidaClient(new InstanceContext(this));
+                var objectoComunicacion = Amigos as ICommunicationObject;
+                if (objectoComunicacion?.State == CommunicationState.Opened ||
+                    objectoComunicacion?.State == CommunicationState.Opening)
+                {
+                    return true;
+                }
+                if (objectoComunicacion?.State == CommunicationState.Faulted)
+                {
+                    CerrarConexionAmigos();
+                }
                 Amigos = new ServicioAmistadClient(new System.ServiceModel.InstanceContext(this));
-                UsuarioSesion = new ServicioUsuarioSesionClient(new System.ServiceModel.InstanceContext(this));
-                LimpiarRecursos();
                 return true;
-
             }
             catch (Exception excepcion)
             {
-                CerrarConexion();
+                CerrarConexionAmigos();
                 ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
                 return false;
             }
+
         }
 
-        private void LimpiarRecursos()
+
+        public bool CerrarConexionAmigos()
         {
-            ListaAmigos.Clear();
+            try
+            {
+                if (Amigos != null)
+                {
+                    Amigos.Close();
+                    Amigos = null;
+                }
+            }
+            catch (Exception excepcion)
+            {
+                Amigos = null;
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                return false;
+            }
+            return true;
         }
-
-        //public bool CerrarConexion()
-        //{
-        //    try
-        //    {
-        //        if (Amigos != null)
-        //        {
-        //            Amigos.Close();
-        //            Amigos = null;
-        //        }
-        //    }
-        //    catch (Exception excepcion)
-        //    {
-        //        Amigos = null;
-        //        ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
-        //        return false;
-        //    }
-        //    return true;
-        //}
 
         public void CambiarEstadoAmigoCallback(Amigo amigo)
         {

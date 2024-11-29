@@ -12,7 +12,7 @@ namespace Pruebas.Servidor
 {
 
     [TestClass]
-    public class ServicioUsuario
+    public class ServicioUsuario_Prueba
     {
         private const int ID_INVALIDO = -1;
         private const int ID_INEXISTE = 9999;

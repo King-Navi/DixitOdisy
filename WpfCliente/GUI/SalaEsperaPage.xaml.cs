@@ -118,7 +118,7 @@ namespace WpfCliente.GUI
                 SingletonGestorVentana.Instancia.Regresar();
                 return;
             }
-            var resultado = SingletonSalaJugador.Instancia.AbrirConexionInvitacionPartida();
+            var resultado = SingletonSalaJugador.Instancia.AbrirConexionSala();
             if (!resultado)
             {
                 SingletonGestorVentana.Instancia.Regresar();
@@ -418,7 +418,7 @@ namespace WpfCliente.GUI
             return valorObtenido;
         }
 
-        private async Task<bool> EnviarInvitacion(string gamertagReceptor)
+        private async Task<bool> EnviarInvitacion(string nombreReceptor)
         {
             bool resultado = false;
             bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
@@ -428,9 +428,12 @@ namespace WpfCliente.GUI
             }
             try
             {
-                resultado = SingletonCanles.Instancia.InvitacionPartida.EnviarInvitacion(SingletonCliente.Instance.NombreUsuario,
-                    SingletonCliente.Instance.IdSala,
-                    gamertagReceptor);
+                resultado = SingletonCanal.Instancia.InvitacionPartida.EnviarInvitacion(new InvitacionPartida
+                {
+                    CodigoSala = SingletonCliente.Instance.IdSala,
+                    NombreEmisor = SingletonCliente.Instance.NombreUsuario,
+                    NombreReceptor = nombreReceptor
+                });
             }
             catch (Exception excepcion)
             {

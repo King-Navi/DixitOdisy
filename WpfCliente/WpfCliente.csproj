@@ -115,8 +115,8 @@
     <Compile Include="GUI\PrincipalWindow.xaml.cs">
       <DependentUpon>PrincipalWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ImplementacionesCallbacks\SingletonConexion.cs" />
     <Compile Include="ImplementacionesCallbacks\SingletonSalaJugador.cs" />
-    <Compile Include="Interfaz\IImplementacionCallback.cs" />
     <Compile Include="ImplementacionesCallbacks\SingletonInvitacionPartida.cs" />
     <Compile Include="Interfaz\INavegacion.cs" />
     <Compile Include="ManejadorAplicacion\SingletonGestorVentana.cs" />
@@ -523,12 +523,6 @@
   <ItemGroup>
     <Resource Include="Recursos\fondoSala.png" />
     <Resource Include="Recursos\fondoNotificaciones.png" />
-    <None Include="Connected Services\ServidorDescribelo\configuration91.svcinfo" />
-    <None Include="Connected Services\ServidorDescribelo\configuration.svcinfo" />
-    <None Include="Connected Services\ServidorDescribelo\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Resource Include="Recursos\agregarAmigo.png" />
     <Resource Include="Recursos\flechaRecargar.png" />
     <Resource Include="Recursos\amigos.png" />
@@ -543,11 +537,22 @@
     <Resource Include="Recursos\cerrarCruz.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Recursos\logoJuego.png" />
+  </ItemGroup>
+  <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\ServidorDescribelo\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Recursos\logoJuego.png" />
+    <None Include="Connected Services\ServidorDescribelo\configuration91.svcinfo" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Connected Services\ServidorDescribelo\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServidorDescribelo\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

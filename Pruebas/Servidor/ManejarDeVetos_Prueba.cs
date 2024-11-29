@@ -8,7 +8,7 @@ using WcfServicioLibreria.Modelo.Vetos;
 namespace Pruebas.Servidor
 {
     [TestClass]
-    public class ManejarDeVetos
+    public class ManejarDeVetos_Prueba
     {
         private const string NOMBRE_PROHIBIDO = "guest";
         private const string NOMBRE_PROHIBIDO_MAYUSCULAS = "GUest";

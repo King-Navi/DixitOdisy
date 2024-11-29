@@ -9,7 +9,7 @@ using WcfServicioLibreria.Utilidades;
 namespace Pruebas.Servidor
 {
     [TestClass]
-    public class ServicioCorreo
+    public class ServicioCorreo_Prueba
     {
         private Mock<IContextoOperacion> mockContextoProvedor;
         private ManejadorPrincipal manejador;

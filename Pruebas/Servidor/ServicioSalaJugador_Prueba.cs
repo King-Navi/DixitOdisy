@@ -3,7 +3,7 @@
 namespace Pruebas.Servidor
 {
     [TestClass]
-    public class ServicioSalaJugador
+    public class ServicioSalaJugador_Prueba
     {
         #region AgregarJugadorSala
         #endregion AgregarJugadorSala

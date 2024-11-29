@@ -6,6 +6,7 @@ using System.IO;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Modelo.Excepciones;
 using WcfServicioLibreria.Utilidades;
@@ -14,22 +15,26 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioUsuario
     {
-        public void DesconectarUsuario(int idJugador)
+        public void DesconectarUsuario(object sender, EventArgs e)
         {
             try
             {
-                if (jugadoresConectadosDiccionario.ContainsKey(idJugador))
+                if (sender is UsuarioContexto && e is UsuarioDesconectadoEventArgs eventoDesconexion)
                 {
-                    jugadoresConectadosDiccionario.TryRemove(idJugador, out UsuarioContexto usuario);
-                    lock (usuario)
+                    if (jugadoresConectadosDiccionario.ContainsKey(eventoDesconexion.IdUsuario))
                     {
-                        if (usuario != null)
+                        jugadoresConectadosDiccionario.TryRemove(eventoDesconexion.IdUsuario, out UsuarioContexto usuarioARemover);
+                        lock (usuarioARemover)
                         {
-                            usuario.EnDesconexion();
-                            usuario.Desechar();
+                            if (usuarioARemover != null)
+                            {
+                                usuarioARemover.EnDesconexion();
+                                usuarioARemover.Desechar();
+                                ((UsuarioContexto)usuarioARemover).DesconexionEvento += DesconectarUsuario;
+                            }
                         }
+                        UsuarioDAO.ColocarUltimaConexion(eventoDesconexion.IdUsuario);
                     }
-                    UsuarioDAO.ColocarUltimaConexion(idJugador);
                 }
             }
             catch (Exception excepcion)

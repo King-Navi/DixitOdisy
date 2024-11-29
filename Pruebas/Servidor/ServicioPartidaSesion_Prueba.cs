@@ -19,7 +19,7 @@ namespace Pruebas.Servidor
     /// que a su vez llama a  <see cref="IServicioPartidaSesion"/>
     /// </summary>
     [TestClass]
-    public class ServicioPartidaSesion
+    public class ServicioPartidaSesion_Prueba
     {
         private Mock<IContextoOperacion> mockContextoProvedor;
         private ManejadorPrincipal manejador;
@@ -47,7 +47,7 @@ namespace Pruebas.Servidor
         {
             // Arrange
             //Precondicion el Usuario deberia estar en BD
-            var implementacionCallback = new PartidaCallbackImpl();
+            var implementacionCallback = new PartidaCallbackImplementacion();
 
             mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IPartidaCallback>())
                                .Returns(implementacionCallback);
@@ -69,7 +69,7 @@ namespace Pruebas.Servidor
             string gamertag = "JugadorInvalido";
             string idPartidaInexistente = "partidaNoExistente";
 
-            var implementacionCallback = new PartidaCallbackImpl();
+            var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             // Act
@@ -86,7 +86,7 @@ namespace Pruebas.Servidor
         public async Task UnirsePartida_PartidaVacia_NoDeberiaExistirPartidaRetornaFalse()
         {
             // Arrange
-            var implementacionCallback = new PartidaCallbackImpl();
+            var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             var usuario = new Usuario { IdUsuario = 19, Nombre = "navi" };
@@ -106,7 +106,7 @@ namespace Pruebas.Servidor
         public async Task UnirsePartida_PartidaConJugadorIgual_RetornaTrue()
         {
             // Arrange
-            var implementacionCallback = new PartidaCallbackImpl();
+            var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             var usuarioExistente = new Usuario { IdUsuario = 19, Nombre = "navi" };
@@ -128,7 +128,7 @@ namespace Pruebas.Servidor
         public async Task UnirsePartida_PartidaConJugador_DeberiaExistir2Jugadores()
         {
             // Arrange
-            var implementacionCallback = new PartidaCallbackImpl();
+            var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             var usuarioExistente = new Usuario { IdUsuario = 19, Nombre = "navi" };
@@ -152,7 +152,7 @@ namespace Pruebas.Servidor
         {
             // Arrange
             //Precondicion: el invitado no existe en BD
-            var implementacionCallback = new PartidaCallbackImpl();
+            var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             var usuarioExistente = new Usuario { IdUsuario = 19, Nombre = "navi" };
@@ -180,7 +180,7 @@ namespace Pruebas.Servidor
         {
             // Arrange
             //PRECAUCION: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP 
-            var implementacionCallback = new PartidaCallbackImpl();
+            var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             var usuario = new Usuario { IdUsuario = 19, Nombre = "navi" };
@@ -204,7 +204,7 @@ namespace Pruebas.Servidor
         {
             // Arrange
             //PRECAUCION: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP 
-            var implementacionCallback = new PartidaCallbackImpl();
+            var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             var usuario = new Usuario { IdUsuario = 19, Nombre = "navi" };
@@ -232,7 +232,7 @@ namespace Pruebas.Servidor
         {
             // Arrange
             //PRECAUCION: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP 
-            var implementacionCallback = new PartidaCallbackImpl();
+            var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             var usuario = new Usuario { IdUsuario = 19, Nombre = "navi" };
@@ -278,7 +278,7 @@ namespace Pruebas.Servidor
             string[] archivosJpg = Directory.GetFiles(rutaCarpeta, "*.jpg");
             Console.WriteLine("Imagenes en disco: " + archivosJpg.Length);
 
-            var implementacionCallback = new PartidaCallbackImpl();
+            var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             var usuario = new Usuario { IdUsuario = 19, Nombre = "navi" };
@@ -310,7 +310,7 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task EmpezarPartida_NoHaySuficienteJugadores_EliminaPartida()
         {
-            var implementacionCallback = new PartidaCallbackImpl();
+            var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
             //Precondicion: El usuario debe existir
             //Precondicon:  El Tiempo de espera de conexiones debe ser igual a la de la partida
@@ -332,7 +332,7 @@ namespace Pruebas.Servidor
         public async Task EmpezarPartida_SuficienteJugadores_PartidaEnProgreso()
         {
             Assert.Fail(); //TODO: Terminar la preuba
-            var implementacionCallback = new PartidaCallbackImpl();
+            var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
             //Precondicion: El usuario debe existir
             var anfitrion = new Usuario { IdUsuario = 19, Nombre = "navi" };
@@ -349,7 +349,7 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task EmpezarPartida_IdNull_RetornaVoid()
         {
-            var implementacionCallback = new PartidaCallbackImpl();
+            var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
             //Precondicion: El usuario debe existir
             var anfitrion = new Usuario { IdUsuario = 19, Nombre = "navi" };

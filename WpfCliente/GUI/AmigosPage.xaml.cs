@@ -117,7 +117,7 @@ namespace WpfCliente.GUI
                 usuarioRemitente.Nombre = SingletonCliente.Instance.NombreUsuario;
                 usuarioRemitente.FotoUsuario = Imagen.ConvertirBitmapImageAMemoryStream(SingletonCliente.Instance.FotoJugador);
 
-                var resultado = SingletonCanles.Instancia.Amigos.EnviarSolicitudAmistad(usuarioRemitente, gamertagReceptor);
+                var resultado = SingletonCanal.Instancia.Amigos.EnviarSolicitudAmistad(usuarioRemitente, gamertagReceptor);
                 return resultado;
             }
             catch (Exception ex)

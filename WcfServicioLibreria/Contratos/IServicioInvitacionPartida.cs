@@ -3,7 +3,7 @@ using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Contratos
 {
-    [ServiceContract(CallbackContract = typeof(IInvitacionPartidaCallback))]
+    [ServiceContract(CallbackContract = typeof(IUsuarioSesionCallback))]
     public interface IServicioInvitacionPartida
     {
         /// <summary>
@@ -14,17 +14,10 @@ namespace WcfServicioLibreria.Contratos
         /// <param name="usuarioReceptor">El identificador del usuario que recibe la invitación.</param>
         /// <returns>True si la invitación fue enviada con éxito; False en caso contrario.</returns>
         [OperationContract]
-        bool EnviarInvitacion(string usuarioEmisor, string codigoSala, string usuarioReceptor);
-        /// <summary>
-        /// Abre un canal de comunicación para recibir invitaciones. Este método es unidireccional y no espera una respuesta.
-        /// </summary>
-        /// <param name="usuario">El usuario que abre el canal para recibir invitaciones.</param>
-        [OperationContract(IsOneWay = true)]
-        void AbrirCanalParaInvitaciones(Usuario usuario);
+        bool EnviarInvitacion(InvitacionPartida invitacion);
     }
 
-    [ServiceContract]
-    public interface IInvitacionPartidaCallback
+    public partial interface IUsuarioSesionCallback
     {
         /// <summary>
         /// Recibe una invitación a una partida. Este método es unidireccional y no devuelve ninguna respuesta al emisor.

@@ -12,7 +12,7 @@ namespace Pruebas.Servidor
     /// Prueba de <see cref="WcfServicioLibreria.Contratos.IServicioPartida"/>
     /// </summary>
     [TestClass]
-    public class ServicioPartida
+    public class ServicioPartida_Prueba
     {
         private Mock<IContextoOperacion> mockContextoProvedor;
         private ManejadorPrincipal manejador;
@@ -168,7 +168,7 @@ namespace Pruebas.Servidor
         public void ValidarPartida_PartidaTodosJugadoresAbandonan_NoExisteEnDiccionario()
         {
             // Arrange
-            var implementacionCallback = new PartidaCallbackImpl();
+            var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             var usuarioAnfritrion = new Usuario { IdUsuario = 19, Nombre = "navi" };

@@ -6,19 +6,19 @@ namespace WcfServicioLibreria.Modelo
     public class InvitacionPartida
     {
         [DataMember]
-        public string GamertagEmisor { get; set; }
+        public string NombreEmisor { get; set; }
 
         [DataMember]
         public string CodigoSala { get; set; }
         [DataMember]
-        public string GamertagReceptor { get; set; }
+        public string NombreReceptor { get; set; }
 
         public InvitacionPartida() { }
-        public InvitacionPartida(string gamertagEmisor, string codigoSala, string gamertagReceptor)
+        public InvitacionPartida(string _nombreEmisor, string _codigoSala, string _nombreReceptor)
         {
-            GamertagEmisor = gamertagEmisor;
-            CodigoSala = codigoSala;
-            GamertagReceptor = gamertagReceptor;
+            NombreEmisor = _nombreEmisor;
+            CodigoSala = _codigoSala;
+            NombreReceptor = _nombreReceptor;
         }
     }
 }

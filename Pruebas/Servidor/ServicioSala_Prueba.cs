@@ -9,7 +9,7 @@ using WcfServicioLibreria.Utilidades;
 namespace Pruebas.Servidor
 {
     [TestClass]
-    public class ServicioSala
+    public class ServicioSala_Prueba
     {
         private Mock<IContextoOperacion> mockContextoProvedor;
         private ManejadorPrincipal manejador;
@@ -87,7 +87,7 @@ namespace Pruebas.Servidor
         public void ValidarPartida_PartidaTodosJugadoresAbandonan_NoExisteEnDiccionario()
         {
             // Arrange
-            var implementacionCallback = new PartidaCallbackImpl();
+            var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             var usuarioAnfritrion = new Usuario { IdUsuario = 19, Nombre = "navi" };

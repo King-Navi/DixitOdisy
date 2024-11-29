@@ -264,11 +264,11 @@ namespace WpfCliente.Contexto
         private void CerrarTodaConexion()
         {
             //TODO:
-            SingletonCanles.Instancia.CerrarConexion();
+            SingletonCanal.Instancia.CerrarConexionUsuarioSesion();
             Conexion.CerrarPartida();
             Conexion.CerrarChatMotor();
-            SingletonCanles.Instancia.CerrarConexion();
-            SingletonCanles.Instancia.CerrarConexion();
+            SingletonCanal.Instancia.CerrarConexionUsuarioSesion();
+            SingletonCanal.Instancia.CerrarConexionUsuarioSesion();
             SingletonSalaJugador.Instancia.CerrarConexion();
         }
         private void CerrarConexionSalaPartida()

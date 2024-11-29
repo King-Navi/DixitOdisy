@@ -60,7 +60,7 @@ namespace WpfCliente.GUI
 
             try
             {
-                var resultado = SingletonCanles.Instancia.Amigos.AceptarSolicitudAmistad(solicitudAmistadActual.Remitente.IdUsuario, SingletonCliente.Instance.IdUsuario);
+                var resultado = SingletonCanal.Instancia.Amigos.AceptarSolicitudAmistad(solicitudAmistadActual.Remitente.IdUsuario, SingletonCliente.Instance.IdUsuario);
 
                 if (resultado)
                 {
@@ -94,7 +94,7 @@ namespace WpfCliente.GUI
 
             try
             {
-                var resultado = SingletonCanles.Instancia.Amigos.RechazarSolicitudAmistad(solicitudAmistadActual.Remitente.IdUsuario, SingletonCliente.Instance.IdUsuario);
+                var resultado = SingletonCanal.Instancia.Amigos.RechazarSolicitudAmistad(solicitudAmistadActual.Remitente.IdUsuario, SingletonCliente.Instance.IdUsuario);
 
                 if (resultado)
                 {

@@ -10,7 +10,7 @@ using WpfCliente.Interfaz;
 
 namespace WpfCliente.ImplementacionesCallbacks
 {
-    public partial class SingletonCanles: IServicioUsuarioSesionCallback, IImplementacionCallback
+    public partial class SingletonCanal: IServicioUsuarioSesionCallback
     {
         public ServicioUsuarioSesionClient UsuarioSesion { get; private set; }
         public EventHandler InicioSesionEvento;
@@ -19,9 +19,8 @@ namespace WpfCliente.ImplementacionesCallbacks
         {
             InicioSesionEvento?.Invoke(this, EventArgs.Empty);
         }
-        public bool AbrirConexion()
+        public bool AbrirConexionUsuarioSesion()
         {
-
             try
             {
                 var objectoComunicacion = UsuarioSesion as ICommunicationObject;
@@ -32,19 +31,22 @@ namespace WpfCliente.ImplementacionesCallbacks
                 }
                 if (objectoComunicacion?.State == CommunicationState.Faulted)
                 {
-                    CerrarConexion();
+                    CerrarConexionUsuarioSesion();
                 }
                 UsuarioSesion = new ServicioUsuarioSesionClient(new System.ServiceModel.InstanceContext(this));
+                LimpiarRecursos();
                 return true;
             }
             catch (Exception excepcion)
             {
-                CerrarConexion();
+                CerrarConexionUsuarioSesion();
                 ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
                 return false;
             }
+
         }
-        public bool CerrarConexion()
+
+        public bool CerrarConexionUsuarioSesion()
         {
             try
             {

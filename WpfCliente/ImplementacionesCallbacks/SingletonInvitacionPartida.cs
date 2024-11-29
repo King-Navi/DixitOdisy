@@ -10,7 +10,7 @@ using System.ServiceModel;
 
 namespace WpfCliente.ImplementacionesCallbacks
 {
-    public partial class SingletonCanles : IServicioInvitacionPartidaCallback , IImplementacionCallback
+    public partial class SingletonCanal : IServicioInvitacionPartidaCallback 
     {
         public event Action<InvitacionPartida> InvitacionRecibida;
         public ServicioInvitacionPartidaClient InvitacionPartida { get; private set; }
@@ -18,12 +18,12 @@ namespace WpfCliente.ImplementacionesCallbacks
         {
             if (invitacion == null)
                 return;
-            if (String.IsNullOrEmpty(invitacion.CodigoSala) || String.IsNullOrEmpty(invitacion.GamertagEmisor))
+            if (String.IsNullOrEmpty(invitacion.CodigoSala) || String.IsNullOrEmpty(invitacion.NombreEmisor))
                 return;
             InvitacionRecibida?.Invoke(invitacion);
         }
 
-        public bool AbrirConexionInvitacionPartida()
+        public bool AbrirConexionInvitacionParitda()
         {
             try
             {
@@ -39,7 +39,6 @@ namespace WpfCliente.ImplementacionesCallbacks
                 }
                 InvitacionPartida = new ServicioInvitacionPartidaClient(new System.ServiceModel.InstanceContext(this));
                 return true;
-
             }
             catch (Exception excepcion)
             {
@@ -47,6 +46,7 @@ namespace WpfCliente.ImplementacionesCallbacks
                 ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
                 return false;
             }
+
         }
 
         public bool CerrarConexionInvitacion()

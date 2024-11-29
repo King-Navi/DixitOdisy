@@ -7,7 +7,7 @@ using WcfServicioLibreria.Modelo.Excepciones;
 
 namespace WcfServicioLibreria.Contratos
 {
-    [ServiceContract(CallbackContract = typeof(IAmistadCallBack))]
+    [ServiceContract(CallbackContract = typeof(IUsuarioSesionCallback))]
     public interface IServicioAmistad
     {
         /// <summary>
@@ -18,7 +18,7 @@ namespace WcfServicioLibreria.Contratos
         [ServiceKnownType(typeof(MemoryStream))]
         [ServiceKnownType(typeof(Stream))]
         [ServiceKnownType(typeof(Amigo))]
-        Task<bool> AbrirCanalParaAmigos(Usuario usuario);
+        bool ConectarYBuscarAmigos(Usuario usuario);
         /// <summary>
         /// Envia una solicitud de amistad a otro usuario.
         /// </summary>
@@ -90,8 +90,8 @@ namespace WcfServicioLibreria.Contratos
         [ServiceKnownType(typeof(Amigo))]
         bool EliminarAmigo(string usuarioRemitente, string destinatario);
     }
-    [ServiceContract]
-    public interface IAmistadCallBack
+
+    public partial interface IUsuarioSesionCallback
     {
         /// <summary>
         /// Notifica al cliente sobre un cambio en el estado de un amigo.

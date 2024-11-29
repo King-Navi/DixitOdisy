@@ -274,7 +274,6 @@ namespace DAOLibreria.DAO
             return true;
         }
 
-
         public static bool ExisteUnicoUsuarioConGamertagYCorreo(string gamertag, string correo)
         {
             try

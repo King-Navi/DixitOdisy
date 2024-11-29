@@ -28,7 +28,7 @@ namespace WpfCliente.GUI
                         IdUsuario = SingletonCliente.Instance.IdUsuario,
                     Nombre = SingletonCliente.Instance.NombreUsuario
                     };
-                    SingletonCanles.Instancia.Amigos.EnviarSolicitudAmistad(usuarioActual, usuario.Nombre);
+                    SingletonCanal.Instancia.Amigos.EnviarSolicitudAmistad(usuarioActual, usuario.Nombre);
                     buttonEnviarSolicitud.Visibility = Visibility.Collapsed;
                 }
 

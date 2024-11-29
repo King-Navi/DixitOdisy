@@ -69,14 +69,12 @@ namespace Pruebas.Servidor.Utilidades
         {
             if (!(result is CompletedAsyncResult))
                 throw new ArgumentException("El resultado proporcionado no es válido para EndClose.");
-            // Opcional: Incluir lógica adicional si se requiere.
         }
 
         public void EndOpen(IAsyncResult result)
         {
             if (!(result is CompletedAsyncResult))
                 throw new ArgumentException("El resultado proporcionado no es válido para EndOpen.");
-            // Opcional: Incluir lógica adicional si se requiere.
         }
 
         private class CompletedAsyncResult : IAsyncResult

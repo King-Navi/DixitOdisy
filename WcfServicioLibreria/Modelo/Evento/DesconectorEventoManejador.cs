@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
 using WcfServicioLibreria.Utilidades;
 
@@ -22,14 +23,14 @@ namespace WcfServicioLibreria.Evento
         
         private void Cerrado(object sender, EventArgs e)
         {
-            Console.WriteLine(" se ha ido de la "+ sender.ToString()+ " (Closed).");
+            Console.WriteLine(clavePropietario + " se ha ido de la " + sender.ToString()+ " (Closed).");
             DesuscribirEventos((ICommunicationObject)sender);
             observador?.DesconectarUsuario(clavePropietario);
         }
 
         private void EnFalla(object sender, EventArgs e)
         {
-            Console.WriteLine(" ha fallado de la" + sender.ToString() + " (Faulted).");
+            Console.WriteLine(clavePropietario +" ha fallado de la" + sender.ToString() + " (Faulted).");
             DesuscribirEventos((ICommunicationObject)sender);
             observador?.DesconectarUsuario(clavePropietario);
         }
@@ -45,19 +46,31 @@ namespace WcfServicioLibreria.Evento
         }
         public void Desechar()
         {
-            DesuscribirEventos(objetoComunicacion);
-            if (objetoComunicacion != null)
+            try
             {
-                objetoComunicacion = null;
+                DesuscribirEventos(objetoComunicacion);
+                if (objetoComunicacion != null)
+                {
+                    objetoComunicacion = null;
+                }
+                if (observador != null)
+                {
+                    observador = null;
+                }
+                if (clavePropietario != null)
+                {
+                    clavePropietario = null;
+                }
             }
-            if (observador != null)
+            catch (NullReferenceException excepcion)
             {
-                observador = null;
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
-            if (clavePropietario != null)
+            catch (Exception excepcion)
             {
-                clavePropietario = null;
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+
         }
         
     }

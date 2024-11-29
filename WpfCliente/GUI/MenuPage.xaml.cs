@@ -30,7 +30,7 @@ namespace WpfCliente.GUI
             KeepAlive = true;
             this.Loaded += CargarNuevoContexto;
             InitializeComponent();
-            SingletonCanles.Instancia.InvitacionRecibida += RecibirInvitacion;
+            SingletonCanal.Instancia.InvitacionRecibida += RecibirInvitacion;
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             ActualizarUI();
             AbrirConexiones();
@@ -63,11 +63,15 @@ namespace WpfCliente.GUI
                 textBlockPartidasJugadas.Text = estadisticas.Estadistica.PartidasJugadas.ToString();
                 textBlockNombre.Text = SingletonCliente.Instance.NombreUsuario;
             }
+            catch (NullReferenceException excepcion)
+            {
+                gridEstadisticas.Visibility = Visibility.Collapsed;
+                ManejadorExcepciones.ManejarErrorExcepcion(excepcion, Window.GetWindow(this));
+            }
             catch (Exception excepcion)
             {
                 gridEstadisticas.Visibility = Visibility.Collapsed;
                 ManejadorExcepciones.ManejarErrorExcepcion(excepcion, Window.GetWindow(this));
-
             }
         }
 
@@ -75,7 +79,7 @@ namespace WpfCliente.GUI
         {
             try
             {
-                var resultadoUsuarioSesion = SingletonCanles.Instancia.AbrirTodaConexion();
+                var resultadoUsuarioSesion = SingletonCanal.Instancia.AbrirTodaConexion();
                 if (!resultadoUsuarioSesion)
                 {
                     VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor,
@@ -102,7 +106,7 @@ namespace WpfCliente.GUI
             if (!esNecesarioAbrir)
                 return;
             var manejadorServico = new ServicioManejador<ServicioUsuarioClient>();
-            var YaInicioSesion = manejadorServico.EjecutarServicio(llamadaServidor=> 
+            var YaInicioSesion = manejadorServico.EjecutarServicio(llamadaServidor => 
                 llamadaServidor.YaIniciadoSesion(SingletonCliente.Instance.NombreUsuario));
             if (YaInicioSesion)
             {
@@ -118,35 +122,33 @@ namespace WpfCliente.GUI
                 IdUsuario = SingletonCliente.Instance.IdUsuario,
                 Nombre = SingletonCliente.Instance.NombreUsuario
             };
-            SingletonCanles.Instancia.UsuarioSesion.ObtenerSessionJugador(user);
-
-            var resultadoAmigo = SingletonCanles.Instancia.AbrirConexion();
-            if (!resultadoAmigo)
+            try
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor,
-                    Properties.Idioma.mensajeErrorServidor,
-                    Window.GetWindow(this));
-                SingletonGestorVentana.Instancia.Regresar();
-                return;
+                var resultadoSesion = await SingletonCanal.Instancia.UsuarioSesion.ObtenerSessionJugadorAsync(user);
+                if (!resultadoSesion)
+                {
+                    VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloErrorServidor, 
+                        Idioma.mensajeErrorServidor, 
+                        Window.GetWindow(this));
+                    Application.Current.Shutdown();
+                }
+                var resultado = await SingletonCanal.Instancia.Amigos.ConectarYBuscarAmigosAsync(user);
+                if (!resultado)
+                {
+                    VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloCargarAmigosFalla,
+                        Idioma.mensajeCargarAmigosFalla, 
+                        Window.GetWindow(this));
+                    Application.Current.Shutdown();
+                }
             }
-            return;
-            var resultado = await SingletonCanles.Instancia.Amigos.AbrirCanalParaAmigosAsync(user);
-            if (!resultado)
+            catch(CommunicationException excepcion)
             {
-                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloCargarAmigosFalla, Idioma.mensajeCargarAmigosFalla, Window.GetWindow(this));
-                Application.Current.Shutdown();
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
-
-            var resultadoInvitacion = SingletonCanles.Instancia.AbrirConexion();
-            if (!resultadoInvitacion)
+            catch (Exception excepcion)
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor,
-                    Properties.Idioma.mensajeErrorServidor,
-                    Window.GetWindow(this));
-                SingletonGestorVentana.Instancia.Regresar();
-                return;
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
-            await SingletonCanles.Instancia.InvitacionPartida.AbrirCanalParaInvitacionesAsync(user);
         }
 
         private void ClicButtonCrearSala(object sender, RoutedEventArgs e)
@@ -262,7 +264,7 @@ namespace WpfCliente.GUI
         public void RecibirInvitacion(InvitacionPartida invitacion)
         {
             invitacionActual = invitacion;
-            MostrarNotificacionGeneral(Properties.Idioma.mensajeInvitacionPartida + invitacion.GamertagEmisor);
+            MostrarNotificacionGeneral(Properties.Idioma.mensajeInvitacionPartida + invitacion.NombreEmisor);
         }
 
         private void OcultarNotificacion()

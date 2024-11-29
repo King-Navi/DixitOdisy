@@ -12,7 +12,7 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.ImplementacionesCallbacks
 {
-    public class SingletonSalaJugador : IServicioSalaJugadorCallback, IImplementacionCallback
+    public class SingletonSalaJugador : IServicioSalaJugadorCallback
     {
         public event Action<bool> DelegacionRolAnfitrion;
         public event Action<string> EmepzarPartida;
@@ -23,7 +23,7 @@ namespace WpfCliente.ImplementacionesCallbacks
         public ObservableCollection<Usuario> JugadoresSala { get; private set; } = new ObservableCollection<Usuario>();
 
         private SingletonSalaJugador() { }
-        public bool AbrirConexionInvitacionPartida()
+        public bool AbrirConexionSala()
         {
             try
             {

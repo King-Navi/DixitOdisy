@@ -48,11 +48,6 @@ namespace WcfServicioLibreria.Manejador
 
         #endregion
 
-        #region Amistad
-        private readonly SemaphoreSlim semaphorAbrirSesionAmigo= new SemaphoreSlim(1, 1);
-
-        #endregion
-
         public ManejadorPrincipal(IContextoOperacion _contextoOperacion, IEscribirDisco _escribirDisco)
         {
             this.contextoOperacion = _contextoOperacion;

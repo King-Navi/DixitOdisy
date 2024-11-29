@@ -12,25 +12,25 @@ namespace WcfServicioLibreria.Manejador
     public partial class ManejadorPrincipal : IServicioRegistro
     {
         private const string NOMBRE_EN_USO = "Gamertag en uso";
-        public bool RegistrarUsuario(Modelo.Usuario _usuario)
+        public bool RegistrarUsuario(Modelo.Usuario usuarioNuevo)
         {
             bool resultado = false;
             try
             {
-                if (EsSha256Valido(_usuario.ContraseniaHASH))
+                if (EsSha256Valido(usuarioNuevo.ContraseniaHASH) && Utilidad.ValidarPropiedades(usuarioNuevo))
                 {
                     var usuarioCuenta = new UsuarioCuenta
                     {
-                        gamertag = _usuario.Nombre,
-                        hashContrasenia = _usuario.ContraseniaHASH.ToString(),
-                        correo = _usuario.Correo
+                        gamertag = usuarioNuevo.Nombre,
+                        hashContrasenia = usuarioNuevo.ContraseniaHASH.ToString(),
+                        correo = usuarioNuevo.Correo
                     };
-                    var usuario = new Usuario
+                    var usuarioModeloBaseDatos = new Usuario
                     {
-                        gamertag = _usuario.Nombre,
-                        fotoPerfil = Utilidad.StreamABytes(_usuario.FotoUsuario),
+                        gamertag = usuarioNuevo.Nombre,
+                        fotoPerfil = Utilidad.StreamABytes(usuarioNuevo.FotoUsuario),
                     };
-                    resultado = DAOLibreria.DAO.UsuarioDAO.RegistrarNuevoUsuario(usuario, usuarioCuenta);
+                    resultado = DAOLibreria.DAO.UsuarioDAO.RegistrarNuevoUsuario(usuarioModeloBaseDatos, usuarioCuenta);
                 }
             }
             catch (GamertagDuplicadoException)

@@ -7,7 +7,7 @@ using WcfServicioLibreria.Utilidades;
 namespace Pruebas.Servidor
 {
     [TestClass]
-    public class ServicioIniciarSesionPruebas : ConfiguracionPruebaBD
+    public class ServicioIniciarSesion_Prueba : ConfiguracionPruebaBD
     {
         private Mock<IContextoOperacion> mockContextoProvedor;
         private ManejadorPrincipal manejador;

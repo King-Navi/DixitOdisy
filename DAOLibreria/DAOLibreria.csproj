@@ -40,8 +40,8 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Serilog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.4.0.2\lib\net471\Serilog.dll</HintPath>
+    <Reference Include="Serilog, Version=4.1.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.4.1.0\lib\net471\Serilog.dll</HintPath>
     </Reference>
     <Reference Include="Serilog.Sinks.File, Version=6.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.Sinks.File.6.0.0\lib\net471\Serilog.Sinks.File.dll</HintPath>
@@ -86,7 +86,7 @@
     <Compile Include="DAO\AmistadDAO.cs" />
     <Compile Include="DAO\EstadisticasDAO.cs" />
     <Compile Include="DAO\ExpulsionDAO.cs" />
-    <Compile Include="DAO\PeticionAmistadDAO.cs" />
+    <Compile Include="DAO\SolicitudAmistadDAO.cs" />
     <Compile Include="DAO\UsuarioCuentaDAO.cs" />
     <Compile Include="DAO\UsuarioDAO.cs" />
     <Compile Include="DAO\VetoDAO.cs" />
@@ -123,7 +123,7 @@
     <Compile Include="ModeloBD\Expulsion.cs">
       <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModeloBD\PeticionAmistad.cs">
+    <Compile Include="ModeloBD\SolicitudAmistad.cs">
       <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
     <Compile Include="ModeloBD\Usuario.cs">

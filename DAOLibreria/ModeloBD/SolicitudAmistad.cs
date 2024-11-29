@@ -12,13 +12,14 @@ namespace DAOLibreria.ModeloBD
     using System;
     using System.Collections.Generic;
     
-    public partial class PeticionAmistad
+    public partial class SolicitudAmistad
     {
-        public int idPeticion { get; set; }
+        public int idSolicitud { get; set; }
         public int idRemitente { get; set; }
         public int idDestinatario { get; set; }
-        public Nullable<System.DateTime> fechaPeticion { get; set; }
+        public System.DateTime fechaSolicitud { get; set; }
         public string estado { get; set; }
+        public string RelacionUnica { get; set; }
     
         public virtual Usuario Usuario { get; set; }
         public virtual Usuario Usuario1 { get; set; }

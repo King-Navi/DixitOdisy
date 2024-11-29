@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 
 namespace DAOLibreria.DAO
 {
-    public static class PeticionAmistadDAO
+    public static class SolicitudAmistadDAO
     {
         private const string ESTADO_SOLICITUD_PENDIENTE = "Pendiente";
         public static bool GuardarSolicitudAmistad(int idUsuarioRemitente, int idUsuarioDestinatario)
@@ -35,15 +35,15 @@ namespace DAOLibreria.DAO
             {
                 using (var context = new DescribeloEntities())
                 {
-                    var nuevaSolicitud = new PeticionAmistad
+                    var nuevaSolicitud = new SolicitudAmistad
                     {
                         idRemitente = idUsuarioRemitente,
                         idDestinatario = idUsuarioDestinatario,
-                        fechaPeticion = DateTime.Now,
+                        fechaSolicitud = DateTime.Now,
                         estado = ESTADO_SOLICITUD_PENDIENTE
                     };
 
-                    context.PeticionAmistad.Add(nuevaSolicitud);
+                    context.SolicitudAmistad.Add(nuevaSolicitud);
                     context.SaveChanges();
                     return true;
                 }
@@ -85,7 +85,7 @@ namespace DAOLibreria.DAO
             {
                 using (var context = new DescribeloEntities())
                 {
-                    return context.PeticionAmistad.Any(fila =>
+                    return context.SolicitudAmistad.Any(fila =>
                         (fila.idRemitente == idRemitente && fila.idDestinatario == idDestinatario) ||
                         (fila.idRemitente == idDestinatario && fila.idDestinatario == idRemitente));
                 }
@@ -105,7 +105,7 @@ namespace DAOLibreria.DAO
             {
                 using (var context = new DescribeloEntities())
                 {
-                    var solicitudesPendientes = context.PeticionAmistad
+                    var solicitudesPendientes = context.SolicitudAmistad
                         .Where(fila => fila.idDestinatario == idUsuario && fila.estado == ESTADO_SOLICITUD_PENDIENTE)
                         .ToList();
 
@@ -142,7 +142,7 @@ namespace DAOLibreria.DAO
                     {
                         try
                         {
-                            var solicitud = context.PeticionAmistad
+                            var solicitud = context.SolicitudAmistad
                                 .FirstOrDefault(solicitudBuscada =>
                                     solicitudBuscada.idRemitente == idRemitente &&
                                     solicitudBuscada.idDestinatario == idDestinatario &&
@@ -161,7 +161,7 @@ namespace DAOLibreria.DAO
                             };
 
                             context.Amigo.Add(nuevaAmistad);
-                            context.PeticionAmistad.Remove(solicitud);
+                            context.SolicitudAmistad.Remove(solicitud);
                             context.SaveChanges();
                             transaction.Commit();
                             return true;
@@ -174,6 +174,11 @@ namespace DAOLibreria.DAO
                         }
                     }
                 }
+            }
+            catch (DbUpdateException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+                return false;
             }
             catch (InvalidOperationException excepcion)
             {
@@ -194,7 +199,7 @@ namespace DAOLibreria.DAO
             {
                 using (var context = new DescribeloEntities())
                 {
-                    var solicitud = context.PeticionAmistad
+                    var solicitud = context.SolicitudAmistad
                         .FirstOrDefault(fila => fila.idRemitente == idRemitente && fila.idDestinatario == idDestinatario && fila.estado == ESTADO_SOLICITUD_PENDIENTE);
 
                     if (solicitud == null)
@@ -202,7 +207,7 @@ namespace DAOLibreria.DAO
                         return false;
                     }
 
-                    context.PeticionAmistad.Remove(solicitud);
+                    context.SolicitudAmistad.Remove(solicitud);
                     context.SaveChanges();
                     return true;
                 }

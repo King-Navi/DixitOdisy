@@ -57,13 +57,13 @@ namespace Pruebas.Servidor
             }
             using (var context = new DescribeloEntities())
             {
-                var solicitudes = context.PeticionAmistad
+                var solicitudes = context.SolicitudAmistad
                                          .Where(solicitud => solicitud.idRemitente == ID_USUARIO_MENOR ||
                                                              solicitud.idDestinatario == ID_USUARIO_MENOR ||
                                                              solicitud.idRemitente == ID_USUARIO_MAYOR ||
                                                              solicitud.idDestinatario == ID_USUARIO_MAYOR)
                                          .ToList();
-                context.PeticionAmistad.RemoveRange(solicitudes);
+                context.SolicitudAmistad.RemoveRange(solicitudes);
                 context.SaveChanges();
             }
         }
@@ -86,15 +86,15 @@ namespace Pruebas.Servidor
 
             using (var context = new DescribeloEntities())
             {
-                var nuevaSolicitud = new PeticionAmistad
+                var nuevaSolicitud = new SolicitudAmistad
                 {
                     idRemitente = idRemitente,
                     idDestinatario = idDestinatario,
-                    fechaPeticion = DateTime.Now,
+                    fechaSolicitud = DateTime.Now,
                     estado = ESTADO_SOLICITUD_PENDIENTE
                 };
 
-                context.PeticionAmistad.Add(nuevaSolicitud);
+                context.SolicitudAmistad.Add(nuevaSolicitud);
                 context.SaveChanges();
             }
         }

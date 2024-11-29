@@ -51,7 +51,7 @@ namespace WcfServicioLibreria.Manejador
         {
             try
             {
-                return PeticionAmistadDAO.GuardarSolicitudAmistad(idRemitente, idDestinatario);
+                return SolicitudAmistadDAO.GuardarSolicitudAmistad(idRemitente, idDestinatario);
             }
             catch (FaultException excepcion)
             {
@@ -260,7 +260,7 @@ namespace WcfServicioLibreria.Manejador
         {
             try
             {
-                List<DAOLibreria.ModeloBD.Usuario> usuariosSolicitantes = PeticionAmistadDAO.ObtenerSolicitudesAmistad(usuario.IdUsuario);
+                List<DAOLibreria.ModeloBD.Usuario> usuariosSolicitantes = SolicitudAmistadDAO.ObtenerSolicitudesAmistad(usuario.IdUsuario);
                 List<SolicitudAmistad> usuariosModeloWCF = new List<SolicitudAmistad>();
                 foreach (DAOLibreria.ModeloBD.Usuario usuarioBD in usuariosSolicitantes)
                 {
@@ -289,7 +289,7 @@ namespace WcfServicioLibreria.Manejador
             {
                 EvaluarIdValido(idRemitente);
                 EvaluarIdValido(idDestinatario);
-                if (PeticionAmistadDAO.AceptarSolicitudAmistad(idRemitente, idDestinatario))
+                if (SolicitudAmistadDAO.AceptarSolicitudAmistad(idRemitente, idDestinatario))
                 {
                     if (jugadoresConectadosDiccionario.ContainsKey(idDestinatario) &&
                         jugadoresConectadosDiccionario.ContainsKey(idRemitente))
@@ -345,7 +345,7 @@ namespace WcfServicioLibreria.Manejador
             {
                 EvaluarIdValido(idRemitente);
                 EvaluarIdValido(idDestinatario);
-                return PeticionAmistadDAO.RechazarSolicitudAmistad(idRemitente, idDestinatario); ;
+                return SolicitudAmistadDAO.RechazarSolicitudAmistad(idRemitente, idDestinatario); ;
             }
 
             catch (FaultException<ServidorFalla> excepcion)

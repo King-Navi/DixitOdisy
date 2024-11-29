@@ -38,6 +38,7 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Interfaz\IHabilitadorBotones.c
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ComandoRele.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Correo.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\EstadisticaUsuario.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Servidor\Amigo.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Servidor\ChatMensaje.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Conexion.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\CambiarIdioma.cs
@@ -47,7 +48,7 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\IdiomaGuardo.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\CambiarIdiomaUserControl.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\IniciarSesionWindow.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Imagen.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\LoggerManager.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ManejadorLogger.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ManejadorExcepciones.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Servidor\Usuario.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Utilidades.cs
@@ -56,10 +57,8 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Servidor\ImagenCarta.
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\SingletonCliente.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ValidacionExistenciaJuego.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ValidacionesString.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\VentanaModal.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\VentanasEmergentes.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Properties\AssemblyInfo.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Sonidos\musicaFondo.mp3
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Properties\Idioma.resx
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Properties\Idioma.en-US.resx
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Properties\Idioma.es-MX.resx
@@ -126,11 +125,8 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\fondoJuego.png
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\leonRegistro.png
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\flechaAtras.png
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\pfp1.png
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\pfp2.png
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\pfp3.png
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\pfp4.png
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\pfp5.png
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\profile.jpg
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\estadisticas.png
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\fondoMenu.png
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\fondoSala.png
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\fondoNotificaciones.png
@@ -140,3 +136,8 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\amigos.png
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\LogoApp.ico
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\podioJugador.png
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\cerrarCruz.png
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\logoJuego.png
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\pfp2.png
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\pfp3.png
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\pfp4.png
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Recursos\pfp5.png

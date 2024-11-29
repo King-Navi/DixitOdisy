@@ -74,7 +74,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cliente\ValidacionesStringPruebas.cs" />
     <Compile Include="DAO\AmigoDAO_Prueba.cs" />
     <Compile Include="DAO\EstadisticasDAONoConexion_Prueba.cs" />
     <Compile Include="DAO\EstadisticasDAO_Prueba.cs" />

@@ -9,7 +9,6 @@
          MinHeight="670" MinWidth="520"
         Title="Partida" Height="683" Width="1131" Closing="CerrandoVentana">
     <Grid x:Name="gridPantalla1">
-        <!-- Pantalla 1 Inicio de ronda-->
         <Grid>
             <Grid.Style>
                 <Style TargetType="Grid">
@@ -24,7 +23,6 @@
             <local:InicioRondaUserControl></local:InicioRondaUserControl>
         </Grid>
 
-        <!-- Pantalla 2   el narrador escoge carta y pista-->
         <Grid x:Name="gridPantalla2">
             <Grid.Style>
                 <Style TargetType="Grid">
@@ -37,7 +35,7 @@
                 </Style>
             </Grid.Style>
         </Grid>
-        <!-- Pantalla 3  el jugador escoge carta para la pista-->
+
         <Grid x:Name="gridPantalla3" Background="Pink">
             <Grid.Style>
                 <Style TargetType="Grid">
@@ -51,7 +49,6 @@
             </Grid.Style>
         </Grid>
 
-        <!-- Pantalla 4 Pool de toda la cartas-->
         <Grid x:Name="gridPantalla4" Background="Pink">
             <Grid.Style>
                 <Style TargetType="Grid">
@@ -65,7 +62,6 @@
             </Grid.Style>
         </Grid>
 
-        <!-- Pantalla 5 Estadisticas de fin de ronda-->
         <Grid x:Name="gridPantalla5" Background="Pink">
             <Grid.Style>
                 <Style TargetType="Grid">
@@ -79,8 +75,6 @@
             </Grid.Style>
         </Grid>
 
-
-        <!-- Pantalla 6 Fin de la partida-->
         <Grid x:Name="gridPantalla6" Background="Purple">
             <Grid.Style>
                 <Style TargetType="Grid">
@@ -95,7 +89,6 @@
             <Label Content="FIN DE LA PARTIDA" FontSize="80"></Label>
         </Grid>
 
-        <!-- Pantalla 7 Esperando a otro jugadores-->
         <Grid x:Name="gridPantalla7" >
             <Grid.Style>
                 <Style TargetType="Grid">
@@ -108,16 +101,13 @@
                 </Style>
             </Grid.Style>
             <local:EsperaRestoJugadoresUserControl></local:EsperaRestoJugadoresUserControl>
-            
+
         </Grid>
-            <local:ChatUserControl x:Name="chatUserControl"></local:ChatUserControl>
+        <local:ChatUserControl x:Name="chatUserControl"></local:ChatUserControl>
 
-                <Button Height="80" Width="180" Content="SIMULACION pool cartas" Margin="941,450,10,137" Click="BORRAME_SImulacionCambioRonda"></Button>
-                <Button Height="80" Width="180" Content="SIMULACION soy jugador" Margin="951,334,0,253" Click="BORRAME_SImulacionCambioRondaSoyJugador"></Button>
-                <Button Height="80" Width="180" Content="SIMULACION soy narrador" Margin="951,217,0,370" Click="BORRAME_SImulacionCambioRondaSoyNarrador"></Button>
-                <Button Height="80" Width="180" Content="SIMULACION solictaImagen" Margin="951,96,0,491" Click="BORRAME_SImulacionSolicitarImagen"></Button>
-        </Grid>
-
-
-
+        <Button Height="80" Width="180" Content="SIMULACION pool cartas" Margin="941,450,10,137" Click="BORRAME_SImulacionCambioRonda"></Button>
+        <Button Height="80" Width="180" Content="SIMULACION soy jugador" Margin="951,334,0,253" Click="BORRAME_SImulacionCambioRondaSoyJugador"></Button>
+        <Button Height="80" Width="180" Content="SIMULACION soy narrador" Margin="951,217,0,370" Click="BORRAME_SImulacionCambioRondaSoyNarrador"></Button>
+        <Button Height="80" Width="180" Content="SIMULACION solictaImagen" Margin="951,96,0,491" Click="BORRAME_SImulacionSolicitarImagen"></Button>
+    </Grid>
 </Window>

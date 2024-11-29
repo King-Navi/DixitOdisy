@@ -19,7 +19,7 @@ namespace WpfCliente.Utilidad
             });
             if (resultado)
             {
-                string codigoIngresado = VentanaModal.AbrirVentanaModalCorreo(ventana);
+                string codigoIngresado = VentanasEmergentes.AbrirVentanaModalCorreo(ventana);
                 return manejadorServicio.EjecutarServicio(servicio =>
                 {
                     return servicio.VerificarCodigo(codigoIngresado);

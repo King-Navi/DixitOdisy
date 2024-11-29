@@ -34,23 +34,6 @@ namespace WpfCliente.Utilidad
             return bitmap;
         }
 
-        /// <summary>
-        /// Verifica si un objeto BitmapImage es válido y puede ser procesado sin errores.
-        /// </summary>
-        /// <param name="bitmap">El objeto BitmapImage a validar.</param>
-        /// <returns>
-        /// True si el objeto BitmapImage es válido y puede ser manipulado; de lo contrario, lanza una excepción.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        /// Se lanza cuando el parámetro 'bitmap' es null.
-        /// </exception>
-        /// <exception cref="Exception">
-        /// Lanza una excepción genérica si ocurre un error al intentar manipular el bitmap, como problemas al leer los píxeles.
-        /// </exception>
-        /// <remarks>
-        /// Este método intenta crear un WriteableBitmap a partir del BitmapImage proporcionado y leer sus píxeles para verificar
-        /// su validez. La capacidad de leer píxeles indica que la imagen está completa y correctamente formateada.
-        /// </remarks>
         [DebuggerStepThrough]
         public static bool EsImagenValida(BitmapImage bitmap)
         {
@@ -136,25 +119,29 @@ namespace WpfCliente.Utilidad
                     resultado = true;
                 }
             }
-            catch (FileNotFoundException)
+            catch (FileNotFoundException excepcion)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
                     Properties.Idioma.mensajeArchivoNoEncontrado, ventana);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
-            catch (UnauthorizedAccessException)
+            catch (UnauthorizedAccessException excepcion)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
                     Properties.Idioma.mensajeAccesoDenegadoArchivo, ventana);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
-            catch (FileFormatException)
+            catch (FileFormatException excepcion)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
                     Properties.Idioma.mensajeArchivoInvalido, ventana);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
-                    Properties.Idioma.mensajeErrorInesperado, ventana);
+                    excepcion.Message, ventana);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
             return resultado;
         }
@@ -173,25 +160,29 @@ namespace WpfCliente.Utilidad
 
                 resultado = true;
             }
-            catch (FileNotFoundException)
+            catch (FileNotFoundException excepcion)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
                     Properties.Idioma.mensajeArchivoNoEncontrado, ventana);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
-            catch (UnauthorizedAccessException)
+            catch (UnauthorizedAccessException excepcion)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
                     Properties.Idioma.mensajeAccesoDenegadoArchivo, ventana);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
-            catch (FileFormatException)
+            catch (FileFormatException excepcion)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
                     Properties.Idioma.mensajeArchivoInvalido, ventana);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
             catch (Exception excepcion)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
-                    Properties.Idioma.mensajeErrorInesperado + excepcion.Message, ventana);
+                    excepcion.Message, ventana);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
             return resultado;
         }

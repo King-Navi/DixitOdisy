@@ -11,7 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfCliente", "WpfCliente\Wp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAOLibreria", "DAOLibreria\DAOLibreria.csproj", "{14E9F882-4CC6-4331-A0AC-B31206796294}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pruebas", "Pruebas\Pruebas.csproj", "{7E26BEBC-B34F-4A9E-964E-EDE2D697C5CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PruebasServidorYDAO", "Pruebas\PruebasServidorYDAO.csproj", "{7E26BEBC-B34F-4A9E-964E-EDE2D697C5CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PruebasCliente", "PruebasCliente\PruebasCliente.csproj", "{191BFBE5-202E-4836-901F-47790EA013C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{7E26BEBC-B34F-4A9E-964E-EDE2D697C5CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E26BEBC-B34F-4A9E-964E-EDE2D697C5CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E26BEBC-B34F-4A9E-964E-EDE2D697C5CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{191BFBE5-202E-4836-901F-47790EA013C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{191BFBE5-202E-4836-901F-47790EA013C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{191BFBE5-202E-4836-901F-47790EA013C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{191BFBE5-202E-4836-901F-47790EA013C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -26,24 +26,18 @@
             
         </Grid.Background>
 
-        <!-- Contenedor de la animación de carga -->
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
 
-            <!-- Mensaje de texto animado -->
             <TextBlock x:Name="textBlockEmpezandoRonda" Text="Empezando ronda..." 
                        FontSize="24" FontWeight="Bold" Foreground="Purple" 
                        HorizontalAlignment="Center" Margin="0,0,0,10" />
 
-            <!-- Componente de carga animado -->
             <bc:DonutSpinner Width="100" Height="100"  SpinnerColor="MediumPurple" Duration="0:0:1.0"/>
 
-            <!-- Mensaje de actualización "Escogiendo narrador" -->
             <TextBlock x:Name="textBlockEscogiendoNarrador" Text="Escogiendo narrador..." FontSize="18" 
                        Foreground="Black" HorizontalAlignment="Center" 
                        Margin="0,10,0,0"/>
 
         </StackPanel>
-        <!-- Fin de la animación de carga -->
-
     </Grid>
 </UserControl>

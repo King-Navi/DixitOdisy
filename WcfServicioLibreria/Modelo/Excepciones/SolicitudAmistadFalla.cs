@@ -24,4 +24,4 @@ namespace WcfServicioLibreria.Modelo
                 : "Ya le enviaste una solicitud de amistad a ese usuario.";
         }
     }
-}
+} 

@@ -2268,11 +2268,11 @@ namespace WpfCliente.ServidorDescribelo {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioEstadisticas")]
     public interface IServicioEstadisticas {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioEstadisticas/ObtenerEstadisitca", ReplyAction="http://tempuri.org/IServicioEstadisticas/ObtenerEstadisitcaResponse")]
-        WpfCliente.ServidorDescribelo.Estadistica ObtenerEstadisitca(int idUsuario);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioEstadisticas/ObtenerEstadisticas", ReplyAction="http://tempuri.org/IServicioEstadisticas/ObtenerEstadisticasResponse")]
+        WpfCliente.ServidorDescribelo.Estadistica ObtenerEstadisticas(int idUsuario);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioEstadisticas/ObtenerEstadisitca", ReplyAction="http://tempuri.org/IServicioEstadisticas/ObtenerEstadisitcaResponse")]
-        System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.Estadistica> ObtenerEstadisitcaAsync(int idUsuario);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioEstadisticas/ObtenerEstadisticas", ReplyAction="http://tempuri.org/IServicioEstadisticas/ObtenerEstadisticasResponse")]
+        System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.Estadistica> ObtenerEstadisticasAsync(int idUsuario);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -2302,12 +2302,12 @@ namespace WpfCliente.ServidorDescribelo {
                 base(binding, remoteAddress) {
         }
         
-        public WpfCliente.ServidorDescribelo.Estadistica ObtenerEstadisitca(int idUsuario) {
-            return base.Channel.ObtenerEstadisitca(idUsuario);
+        public WpfCliente.ServidorDescribelo.Estadistica ObtenerEstadisticas(int idUsuario) {
+            return base.Channel.ObtenerEstadisticas(idUsuario);
         }
         
-        public System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.Estadistica> ObtenerEstadisitcaAsync(int idUsuario) {
-            return base.Channel.ObtenerEstadisitcaAsync(idUsuario);
+        public System.Threading.Tasks.Task<WpfCliente.ServidorDescribelo.Estadistica> ObtenerEstadisticasAsync(int idUsuario) {
+            return base.Channel.ObtenerEstadisticasAsync(idUsuario);
         }
     }
 }

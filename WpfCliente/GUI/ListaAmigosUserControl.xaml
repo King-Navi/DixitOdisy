@@ -8,47 +8,25 @@
              d:DesignHeight="500" d:DesignWidth="260" Unloaded="CerrandoUserControl">
     <Grid Width="220" Height="400" >
         <DockPanel LastChildFill="True">
-            <!--Header-->
             <StackPanel d:Background="#E0DCC7" DockPanel.Dock="Top">
                 <Label x:Name="labelListaAmigos" HorizontalContentAlignment="Center" FontFamily="Lucida Sans Unicode Bold" BorderBrush="Black" BorderThickness="3" d:Content="Lista de amigos"></Label>
             </StackPanel>
-            <!--Footer-->
             <StackPanel Background="#E0DCC7" DockPanel.Dock="Bottom">
                 <Label x:Name="labelHora" d:Content="Son las 18:17" HorizontalContentAlignment="Center" BorderBrush="Black" BorderThickness="3" FontFamily="Lucida Sans Unicode Bold" Unloaded="Cerrado">
                     <Image Height="100" Width="100"/>
                 </Label>
             </StackPanel>
-            <!--Contenido-->
-            <!--<Grid>
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ItemsControl x:Name="itemsControlAmigos" Background="DarkGray">
-                        --><!-- El ItemsPanel organiza los elementos --><!--
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                
-                                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" />
-                            </ItemsPanelTemplate>
-                            
-                        </ItemsControl.ItemsPanel>
-                        <d:Grid Height="80" Width="190" d:Background="Azure"></d:Grid>
-                    </ItemsControl>
-                    
-                </ScrollViewer>
-            </Grid>-->
-            <!--Contenido-->
             <Grid>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <ItemsControl x:Name="itemsControlAmigos" Background="#A9A9A9" ItemsSource="{Binding Amigos}">
-                        <!-- El ItemsPanel organiza los elementos -->
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Vertical" HorizontalAlignment="Left" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
-                        <!-- DataTemplate para los elementos del ItemsControl -->
+
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <!-- Aquí se muestra el AmigoUserControl con el DataContext correspondiente -->
                                 <local:AmigoUserControl DataContext="{Binding}" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

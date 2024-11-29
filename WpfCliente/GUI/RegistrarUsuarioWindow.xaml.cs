@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -46,14 +47,9 @@ namespace WpfCliente.GUI
             ActualizarUI();
         }
 
-        private async void ClicButtonRegistrarUsuario(object sender, RoutedEventArgs e)
+        private void ClicButtonRegistrarUsuario(object sender, RoutedEventArgs e)
         {
-            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
-            if (!conexionExitosa)
-            {
-                return;
-            }
-            CrearCuenta();
+            CrearCuentaAsync();
         }
 
 
@@ -88,20 +84,30 @@ namespace WpfCliente.GUI
         }
 
 
-        private void CrearCuenta()
+        private async void CrearCuentaAsync()
         {
-            if (ValidarCampos() && Correo.VerificarCorreo(textBoxCorreo.Text,this) && rutaAbsolutaImagen != null)
+            if (!ValidarCampos())
             {
-                RegistrarUsuario();
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCamposInvalidos,
+                    Properties.Idioma.mensajeCamposInvalidos, this);
+            }
+            else if (rutaAbsolutaImagen == null)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
+                    Properties.Idioma.mensajeImagenInvalida, this);
+            }
+            else if (!Correo.VerificarCorreo(textBoxCorreo.Text, this))
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCorreoInvalido,
+                    Properties.Idioma.mensajeCorreoInvalido, this);
             }
             else
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorInesperado, 
-                    Properties.Idioma.mensajeErrorInesperado, this);
+                await RegistrarUsuarioAsync();
             }
         }
 
-        private async void RegistrarUsuario()
+        private async Task RegistrarUsuarioAsync()
         {
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
@@ -120,7 +126,7 @@ namespace WpfCliente.GUI
                         fileStream.CopyTo(memoryStream);
                         memoryStream.Position = 0;
 
-                        bool resultado = servicio.RegistrarUsuario(new Usuario()
+                        bool resultado = await servicio.RegistrarUsuarioAsync(new Usuario()
                         {
                             ContraseniaHASH = contraseniaHash,
                             Correo = textBoxCorreo.Text,
@@ -141,9 +147,17 @@ namespace WpfCliente.GUI
                     }
                 }
             }
+            catch (IOException ex)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
+            }
+            catch (ArgumentNullException ex)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
+            }
             catch(FaultException<BaseDatosFalla>)
             {
-                VentanasEmergentes.CrearVentanaEmergenteConCierre(Properties.Idioma.tituloUsuarioExiste, 
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloUsuarioExiste, 
                     Properties.Idioma.mensajeUsuarioYaExiste,this);
             }
             catch (Exception ex)
@@ -167,7 +181,7 @@ namespace WpfCliente.GUI
         public bool ValidarCampos()
         {
             bool isValid = true;
-            string errorTextBoxStyle = "ErrorTextBoxStyle";
+            string errorTextBoxStyle = "TextBoxEstiloError";
 
             ObtenerEstilos();
             if (!ValidarCaracteristicasContrasenia())
@@ -195,13 +209,10 @@ namespace WpfCliente.GUI
 
         private void ObtenerEstilos()
         {
-            string normalTextBoxStyle = "NormalTextBoxStyle";
-            string normalPasswordBoxStyle = "NormalPasswordBoxStyle";
+            string normalTextBoxStyle = "TextBoxEstiloNormal";
 
             textBoxGamertag.Style = (Style)FindResource(normalTextBoxStyle);
             textBoxCorreo.Style = (Style)FindResource(normalTextBoxStyle);
-            passwordBoxContrasenia.Style = (Style)FindResource(normalPasswordBoxStyle);
-            passwordBoxRepetirContrasenia.Style = (Style)FindResource(normalPasswordBoxStyle);
 
             labelCorreoInvalido.Visibility = Visibility.Hidden;
             labelCorreoExistente.Visibility = Visibility.Hidden;

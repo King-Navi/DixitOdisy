@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,7 +14,7 @@ namespace WpfCliente.GUI
 {
     public partial class IniciarSesion : Window, IActualizacionUI, IHabilitadorBotones
     {
-        private const string RECURSOS_ESTILO_TEXTBOX_ERROR = "ErrorTextBoxStyle";
+        private const string RECURSOS_ESTILO_TEXTBOX_ERROR = "TextBoxEstiloError";
         public IniciarSesion()
         {
             InitializeComponent();
@@ -62,7 +63,7 @@ namespace WpfCliente.GUI
             this.Close();
         }
 
-        private async void ClicIniciarSesion(object sender, RoutedEventArgs e)
+        private async void ClicIniciarSesionAsync(object sender, RoutedEventArgs e)
         {
             if (ValidarCampos())
             {
@@ -71,7 +72,7 @@ namespace WpfCliente.GUI
                 {
                     return;
                 }
-                IntentarIniciarSesion();
+                _ = IntentarIniciarSesionAsync();
             }
             else
             {
@@ -83,62 +84,100 @@ namespace WpfCliente.GUI
         {
             bool camposValidos = true;
 
-            if (string.IsNullOrWhiteSpace(textBoxUsuario.Text) && textBoxUsuario.Text.Contains(" "))
+            if (!ValidacionesString.EsGamertagValido(textBoxUsuario.Text))
             {
                 textBoxUsuario.Style = (Style)FindResource(RECURSOS_ESTILO_TEXTBOX_ERROR);
                 camposValidos = false;
             }
 
-            if (string.IsNullOrWhiteSpace(passwordBoxContrasenia.Password) && passwordBoxContrasenia.Password.Contains(" "))
+            if (string.IsNullOrWhiteSpace(passwordBoxContrasenia.Password) || passwordBoxContrasenia.Password.Contains(" "))
             {
-                pwBxPasswordMask.Style = (Style)FindResource(RECURSOS_ESTILO_TEXTBOX_ERROR); 
+                textBoxContrasenia.Style = (Style)FindResource(RECURSOS_ESTILO_TEXTBOX_ERROR); 
                 camposValidos = false;
             }
             return camposValidos;
         }
 
-        private bool IntentarIniciarSesion() {
-            bool exito = false;
+        private async Task<bool> IntentarIniciarSesionAsync()
+        {
+            if (!await VerificarConexionAsync())
+            {
+                return false;
+            }
+
+            Usuario usuario = ValidarCredenciales();
+            if (usuario == null)
+            {
+                MostrarMensajeCredencialesIncorrectas();
+                return false;
+            }
+
+            if (VerificarSesionIniciada(usuario.Nombre))
+            {
+                VentanasEmergentes.CrearVentanaEmergente(
+                    Properties.Idioma.tituloSesionIniciada,
+                    Properties.Idioma.mensajeSesionIniciada,
+                    this);
+                return false;
+            }
+
+            return ConfigurarSesionYMostrarMenu(usuario);
+        }
+
+        private async Task<bool> VerificarConexionAsync()
+        {
+            return await Conexion.VerificarConexion(HabilitarBotones, this);
+        }
+
+        private Usuario ValidarCredenciales()
+        {
             try
             {
                 ServidorDescribelo.IServicioUsuario servicio = new ServidorDescribelo.ServicioUsuarioClient();
                 string contraseniaHash = Encriptacion.OcuparSHA256(passwordBoxContrasenia.Password);
-                Usuario resultadoUsuario = servicio.ValidarCredenciales(textBoxUsuario.Text, contraseniaHash);
-                bool yaInicioSesion = servicio.YaIniciadoSesion(textBoxUsuario.Text);
-                if (yaInicioSesion)
-                {
-                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSesionIniciada, Properties.Idioma.mensajeSesionIniciada, this);
-                }
-                else
-                {
-                    if (resultadoUsuario != null)
-                    {
-                        exito = true;
-                        BitmapImage imagenUsuario = Imagen.ConvertirStreamABitmapImagen(resultadoUsuario.FotoUsuario);
-                        if (imagenUsuario == null)
-                        {
-                            VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, Properties.Idioma.mensajeImagenInvalida, this);
-                            this.Close();
-                        }
-                        else
-                        {
-                            ConfigurarSingletonConUsuario(resultadoUsuario, imagenUsuario);
-                            AbrirVentanaMenu();
-                        }
-                    }
-                    labelCredencialesIncorrectas.Visibility = Visibility.Visible;
-                }
+                return servicio.ValidarCredenciales(textBoxUsuario.Text, contraseniaHash);
             }
             catch (FaultException<VetoFalla> veto)
             {
                 EvaluarExcepcion(veto);
+                return null;
             }
-            catch (Exception excepcion)
+            catch (Exception ex)
             {
-                ManejadorExcepciones.ManejarErrorExcepcion(excepcion, this);
+                ManejadorExcepciones.ManejarErrorExcepcion(ex, this);
+                return null;
             }
-            return exito;
         }
+
+        private bool VerificarSesionIniciada(string nombreUsuario)
+        {
+            ServidorDescribelo.IServicioUsuario servicio = new ServidorDescribelo.ServicioUsuarioClient();
+            return servicio.YaIniciadoSesion(nombreUsuario);
+        }
+
+        private void MostrarMensajeCredencialesIncorrectas()
+        {
+            labelCredencialesIncorrectas.Visibility = Visibility.Visible;
+        }
+
+        private bool ConfigurarSesionYMostrarMenu(Usuario resultadoUsuario)
+        {
+            BitmapImage imagenUsuario = Imagen.ConvertirStreamABitmapImagen(resultadoUsuario.FotoUsuario);
+            if (imagenUsuario == null)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(
+                    Properties.Idioma.tituloImagenInvalida,
+                    Properties.Idioma.mensajeImagenInvalida,
+                    this);
+                this.Close();
+                return false;
+            }
+
+            ConfigurarSingletonConUsuario(resultadoUsuario, imagenUsuario);
+            AbrirVentanaMenu();
+            return true;
+        }
+
 
         private void EvaluarExcepcion(FaultException<VetoFalla> veto)
         {
@@ -162,20 +201,21 @@ namespace WpfCliente.GUI
             SingletonCliente.Instance.ContraniaHash = usuario.ContraseniaHASH;
         }
 
-        private async void ClicJugarComoInvitado(object sender, RoutedEventArgs e)
+        private async void ClicJugarComoInvitadoAsync(object sender, RoutedEventArgs e)
         {
-            string codigoSala = VentanaModal.AbrirVentanaModalSala(this);
-            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
-            if (!conexionExitosa)
-            {
-                return;
-            }
+            string codigoSala = VentanasEmergentes.AbrirVentanaModalSala(this);
             if (codigoSala != null)
             {
+                bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
+                if (!conexionExitosa)
+                {
+                    return;
+                }
                 if (ValidacionExistenciaJuego.ExisteSala(codigoSala))
                 {
                     SingletonCliente.Instance.NombreUsuario = Utilidades.GenerarGamertagInvitado();
-                    AbrirVentanaSala(codigoSala);
+                    await AbrirVentanaSalaAsync(codigoSala);
+                    this.Hide();
                     return;
                 }
                 else
@@ -184,9 +224,13 @@ namespace WpfCliente.GUI
                 }
 
             }
+            else
+            {
+                return;
+            }
         }
 
-        private async void AbrirVentanaSala(string idSala)
+        private async Task AbrirVentanaSalaAsync(string idSala)
         {
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
@@ -237,42 +281,74 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void ClicButtonOlvidarContrasenia(object sender, RoutedEventArgs e)
+        private async void ClicButtonOlvidarContrasenia(object sender, RoutedEventArgs e)
         {
-            OlvidarContrasenia();
+            await OlvidarContraseniaAsync();
         }
 
-        private async void OlvidarContrasenia()
+        private async Task OlvidarContraseniaAsync()
         {
-            bool olvidoContrasenia = true;
-            string correoIngresado = VentanaModal.AbrirVentanaModalCorreo(this, olvidoContrasenia);
-            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
-            if (!conexionExitosa)
+            string correoIngresado = SolicitarCorreo();
+            if (correoIngresado == null) return;
+
+            if (!await VerificarConexionAsync()) return;
+
+            if (!EsCorreoValido(correoIngresado))
             {
+                MostrarMensajeCorreoInvalido();
                 return;
             }
-            if (ValidacionesString.EsCorreoValido(correoIngresado) && Correo.VerificarCorreo(correoIngresado,this))
+
+            string gamertag = SolicitarGamertag();
+            if (gamertag == null) return;
+
+            if (!await VerificarConexionAsync()) return;
+
+            if (!EsGamertagYCorreoValidos(gamertag, correoIngresado))
             {
-                string gamertag = VentanaModal.AbrirVentanaModalGamertag(this);
-                bool _conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
-                if (!_conexionExitosa)
-                {
-                    return;
-                }
-                if (ValidacionesString.EsGamertagValido(gamertag) && Correo.VerificarCorreoConGamertag(gamertag, correoIngresado))
-                {
-                    AbrirVentanaCambiarContrasenia(gamertag);
-                }
-                else
-                {
-                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCorreoYGamertagNoCoinciden, Properties.Idioma.mensajeCorreoYGamertagNoCoinciden, this);
-                }
+                MostrarMensajeCorreoYGamertagNoCoinciden();
+                return;
             }
-            else
-            {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCorreoInvalido, Properties.Idioma.mensajeCorreoInvalido, this);
-            }
-            
+
+            AbrirVentanaCambiarContrasenia(gamertag);
+        }
+
+        private string SolicitarCorreo()
+        {
+            bool olvidoContrasenia = true;
+            return VentanasEmergentes.AbrirVentanaModalCorreo(this, olvidoContrasenia);
+        }
+
+        private bool EsCorreoValido(string correoIngresado)
+        {
+            return ValidacionesString.EsCorreoValido(correoIngresado) && Correo.VerificarCorreo(correoIngresado, this);
+        }
+
+        private void MostrarMensajeCorreoInvalido()
+        {
+            VentanasEmergentes.CrearVentanaEmergente(
+                Properties.Idioma.tituloCorreoInvalido,
+                Properties.Idioma.mensajeCorreoInvalido,
+                this);
+        }
+
+        private string SolicitarGamertag()
+        {
+            return VentanasEmergentes.AbrirVentanaModalGamertag(this);
+        }
+
+        private bool EsGamertagYCorreoValidos(string gamertag, string correoIngresado)
+        {
+            return ValidacionesString.EsGamertagValido(gamertag) &&
+                   Correo.VerificarCorreoConGamertag(gamertag, correoIngresado);
+        }
+
+        private void MostrarMensajeCorreoYGamertagNoCoinciden()
+        {
+            VentanasEmergentes.CrearVentanaEmergente(
+                Properties.Idioma.tituloCorreoYGamertagNoCoinciden,
+                Properties.Idioma.mensajeCorreoYGamertagNoCoinciden,
+                this);
         }
 
         private void AbrirVentanaCambiarContrasenia(string gamertag)

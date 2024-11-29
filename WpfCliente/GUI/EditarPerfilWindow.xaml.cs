@@ -13,8 +13,8 @@ namespace WpfCliente.GUI
     public partial class EditarPerfilWindow : Window , IActualizacionUI
     {
         private bool cambioImagen = false;
-        private const string RECURSO_ESTILO_CORREO = "NormalTextBoxStyle";
-        private const string RECURSO_ESTILO_CORREO_ERROR = "ErrorTextBoxStyle";
+        private const string RECURSO_ESTILO_CORREO = "TextBoxEstiloNormal";
+        private const string RECURSO_ESTILO_CORREO_ERROR = "TextBoxEstiloError";
 
         public EditarPerfilWindow(Window menuVentana)
         {
@@ -23,6 +23,7 @@ namespace WpfCliente.GUI
             CargarDatos();
             ActualizarUI();
             this.Owner = menuVentana;
+            this.Owner.Hide();
         }
 
         private void CargarDatos()
@@ -314,6 +315,7 @@ namespace WpfCliente.GUI
         private void ClicFlechaAtras(object sender, MouseButtonEventArgs e)
         {
             this.Close();
+            this.Owner.Show();
         }
     }
 }

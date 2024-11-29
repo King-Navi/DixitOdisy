@@ -580,7 +580,7 @@
     <value>Archivos de imagen</value>
   </data>
   <data name="mensajeInvitacionPartida" xml:space="preserve">
-    <value>Invitation from:</value>
+    <value>Invitación a partida de: </value>
   </data>
   <data name="tituloMenu" xml:space="preserve">
     <value>Menu</value>
@@ -629,6 +629,12 @@
   </data>
   <data name="buttonRechazar" xml:space="preserve">
     <value>Rechazar</value>
+  </data>
+  <data name="tituloCamposInvalidos" xml:space="preserve">
+    <value>Campos inválidos</value>
+  </data>
+  <data name="mensajeCamposInvalidos" xml:space="preserve">
+    <value>Los campos que ingresaste son inválidos</value>
   </data>
   <data name="mensajeSeNecesitaReiniciar" xml:space="preserve">
     <value>Necesitas reiniciar, porfavor vuelva a iniciar sesion.</value>

@@ -17,24 +17,21 @@
             </LinearGradientBrush>
         </Grid.Background>
         <DockPanel LastChildFill="True">
-            <!--Encabezado-->
             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal"  HorizontalAlignment="Right">
 
             </StackPanel>
 
-
-            <!--Pie de pagina-->
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Background="Coral" HorizontalAlignment="Center">
 
             </StackPanel>
-            <!--Jugadores conectado lista-->
+
             <StackPanel DockPanel.Dock="Left" Orientation="Vertical">
 
             </StackPanel>
-            <!--Middler-->
+
             <StackPanel Orientation="Vertical" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid>
-                    <Image Source="/Recursos/podioJugador.png" Height="250" Width="460" HorizontalAlignment="Center"/>
+                    <Image Source="pack://application:,,,/WpfCliente;component/Recursos/podioJugador.png" Height="250" Width="460" HorizontalAlignment="Center"/>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
@@ -43,28 +40,21 @@
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*" />
-                            <!-- Más espacio para la columna izquierda -->
                             <ColumnDefinition Width="*" />
-                            <!-- Columna del centro -->
                             <ColumnDefinition Width="2*" />
-                            <!-- Más espacio para la columna derecha -->
                         </Grid.ColumnDefinitions>
 
-                        <!-- Imagen del primer lugar -->
                         <Image Source="{Binding PrimerLugar.BitmapImagen}" d:Source="pack://application:,,,/Recursos/pfp1.png" Height="100" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Margin="0,-83,0,318" />
                         <Label x:Name="labelPrimerLugar" Content="{Binding Podio[0]}" d:Content="Primer" Grid.Column="1" HorizontalAlignment="Center"        HorizontalContentAlignment="Center"  VerticalContentAlignment="Center"  Margin="0,22,0,287" Width="80" />
-                        
-                        <!-- Imagen del segundo lugar -->
+
                         <Image Source="{Binding SegundoLugar.BitmapImagen}" d:Source="pack://application:,,,/Recursos/pfp2.png" Height="100" Width="100" Grid.Row="0" HorizontalAlignment="Center" Margin="0,-33,0,268" />
                         <Label x:Name="labelSegundoLugar" Content="{Binding Podio[1]}" d:Content="Segundo" HorizontalAlignment="Center" Margin="0,68,0,229" HorizontalContentAlignment="Center"  VerticalContentAlignment="Center" />
 
-                        <!-- Imagen del tercer lugar -->
                         <Image Source="{Binding TercerLugar.BitmapImagen}" d:Source="pack://application:,,,/Recursos/pfp3.png" Height="100" Width="100" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Margin="0,-2,0,237" />
                         <Label x:Name="labelTercerLugar"  Content="{Binding Podio[2]}" d:Content="Tercero" Grid.Column="2" HorizontalAlignment="Center" Margin="0,98,0,198"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
                 </Grid>
             </StackPanel>
         </DockPanel>
-
     </Grid>
 </UserControl>

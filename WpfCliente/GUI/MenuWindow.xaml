@@ -92,11 +92,11 @@
                 <StackPanel Orientation="Vertical" Opacity="0.76" Background="#E0DCC7" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,55,0,0">
                     <Button x:Name="buttonCrearSala" Content="Crear sala de espera" FontFamily="ROG Fonts" 
                         Background="#E0DCC7" Foreground="Black" BorderThickness="4" BorderBrush="Black" 
-                        FontSize="24" Margin="10,10,10,5" Click="ClicButtonCrearSalaAsync" VerticalAlignment="Top" />
+                        FontSize="24" Margin="10,10,10,5" Click="ClicButtonCrearSala" VerticalAlignment="Top" />
 
                     <Button x:Name="buttonUniserSala" Content="Unirse a sala de espera" FontFamily="ROG Fonts" 
                         Background="#E0DCC7" Foreground="Black" BorderThickness="4" BorderBrush="Black" 
-                        FontSize="24" Margin="10,5,10,10" Click="ClicButtonUnirseSalaAsync" />
+                        FontSize="24" Margin="10,5,10,10" Click="ClicButtonUnirseSala" />
                 </StackPanel>
 
             </StackPanel>

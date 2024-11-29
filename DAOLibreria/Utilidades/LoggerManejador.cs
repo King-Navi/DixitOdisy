@@ -1,9 +1,13 @@
-﻿using System;
-using Serilog;
+﻿using Serilog;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WcfServicioLibreria.Utilidades
+namespace DAOLibreria.Utilidades
 {
-    public static class LoggerManajador
+    internal class LoggerManejador
     {
         private const string FORMATO_FECHA = "dd-MM-yyyy";
         private const string NOMBRE_LOG = "Log";
@@ -47,6 +51,5 @@ namespace WcfServicioLibreria.Utilidades
             logger = Log.Logger;
             return logger;
         }
-
     }
 }

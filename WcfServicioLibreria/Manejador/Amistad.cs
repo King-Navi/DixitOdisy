@@ -35,20 +35,29 @@ namespace WcfServicioLibreria.Manejador
 
                 return false;
             }
-            catch (SolicitudAmistadExcepcion ex)
+            catch (SolicitudAmistadExcepcion excepcion)
             {
                 throw new FaultException<SolicitudAmistadFalla>(
-                    new SolicitudAmistadFalla(ex.ExisteAmistad, ex.ExistePeticion));
+                    new SolicitudAmistadFalla(excepcion.ExisteAmistad, excepcion.ExistePeticion));
             }
-            catch (Exception ex)
+            catch (Exception excepcion)
             {
-                throw new FaultException("Ocurrió un error inesperado al enviar la solicitud de amistad.");
+                ManejadorExcepciones.ManejarFatalException(excepcion);
+                throw new FaultException("Ocurrió un error inesperado al guardar la solicitud de amistad.");
             }
         }
 
         private bool GuardarSolicitudAmistad(int idRemitente, int idDestinatario)
         {
-            return PeticionAmistadDAO.GuardarSolicitudAmistad(idRemitente, idDestinatario);
+            try
+            {
+                return PeticionAmistadDAO.GuardarSolicitudAmistad(idRemitente, idDestinatario);
+            }
+            catch (FaultException excepcion)
+            {
+                ManejadorExcepciones.ManejarFatalException(excepcion);
+                return false;
+            }
         }
 
         private int ObtenerIdPorNombre(string nombre)
@@ -58,8 +67,9 @@ namespace WcfServicioLibreria.Manejador
             {
                 id = UsuarioDAO.ObtenerIdPorNombre(nombre);
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                //excepcion;
             }
             return id;
 
@@ -76,7 +86,6 @@ namespace WcfServicioLibreria.Manejador
                 return true;
             }
             return SonAmigos(idMayorUsuario, idMenorUsuario);
-
         }
 
         private bool SonAmigos(int idMasAlto, int idMasBajo)
@@ -85,21 +94,9 @@ namespace WcfServicioLibreria.Manejador
             {
                 return AmistadDAO.SonAmigos(idMasAlto, idMasBajo);
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
-            }
-            return false;
-
-        }
-
-        private bool ExisteSolicitudAmistad(int idMasAlto, int idMasBajo)
-        {
-            try
-            {
-                return PeticionAmistadDAO.ExisteSolicitudAmistad(idMasAlto, idMasBajo);
-            }
-            catch (Exception)
-            {
+                //
             }
             return false;
         }
@@ -123,8 +120,9 @@ namespace WcfServicioLibreria.Manejador
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                //
             }
             return false;
         }
@@ -172,8 +170,9 @@ namespace WcfServicioLibreria.Manejador
                 return usuariosModeloBaseDatos;
 
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                //
             }
             return usuariosModeloWCF;
         }
@@ -227,8 +226,9 @@ namespace WcfServicioLibreria.Manejador
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                //
             }
         }
 
@@ -252,8 +252,9 @@ namespace WcfServicioLibreria.Manejador
 
                 return usuariosModeloWCF;
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                //
             }
             return null;
         }
@@ -302,8 +303,13 @@ namespace WcfServicioLibreria.Manejador
             {
                 throw excepcion;
             }
-            catch (Exception)
+            catch (InvalidOperationException excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
         }
@@ -317,10 +323,20 @@ namespace WcfServicioLibreria.Manejador
                 EvaluarIdValido(idDestinatario);
                 return PeticionAmistadDAO.RechazarSolicitudAmistad(idRemitente, idDestinatario); ;
             }
-            catch (Exception)
+
+            catch (FaultException<ServidorFalla> excepcion)
             {
-                return false;
+                throw excepcion;
             }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            return false;
         }
 
         public bool EliminarAmigo(string usuarioRemitenteNombre, string usuarioDestinatarioNombre)
@@ -373,8 +389,9 @@ namespace WcfServicioLibreria.Manejador
             {
                 throw excepcion;
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                //
             }
             return false;
 

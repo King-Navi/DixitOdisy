@@ -25,7 +25,7 @@ namespace WpfCliente.GUI
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             ActualizarUI();
-            AbrirConexionesAsync();
+            _ = AbrirConexionesAsync();
             ConfigurarTemporizadorNotificacion();
             InicializarEstadisticas();
         }
@@ -93,9 +93,9 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void ClicButtonCrearSalaAsync(object sender, RoutedEventArgs e)
+        private void ClicButtonCrearSala(object sender, RoutedEventArgs e)
         {
-            await AbrirVentanaSalaAsync(null);
+            _ = AbrirVentanaSalaAsync(null);
         }
 
         private async Task AbrirVentanaSalaAsync(string idSala)
@@ -148,11 +148,11 @@ namespace WpfCliente.GUI
             await Conexion.InvitacionPartida.AbrirCanalParaInvitacionesAsync(user);
         }
 
-        private async void ClicButtonUnirseSalaAsync(object sender, RoutedEventArgs e)
+        private void ClicButtonUnirseSala(object sender, RoutedEventArgs e)
         {
             bool esInvitacion = false;
             string _codigoSala = null;
-            await UnirseASalaAsync(esInvitacion, _codigoSala);
+            _ = UnirseASalaAsync(esInvitacion, _codigoSala);
         }
 
         private async Task UnirseASalaAsync(bool esInvitacion, string _codigoSala)

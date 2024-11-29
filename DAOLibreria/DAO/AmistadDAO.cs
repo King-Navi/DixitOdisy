@@ -1,7 +1,9 @@
 ﻿using DAOLibreria.ModeloBD;
+using DAOLibreria.Utilidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity.Infrastructure;
 
 namespace DAOLibreria.DAO
 {
@@ -31,8 +33,13 @@ namespace DAOLibreria.DAO
                     resultado = consultaUsuario;
                 }
             }
-            catch (Exception)
+            catch (ArgumentNullException excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return resultado;
         }
@@ -48,9 +55,15 @@ namespace DAOLibreria.DAO
                         (fila.idMayor_usuario == idUsuarioDestinatario && fila.idMenor_usuario == idUsuarioRemitente));
                 }
             }
-            catch (Exception)
+            catch (ArgumentNullException excepcion)
             {
-                return true;
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+                return false;
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+                throw new InvalidOperationException("Ocurrió un error al verificar la amistad.", excepcion);
             }
         }
 
@@ -75,6 +88,21 @@ namespace DAOLibreria.DAO
                         return false;
                     }
                 }
+            }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+                return false;
+            }
+            catch (DbUpdateException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+                return false;
+            }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+                return false;
             }
             catch (Exception)
             {

@@ -162,7 +162,7 @@
     <Compile Include="Utilidades\ContextoOperacion.cs" />
     <Compile Include="Utilidades\IContextoOperacion.cs" />
     <Compile Include="Utilidades\IObservador.cs" />
-    <Compile Include="Utilidades\LoggerManajador.cs" />
+    <Compile Include="Utilidades\LoggerManejador.cs" />
     <Compile Include="Utilidades\ManejadorExcepciones.cs" />
     <Compile Include="Utilidades\Utilidad.cs" />
   </ItemGroup>

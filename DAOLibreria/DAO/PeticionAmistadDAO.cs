@@ -1,8 +1,11 @@
 ﻿using DAOLibreria.Excepciones;
 using DAOLibreria.ModeloBD;
+using DAOLibreria.Utilidades;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace DAOLibreria.DAO
 {
@@ -45,29 +48,35 @@ namespace DAOLibreria.DAO
                     return true;
                 }
             }
-            catch (Exception ex)
+            catch (DbUpdateException excepcion)
             {
-                throw new InvalidOperationException("Error al guardar la solicitud de amistad.", ex);
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                throw new InvalidOperationException("Error al guardar la solicitud de amistad.", excepcion);
+            }
+            return false;
         }
 
         private static bool SonAmigos(int idUsuarioRemitente, int idUsuarioDestinatario)
         {
             int idMayorUsuario = Math.Max(idUsuarioRemitente, idUsuarioDestinatario);
             int idMenorUsuario = Math.Min(idUsuarioRemitente, idUsuarioDestinatario);
-            if (!(idUsuarioDestinatario > 0 || idUsuarioRemitente > 0))
-            {
-                return true;
-            }
+
             try
             {
                 return AmistadDAO.SonAmigos(idMayorUsuario, idMenorUsuario);
             }
-            catch (Exception)
+            catch (InvalidOperationException excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
-
         }
 
         public static bool ExisteSolicitudAmistad(int idRemitente, int idDestinatario)
@@ -81,15 +90,17 @@ namespace DAOLibreria.DAO
                         (fila.idRemitente == idDestinatario && fila.idDestinatario == idRemitente));
                 }
             }
-            catch (Exception ex)
+            catch (ArgumentNullException excepcion)
             {
-                throw new InvalidOperationException("Error al verificar la existencia de la solicitud de amistad.", ex);
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+            return false;
         }
 
 
         public static List<Usuario> ObtenerSolicitudesAmistad(int idUsuario)
         {
+            List<Usuario> usuariosRemitentes = new List<Usuario>();
             try
             {
                 using (var context = new DescribeloEntities())
@@ -102,17 +113,22 @@ namespace DAOLibreria.DAO
                         .Select(seleccion => seleccion.idRemitente)
                         .ToList();
 
-                    List<Usuario> usuariosRemitentes = context.Usuario
+                    usuariosRemitentes = context.Usuario
                         .Where(fila => idsRemitentes.Contains(fila.idUsuario))
                         .ToList();
 
                     return usuariosRemitentes;
                 }
             }
-            catch (Exception)
+            catch (ArgumentNullException excepcion)
             {
-                return new List<Usuario>();
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            return usuariosRemitentes;
         }
 
 
@@ -150,17 +166,24 @@ namespace DAOLibreria.DAO
                             transaction.Commit();
                             return true;
                         }
-                        catch (Exception ex)
+                        catch (ArgumentNullException excepcion)
                         {
                             transaction.Rollback();
-                            throw new InvalidOperationException("Error al aceptar la solicitud de amistad.", ex);
+                            ManejadorExcepciones.ManejarFatalException(excepcion);
+                            return false;
                         }
                     }
                 }
             }
-            catch (Exception ex)
+            catch (InvalidOperationException excepcion)
             {
-                throw new InvalidOperationException("Error en la operación de aceptación de solicitud de amistad.", ex);
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+                return false;
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+                throw new InvalidOperationException(excepcion.Message);
             }
         }
 
@@ -184,10 +207,20 @@ namespace DAOLibreria.DAO
                     return true;
                 }
             }
-            catch (Exception ex)
+            catch (DbUpdateException excepcion)
             {
-                throw new InvalidOperationException("Error al rechazar la solicitud de amistad.", ex);
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+                throw new InvalidOperationException(excepcion.Message);
+            }
+            return false;
         }
     }
 }

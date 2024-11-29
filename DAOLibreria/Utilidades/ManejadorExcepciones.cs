@@ -1,9 +1,13 @@
 ﻿using Serilog;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WcfServicioLibreria.Utilidades
+namespace DAOLibreria.Utilidades
 {
-    public static class ManejadorExcepciones
+    internal class ManejadorExcepciones
     {
         private static readonly ILogger logger = LoggerManejador.ObtenerLogger();
         private const string MENSAJE_ERROR_EXCEPTION = "Error exception:\n";

@@ -356,6 +356,5 @@ namespace WpfCliente.GUI
             CambiarContraseniaWindow cambiarContraseniaWindow = new CambiarContraseniaWindow(gamertag);
             cambiarContraseniaWindow.Show();
         }
-
     }
 }

@@ -26,11 +26,7 @@ namespace WcfServicioLibreria.Manejador
             }
             return false;
         }
-        /// <summary>
-        /// Agrega a un jugador a una sala ya existente
-        /// </summary>
-        /// <param name="gamertag"></param>
-        /// <param name="idSala"></param>
+
         public async Task AgregarJugadorSalaAsync(string gamertag, string idSala)
         {
             if (!ValidarSala(idSala))

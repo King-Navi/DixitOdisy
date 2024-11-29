@@ -40,14 +40,18 @@ namespace WpfCliente.Contexto
                 VentanaPrincipal = ventanaNueva;
                 return true;
             }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
-                return false;
             }
+            return false;
         }
 
-        public bool LimpiarHistorial()
+            public bool LimpiarHistorial()
         {
             try
             {
@@ -62,6 +66,10 @@ namespace WpfCliente.Contexto
                     return true;
                 }
 
+            }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
             catch (Exception excepcion)
             {
@@ -84,6 +92,10 @@ namespace WpfCliente.Contexto
                     marco.Navigate(nuevoMarco);
                     return true;
                 }
+            }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
             catch (Exception excepcion)
             {
@@ -110,6 +122,10 @@ namespace WpfCliente.Contexto
                     return;
                 }
             }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
@@ -133,6 +149,10 @@ namespace WpfCliente.Contexto
                     return;
                 }
             }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
@@ -150,6 +170,10 @@ namespace WpfCliente.Contexto
                     marco.Navigated += MarcoNavigacion;
                     marco.GoBack();
                 }
+            }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
             catch (Exception excepcion)
             {
@@ -187,8 +211,13 @@ namespace WpfCliente.Contexto
                     return;
                 }
             }
-            catch (Exception)
+            catch (InvalidOperationException excepcion)
             {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
             if (marcoViejo != null)
             {
@@ -213,6 +242,10 @@ namespace WpfCliente.Contexto
                     LimpiarHistorial();
                     return;
                 }
+            }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
             catch (Exception excepcion)
             {
@@ -263,12 +296,9 @@ namespace WpfCliente.Contexto
 
         private void CerrarTodaConexion()
         {
-            //TODO:
-            SingletonCanal.Instancia.CerrarConexionUsuarioSesion();
+            SingletonCanal.Instancia.CerrarTodaConexion();
             Conexion.CerrarPartida();
             Conexion.CerrarChatMotor();
-            SingletonCanal.Instancia.CerrarConexionUsuarioSesion();
-            SingletonCanal.Instancia.CerrarConexionUsuarioSesion();
             SingletonSalaJugador.Instancia.CerrarConexion();
         }
         private void CerrarConexionSalaPartida()

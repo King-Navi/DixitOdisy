@@ -124,7 +124,7 @@ namespace WpfCliente.GUI
             };
             try
             {
-                var resultadoSesion = await SingletonCanal.Instancia.UsuarioSesion.ObtenerSessionJugadorAsync(user);
+                var resultadoSesion = await SingletonCanal.Instancia.UsuarioSesion.ObtenerSesionJugadorAsync(user);
                 if (!resultadoSesion)
                 {
                     VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloErrorServidor, 

@@ -23,7 +23,7 @@ namespace Pruebas.Servidor
         private const string CONTRASNIAHASH_ID_MAYOR = "C1DB496F4E2EBBDCDE8A97461D659AE24C5EC0DE25E96AC04E4C1ECD9421950C";
 
         [TestInitialize]
-        protected override void ConfigurarManejador()
+        public override void ConfigurarManejador()
         {
             base.ConfigurarManejador();
             imitarVetoDAO.Setup(dao => dao.ExisteTablaVetoPorIdCuenta(It.IsAny<int>())).Returns(false);
@@ -33,7 +33,7 @@ namespace Pruebas.Servidor
 
         }
         [TestCleanup]
-        protected override void LimpiadorTodo()
+        public override void LimpiadorTodo()
         {
             base.LimpiadorTodo();
         }
@@ -42,7 +42,7 @@ namespace Pruebas.Servidor
         public void AceptarSolicitudAmistad_CuandoIdsSonValidosYAmbosConectados_DeberiaRetornarTrue()
         {
 
-            // Arrange
+            
             var implementacionCallbackAmistad = new Utilidades.UsuarioSesionCallbackImplementacion();
 
             mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IUsuarioSesionCallback>())
@@ -67,10 +67,10 @@ namespace Pruebas.Servidor
             });
 
 
-            // Act
+            
             bool resultado = manejador.AceptarSolicitudAmistad(ID_USUARIO_MAYOR,ID_USUARIO_MENOR);
 
-            // Assert
+            
             Assert.IsTrue(implementacionCallbackAmistad.SesionAbierta , "La sesion deberia estar abierta");
             Assert.IsTrue(resultado, "El método debería devolver true cuando ambos usuarios están conectados y la solicitud de amistad se acepta.");
 

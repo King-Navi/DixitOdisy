@@ -68,7 +68,7 @@ namespace WpfCliente.GUI
 
         public void RecibirMensajeClienteCallback(ChatMensaje mensaje)
         {
-            textBoxReceptorMensaje.Text += $"{Environment.NewLine} {mensaje.ToString()}";
+            textBoxReceptorMensaje.Text += $"{Environment.NewLine} {mensaje}";
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)

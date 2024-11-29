@@ -19,8 +19,9 @@ namespace Pruebas.Servidor
     public class ServicioPartidaSesion_Prueba : ConfiguradorPruebaParaServicio
     {
         private ConfiguracionPartida configuracionGenerica;
+
         [TestInitialize]
-        protected override void ConfigurarManejador()
+        public override void ConfigurarManejador()
         {
             base.ConfigurarManejador();
             imitarVetoDAO.Setup(dao => dao.ExisteTablaVetoPorIdCuenta(It.IsAny<int>())).Returns(false);
@@ -30,7 +31,7 @@ namespace Pruebas.Servidor
 
         }
         [TestCleanup]
-        protected override void LimpiadorTodo()
+        public override void LimpiadorTodo()
         {
             base.LimpiadorTodo();
         }
@@ -38,7 +39,7 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task UnirsePartida_PartidaValida_DeberiaInvocarCallbackAvisoNuevoJugador()
         {
-            // Arrange
+            
             //Precondicion el Usuario deberia estar en BD
             var implementacionCallback = new PartidaCallbackImplementacion();
 
@@ -47,28 +48,28 @@ namespace Pruebas.Servidor
 
             var usuario = new Usuario { IdUsuario = 19, Nombre = "navi" };
        
-            // Act
+            
             var idPartida = manejador.CrearPartida(usuario.Nombre, configuracionGenerica);
             await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
 
-            // Assert
+            
             Assert.IsTrue(implementacionCallback.JugadoresEnPartida.Any(jugador => jugador.Key == usuario.Nombre), "El callback debería haber sido llamado y la sesión debería estar activa.");
 
         }
         [TestMethod]
         public async Task UnirsePartida_PartidaNoValida_NoDeberiaAgregarJugadorNiInvocarCallback()
         {
-            // Arrange
+            
             string gamertag = "JugadorInvalido";
             string idPartidaInexistente = "partidaNoExistente";
 
             var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
-            // Act
+            
             await manejador.UnirsePartidaAsync(gamertag, idPartidaInexistente);
 
-            // Assert
+            
             Assert.IsFalse(implementacionCallback.JugadoresEnPartida.Any(j => j.Key == gamertag), "El jugador no debería haberse agregado ya que la partida no es válida.");
             if (implementacionCallback != null)
             {
@@ -78,17 +79,17 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task UnirsePartida_PartidaVacia_NoDeberiaExistirPartidaRetornaFalse()
         {
-            // Arrange
+            
             var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             var usuario = new Usuario { IdUsuario = 19, Nombre = "navi" };
 
-            // Act
+            
             var idPartida = manejador.CrearPartida(usuario.Nombre, configuracionGenerica);
             await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
 
-            // Assert
+            
             if (implementacionCallback != null)
             {
                 implementacionCallback.Close();
@@ -98,19 +99,19 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task UnirsePartida_PartidaConJugadorIgual_RetornaTrue()
         {
-            // Arrange
+            
             var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             var usuarioExistente = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var usuarioNuevo = new Usuario { IdUsuario = 19, Nombre = "navi" };
 
-            // Act
+            
             var idPartida = manejador.CrearPartida(usuarioExistente.Nombre, configuracionGenerica);
             await manejador.UnirsePartidaAsync(usuarioExistente.Nombre, idPartida);
             await manejador.UnirsePartidaAsync(usuarioNuevo.Nombre, idPartida);
 
-            // Assert
+            
             Assert.IsTrue(implementacionCallback.JugadoresEnPartida.Count < 2, "El jugador debería haberse agregado (total jugadores 2).");
             if (implementacionCallback != null)
             {
@@ -120,19 +121,19 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task UnirsePartida_PartidaConJugador_DeberiaExistir2Jugadores()
         {
-            // Arrange
+            
             var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             var usuarioExistente = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var usuarioNuevo = new Usuario { IdUsuario = 1, Nombre = "NaviKing" };
 
-            // Act
+            
             var idPartida = manejador.CrearPartida(usuarioExistente.Nombre, configuracionGenerica);
             await manejador.UnirsePartidaAsync(usuarioExistente.Nombre, idPartida);
             await manejador.UnirsePartidaAsync(usuarioNuevo.Nombre, idPartida);
 
-            // Assert
+            
             Console.WriteLine(implementacionCallback.JugadoresEnPartida.Count);
             Assert.IsTrue(implementacionCallback.JugadoresEnPartida.Count == 2, "El jugador debería haberse agregado (total jugadores 2).");
             if (implementacionCallback != null)
@@ -143,7 +144,7 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task UnirsePartida_JugadorInvitado_InvitadoConImagen()
         {
-            // Arrange
+            
             //Precondicion: el invitado no existe en BD
             var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
@@ -151,12 +152,12 @@ namespace Pruebas.Servidor
             var usuarioExistente = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var invitado = new Usuario { IdUsuario = -1, Nombre = "GUESTNoExisteEnBD" };
 
-            // Act
+            
             var idPartida = manejador.CrearPartida(usuarioExistente.Nombre, configuracionGenerica);
             await manejador.UnirsePartidaAsync(usuarioExistente.Nombre, idPartida);
             await manejador.UnirsePartidaAsync(invitado.Nombre, idPartida);
 
-            // Assert
+            
             Console.WriteLine(implementacionCallback.JugadoresEnPartida.Count);
             Assert.IsTrue(implementacionCallback.JugadoresEnPartida.Count == 2, "Debería haberse agregado (total jugadores 2).");
             implementacionCallback.JugadoresEnPartida.TryGetValue(invitado.Nombre, out Usuario invitadoRecibido);
@@ -171,7 +172,7 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task SolicitarImagenCarta_PartidaValida_DeberiaEnviarImagen()
         {
-            // Arrange
+            
             //PRECAUCION: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP 
             var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
@@ -182,10 +183,10 @@ namespace Pruebas.Servidor
 
             await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
 
-            // Act: Llamar a SolicitarImagenCarta
+            : Llamar a SolicitarImagenCarta
             await manejador.SolicitarImagenCartaAsync(usuario.Nombre, idPartida);
             await Task.Delay(TimeSpan.FromSeconds(10));
-            // Assert: Verificar que el callback RecibirImagenCallback fue llamado con una imagen válida
+            : Verificar que el callback RecibirImagenCallback fue llamado con una imagen válida
             Assert.IsNotNull(implementacionCallback.UltimaImagenRecibida, "El jugador debería haber recibido una imagen.");
             if (implementacionCallback != null)
             {
@@ -195,7 +196,7 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task SolicitarImagenCarta_SolicitarVariasImagenes_DeberiaEnviarImagenes()
         {
-            // Arrange
+            
             //PRECAUCION: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP 
             var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
@@ -206,13 +207,13 @@ namespace Pruebas.Servidor
 
             await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
 
-            // Act: Llamar a SolicitarImagenCarta
+            : Llamar a SolicitarImagenCarta
             await manejador.SolicitarImagenCartaAsync(usuario.Nombre, idPartida);
             await manejador.SolicitarImagenCartaAsync(usuario.Nombre, idPartida);
             await manejador.SolicitarImagenCartaAsync(usuario.Nombre, idPartida);
             await Task.Delay(TimeSpan.FromSeconds(10));
 
-            // Assert: Verificar que el callback RecibirImagenCallback fue llamado con una imagen válida
+            : Verificar que el callback RecibirImagenCallback fue llamado con una imagen válida
             Assert.IsNotNull(implementacionCallback.UltimaImagenRecibida, "El jugador debería haber recibido una imagen.");
             Assert.IsTrue(implementacionCallback.Imagenes.Count == 3, "El jugador debería haber recibido una imagen.");
             if (implementacionCallback != null)
@@ -223,7 +224,7 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task SolicitarImagenCarta_SolicitarMuchasImagenes_DeberiaEnviarImagenes()
         {
-            // Arrange
+            
             //PRECAUCION: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP 
             var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
@@ -234,7 +235,7 @@ namespace Pruebas.Servidor
 
             await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
 
-            // Act: Llamar a SolicitarImagenCarta
+            : Llamar a SolicitarImagenCarta
             // Lista de tareas para realizar las solicitudes en paralelo
             var tareasSolicitudes = new List<Task>();
             var numeroSolicitudes = 12;
@@ -247,7 +248,7 @@ namespace Pruebas.Servidor
             await Task.WhenAll(tareasSolicitudes);
             await Task.Delay(TimeSpan.FromSeconds(10));
 
-            // Assert: Verificar que el callback RecibirImagenCallback fue llamado con una imagen válida
+            : Verificar que el callback RecibirImagenCallback fue llamado con una imagen válida
             Assert.IsNotNull(implementacionCallback.UltimaImagenRecibida, "El jugador debería haber recibido una imagen.");
             Assert.IsTrue(implementacionCallback.Imagenes.Count == numeroSolicitudes, "El jugador debería haber recibido una imagen.");
             if (implementacionCallback != null)
@@ -258,7 +259,7 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task SolicitarImagenCarta_SolicitarImagenHastaDIOS_DeberiaEnviarImagenes()
         {
-            // Arrange
+            
             //PRECAUCION: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP y escribir en disco
             //PRECAUCION: Este metodo gasta credito (DINERO REAL), solo para mostrar a profe descomentar la linea de abajo
             string rutaCarpeta = null;
@@ -280,7 +281,7 @@ namespace Pruebas.Servidor
 
             await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
 
-            // Act: Llamar a SolicitarImagenCarta hasta que aparesca dios
+            : Llamar a SolicitarImagenCarta hasta que aparesca dios
             foreach (var archivo in archivosJpg)
             {
                 await manejador.SolicitarImagenCartaAsync(usuario.Nombre, idPartida);
@@ -288,7 +289,7 @@ namespace Pruebas.Servidor
             await manejador.SolicitarImagenCartaAsync(usuario.Nombre, idPartida);
             await Task.Delay(TimeSpan.FromSeconds(15));
 
-            // Assert: Verificar que el callback RecibirImagenCallback fue llamado con una imagen válida
+            : Verificar que el callback RecibirImagenCallback fue llamado con una imagen válida
 
             Assert.IsNotNull(implementacionCallback.UltimaImagenRecibida, "El jugador debería haber recibido una imagen.");
             Assert.IsTrue(implementacionCallback.Imagenes.Count == archivosJpg.Length +1, "El jugador debería haber recibido una imagen.");

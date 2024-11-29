@@ -214,11 +214,11 @@
   <wsdl:message name="IServicioAmistad_EliminarAmigoCallback_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:EliminarAmigoCallbackResponse" />
   </wsdl:message>
-  <wsdl:message name="IServicioAmistad_ObtenerSessionJugadorCallback_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ObtenerSessionJugadorCallback" />
+  <wsdl:message name="IServicioAmistad_ObtenerSesionJugadorCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerSesionJugadorCallback" />
   </wsdl:message>
-  <wsdl:message name="IServicioAmistad_ObtenerSessionJugadorCallback_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ObtenerSessionJugadorCallbackResponse" />
+  <wsdl:message name="IServicioAmistad_ObtenerSesionJugadorCallback_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerSesionJugadorCallbackResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioChat_CrearChat_InputMessage">
     <wsdl:part name="parameters" element="tns:CrearChat" />
@@ -436,11 +436,11 @@
   <wsdl:message name="IServicioUsuario_EditarContraseniaUsuario_OutputMessage">
     <wsdl:part name="parameters" element="tns:EditarContraseniaUsuarioResponse" />
   </wsdl:message>
-  <wsdl:message name="IServicioUsuarioSesion_ObtenerSessionJugador_InputMessage">
-    <wsdl:part name="parameters" element="tns:ObtenerSessionJugador" />
+  <wsdl:message name="IServicioUsuarioSesion_ObtenerSesionJugador_InputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerSesionJugador" />
   </wsdl:message>
-  <wsdl:message name="IServicioUsuarioSesion_ObtenerSessionJugador_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ObtenerSessionJugadorResponse" />
+  <wsdl:message name="IServicioUsuarioSesion_ObtenerSesionJugador_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerSesionJugadorResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioUsuarioSesion_RecibirInvitacionCallback_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:RecibirInvitacionCallback" />
@@ -463,11 +463,11 @@
   <wsdl:message name="IServicioUsuarioSesion_EliminarAmigoCallback_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:EliminarAmigoCallbackResponse" />
   </wsdl:message>
-  <wsdl:message name="IServicioUsuarioSesion_ObtenerSessionJugadorCallback_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ObtenerSessionJugadorCallback" />
+  <wsdl:message name="IServicioUsuarioSesion_ObtenerSesionJugadorCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerSesionJugadorCallback" />
   </wsdl:message>
-  <wsdl:message name="IServicioUsuarioSesion_ObtenerSessionJugadorCallback_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ObtenerSessionJugadorCallbackResponse" />
+  <wsdl:message name="IServicioUsuarioSesion_ObtenerSesionJugadorCallback_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerSesionJugadorCallbackResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioInvitacionPartida_EnviarInvitacion_InputMessage">
     <wsdl:part name="parameters" element="tns:EnviarInvitacion" />
@@ -496,11 +496,11 @@
   <wsdl:message name="IServicioInvitacionPartida_EliminarAmigoCallback_InputCallbackMessage">
     <wsdl:part name="parameters" element="tns:EliminarAmigoCallbackResponse" />
   </wsdl:message>
-  <wsdl:message name="IServicioInvitacionPartida_ObtenerSessionJugadorCallback_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ObtenerSessionJugadorCallback" />
+  <wsdl:message name="IServicioInvitacionPartida_ObtenerSesionJugadorCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerSesionJugadorCallback" />
   </wsdl:message>
-  <wsdl:message name="IServicioInvitacionPartida_ObtenerSessionJugadorCallback_InputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:ObtenerSessionJugadorCallbackResponse" />
+  <wsdl:message name="IServicioInvitacionPartida_ObtenerSesionJugadorCallback_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ObtenerSesionJugadorCallbackResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioEstadisticas_ObtenerEstadisitca_InputMessage">
     <wsdl:part name="parameters" element="tns:ObtenerEstadisitca" />
@@ -555,9 +555,9 @@
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/EliminarAmigoCallback" message="tns:IServicioAmistad_EliminarAmigoCallback_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/EliminarAmigoCallbackResponse" message="tns:IServicioAmistad_EliminarAmigoCallback_InputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ObtenerSessionJugadorCallback">
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/ObtenerSessionJugadorCallback" message="tns:IServicioAmistad_ObtenerSessionJugadorCallback_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/ObtenerSessionJugadorCallbackResponse" message="tns:IServicioAmistad_ObtenerSessionJugadorCallback_InputCallbackMessage" />
+    <wsdl:operation name="ObtenerSesionJugadorCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/ObtenerSesionJugadorCallback" message="tns:IServicioAmistad_ObtenerSesionJugadorCallback_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/ObtenerSesionJugadorCallbackResponse" message="tns:IServicioAmistad_ObtenerSesionJugadorCallback_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioChat">
@@ -737,9 +737,9 @@
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioUsuarioSesion">
-    <wsdl:operation name="ObtenerSessionJugador">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuarioSesion/ObtenerSessionJugador" message="tns:IServicioUsuarioSesion_ObtenerSessionJugador_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioUsuarioSesion/ObtenerSessionJugadorResponse" message="tns:IServicioUsuarioSesion_ObtenerSessionJugador_OutputMessage" />
+    <wsdl:operation name="ObtenerSesionJugador">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuarioSesion/ObtenerSesionJugador" message="tns:IServicioUsuarioSesion_ObtenerSesionJugador_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioUsuarioSesion/ObtenerSesionJugadorResponse" message="tns:IServicioUsuarioSesion_ObtenerSesionJugador_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="RecibirInvitacionCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioUsuarioSesion/RecibirInvitacionCallback" message="tns:IServicioUsuarioSesion_RecibirInvitacionCallback_OutputCallbackMessage" />
@@ -756,9 +756,9 @@
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioUsuarioSesion/EliminarAmigoCallback" message="tns:IServicioUsuarioSesion_EliminarAmigoCallback_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuarioSesion/EliminarAmigoCallbackResponse" message="tns:IServicioUsuarioSesion_EliminarAmigoCallback_InputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ObtenerSessionJugadorCallback">
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioUsuarioSesion/ObtenerSessionJugadorCallback" message="tns:IServicioUsuarioSesion_ObtenerSessionJugadorCallback_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuarioSesion/ObtenerSessionJugadorCallbackResponse" message="tns:IServicioUsuarioSesion_ObtenerSessionJugadorCallback_InputCallbackMessage" />
+    <wsdl:operation name="ObtenerSesionJugadorCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioUsuarioSesion/ObtenerSesionJugadorCallback" message="tns:IServicioUsuarioSesion_ObtenerSesionJugadorCallback_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioUsuarioSesion/ObtenerSesionJugadorCallbackResponse" message="tns:IServicioUsuarioSesion_ObtenerSesionJugadorCallback_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioInvitacionPartida">
@@ -781,9 +781,9 @@
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioInvitacionPartida/EliminarAmigoCallback" message="tns:IServicioInvitacionPartida_EliminarAmigoCallback_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioInvitacionPartida/EliminarAmigoCallbackResponse" message="tns:IServicioInvitacionPartida_EliminarAmigoCallback_InputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ObtenerSessionJugadorCallback">
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioInvitacionPartida/ObtenerSessionJugadorCallback" message="tns:IServicioInvitacionPartida_ObtenerSessionJugadorCallback_OutputCallbackMessage" />
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioInvitacionPartida/ObtenerSessionJugadorCallbackResponse" message="tns:IServicioInvitacionPartida_ObtenerSessionJugadorCallback_InputCallbackMessage" />
+    <wsdl:operation name="ObtenerSesionJugadorCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioInvitacionPartida/ObtenerSesionJugadorCallback" message="tns:IServicioInvitacionPartida_ObtenerSesionJugadorCallback_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioInvitacionPartida/ObtenerSesionJugadorCallbackResponse" message="tns:IServicioInvitacionPartida_ObtenerSesionJugadorCallback_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioEstadisticas">
@@ -901,8 +901,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="ObtenerSessionJugadorCallback">
-      <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/ObtenerSessionJugadorCallback" style="document" />
+    <wsdl:operation name="ObtenerSesionJugadorCallback">
+      <soap12:operation soapAction="http://tempuri.org/IServicioAmistad/ObtenerSesionJugadorCallback" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -1305,8 +1305,8 @@
     <wsp:PolicyReference URI="#NetTcpBinding_IServicioUsuarioSesion_policy">
     </wsp:PolicyReference>
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="ObtenerSessionJugador">
-      <soap12:operation soapAction="http://tempuri.org/IServicioUsuarioSesion/ObtenerSessionJugador" style="document" />
+    <wsdl:operation name="ObtenerSesionJugador">
+      <soap12:operation soapAction="http://tempuri.org/IServicioUsuarioSesion/ObtenerSesionJugador" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -1347,8 +1347,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="ObtenerSessionJugadorCallback">
-      <soap12:operation soapAction="http://tempuri.org/IServicioUsuarioSesion/ObtenerSessionJugadorCallback" style="document" />
+    <wsdl:operation name="ObtenerSesionJugadorCallback">
+      <soap12:operation soapAction="http://tempuri.org/IServicioUsuarioSesion/ObtenerSesionJugadorCallback" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -1403,8 +1403,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="ObtenerSessionJugadorCallback">
-      <soap12:operation soapAction="http://tempuri.org/IServicioInvitacionPartida/ObtenerSessionJugadorCallback" style="document" />
+    <wsdl:operation name="ObtenerSesionJugadorCallback">
+      <soap12:operation soapAction="http://tempuri.org/IServicioInvitacionPartida/ObtenerSesionJugadorCallback" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

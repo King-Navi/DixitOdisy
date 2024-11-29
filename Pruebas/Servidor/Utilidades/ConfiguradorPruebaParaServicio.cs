@@ -16,6 +16,7 @@ namespace Pruebas.Servidor.Utilidades
         public const int ID_INEXISTENTE = 9999;
         public const int ID_VALIDO = 1;
         public const string ESTADO_SOLICITUD_PENDIENTE = "Pendiente";
+        public const string PALABRA_PROHIBIDA_GUEST = "guest";
         public int idAleatorioValido;
         protected Mock<IVetoDAO> imitarVetoDAO = new Mock<IVetoDAO>();
         protected Mock<IUsuarioDAO> imitarUsuarioDAO = new Mock<IUsuarioDAO>();
@@ -30,7 +31,7 @@ namespace Pruebas.Servidor.Utilidades
         protected ManejadorPrincipal manejador;
 
 
-        protected virtual void ConfigurarManejador()
+        public virtual void ConfigurarManejador()
         {
             manejador = new ManejadorPrincipal(
                 mockContextoProvedor.Object,
@@ -44,7 +45,7 @@ namespace Pruebas.Servidor.Utilidades
             );
             idAleatorioValido = GeneradorAleatorio.GenerarIdValido();
         }
-        protected void ConfigurarImitadores()
+        public void ConfigurarImitadores()
         {
             imitarPeticionAmistadDAO
                 .Setup(dao => dao.AceptarSolicitudAmistad(It.IsAny<int>(), It.IsAny<int>()))
@@ -62,7 +63,7 @@ namespace Pruebas.Servidor.Utilidades
                 });
         }
 
-        protected virtual void LimpiadorTodo()
+        public virtual void LimpiadorTodo()
         {
             manejador = null;
             imitarVetoDAO = null;
@@ -74,7 +75,7 @@ namespace Pruebas.Servidor.Utilidades
             imitarAmistadDAO = null;
         }
 
-        protected virtual void LimpiadorDAOs()
+        public virtual void LimpiadorDAOs()
         {
             imitarVetoDAO = null;
             imitarUsuarioDAO = null;

@@ -44,7 +44,7 @@ namespace WpfCliente.GUI
                     var listaSolicitudes = SingletonCanal.Instancia.Amigos.ObtenerSolicitudesAmistad(usuarioActual);
                     if (listaSolicitudes == null || listaSolicitudes.Count() == 0)
                     {
-                        labelNoHaySolicitudes.Visibility = Visibility.Visible;
+                        textBlockNoHaySolicitudes.Visibility = Visibility.Visible;
                         return false;
                     }
                     Solicitudes.Clear();
@@ -80,7 +80,7 @@ namespace WpfCliente.GUI
         public void ActualizarUI()
         {
             labelSolicitudes.Content = Idioma.labelSolicitudesAmistad;
-            labelNoHaySolicitudes.Content = Idioma.labelNoHaySolicitudes;
+            textBlockNoHaySolicitudes.Text = Idioma.labelNoHaySolicitudes;
         }
     }
 }

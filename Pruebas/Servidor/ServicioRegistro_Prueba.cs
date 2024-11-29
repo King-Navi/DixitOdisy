@@ -12,7 +12,7 @@ namespace Pruebas.Servidor
     public class ServicioRegistro_Prueba : ConfiguradorPruebaParaServicio
     {
         [TestInitialize]
-        protected override void ConfigurarManejador()
+        public override void ConfigurarManejador()
         {
             base.ConfigurarManejador();
             imitarVetoDAO.Setup(dao => dao.ExisteTablaVetoPorIdCuenta(It.IsAny<int>())).Returns(false);
@@ -22,7 +22,7 @@ namespace Pruebas.Servidor
 
         }
         [TestCleanup]
-        protected override void LimpiadorTodo()
+        public override void LimpiadorTodo()
         {
             base.LimpiadorTodo();
         }

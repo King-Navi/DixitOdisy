@@ -13,7 +13,7 @@ namespace Pruebas.Servidor
     public class ServicioInvitacionPartidaPruebas : ConfiguradorPruebaParaServicio
     {
         [TestInitialize]
-        protected override void ConfigurarManejador()
+        public override void ConfigurarManejador()
         {
             base.ConfigurarManejador();
             imitarVetoDAO.Setup(dao => dao.ExisteTablaVetoPorIdCuenta(It.IsAny<int>())).Returns(false);
@@ -23,7 +23,7 @@ namespace Pruebas.Servidor
 
         }
         [TestCleanup]
-        protected override void LimpiadorTodo()
+        public override void LimpiadorTodo()
         {
             base.LimpiadorTodo();
         }
@@ -31,7 +31,7 @@ namespace Pruebas.Servidor
         //[TestMethod]
         //public void EnviarInvitacion_UsuarioConectado_DeberiaEnviarExitosamente()
         //{
-        //    // Arrange
+        //    
         //    var callbackInvitacionMock = new Mock<IUsuarioSesionCallback>();
 
         //    var receptor = new Usuario
@@ -45,11 +45,11 @@ namespace Pruebas.Servidor
         //    var codigoSala = "123456";
         //    var gamertagReceptor = "ReceptorPrueba";
 
-        //    // Act
+        //    
         //    _ = manejador.ConectarUsuario(receptor);
         //    var resultado = manejador.EnviarInvitacion(gamertagEmisor, codigoSala, gamertagReceptor);
 
-        //    // Assert
+        //    
         //    Assert.IsTrue(resultado, "La invitación debería haberse enviado correctamente.");
         //    callbackInvitacionMock.Verify(c => c.RecibirInvitacionCallback(It.IsAny<InvitacionPartida>()), Times.Once, "El callback debería haber sido llamado exactamente una vez.");
         //    manejador.DesconectarUsuario(receptor.IdUsuario);
@@ -59,15 +59,15 @@ namespace Pruebas.Servidor
         //[TestMethod]
         //public void EnviarInvitacion_UsuarioNoConectado_DeberiaFallar()
         //{
-        //    // Arrange
+        //    
         //    var gamertagEmisor = "EmisorPrueba";
         //    var codigoSala = "Sala123";
         //    var gamertagReceptor = "ReceptorNoConectado";
 
-        //    // Act
+        //    
         //    var resultado = manejador.EnviarInvitacion(gamertagEmisor, codigoSala, gamertagReceptor);
 
-        //    // Assert
+        //    
         //    Assert.IsFalse(resultado, "La invitación no debería haberse enviado porque el receptor no está conectado.");
         //}
     }

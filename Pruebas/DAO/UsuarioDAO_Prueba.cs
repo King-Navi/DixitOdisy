@@ -64,44 +64,44 @@ namespace Pruebas.DAO
         [TestMethod]
         public void RegistrarNuevoUsuario_CuandoLosGamertagsCoinciden_DeberiaRegistrar()
         {
-            // Arrange
+            
            var usuario = Utilidad.GenerarUsuarioDePrueba();
             var usuarioCuenta = Utilidad.GenerarUsuarioCuentaDePrueba(usuario.gamertag);
-            // Act
+            
             bool resultadoPrueba = usuarioDAO.RegistrarNuevoUsuario(usuario, usuarioCuenta);
-            // Assert
+            
             Assert.IsTrue(resultadoPrueba, "El registro debería haber sido exitoso porque los gamertags coinciden.");
         }
         [TestMethod]
         public void RegistrarNuevoUsuario_CuandoLosGamertagsNoCoinciden_DeberiaFallar()
         {
-            // Arrange
+            
             var usuario = Utilidad.GenerarUsuarioDePrueba();
             var numeroAleatorio = new Random((int)DateTime.Now.Ticks);
             var usuarioCuenta = Utilidad.GenerarUsuarioCuentaDePrueba("JugadorPrueba" + numeroAleatorio);
-            // Act
+            
             bool resultadoPrueba = usuarioDAO.RegistrarNuevoUsuario(usuario, usuarioCuenta);
-            // Assert
+            
             Assert.IsFalse(resultadoPrueba, "El registro no debería ser exitoso porque los gamertags no coinciden.");
         }
         [TestMethod]
         public void RegistrarNuevoUsuario_CuandoUsuarioEsNulo_DeberiaFallar()
         {
-            // Arrange
+            
             Usuario usuario = null;
             var numeroAleatorio = new Random((int)DateTime.Now.Ticks);
             var usuarioCuenta = Utilidad.GenerarUsuarioCuentaDePrueba("JugadorPrueba" + numeroAleatorio);
 
-            // Act
+            
             bool resultadoPrueba = usuarioDAO.RegistrarNuevoUsuario(usuario, usuarioCuenta);
 
-            // Assert
+            
             Assert.IsFalse(resultadoPrueba, "El registro no debería ser exitoso porque Usuario es nulo.");
         }
         [TestMethod]
         public void RegistrarNuevoUsuario_CuandoUsuarioYaExiste_DeberiaFallar()
         {
-            // Arrange
+            
             //Pre-condicion: El usuario debe estar ya registrado en base de datos
             var (usuarioExistente, usuarioCuentaExistente) = Utilidad.PrepararUsuarioExistente();
 
@@ -116,9 +116,9 @@ namespace Pruebas.DAO
                 hashContrasenia = Utilidad.ObtenerSHA256Hash("NuevaContraseña"),
                 correo = "nuevo@ejemplo.com" 
             };
-            // Act
+            
             bool resultado = false;
-            // Assert
+            
             Assert.ThrowsException<GamertagDuplicadoException>(() => resultado = usuarioDAO.RegistrarNuevoUsuario(nuevoUsuario, nuevoUsuarioCuenta));
             Assert.IsFalse(resultado, "El registro no debería ser exitoso porque el usuario ya existe en la base de datos.");
         }
@@ -132,7 +132,7 @@ namespace Pruebas.DAO
         [TestMethod]
         public void EditarUsuario_CuandoDatosValidos_DeberiaActualizarUsuario()
         {
-            // Arrange
+            
             //Pre condicion el usuario debe existir
             string correoAleatorio = $"ivan{new Random().Next(1000, 9999)}@ejemplo.com";
             var usuarioEditado = new UsuarioPerfilDTO
@@ -144,10 +144,10 @@ namespace Pruebas.DAO
                 HashContrasenia = POR_DEFECTO_CONTRANIA_HASH
             };
 
-            // Act
+            
             bool resultado = usuarioDAO.EditarUsuario(usuarioEditado);
 
-            // Assert
+            
             Assert.IsTrue(resultado, "El método debería retornar true al actualizar el usuario con datos válidos.");
 
             // Verificar que los cambios se aplicaron correctamente
@@ -164,7 +164,7 @@ namespace Pruebas.DAO
         [TestMethod]
         public void EditarUsuario_ModificacionIgual_DeberiaActualizarUsuario()
         {
-            // Arrange
+            
             //Pre condicion el usuario debe existir
             var usuarioEditado = new UsuarioPerfilDTO
             {
@@ -190,10 +190,10 @@ namespace Pruebas.DAO
                 contraseniaAnteriror = usuarioCuenta.hashContrasenia;
             }
 
-            // Act
+            
             bool resultado = usuarioDAO.EditarUsuario(usuarioEditado);
 
-            // Assert
+            
             Assert.IsTrue(resultado, "El método debería retornar true al no actulizar nada.");
 
             // Verificar que los cambios se aplicaron correctamente
@@ -213,17 +213,17 @@ namespace Pruebas.DAO
         [TestMethod]
         public void EditarUsuario_NoModificoNada_RetornaFalse()
         {
-            // Arrange
+            
             var usuarioEditado = new UsuarioPerfilDTO
             {
                 IdUsuario = POR_DEFECTO_IDUSUARIO_CUENTA,
                 NombreUsuario = POR_DEFECTO_NOMBRE
             };
 
-            // Act
+            
             bool resultado = usuarioDAO.EditarUsuario(usuarioEditado);
 
-            // Assert
+            
             Assert.IsFalse(resultado, "El método debería retornar true al no actulizar nada.");
 
         }
@@ -233,11 +233,11 @@ namespace Pruebas.DAO
         [TestMethod]
         public void ValidarCredenciales_CuandoCredencialesSonValidas_DeberiaRetornarUsuario()
         {
-            // Arrange
+            
 
-            // Act
+            
             UsuarioPerfilDTO usuario = usuarioDAO.ValidarCredenciales(POR_DEFECTO_NOMBRE, POR_DEFECTO_CONTRANIA_HASH);
-            // Assert
+            
             Assert.IsNotNull(usuario, "El usuario debería ser retornado cuando las credenciales son válidas.");
             Assert.AreEqual(POR_DEFECTO_NOMBRE, usuario.NombreUsuario, "El gamertag del usuario retornado debería coincidir con el gamertag proporcionado.");
         }
@@ -245,22 +245,22 @@ namespace Pruebas.DAO
         [TestMethod]
         public void ValidarCredenciales_CuandoContraseniaEsIncorrecta_DeberiaRetornarNull()
         {
-            // Arrange
+            
 
-            // Act
+            
             UsuarioPerfilDTO usuario = usuarioDAO.ValidarCredenciales(POR_DEFECTO_NOMBRE, CONTRASENIA_INCORRECTA);
 
-            // Assert
+            
             Assert.IsNull(usuario, "No se debería retornar un usuario cuando la contraseña es incorrecta.");
         }
         [TestMethod]
         public void ValidarCredenciales_CuandoEsNulo_DeberiaRetornarNull()
         {
-            // Arrange
-            // Act
+            
+            
             UsuarioPerfilDTO usuario = usuarioDAO.ValidarCredenciales(null, null);
 
-            // Assert
+            
             Assert.IsNull(usuario, "No se debería retornar un usuario cuando el gamertag no existe en la base de datos.");
         }
         #endregion ValidarCredenciales
@@ -270,15 +270,15 @@ namespace Pruebas.DAO
         [TestMethod]
         public void ColocarUltimaConexion_UsuarioExistente_DeberiaActualizarUltimaConexion()
         {
-            // Arrange
+            
             // Precondición: Este ID no debe existir en la base de datos
             int idUsuarioExistente = 1;
             DateTime antesDeLlamar = DateTime.Now;
 
-            // Act
+            
             bool resultado = usuarioDAO.ColocarUltimaConexion(idUsuarioExistente);
 
-            // Assert
+            
             Assert.IsTrue(resultado, "El método debería retornar true para un usuario existente.");
 
             using (var context = new DescribeloEntities())
@@ -292,27 +292,27 @@ namespace Pruebas.DAO
         [TestMethod]
         public void ColocarUltimaConexion_UsuarioInexistente_DeberiaRetornarFalse()
         {
-            // Arrange
+            
             // Precondición: Este ID no debe existir en la base de datos
             int idUsuarioInexistente = -1; 
 
-            // Act
+            
             bool resultado = usuarioDAO.ColocarUltimaConexion(idUsuarioInexistente);
 
-            // Assert
+            
             Assert.IsFalse(resultado, "El método debería retornar false para un usuario inexistente.");
         }
         [TestMethod]
         public void ColocarUltimaConexion_IdCero_DeberiaRetornarFalse()
         {
-            // Arrange
+            
             // Precondición: Este ID no debe existir en la base de datos
             int idUsuarioInexistente = 0; 
 
-            // Act
+            
             bool resultado = usuarioDAO.ColocarUltimaConexion(idUsuarioInexistente);
 
-            // Assert
+            
             Assert.IsFalse(resultado, "El método debería retornar false para un usuario inexistente.");
         }
 
@@ -323,37 +323,37 @@ namespace Pruebas.DAO
         [TestMethod]
         public void ObtenerUsuarioPorId_CuandoIdExiste_DeberiaRetornarUsuario()
         {
-            // Arrange
+            
             // Un ID que existe en la base de datos
 
-            // Act
+            
             DAOLibreria.ModeloBD.Usuario resultado = usuarioDAO.ObtenerUsuarioPorId(ID_VALIDO);
 
-            // Assert
+            
             Assert.IsNotNull(resultado, "El método debería devolver un usuario válido.");
             Assert.AreEqual(ID_VALIDO, resultado.idUsuario, "El ID del usuario debería coincidir.");
         }
         [TestMethod]
         public void ObtenerUsuarioPorId_CuandoIdNoExiste_DeberiaRetornarNull()
         {
-            // Arrange
+            
             // Un ID que no existe en la base de datos
 
-            // Act
+            
             DAOLibreria.ModeloBD.Usuario resultado = usuarioDAO.ObtenerUsuarioPorId(ID_INEXISTENTE);
 
-            // Assert
+            
             Assert.IsNull(resultado, "El método debería devolver null cuando el ID no existe.");
         }
         [TestMethod]
         public void ObtenerUsuarioPorId_CuandoIdEsInvalido_DeberiaRetornarNull()
         {
-            // Arrange
+            
             // Un ID inválido
-            // Act
+            
             DAOLibreria.ModeloBD.Usuario resultado = usuarioDAO.ObtenerUsuarioPorId(ID_INVALIDO);
 
-            // Assert
+            
             Assert.IsNull(resultado, "El método debería devolver null cuando el ID es inválido.");
         }
 

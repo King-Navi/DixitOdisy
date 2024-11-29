@@ -11,21 +11,28 @@ namespace WcfServicioLibreria.Modelo
 
         private readonly List<LectorDisco> lectoresDisco = new List<LectorDisco>();
         private readonly int MAXIMO_LECTORESDISCO;
+        private readonly int LECTORESDISCO_CERO;
         private int indiceActual = 0;
         private readonly SemaphoreSlim semaforoAsignacion = new SemaphoreSlim(1, 1);
         public bool Desechado { get; private set; } = false;
 
         public LectorDiscoOrquestador(int cantidadLectores)
         {
-            if (cantidadLectores > MAXIMO_LECTORESDISCO)
+            if (cantidadLectores > MAXIMO_LECTORESDISCO || cantidadLectores <= LECTORESDISCO_CERO)
             {
-                cantidadLectores = MAXIMO_LECTORESDISCO;
+                for (int i = 0; i < cantidadLectores; i++)
+                {
+                    lectoresDisco.Add(new LectorDisco(i));
+
+                }
             }
-            MAXIMO_LECTORESDISCO = cantidadLectores;
-            for (int i = 0; i < MAXIMO_LECTORESDISCO; i++)
+            else
             {
-                lectoresDisco.Add(new LectorDisco(i));
-            }
+                for (int i = 0; i < cantidadLectores; i++)
+                {
+                    lectoresDisco.Add(new LectorDisco(i));
+                }
+            }           
         }
 
         public void AsignarTrabajo(string archivoPath, IPartidaCallback callback, bool usarGrupo = false)

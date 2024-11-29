@@ -8,7 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800" Unloaded="CerrarControl">
     <Grid >
         <!-- Chat-->
-        <Grid x:Name="gridChat" Background="#AA000000" Margin="295,132,0,0" Visibility="Collapsed" >
+        <Grid x:Name="gridChat" Background="#AA000000" Margin="295,132,0,0" Visibility="Collapsed"  MaxHeight="500" MaxWidth="700">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
@@ -23,20 +23,16 @@
                  VerticalScrollBarVisibility="Auto"
                  TextWrapping="Wrap"
                  Margin="10"/>
-
-            <!-- Input y botón de enviar -->
             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
                 <TextBox x:Name="textBoxEnviarMensaje"
                      Height="30"
-                     Margin="0,0,10,0" MinWidth="380"/>
+                     Margin="0,0,10,0" MinWidth="380" MaxHeight="30" MaxWidth="400"/>
                 <Button x:Name="buttonEnviar" Content="ENVIAR"
                     Width="80"
                     Height="30"
                     Click="ClicButtonEnviar"
                     IsDefault="True"/>
             </StackPanel>
-
-            <!-- Botón para cerrar el chat -->
             <Button Content="X"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
@@ -47,7 +43,6 @@
                 FontWeight="Bold"
                 Click="ClicButtonCerrarChat" Width="20" Height="20"/>
         </Grid>
-        <!--Boton para abrir el chat-->
         <Button x:Name="buttonAbrirChat" Width="120" Height="120" Click="ClicButtonAbrirChat" Cursor="Hand" VerticalAlignment="Bottom" HorizontalAlignment="Right" >
             <Button.Template>
                 <ControlTemplate TargetType="Button">

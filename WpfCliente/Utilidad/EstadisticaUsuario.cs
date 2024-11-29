@@ -16,7 +16,7 @@ namespace WpfCliente.Utilidad
         {
             var manejadorServicio = new ServicioManejador<ServicioEstadisticasClient>();
             var resultado = manejadorServicio.EjecutarServicio(servicio =>
-                servicio.ObtenerEstadisitca(idUsuario
+                servicio.ObtenerEstadisticas(idUsuario
            ));
             if (resultado != null)
             {
@@ -27,7 +27,7 @@ namespace WpfCliente.Utilidad
         {
             var manejadorServicio = new ServicioManejador<ServicioEstadisticasClient>();
             var resultado = await manejadorServicio.EjecutarServicioAsync(servicio =>
-                servicio.ObtenerEstadisitcaAsync(idUsuario
+                servicio.ObtenerEstadisticasAsync(idUsuario
            ));
             if (resultado != null)
             {

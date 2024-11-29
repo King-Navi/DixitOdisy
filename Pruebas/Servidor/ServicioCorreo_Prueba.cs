@@ -17,7 +17,7 @@ namespace Pruebas.Servidor
         private const string CODIGO_INVALIDO = "CodigoInvalido";
 
         [TestInitialize]
-        protected override void ConfigurarManejador()
+        public override void ConfigurarManejador()
         {
             base.ConfigurarManejador();
             imitarVetoDAO.Setup(dao => dao.ExisteTablaVetoPorIdCuenta(It.IsAny<int>())).Returns(false);
@@ -27,7 +27,7 @@ namespace Pruebas.Servidor
 
         }
         [TestCleanup]
-        protected override void LimpiadorTodo()
+        public override void LimpiadorTodo()
         {
             base.LimpiadorTodo();
         }
@@ -74,39 +74,39 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void VerificarCodigo_CodigoNoCoincide_RetornaFalse()
         {
-            // Act
+            
             bool result = manejador.VerificarCodigo(CODIGO_INVALIDO, CORREO_VALIDO);
-            // Assert
+            
             Assert.IsFalse(result, "El código recibido no coincide con el generado.");
         }
         [TestMethod]
         public async void VerificarCodigo_CuandoCodigoNulo_DeberiaRetornarTrue()
         {
-            // Arrange
+            
             await manejador.VerificarCorreoAsync(new Usuario()
             {
                 Correo = CORREO_VALIDO
             });
 
-            // Act
+            
             bool resultado = manejador.VerificarCodigo(null, CORREO_VALIDO);
 
-            // Assert
+            
             Assert.IsFalse(resultado, "El método debería devolver true cuando el código recibido coincide con el guardado.");
         }
         [TestMethod]
         public async void VerificarCodigo_CuandoNulo_DeberiaRetornarTrue()
         {
-            // Arrange
+            
             await manejador.VerificarCorreoAsync(new Usuario()
             {
                 Correo = CORREO_VALIDO
             });
 
-            // Act
+            
             bool resultado = manejador.VerificarCodigo(null, null);
 
-            // Assert
+            
             Assert.IsFalse(resultado, "El método debería devolver true cuando el código recibido coincide con el guardado.");
         }
         
@@ -116,39 +116,39 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async void EnviarCorreoAsync_CuandoDatosSonValidos_DeberiaRetornarTrue()
         {
-            // Arrange
+            
             string codigoValido = "123456";
 
-            // Act
+            
             bool resultado = await manejador.EnviarCorreoAsync(codigoValido, CORREO_VALIDO);
 
-            // Assert
+            
             Assert.IsTrue(resultado, "El método debería devolver true cuando el correo se envía correctamente.");
         }
         [TestMethod]
         public async void EnviarCorreoAsync_CuandoCorreoEsInvalido_DeberiaRetornarTrue()
         {
-            // Arrange
+            
             string codigoValido = "123456";
 
-            // Act
+            
             bool resultado = await manejador.EnviarCorreoAsync(codigoValido, CORREO_VALIDO);
 
-            // Assert
+            
             Assert.IsTrue(resultado, "El método debería devolver true cuando el correo del destinatario es inválido.");
         }
 
         [TestMethod]
         public async void EnviarCorreoAsync_CuandoServidorNoDisponible_DeberiaRetornarFalse()
         {
-            // Arrange
+            
             //Precondicon smtp no disponible
             string codigo = "123456";
 
-            // Act
+            
             bool resultado = await manejador.EnviarCorreoAsync(codigo, CORREO_VALIDO);
 
-            // Assert
+            
             Assert.IsFalse(resultado, "El método debería devolver false cuando el servidor SMTP no está disponible.");
         }
 

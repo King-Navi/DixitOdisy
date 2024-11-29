@@ -186,7 +186,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Idioma.resx</DependentUpon>
     </Compile>
-    <Compile Include="ImplementacionesCallbacks\SingletonUsuarioSessionJugador.cs" />
+    <Compile Include="ImplementacionesCallbacks\SingletonUsuarioSesionJugador.cs" />
+    <Compile Include="Servidor\SolicitudAmistad.cs" />
     <Compile Include="Utilidad\RecursosCompartidosPartida.cs" />
     <Compile Include="GUI\RegistrarUsuarioPage.xaml.cs">
       <DependentUpon>RegistrarUsuarioPage.xaml</DependentUpon>

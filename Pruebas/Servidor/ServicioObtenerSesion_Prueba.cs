@@ -15,13 +15,13 @@ namespace Pruebas.Servidor
     {
 
         [TestInitialize]
-        protected override void ConfigurarManejador()
+        public override void ConfigurarManejador()
         {
             base.ConfigurarManejador();
         }
 
         [TestCleanup]
-        protected override void LimpiadorTodo()
+        public override void LimpiadorTodo()
         {
             base.LimpiadorTodo();
         }
@@ -30,7 +30,7 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void ObtenerSessionJugadorCallback_SeAbreElCanal_DeberiaRetornarTrue()
         {
-            // Arrange
+            
             var implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
 
             mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IUsuarioSesionCallback>())
@@ -38,10 +38,10 @@ namespace Pruebas.Servidor
 
             var usuario = new Usuario { IdUsuario = 1, Nombre = "PruebaUsuario" };
 
-            // Act
+            
             manejador.ObtenerSesionJugador(usuario);
 
-            // Assert
+            
             Assert.IsTrue(implementacionCallback.SesionAbierta, "El callback debería haber sido llamado y la sesión debería estar activa.");
             Assert.AreEqual(CommunicationState.Opened, ((ICommunicationObject)implementacionCallback).State, "El canal debería estar en estado abierto.");
             Assert.IsTrue(manejador.YaIniciadoSesion(usuario.Nombre), "El canal debería estar en estado abierto.");
@@ -53,7 +53,7 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void ObtenerSessionJugadorCallback_SeCierraElCanal_DeberiaRetornarTrue()
         {
-            // Arrange
+            
             var implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
 
             mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IUsuarioSesionCallback>())
@@ -61,10 +61,10 @@ namespace Pruebas.Servidor
 
             var usuario = new Usuario { IdUsuario = 1, Nombre = "PruebaUsuario" };
 
-            // Act
+            
             manejador.ObtenerSesionJugador(usuario);
 
-            // Assert
+            
             Assert.IsTrue(implementacionCallback.SesionAbierta, "El callback debería haber sido llamado y la sesión debería estar activa.");
             Assert.AreEqual(CommunicationState.Opened, ((ICommunicationObject)implementacionCallback).State, "El canal debería estar en estado abierto.");
             Assert.IsTrue(manejador.YaIniciadoSesion(usuario.Nombre), "El canal debería estar en estado abierto.");
@@ -78,7 +78,7 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void ObtenerSessionJugadorCallback_YaHaIniciadoSesion_DeberiaRetornarUsuarioFalla()
         {
-            // Arrange
+            
 
             var implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
 
@@ -88,7 +88,7 @@ namespace Pruebas.Servidor
             var usuario = new Usuario { IdUsuario = 1, Nombre = "PruebaUsuario" };
             var usuarioRepetido = new Usuario { IdUsuario = 1, Nombre = "PruebaUsuario" };
 
-            // Act: 
+            : 
             manejador.ObtenerSesionJugador(usuario);
 
             //Assert
@@ -100,7 +100,7 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void ObtenerSessionJugadorCallback_EnDesconeccion_DeberiaRetornarFalse()
         {
-            // Arrange
+            
 
             var implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
 
@@ -109,7 +109,7 @@ namespace Pruebas.Servidor
 
             var usuario = new Usuario { IdUsuario = 1, Nombre = "PruebaUsuario" };
 
-            // Act: Llamar a ObtenerSessionJugador una vez para establecer la sesión
+            : Llamar a ObtenerSessionJugador una vez para establecer la sesión
             manejador.ObtenerSesionJugador(usuario);
             implementacionCallback.Abort();
 
@@ -124,7 +124,7 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void ObtenerSessionJugadorCallback_EsNulo_DeberiaRetornarFalse()
         {
-            // Arrange
+            
 
             var implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
 
@@ -133,7 +133,7 @@ namespace Pruebas.Servidor
 
             Usuario usuario = null;
 
-            // Act: Llamar a ObtenerSessionJugador una vez para establecer la sesión
+            : Llamar a ObtenerSessionJugador una vez para establecer la sesión
             manejador.ObtenerSesionJugador(usuario);
 
             //Assert

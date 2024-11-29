@@ -15,5 +15,10 @@ namespace WcfServicioLibreria.Modelo
             Nombre = nombre;
             Puntos = 0;
         }
+        public JugadorEstadisticas(string nombre, int  puntos)
+        {
+            Nombre = nombre;
+            Puntos = puntos;
+        }
     }
 }

@@ -127,7 +127,7 @@ namespace WcfServicioLibreria.Modelo
             Escritor = _escritorDisco;
             SolicitarImagen = new SolicitarImagen();
             estadisticasPartida = new EstadisticasPartida(_configuracion.Tematica);
-            TodosListos += (sender, e) =>
+            TodosListos += (emisor, evento) =>
             {
                 cancelacionEjecucionRonda= new CancellationTokenSource(); 
                 Task.Run(async () => await IniciarPartidaSeguroAsync(cancelacionEjecucionRonda.Token));

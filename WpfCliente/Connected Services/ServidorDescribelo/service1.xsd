@@ -147,12 +147,12 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ObtenerSessionJugadorCallback">
+  <xs:element name="ObtenerSesionJugadorCallback">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="ObtenerSessionJugadorCallbackResponse">
+  <xs:element name="ObtenerSesionJugadorCallbackResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
@@ -633,17 +633,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ObtenerSessionJugador">
+  <xs:element name="ObtenerSesionJugador">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q24:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ObtenerSessionJugadorResponse">
+  <xs:element name="ObtenerSesionJugadorResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="ObtenerSessionJugadorResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="ObtenerSesionJugadorResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

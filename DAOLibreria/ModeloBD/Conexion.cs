@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DAOLibreria.Utilidades;
+using System;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace DAOLibreria.ModeloBD
@@ -16,10 +18,20 @@ namespace DAOLibreria.ModeloBD
                     return true; 
                 }
             }
-            catch (Exception)
+            catch (SqlException excepcion)
             {
-                return false;
+                ManejadorExcepciones.ManejarFatalException(excepcion);
             }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarFatalException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+
+            return false;
         }
     }
 }

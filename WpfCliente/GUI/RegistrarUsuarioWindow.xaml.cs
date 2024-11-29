@@ -157,7 +157,7 @@ namespace WpfCliente.GUI
             }
             catch(FaultException<BaseDatosFalla>)
             {
-                VentanasEmergentes.CrearVentanaEmergenteConCierre(Properties.Idioma.tituloUsuarioExiste, 
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloUsuarioExiste, 
                     Properties.Idioma.mensajeUsuarioYaExiste,this);
             }
             catch (Exception ex)

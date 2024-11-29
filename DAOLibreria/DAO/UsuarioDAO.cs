@@ -3,20 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DAOLibreria.Excepciones;
+using System.Data.Entity.Infrastructure;
+using DAOLibreria.Utilidades;
+using System.Runtime.InteropServices;
 
 namespace DAOLibreria.DAO
 {
     public static class UsuarioDAO
     {
         private const string PALABRA_RESERVADA_GUEST = "guest";
-        /// <summary>
-        /// Registra un nuevo usuario en el sistema junto con su cuenta asociada y estadísticas iniciales.
-        /// Asegura la coherencia entre el gamertag del usuario y el de la cuenta.
-        /// </summary>
-        /// <param name="_usuario">El objeto Usuario que contiene la información del usuario, incluido el gamertag y foto de perfil.</param>
-        /// <param name="_usuarioCuenta">El objeto UsuarioCuenta que contiene detalles de la cuenta del usuario como el gamertag, el hash de la contraseña y el correo electrónico.</param>
-        /// <exception cref="VerificarNombreUnico(string)"></exception>
-        /// <returns></returns>
+
         public static bool RegistrarNuevoUsuario(Usuario _usuario, UsuarioCuenta _usuarioCuenta)
         {
             bool resultado = false;
@@ -26,7 +22,7 @@ namespace DAOLibreria.DAO
             }
             VerificarNombreUnico(_usuario.gamertag);
             VerificarNombreUnico(_usuarioCuenta.gamertag);
-            
+
             if (_usuario.gamertag != _usuarioCuenta.gamertag)
             {
                 return resultado;
@@ -69,26 +65,32 @@ namespace DAOLibreria.DAO
                             transaction.Commit();
                             resultado = true;
                         }
-                        catch (Exception)
+                        catch (DbUpdateException excepcion)
                         {
                             transaction.Rollback();
-                            resultado = false;
+                            ManejadorExcepciones.ManejarErrorException(excepcion);
                         }
+                        catch (ArgumentNullException excepcion)
+                        {
+                            transaction.Rollback();
+                            ManejadorExcepciones.ManejarErrorException(excepcion);
+                        }
+                        catch (Exception excepcion)
+                        {
+                            transaction.Rollback();
+                            ManejadorExcepciones.ManejarErrorException(excepcion);
+                        }
+                        return resultado;
                     }
-
-                    return resultado;
                 }
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="usuarioEditado"></param>
-        /// <returns></returns>
+
         public static bool EditarUsuario(UsuarioPerfilDTO usuarioEditado)
         {
             bool resultado = false;
@@ -134,27 +136,33 @@ namespace DAOLibreria.DAO
                             context.SaveChanges();
                             transaction.Commit();
                         }
-                        catch (Exception)
+                        catch (DbUpdateException excepcion)
                         {
                             transaction.Rollback();
+                            ManejadorExcepciones.ManejarErrorException(excepcion);
                         }
+                        catch (ArgumentNullException excepcion)
+                        {
+                            transaction.Rollback();
+                            ManejadorExcepciones.ManejarErrorException(excepcion);
+                        }
+                        catch (Exception excepcion)
+                        {
+                            transaction.Rollback();
+                            ManejadorExcepciones.ManejarErrorException(excepcion);
+                        }
+                        return resultado;
                     }
-
-                    return resultado;
                 }
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
-
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="gamertag"></param>
-        /// <param name="contrasenia"></param>
-        /// <returns></returns>
+
+
         public static UsuarioPerfilDTO ValidarCredenciales(string gamertag, string contrasenia)
         {
             UsuarioCuenta datosUsuarioCuenta = null;
@@ -179,18 +187,18 @@ namespace DAOLibreria.DAO
                     }
                 }
             }
-            catch (Exception ex)
+            catch (ArgumentNullException excepcion)
             {
-                Console.WriteLine($"Error en ValidarCredenciales: {ex.Message}");
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
-
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
             return resultado;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="gamertag"></param>
-        /// <returns></returns>
+    
+
         public static Usuario ObtenerUsuarioPorNombre(string gamertag)
         {
             Usuario usuario = null;
@@ -203,8 +211,13 @@ namespace DAOLibreria.DAO
                 }
             }
 
-            catch (Exception)
+            catch (ArgumentNullException excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return usuario;
         }
@@ -220,17 +233,17 @@ namespace DAOLibreria.DAO
                                      .SingleOrDefault(userFila => userFila.idUsuario == idUsuario);
                 }
             }
-            catch (Exception)
+            catch (ArgumentNullException excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return usuario;
         }
 
-        /// <summary>
-        /// Obtiene el ID de un usuario por su gamertag.
-        /// </summary>
-        /// <param name="gamertag">El gamertag del usuario.</param>
-        /// <returns>El ID del usuario, o 0 si no se encuentra.</returns>
         public static int ObtenerIdPorNombre(string gamertag)
         {
             try
@@ -245,16 +258,18 @@ namespace DAOLibreria.DAO
                     }
                 }
             }
-            catch (Exception)
+            catch (ArgumentNullException excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return 0;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="nombres"></param>
-        /// <returns></returns>
+
+
         public static List<Usuario> ObtenerListaUsuariosPorNombres(List<string> nombres)
         {
             List<Usuario> usuarios = new List<Usuario>();
@@ -268,18 +283,19 @@ namespace DAOLibreria.DAO
                         .ToList();
                 }
             }
-            catch (Exception )
+            catch (ArgumentNullException excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return usuarios;
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="gamertag"></param>
-        /// <returns></returns>
-        /// <exception cref="GamertagDuplicadoException"></exception>
-        public static bool VerificarNombreUnico(string gamertag)
+
+
+        public static void VerificarNombreUnico(string gamertag)
         {
             bool resultado = true;
             Usuario usuario = null;
@@ -293,25 +309,23 @@ namespace DAOLibreria.DAO
                     usuarioCuenta = context.UsuarioCuenta
                                    .SingleOrDefault(userioFila => userioFila.gamertag == gamertag);
                 }
+                if (usuario != null || usuarioCuenta != null)
+                {
+                    throw new GamertagDuplicadoException($"El gamertag '{gamertag}' ya está en uso.");
+                }
+            }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
 
-            catch (Exception)
-            {
-            }
-
-            if (usuario != null || usuarioCuenta != null)
-            {
-                throw new GamertagDuplicadoException($"El gamertag '{gamertag}' ya está en uso.");
-            }
-            return resultado;
         }
 
-        /// <summary>
-        /// Verifica si existe únicamente un usuario con el gamertag y el correo especificados.
-        /// </summary>
-        /// <param name="gamertag">El gamertag del usuario.</param>
-        /// <param name="correo">El correo electrónico del usuario.</param>
-        /// <returns>True si existe exactamente un usuario con ese gamertag y correo, de lo contrario, false.</returns>
+
         public static bool ExisteUnicoUsuarioConGamertagYCorreo(string gamertag, string correo)
         {
             try
@@ -325,18 +339,22 @@ namespace DAOLibreria.DAO
                     return (cantidadUsuarios == 1);
                 }
             }
-            catch (Exception)
+            catch (ArgumentNullException excepcion)
             {
-                return false;
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+            catch (OverflowException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            return false;
         }
 
-        /// <summary>
-        /// Edita la contraseña de un usuario especificado por su gamertag.
-        /// </summary>
-        /// <param name="gamertag">El gamertag del usuario.</param>
-        /// <param name="nuevoHashContrasenia">El nuevo hash de la contraseña.</param>
-        /// <returns>True si la contraseña se actualizó correctamente, de lo contrario, false.</returns>
+
         public static bool EditarContraseniaPorGamertag(string gamertag, string nuevoHashContrasenia)
         {
             bool resultado = false;
@@ -365,15 +383,25 @@ namespace DAOLibreria.DAO
                             transaction.Commit();
                             resultado = true;
                         }
-                        catch (Exception)
+                        catch (Exception excepcion)
                         {
                             transaction.Rollback();
+                            ManejadorExcepciones.ManejarErrorException(excepcion);
                         }
                     }
                 }
             }
-            catch (Exception)
+            catch (DbUpdateException excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
 
             return resultado;
@@ -395,8 +423,17 @@ namespace DAOLibreria.DAO
                     }
                 }
             }
-            catch (Exception)
+            catch (DbUpdateException excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return resultado;
         }

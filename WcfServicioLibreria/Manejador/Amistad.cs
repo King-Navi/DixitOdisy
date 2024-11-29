@@ -67,9 +67,13 @@ namespace WcfServicioLibreria.Manejador
             {
                 id = UsuarioDAO.ObtenerIdPorNombre(nombre);
             }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
             catch (Exception excepcion)
             {
-                //excepcion;
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return id;
 
@@ -94,10 +98,15 @@ namespace WcfServicioLibreria.Manejador
             {
                 return AmistadDAO.SonAmigos(idMasAlto, idMasBajo);
             }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
             catch (Exception excepcion)
             {
-                //
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+
             return false;
         }
 
@@ -120,10 +129,15 @@ namespace WcfServicioLibreria.Manejador
                 }
                 return true;
             }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
             catch (Exception excepcion)
             {
-                //
+                ManejadorExcepciones.ManejarFatalException(excepcion);
             }
+
             return false;
         }
 
@@ -170,10 +184,15 @@ namespace WcfServicioLibreria.Manejador
                 return usuariosModeloBaseDatos;
 
             }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
             catch (Exception excepcion)
             {
-                //
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+
             return usuariosModeloWCF;
         }
 
@@ -226,10 +245,15 @@ namespace WcfServicioLibreria.Manejador
                     }
                 }
             }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
             catch (Exception excepcion)
             {
-                //
+                ManejadorExcepciones.ManejarFatalException(excepcion);
             }
+
         }
 
         public List<SolicitudAmistad> ObtenerSolicitudesAmistad(Usuario usuario)

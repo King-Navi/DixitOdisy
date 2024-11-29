@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAOLibreria.Utilidades;
+using System;
 using System.Configuration;
 
 namespace DAOLibreria
@@ -23,8 +24,13 @@ namespace DAOLibreria
                     Console.WriteLine($"Connection string '{nombre}' no encontrado en el archivo.");
                 }
             }
-            catch (Exception)
+            catch (ConfigurationErrorsException excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
         }
     }

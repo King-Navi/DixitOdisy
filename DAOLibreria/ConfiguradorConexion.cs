@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAOLibreria.Utilidades;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -54,16 +55,19 @@ namespace DAOLibreria
             {
                 resultado.Add(Llaves.LLAVE_ERROR, true);
                 resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexion(1)) [ArgumentNullException].  {excepcion.Message}");
+                ManejadorExcepciones.ManejarFatalException(excepcion);
             }
             catch (SecurityException excepcion)
             {
                 resultado.Add(Llaves.LLAVE_ERROR, true);
                 resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos (ConfigurarCadenaConexion(1)) [SecurityException].  {excepcion.Message}");
+                ManejadorExcepciones.ManejarFatalException(excepcion);
             }
             catch (Exception excepcion)
             {
                 resultado.Add(Llaves.LLAVE_ERROR, true);
                 resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexion(1)) [Exception].  {excepcion.Message}");
+                ManejadorExcepciones.ManejarFatalException(excepcion);
             }
             return resultado;
         }
@@ -98,10 +102,17 @@ namespace DAOLibreria
                     resultado.Add(Llaves.LLAVE_MENSAJE, $"El archivo no tiene el formato correcto: {ruta}");
                 }
             }
+            catch (FileNotFoundException excepcion)
+            {
+                resultado.Add(Llaves.LLAVE_ERROR, true);
+                resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexionRuta()) [Exception]. {excepcion.Message}");
+                ManejadorExcepciones.ManejarFatalException(excepcion);
+            }
             catch (Exception excepcion)
             {
                 resultado.Add(Llaves.LLAVE_ERROR, true);
                 resultado.Add(Llaves.LLAVE_MENSAJE, $"Error al conectar con la base de datos(ConfigurarCadenaConexionRuta()) [Exception]. {excepcion.Message}");
+                ManejadorExcepciones.ManejarFatalException(excepcion);
             }
             return resultado;
 
@@ -197,7 +208,7 @@ namespace DAOLibreria
             }
             catch (Exception excepcion)
             {
-                Console.WriteLine($"Error al procesar el archivo: {excepcion.Message}");
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
 
             return null;

@@ -10,6 +10,7 @@ namespace Pruebas.DAO
     [TestClass]
     public class VetoDAONoConexion_Prueba : ConfiguracionPruebaBDInvalida
     {
+        private VetoDAO vetoDAO= new VetoDAO();
         [TestMethod]
         public async Task VerificarConexionAsync_CuandoConexionFalla_DeberiaRetornarFalse()
         {
@@ -34,7 +35,7 @@ namespace Pruebas.DAO
             int idUsuario = 1;
 
             // Act
-            var resultado = VetoDAO.ExisteTablaVetoPorIdCuenta(idUsuario);
+            var resultado = vetoDAO.ExisteTablaVetoPorIdCuenta(idUsuario);
 
             // Assert
             Assert.IsFalse(resultado, "Dberia retorna false.");
@@ -48,7 +49,7 @@ namespace Pruebas.DAO
             bool esPermanente = false;
 
             // Act
-            bool resultado = VetoDAO.CrearRegistroVeto(idUsuarioCuenta, fechaFin, esPermanente);
+            bool resultado = vetoDAO.CrearRegistroVeto(idUsuarioCuenta, fechaFin, esPermanente);
 
             // Assert
             Assert.IsFalse(resultado, "El método debería devolver false cuando ocurre una excepción en el contexto.");

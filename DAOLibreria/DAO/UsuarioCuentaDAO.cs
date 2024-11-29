@@ -1,42 +1,90 @@
-﻿using DAOLibreria.ModeloBD;
+﻿using DAOLibreria.Interfaces;
+using DAOLibreria.ModeloBD;
 using System;
 using System.Linq;
 
 namespace DAOLibreria.DAO
 {
-    public class UsuarioCuentaDAO
+    public class UsuarioCuentaDAO : IUsuarioCuentaDAO
     {
-        /// <summary>
-        /// Obtiene el identificador de cuenta asociado a un identificador de usuario específico.
-        /// </summary>
-        /// <param name="idUsuario">El identificador del usuario para el cual se desea obtener el identificador de cuenta asociado.</param>
-        /// <returns>
-        /// El identificador de la cuenta del usuario si existe; null si el usuario no tiene una cuenta asociada
-        /// o si el identificador de cuenta es 0. Retorna -1 en caso de cualquier error durante la operación de recuperación.
-        /// </returns>
-        /// <remarks>
-        /// Este método realiza una consulta a la base de datos utilizando Entity Framework para obtener el identificador de cuenta.
-        /// Utiliza manejo de excepciones para asegurar que cualquier error en la consulta no interrumpa el flujo de la aplicación
-        /// y retorna -1 como indicador de error. Este valor de retorno debería ser manejado adecuadamente por el código que invoca este método
-        /// para distinguir entre diferentes condiciones de fallo o ausencia de datos.
-        /// </remarks>
-        public static int? ObtenerIdUsuarioCuentaPorIdUsuario(int idUsuario)
+        public int ObtenerIdUsuarioCuentaPorIdUsuario(int idUsuario)
         {
             try
             {
                 using (var context = new DescribeloEntities())
                 {
                     var idUsuarioCuenta = context.Usuario
-                                                  .Where(u => u.idUsuario == idUsuario)
-                                                  .Select(u => u.idUsuarioCuenta)
-                                                  .FirstOrDefault();
+                        .Where(u => u.idUsuario == idUsuario)
+                        .Select(u => u.idUsuarioCuenta)
+                        .FirstOrDefault();
 
-                    return idUsuarioCuenta == 0 ? (int?)null : idUsuarioCuenta;
+                    return idUsuarioCuenta == 0 ? -2 : idUsuarioCuenta;
                 }
             }
             catch (Exception)
             {
                 return -1;
+            }
+        }
+
+        public bool EditarContraseniaPorGamertag(string gamertag, string nuevoHashContrasenia)
+        {
+            bool resultado = false;
+            if (string.IsNullOrEmpty(gamertag) || string.IsNullOrEmpty(nuevoHashContrasenia))
+            {
+                return resultado;
+            }
+
+            try
+            {
+                using (var context = new DescribeloEntities())
+                {
+                    using (var transaction = context.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            var usuarioCuenta = context.UsuarioCuenta.SingleOrDefault(cuenta => cuenta.gamertag == gamertag);
+                            if (usuarioCuenta == null)
+                            {
+                                return false;
+                            }
+
+                            usuarioCuenta.hashContrasenia = nuevoHashContrasenia.ToUpper();
+                            context.SaveChanges();
+
+                            transaction.Commit();
+                            resultado = true;
+                        }
+                        catch (Exception)
+                        {
+                            transaction.Rollback();
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+
+            return resultado;
+        }
+
+        public bool ExisteUnicoUsuarioConGamertagYCorreo(string gamertag, string correo)
+        {
+            try
+            {
+                using (var context = new DescribeloEntities())
+                {
+                    var cantidadUsuarios = context.UsuarioCuenta
+                        .Where(u => u.gamertag == gamertag && u.correo == correo)
+                        .Count();
+
+                    return (cantidadUsuarios >= 1);
+                }
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
     }

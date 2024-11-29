@@ -1,7 +1,10 @@
 ﻿using DAOLibreria;
 using DAOLibreria.DAO;
+using DAOLibreria.Interfaces;
+using DAOLibreria.ModeloBD;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Pruebas.Servidor.Utilidades;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -12,33 +15,43 @@ namespace Pruebas.Servidor
 {
 
     [TestClass]
-    public class ServicioUsuario_Prueba
+    public class ServicioUsuario_Prueba : ConfiguradorPruebaParaServicio
     {
-        private const int ID_INVALIDO = -1;
-        private const int ID_INEXISTE = 9999;
-        private const int ID_VALIDO = 1;
-        private Mock<IContextoOperacion> mockContextoProvedor;
-        private ManejadorPrincipal manejador;
-
         [TestInitialize]
-        public void PruebaConfiguracion()
+        protected override void ConfigurarManejador()
         {
-            mockContextoProvedor = new Mock<IContextoOperacion>();
-            manejador = new ManejadorPrincipal(mockContextoProvedor.Object);
+            base.ConfigurarManejador();
+            imitarUsuarioDAO
+            .Setup(dao => dao.EditarUsuario(It.IsAny<UsuarioPerfilDTO>()))
+            .Returns((UsuarioPerfilDTO usuarioEditado) =>
+                {
+                    if (usuarioEditado == null ||
+                        usuarioEditado.IdUsuario <= 0 ||
+                        string.IsNullOrEmpty(usuarioEditado.NombreUsuario) ||
+                        usuarioEditado.NombreUsuario.ToLower().Contains("guest"))
+                    {
+                        return false;
+                    }
+                    return true;
+                });
+        }
+        [TestCleanup]
+        protected override void LimpiadorTodo()
+        {
+            base.LimpiadorTodo();
         }
 
         [TestMethod]
         public void EditarUsuario_CuandoDatosValidos_DeberiaActualizarUsuario()
         {
             // Arrange
-            //Pre condicion, el usuario debe exisitir en BD
             var usuarioEditado = new WcfServicioLibreria.Modelo.Usuario
             {
-                IdUsuario = 4,  //ID de un usuario existente
+                IdUsuario = 4, 
                 Nombre = "ivan",
-                Correo = $"NaviKing{new Random().Next(1000, 9999)}@editado.com", // Correo aleatorio para evitar duplicados
-                FotoUsuario = new MemoryStream(new byte[] { 0x20, 0x21, 0x22, 0x23 }), // Ejemplo de foto como MemoryStream
-                ContraseniaHASH = "6B86B273FF34FCE19D6B804EFF5A3F5747ADA4EAA22F1D49C01E52DDB7875B4B" // Hash de la contraseña actualizado
+                Correo = $"NaviKing{new Random().Next(1000, 9999)}@editado.com", 
+                FotoUsuario = new MemoryStream(new byte[] { 0x20, 0x21, 0x22, 0x23 }),
+                ContraseniaHASH = "6B86B273FF34FCE19D6B804EFF5A3F5747ADA4EAA22F1D49C01E52DDB7875B4B"
             };
 
             // Act
@@ -48,34 +61,37 @@ namespace Pruebas.Servidor
             Assert.IsTrue(resultado, "El método debería retornar true cuando se actualiza el usuario con datos válidos.");
         }
         [TestMethod]
-        public void EditarUsuario_CunadoNoModificoNada_RetornaFalse()
+        public void EditarUsuario_CuandoRegesaFalse_RetornaFalse()
         {
             // Arrange
-            //Pre condicion, el usuario debe exisitir en BD
-            var usuarioEditado = new WcfServicioLibreria.Modelo.Usuario
+            var usuario = new WcfServicioLibreria.Modelo.Usuario
             {
-                // ID de un usuario existente
-                IdUsuario = 1, 
-                Nombre = "egege",
-                Correo = null,
-                FotoUsuario = null,
-                ContraseniaHASH = null
+                IdUsuario = 4,
+                Nombre = "ivan",
+                Correo = $"NaviKing{new Random().Next(1000, 9999)}@editado.com",
+                FotoUsuario = new MemoryStream(new byte[] { 0x20, 0x21, 0x22, 0x23 }),
+                ContraseniaHASH = "6B86B273FF34FCE19D6B804EFF5A3F5747ADA4EAA22F1D49C01E52DDB7875B4B"
             };
+            imitarUsuarioDAO
+             .Setup(dao => dao.EditarUsuario(It.IsAny<UsuarioPerfilDTO>()))
+             .Returns((UsuarioPerfilDTO usuarioEditado) =>
+                 {
+                     return false;
+                 });
 
             // Act
-            bool resultado = manejador.EditarUsuario(usuarioEditado);
+            bool resultado = manejador.EditarUsuario(usuario);
 
             // Assert
             Assert.IsFalse(resultado, "El método debería retornar false cuando se actualiza el usuario con datos válidos.");
         }
         [TestMethod]
-        public void EditarUsuario_CunadoTodoEsNulo_RetornaFalse()
+        public void EditarUsuario_CunadoTodoNull_RetornaFalse()
         {
             // Arrange
-            var usuarioEditado = new WcfServicioLibreria.Modelo.Usuario();
 
             // Act
-            bool resultado = manejador.EditarUsuario(usuarioEditado);
+            bool resultado = manejador.EditarUsuario(null);
 
             // Assert
             Assert.IsFalse(resultado, "El método debería retornar false cuando se actualiza el usuario con datos válidos.");
@@ -126,14 +142,6 @@ namespace Pruebas.Servidor
         public void PingBD_CuandoHayConexion_RetornaTrue()
         {
             //Arrage
-            mockContextoProvedor = new Mock<IContextoOperacion>();
-            manejador = new ManejadorPrincipal(mockContextoProvedor.Object);
-            var resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-");
-            resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
-            if ((bool)fueExitoso)
-            {
-                Assert.Fail("La BD no está configurada.");
-            }
             //Act
             var respuesta= Task.Run(async() => await manejador.PingBDAsync());
             //Assert
@@ -143,54 +151,13 @@ namespace Pruebas.Servidor
         public void PingBD_CuandoNoHayConexion_RetornaFalse()
         {
             //Arrage
-            mockContextoProvedor = new Mock<IContextoOperacion>();
-            manejador = new ManejadorPrincipal(mockContextoProvedor.Object);
-            var resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "@-");
-            resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
-            if (!(bool)fueExitoso)
-            {
-                Assert.Fail("La BD no está configurada.");
-            }
             //Act
             var respuesta= Task.Run(async() => await manejador.PingBDAsync());
             //Assert
             Assert.IsFalse(respuesta.Result, "El resutlado es falase");
         }
-        [TestMethod]
-        public void ObtenerUsuarioPorId_CuandoIdExiste_DeberiaRetornarUsuario()
-        {
-            // Arrange
-            // Un ID que existe en la base de datos
+        
 
-            // Act
-            DAOLibreria.ModeloBD.Usuario resultado = UsuarioDAO.ObtenerUsuarioPorId(ID_VALIDO);
-
-            // Assert
-            Assert.IsNotNull(resultado, "El método debería devolver un usuario válido.");
-            Assert.AreEqual(ID_VALIDO, resultado.idUsuario, "El ID del usuario debería coincidir.");
-        }
-        [TestMethod]
-        public void ObtenerUsuarioPorId_CuandoIdNoExiste_DeberiaRetornarNull()
-        {
-            // Arrange
-            // Un ID que no existe en la base de datos
-
-            // Act
-            DAOLibreria.ModeloBD.Usuario resultado = UsuarioDAO.ObtenerUsuarioPorId(ID_INEXISTE);
-
-            // Assert
-            Assert.IsNull(resultado, "El método debería devolver null cuando el ID no existe.");
-        }
-        [TestMethod]
-        public void ObtenerUsuarioPorId_CuandoIdEsInvalido_DeberiaRetornarNull()
-        {
-            // Arrange
-            // Un ID inválido
-            // Act
-            DAOLibreria.ModeloBD.Usuario resultado = UsuarioDAO.ObtenerUsuarioPorId(ID_INVALIDO);
-
-            // Assert
-            Assert.IsNull(resultado, "El método debería devolver null cuando el ID es inválido.");
-        }
+        
     }
 }

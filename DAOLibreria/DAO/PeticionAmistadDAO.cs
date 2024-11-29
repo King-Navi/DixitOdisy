@@ -1,21 +1,21 @@
-﻿using DAOLibreria.ModeloBD;
+﻿using DAOLibreria.EvaluacionesParametros;
+using DAOLibreria.Interfaces;
+using DAOLibreria.ModeloBD;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace DAOLibreria.DAO
 {
-    public static class PeticionAmistadDAO
+    public class PeticionAmistadDAO : IPeticionAmistadDAO
     {
         private const string ESTADO_SOLICITUD_PENDIENTE = "Pendiente";
-        public static bool GuardarSolicitudAmistad(int idUsuarioRemitente, int idUsuarioDestinatario)
+        public bool GuardarSolicitudAmistad(int idUsuarioRemitente, int idUsuarioDestinatario)
         {
-            if(idUsuarioRemitente == idUsuarioDestinatario) 
-            { 
-                return false; 
-            }
+            
             try
             {
+                Evaluador.EvaluarIdsNoSonIguales(idUsuarioRemitente, idUsuarioDestinatario);
                 using (var context = new DescribeloEntities())
                 {
                     var nuevaSolicitud = new PeticionAmistad
@@ -38,10 +38,11 @@ namespace DAOLibreria.DAO
         }
 
 
-        public static bool ExisteSolicitudAmistad(int idRemitente, int idDestinatario)
+        public bool ExisteSolicitudAmistad(int idRemitente, int idDestinatario)
         {
             try
             {
+                Evaluador.EvaluarIdsNoSonIguales(idRemitente, idDestinatario);
                 using (var context = new DescribeloEntities())
                 {
                     return context.PeticionAmistad.Any(fila =>
@@ -55,7 +56,7 @@ namespace DAOLibreria.DAO
             }
         }
 
-        public static List<Usuario> ObtenerSolicitudesAmistad(int idUsuario)
+        public List<Usuario> ObtenerSolicitudesAmistad(int idUsuario)
         {
             try
             {
@@ -83,10 +84,11 @@ namespace DAOLibreria.DAO
         }
 
 
-        public static bool AceptarSolicitudAmistad(int idRemitente, int idDestinatario)
+        public bool AceptarSolicitudAmistad(int idRemitente, int idDestinatario)
         {
             try
             {
+                Evaluador.EvaluarIdsNoSonIguales(idRemitente, idDestinatario);
                 using (var context = new DescribeloEntities())
                 {
                     using (var transaction = context.Database.BeginTransaction())
@@ -133,10 +135,11 @@ namespace DAOLibreria.DAO
             }
         }
 
-        public static bool RechazarSolicitudAmistad(int idRemitente, int idDestinatario)
+        public bool RechazarSolicitudAmistad(int idRemitente, int idDestinatario)
         {
             try
             {
+                Evaluador.EvaluarIdsNoSonIguales(idRemitente, idDestinatario);
                 using (var context = new DescribeloEntities())
                 {
                     var solicitud = context.PeticionAmistad
@@ -160,7 +163,9 @@ namespace DAOLibreria.DAO
                 return false;
             }
         }
-
+        
 
     }
+
+    
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAOLibreria.DAO;
+using System;
 using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Evento;
@@ -33,7 +34,7 @@ namespace WcfServicioLibreria.Manejador
                 {
                     idSala = Utilidad.Generar6Caracteres();
                 } while (salasDiccionario.ContainsKey(idSala));
-                Sala salaNueva = new Sala(idSala, nombreUsuarioAnfitrion);
+                Sala salaNueva = new Sala(idSala, nombreUsuarioAnfitrion, new UsuarioDAO());
                 bool existeSala = salasDiccionario.TryAdd(idSala, salaNueva);
                 if (existeSala)
                 {

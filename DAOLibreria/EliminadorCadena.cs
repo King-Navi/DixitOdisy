@@ -5,22 +5,22 @@ namespace DAOLibreria
 {
     public class EliminadorCadena
     {
-        private const string nombre = "DescribeloEntities";
+        private const string NOMBRE = "DescribeloEntities";
         public static void EliminarConnectionStringDelArchivo()
         {
             try
             {
                 var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                if (config.ConnectionStrings.ConnectionStrings[nombre] != null)
+                if (config.ConnectionStrings.ConnectionStrings[NOMBRE] != null)
                 {
-                    config.ConnectionStrings.ConnectionStrings.Remove(nombre);
+                    config.ConnectionStrings.ConnectionStrings.Remove(NOMBRE);
                     config.Save(ConfigurationSaveMode.Modified);
                     ConfigurationManager.RefreshSection("connectionStrings");
-                    Console.WriteLine($"Connection string '{nombre}' eliminado del archivo de configuración.");
+                    Console.WriteLine($"Connection string '{NOMBRE}' eliminado del archivo de configuración.");
                 }
                 else
                 {
-                    Console.WriteLine($"Connection string '{nombre}' no encontrado en el archivo.");
+                    Console.WriteLine($"Connection string '{NOMBRE}' no encontrado en el archivo.");
                 }
             }
             catch (Exception)

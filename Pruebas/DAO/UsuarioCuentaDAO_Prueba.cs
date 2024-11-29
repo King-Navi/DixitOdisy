@@ -8,12 +8,9 @@ namespace Pruebas.DAO
     [TestClass]
     public class UsuarioCuentaDAO_Prueba : ConfiguracionPruebaBD
     {
-        private const string NOMBRE_VALIDO = "naviking";
-        private const string CONTRASENIA_VALIDA = "6B86B273FF34FCE19D6B804EFF5A3F5747ADA4EAA22F1D49C01E52DDB7875B4B";
-        private const string CONTRASENIA_INCORRECTA = "1234";
         private const int IDUSUARIO_INEXISTENTE = -130;
         private const int IDUSUARIO = 1;
-
+        private UsuarioCuentaDAO usuarioCuentaDAO = new UsuarioCuentaDAO();
         #region ObtenerIdUsuarioCuentaPorIdUsuario
         [TestMethod]
         public void ObtenerIdUsuarioCuentaPorIdUsuario_IdUsuarioExistente_DeberiaRetornarIdUsuarioCuenta()
@@ -22,7 +19,7 @@ namespace Pruebas.DAO
             int idUsuarioCuentaEsperado = IDUSUARIO;
 
             // Act
-            var resultado = UsuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(IDUSUARIO);
+            var resultado = usuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(IDUSUARIO);
 
             // Assert
             Assert.IsNotNull(resultado, "El método debería retornar un valor no nulo.");
@@ -35,7 +32,7 @@ namespace Pruebas.DAO
             // Arrange
 
             // Act
-            var resultado = UsuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(IDUSUARIO_INEXISTENTE);
+            var resultado = usuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(IDUSUARIO_INEXISTENTE);
 
             // Assert
             Assert.IsNull(resultado, "El método debería retornar null para un ID de usuario inexistente.");
@@ -46,47 +43,86 @@ namespace Pruebas.DAO
             // Arrange
 
             // Act
-            var resultado = UsuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(IDUSUARIO_INEXISTENTE);
+            var resultado = usuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(IDUSUARIO_INEXISTENTE);
 
             // Assert
             Assert.IsNull(resultado, "El método debería retornar null para un ID de usuario inexistente.");
         } 
         #endregion
 
-        #region ValidarCredenciales
+
+        #region VerificarCorreoConGamertag
+
         [TestMethod]
-        public void ValidarCredenciales_CuandoCredencialesSonValidas_DeberiaRetornarUsuario()
+        public void VerificarCorreoConGamertag_CuandoCoinciden_DeberiaRetornarTrue()
         {
             // Arrange
+            var correo = "unaayjose@gmail.com";
+            var gamertag = "unaay";
 
             // Act
-            UsuarioPerfilDTO usuario = DAOLibreria.DAO.UsuarioDAO.ValidarCredenciales(NOMBRE_VALIDO, CONTRASENIA_VALIDA);
+            bool resultado = usuarioCuentaDAO.ExisteUnicoUsuarioConGamertagYCorreo(gamertag, correo);
+
             // Assert
-            Assert.IsNotNull(usuario, "El usuario debería ser retornado cuando las credenciales son válidas.");
-            Assert.AreEqual(NOMBRE_VALIDO, usuario.NombreUsuario, "El gamertag del usuario retornado debería coincidir con el gamertag proporcionado.");
+            Assert.IsTrue(resultado, "El método debería retornar true cuando el correo y el gamertag coinciden.");
         }
 
         [TestMethod]
-        public void ValidarCredenciales_CuandoContraseniaEsIncorrecta_DeberiaRetornarNull()
+        public void VerificarCorreoConGamertag_CuandoNoCoinciden_DeberiaRetornarFalse()
         {
             // Arrange
+            var correo = "unaayjose@gmail.com";
+            var gamertag = "unaay20";
 
             // Act
-            UsuarioPerfilDTO usuario = DAOLibreria.DAO.UsuarioDAO.ValidarCredenciales(NOMBRE_VALIDO, CONTRASENIA_INCORRECTA);
+            bool resultado = usuarioCuentaDAO.ExisteUnicoUsuarioConGamertagYCorreo(gamertag, correo);
 
             // Assert
-            Assert.IsNull(usuario, "No se debería retornar un usuario cuando la contraseña es incorrecta.");
+            Assert.IsFalse(resultado, "El método debería retornar false cuando el correo y el gamertag no coinciden.");
         }
+
         [TestMethod]
-        public void ValidarCredenciales_CuandoEsNulo_DeberiaRetornarNull()
+        public void EditarContraseniaPorGamertag_CuandoDatosValidos_DeberiaRetornarTrue()
         {
             // Arrange
+            string gamertag = "leoleo";
+            string nuevoHashContrasenia = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd6d0fcb4c8b9e3fbb5"; // SHA256 de "password"
+
             // Act
-            UsuarioPerfilDTO usuario = DAOLibreria.DAO.UsuarioDAO.ValidarCredenciales(null, null);
+            bool resultado = usuarioCuentaDAO.EditarContraseniaPorGamertag(gamertag, nuevoHashContrasenia);
 
             // Assert
-            Assert.IsNull(usuario, "No se debería retornar un usuario cuando el gamertag no existe en la base de datos.");
+            Assert.IsTrue(resultado, "El método debería retornar true cuando los datos son válidos y la contraseña está en SHA256.");
         }
-        #endregion
+
+        [TestMethod]
+        public void EditarContraseniaPorGamertag_CuandoContraseniaNoEsSHA256_DeberiaRetornarFalse()
+        {
+            // Arrange
+            string gamertag = "usuarioPrueba";
+            string nuevoHashContraseniaInvalido = "password"; // Contraseña en texto plano, no en SHA256
+
+            // Act
+            bool resultado = usuarioCuentaDAO.EditarContraseniaPorGamertag(gamertag, nuevoHashContraseniaInvalido);
+
+            // Assert
+            Assert.IsFalse(resultado, "El método debería retornar false cuando la nueva contraseña no está en SHA256.");
+        }
+
+        [TestMethod]
+        public void EditarContraseniaPorGamertag_CuandoGamertagYContraseniaSonNulos_DeberiaRetornarFalse()
+        {
+            // Arrange
+            string gamertagNulo = null;
+            string nuevoHashContraseniaNulo = null;
+
+            // Act
+            bool resultado = usuarioCuentaDAO.EditarContraseniaPorGamertag(gamertagNulo, nuevoHashContraseniaNulo);
+
+            // Assert
+            Assert.IsFalse(resultado, "El método debería retornar false cuando el gamertag y la nueva contraseña son nulos.");
+        }
+        #endregion VerificarCorreoConGamertag
+
     }
 }

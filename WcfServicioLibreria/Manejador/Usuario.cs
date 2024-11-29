@@ -33,7 +33,7 @@ namespace WcfServicioLibreria.Manejador
                                 ((UsuarioContexto)usuarioARemover).DesconexionEvento += DesconectarUsuario;
                             }
                         }
-                        UsuarioDAO.ColocarUltimaConexion(eventoDesconexion.IdUsuario);
+                        usuarioDAO.ColocarUltimaConexion(eventoDesconexion.IdUsuario);
                     }
                 }
             }
@@ -59,7 +59,7 @@ namespace WcfServicioLibreria.Manejador
 
             try
             {
-                resultado = UsuarioDAO.EditarContraseniaPorGamertag(gamertag, nuevaContrasenia);
+                resultado = usuarioCuentaDAO.EditarContraseniaPorGamertag(gamertag, nuevaContrasenia);
             }
             catch (CommunicationException excepcion)
             {
@@ -97,7 +97,7 @@ namespace WcfServicioLibreria.Manejador
                     FotoPerfil = usuarioEditado.FotoUsuario != null ? Utilidad.StreamABytes(usuarioEditado.FotoUsuario) : null,
                     HashContrasenia = usuarioEditado.ContraseniaHASH ?? null,
                 };
-                bool consulta = DAOLibreria.DAO.UsuarioDAO.EditarUsuario(usuarioPerfilDTO);
+                bool consulta = usuarioDAO.EditarUsuario(usuarioPerfilDTO);
                 resultado = true;
 
             }
@@ -123,10 +123,10 @@ namespace WcfServicioLibreria.Manejador
             WcfServicioLibreria.Modelo.Usuario usuario = null;
             try
             {
-                DAOLibreria.ModeloBD.UsuarioPerfilDTO usuarioConsulta = DAOLibreria.DAO.UsuarioDAO.ValidarCredenciales(gamertag, contrasenia);
+                DAOLibreria.ModeloBD.UsuarioPerfilDTO usuarioConsulta = usuarioDAO.ValidarCredenciales(gamertag, contrasenia);
                 if (usuarioConsulta != null)
                 {
-                    DAOLibreria.DAO.VetoDAO.VerificarVetoPorIdCuenta(usuarioConsulta.IdUsuarioCuenta);
+                    vetoDAO.VerificarVetoPorIdCuenta(usuarioConsulta.IdUsuarioCuenta);
                     usuario = new WcfServicioLibreria.Modelo.Usuario();
                     if (usuarioConsulta.FotoPerfil != null && usuarioConsulta.FotoPerfil.Length > 0)
                     {
@@ -165,7 +165,7 @@ namespace WcfServicioLibreria.Manejador
         }
         public bool YaIniciadoSesion(string nombreUsuario)
         {
-            DAOLibreria.ModeloBD.Usuario usuario = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorNombre(nombreUsuario);
+            DAOLibreria.ModeloBD.Usuario usuario = usuarioDAO.ObtenerUsuarioPorNombre(nombreUsuario);
             if (usuario == null)
             {
                 return false;

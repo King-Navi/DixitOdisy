@@ -14,6 +14,7 @@ namespace Pruebas.DAO
         private const string MOTIVO_PRUEBA = "PRUEBA MOTIVO";
         private const bool ES_HACKER_FALSE = false;
         private const bool ES_HACKER_TRUE = true;
+        private ExpulsionDAO  expulsionDAO= new ExpulsionDAO();
         [TestCleanup]
         public void LimpiarRegistrosDePrueba()
         {
@@ -30,7 +31,7 @@ namespace Pruebas.DAO
         {
             // Arrange
             // Act
-            bool resultado = ExpulsionDAO.CrearRegistroExpulsion(IDUSUARIOCUENTA_PRUEBA, MOTIVO_PRUEBA, ES_HACKER_FALSE);
+            bool resultado = expulsionDAO.CrearRegistroExpulsion(IDUSUARIOCUENTA_PRUEBA, MOTIVO_PRUEBA, ES_HACKER_FALSE);
 
             // Assert
             Assert.IsTrue(resultado, "El método debería devolver true cuando los datos son válidos y se crea correctamente un registro de expulsión.");
@@ -43,7 +44,7 @@ namespace Pruebas.DAO
             int idUsuarioCuenta = -1;
 
             // Act
-            bool resultado = ExpulsionDAO.CrearRegistroExpulsion(idUsuarioCuenta, MOTIVO_PRUEBA, ES_HACKER_FALSE);
+            bool resultado = expulsionDAO.CrearRegistroExpulsion(idUsuarioCuenta, MOTIVO_PRUEBA, ES_HACKER_FALSE);
 
             // Assert
             Assert.IsFalse(resultado, "El método debería devolver false cuando el ID del usuario es inválido.");
@@ -58,7 +59,7 @@ namespace Pruebas.DAO
             PrepararExpulsionesSinPenalizar(IDUSUARIOCUENTA_PRUEBA, 12);
 
             // Act
-            bool resultado = ExpulsionDAO.TieneMasDeDiezExpulsionesSinPenalizar(IDUSUARIOCUENTA_PRUEBA);
+            bool resultado = expulsionDAO.TieneMasDeDiezExpulsionesSinPenalizar(IDUSUARIOCUENTA_PRUEBA);
 
             // Assert
             Assert.IsTrue(resultado, "El método debería retornar true cuando el usuario tiene 10 o más expulsiones sin penalizar.");
@@ -70,7 +71,7 @@ namespace Pruebas.DAO
             PrepararExpulsionesSinPenalizar(IDUSUARIOCUENTA_PRUEBA, 5);
 
             // Act
-            bool resultado = ExpulsionDAO.TieneMasDeDiezExpulsionesSinPenalizar(IDUSUARIOCUENTA_PRUEBA);
+            bool resultado = expulsionDAO.TieneMasDeDiezExpulsionesSinPenalizar(IDUSUARIOCUENTA_PRUEBA);
 
             // Assert
             Assert.IsFalse(resultado, "El método debería retornar false cuando el usuario tiene menos de 10 expulsiones sin penalizar.");
@@ -80,7 +81,7 @@ namespace Pruebas.DAO
         {
             // Arrange
             // Act
-            bool resultado = ExpulsionDAO.TieneMasDeDiezExpulsionesSinPenalizar(IDUSUARIOCUENTA_PRUEBA);
+            bool resultado = expulsionDAO.TieneMasDeDiezExpulsionesSinPenalizar(IDUSUARIOCUENTA_PRUEBA);
 
             // Assert
             Assert.IsFalse(resultado, "El método debería retornar false cuando el usuario no tiene registros de expulsión.");
@@ -115,7 +116,7 @@ namespace Pruebas.DAO
             PrepararExpulsionesSinPenalizar(IDUSUARIOCUENTA_PRUEBA, 3);
 
             // Act
-            bool resultado = ExpulsionDAO.CambiarExpulsionesAFueronPenalizadas(IDUSUARIOCUENTA_PRUEBA);
+            bool resultado = expulsionDAO.CambiarExpulsionesAFueronPenalizadas(IDUSUARIOCUENTA_PRUEBA);
 
             // Assert
             Assert.IsTrue(resultado, "El método debería devolver true cuando se actualizan expulsiones sin penalizar.");
@@ -136,7 +137,7 @@ namespace Pruebas.DAO
             PrepararExpulsionesSinPenalizar(IDUSUARIOCUENTA_PRUEBA, 0);
 
             // Act
-            bool resultado = ExpulsionDAO.CambiarExpulsionesAFueronPenalizadas(IDUSUARIOCUENTA_PRUEBA);
+            bool resultado = expulsionDAO.CambiarExpulsionesAFueronPenalizadas(IDUSUARIOCUENTA_PRUEBA);
 
             // Assert
             Assert.IsTrue(resultado, "El método debería devolver true cuando no hay expulsiones sin penalizar.");
@@ -149,7 +150,7 @@ namespace Pruebas.DAO
             int idUsuarioCuentaInvalido = -1;
 
             // Act
-            bool resultado = ExpulsionDAO.CambiarExpulsionesAFueronPenalizadas(idUsuarioCuentaInvalido);
+            bool resultado = expulsionDAO.CambiarExpulsionesAFueronPenalizadas(idUsuarioCuentaInvalido);
 
             // Assert
             Assert.IsFalse(resultado, "El método debería devolver false cuando el ID del usuario no es válido.");

@@ -46,7 +46,7 @@ namespace WcfServicioLibreria.Manejador
 
         private bool GuardarSolicitudAmistad(int idRemitente, int idDestinatario)
         {
-            return PeticionAmistadDAO.GuardarSolicitudAmistad(idRemitente, idDestinatario);
+            return peticionAmistadDAO.GuardarSolicitudAmistad(idRemitente, idDestinatario);
         }
 
         private int ObtenerIdPorNombre(string nombre)
@@ -54,7 +54,7 @@ namespace WcfServicioLibreria.Manejador
             int id = 0;
             try
             {
-                id = UsuarioDAO.ObtenerIdPorNombre(nombre);
+                id = usuarioDAO.ObtenerIdPorNombre(nombre);
             }
             catch (Exception excepcion)
             {
@@ -82,7 +82,7 @@ namespace WcfServicioLibreria.Manejador
         {
             try
             {
-                return AmistadDAO.SonAmigos(idMasAlto, idMasBajo);
+                return amistadDAO.SonAmigos(idMasAlto, idMasBajo);
             }
             catch (Exception excepcion)
             {
@@ -96,7 +96,7 @@ namespace WcfServicioLibreria.Manejador
         {
             try
             {
-                return PeticionAmistadDAO.ExisteSolicitudAmistad(idMasAlto, idMasBajo);
+                return peticionAmistadDAO.ExisteSolicitudAmistad(idMasAlto, idMasBajo);
             }
             catch (Exception excepcion)
             {
@@ -110,7 +110,7 @@ namespace WcfServicioLibreria.Manejador
             try
             {
                 jugadoresConectadosDiccionario.TryGetValue(usuarioRemitenteServidor.IdUsuario, out UsuarioContexto remitente);
-                DAOLibreria.ModeloBD.Usuario usuarioRemitenteModeloBaseDatos = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorId(usuarioRemitenteServidor.IdUsuario);
+                DAOLibreria.ModeloBD.Usuario usuarioRemitenteModeloBaseDatos = usuarioDAO.ObtenerUsuarioPorId(usuarioRemitenteServidor.IdUsuario);
                 List<DAOLibreria.ModeloBD.Usuario> amigosConetados = EnviarListaAmigosAsync(usuarioRemitenteServidor, remitente.UsuarioSesionCallback);
 
                 foreach (var usuarioDestino in amigosConetados)
@@ -134,7 +134,7 @@ namespace WcfServicioLibreria.Manejador
             {
                 IUsuarioSesionCallback contextoUsuarioSesion = contextoOperacion.GetCallbackChannel<IUsuarioSesionCallback>();
 
-                List<DAOLibreria.ModeloBD.Usuario> usuariosModeloBaseDatos = AmistadDAO.RecuperarListaAmigos(usuario.IdUsuario);
+                List<DAOLibreria.ModeloBD.Usuario> usuariosModeloBaseDatos = amistadDAO.RecuperarListaAmigos(usuario.IdUsuario);
                 foreach (DAOLibreria.ModeloBD.Usuario amigoDestinario in usuariosModeloBaseDatos)
                 {
                     EstadoAmigo estadoJugador;
@@ -241,7 +241,7 @@ namespace WcfServicioLibreria.Manejador
         {
             try
             {
-                List<DAOLibreria.ModeloBD.Usuario> usuariosSolicitantes = PeticionAmistadDAO.ObtenerSolicitudesAmistad(usuario.IdUsuario);
+                List<DAOLibreria.ModeloBD.Usuario> usuariosSolicitantes = peticionAmistadDAO.ObtenerSolicitudesAmistad(usuario.IdUsuario);
                 List<SolicitudAmistad> usuariosModeloWCF = new List<SolicitudAmistad>();
                 foreach (DAOLibreria.ModeloBD.Usuario usuarioBD in usuariosSolicitantes)
                 {
@@ -270,19 +270,19 @@ namespace WcfServicioLibreria.Manejador
             {
                 EvaluarIdValido(idRemitente);
                 EvaluarIdValido(idDestinatario);
-                if (PeticionAmistadDAO.AceptarSolicitudAmistad(idRemitente, idDestinatario))
+                if (peticionAmistadDAO.AceptarSolicitudAmistad(idRemitente, idDestinatario))
                 {
                     if (jugadoresConectadosDiccionario.ContainsKey(idDestinatario) &&
                         jugadoresConectadosDiccionario.ContainsKey(idRemitente))
                     {
-                        var usuarioDestinoConectado = UsuarioDAO.ObtenerUsuarioPorId(idDestinatario);
-                        var usuarioRemitenteConectado = UsuarioDAO.ObtenerUsuarioPorId(idRemitente);
+                        var usuarioDestinoConectado = usuarioDAO.ObtenerUsuarioPorId(idDestinatario);
+                        var usuarioRemitenteConectado = usuarioDAO.ObtenerUsuarioPorId(idRemitente);
                         AmigoConetado(usuarioRemitenteConectado, usuarioDestinoConectado);
                     }
                     else if (jugadoresConectadosDiccionario.ContainsKey(idRemitente))
                     {
                         jugadoresConectadosDiccionario.TryGetValue(idRemitente, out UsuarioContexto remitente);
-                        var amigoDestinario = UsuarioDAO.ObtenerUsuarioPorId(idDestinatario);
+                        var amigoDestinario = usuarioDAO.ObtenerUsuarioPorId(idDestinatario);
                         Modelo.Amigo amigo = new Modelo.Amigo()
                         {
                             Nombre = amigoDestinario.gamertag,
@@ -322,7 +322,7 @@ namespace WcfServicioLibreria.Manejador
             {
                 EvaluarIdValido(idRemitente);
                 EvaluarIdValido(idDestinatario);
-                return PeticionAmistadDAO.RechazarSolicitudAmistad(idRemitente, idDestinatario); ;
+                return peticionAmistadDAO.RechazarSolicitudAmistad(idRemitente, idDestinatario); ;
             }
             catch (Exception)
             {
@@ -341,7 +341,7 @@ namespace WcfServicioLibreria.Manejador
             {
                 EvaluarIdValido(idRemitente);
                 EvaluarIdValido(idDestinatario);
-                if (AmistadDAO.EliminarAmigo(idMayorUsuario, idMenorUsuario))
+                if (amistadDAO.EliminarAmigo(idMayorUsuario, idMenorUsuario))
                 {
                     if (jugadoresConectadosDiccionario.ContainsKey(idDestinatario) && 
                         jugadoresConectadosDiccionario.ContainsKey(idRemitente))

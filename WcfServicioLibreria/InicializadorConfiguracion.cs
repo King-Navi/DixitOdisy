@@ -7,9 +7,9 @@ namespace WcfServicioLibreria
     {
         public static bool IniciarConexion()
         {
-            bool salir = true;
+            bool salir = false;
 
-            while (salir)
+            while (!salir)
             {
                 Console.WriteLine("---- Bienvenido al iniciador de conexión ----");
                 Console.WriteLine("¿Qué desea hacer?");
@@ -64,7 +64,7 @@ namespace WcfServicioLibreria
             string contrasena = Console.ReadLine();
 
             var resultado = ConfiguradorConexion.ConfigurarCadenaConexion(servidor, nombreBD, usuario, contrasena);
-            return ProcesarResultado(resultado);
+            return resultado;
         }
 
         private static bool ConfigurarConVariableEntorno()
@@ -73,35 +73,19 @@ namespace WcfServicioLibreria
             string nombreVariableEntorno = Console.ReadLine();
 
             var resultado = ConfiguradorConexion.ConfigurarCadenaConexion(nombreVariableEntorno);
-            return ProcesarResultado(resultado);
-        } 
+            return resultado;
+        }
         public static bool ConfigurarConVariableEntorno(string nombreVariableEntorno)
         {
             var resultado = ConfiguradorConexion.ConfigurarCadenaConexion(nombreVariableEntorno);
-            return ProcesarResultado(resultado);
+            return resultado;
         }
 
         private static bool ConfigurarConArchivo()
         {
             Console.WriteLine("Buscando archivo...");
             var resultado = ConfiguradorConexion.ConfigurarCadenaConexionRuta();
-            return ProcesarResultado(resultado);
-        }
-
-        private static bool ProcesarResultado(Dictionary<string, object> resultado)
-        {
-            if (resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje))
-            {
-                Console.WriteLine((string)mensaje);
-            }
-
-            if (resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso) && fueExitoso is bool resultadoBool)
-            {
-                return resultadoBool;
-            }
-
-            Console.WriteLine("Ocurrió un error inesperado en la configuración.");
-            return false;
+            return resultado;
         }
 
     }

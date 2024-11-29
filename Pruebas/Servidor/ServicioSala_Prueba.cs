@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Pruebas.Servidor.Utilidades;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Enumerador;
 using WcfServicioLibreria.Manejador;
@@ -9,18 +10,27 @@ using WcfServicioLibreria.Utilidades;
 namespace Pruebas.Servidor
 {
     [TestClass]
-    public class ServicioSala_Prueba
+    public class ServicioSala_Prueba : ConfiguradorPruebaParaServicio
     {
-        private Mock<IContextoOperacion> mockContextoProvedor;
-        private ManejadorPrincipal manejador;
         private ConfiguracionPartida configuracionGenerica;
+
         [TestInitialize]
-        public void PruebaConfiguracion()
+        protected override void ConfigurarManejador()
         {
-            mockContextoProvedor = new Mock<IContextoOperacion>();
-            manejador = new ManejadorPrincipal(mockContextoProvedor.Object);
-            configuracionGenerica = new ConfiguracionPartida(TematicaPartida.Mixta, CondicionVictoriaPartida.PorCantidadRondas, 0);
+            base.ConfigurarManejador();
+            imitarVetoDAO.Setup(dao => dao.ExisteTablaVetoPorIdCuenta(It.IsAny<int>())).Returns(false);
+            imitarVetoDAO.Setup(dao => dao.CrearRegistroVeto(It.IsAny<int>(), It.IsAny<System.DateTime?>(), It.IsAny<bool>())).Returns(true);
+            imitarVetoDAO.Setup(dao => dao.VerificarVetoPorIdCuenta(It.IsAny<int>())).Returns(true);
+            imitarUsuarioDAO.Setup(dao => dao.ObtenerIdPorNombre(It.IsAny<string>())).Returns(1);
+
         }
+        [TestCleanup]
+        protected override void LimpiadorTodo()
+        {
+            base.LimpiadorTodo();
+        }
+
+
         #region CrearSala
         [TestMethod]
         public void CrearSala_ParametroNull_RetornaFalse()
@@ -84,7 +94,7 @@ namespace Pruebas.Servidor
             Assert.IsTrue(resultado, "Debería devolver true para una partida recién creada.");
         }
         [TestMethod]
-        public void ValidarPartida_PartidaTodosJugadoresAbandonan_NoExisteEnDiccionario()
+        public async void ValidarPartida_PartidaTodosJugadoresAbandonan_NoExisteEnDiccionario()
         {
             // Arrange
             var implementacionCallback = new PartidaCallbackImplementacion();
@@ -95,8 +105,8 @@ namespace Pruebas.Servidor
 
             // Arrange
             var idPartida = manejador.CrearPartida(usuarioAnfritrion.Nombre, configuracionGenerica);
-            manejador.UnirsePartidaAsync(usuarioAnfritrion.Nombre, idPartida);
-            manejador.UnirsePartidaAsync(usuarioNuevo.Nombre, idPartida);
+            await manejador.UnirsePartidaAsync(usuarioAnfritrion.Nombre, idPartida);
+            await manejador.UnirsePartidaAsync(usuarioNuevo.Nombre, idPartida);
 
             implementacionCallback?.Close();
 

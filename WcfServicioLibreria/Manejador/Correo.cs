@@ -73,7 +73,7 @@ namespace WcfServicioLibreria.Manejador
             try
             {
                 VerificarUsuarioCorreoNoNulo(usuario);
-                return DAOLibreria.DAO.UsuarioDAO.ExisteUnicoUsuarioConGamertagYCorreo(usuario.Correo, usuario.Nombre);
+                return usuarioCuentaDAO.ExisteUnicoUsuarioConGamertagYCorreo(usuario.Correo, usuario.Nombre);
             }
             catch (Exception excepcion)
             {

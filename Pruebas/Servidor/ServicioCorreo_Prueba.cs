@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Pruebas.Servidor.Utilidades;
+using System;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Manejador;
 using WcfServicioLibreria.Modelo;
@@ -9,21 +10,27 @@ using WcfServicioLibreria.Utilidades;
 namespace Pruebas.Servidor
 {
     [TestClass]
-    public class ServicioCorreo_Prueba
+    public class ServicioCorreo_Prueba : ConfiguradorPruebaParaServicio
     {
-        private Mock<IContextoOperacion> mockContextoProvedor;
-        private ManejadorPrincipal manejador;
         private const string CORREO_VALIDO = "zs22013698@estudiantes.uv.mx";
         private const string CORREO_INVALIDO = "zs220136estudiantes.uv.";
         private const string CODIGO_INVALIDO = "CodigoInvalido";
 
         [TestInitialize]
-        public void PruebaConfiguracion()
+        protected override void ConfigurarManejador()
         {
-            mockContextoProvedor = new Mock<IContextoOperacion>();
-            manejador = new ManejadorPrincipal(mockContextoProvedor.Object);
-        }
+            base.ConfigurarManejador();
+            imitarVetoDAO.Setup(dao => dao.ExisteTablaVetoPorIdCuenta(It.IsAny<int>())).Returns(false);
+            imitarVetoDAO.Setup(dao => dao.CrearRegistroVeto(It.IsAny<int>(), It.IsAny<DateTime?>(), It.IsAny<bool>())).Returns(true);
+            imitarVetoDAO.Setup(dao => dao.VerificarVetoPorIdCuenta(It.IsAny<int>())).Returns(true);
+            imitarUsuarioDAO.Setup(dao => dao.ObtenerIdPorNombre(It.IsAny<string>())).Returns(1);
 
+        }
+        [TestCleanup]
+        protected override void LimpiadorTodo()
+        {
+            base.LimpiadorTodo();
+        }
         #region VerificarCorreo
         [TestMethod]
         public async void VerificarCorreo_CorreoValido_RetornaTrue()

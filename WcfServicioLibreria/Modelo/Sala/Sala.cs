@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DAOLibreria.DAO;
+using DAOLibreria.Interfaces;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -35,6 +37,7 @@ namespace WcfServicioLibreria.Modelo
         public EventHandler salaVaciaManejadorEvento;
         private readonly SemaphoreSlim semaphoreLeerFotoInvitado = new SemaphoreSlim(1, 1);
         private static readonly SemaphoreSlim semaphoreRemoverJugador = new SemaphoreSlim(1, 1);
+        private IUsuarioDAO usuarioDAO;
 
         private IManejadorVeto manejadorVeto;
         #endregion Campos
@@ -45,11 +48,12 @@ namespace WcfServicioLibreria.Modelo
         #endregion Propiedades
 
         #region Contructores
-        public Sala(string _idCodigoSala, string nombreUsuario)
+        public Sala(string _idCodigoSala, string nombreUsuario, IUsuarioDAO _usuarioDAO)
         {
             this.IdCodigoSala = _idCodigoSala;
             this.Anfitrion = nombreUsuario;
             manejadorVeto = new ManejadorDeVetos();
+            usuarioDAO = _usuarioDAO;
         }
 
         #endregion Contructores
@@ -190,7 +194,7 @@ namespace WcfServicioLibreria.Modelo
 
         private async Task<DAOLibreria.ModeloBD.Usuario> ObtenerInformacionUsuarioAsync(string nombreJugador)
         {
-            DAOLibreria.ModeloBD.Usuario informacionUsuario = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
+            DAOLibreria.ModeloBD.Usuario informacionUsuario = usuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
             if (informacionUsuario == null)
             {
                 await semaphoreLeerFotoInvitado.WaitAsync();

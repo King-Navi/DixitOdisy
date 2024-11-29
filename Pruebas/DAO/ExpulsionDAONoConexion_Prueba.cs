@@ -7,6 +7,8 @@ namespace Pruebas.DAO
     [TestClass]
     public class ExpulsionDAONoConexion_Prueba : ConfiguracionPruebaBDInvalida
     {
+        private ExpulsionDAO expulsionDAO = new ExpulsionDAO();
+
         [TestMethod]
         public void CrearRegistroExpulsion_CuandoContextoFalla_DeberiaRetornarFalse()
         {
@@ -18,7 +20,7 @@ namespace Pruebas.DAO
 
 
             // Act
-            bool resultado = ExpulsionDAO.CrearRegistroExpulsion(idUsuarioCuenta, motivo, esHacker);
+            bool resultado = expulsionDAO.CrearRegistroExpulsion(idUsuarioCuenta, motivo, esHacker);
 
             // Assert
             Assert.IsFalse(resultado, "El método debería devolver false cuando ocurre un fallo en el contexto.");
@@ -33,7 +35,7 @@ namespace Pruebas.DAO
             int idUsuarioCuenta = 3;
 
             // Act
-            bool resultado = ExpulsionDAO.TieneMasDeDiezExpulsionesSinPenalizar(idUsuarioCuenta);
+            bool resultado = expulsionDAO.TieneMasDeDiezExpulsionesSinPenalizar(idUsuarioCuenta);
 
             // Assert
             Assert.IsFalse(resultado, "El método debería retornar false cuando el usuario no tiene registros de expulsión.");
@@ -46,7 +48,7 @@ namespace Pruebas.DAO
             int idUsuarioCuenta = 1;
 
             // Act
-            bool resultado = ExpulsionDAO.CambiarExpulsionesAFueronPenalizadas(idUsuarioCuenta);
+            bool resultado = expulsionDAO.CambiarExpulsionesAFueronPenalizadas(idUsuarioCuenta);
 
             // Assert
             Assert.IsFalse(resultado, "El método debería retornar false cuando el usuario no tiene registros de expulsión.");

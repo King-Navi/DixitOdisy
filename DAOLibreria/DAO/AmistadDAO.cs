@@ -1,13 +1,14 @@
-﻿using DAOLibreria.ModeloBD;
+﻿using DAOLibreria.Interfaces;
+using DAOLibreria.ModeloBD;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace DAOLibreria.DAO
 {
-    public class AmistadDAO
+    public class AmistadDAO : IAmistadDAO
     {
-        public static List<Usuario> RecuperarListaAmigos(int idUsuario)
+        public List<Usuario> RecuperarListaAmigos(int idUsuario)
         {
             List<Usuario> resultado = null;
             try
@@ -37,7 +38,7 @@ namespace DAOLibreria.DAO
             return resultado;
         }
 
-        public static bool SonAmigos(int idUsuarioRemitente, int idUsuarioDestinatario)
+        public bool SonAmigos(int idUsuarioRemitente, int idUsuarioDestinatario)
         {
             try
             {
@@ -54,7 +55,7 @@ namespace DAOLibreria.DAO
             }
         }
 
-        public static bool EliminarAmigo(int idUsuarioMayor, int idUsuarioMenor)
+        public bool EliminarAmigo(int idUsuarioMayor, int idUsuarioMenor)
         {
             try
             {

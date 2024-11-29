@@ -16,14 +16,14 @@ namespace Pruebas.DAO
     {
         private const int ID_REMITENTE = 1;
         private const int ID_DESTINATARIO = 2;
-
+        private PeticionAmistadDAO peticionAmistadDAO = new PeticionAmistadDAO();
 
         [TestMethod]
         public void GuardarSolicitudAmistad_CuandoNoHayConexion_DeberiaRetornarFalse()
         {
             // Arrange
             // Act
-            bool resultado = PeticionAmistadDAO.GuardarSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
+            bool resultado = peticionAmistadDAO.GuardarSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
 
             // Assert
             Assert.IsFalse(resultado, "El método debería retornar false cuando no hay conexión a la base de datos.");
@@ -36,7 +36,7 @@ namespace Pruebas.DAO
             // Arrange
 
             // Act
-            bool resultado = PeticionAmistadDAO.ExisteSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
+            bool resultado = peticionAmistadDAO.ExisteSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
 
             // Assert
             Assert.IsTrue(resultado, "El método debería retornar true cuando no hay conexión a la base de datos debido a la captura de excepciones.");
@@ -48,7 +48,7 @@ namespace Pruebas.DAO
             // Arrange
 
             // Act
-            var resultado = PeticionAmistadDAO.ObtenerSolicitudesAmistad(ID_REMITENTE);
+            var resultado = peticionAmistadDAO.ObtenerSolicitudesAmistad(ID_REMITENTE);
 
             // Assert
             Assert.IsNotNull(resultado, "El método debería retornar una lista, aunque sea vacía.");
@@ -61,7 +61,7 @@ namespace Pruebas.DAO
             // Arrange
 
             // Act
-            bool resultado = PeticionAmistadDAO.AceptarSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
+            bool resultado = peticionAmistadDAO.AceptarSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
 
             // Assert
             Assert.IsFalse(resultado, "El método debería retornar false cuando no hay conexión a la base de datos.");
@@ -73,7 +73,7 @@ namespace Pruebas.DAO
             // Arrange
 
             // Act
-            bool resultado = PeticionAmistadDAO.RechazarSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
+            bool resultado = peticionAmistadDAO.RechazarSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
 
             // Assert
             Assert.IsFalse(resultado, "El método debería retornar false cuando no hay conexión a la base de datos.");

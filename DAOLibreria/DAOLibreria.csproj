@@ -88,11 +88,19 @@
     <Compile Include="DAO\UsuarioDAO.cs" />
     <Compile Include="DAO\VetoDAO.cs" />
     <Compile Include="EliminadorCadena.cs" />
+    <Compile Include="EvaluacionesParametros\Evaluador.cs" />
     <Compile Include="Excepciones\ActividadSospechosaExcepcion.cs" />
     <Compile Include="Excepciones\GamertagDuplicadoExcepcion.cs" />
     <Compile Include="Excepciones\PropiedadesNulasExcepcion.cs" />
     <Compile Include="Excepciones\VetoEnProgresoExcepcion.cs" />
     <Compile Include="Excepciones\VetoPermanenteExcepcion.cs" />
+    <Compile Include="Interfaces\IAmistadDAO.cs" />
+    <Compile Include="Interfaces\IEstadisticasDAO.cs" />
+    <Compile Include="Interfaces\IExpulsionDAO.cs" />
+    <Compile Include="Interfaces\IPeticionAmistadDAO.cs" />
+    <Compile Include="Interfaces\IUsuarioCuentaDAO.cs" />
+    <Compile Include="Interfaces\IUsuarioDAO.cs" />
+    <Compile Include="Interfaces\IVetoDAO.cs" />
     <Compile Include="ModeloBD\Amigo.cs">
       <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>

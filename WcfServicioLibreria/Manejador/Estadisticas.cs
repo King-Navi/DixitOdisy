@@ -8,10 +8,10 @@ namespace WcfServicioLibreria.Manejador
         public Estadistica ObtenerEstadisitca(int idUsuario)
         {
             Estadistica estadistica = new Estadistica();
-            int idEstadisica = DAOLibreria.DAO.EstadisticasDAO.ObtenerIdEstadisticaConIdUsuario(idUsuario);
+            int idEstadisica = estadisticasDAO.ObtenerIdEstadisticaConIdUsuario(idUsuario);
             if (idEstadisica > 0)
             {
-                var estadisticaModeloBD = DAOLibreria.DAO.EstadisticasDAO.RecuperarEstadisticas(idEstadisica);
+                var estadisticaModeloBD = estadisticasDAO.RecuperarEstadisticas(idEstadisica);
                 estadistica = new Estadistica(estadisticaModeloBD);
             }
             return estadistica;

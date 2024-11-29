@@ -30,7 +30,7 @@ namespace WcfServicioLibreria.Manejador
                         gamertag = usuarioNuevo.Nombre,
                         fotoPerfil = Utilidad.StreamABytes(usuarioNuevo.FotoUsuario),
                     };
-                    resultado = DAOLibreria.DAO.UsuarioDAO.RegistrarNuevoUsuario(usuarioModeloBaseDatos, usuarioCuenta);
+                    resultado = usuarioDAO.RegistrarNuevoUsuario(usuarioModeloBaseDatos, usuarioCuenta);
                 }
             }
             catch (GamertagDuplicadoException)

@@ -7,14 +7,15 @@ namespace Pruebas.DAO.Utilidades
 {
     public abstract class ConfiguracionPruebaBD
     {
+        public const int ID_INVALIDO = -1;
+        public const int ID_INEXISTENTE = 9999;
+        public const int ID_VALIDO = 1;
+
         [TestInitialize]
         public virtual void ConfigurarPruebas()
         {
-            Dictionary<string, object> resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-");
-            resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje);
-            Console.WriteLine((string)mensaje);
-            resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
-            if ((bool)fueExitoso)
+            var resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-");
+            if (!resultado)
             {
                 Assert.Fail("La BD no está configurada.");
             }

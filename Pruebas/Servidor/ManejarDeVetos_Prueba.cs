@@ -1,5 +1,9 @@
 ﻿using DAOLibreria;
+using DAOLibreria.DAO;
+using DAOLibreria.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using Pruebas.Servidor.Utilidades;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,30 +12,34 @@ using WcfServicioLibreria.Modelo.Vetos;
 namespace Pruebas.Servidor
 {
     [TestClass]
-    public class ManejarDeVetos_Prueba
+    public class ManejarDeVetos_Prueba : ConfiguradorPruebaParaServicio
     {
         private const string NOMBRE_PROHIBIDO = "guest";
         private const string NOMBRE_PROHIBIDO_MAYUSCULAS = "GUest";
 
         [TestInitialize]
-        public void PruebaConfiguracion()
+        protected override void ConfigurarManejador()
         {
-            Dictionary<string, object> resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-");
-            resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje);
-            Console.WriteLine((string)mensaje);
-            resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
-            if ((bool)fueExitoso)
-            {
-                Assert.Fail("La BD no está configurada.");
-            }
-
+            base.ConfigurarManejador();
+            imitarVetoDAO.Setup(dao => dao.ExisteTablaVetoPorIdCuenta(It.IsAny<int>())).Returns(false);
+            imitarVetoDAO.Setup(dao => dao.CrearRegistroVeto(It.IsAny<int>(), It.IsAny<DateTime?>(), It.IsAny<bool>())).Returns(true);
+            imitarVetoDAO.Setup(dao => dao.VerificarVetoPorIdCuenta(It.IsAny<int>())).Returns(true);
+            imitarUsuarioDAO.Setup(dao => dao.ObtenerIdPorNombre(It.IsAny<string>())).Returns(1);
         }
+        [TestCleanup]
+        protected override void LimpiadorTodo()
+        {
+            base.LimpiadorTodo();
+        }
+
+
 
         [TestMethod]
         public async Task VetaJugador_CuandoNombreProhibido_DeberiaRetornarFalse()
         {
             // Arrange
-            var manejadorDeVetos = new ManejadorDeVetos();
+
+            var manejadorDeVetos = new ManejadorDeVetos(imitarVetoDAO.Object, imitarUsuarioDAO.Object,imitarUsuarioCuentaDAO.Object ,imitarExpulsionDAO.Object);
             string nombreJugador = "Player" + NOMBRE_PROHIBIDO;
             string nombreJugadorMayusculasProhido =  NOMBRE_PROHIBIDO_MAYUSCULAS + "Player" ;
 
@@ -48,7 +56,7 @@ namespace Pruebas.Servidor
         public async Task VetaJugador_CuandoJugadorNoExiste_DeberiaRetornarFalse()
         {
             // Arrange
-            var manejadorDeVetos = new ManejadorDeVetos();
+            var manejadorDeVetos = new ManejadorDeVetos(imitarVetoDAO.Object, imitarUsuarioDAO.Object, imitarUsuarioCuentaDAO.Object, imitarExpulsionDAO.Object);
             string nombreJugador = "jugadorNoExiste";
 
             // Act
@@ -61,8 +69,7 @@ namespace Pruebas.Servidor
         public async Task VetaJugador_CuandoJugadorEsValido_DeberiaRetornarTrue()
         {
             // Arrange
-            var manejadorDeVetos = new ManejadorDeVetos();
-            //Pre condcion: debe ser un usaurio valido
+            var manejadorDeVetos = new ManejadorDeVetos(imitarVetoDAO.Object, imitarUsuarioDAO.Object, imitarUsuarioCuentaDAO.Object, imitarExpulsionDAO.Object);
             string nombreJugador = "user2";
             // Act
             bool resultado = await manejadorDeVetos.VetaJugadorAsync(nombreJugador);
@@ -75,7 +82,7 @@ namespace Pruebas.Servidor
         public async Task RegistrarExpulsionJugador_CuandoNombreProhibido_DeberiaRetornarFalse()
         {
             // Arrange
-            var manejadorDeVetos = new ManejadorDeVetos();
+            var manejadorDeVetos = new ManejadorDeVetos(imitarVetoDAO.Object, imitarUsuarioDAO.Object, imitarUsuarioCuentaDAO.Object, imitarExpulsionDAO.Object);
             string nombreJugador = "guestPlayer";
             string motivo = "Conducta inapropiada";
             bool esHacker = false;
@@ -90,7 +97,7 @@ namespace Pruebas.Servidor
         public async Task RegistrarExpulsionJugador_CuandoJugadorNoExiste_DeberiaRetornarFalse()
         {
             // Arrange
-            var manejadorDeVetos = new ManejadorDeVetos();
+            var manejadorDeVetos = new ManejadorDeVetos(imitarVetoDAO.Object, imitarUsuarioDAO.Object, imitarUsuarioCuentaDAO.Object, imitarExpulsionDAO.Object);
             //Pre condcion: NO debe ser un usaurio valido
             string nombreJugador = "JugadorInexistente";
             string motivo = "Hackeo detectado";
@@ -107,8 +114,8 @@ namespace Pruebas.Servidor
         public async Task RegistrarExpulsionJugador_CuandoDatosValidos_DeberiaRetornarTrue()
         {
             // Arrange
-            var manejadorDeVetos = new ManejadorDeVetos();
-            //Pre condcion: debe ser un usaurio valido
+            var manejadorDeVetos = new ManejadorDeVetos(imitarVetoDAO.Object, imitarUsuarioDAO.Object, imitarUsuarioCuentaDAO.Object, imitarExpulsionDAO.Object);
+
             string nombreJugador = "user2";
             string motivo = "Uso de software no permitido";
             bool esHacker = true;
@@ -119,5 +126,7 @@ namespace Pruebas.Servidor
             // Assert
             Assert.IsTrue(resultado, "El método debería retornar true cuando los datos son válidos y se registra una expulsión correctamente.");
         }
+
+        
     }
 }

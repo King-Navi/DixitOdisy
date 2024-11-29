@@ -1,5 +1,7 @@
 ﻿using ChatGPTLibreria;
 using DAOLibreria;
+using DAOLibreria.DAO;
+using DAOLibreria.Interfaces;
 using System;
 using System.Collections.Concurrent;
 using System.ServiceModel;
@@ -48,23 +50,47 @@ namespace WcfServicioLibreria.Manejador
 
         #endregion
 
+        #region DAO
+        private readonly IVetoDAO vetoDAO;
+        private readonly IUsuarioDAO usuarioDAO;
+        private readonly IUsuarioCuentaDAO usuarioCuentaDAO;
+        private readonly IPeticionAmistadDAO peticionAmistadDAO;
+        private readonly IExpulsionDAO expulsionDAO;
+        private readonly IEstadisticasDAO estadisticasDAO;
+        private readonly IAmistadDAO amistadDAO;
+        #endregion DAO
+
         public ManejadorPrincipal(IContextoOperacion _contextoOperacion, IEscribirDisco _escribirDisco)
         {
             this.contextoOperacion = _contextoOperacion;
             Escritor = _escribirDisco;
 
         }
-        public ManejadorPrincipal(IContextoOperacion _contextoOperacion)
-        {
-            this.contextoOperacion = _contextoOperacion;
-            Escritor = new EscritorDisco();
 
+        public ManejadorPrincipal(IContextoOperacion contextoOperacion, IVetoDAO vetoDAO, IUsuarioDAO usuarioDAO, IUsuarioCuentaDAO usuarioCuentaDAO, 
+            IPeticionAmistadDAO peticionAmistadDAO, IExpulsionDAO expulsionDAO, IEstadisticasDAO estadisticasDAO, IAmistadDAO amistadDAO)
+        {
+            this.contextoOperacion = contextoOperacion;
+            this.vetoDAO = vetoDAO;
+            this.usuarioDAO = usuarioDAO;
+            this.usuarioCuentaDAO = usuarioCuentaDAO;
+            this.peticionAmistadDAO = peticionAmistadDAO;
+            this.expulsionDAO = expulsionDAO;
+            this.estadisticasDAO = estadisticasDAO;
+            this.amistadDAO = amistadDAO;
         }
+
         public ManejadorPrincipal()
         {
             contextoOperacion = new ContextoOperacion();
             Escritor = new EscritorDisco();
-
+            vetoDAO = new VetoDAO();
+            usuarioDAO = new UsuarioDAO();
+            usuarioCuentaDAO = new UsuarioCuentaDAO();
+            peticionAmistadDAO = new PeticionAmistadDAO();
+            expulsionDAO = new ExpulsionDAO();
+            estadisticasDAO = new EstadisticasDAO();
+            amistadDAO = new AmistadDAO();
         }
         public void CerrarAplicacion()
         {

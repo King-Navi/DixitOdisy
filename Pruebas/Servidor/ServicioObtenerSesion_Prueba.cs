@@ -11,22 +11,26 @@ namespace Pruebas.Servidor
 {
 
     [TestClass]
-    public class ServicioUsuarioSesion
+    public class ServicioUsuarioSesion_Prueba : ConfiguradorPruebaParaServicio
     {
-        private Mock<IContextoOperacion> mockContextoProvedor;
-        private ManejadorPrincipal manejador;
 
         [TestInitialize]
-        public void PruebaConfiguracion()
+        protected override void ConfigurarManejador()
         {
-            mockContextoProvedor = new Mock<IContextoOperacion>();
-            manejador = new ManejadorPrincipal(mockContextoProvedor.Object);
+            base.ConfigurarManejador();
         }
+
+        [TestCleanup]
+        protected override void LimpiadorTodo()
+        {
+            base.LimpiadorTodo();
+        }
+
+        #region ObtenerSessionJugadorCallback
         [TestMethod]
         public void ObtenerSessionJugadorCallback_SeAbreElCanal_DeberiaRetornarTrue()
         {
             // Arrange
-            //Precondicion: el Usuario deberia estar en BD
             var implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
 
             mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IUsuarioSesionCallback>())
@@ -45,6 +49,32 @@ namespace Pruebas.Servidor
             implementacionCallback.Close();
 
         }
+
+        [TestMethod]
+        public void ObtenerSessionJugadorCallback_SeCierraElCanal_DeberiaRetornarTrue()
+        {
+            // Arrange
+            var implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
+
+            mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IUsuarioSesionCallback>())
+                               .Returns(implementacionCallback);
+
+            var usuario = new Usuario { IdUsuario = 1, Nombre = "PruebaUsuario" };
+
+            // Act
+            manejador.ObtenerSesionJugador(usuario);
+
+            // Assert
+            Assert.IsTrue(implementacionCallback.SesionAbierta, "El callback debería haber sido llamado y la sesión debería estar activa.");
+            Assert.AreEqual(CommunicationState.Opened, ((ICommunicationObject)implementacionCallback).State, "El canal debería estar en estado abierto.");
+            Assert.IsTrue(manejador.YaIniciadoSesion(usuario.Nombre), "El canal debería estar en estado abierto.");
+
+            implementacionCallback.Close();
+            var resultado = manejador.YaIniciadoSesion("PruebaUsuario");
+            Assert.IsFalse(resultado, "No deberia estar inciado");
+
+        }
+
         [TestMethod]
         public void ObtenerSessionJugadorCallback_YaHaIniciadoSesion_DeberiaRetornarUsuarioFalla()
         {
@@ -114,7 +144,9 @@ namespace Pruebas.Servidor
             }
 
         }
-        
+        #endregion ObtenerSessionJugadorCallback
+
+
     }
 
 }

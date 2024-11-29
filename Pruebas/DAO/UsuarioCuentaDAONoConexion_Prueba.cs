@@ -7,6 +7,7 @@ namespace Pruebas.DAO
     [TestClass]
     public class UsuarioCuentaDAONoConexion_Prueba : ConfiguracionPruebaBDInvalida
     {
+        private UsuarioCuentaDAO usuarioCuentaDAO = new UsuarioCuentaDAO();
         [TestMethod]
         public void ObtenerIdUsuarioCuentaPorIdUsuario_BaseDatosFalla_DeberiaRetornarMenosUno()
         {
@@ -18,7 +19,7 @@ namespace Pruebas.DAO
             int idUsuarioCuentaEsperado = -1;
 
             // Act
-            var resultado = UsuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(idUsuario);
+            var resultado = usuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(idUsuario);
 
             // Assert
             Assert.IsNotNull(resultado, "El método debería retornar un valor no nulo.");

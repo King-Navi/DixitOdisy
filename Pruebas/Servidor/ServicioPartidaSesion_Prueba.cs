@@ -11,35 +11,28 @@ using WcfServicioLibreria.Utilidades;
 using WcfServicioLibreria.Enumerador;
 using DAOLibreria;
 using System.IO;
+using Pruebas.Servidor.Utilidades;
 
 namespace Pruebas.Servidor
 {
-    /// <summary>
-    /// Prueba de <see cref="WcfServicioLibreria.Contratos.IServicioPartidaSesion" />
-    /// que a su vez llama a  <see cref="IServicioPartidaSesion"/>
-    /// </summary>
     [TestClass]
-    public class ServicioPartidaSesion_Prueba
+    public class ServicioPartidaSesion_Prueba : ConfiguradorPruebaParaServicio
     {
-        private Mock<IContextoOperacion> mockContextoProvedor;
-        private ManejadorPrincipal manejador;
         private ConfiguracionPartida configuracionGenerica;
-
         [TestInitialize]
-        public void PruebaConfiguracion()
+        protected override void ConfigurarManejador()
         {
-            Dictionary<string, object> resultado = ConfiguradorConexion.ConfigurarCadenaConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-");
-            resultado.TryGetValue(Llaves.LLAVE_MENSAJE, out object mensaje);
-            Console.WriteLine((string)mensaje);
-            resultado.TryGetValue(Llaves.LLAVE_ERROR, out object fueExitoso);
-            if ((bool)fueExitoso)
-            {
-                Assert.Fail("La BD no está configurada.");
-            }
-            mockContextoProvedor = new Mock<IContextoOperacion>();
-            manejador = new ManejadorPrincipal(mockContextoProvedor.Object);
-            configuracionGenerica = new ConfiguracionPartida(TematicaPartida.Mixta, CondicionVictoriaPartida.PorCantidadRondas, 0);
+            base.ConfigurarManejador();
+            imitarVetoDAO.Setup(dao => dao.ExisteTablaVetoPorIdCuenta(It.IsAny<int>())).Returns(false);
+            imitarVetoDAO.Setup(dao => dao.CrearRegistroVeto(It.IsAny<int>(), It.IsAny<DateTime?>(), It.IsAny<bool>())).Returns(true);
+            imitarVetoDAO.Setup(dao => dao.VerificarVetoPorIdCuenta(It.IsAny<int>())).Returns(true);
+            imitarUsuarioDAO.Setup(dao => dao.ObtenerIdPorNombre(It.IsAny<string>())).Returns(1);
 
+        }
+        [TestCleanup]
+        protected override void LimpiadorTodo()
+        {
+            base.LimpiadorTodo();
         }
         #region UnirsePartida
         [TestMethod]

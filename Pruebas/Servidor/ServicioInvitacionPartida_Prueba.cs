@@ -4,19 +4,28 @@ using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Manejador;
 using WcfServicioLibreria.Utilidades;
+using Pruebas.Servidor.Utilidades;
+using System;
 
 namespace Pruebas.Servidor
 {
     [TestClass]
-    public class ServicioInvitacionPartidaPruebas
+    public class ServicioInvitacionPartidaPruebas : ConfiguradorPruebaParaServicio
     {
-        private Mock<IContextoOperacion> mockContextoOperacion;
-        private ManejadorPrincipal manejador;
         [TestInitialize]
-        public void PruebaConfiguracion()
+        protected override void ConfigurarManejador()
         {
-            mockContextoOperacion = new Mock<IContextoOperacion>();
-            manejador = new ManejadorPrincipal(mockContextoOperacion.Object);
+            base.ConfigurarManejador();
+            imitarVetoDAO.Setup(dao => dao.ExisteTablaVetoPorIdCuenta(It.IsAny<int>())).Returns(false);
+            imitarVetoDAO.Setup(dao => dao.CrearRegistroVeto(It.IsAny<int>(), It.IsAny<DateTime?>(), It.IsAny<bool>())).Returns(true);
+            imitarVetoDAO.Setup(dao => dao.VerificarVetoPorIdCuenta(It.IsAny<int>())).Returns(true);
+            imitarUsuarioDAO.Setup(dao => dao.ObtenerIdPorNombre(It.IsAny<string>())).Returns(1);
+
+        }
+        [TestCleanup]
+        protected override void LimpiadorTodo()
+        {
+            base.LimpiadorTodo();
         }
 
         //[TestMethod]

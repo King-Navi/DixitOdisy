@@ -3,21 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DAOLibreria.Excepciones;
+using DAOLibreria.Interfaces;
 
 namespace DAOLibreria.DAO
 {
-    public static class UsuarioDAO
+    public class UsuarioDAO : IUsuarioDAO
     {
         private const string PALABRA_PROHIBIDA_GUEST = "guest";
-        /// <summary>
-        /// Registra un nuevo usuario en el sistema junto con su cuenta asociada y estadísticas iniciales.
-        /// Asegura la coherencia entre el gamertag del usuario y el de la cuenta.
-        /// </summary>
-        /// <param name="_usuario">El objeto Usuario que contiene la información del usuario, incluido el gamertag y foto de perfil.</param>
-        /// <param name="_usuarioCuenta">El objeto UsuarioCuenta que contiene detalles de la cuenta del usuario como el gamertag, el hash de la contraseña y el correo electrónico.</param>
-        /// <exception cref="VerificarNombreUnico(string)"></exception>
-        /// <returns></returns>
-        public static bool RegistrarNuevoUsuario(Usuario _usuario, UsuarioCuenta _usuarioCuenta)
+        
+        public bool RegistrarNuevoUsuario(Usuario _usuario, UsuarioCuenta _usuarioCuenta)
         {
             bool resultado = false;
             if (_usuario == null || _usuarioCuenta == null)
@@ -84,7 +78,7 @@ namespace DAOLibreria.DAO
             }
             return false;
         }
-        public static bool EditarUsuario(UsuarioPerfilDTO usuarioEditado)
+        public bool EditarUsuario(UsuarioPerfilDTO usuarioEditado)
         {
             bool resultado = false;
             if (usuarioEditado == null
@@ -144,7 +138,7 @@ namespace DAOLibreria.DAO
             }
             return false;
         }
-        public static UsuarioPerfilDTO ValidarCredenciales(string gamertag, string contrasenia)
+        public UsuarioPerfilDTO ValidarCredenciales(string gamertag, string contrasenia)
         {
             UsuarioCuenta datosUsuarioCuenta = null;
             Usuario usuario = null;
@@ -175,7 +169,7 @@ namespace DAOLibreria.DAO
 
             return resultado;
         }
-        public static Usuario ObtenerUsuarioPorNombre(string gamertag)
+        public Usuario ObtenerUsuarioPorNombre(string gamertag)
         {
             Usuario usuario = null;
             try
@@ -193,7 +187,7 @@ namespace DAOLibreria.DAO
             return usuario;
         }
 
-        public static Usuario ObtenerUsuarioPorId(int idUsuario)
+        public Usuario ObtenerUsuarioPorId(int idUsuario)
         {
             Usuario usuario = null;
             try
@@ -210,7 +204,7 @@ namespace DAOLibreria.DAO
             return usuario;
         }
 
-        public static int ObtenerIdPorNombre(string gamertag)
+        public int ObtenerIdPorNombre(string gamertag)
         {
             try
             {
@@ -230,7 +224,7 @@ namespace DAOLibreria.DAO
             return 0;
         }
 
-        public static List<Usuario> ObtenerListaUsuariosPorNombres(List<string> nombres)
+        public List<Usuario> ObtenerListaUsuariosPorNombres(List<string> nombres)
         {
             List<Usuario> usuarios = new List<Usuario>();
 
@@ -248,7 +242,7 @@ namespace DAOLibreria.DAO
             }
             return usuarios;
         }
-        public static bool VerificarNombreUnico(string gamertag)
+        public bool VerificarNombreUnico(string gamertag)
         {
             try
             {
@@ -272,71 +266,9 @@ namespace DAOLibreria.DAO
                 return false; 
             }
             return true;
-        }
+        } 
 
-        public static bool ExisteUnicoUsuarioConGamertagYCorreo(string gamertag, string correo)
-        {
-            try
-            {
-                using (var context = new DescribeloEntities())
-                {
-                    var cantidadUsuarios = context.UsuarioCuenta
-                        .Where(u => u.gamertag == gamertag && u.correo == correo)
-                        .Count();
-
-                    return (cantidadUsuarios >= 1);
-                }
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        
-        public static bool EditarContraseniaPorGamertag(string gamertag, string nuevoHashContrasenia)
-        {
-            bool resultado = false;
-            if (string.IsNullOrEmpty(gamertag) || string.IsNullOrEmpty(nuevoHashContrasenia))
-            {
-                return resultado;
-            }
-
-            try
-            {
-                using (var context = new DescribeloEntities())
-                {
-                    using (var transaction = context.Database.BeginTransaction())
-                    {
-                        try
-                        {
-                            var usuarioCuenta = context.UsuarioCuenta.SingleOrDefault(cuenta => cuenta.gamertag == gamertag);
-                            if (usuarioCuenta == null)
-                            {
-                                return false; 
-                            }
-
-                            usuarioCuenta.hashContrasenia = nuevoHashContrasenia.ToUpper();
-                            context.SaveChanges();
-
-                            transaction.Commit();
-                            resultado = true;
-                        }
-                        catch (Exception)
-                        {
-                            transaction.Rollback();
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-            }
-
-            return resultado;
-        }
-
-        public static bool ColocarUltimaConexion(int idUsuario)
+        public bool ColocarUltimaConexion(int idUsuario)
         {
             bool resultado = false;
             try

@@ -1,42 +1,56 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using DAOLibreria.ModeloBD;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Pruebas.DAO.Utilidades;
+using Pruebas.Servidor.Utilidades;
 using WcfServicioLibreria.Manejador;
 using WcfServicioLibreria.Utilidades;
 
 namespace Pruebas.Servidor
 {
     [TestClass]
-    public class ServicioIniciarSesion_Prueba : ConfiguracionPruebaBD
+    public class ServicioIniciarSesion_Prueba : ConfiguradorPruebaParaServicio
     {
-        private Mock<IContextoOperacion> mockContextoProvedor;
-        private ManejadorPrincipal manejador;
-
         [TestInitialize]
-        public void PruebaConfiguracion()
+        protected override void ConfigurarManejador()
         {
-            mockContextoProvedor = new Mock<IContextoOperacion>();
-            manejador = new ManejadorPrincipal(mockContextoProvedor.Object);
+            base.ConfigurarManejador();
+        }
+        [TestCleanup]
+
+        protected override void LimpiadorTodo()
+        {
+            base.LimpiadorTodo();
         }
 
+        #region ValidarCredenciales
         [TestMethod]
         public void ValidarCredenciales_CredencialesCorrectas_DeberiaRetornarUsuario()
         {
             // Arrange
-            //Pre condicion, el usuario debe exisitir en BD
-            string gamertagValido = "elrevo";
-            string contraseniaValida = "83DB3ABE8D166668D1B09657EB82F4E17361DE34BD389BA7B0566811DAA68703";
-            var usuarioEsperado = new DAOLibreria.ModeloBD.UsuarioPerfilDTO
-            {
-                NombreUsuario = gamertagValido,
-            };
-
+            imitarUsuarioDAO
+            .Setup(dao => dao.ObtenerUsuarioPorNombre(It.IsAny<string>()))
+            .Returns((string gamertag) =>
+                {
+                    // Simula el comportamiento del método
+                    if (gamertag == "UsuarioExistente")
+                    {
+                        return new Usuario
+                        {
+                            idUsuario = 1,
+                            gamertag = "UsuarioExistente",
+                        };
+                    }
+                    return null; // Devuelve null si no encuentra el usuario
+                });
+            var nombreValido = "UsuarioExistente";
+            var contraseniaValida = "contraseniaValida";
             // Act
-            var resultado = manejador.ValidarCredenciales(gamertagValido, contraseniaValida);
+            var resultado = manejador.ValidarCredenciales(nombreValido, contraseniaValida);
 
             // Assert
             Assert.IsNotNull(resultado, "El método debería devolver un usuario válido.");
-            Assert.AreEqual(usuarioEsperado.NombreUsuario, resultado.Nombre, "El nombre del usuario debería coincidir.");
+            Assert.AreEqual(nombreValido, resultado.Nombre, "El nombre del usuario debería coincidir.");
         }
         [TestMethod]
         public void ValidarCredenciales_CredencialesIncorrectas_DeberiaRetornarNulo()
@@ -64,5 +78,8 @@ namespace Pruebas.Servidor
             // Assert
             Assert.IsNull(resultado, "El método debería devolver un nulo");
         }
+
+        
+        #endregion
     }
 }

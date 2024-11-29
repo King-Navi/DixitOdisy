@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAOLibreria.DAO;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -604,17 +605,17 @@ namespace WcfServicioLibreria.Modelo
                 var listaNoInvitado = jugadoresInformacion.Values
                     .Where(jugador => jugador.idUsuario > ID_INVALIDO)
                     .Select(jugador =>
-                    {
-                        try
                         {
-                            int idEstadistica = DAOLibreria.DAO.EstadisticasDAO.ObtenerIdEstadisticaConIdUsuario(jugador.idUsuario);
-                            return idEstadistica != 0 ? new Tuple<string, int>(jugador.gamertag, idEstadistica) : null;
-                        }
-                        catch (Exception)
-                        {
-                            return null;
-                        }
-                    })
+                            try
+                            {
+                                int idEstadistica = estadisticasDAO.ObtenerIdEstadisticaConIdUsuario(jugador.idUsuario);
+                                return idEstadistica != 0 ? new Tuple<string, int>(jugador.gamertag, idEstadistica) : null;
+                            }
+                            catch (Exception)
+                            {
+                                return null;
+                            }
+                        })
                     .Where(tuple => tuple != null)
                     .ToList();
 

@@ -1,4 +1,5 @@
 ﻿using DAOLibreria.Excepciones;
+using DAOLibreria.Interfaces;
 using DAOLibreria.ModeloBD;
 using System;
 using System.Linq;
@@ -6,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DAOLibreria.DAO
 {
-    public class EstadisticasDAO
+    public class EstadisticasDAO : IEstadisticasDAO
     {
-        public static async Task<bool> AgregarEstadiscaPartidaAsync(int idEstadisticas, EstadisticasAcciones accion, int victoria)
+        public async Task<bool> AgregarEstadiscaPartidaAsync(int idEstadisticas, EstadisticasAcciones accion, int victoria)
         {
             if (victoria > 1)
             {
@@ -45,7 +46,7 @@ namespace DAOLibreria.DAO
             return resultado;
         }
 
-        public static Estadisticas RecuperarEstadisticas(int idEstadisticas)
+        public Estadisticas RecuperarEstadisticas(int idEstadisticas)
         {
             try
             {
@@ -62,7 +63,7 @@ namespace DAOLibreria.DAO
             return null;
         }
 
-        private static Action<Estadisticas> ObtenerAccion(EstadisticasAcciones accion)
+        private Action<Estadisticas> ObtenerAccion(EstadisticasAcciones accion)
         {
             switch (accion)
             {
@@ -81,7 +82,7 @@ namespace DAOLibreria.DAO
             }
         }
 
-        public static int ObtenerIdEstadisticaConIdUsuario(int idUsuario)
+        public int ObtenerIdEstadisticaConIdUsuario(int idUsuario)
         {
             try
             {

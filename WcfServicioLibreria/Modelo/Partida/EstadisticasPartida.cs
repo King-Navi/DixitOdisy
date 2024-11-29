@@ -1,5 +1,6 @@
 ﻿using DAOLibreria.DAO;
 using DAOLibreria.Excepciones;
+using DAOLibreria.Interfaces;
 using DAOLibreria.ModeloBD;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,8 @@ namespace WcfServicioLibreria.Modelo
         public JugadorEstadisticas SegundoLugar { get; set; }
         [DataMember]
         public JugadorEstadisticas TercerLugar { get; set; }
-        private ManejadorDeVetos manejadorVetos { get; set; } = new ManejadorDeVetos();
+        private ManejadorDeVetos ManejadorVetos { get; set; } = new ManejadorDeVetos();
+        private IEstadisticasDAO estadisticasDAO;
         public EstadisticasPartida(TematicaPartida tematica)
         {
             Tematica = tematica;
@@ -39,6 +41,17 @@ namespace WcfServicioLibreria.Modelo
             PrimerLugar = null;
             SegundoLugar = null;
             TercerLugar = null;
+            estadisticasDAO = new EstadisticasDAO();
+        }
+        public EstadisticasPartida(TematicaPartida tematica, IEstadisticasDAO _estadisticasDAO)
+        {
+            Tematica = tematica;
+            Jugadores = new List<JugadorEstadisticas>();
+            TotalRondas = 0;
+            PrimerLugar = null;
+            SegundoLugar = null;
+            TercerLugar = null;
+            estadisticasDAO = _estadisticasDAO;
         }
         public void CalcularPodio()
         {
@@ -56,7 +69,7 @@ namespace WcfServicioLibreria.Modelo
                 .FirstOrDefault(jugador => jugador.Puntos != PrimerLugar?.Puntos && jugador.Puntos != SegundoLugar?.Puntos);
         }
 
-        internal async Task GuardarPuntajeAsync(List<Tuple<String , int >> listaTuplaNombreIdEstadistica)
+        public async Task GuardarPuntajeAsync(List<Tuple<String , int >> listaTuplaNombreIdEstadistica)
         {
             var accion = SelecionarAccion(Tematica);
             var tareasSolicitudes = new List<Task>();
@@ -66,17 +79,17 @@ namespace WcfServicioLibreria.Modelo
                 {
                     if (tupla.Item1.Equals(PrimerLugar.Nombre, StringComparison.OrdinalIgnoreCase))
                     {
-                        tareasSolicitudes.Add(EstadisticasDAO.AgregarEstadiscaPartidaAsync(tupla.Item2, accion, VICTORIA));
+                        tareasSolicitudes.Add(estadisticasDAO.AgregarEstadiscaPartidaAsync(tupla.Item2, accion, VICTORIA));
 
                     }
                     else
                     {
-                        tareasSolicitudes.Add(EstadisticasDAO.AgregarEstadiscaPartidaAsync(tupla.Item2, accion, DERROTA));
+                        tareasSolicitudes.Add(estadisticasDAO.AgregarEstadiscaPartidaAsync(tupla.Item2, accion, DERROTA));
                     }
                 }
                 catch (ActividadSospechosaExcepcion)
                 {
-                    await manejadorVetos.VetaJugadorAsync(tupla.Item1);
+                    await ManejadorVetos.VetaJugadorAsync(tupla.Item1);
                 }
                 catch (Exception)
                 {

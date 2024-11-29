@@ -1,13 +1,14 @@
-﻿using DAOLibreria.ModeloBD;
+﻿using DAOLibreria.Interfaces;
+using DAOLibreria.ModeloBD;
 using System;
 using System.Linq;
 
 namespace DAOLibreria.DAO
 {
-    public class ExpulsionDAO
+    public class ExpulsionDAO : IExpulsionDAO
     {
         private const int ID_INVALIDO = 0;
-        public static bool TieneMasDeDiezExpulsionesSinPenalizar(int idUsuarioCuenta)
+        public bool TieneMasDeDiezExpulsionesSinPenalizar(int idUsuarioCuenta)
         {
             try
             {
@@ -24,7 +25,7 @@ namespace DAOLibreria.DAO
                 return false;
             }
         }
-        public static bool CambiarExpulsionesAFueronPenalizadas(int idUsuarioCuenta)
+        public bool CambiarExpulsionesAFueronPenalizadas(int idUsuarioCuenta)
         {
             if (idUsuarioCuenta <= ID_INVALIDO)
             {
@@ -56,7 +57,7 @@ namespace DAOLibreria.DAO
             return false;
         }
 
-        public static bool CrearRegistroExpulsion(int idUsuarioCuenta, string motivo, bool esHacker)
+        public bool CrearRegistroExpulsion(int idUsuarioCuenta, string motivo, bool esHacker)
         {
             if (idUsuarioCuenta <= ID_INVALIDO)
             {

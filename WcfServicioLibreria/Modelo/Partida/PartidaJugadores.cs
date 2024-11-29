@@ -13,6 +13,8 @@ using System.Threading;
 using ChatGPTLibreria;
 using ChatGPTLibreria.ModelosJSON;
 using System.Net.Http;
+using DAOLibreria.Interfaces;
+using DAOLibreria.DAO;
 
 namespace WcfServicioLibreria.Modelo
 {
@@ -80,6 +82,8 @@ namespace WcfServicioLibreria.Modelo
         public EventHandler partidaVaciaManejadorEvento;
         private event EventHandler TodosListos;
         private readonly Lazy<string[]> archivosCache;
+        private readonly IUsuarioDAO usuarioDAO;
+        private readonly IEstadisticasDAO estadisticasDAO;
         /// <summary>
         /// Precausion: Aumentar esto ocupara significativamente mas recursos
         /// </summary>
@@ -108,7 +112,7 @@ namespace WcfServicioLibreria.Modelo
         #endregion Propiedad
 
         #region Contructor
-        public Partida(string _idPartida, string _anfitrion, ConfiguracionPartida _configuracion, IEscribirDisco _escritorDisco)
+        public Partida(string _idPartida, string _anfitrion, ConfiguracionPartida _configuracion, IEscribirDisco _escritorDisco, IUsuarioDAO _usuarioDAO, IEstadisticasDAO _estadisticasDAO)
         {
             IdPartida = _idPartida;
             Anfitrion = _anfitrion;
@@ -129,7 +133,8 @@ namespace WcfServicioLibreria.Modelo
                 Task.Run(async () => await IniciarPartidaSeguroAsync(cancelacionEjecucionRonda.Token));
             };
             archivosCache = new Lazy<string[]>(() => Directory.GetFiles(rutaImagenes, "*.jpg"));
-
+            usuarioDAO = _usuarioDAO;
+            estadisticasDAO = _estadisticasDAO;
         }
         #endregion Contructor
 
@@ -332,7 +337,7 @@ namespace WcfServicioLibreria.Modelo
 
         internal async Task AvisarNuevoJugadorAsync(string nombreJugador)
         {
-            DAOLibreria.ModeloBD.Usuario informacionUsuario = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
+            DAOLibreria.ModeloBD.Usuario informacionUsuario = usuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
             bool esInvitado = false;
             if (informacionUsuario == null)
             {

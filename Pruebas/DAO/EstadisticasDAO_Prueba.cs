@@ -13,6 +13,7 @@ namespace Pruebas.DAO
     [TestClass]
     public class EstadisticasDAO_Prueba : ConfiguracionPruebaBD
     {
+        private EstadisticasDAO estadisticasDAO = new EstadisticasDAO();
         #region RecuperarEstadisticas
         [TestMethod]
         public void RecuperarEstadisticas_IdExistente_DeberiaRetornarEstadistica()
@@ -22,7 +23,7 @@ namespace Pruebas.DAO
             int idEstadisticas = 1;
 
             // Act
-            var resultado = DAOLibreria.DAO.EstadisticasDAO.RecuperarEstadisticas(idEstadisticas);
+            var resultado = estadisticasDAO.RecuperarEstadisticas(idEstadisticas);
 
             // Assert
             Assert.IsNotNull(resultado, "El resultado no debería ser nulo.");
@@ -36,7 +37,7 @@ namespace Pruebas.DAO
             int idEstadisticas = -1;
 
             // Act & Assert
-            Assert.ThrowsException<ArgumentException>(() => DAOLibreria.DAO.EstadisticasDAO.RecuperarEstadisticas(idEstadisticas), "Deber retornar un argument exceotion");
+            Assert.ThrowsException<ArgumentException>(() => estadisticasDAO.RecuperarEstadisticas(idEstadisticas), "Deber retornar un argument exceotion");
         }
 
         [TestMethod]
@@ -48,7 +49,7 @@ namespace Pruebas.DAO
 
             // Act & Assert
 
-            Assert.ThrowsException<ArgumentException>(() => DAOLibreria.DAO.EstadisticasDAO.RecuperarEstadisticas(idEstadisticas), "Deber retornar un argument exceotion");
+            Assert.ThrowsException<ArgumentException>(() => estadisticasDAO.RecuperarEstadisticas(idEstadisticas), "Deber retornar un argument exceotion");
         }
         #endregion RecuperarEstadisticas
 
@@ -64,7 +65,7 @@ namespace Pruebas.DAO
             int victoria = 1;
 
             // Act
-            var resultado = await EstadisticasDAO.AgregarEstadiscaPartidaAsync(idEstadisticas, accion, victoria);
+            var resultado = await estadisticasDAO.AgregarEstadiscaPartidaAsync(idEstadisticas, accion, victoria);
 
             // Assert
             Assert.IsTrue(resultado, "El resultado debería ser verdadero.");
@@ -76,7 +77,7 @@ namespace Pruebas.DAO
             //Precondicon: debe existir el id en base de datos
             int idEstadisticas = 1;
             int victoria = 1;
-            var estadisticasAnteriores = EstadisticasDAO.RecuperarEstadisticas(idEstadisticas);
+            var estadisticasAnteriores = estadisticasDAO.RecuperarEstadisticas(idEstadisticas);
             // Lista de acciones a probar
             var acciones = new List<EstadisticasAcciones>
             {
@@ -92,11 +93,11 @@ namespace Pruebas.DAO
             var tareasSolicitudes = new List<Task>();
             foreach (var accion in acciones)
             {
-                tareasSolicitudes.Add(EstadisticasDAO.AgregarEstadiscaPartidaAsync(idEstadisticas, accion, victoria));
+                tareasSolicitudes.Add(estadisticasDAO.AgregarEstadiscaPartidaAsync(idEstadisticas, accion, victoria));
             }
             await Task.WhenAll(tareasSolicitudes);
 
-            var estadisticasNuevas = EstadisticasDAO.RecuperarEstadisticas(idEstadisticas);
+            var estadisticasNuevas = estadisticasDAO.RecuperarEstadisticas(idEstadisticas);
 
             // Assert
             Assert.IsTrue(estadisticasAnteriores.partidasGanadas + acciones.Count == estadisticasNuevas.partidasGanadas, "El número de partidas ganadas no coincide.");
@@ -117,7 +118,7 @@ namespace Pruebas.DAO
 
 
             // Act & Assert
-            await Assert.ThrowsExceptionAsync<ActividadSospechosaExcepcion>(async () => await EstadisticasDAO.AgregarEstadiscaPartidaAsync(idEstadisticas, accion, victoria), "Deber retornar un actividad sospechosa exceotion");
+            await Assert.ThrowsExceptionAsync<ActividadSospechosaExcepcion>(async () => await estadisticasDAO.AgregarEstadiscaPartidaAsync(idEstadisticas, accion, victoria), "Deber retornar un actividad sospechosa exceotion");
         }
         #endregion AgregarEstadisticaPartida
 
@@ -129,7 +130,7 @@ namespace Pruebas.DAO
             int idUsuario = 1; // Precondición: este ID debe existir en la base de datos y estar relacionado con una estadística.
 
             // Act
-            int resultado = EstadisticasDAO.ObtenerIdEstadisticaConIdUsuario(idUsuario);
+            int resultado = estadisticasDAO.ObtenerIdEstadisticaConIdUsuario(idUsuario);
 
             // Assert
             Assert.IsTrue(resultado > 0, "El método debería devolver el ID del usuario existente.");
@@ -140,7 +141,7 @@ namespace Pruebas.DAO
             // Arrange
             int idUsuarioInexistente = -10; // Precondición: este ID no debe existir en la base de datos.
             //Act 
-            int resultado = DAOLibreria.DAO.EstadisticasDAO.ObtenerIdEstadisticaConIdUsuario(idUsuarioInexistente);
+            int resultado = estadisticasDAO.ObtenerIdEstadisticaConIdUsuario(idUsuarioInexistente);
             //  Assert
             Assert.AreEqual(resultado, -1, "El método debería devolver -1 para un usuario inexistente.");
         }

@@ -21,5 +21,20 @@ namespace DAOLibreria.ModeloBD
                 return false;
             }
         }
+        public static bool VerificarConexion()
+        {
+            try
+            {
+                using (var context = new DescribeloEntities())
+                {
+                    context.Database.ExecuteSqlCommand(CONSULTA_PING);
+                    return true; 
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

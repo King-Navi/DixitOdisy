@@ -20,6 +20,7 @@ namespace WpfCliente.GUI
             ColocarFondoColorAleatorio();
             DataContextChanged += SolicitudAmistadUserControlCambioDataContext;
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
+            ActualizarUI();
         }
 
         private void SolicitudAmistadUserControlCambioDataContext(object sender, DependencyPropertyChangedEventArgs e)
@@ -39,10 +40,10 @@ namespace WpfCliente.GUI
 
         private void ClicButtonAceptar(object sender, RoutedEventArgs e)
         {
-            _ = AceptarSolicitud(solicitudAmistadActual);
+            _ = AceptarSolicitudAsync(solicitudAmistadActual);
         }
 
-        private async Task<bool> AceptarSolicitud(SolicitudAmistad solicitud)
+        private async Task<bool> AceptarSolicitudAsync(SolicitudAmistad solicitud)
         {
             Window window = Window.GetWindow(this);
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, window);
@@ -53,7 +54,7 @@ namespace WpfCliente.GUI
 
             try
             {
-                var resultado = Conexion.Amigos.AceptarSolicitudAmistad(solicitudAmistadActual.Remitente.IdUsuario, SingletonCliente.Instance.IdUsuario);
+                var resultado = await Conexion.Amigos.AceptarSolicitudAmistadAsync(solicitudAmistadActual.Remitente.IdUsuario, SingletonCliente.Instance.IdUsuario);
 
                 if (resultado)
                 {
@@ -92,7 +93,7 @@ namespace WpfCliente.GUI
 
             try
             {
-                var resultado = Conexion.Amigos.RechazarSolicitudAmistad(solicitudAmistadActual.Remitente.IdUsuario, SingletonCliente.Instance.IdUsuario);
+                var resultado = await Conexion.Amigos.RechazarSolicitudAmistadAsync(solicitudAmistadActual.Remitente.IdUsuario, SingletonCliente.Instance.IdUsuario);
 
                 if (resultado)
                 {
@@ -126,8 +127,8 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
-            buttonAceptar.Content = Idioma.buttonAceptar;
-            buttonRechazar.Content = Idioma.buttonRechazar;
+            buttonAceptar.Content = Properties.Idioma.buttonAceptar;
+            buttonRechazar.Content = Properties.Idioma.buttonRechazar;
         }
 
         private void CerrandoUserControl(object sender, RoutedEventArgs e)

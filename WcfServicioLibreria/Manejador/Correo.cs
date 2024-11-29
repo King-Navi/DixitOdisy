@@ -36,12 +36,12 @@ namespace WcfServicioLibreria.Manejador
         {
             using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587))
             {
-                smtpClient.Credentials = new NetworkCredential(CORREO, CONTRASENIA);
+                smtpClient.Credentials = new NetworkCredential(CORREO_DESCRIBELO, CONTRASENIA_CORREO_DESCRIBELO);
                 smtpClient.EnableSsl = true;
 
                 string asunto = "Codigo de verificación";
                 string cuerpo = "Tu código es: " + codigo;
-                using (MailMessage mail = new MailMessage(CORREO, correoUsuario, asunto, cuerpo))
+                using (MailMessage mail = new MailMessage(CORREO_DESCRIBELO, correoUsuario, asunto, cuerpo))
                 {
                     await smtpClient.SendMailAsync(mail);
                 }
@@ -66,6 +66,16 @@ namespace WcfServicioLibreria.Manejador
             }
             return false;
 
+        }
+
+        private static string ObtenerContraseniaCorreo()
+        {
+            string contrasenia = Environment.GetEnvironmentVariable("CONTRASENIA_CORREO");
+            if (string.IsNullOrEmpty(contrasenia))
+            {
+                throw new InvalidOperationException("La variable de entorno 'CONTRASENIA_CORREO' no está definida.");
+            }
+            return contrasenia;
         }
     }
 }

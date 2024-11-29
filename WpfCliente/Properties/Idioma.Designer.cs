@@ -862,6 +862,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Los campos que ingresaste son inválidos.
+        /// </summary>
+        public static string mensajeCamposInvalidos {
+            get {
+                return ResourceManager.GetString("mensajeCamposInvalidos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No se pueden dejar campos vacíos.
         /// </summary>
         public static string mensajeCamposVacios {
@@ -1051,7 +1060,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Invitation from:.
+        ///   Busca una cadena traducida similar a Invitación a partida de: .
         /// </summary>
         public static string mensajeInvitacionPartida {
             get {
@@ -1308,6 +1317,15 @@ namespace WpfCliente.Properties {
         public static string tituloCambiarContrasenia {
             get {
                 return ResourceManager.GetString("tituloCambiarContrasenia", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Campos inválidos.
+        /// </summary>
+        public static string tituloCamposInvalidos {
+            get {
+                return ResourceManager.GetString("tituloCamposInvalidos", resourceCulture);
             }
         }
         

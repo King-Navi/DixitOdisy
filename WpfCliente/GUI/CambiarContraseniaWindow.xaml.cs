@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -39,14 +40,14 @@ namespace WpfCliente.GUI
             windowCambiarContrasenia.Title = Properties.Idioma.tituloCambiarContrasenia; 
         }
 
-        private void ClicButtonAceptar(object sender, RoutedEventArgs e)
+        private async void ClicButtonEditarContraseniaAsync(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (ValidarCampos())
                 {
                     EncriptarContrasenia(passwordBoxContrasenia.Password);
-                    GuardarCambiosUsuario(usuarioEditado);
+                    await GuardarCambiosUsuarioAsync(usuarioEditado);
                 }
             }
             catch (Exception ex)
@@ -126,7 +127,7 @@ namespace WpfCliente.GUI
             usuarioEditado.ContraseniaHASH = Encriptacion.OcuparSHA256(contrasenia);
         }
 
-        private async void GuardarCambiosUsuario(Usuario usuarioEditado)
+        private async Task GuardarCambiosUsuarioAsync(Usuario usuarioEditado)
         {
             var resultadoConexion = await Conexion.VerificarConexion(HabilitarBotones,this);
             if (!resultadoConexion)
@@ -144,12 +145,13 @@ namespace WpfCliente.GUI
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloEditarUsuario, Properties.Idioma.mensajeUsuarioEditadoConExito, this);
                 this.Close();
+                return;
             }
             else
             {
                 VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloEditarUsuario, Idioma.mensajeUsuarioEditadoFallo, this);
+                return;
             }
-
         }
         private void ClicButtonCancelar(object sender, RoutedEventArgs e)
         {

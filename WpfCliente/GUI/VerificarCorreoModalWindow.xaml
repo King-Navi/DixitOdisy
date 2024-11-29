@@ -9,7 +9,7 @@
         ResizeMode="NoResize"
         Title="Verificar correo" Height="148" Width="400">
     <Window.Background>
-        <ImageBrush ImageSource="/Recursos/cajaLogin.png" Stretch="UniformToFill"/>
+        <ImageBrush ImageSource="pack://application:,,,/WpfCliente;component/Recursos/cajaLogin.png" Stretch="UniformToFill"/>
     </Window.Background>
     <Window.Resources>
         <Style TargetType="{x:Type TextBox}" >
@@ -36,7 +36,7 @@
         </Grid.RowDefinitions>
         <Label x:Name="labelIngresarCodigo" Content="Ingrese el código" FontFamily="Lucida Sans Unicode" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Foreground="Black" Grid.Row="1" HorizontalContentAlignment="Center" Height="38" Width="360"/>
         <TextBox  x:Name="textBoxCodigo" MaxLength="6" Grid.Row="0" Width="260" Height="25" Margin="60,34,60,6" Grid.RowSpan="3"/>
-        <Button x:Name="buttonAceptar" Content="Aceptar" FontFamily="Lucida Sans Unicode" Grid.Row="2" Width="74" HorizontalAlignment="Center" Margin="0,45,0,-37" Click="ClicButtonAceptar"/>
+        <Button x:Name="buttonAceptar" Content="Aceptar" FontFamily="Lucida Sans Unicode" Background="#E0DCC7" Grid.Row="2" Width="100" HorizontalAlignment="Center" Margin="0,38,0,-30"  Height="30" Click="ClicButtonAceptar"/>
         <Label x:Name="labelCodigoInvalido" Content="Codigo invalido" HorizontalAlignment="Left" Margin="261,32,0,0" Grid.Row="1" VerticalAlignment="Top" Visibility="Collapsed" FontFamily="Lucida Sans Unicode" FontSize="6" Grid.RowSpan="2"/>
         <Label x:Name="labelInstruccionesVerificacionCorreo" Content="Te enviamos un código al correo que ingresaste" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,-16,0,0" VerticalAlignment="Top" Grid.RowSpan="2" Width="360"/>
     </Grid>

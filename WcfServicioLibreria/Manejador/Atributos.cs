@@ -15,22 +15,25 @@ namespace WcfServicioLibreria.Manejador
         #region Sala
         private static readonly ConcurrentDictionary<string, Sala> salasDiccionario = new ConcurrentDictionary<string, Sala>();
         #endregion Sala
+
         #region JugadorSesion
         private static readonly ConcurrentDictionary<int, UsuarioContexto> jugadoresConectadosDiccionario = new ConcurrentDictionary<int, UsuarioContexto>();
         #endregion JuagdorSesion
+
         #region Chat
         private static readonly ConcurrentDictionary<string, Chat> chatDiccionario = new ConcurrentDictionary<string, Chat>();
         #endregion Chat
+
         #region Partida
         private static readonly ConcurrentDictionary<string, Partida> partidasdDiccionario = new ConcurrentDictionary<string, Partida>();
         #endregion Partida
 
         #region Correo
-        private static readonly string CORREO = "describeloproyecto@gmail.com";
-        private static readonly string CONTRASENIA = "rbyu noyd vebq adwe";
+        private static readonly string CORREO_DESCRIBELO = "describeloproyecto@gmail.com";
+        private static readonly string CONTRASENIA_CORREO_DESCRIBELO = ManejadorPrincipal.ObtenerContraseniaCorreo();
         #endregion Correo
 
-        #region Inyeccion de depdendencias
+        #region Inyeccion de dependencias
         private readonly IContextoOperacion contextoOperacion;
 
         public ManejadorPrincipal(IContextoOperacion _contextoOperacion , IEscribirDisco _escribirDisco)

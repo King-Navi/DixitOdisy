@@ -1,16 +1,22 @@
 ﻿using DAOLibreria.Excepciones;
 using DAOLibreria.ModeloBD;
+using DAOLibreria.Utilidades;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Data.Entity.Infrastructure;
 
 namespace DAOLibreria.DAO
 {
     public class EstadisticasDAO
     {
+        private const int AUMENTO_MAXIMO_PARTIDAS_JUGADAS = 1;
+        private const int AUMENTO_MAXIMO_VICTORIAS = 1;
+        private const int SIN_PARTIDAS_JUGADAS = 0;
+        private const int SIN_VICTORIA = 0;
         public static async Task<bool> AgregarEstadiscaPartidaAsync(int idEstadisticas, EstadisticasAcciones accion, int victoria)
         {
-            if (victoria > 1)
+            if (victoria > AUMENTO_MAXIMO_VICTORIAS)
             {
                 throw new ActividadSospechosaExcepcion() { id = idEstadisticas };
             }
@@ -29,8 +35,8 @@ namespace DAOLibreria.DAO
                     {
                         context.Entry(estadistica).Reload();
                     }
-                    estadistica.partidasJugadas = (estadistica.partidasJugadas ?? 0) + 1;
-                    estadistica.partidasGanadas = (estadistica.partidasGanadas ?? 0) + victoria;
+                    estadistica.partidasJugadas = (estadistica.partidasJugadas ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS;
+                    estadistica.partidasGanadas = (estadistica.partidasGanadas ?? SIN_VICTORIA) + victoria;
 
                     var accionARealizar = ObtenerAccion(accion);
                     accionARealizar(estadistica);
@@ -39,8 +45,17 @@ namespace DAOLibreria.DAO
 
                 }
             }
-            catch (Exception)
+            catch (DbUpdateException excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return resultado;
         }
@@ -56,29 +71,34 @@ namespace DAOLibreria.DAO
                     return estadistica ?? throw new ArgumentException();
                 }
             }
-            catch (Exception)
+            catch (ArgumentNullException excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+
             return null;
         }
 
-        //Pregunar al profe: metodo con alta complejidad ciclomatica
         private static Action<Estadisticas> ObtenerAccion(EstadisticasAcciones accion)
         {
             switch (accion)
             {
                 case EstadisticasAcciones.IncrementarPartidasMitologia:
-                    return estadistica => { estadistica.vecesTematicaMitologia = (estadistica.vecesTematicaMitologia ?? 0) + 1; };
+                    return estadistica => { estadistica.vecesTematicaMitologia = (estadistica.vecesTematicaMitologia ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS; };
                 case EstadisticasAcciones.IncrementarPartidaMixta:
-                    return estadistica => { estadistica.vecesTematicaMixto = (estadistica.vecesTematicaMixto ?? 0) + 1; };
+                    return estadistica => { estadistica.vecesTematicaMixto = (estadistica.vecesTematicaMixto ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS; };
                 case EstadisticasAcciones.IncrementarPartidaEspacio:
-                    return estadistica => { estadistica.vecesTematicaEspacio = (estadistica.vecesTematicaEspacio ?? 0) + 1; };
+                    return estadistica => { estadistica.vecesTematicaEspacio = (estadistica.vecesTematicaEspacio ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS; };
                 case EstadisticasAcciones.IncrementarPartidaAnimales:
-                    return estadistica => { estadistica.vecesTematicaAnimales = (estadistica.vecesTematicaAnimales ?? 0) + 1; };
+                    return estadistica => { estadistica.vecesTematicaAnimales = (estadistica.vecesTematicaAnimales ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS; };
                 case EstadisticasAcciones.IncrementarPartidaPaises:
-                    return estadistica => { estadistica.vecesTematicaPaises = (estadistica.vecesTematicaPaises ?? 0) + 1; };
+                    return estadistica => { estadistica.vecesTematicaPaises = (estadistica.vecesTematicaPaises ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS; };
                 default:
-                    return estadistica => { estadistica.vecesTematicaMixto = (estadistica.vecesTematicaMixto ?? 0) + 1; };
+                    return estadistica => { estadistica.vecesTematicaMixto = (estadistica.vecesTematicaMixto ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS; };
             }
         }
 
@@ -93,10 +113,15 @@ namespace DAOLibreria.DAO
                     return usuario == null ? throw new ArgumentException() : usuario.idUsuario;
                 }
             }
-            catch (Exception)
+            catch (ArgumentNullException excepcion)
             {
-                return -1;
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            return -1;
         }
     }
 }

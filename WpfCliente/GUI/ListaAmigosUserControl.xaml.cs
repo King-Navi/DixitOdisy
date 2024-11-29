@@ -158,5 +158,17 @@ namespace WpfCliente.GUI
                 Amigos.Remove(amigoAEliminar);
             }
         }
+
+        private void OnAmigoEliminado(object sender, Amigo amigo)
+        {
+            if (amigo == null) return;
+
+            // Buscar y eliminar al amigo de la lista
+            var amigoAEliminar = Amigos.FirstOrDefault(a => a.Nombre == amigo.Nombre);
+            if (amigoAEliminar != null)
+            {
+                Amigos.Remove(amigoAEliminar);
+            }
+        }
     }
 }

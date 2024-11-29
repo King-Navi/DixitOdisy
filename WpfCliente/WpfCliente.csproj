@@ -53,8 +53,8 @@
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.135\lib\net462\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
-    <Reference Include="Serilog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.4.0.2\lib\net471\Serilog.dll</HintPath>
+    <Reference Include="Serilog, Version=4.1.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.4.1.0\lib\net471\Serilog.dll</HintPath>
     </Reference>
     <Reference Include="Serilog.Sinks.File, Version=6.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.Sinks.File.6.0.0\lib\net471\Serilog.Sinks.File.dll</HintPath>
@@ -221,7 +221,7 @@
       <DependentUpon>IniciarSesionWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilidad\Imagen.cs" />
-    <Compile Include="Utilidad\LoggerManagador.cs" />
+    <Compile Include="Utilidad\ManejadorLogger.cs" />
     <Compile Include="Utilidad\ManejadorExcepciones.cs" />
     <Compile Include="Utilidad\Servidor\Usuario.cs" />
     <Compile Include="Utilidad\Utilidades.cs" />
@@ -230,7 +230,6 @@
     <Compile Include="Utilidad\SingletonCliente.cs" />
     <Compile Include="Utilidad\ValidacionExistenciaJuego.cs" />
     <Compile Include="Utilidad\ValidacionesString.cs" />
-    <Compile Include="Utilidad\VentanaModal.cs" />
     <Compile Include="Utilidad\VentanasEmergentes.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -483,16 +482,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Recursos\pfp1.png" />
-    <Resource Include="Recursos\pfp2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Recursos\pfp3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Recursos\pfp4.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Recursos\pfp5.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Recursos\profile.jpg">
@@ -529,6 +518,15 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\ServidorDescribelo\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\logoJuego.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Recursos\pfp2.png" />
+    <Resource Include="Recursos\pfp3.png" />
+    <Resource Include="Recursos\pfp4.png" />
+    <Resource Include="Recursos\pfp5.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

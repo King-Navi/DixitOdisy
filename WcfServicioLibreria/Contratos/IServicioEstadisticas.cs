@@ -16,6 +16,6 @@ namespace WcfServicioLibreria.Contratos
         /// ya sea retornando un objeto nulo o lanzando una excepción específica, dependiendo de la implementación del servicio.
         /// </returns>
         [OperationContract]
-        Estadistica ObtenerEstadisitca(int idUsuario);
+        Estadistica ObtenerEstadisticas(int idUsuario);
     }
 }

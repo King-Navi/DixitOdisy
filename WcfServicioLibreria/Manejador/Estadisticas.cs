@@ -1,20 +1,37 @@
-﻿using WcfServicioLibreria.Contratos;
+﻿using System;
+using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioEstadisticas
     {
-        public Estadistica ObtenerEstadisitca(int idUsuario)
+        public Estadistica ObtenerEstadisticas(int idUsuario)
         {
-            Estadistica estadistica = new Estadistica();
-            int idEstadisica = DAOLibreria.DAO.EstadisticasDAO.ObtenerIdEstadisticaConIdUsuario(idUsuario);
-            if (idEstadisica > 0)
+            try
             {
-                var estadisticaModeloBD = DAOLibreria.DAO.EstadisticasDAO.RecuperarEstadisticas(idEstadisica);
-                estadistica = new Estadistica(estadisticaModeloBD);
+                Estadistica estadistica = new Estadistica();
+
+                int idEstadistica = DAOLibreria.DAO.EstadisticasDAO.ObtenerIdEstadisticaConIdUsuario(idUsuario);
+                if (idEstadistica > 0)
+                {
+                    var estadisticaModeloBD = DAOLibreria.DAO.EstadisticasDAO.RecuperarEstadisticas(idEstadistica);
+                    estadistica = new Estadistica(estadisticaModeloBD);
+                }
+
+                return estadistica;
             }
-            return estadistica;
+            catch (ArgumentException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+                return new Estadistica(); 
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+                return new Estadistica(); 
+            }
         }
     }
 }

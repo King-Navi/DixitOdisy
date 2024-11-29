@@ -1,9 +1,9 @@
-﻿using System;
-using Serilog;
+﻿using Serilog;
+using System;
 
-namespace WcfServicioLibreria.Utilidades
+namespace WpfCliente.Utilidad
 {
-    public static class LoggerManajador
+    public static class ManejadorLogger
     {
         private const string FORMATO_FECHA = "dd-MM-yyyy";
         private const string NOMBRE_LOG = "Log";
@@ -11,11 +11,11 @@ namespace WcfServicioLibreria.Utilidades
         private const string EXTENSION_LOG = ".txt";
         private static ILogger logger;
 
-        private static void ConfigurarLogger(string logFilePath)
+        private static void ConfigurarLogger(string archivoRuta)
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
-                .WriteTo.File(@logFilePath)
+                .WriteTo.File(archivoRuta)
                 .CreateLogger();
         }
 

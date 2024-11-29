@@ -1,5 +1,7 @@
 ﻿using DAOLibreria.ModeloBD;
+using DAOLibreria.Utilidades;
 using System;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 
 namespace DAOLibreria.DAO
@@ -19,10 +21,15 @@ namespace DAOLibreria.DAO
                     return conteo >= 10; 
                 }
             }
-            catch (Exception)
+            catch (ArgumentNullException excepcion)
             {
-                return false;
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            return false;
         }
         public static bool CambiarExpulsionesAFueronPenalizadas(int idUsuarioCuenta)
         {
@@ -50,8 +57,17 @@ namespace DAOLibreria.DAO
                     return true;
                 }
             }
-            catch (Exception )
+            catch (DbUpdateException excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
         }
@@ -78,8 +94,17 @@ namespace DAOLibreria.DAO
                     return true;
                 }
             }
-            catch (Exception)
+            catch (DbUpdateException excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
         }

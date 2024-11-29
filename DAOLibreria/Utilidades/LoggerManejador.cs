@@ -1,9 +1,13 @@
 ﻿using Serilog;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WpfCliente.Utilidad
+namespace DAOLibreria.Utilidades
 {
-    public static class LoggerManagador
+    internal class LoggerManejador
     {
         private const string FORMATO_FECHA = "dd-MM-yyyy";
         private const string NOMBRE_LOG = "Log";
@@ -11,11 +15,11 @@ namespace WpfCliente.Utilidad
         private const string EXTENSION_LOG = ".txt";
         private static ILogger logger;
 
-        private static void ConfigurarLogger(string archivoRuta)
+        private static void ConfigurarLogger(string logFilePath)
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
-                .WriteTo.File(archivoRuta)
+                .WriteTo.File(@logFilePath)
                 .CreateLogger();
         }
 
@@ -47,6 +51,5 @@ namespace WpfCliente.Utilidad
             logger = Log.Logger;
             return logger;
         }
-
     }
 }

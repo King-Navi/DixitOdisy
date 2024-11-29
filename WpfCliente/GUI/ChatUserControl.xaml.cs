@@ -25,7 +25,7 @@ namespace WpfCliente.GUI
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
         }
 
-        private async void ClicButtonEnviar(object sender, RoutedEventArgs e)
+        private async void ClicButtonEnviarAsync(object sender, RoutedEventArgs e)
         {
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)

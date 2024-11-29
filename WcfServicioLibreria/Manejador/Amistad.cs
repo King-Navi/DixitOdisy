@@ -1,4 +1,5 @@
 ﻿using DAOLibreria.DAO;
+using DAOLibreria.Excepciones;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,8 +20,10 @@ namespace WcfServicioLibreria.Manejador
         private const int ID_INVALIDO = 0;
         public bool EnviarSolicitudAmistad(Modelo.Usuario remitente, string destinatario)
         {
-            int idRemitente = ObtenerIdPorNombre(remitente.Nombre);
-            int idDestinatario = ObtenerIdPorNombre(destinatario);
+            try
+            {
+                int idRemitente = ObtenerIdPorNombre(remitente.Nombre);
+                int idDestinatario = ObtenerIdPorNombre(destinatario);
 
             if (SonAmigos(idRemitente, idDestinatario))
             {
@@ -30,25 +33,36 @@ namespace WcfServicioLibreria.Manejador
                     new SolicitudAmistadFalla(existeAmistad, existePeticion));
             }
 
-            if (ExisteSolicitudAmistad(idRemitente, idDestinatario))
+                if (GuardarSolicitudAmistad(idRemitente, idDestinatario))
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch (SolicitudAmistadExcepcion excepcion)
             {
-                bool existeAmistad = false;
-                bool existePeticion = true;
                 throw new FaultException<SolicitudAmistadFalla>(
-                    new SolicitudAmistadFalla(existeAmistad, existePeticion));
+                    new SolicitudAmistadFalla(excepcion.ExisteAmistad, excepcion.ExistePeticion));
             }
-
-            if (GuardarSolicitudAmistad(idRemitente, idDestinatario))
+            catch (Exception excepcion)
             {
-                return true;
+                ManejadorExcepciones.ManejarFatalException(excepcion);
+                throw new FaultException("Ocurrió un error inesperado al guardar la solicitud de amistad.");
             }
-
-            return false;
         }
 
         private bool GuardarSolicitudAmistad(int idRemitente, int idDestinatario)
         {
-            return PeticionAmistadDAO.GuardarSolicitudAmistad(idRemitente, idDestinatario);
+            try
+            {
+                return SolicitudAmistadDAO.GuardarSolicitudAmistad(idRemitente, idDestinatario);
+            }
+            catch (FaultException excepcion)
+            {
+                ManejadorExcepciones.ManejarFatalException(excepcion);
+                return false;
+            }
         }
 
         private int ObtenerIdPorNombre(string nombre)
@@ -57,6 +71,10 @@ namespace WcfServicioLibreria.Manejador
             try
             {
                 id = UsuarioDAO.ObtenerIdPorNombre(nombre);
+            }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             catch (Exception excepcion)
             {
@@ -77,7 +95,6 @@ namespace WcfServicioLibreria.Manejador
                 return true;
             }
             return SonAmigos(idMayorUsuario, idMenorUsuario);
-
         }
 
         private bool SonAmigos(int idMasAlto, int idMasBajo)
@@ -86,24 +103,15 @@ namespace WcfServicioLibreria.Manejador
             {
                 return AmistadDAO.SonAmigos(idMasAlto, idMasBajo);
             }
-            catch (Exception excepcion)
+            catch (InvalidOperationException excepcion)
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
-            }
-            return false;
-
-        }
-
-        private bool ExisteSolicitudAmistad(int idMasAlto, int idMasBajo)
-        {
-            try
-            {
-                return PeticionAmistadDAO.ExisteSolicitudAmistad(idMasAlto, idMasBajo);
             }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+
             return false;
         }
 
@@ -127,10 +135,15 @@ namespace WcfServicioLibreria.Manejador
                 }
                 return true;
             }
-            catch (Exception excepcion)
+            catch (ArgumentNullException excepcion)
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarFatalException(excepcion);
+            }
+
             return false;
         }
 
@@ -177,10 +190,15 @@ namespace WcfServicioLibreria.Manejador
                 return usuariosModeloBaseDatos;
 
             }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+
             return usuariosModeloWCF;
         }
 
@@ -237,17 +255,22 @@ namespace WcfServicioLibreria.Manejador
                     }
                 }
             }
-            catch (Exception excepcion)
+            catch (ArgumentNullException excepcion)
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarFatalException(excepcion);
+            }
+
         }
 
         public List<SolicitudAmistad> ObtenerSolicitudesAmistad(Usuario usuario)
         {
             try
             {
-                List<DAOLibreria.ModeloBD.Usuario> usuariosSolicitantes = PeticionAmistadDAO.ObtenerSolicitudesAmistad(usuario.IdUsuario);
+                List<DAOLibreria.ModeloBD.Usuario> usuariosSolicitantes = SolicitudAmistadDAO.ObtenerSolicitudesAmistad(usuario.IdUsuario);
                 List<SolicitudAmistad> usuariosModeloWCF = new List<SolicitudAmistad>();
                 foreach (DAOLibreria.ModeloBD.Usuario usuarioBD in usuariosSolicitantes)
                 {
@@ -276,7 +299,7 @@ namespace WcfServicioLibreria.Manejador
             {
                 EvaluarIdValido(idRemitente);
                 EvaluarIdValido(idDestinatario);
-                if (PeticionAmistadDAO.AceptarSolicitudAmistad(idRemitente, idDestinatario))
+                if (SolicitudAmistadDAO.AceptarSolicitudAmistad(idRemitente, idDestinatario))
                 {
                     if (jugadoresConectadosDiccionario.ContainsKey(idDestinatario) &&
                         jugadoresConectadosDiccionario.ContainsKey(idRemitente))
@@ -314,9 +337,13 @@ namespace WcfServicioLibreria.Manejador
             {
                 throw excepcion;
             }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
 
@@ -329,12 +356,22 @@ namespace WcfServicioLibreria.Manejador
             {
                 EvaluarIdValido(idRemitente);
                 EvaluarIdValido(idDestinatario);
-                return PeticionAmistadDAO.RechazarSolicitudAmistad(idRemitente, idDestinatario); ;
+                return SolicitudAmistadDAO.RechazarSolicitudAmistad(idRemitente, idDestinatario); ;
             }
-            catch (Exception)
+
+            catch (FaultException<ServidorFalla> excepcion)
             {
-                return false;
+                throw excepcion;
             }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            return false;
         }
 
         public bool EliminarAmigo(string usuarioRemitenteNombre, string usuarioDestinatarioNombre)
@@ -397,7 +434,7 @@ namespace WcfServicioLibreria.Manejador
 
         private void EvaluarIdValido(int identificador)
         {
-            if (identificador <= 0 || identificador <= 0)
+            if (identificador <= ID_INVALIDO)
             {
                 throw new ArgumentException();
             }

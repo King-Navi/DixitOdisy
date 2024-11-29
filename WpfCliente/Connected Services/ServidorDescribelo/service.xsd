@@ -657,17 +657,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ObtenerEstadisitca">
+  <xs:element name="ObtenerEstadisticas">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="idUsuario" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ObtenerEstadisitcaResponse">
+  <xs:element name="ObtenerEstadisticasResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="ObtenerEstadisitcaResult" nillable="true" type="q26:Estadistica" />
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="ObtenerEstadisticasResult" nillable="true" type="q26:Estadistica" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

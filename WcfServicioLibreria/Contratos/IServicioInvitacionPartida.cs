@@ -29,7 +29,7 @@ namespace WcfServicioLibreria.Contratos
         /// <summary>
         /// Recibe una invitación a una partida. Este método es unidireccional y no devuelve ninguna respuesta al emisor.
         /// </summary>
-        /// <param name="invitacion">El objeto invitación que contiene detalles de la partida a la que se está invitando al usuario.</param>
+        /// <param name="invitacion">El objeto invitación que contiene detalles de la partida a la que se está invitando al usuario receptor.</param>
         [OperationContract(IsOneWay = true)]
         void RecibirInvitacion(InvitacionPartida invitacion);
     }

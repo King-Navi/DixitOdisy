@@ -58,14 +58,14 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void ClicButtonNuevaSolicitud(object sender, MouseButtonEventArgs e)
+        private async void ClicButtonNuevaSolicitudAsync(object sender, MouseButtonEventArgs e)
         {
-            TryEnviarSolicitud();
+            await IntentarEnviarSolicitudAsync();
         }
 
-        private async void TryEnviarSolicitud()
+        private async Task IntentarEnviarSolicitudAsync()
         {
-            string gamertagSolicitud = VentanaModal.AbrirVentanaModalGamertag(this);
+            string gamertagSolicitud = VentanasEmergentes.AbrirVentanaModalGamertag(this);
 
             var resultado = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!resultado)
@@ -76,22 +76,10 @@ namespace WpfCliente.GUI
             if (ValidacionesString.EsGamertagValido(gamertagSolicitud) && gamertagSolicitud != SingletonCliente.Instance.NombreUsuario)
             {
                 try {
-                    if (await EnviarSolicitud(gamertagSolicitud))
+                    if (await EnviarSolicitudAsync(gamertagSolicitud))
                     {
                         VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadExitosa, this);
                     }
-                    else
-                    {
-                        VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadFallida, this);
-                    }
-                }
-                catch (FaultException<SolicitudAmistadFalla> ex)
-                {
-                    VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloSolicitudAmistad, ex.Detail.Mensaje, this);
-                }
-                catch (FaultException ex)
-                {
-                    VentanasEmergentes.CrearVentanaEmergente(Idioma.mensajeErrorInesperado, ex.Message, this);
                 }
                 catch (Exception ex)
                 {
@@ -100,7 +88,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async Task<bool> EnviarSolicitud(string gamertagReceptor)
+        private async Task<bool> EnviarSolicitudAsync(string gamertagReceptor)
         {
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
@@ -114,8 +102,22 @@ namespace WpfCliente.GUI
                 usuarioRemitente.Nombre = SingletonCliente.Instance.NombreUsuario;
                 usuarioRemitente.FotoUsuario = Imagen.ConvertirBitmapImageAMemoryStream(SingletonCliente.Instance.FotoJugador);
 
-                var resultado = Conexion.Amigos.EnviarSolicitudAmistad(usuarioRemitente, gamertagReceptor);
+                var resultado = await Conexion.Amigos.EnviarSolicitudAmistadAsync(usuarioRemitente, gamertagReceptor);
+                if (!resultado)
+                {
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadFallida, this);
+                }
                 return resultado;
+            }
+            catch (FaultException<SolicitudAmistadFalla> ex)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloSolicitudAmistad, ex.Detail.Mensaje, this);
+                return false;
+            }
+            catch (FaultException ex)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Idioma.mensajeErrorInesperado, ex.Message, this);
+                return false;
             }
             catch (Exception ex)
             {

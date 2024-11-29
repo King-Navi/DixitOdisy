@@ -25,7 +25,7 @@ namespace WpfCliente.GUI
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             ActualizarUI();
-            AbrirConexiones();
+            _ = AbrirConexionesAsync();
             ConfigurarTemporizadorNotificacion();
             InicializarEstadisticas();
         }
@@ -46,7 +46,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void AbrirConexiones()
+        private async Task AbrirConexionesAsync()
         {
             try
             {
@@ -85,7 +85,7 @@ namespace WpfCliente.GUI
                     IdUsuario = SingletonCliente.Instance.IdUsuario,
                     Nombre = SingletonCliente.Instance.NombreUsuario
                 };
-                Conexion.UsuarioSesion.ObtenerSessionJugador(user);
+                await Conexion.UsuarioSesion.ObtenerSessionJugadorAsync(user);
             }
             catch (Exception excepcion)
             {
@@ -95,10 +95,10 @@ namespace WpfCliente.GUI
 
         private void ClicButtonCrearSala(object sender, RoutedEventArgs e)
         {
-            AbrirVentanaSala(null);
+            _ = AbrirVentanaSalaAsync(null);
         }
 
-        private async void AbrirVentanaSala(string idSala)
+        private async Task AbrirVentanaSalaAsync(string idSala)
         {
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
@@ -152,10 +152,10 @@ namespace WpfCliente.GUI
         {
             bool esInvitacion = false;
             string _codigoSala = null;
-            UnirseASala(esInvitacion, _codigoSala);
+            _ = UnirseASalaAsync(esInvitacion, _codigoSala);
         }
 
-        private async void UnirseASala(bool esInvitacion, string _codigoSala)
+        private async Task UnirseASalaAsync(bool esInvitacion, string _codigoSala)
         {
             string codigoSala = "";
             if (esInvitacion)
@@ -164,7 +164,7 @@ namespace WpfCliente.GUI
             }
             else
             {
-                codigoSala = VentanaModal.AbrirVentanaModalSala(this);
+                codigoSala = VentanasEmergentes.AbrirVentanaModalSala(this);
             }
             bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, this);
             if (!conexionExitosa)
@@ -175,7 +175,7 @@ namespace WpfCliente.GUI
             {
                 if (ValidacionExistenciaJuego.ExisteSala(codigoSala))
                 {
-                    AbrirVentanaSala(codigoSala);
+                    await AbrirVentanaSalaAsync(codigoSala);
                     return;
                 }
                 else
@@ -258,17 +258,12 @@ namespace WpfCliente.GUI
             timerNotificacion.Tick += ContadorNotificacion;
         }
 
-        private void MostrarNotificacionGeneral(string mensaje, string imagenPath = "")
+        private void MostrarNotificacion(string mensaje)
         {
-            textBlockNotificacionGeneral.Text = mensaje;
-
-            if (!string.IsNullOrEmpty(imagenPath))
-            {
-                imagenPerfil.Source = new BitmapImage(new Uri(imagenPath));
-            }
+            textBlockNotificacion.Text = mensaje;
             buttonUnirse.Visibility = Visibility.Visible;
 
-            borderNotificacionGeneral.Visibility = Visibility.Visible;
+            borderNotificacion.Visibility = Visibility.Visible;
             progressTimerGeneral.Value = 0;
             timerNotificacion.Start();
         }
@@ -276,12 +271,12 @@ namespace WpfCliente.GUI
         public void RecibirInvitacion(InvitacionPartida invitacion)
         {
             invitacionActual = invitacion;
-            MostrarNotificacionGeneral(Properties.Idioma.mensajeInvitacionPartida + invitacion.GamertagEmisor);
+            MostrarNotificacion(Properties.Idioma.mensajeInvitacionPartida + " " + invitacion.GamertagEmisor);
         }
 
         private void OcultarNotificacion()
         {
-            borderNotificacionGeneral.Visibility = Visibility.Collapsed;
+            borderNotificacion.Visibility = Visibility.Collapsed;
             timerNotificacion.Stop();
         }
 
@@ -294,10 +289,10 @@ namespace WpfCliente.GUI
                 OcultarNotificacion();
             }
         }
-        private void ClicButtonUnirseInvitacion(object sender, RoutedEventArgs e)
+        private async void ClicButtonUnirseInvitacionAsync(object sender, RoutedEventArgs e)
         {
             bool esInvitacion = true;
-            UnirseASala(esInvitacion, invitacionActual.CodigoSala);
+            await UnirseASalaAsync(esInvitacion, invitacionActual.CodigoSala);
             OcultarNotificacion();
         }
 
@@ -318,7 +313,7 @@ namespace WpfCliente.GUI
             gridEstadisticas.Visibility = Visibility.Collapsed;
         }
 
-        private async void ClicButtonRefrescarEstadisticas(object sender, RoutedEventArgs e)
+        private async void ClicButtonRefrescarEstadisticasAsync(object sender, RoutedEventArgs e)
         {
             if (contadorClics >= LIMITE_CLICS)
             {
@@ -328,7 +323,7 @@ namespace WpfCliente.GUI
             buttonRefrescar.IsEnabled = false;
             try
             {
-                estadisticas.SolicitarEstadisiticas(SingletonCliente.Instance.IdUsuario);
+                estadisticas.SolicitarEstadisticas(SingletonCliente.Instance.IdUsuario);
                 textBlockPartidasGanadas.Text = estadisticas.Estadistica.PartidasGanadas.ToString();
                 textBlockPartidasJugadas.Text = estadisticas.Estadistica.PartidasJugadas.ToString();
                 textBlockNombre.Text = SingletonCliente.Instance.NombreUsuario;

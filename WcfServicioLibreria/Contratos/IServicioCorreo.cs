@@ -7,7 +7,7 @@ namespace WcfServicioLibreria.Contratos
     public interface IServicioCorreo
     {
         /// <summary>
-        /// Verifica si el correo electrónico asociado a un usuario es válido y se encuentra en buen estado.
+        /// Verifica si el correo electrónico asociado a un usuario es válido y le pertenece al mismo.
         /// </summary>
         /// <param name="usuario">El usuario cuyo correo electrónico se va a verificar.</param>
         /// <returns>True si el correo electrónico es válido; False en caso contrario.</returns>
@@ -25,7 +25,7 @@ namespace WcfServicioLibreria.Contratos
         string GenerarCodigo();
 
         /// <summary>
-        /// Verifica si el código proporcionado para alguna operación de verificación (como cambio de contraseña o verificación de correo) es correcto.
+        /// Verifica si el código proporcionado para alguna operación de verificación (como cambio de contraseña o verificación de correo) coicide con el proporcionado por el usuario que desea verificar su correo.
         /// </summary>
         /// <param name="codigo">El código que se debe verificar.</param>
         /// <returns>True si el código es correcto y válido para la operación; False en caso contrario.</returns>
@@ -33,10 +33,10 @@ namespace WcfServicioLibreria.Contratos
         bool VerificarCodigo(string codigo);
 
         /// <summary>
-        /// Verifica el correo electrónico de un usuario utilizando su gamertag asociado.
+        /// Verifica que exista un único usuario con el correo electrónico y el gamertag asociado.
         /// </summary>
         /// <param name="usuario">El usuario cuyo correo electrónico se va a verificar usando su gamertag.</param>
-        /// <returns>True si el correo electrónico asociado al gamertag es válido; False en caso contrario.</returns>
+        /// <returns>True si existe un usuario que coincida con el gamertag y correo; False en caso contrario.</returns>
         [OperationContract]
         bool VerificarCorreoConGamertag(Usuario usuario);
 

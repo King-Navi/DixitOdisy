@@ -8,13 +8,13 @@ namespace WcfServicioLibreria.Modelo.Vetos
     public class ManejadorDeVetos : IManejadorVeto
     {
         private const int ID_INVALIDO = 0;
-        private const string NOMBRE_PROHIBIDO = "guest";
+        private const string NOMBRE_RESERVADO = "guest";
         private const int DIAS_PRIMER_VETO = 30;
         public ManejadorDeVetos() { }
 
         public async Task<bool> VetaJugadorAsync(string nombreJugador)
         {
-            if (nombreJugador.ToLower().Contains(NOMBRE_PROHIBIDO))
+            if (nombreJugador.ToLower().Contains(NOMBRE_RESERVADO))
             {
                 return false;
             }
@@ -27,7 +27,7 @@ namespace WcfServicioLibreria.Modelo.Vetos
         }
         public async Task<bool> RegistrarExpulsionJugadorAsync(string nombreJugador, string motivo, bool esHacker)
         {
-            if (nombreJugador.ToLower().Contains(NOMBRE_PROHIBIDO))
+            if (nombreJugador.ToLower().Contains(NOMBRE_RESERVADO))
             {
                 return false;
             }

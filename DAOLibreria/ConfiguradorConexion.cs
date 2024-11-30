@@ -69,7 +69,7 @@ namespace DAOLibreria
 
 
                     ActualizarCadenaConexionEnAppConfig(nombreArchivoContext, contenidoArchivo);
-                    resultado = ProbarConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-"); //FIXME
+                    resultado = ProbarConexion("localhost", "Describelo", "devDescribelo", "UnaayIvan2025@-");
                 }
             }
             catch (Exception)

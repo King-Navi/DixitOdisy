@@ -26,8 +26,8 @@ namespace WpfCliente.GUI
         public void AsignarPodio(JugadorEstadisticas _primerLugar, JugadorEstadisticas _segundoLugar, JugadorEstadisticas _tercerLugar)
         {
             primerLugar = _primerLugar != null
-            ? UsuarioEnpartida.FirstOrDefault(usuario => usuario.Nombre == _primerLugar.Nombre)
-            : null;
+                ? UsuarioEnpartida.FirstOrDefault(usuario => usuario.Nombre == _primerLugar.Nombre)
+                : null;
 
             segundoLugar = _segundoLugar != null
                 ? UsuarioEnpartida.FirstOrDefault(usuario => usuario.Nombre == _segundoLugar.Nombre)
@@ -52,6 +52,7 @@ namespace WpfCliente.GUI
         {
             if (usuario == null)
             {
+                return;
             }
             else
             {

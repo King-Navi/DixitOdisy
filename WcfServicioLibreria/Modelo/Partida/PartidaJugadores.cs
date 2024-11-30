@@ -18,7 +18,7 @@ using DAOLibreria.DAO;
 
 namespace WcfServicioLibreria.Modelo
 {
-    internal partial class Partida : IObservador//FIXME: Faltan muchas funcionalidades y pruebas
+    internal partial class Partida : IObservador
     {
         #region Constantes
         #region Carpetas
@@ -127,7 +127,7 @@ namespace WcfServicioLibreria.Modelo
             Escritor = _escritorDisco;
             SolicitarImagen = new SolicitarImagen();
             estadisticasPartida = new EstadisticasPartida(_configuracion.Tematica);
-            TodosListos += (sender, e) =>
+            TodosListos += (emisor, evento) =>
             {
                 cancelacionEjecucionRonda= new CancellationTokenSource(); 
                 Task.Run(async () => await IniciarPartidaSeguroAsync(cancelacionEjecucionRonda.Token));
@@ -199,8 +199,13 @@ namespace WcfServicioLibreria.Modelo
                 Console.WriteLine($"Se asignor {nombreSolicitante} el archivo {nombreSinExtension}");
                 return true;
             }
-            catch (Exception)
+            catch (InvalidOperationException excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
 

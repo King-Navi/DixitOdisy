@@ -279,19 +279,19 @@ namespace WcfServicioLibreria.Manejador
                         var usuarioRemitenteConectado = usuarioDAO.ObtenerUsuarioPorId(idRemitente);
                         AmigoConetado(usuarioRemitenteConectado, usuarioDestinoConectado);
                     }
-                    else if (jugadoresConectadosDiccionario.ContainsKey(idRemitente))
+                    else if (jugadoresConectadosDiccionario.ContainsKey(idDestinatario))
                     {
-                        jugadoresConectadosDiccionario.TryGetValue(idRemitente, out UsuarioContexto remitente);
-                        var amigoDestinario = usuarioDAO.ObtenerUsuarioPorId(idDestinatario);
+                        jugadoresConectadosDiccionario.TryGetValue(idDestinatario, out UsuarioContexto destinatario);
+                        var amigoRemitente = usuarioDAO.ObtenerUsuarioPorId(idRemitente);
                         Modelo.Amigo amigo = new Modelo.Amigo()
                         {
-                            Nombre = amigoDestinario.gamertag,
+                            Nombre = amigoRemitente.gamertag,
                             Estado = EstadoAmigo.Desconectado,
-                            Foto = new MemoryStream(amigoDestinario.fotoPerfil),
-                            UltimaConexion = amigoDestinario.ultimaConexion.ToString()
+                            Foto = new MemoryStream(amigoRemitente.fotoPerfil),
+                            UltimaConexion = amigoRemitente.ultimaConexion.ToString()
 
                         };
-                        remitente.UsuarioSesionCallback?.ObtenerAmigoCallback(amigo);
+                        destinatario.UsuarioSesionCallback?.ObtenerAmigoCallback(amigo);
                     }
                     else
                     {
@@ -304,9 +304,9 @@ namespace WcfServicioLibreria.Manejador
                     return true;
                 }
             }
-            catch (FaultException<ServidorFalla> excepcion)
+            catch (FaultException<ServidorFalla>)
             {
-                throw excepcion;
+                throw;
             }
             catch (Exception excepcion)
             {

@@ -56,21 +56,21 @@ namespace WcfServicioLibreria.Modelo
         public void CalcularPodio()
         {
             var jugadoresOrdenados = Jugadores
-                .OrderByDescending(jugador => jugador.Puntos).ToList();
+                .OrderByDescending(jugador => jugador.Puntos)
+                .ToList();
 
-            PrimerLugar = jugadoresOrdenados.FirstOrDefault();
-
-            SegundoLugar = jugadoresOrdenados
-                .Skip(1)
-                .FirstOrDefault(jugador => jugador.Puntos != PrimerLugar?.Puntos);
-
-            TercerLugar = jugadoresOrdenados
-                .Skip(2)
-                .FirstOrDefault(jugador => jugador.Puntos != PrimerLugar?.Puntos && jugador.Puntos != SegundoLugar?.Puntos);
+            PrimerLugar = jugadoresOrdenados.ElementAtOrDefault(0);
+            SegundoLugar = jugadoresOrdenados.ElementAtOrDefault(1);
+            TercerLugar = jugadoresOrdenados.ElementAtOrDefault(2);
         }
 
         public async Task GuardarPuntajeAsync(List<Tuple<String , int >> listaTuplaNombreIdEstadistica)
         {
+            if (listaTuplaNombreIdEstadistica == null)
+            {
+                return;
+            }
+            CalcularPodio();
             var accion = SelecionarAccion(Tematica);
             var tareasSolicitudes = new List<Task>();
             foreach (var tupla in listaTuplaNombreIdEstadistica)

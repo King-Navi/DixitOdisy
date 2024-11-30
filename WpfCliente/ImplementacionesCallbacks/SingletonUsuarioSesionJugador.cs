@@ -15,7 +15,7 @@ namespace WpfCliente.ImplementacionesCallbacks
         public ServicioUsuarioSesionClient UsuarioSesion { get; private set; }
         public EventHandler InicioSesionEvento;
 
-        public void ObtenerSessionJugadorCallback()
+        public void ObtenerSesionJugadorCallback()
         {
             InicioSesionEvento?.Invoke(this, EventArgs.Empty);
         }

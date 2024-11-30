@@ -54,25 +54,7 @@ namespace DAOLibreria.DAO
                 return false;
             }
         }
-        /// <summary>
-        /// Verifica si hay algún veto activo o permanente asociado a una cuenta de usuario específica.
-        /// </summary>
-        /// <param name="idUsuarioCuenta">El identificador de la cuenta de usuario a verificar.</param>
-        /// <returns>
-        /// True si se produce un error inesperado durante la verificación.
-        /// False si no hay vetos activos o si todos los vetos han expirado y no son permanentes.
-        /// </returns>
-        /// <exception cref="VetoPermanenteExcepcion">
-        /// Lanza una excepción si se encuentra un veto permanente asociado a la cuenta.
-        /// </exception>
-        /// <exception cref="VetoEnProgresoExcepcion">
-        /// Lanza una excepción si se encuentra un veto temporal que todavía está en progreso.
-        /// </exception>
-        /// /// <remarks>
-        /// Este método consulta la base de datos para recuperar todos los vetos asociados con el identificador de cuenta dado.
-        /// Basado en la evaluación de estos vetos, se pueden lanzar excepciones específicas para indicar la presencia de restricciones activas.
-        /// La lógica de manejo de excepciones está diseñada para separar claramente los diferentes tipos de restricciones (permanentes y temporales).
-        /// </remarks>
+    
         public bool VerificarVetoPorIdCuenta(int idUsuarioCuenta)
         {
             try

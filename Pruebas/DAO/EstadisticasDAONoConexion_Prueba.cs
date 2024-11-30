@@ -26,14 +26,14 @@ namespace Pruebas.DAO
         [TestMethod]
         public void ObtenerIdEstadisticaConIdUsuario_SinConexionBD_DeberiaRetornarMenosUno()
         {
-            // Arrange
+            
             //Precondcion: El ID debe exisitir en BD.
             int idUsuario = 1; 
 
-            // Act
+            
             int resultado = estadisticasDAO.ObtenerIdEstadisticaConIdUsuario(idUsuario);
 
-            // Assert
+            
             Assert.AreEqual(-1, resultado, "El método debería devolver -1 cuando no hay conexión a la base de datos.");
         }
     }

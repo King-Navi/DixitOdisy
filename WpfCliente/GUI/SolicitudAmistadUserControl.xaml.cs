@@ -34,7 +34,6 @@ namespace WpfCliente.GUI
             if (DataContext is SolicitudAmistad solicitud && solicitud != null)
             {
                 labelNombreAmigo.Content = solicitud.Remitente.Nombre;
-                imageAmigo.Source = Imagen.ConvertirStreamABitmapImagen(solicitud.Remitente.FotoUsuario);
                 solicitudAmistadActual = solicitud;
             }
         }

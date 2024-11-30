@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DescribeloBD.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ModeloBD.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Amigo">
           <Key>
             <PropertyRef Name="idMayor_usuario" />
@@ -175,7 +175,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DescribeloBDStoreContainer">
+        <EntityContainer Name="ModeloBDStoreContainer">
           <EntitySet Name="Amigo" EntityType="Self.Amigo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Estadisticas" EntityType="Self.Estadisticas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Expulsion" EntityType="Self.Expulsion" Schema="dbo" store:Type="Tables" />
@@ -220,7 +220,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DescribeloBD" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="ModeloBD" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Amigo">
           <Key>
             <PropertyRef Name="idMayor_usuario" />
@@ -453,9 +453,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DescribeloBDStoreContainer" CdmEntityContainer="DescribeloEntities">
+        <EntityContainerMapping StorageEntityContainer="ModeloBDStoreContainer" CdmEntityContainer="DescribeloEntities">
           <EntitySetMapping Name="Amigo">
-            <EntityTypeMapping TypeName="DescribeloBD.Amigo">
+            <EntityTypeMapping TypeName="ModeloBD.Amigo">
               <MappingFragment StoreEntitySet="Amigo">
                 <ScalarProperty Name="idMayor_usuario" ColumnName="idMayor_usuario" />
                 <ScalarProperty Name="idMenor_usuario" ColumnName="idMenor_usuario" />
@@ -465,7 +465,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Estadisticas">
-            <EntityTypeMapping TypeName="DescribeloBD.Estadisticas">
+            <EntityTypeMapping TypeName="ModeloBD.Estadisticas">
               <MappingFragment StoreEntitySet="Estadisticas">
                 <ScalarProperty Name="idEstadisticas" ColumnName="idEstadisticas" />
                 <ScalarProperty Name="partidasJugadas" ColumnName="partidasJugadas" />
@@ -480,7 +480,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Expulsion">
-            <EntityTypeMapping TypeName="DescribeloBD.Expulsion">
+            <EntityTypeMapping TypeName="ModeloBD.Expulsion">
               <MappingFragment StoreEntitySet="Expulsion">
                 <ScalarProperty Name="idExpulsion" ColumnName="idExpulsion" />
                 <ScalarProperty Name="motivo" ColumnName="motivo" />
@@ -491,7 +491,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SolicitudAmistad">
-            <EntityTypeMapping TypeName="DescribeloBD.SolicitudAmistad">
+            <EntityTypeMapping TypeName="ModeloBD.SolicitudAmistad">
               <MappingFragment StoreEntitySet="SolicitudAmistad">
                 <ScalarProperty Name="idSolicitud" ColumnName="idSolicitud" />
                 <ScalarProperty Name="idRemitente" ColumnName="idRemitente" />
@@ -503,7 +503,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Usuario">
-            <EntityTypeMapping TypeName="DescribeloBD.Usuario">
+            <EntityTypeMapping TypeName="ModeloBD.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
                 <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
                 <ScalarProperty Name="gamertag" ColumnName="gamertag" />
@@ -514,7 +514,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UsuarioCuenta">
-            <EntityTypeMapping TypeName="DescribeloBD.UsuarioCuenta">
+            <EntityTypeMapping TypeName="ModeloBD.UsuarioCuenta">
               <MappingFragment StoreEntitySet="UsuarioCuenta">
                 <ScalarProperty Name="idUsuarioCuenta" ColumnName="idUsuarioCuenta" />
                 <ScalarProperty Name="gamertag" ColumnName="gamertag" />
@@ -524,7 +524,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Veto">
-            <EntityTypeMapping TypeName="DescribeloBD.Veto">
+            <EntityTypeMapping TypeName="ModeloBD.Veto">
               <MappingFragment StoreEntitySet="Veto">
                 <ScalarProperty Name="idVeto" ColumnName="idVeto" />
                 <ScalarProperty Name="fechaInicio" ColumnName="fechaInicio" />

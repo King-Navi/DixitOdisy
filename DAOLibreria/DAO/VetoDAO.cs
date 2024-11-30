@@ -30,6 +30,7 @@ namespace DAOLibreria.DAO
             }
             return false;
         }
+
         public bool CrearRegistroVeto(int idUsuarioCuenta, DateTime? fechaFin, bool esPermanente)
         {
             if (idUsuarioCuenta <= ID_INVALIDO)

@@ -18,9 +18,9 @@ namespace WpfCliente.GUI
     public partial class RegistrarUsuarioPage : Page,  IActualizacionUI, IHabilitadorBotones
     {
         private string rutaAbsolutaImagen;
-        private const string ESTILO_NORMAL_TEXTO = "NormalTextBoxStyle";
-        private const string ESTILO_NORMAL_CONTRASENIA = "NormalPasswordBoxStyle";
-        private const string ERROR_ESTILO_TEXTO = "ErrorTextBoxStyle";
+        private const string ESTILO_NORMAL_TEXTO = "TextBoxEstiloNormal";
+        private const string ESTILO_NORMAL_CONTRASENIA = "PasswordBoxEstiloError";
+        private const string ERROR_ESTILO_TEXTO = "TextBoxEstiloError";
         private const string PALABRA_PROHIBIDA_GUEST = "guest";
         public RegistrarUsuarioPage()
         {
@@ -244,10 +244,25 @@ namespace WpfCliente.GUI
 
         private void ObtenerEstilos()
         {
-            textBoxNombreUsuario.Style = (Style)FindResource(ESTILO_NORMAL_TEXTO);
-            textBoxCorreo.Style = (Style)FindResource(ESTILO_NORMAL_TEXTO);
-            passwordBoxContrasenia.Style = (Style)FindResource(ESTILO_NORMAL_CONTRASENIA);
-            passwordBoxRepetirContrasenia.Style = (Style)FindResource(ESTILO_NORMAL_CONTRASENIA);
+            try
+            {
+                textBoxNombreUsuario.Style = (Style)FindResource(ESTILO_NORMAL_TEXTO);
+                textBoxCorreo.Style = (Style)FindResource(ESTILO_NORMAL_TEXTO);
+                passwordBoxContrasenia.Style = (Style)FindResource(ESTILO_NORMAL_CONTRASENIA);
+                passwordBoxRepetirContrasenia.Style = (Style)FindResource(ESTILO_NORMAL_CONTRASENIA);
+            }
+            catch (ResourceReferenceKeyNotFoundException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+            }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+            }
             labelCorreoInvalido.Visibility = Visibility.Hidden;
             labelCorreoExistente.Visibility = Visibility.Hidden;
             labelGamertagExistente.Visibility = Visibility.Hidden;

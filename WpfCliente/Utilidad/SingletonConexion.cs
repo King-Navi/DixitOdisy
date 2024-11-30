@@ -58,7 +58,7 @@ namespace WpfCliente.Utilidad
                     bool conexionExitosa = await Conexion.VerificarConexionSinBaseDatosAsync();
                     if (!conexionExitosa)
                     {
-                        SingletonGestorVentana.Instancia.AbrirNuevaVentanaPrincipal(new ReconectandoWindow());
+                        SingletonGestorVentana.Instancia.NavegarA(new IniciarSesionPage());
                         Detener();
                         return;
                     }

@@ -19,7 +19,7 @@ namespace DAOLibreria
             string nuevaCadenaConexion = $"metadata=res://*/{CARPETA}.{NOMBRE_MODELO_ENTIDAD}.csdl|res://*/{CARPETA}.{NOMBRE_MODELO_ENTIDAD}.ssdl|res://*/{CARPETA}.{NOMBRE_MODELO_ENTIDAD}.msl;" +
                                          $"provider=System.Data.SqlClient;provider connection string=\"Server={servidor};Database={nombreBD};User Id={usuario};Password={contrasena};MultipleActiveResultSets=True;App=EntityFramework\";";
             ActualizarCadenaConexionEnAppConfig(NOMBRE_CADENA_CONTEXTO, nuevaCadenaConexion);
-            return ProbarConexion(servidor, nombreBD, usuario, contrasena);
+            return ProbarConexion();
 
         }
 
@@ -43,7 +43,7 @@ namespace DAOLibreria
 
                 ActualizarCadenaConexionEnAppConfig(NOMBRE_CADENA_CONTEXTO, nuevaCadenaConexion);
 
-                resultado = ProbarConexion(valoresLista[0], valoresLista[1], valoresLista[2], valoresLista[3]);
+                resultado = ProbarConexion();
             }
             catch (ArgumentNullException excepcion)
             {
@@ -76,7 +76,6 @@ namespace DAOLibreria
             }
             config.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("connectionStrings");
-            Console.WriteLine(seccion);
         }
         public static bool ConfigurarCadenaConexionRuta()
         {
@@ -99,7 +98,7 @@ namespace DAOLibreria
 
                     ActualizarCadenaConexionEnAppConfig(NOMBRE_CADENA_CONTEXTO, nuevaCadenaConexion);
 
-                    resultado = ProbarConexion(servidor, nombreBD, usuario, contrasena);
+                    resultado = ProbarConexion();
                 }
             }
             catch (FileNotFoundException exepcion)
@@ -145,10 +144,9 @@ namespace DAOLibreria
             return null;
         }
 
-        private static bool ProbarConexion(string servidor, string nombreBD, string usuario, string contrasena)
+        private static bool ProbarConexion()
         {
             bool resultado = false;
-            string cadenaConexionSQL = $"Server={servidor};Database={nombreBD};User Id={usuario};Password={contrasena};";
             try
             {
                 var primerIntento = Conexion.VerificarConexion();

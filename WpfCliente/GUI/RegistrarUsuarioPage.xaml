@@ -49,13 +49,13 @@
             <Setter Property="Height" Value="32"/>
         </Style>
 
-        <Style TargetType="{x:Type PasswordBox}" x:Key="ErrorPasswordBoxStyle">
+        <Style TargetType="{x:Type PasswordBox}" x:Key="PasswordBoxEstiloError">
             <Setter Property="BorderBrush" Value="Red"/>
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="Background" Value="#FFE57E7E"/>
         </Style>
 
-        <Style TargetType="{x:Type PasswordBox}" x:Key="NormalPasswordBoxStyle">
+        <Style TargetType="{x:Type PasswordBox}" x:Key="PasswordBoxEstiloNormal">
             <Setter Property="BorderBrush" Value="#FFFFFF"/>
             <Setter Property="BorderThickness" Value="2"/>
             <Setter Property="Background" Value="#FFFFFF"/>

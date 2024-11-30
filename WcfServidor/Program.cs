@@ -12,7 +12,6 @@ namespace WcfServidor
             var respuesta = InicializadorConfiguracion.ConfigurarConVariableEntorno("a");
             if (!respuesta)
             {
-                Console.WriteLine(respuesta);
                 return;
             }
             Program programa = new Program();

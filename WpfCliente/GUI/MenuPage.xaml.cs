@@ -53,7 +53,6 @@ namespace WpfCliente.GUI
             if (!resutlado)
             {
                 SingletonGestorVentana.Instancia.Regresar();
-                SingletonGestorVentana.Instancia.AbrirNuevaVentanaPrincipal(new ReconectandoWindow());
                 return;
             }
             try

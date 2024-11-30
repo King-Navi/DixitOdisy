@@ -2,6 +2,7 @@
 using DAOLibreria.ModeloBD;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pruebas.DAO.Utilidades;
+using System.Linq;
 
 namespace Pruebas.DAO
 {
@@ -10,18 +11,39 @@ namespace Pruebas.DAO
     {
         private const int IDUSUARIO_INEXISTENTE = -130;
         private const int IDUSUARIO = 1;
+        private const int RETORNO_USUARIO_NO_ENCONTRADO = -2;
         private UsuarioCuentaDAO usuarioCuentaDAO = new UsuarioCuentaDAO();
+
+
+
+        [TestInitialize]
+        public void BuscarUsuarioInicial()
+        {
+            using (var context = new DescribeloEntities())
+            {
+                var usuario = context.Usuario
+                    .SingleOrDefault(u => u.idUsuario == IDUSUARIO);
+
+                var usuarioCuenta = context.UsuarioCuenta
+                    .SingleOrDefault(u => u.idUsuarioCuenta == IDUSUARIO);
+
+                if (usuario != null && usuarioCuenta != null)
+                {
+                    usuarioInicial = usuario;
+                    usuarioCuentaInicial = usuarioCuenta;
+                }
+                else
+                {
+                    Assert.Fail("No se encontro el usuario inicial");
+                }
+            }
+        }
         #region ObtenerIdUsuarioCuentaPorIdUsuario
         [TestMethod]
         public void ObtenerIdUsuarioCuentaPorIdUsuario_IdUsuarioExistente_DeberiaRetornarIdUsuarioCuenta()
         {
-            
             int idUsuarioCuentaEsperado = IDUSUARIO;
-
-            
             var resultado = usuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(IDUSUARIO);
-
-            
             Assert.IsNotNull(resultado, "El método debería retornar un valor no nulo.");
             Assert.AreEqual(idUsuarioCuentaEsperado, resultado, "El ID de la cuenta retornado no coincide con el esperado.");
         }
@@ -29,24 +51,14 @@ namespace Pruebas.DAO
         [TestMethod]
         public void ObtenerIdUsuarioCuentaPorIdUsuario_IdUsuarioInexistenteNegativo_DeberiaRetornarNull()
         {
-            
-
-            
             var resultado = usuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(IDUSUARIO_INEXISTENTE);
-
-            
-            Assert.IsNull(resultado, "El método debería retornar null para un ID de usuario inexistente.");
+             Assert.AreEqual(resultado, RETORNO_USUARIO_NO_ENCONTRADO);
         }
         [TestMethod]
         public void ObtenerIdUsuarioCuentaPorIdUsuario_IdUsuarioInexistentePositvo_DeberiaRetornarNull()
         {
-            
-
-            
-            var resultado = usuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(IDUSUARIO_INEXISTENTE);
-
-            
-            Assert.IsNull(resultado, "El método debería retornar null para un ID de usuario inexistente.");
+           var resultado = usuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(IDUSUARIO_INEXISTENTE);
+            Assert.AreEqual(resultado, RETORNO_USUARIO_NO_ENCONTRADO);
         } 
         #endregion
 
@@ -56,14 +68,7 @@ namespace Pruebas.DAO
         [TestMethod]
         public void VerificarCorreoConGamertag_CuandoCoinciden_DeberiaRetornarTrue()
         {
-            
-            var correo = "unaayjose@gmail.com";
-            var gamertag = "unaay";
-
-            
-            bool resultado = usuarioCuentaDAO.ExisteUnicoUsuarioConGamertagYCorreo(gamertag, correo);
-
-            
+            bool resultado = usuarioCuentaDAO.ExisteUnicoUsuarioConGamertagYCorreo(usuarioInicial.gamertag, usuarioCuentaInicial.correo);
             Assert.IsTrue(resultado, "El método debería retornar true cuando el correo y el gamertag coinciden.");
         }
 
@@ -84,14 +89,7 @@ namespace Pruebas.DAO
         [TestMethod]
         public void EditarContraseniaPorGamertag_CuandoDatosValidos_DeberiaRetornarTrue()
         {
-            
-            string gamertag = "leoleo";
-            string nuevoHashContrasenia = "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd6d0fcb4c8b9e3fbb5"; // SHA256 de "password"
-
-            
-            bool resultado = usuarioCuentaDAO.EditarContraseniaPorGamertag(gamertag, nuevoHashContrasenia);
-
-            
+            bool resultado = usuarioCuentaDAO.EditarContraseniaPorGamertag(POR_DEFECTO_NOMBRE_CUENTA, NUEVA_CONTRASENIA);
             Assert.IsTrue(resultado, "El método debería retornar true cuando los datos son válidos y la contraseña está en SHA256.");
         }
 
@@ -100,7 +98,7 @@ namespace Pruebas.DAO
         {
             
             string gamertag = "usuarioPrueba";
-            string nuevoHashContraseniaInvalido = "password"; // Contraseña en texto plano, no en SHA256
+            string nuevoHashContraseniaInvalido = "password"; 
 
             
             bool resultado = usuarioCuentaDAO.EditarContraseniaPorGamertag(gamertag, nuevoHashContraseniaInvalido);

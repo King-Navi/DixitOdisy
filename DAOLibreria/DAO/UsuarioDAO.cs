@@ -91,6 +91,7 @@ namespace DAOLibreria.DAO
             }
             return false;
         }
+
         public bool EditarUsuario(UsuarioPerfilDTO usuarioEditado)
         {
             bool resultado = false;
@@ -161,6 +162,7 @@ namespace DAOLibreria.DAO
             }
             return false;
         }
+
         public UsuarioPerfilDTO ValidarCredenciales(string gamertag, string contrasenia)
         {
             UsuarioCuenta datosUsuarioCuenta = null;
@@ -195,6 +197,7 @@ namespace DAOLibreria.DAO
             }
             return resultado;
         }
+
         public Usuario ObtenerUsuarioPorNombre(string gamertag)
         {
             Usuario usuario = null;
@@ -288,6 +291,7 @@ namespace DAOLibreria.DAO
             }
             return usuarios;
         }
+
         public void VerificarNombreUnico(string gamertag)
         {
             Usuario usuario = null;
@@ -321,8 +325,6 @@ namespace DAOLibreria.DAO
             }
 
         }
-
-
 
         public bool ColocarUltimaConexion(int idUsuario)
         {

@@ -2,6 +2,7 @@
 using Moq;
 using Pruebas.Servidor.Utilidades;
 using System;
+using System.IO;
 using WcfServicioLibreria.Manejador;
 using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Utilidades;
@@ -29,36 +30,30 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void RegistrarUsuario_FaltanCampos_RetornaFalse()
         {
-            //Arrage
             Usuario usuario = new Usuario();
             usuario.Nombre = "Pedro57Master";
-            //Act
             bool resultado = manejador.RegistrarUsuario(usuario);
-            //Result
             Assert.IsFalse(resultado, "El usuario no deberia ser registrado");
         }
         [TestMethod]
         public void RegistrarUsuario_SHA256Invalido_RetornaFalse()
         {
-            //Arrage
             Usuario usuario = new Usuario();
             usuario.Nombre = "Pedro57Master";
             usuario.ContraseniaHASH = "Invalido";
             usuario.Correo = "CorreoValido@gmail.com";
             usuario.FotoUsuario = GeneradorAleatorio.GenerarStreamAleatorio(20);
-            //Act
             bool resultado = manejador.RegistrarUsuario(usuario);
-            //Result
             Assert.IsFalse(resultado, "El usuario no deberia ser registrado");
         }
         [TestMethod]
         public void RegistrarUsuario_RegistroExistoso_RetornaTrue()
         {
-            //Arrage
+            imitarUsuarioDAO.Setup(dao => dao.RegistrarNuevoUsuario(It.IsAny<DAOLibreria.ModeloBD.Usuario>(), It.IsAny<DAOLibreria.ModeloBD.UsuarioCuenta>())).Returns(true);
+
+
             Usuario usuario = GeneradorAleatorio.GenerarUsuarioAleatorio();
-            //Act
             bool resultado = manejador.RegistrarUsuario(usuario);
-            //Result
             Assert.IsTrue(resultado, "El usuario no deberia ser registrado");
         }
 

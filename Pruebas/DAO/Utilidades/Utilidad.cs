@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Pruebas.Servidor.Utilidades;
+using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -6,8 +8,11 @@ namespace Pruebas.DAO
 {
     public static class Utilidad
     {
+        private static Random random = new Random();
+
         public static string ObtenerSHA256Hash(string entrada)
         {
+
             using (SHA256 algoritmoSHA256 = SHA256.Create())
             {
                 byte[] arregloByte = algoritmoSHA256.ComputeHash(Encoding.UTF8.GetBytes(entrada));
@@ -40,6 +45,13 @@ namespace Pruebas.DAO
             };
         }
 
+        public static string GenerarCadenaAleatoria(int longitud)
+        {
+            const string caracteres = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(caracteres, longitud)
+                                        .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
         public static DAOLibreria.ModeloBD.UsuarioCuenta GenerarUsuarioCuentaDePrueba(string gamertag)
         {
             string contraseniaAleatoria = "Contraseña" + new Random().Next(1000, 9999);
@@ -53,29 +65,7 @@ namespace Pruebas.DAO
                 correo = correoAleatorio
             };
         }
-        public static (DAOLibreria.ModeloBD.Usuario, DAOLibreria.ModeloBD.UsuarioCuenta) PrepararUsuarioExistente()
-        {
-            string gamertagExistente = "UsuarioExistente";
-            string contraseniaExistente = "Contrasena1234";
-            string hashContraseniaExistente = Utilidad.ObtenerSHA256Hash(contraseniaExistente);
-            string correoExistente = "usuarioexistente@ejemplo.com";
-            byte[] fotoPerfilExistente = Utilidad.GenerarBytesAleatorios(256);
 
-            var usuarioCuentaExistente = new DAOLibreria.ModeloBD.UsuarioCuenta
-            {
-                gamertag = gamertagExistente,
-                hashContrasenia = hashContraseniaExistente,
-                correo = correoExistente
-            };
-
-            var usuarioExistente = new DAOLibreria.ModeloBD.Usuario
-            {
-                gamertag = gamertagExistente,
-                fotoPerfil = fotoPerfilExistente,
-                idUsuarioCuenta = usuarioCuentaExistente.idUsuarioCuenta
-            };
-            return (usuarioExistente, usuarioCuentaExistente);
-        }
     }
 
 }

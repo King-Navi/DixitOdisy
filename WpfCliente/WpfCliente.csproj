@@ -175,9 +175,6 @@
     <Compile Include="GUI\PerfilMenuDesplegableUserControl.xaml.cs">
       <DependentUpon>PerfilMenuDesplegableUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\ReconectandoWindow.xaml.cs">
-      <DependentUpon>ReconectandoWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GUI\UsuarioUserControl.xaml.cs">
       <DependentUpon>UsuarioUserControl.xaml</DependentUpon>
     </Compile>
@@ -418,10 +415,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\PrincipalWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="GUI\ReconectandoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

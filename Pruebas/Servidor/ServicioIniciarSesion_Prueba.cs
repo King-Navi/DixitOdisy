@@ -79,7 +79,6 @@ namespace Pruebas.Servidor
             Assert.IsNull(resultado, "El método debería devolver un nulo");
         }
 
-        
-        #endregion
+        # endregion ValidarCredenciales
     }
 }

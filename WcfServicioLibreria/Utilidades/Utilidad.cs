@@ -47,35 +47,5 @@ namespace WcfServicioLibreria.Utilidades
             }
             return resultado.ToString();
         }
-
-        /// <summary>
-        /// Evalúa si todas las propiedades públicas de un objeto tienen un valor válido.
-        /// </summary>
-        /// <param name="objeto">El objeto a evaluar.</param>
-        /// <returns>True si todas las propiedades tienen valores válidos; False en caso contrario.</returns>
-        /// <exception cref="ArgumentNullException">Se lanza si el objeto es null.</exception>
-        public static bool ValidarPropiedades(object objeto)
-        {
-            if (objeto == null)
-            {
-                throw new ArgumentNullException(nameof(objeto), "El objeto no puede ser null.");
-            }
-            var propiedades = objeto.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-            foreach (var propiedad in propiedades)
-            {
-                var valor = propiedad.GetValue(objeto);
-                if (valor == null)
-                {
-                    return false;
-                }
-                if (propiedad.PropertyType == typeof(string) && string.IsNullOrWhiteSpace((string)valor))
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
     }
 }

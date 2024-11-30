@@ -1,8 +1,8 @@
-﻿using System;
+﻿using DAOLibreria.Excepciones;
+using DAOLibreria.ModeloBD;
+using System;
 using System.Linq;
 using System.ServiceModel;
-using DAOLibreria.Excepciones;
-using DAOLibreria.ModeloBD;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo.Excepciones;
 using WcfServicioLibreria.Utilidades;
@@ -17,7 +17,7 @@ namespace WcfServicioLibreria.Manejador
             bool resultado = false;
             try
             {
-                if (EsSha256Valido(usuarioNuevo.ContraseniaHASH) && Utilidad.ValidarPropiedades(usuarioNuevo))
+                if (EsSha256Valido(usuarioNuevo.ContraseniaHASH) && ValidarUsuarioRegistro(usuarioNuevo))
                 {
                     var usuarioCuenta = new UsuarioCuenta
                     {
@@ -33,13 +33,19 @@ namespace WcfServicioLibreria.Manejador
                     resultado = usuarioDAO.RegistrarNuevoUsuario(usuarioModeloBaseDatos, usuarioCuenta);
                 }
             }
-            catch (GamertagDuplicadoException)
+            catch (GamertagDuplicadoException excepcionGamertag)
             {
-                BaseDatosFalla excepcion = new BaseDatosFalla()
+                BaseDatosFalla excepcionBaseDatos = new BaseDatosFalla()
                 {
                     EsGamertagDuplicado = true
                 };
-                throw new FaultException<BaseDatosFalla>(excepcion, new FaultReason(NOMBRE_EN_USO));
+                ManejadorExcepciones.ManejarErrorException(excepcionGamertag);
+                throw new FaultException<BaseDatosFalla>(excepcionBaseDatos, new FaultReason(NOMBRE_EN_USO));
+
+            }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             catch (Exception excepcion)
             {
@@ -47,6 +53,27 @@ namespace WcfServicioLibreria.Manejador
             }
 
             return resultado;
+        }
+
+        private bool ValidarUsuarioRegistro(Modelo.Usuario usuarioNuevo)
+        {
+            if (String.IsNullOrEmpty(usuarioNuevo.Nombre))
+            {
+                throw new ArgumentException();
+            }
+            if (String.IsNullOrEmpty(usuarioNuevo.ContraseniaHASH))
+            {
+                throw new ArgumentException();
+            }
+            if (String.IsNullOrEmpty(usuarioNuevo.Correo))
+            {
+                throw new ArgumentException();
+            }
+            if (usuarioNuevo.FotoUsuario == null)
+            {
+                throw new ArgumentException();
+            }
+            return true;
         }
 
         public bool EsSha256Valido(string hash)

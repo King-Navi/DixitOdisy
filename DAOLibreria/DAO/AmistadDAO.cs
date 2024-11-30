@@ -59,13 +59,12 @@ namespace DAOLibreria.DAO
             catch (ArgumentNullException excepcion)
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
-                return false;
             }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
-                throw new InvalidOperationException("Ocurrió un error al verificar la amistad.", excepcion);
             }
+            return false;
         }
 
         public bool EliminarAmigo(int idUsuarioMayor, int idUsuarioMenor)

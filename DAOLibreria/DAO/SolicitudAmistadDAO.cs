@@ -59,7 +59,7 @@ namespace DAOLibreria.DAO
             }
             catch (Exception excepcion)
             {
-                throw new InvalidOperationException("Error al guardar la solicitud de amistad.", excepcion);
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
         }
@@ -79,9 +79,12 @@ namespace DAOLibreria.DAO
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
             }
-            return false;
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            return true;
         }
-
 
         public List<Usuario> ObtenerSolicitudesAmistad(int idUsuario)
         {
@@ -115,7 +118,6 @@ namespace DAOLibreria.DAO
             }
             return usuariosRemitentes;
         }
-
 
         public bool AceptarSolicitudAmistad(int idRemitente, int idDestinatario)
         {
@@ -163,20 +165,17 @@ namespace DAOLibreria.DAO
             catch (DbUpdateException excepcion)
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
-                return false;
             }
             catch (InvalidOperationException excepcion)
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
-                return false;
             }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
-                throw new InvalidOperationException(excepcion.Message);
             }
+            return false;
         }
-
 
         public bool RechazarSolicitudAmistad(int idRemitente, int idDestinatario)
         {
@@ -208,7 +207,6 @@ namespace DAOLibreria.DAO
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
-                throw new InvalidOperationException(excepcion.Message);
             }
             return false;
         }

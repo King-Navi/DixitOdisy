@@ -21,7 +21,7 @@ namespace DAOLibreria.DAO
                         .Select(u => u.idUsuarioCuenta)
                         .FirstOrDefault();
 
-                    return idUsuarioCuenta == 0 ? -2 : idUsuarioCuenta;
+                    return idUsuarioCuenta <= 0 ? -2 : idUsuarioCuenta;
                 }
             }
             catch (ArgumentNullException excepcion)

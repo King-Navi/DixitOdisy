@@ -2,13 +2,14 @@
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Modelo.Vetos;
 using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioSalaJugador
     {
-        public bool ComenzarPartidaAnfrition(string nombre, string idSala , string idPartida)
+        public bool ComenzarPartidaAnfrition(string nombre, string idSala, string idPartida)
         {
             var resultado = false;
             try
@@ -57,31 +58,40 @@ namespace WcfServicioLibreria.Manejador
             }
         }
 
-        public void ExpulsarJugadorSala(string anfitrion, string jugadorAExpulsar, string idSala)
+        public async Task<bool> ExpulsarJugadorSalaAsync(string anfitrion, string jugadorAExpulsar, string idSala)
         {
             if (!ValidarSala(idSala))
             {
-                return;
+                return false;
             }
             if (anfitrion.Equals(jugadorAExpulsar, StringComparison.OrdinalIgnoreCase))
             {
-                return;
+                return false;
             }
             try
             {
                 salasDiccionario.TryGetValue(idSala, out Modelo.Sala sala);
-                lock (sala)
+                if (String.IsNullOrEmpty(anfitrion))
                 {
-                    if (sala.Anfitrion.Equals(anfitrion, StringComparison.OrdinalIgnoreCase))
+                    return false;
+                }
+                if (sala.Anfitrion.Equals(anfitrion, StringComparison.OrdinalIgnoreCase))
+                {
+                    ManejadorDeVetos veto = new ManejadorDeVetos();
+                    var resultado = await veto.RegistrarExpulsionJugadorAsync(jugadorAExpulsar, MOTIVO_EXPULSION_SALA, false);
+                    lock (sala)
                     {
                         sala.DesconectarUsuario(jugadorAExpulsar);
                     }
+                    return true;
                 }
+
             }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+            return false;
         }
     }
 }

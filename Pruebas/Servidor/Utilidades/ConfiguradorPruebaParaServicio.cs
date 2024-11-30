@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Manejador;
 using WcfServicioLibreria.Utilidades;
 
@@ -26,7 +27,7 @@ namespace Pruebas.Servidor.Utilidades
         protected Mock<IEstadisticasDAO> imitarEstadisticasDAO = new Mock<IEstadisticasDAO>();
         protected Mock<IAmistadDAO> imitarAmistadDAO = new Mock<IAmistadDAO>();
         protected Mock<IContextoOperacion> mockContextoProvedor = new Mock<IContextoOperacion>();
-
+        public UsuarioSesionCallbackImplementacion implementacionCallback;
 
         protected ManejadorPrincipal manejador;
 
@@ -44,6 +45,9 @@ namespace Pruebas.Servidor.Utilidades
                 imitarAmistadDAO.Object
             );
             idAleatorioValido = GeneradorAleatorio.GenerarIdValido();
+            implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
+            mockContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
+                .Returns(implementacionCallback);
         }
         public void ConfigurarImitadores()
         {

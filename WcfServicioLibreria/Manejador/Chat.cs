@@ -39,6 +39,7 @@ namespace WcfServicioLibreria.Manejador
             }
             return resultado;
         }
+
         public void BorrarChat(object sender, System.EventArgs e)
         {
             if (sender is MultiChat chat)

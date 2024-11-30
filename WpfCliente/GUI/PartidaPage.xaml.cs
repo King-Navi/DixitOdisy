@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WpfCliente.Contexto;
+using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
@@ -98,7 +99,7 @@ namespace WpfCliente.GUI
             var tareasSolicitudes = new List<Task>();
             for (int i = CERO_IMAGENES_MAZO; i < MAXIMO_IMAGENES_MAZO; i++)
             {
-                tareasSolicitudes.Add(Conexion.Partida.SolicitarImagenCartaAsync(
+                tareasSolicitudes.Add(SingletonCanal.Instancia.Partida.SolicitarImagenCartaAsync(
                     SingletonCliente.Instance.NombreUsuario, 
                     SingletonCliente.Instance.IdPartida));
             }
@@ -117,7 +118,7 @@ namespace WpfCliente.GUI
             seleccionCartasUserControl = new SeleccionCartaUserControl(recursosCompartidos.Imagenes);
             verTodasCartasUserControl = new VerTodasCartasUserControl(recursosCompartidos.GruposDeImagenes);
             resumenRondaUserControl = new ResumenRondaUserControl(recursosCompartidos.UsuarioEnpartida, 
-                recursosCompartidos.Podio);
+                recursosCompartidos.NombreEnPodio);
             chatUserControl.IsEnabled = false;
             gridPantalla2.Children.Add(seleccionCartasUserControl);
             gridPantalla3.Children.Add(narradorSeleccionCartasUserControl);
@@ -128,9 +129,8 @@ namespace WpfCliente.GUI
 
         private async Task UnirseChat()
         {
-            await Conexion.AbrirConexionChatMotorCallbackAsync(chatUserControl);
-            await Conexion.ChatMotor.AgregarUsuarioChatAsync(SingletonCliente.Instance.IdChat, 
-                SingletonCliente.Instance.NombreUsuario);
+            SingletonChat.Instancia.AbrirConexionChat();
+            await SingletonChat.Instancia.ChatMotor.AgregarUsuarioChatAsync(SingletonCliente.Instance.IdChat, SingletonCliente.Instance.NombreUsuario);
             chatUserControl.IsEnabled = true;
         }
 

@@ -17,6 +17,7 @@ namespace WcfServicioLibreria.Manejador
     {
         #region Sala
         private static readonly ConcurrentDictionary<string, Sala> salasDiccionario = new ConcurrentDictionary<string, Sala>();
+        private const string MOTIVO_EXPULSION_SALA = "Expulsion de sala";
         #endregion Sala
 
         #region JugadorSesion
@@ -53,7 +54,7 @@ namespace WcfServicioLibreria.Manejador
         }
         #endregion Correo
 
-            #region ContextoOperacion
+        #region ContextoOperacion
         private readonly IContextoOperacion contextoOperacion;
         #endregion
 

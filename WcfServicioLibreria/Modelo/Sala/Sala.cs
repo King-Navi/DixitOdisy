@@ -20,7 +20,6 @@ namespace WcfServicioLibreria.Modelo
     public class Sala : IObservador
     {
         #region Constantes
-        private const string MOTIVO_EXPULSION_SALA = "Expulsion de sala";
         private const string TODOS_ARCHIVOS_EXTENSION_PNG = "*.png";
         private const string RUTA_RECURSOS = "Recursos";
         private const string CARPETA_FOTOS_INVITADOS = "FotosInvitados";
@@ -113,7 +112,6 @@ namespace WcfServicioLibreria.Modelo
                 if (eventosJugador != null)
                 {
                     eventosJugador.Desechar();
-                    await manejadorVeto.RegistrarExpulsionJugadorAsync(nombreJugador, MOTIVO_EXPULSION_SALA, false);
                 }
 
                 if (ContarJugadores() == SALA_VACIA)

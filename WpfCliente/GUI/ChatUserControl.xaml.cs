@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using WpfCliente.Contexto;
+using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
@@ -9,14 +10,24 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class ChatUserControl : UserControl , IServicioChatMotorCallback , IActualizacionUI , IHabilitadorBotones
+    public partial class ChatUserControl : UserControl , IActualizacionUI , IHabilitadorBotones
     {
         private const int MAXIMO_CARACTERES_PERMITIDOS = 200;
         public ChatUserControl()
         {
+            this.Loaded += CargarNuevoContexto;
+            SingletonChat.Instancia.RecibirMensaje  += RecibirMensaje;
             InitializeComponent();
             gridChat.Visibility = Visibility.Collapsed;
             ActualizarUI();
+        }
+
+        private void CargarNuevoContexto(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext == null)
+            {
+                this.DataContext = this;
+            }
         }
 
         private void ClicButtonAbrirChat(object sender, RoutedEventArgs e)
@@ -34,9 +45,10 @@ namespace WpfCliente.GUI
                 SingletonGestorVentana.Instancia.NavegarA(new IniciarSesionPage());
                 return;
             }
+
             if (textBoxEnviarMensaje.Text.Length > MAXIMO_CARACTERES_PERMITIDOS || string.IsNullOrWhiteSpace(textBoxEnviarMensaje.Text))
             {
-                RecibirMensajeClienteCallback(new ChatMensaje
+                RecibirMensaje(new ChatMensaje
                 {
                     Mensaje = Properties.Idioma.mensajeProfe,
                     HoraFecha = DateTime.Now,
@@ -46,13 +58,17 @@ namespace WpfCliente.GUI
             }
             try
             {
-                await Conexion.ChatMotor.EnviarMensajeAsync(SingletonCliente.Instance.IdChat, new ChatMensaje
+                await SingletonChat.Instancia.ChatMotor.EnviarMensajeAsync(SingletonCliente.Instance.IdChat, new ChatMensaje
                 {
                     Mensaje = textBoxEnviarMensaje.Text,
                     HoraFecha = DateTime.Now,
                     Nombre = SingletonCliente.Instance.NombreUsuario
                 });
                 textBoxEnviarMensaje.Text = "";
+            }
+            catch (TimeoutException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
             catch (Exception excepcion)
             {
@@ -66,7 +82,7 @@ namespace WpfCliente.GUI
             buttonAbrirChat.Visibility = Visibility.Visible;
         }
 
-        public void RecibirMensajeClienteCallback(ChatMensaje mensaje)
+        public void RecibirMensaje(ChatMensaje mensaje)
         {
             textBoxReceptorMensaje.Text += $"{Environment.NewLine} {mensaje}";
         }
@@ -84,6 +100,8 @@ namespace WpfCliente.GUI
         private void CerrarControl(object sender, RoutedEventArgs e)
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
+            SingletonChat.Instancia.RecibirMensaje -= RecibirMensaje;
+
         }
 
         public void HabilitarBotones(bool esHabilitado)

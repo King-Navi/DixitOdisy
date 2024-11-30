@@ -42,7 +42,7 @@ namespace Pruebas.Servidor
             
             var implementacionCallback = new PartidaCallbackImplementacion();
 
-            mockContextoProvedor.Setup(contextProvider => contextProvider.GetCallbackChannel<IPartidaCallback>())
+            mockContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IPartidaCallback>())
                                .Returns(implementacionCallback);
 
             var usuario = new Usuario { IdUsuario = 19, Nombre = "navi" };

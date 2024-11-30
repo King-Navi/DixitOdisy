@@ -97,6 +97,7 @@ namespace WcfServicioLibreria.Manejador
                 }
             }
         }
+
         private void VerificarUsuarioCorreoNoNulo(Usuario usuario)
         {
             if (usuario == null || String.IsNullOrEmpty(usuario.Correo))
@@ -104,6 +105,7 @@ namespace WcfServicioLibreria.Manejador
                 throw new ArgumentNullException(nameof(usuario));
             }
         }
+
         private string GenerarCodigo()
         {
             string codigo = Utilidad.Generar6Caracteres();

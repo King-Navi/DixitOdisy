@@ -11,7 +11,7 @@
             <Grid Height="80" Width="203" d:Background="Plum">
                 <Grid.ContextMenu>
                     <ContextMenu>
-                        <MenuItem x:Name="menuItemEliminarAmigo" Header="Eliminar amigo" Click="ClicButtonEliminarAmigo" />
+                        <MenuItem x:Name="menuItemEliminarAmigo" Header="Eliminar amigo" Click="ClicButtonEliminarAmigoAsync" />
                     </ContextMenu>
                 </Grid.ContextMenu>
                 <Image x:Name="imageAmigo" Source="{Binding BitmapImagen}"  

@@ -29,6 +29,7 @@ namespace Pruebas.Servidor
         {
             base.LimpiadorTodo();
         }
+
         #region CrearPartida
         [TestMethod]
         public void CrearPartida_CuandoDatosValidosMixta_DeberiaRetornarIdPartida()
@@ -157,64 +158,44 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void ValidarPartida_PartidaCreada_ExisteEnDiccionario()
         {
-            
             string anfitrion = "usuario123";
             var configuracion = configuracionGenerica;
             string idPartida = manejador.CrearPartida(anfitrion, configuracion);
-
-            
             bool resultado = manejador.ValidarPartida(idPartida);
-
-            
             Assert.IsTrue(resultado, "Debería devolver true para una partida recién creada.");
         }
         [TestMethod]
         public async void ValidarPartida_PartidaTodosJugadoresAbandonan_NoExisteEnDiccionario()
         {
-            
             var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
-
             var usuarioAnfritrion = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var usuarioNuevo = new Usuario { IdUsuario = 1, Nombre = "NaviKing" };
-
-            
             var idPartida = manejador.CrearPartida(usuarioAnfritrion.Nombre, configuracionGenerica);
             await manejador.UnirsePartidaAsync(usuarioAnfritrion.Nombre, idPartida);
             await manejador.UnirsePartidaAsync(usuarioNuevo.Nombre, idPartida);
-
             implementacionCallback?.Close();
-
-            
             bool resultado = manejador.ValidarPartida(idPartida);
-
-            
             Assert.IsFalse(resultado, "Debería devolver false porque se debio eliminar.");
         }
+       
         [TestMethod]
         public void ValidarPartida_PartidaNoCreada_NoExisteEnDiccionario()
         {
-            
             string idPartidaInexistente = "salaNoCreada";
-
-            
             bool resultado = manejador.ValidarPartida(idPartidaInexistente);
-
-            
             Assert.IsFalse(resultado, "Debería devolver false para una partida que no existe en el diccionario.");
         }
+
         [TestMethod]
         public void ValidarPartida_IdentificadorNull_DeberiaRetornarFalse()
         {
-            
             bool resultado = manejador.ValidarPartida(null);
-
-            
             Assert.IsFalse(resultado, "Debería devolver false cuando el identificador de la sala es null.");
         }
 
         #endregion
-
+        
         #region EsPartidaEmpezada
         [TestMethod]
         public void EsPartidaEmpezada_IdentificadorNull_DeberiaRetornarFalse()

@@ -36,7 +36,6 @@ namespace WcfServicioLibreria.Manejador
             return false;
         }
 
-
         void IServicioChatMotor.EnviarMensaje(string idChat, ChatMensaje mensaje)
         {
             try

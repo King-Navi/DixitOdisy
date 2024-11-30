@@ -115,7 +115,9 @@
     <Compile Include="GUI\PrincipalWindow.xaml.cs">
       <DependentUpon>PrincipalWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ImplementacionesCallbacks\SingletonChat.cs" />
     <Compile Include="ImplementacionesCallbacks\SingletonConexion.cs" />
+    <Compile Include="ImplementacionesCallbacks\SingletonPartida.cs" />
     <Compile Include="ImplementacionesCallbacks\SingletonSalaJugador.cs" />
     <Compile Include="ImplementacionesCallbacks\SingletonInvitacionPartida.cs" />
     <Compile Include="Interfaz\INavegacion.cs" />
@@ -235,7 +237,6 @@
     <Compile Include="Utilidad\ManejadorExcepciones.cs" />
     <Compile Include="Servidor\Usuario.cs" />
     <Compile Include="ImplementacionesCallbacks\SingletonAmigos.cs" />
-    <Compile Include="Utilidad\SingletonConexion.cs" />
     <Compile Include="Utilidad\Utilidades.cs" />
     <Compile Include="Utilidad\ServicioManejador.cs" />
     <Compile Include="Servidor\ImagenCarta.cs" />

@@ -15,7 +15,6 @@ namespace DAOLibreria.ModeloBD
             {
                 using (var contexto = new DescribeloEntities())
                 {
-                    contexto.Database.Log = Console.WriteLine;
                     await contexto.Database.ExecuteSqlCommandAsync(CONSULTA_DE_PRUEBA);
                     return true;
                 }

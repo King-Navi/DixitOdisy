@@ -246,21 +246,43 @@ namespace WcfServicioLibreria.Manejador
                                 remitente.DesconexionEvento += desconexionHandlerRemitente;
                                 destinatario.DesconexionEvento += desconexionHandlerDestinatario;
 
-                                remitente.EnviarAmigoActulizadoCallback(new Amigo()
+                                try
                                 {
-                                    Foto = new MemoryStream(_destinatario.fotoPerfil),
-                                    Nombre = _destinatario.gamertag,
-                                    Estado = EstadoAmigo.Conectado,
-                                    UltimaConexion = _destinatario.ultimaConexion.ToString()
+                                    remitente.EnviarAmigoActulizadoCallback(new Amigo()
+                                    {
+                                        Foto = new MemoryStream(_destinatario.fotoPerfil),
+                                        Nombre = _destinatario.gamertag,
+                                        Estado = EstadoAmigo.Conectado,
+                                        UltimaConexion = _destinatario.ultimaConexion.ToString()
 
-                                });
-                                destinatario.EnviarAmigoActulizadoCallback(new Amigo()
+                                    });
+                                }
+                                catch (TimeoutException excepcion)
                                 {
-                                    Foto = new MemoryStream(_remitente.fotoPerfil),
-                                    Nombre = _remitente.gamertag,
-                                    Estado = EstadoAmigo.Conectado,
-                                    UltimaConexion = _remitente.ultimaConexion.ToString()
-                                });
+                                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                                }
+                                catch (CommunicationException excepcion)
+                                {
+                                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                                }
+                                try
+                                {
+                                    destinatario.EnviarAmigoActulizadoCallback(new Amigo()
+                                    {
+                                        Foto = new MemoryStream(_remitente.fotoPerfil),
+                                        Nombre = _remitente.gamertag,
+                                        Estado = EstadoAmigo.Conectado,
+                                        UltimaConexion = _remitente.ultimaConexion.ToString()
+                                    });
+                                }
+                                catch (TimeoutException excepcion)
+                                {
+                                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                                }
+                                catch (CommunicationException excepcion)
+                                {
+                                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                                }
                             }
                         }
                     }
@@ -279,6 +301,7 @@ namespace WcfServicioLibreria.Manejador
                 ManejadorExcepciones.ManejarErrorException(excepcion);
             }
         }
+
         public List<SolicitudAmistad> ObtenerSolicitudesAmistad(Usuario usuario)
         {
             try
@@ -320,7 +343,7 @@ namespace WcfServicioLibreria.Manejador
                         var usuarioDestinoConectado = usuarioDAO.ObtenerUsuarioPorId(idDestinatario);
                         var usuarioRemitenteConectado = usuarioDAO.ObtenerUsuarioPorId(idRemitente);
                         AmigoConetado(usuarioRemitenteConectado, usuarioDestinoConectado);
-                    }
+                    } 
                     else if (jugadoresConectadosDiccionario.ContainsKey(idDestinatario))
                     {
                         jugadoresConectadosDiccionario.TryGetValue(idDestinatario, out UsuarioContexto destinatario);
@@ -334,6 +357,7 @@ namespace WcfServicioLibreria.Manejador
 
                         };
                         destinatario.UsuarioSesionCallback?.ObtenerAmigoCallback(amigo);
+                        return true;
                     }
                     else
                     {
@@ -343,7 +367,6 @@ namespace WcfServicioLibreria.Manejador
                         };
                         throw new FaultException<ServidorFalla>(excepcion, new FaultReason("Te encuentras en estado invalido"));
                     }
-                    return true;
                 }
             }
             catch (FaultException<ServidorFalla>)
@@ -362,7 +385,6 @@ namespace WcfServicioLibreria.Manejador
             return false;
 
         }
-
 
         public bool RechazarSolicitudAmistad(int idRemitente, int idDestinatario)
         {

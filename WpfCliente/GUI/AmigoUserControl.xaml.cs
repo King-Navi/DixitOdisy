@@ -32,9 +32,9 @@ namespace WpfCliente.GUI
             this.Background = Utilidades.ObtenerColorAleatorio();
         }
 
-        private void ClicButtonEliminarAmigo(object sender, RoutedEventArgs e)
+        private async void ClicButtonEliminarAmigoAsync(object sender, RoutedEventArgs e)
         {
-            _ = EliminarAmigoAsync();
+            await EliminarAmigoAsync();
         }
 
         private async Task<bool> EliminarAmigoAsync()
@@ -44,7 +44,20 @@ namespace WpfCliente.GUI
             {
                 return false;
             }
-            return SingletonCanal.Instancia.Amigos.EliminarAmigo(SingletonCliente.Instance.NombreUsuario,labelNombreAmigo.Content.ToString());
+            try
+            {
+                return await SingletonCanal.Instancia.Amigos.EliminarAmigoAsync(SingletonCliente.Instance.NombreUsuario, labelNombreAmigo.Content.ToString());
+
+            }
+            catch (TimeoutException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+            }
+            return false;
         }
 
         public void HabilitarBotones(bool esHabilitado)

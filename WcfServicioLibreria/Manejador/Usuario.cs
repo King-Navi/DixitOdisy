@@ -163,6 +163,7 @@ namespace WcfServicioLibreria.Manejador
 
             return usuario;
         }
+
         public bool YaIniciadoSesion(string nombreUsuario)
         {
             DAOLibreria.ModeloBD.Usuario usuario = usuarioDAO.ObtenerUsuarioPorNombre(nombreUsuario);
@@ -180,8 +181,6 @@ namespace WcfServicioLibreria.Manejador
                 try
                 {
                     Modelo.Usuario usuarioActual = jugador as Modelo.Usuario;
-                    Console.WriteLine(usuarioActual.Nombre);
-
                 }
                 catch (Exception excepcion)
                 {
@@ -189,8 +188,6 @@ namespace WcfServicioLibreria.Manejador
                 }
             }
         }
-
-        
 
     }
 }

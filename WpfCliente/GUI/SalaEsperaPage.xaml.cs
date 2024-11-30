@@ -29,7 +29,11 @@ namespace WpfCliente.GUI
             KeepAlive = false;
             try
             {
+                CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
                 InitializeComponent();
+                SingletonSalaJugador.Instancia.DelegacionRolAnfitrion += DelegacionRol;
+                SingletonSalaJugador.Instancia.EmepzarPartida += EmpezarPartidaCallback;
+                JugadoresSala = SingletonSalaJugador.Instancia.JugadoresSala;
                 EsconderOpciones();
                 VerificarConexionAsync();
                 ConfiguracionPartidaPorDefecto();
@@ -45,11 +49,7 @@ namespace WpfCliente.GUI
                     UnirseSalaAsync(idSala);
                 }
                 DataContext = this;
-                CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
                 ActualizarUI();
-                JugadoresSala = SingletonSalaJugador.Instancia.JugadoresSala;
-                SingletonSalaJugador.Instancia.DelegacionRolAnfitrion += DelegacionRol;
-                SingletonSalaJugador.Instancia.EmepzarPartida += EmpezarPartidaCallback;
             }
             catch (Exception excepcion)
             {
@@ -95,7 +95,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async Task VerificarConexionAsync()
+        private async void VerificarConexionAsync()
         {
             bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)
@@ -105,7 +105,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async Task UnirseSalaAsync(string idSala)
+        private async void UnirseSalaAsync(string idSala)
         {
             bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)
@@ -126,7 +126,7 @@ namespace WpfCliente.GUI
             }
             SingletonSalaJugador.Instancia.Sala.AgregarJugadorSala(SingletonCliente.Instance.NombreUsuario, idSala);
             labelCodigo.Content += idSala;
-            UnirseChatAsync();
+            UnirseChat();
         }
 
 
@@ -151,10 +151,10 @@ namespace WpfCliente.GUI
 
         }
 
-        private async void UnirseChatAsync()
+        private void UnirseChat()
         {
-            await Conexion.AbrirConexionChatMotorCallbackAsync(chatUserControl);
-            var resultado = Conexion.ChatMotor.AgregarUsuarioChat(SingletonCliente.Instance.IdChat, SingletonCliente.Instance.NombreUsuario);
+            SingletonChat.Instancia.AbrirConexionChat();
+            var resultado = SingletonChat.Instancia.ChatMotor.AgregarUsuarioChat(SingletonCliente.Instance.IdChat, SingletonCliente.Instance.NombreUsuario);
             if (!resultado)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorInesperado, Properties.Idioma.mensajeErrorInesperado, Window.GetWindow(this));

@@ -44,9 +44,9 @@ namespace WpfCliente.GUI
             this.Background = Utilidades.ObtenerColorAleatorio();
         }
 
-        private void ClicButtonAceptar(object sender, RoutedEventArgs e)
+        private async void ClicButtonAceptarAsync(object sender, RoutedEventArgs e)
         {
-            _ = AceptarSolicitudAsync(solicitudAmistadActual);
+            await AceptarSolicitudAsync(solicitudAmistadActual);
         }
 
         private async Task<bool> AceptarSolicitudAsync(SolicitudAmistad solicitud)
@@ -62,7 +62,7 @@ namespace WpfCliente.GUI
             {
                 var resultado = SingletonCanal.Instancia.Amigos.AceptarSolicitudAmistad(solicitudAmistadActual.Remitente.IdUsuario, SingletonCliente.Instance.IdUsuario);
 
-                if (resultado)
+                if (!resultado)
                 {
                     VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadAceptada + solicitudAmistadActual.Remitente.Nombre, window);
                     HabilitarBotones(false);
@@ -75,6 +75,10 @@ namespace WpfCliente.GUI
                 VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloErrorInesperado, Idioma.mensajeSeNecesitaReiniciar, this);
                 Application.Current.Shutdown();
             }
+            catch (TimeoutException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+            }
             catch (Exception Excepcion)
             {
                 ManejadorExcepciones.ManejarComponenteFatalExcepcion(Excepcion);
@@ -83,12 +87,12 @@ namespace WpfCliente.GUI
             return false;
         }
 
-        private void ClicButtonRechazar(object sender, RoutedEventArgs e)
+        private async void ClicButtonRechazarAsync(object sender, RoutedEventArgs e)
         {
-            _ = RechazarSolicitudAsync(solicitudAmistadActual);
+            await RechazarSolicitudAsync();
         }
 
-        private async Task<bool> RechazarSolicitudAsync(SolicitudAmistad solicitud)
+        private async Task<bool> RechazarSolicitudAsync()
         {
             Window window = Window.GetWindow(this);
             bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, window);
@@ -99,9 +103,9 @@ namespace WpfCliente.GUI
 
             try
             {
-                var resultado = SingletonCanal.Instancia.Amigos.RechazarSolicitudAmistad(solicitudAmistadActual.Remitente.IdUsuario, SingletonCliente.Instance.IdUsuario);
+                var resultado = await SingletonCanal.Instancia.Amigos.RechazarSolicitudAmistadAsync(solicitudAmistadActual.Remitente.IdUsuario, SingletonCliente.Instance.IdUsuario);
 
-                if (resultado)
+                if (!resultado)
                 {
                     VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadRechazada + solicitudAmistadActual.Remitente.Nombre, window);
                     HabilitarBotones(false);
@@ -109,12 +113,17 @@ namespace WpfCliente.GUI
 
                 return resultado;
             }
-            catch (Exception ex)
+            catch (TimeoutException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(ex);
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCargarAmigosFalla, Properties.Idioma.mensajeCargarAmigosFalla, this);
-                return false;
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCargarAmigosFalla, Properties.Idioma.mensajeCargarAmigosFalla, this);
+            }
+            return false;
+
         }
 
         public void HabilitarBotones(bool esHabilitado)

@@ -7,22 +7,20 @@ namespace WpfCliente.GUI
 {
     internal class RecursosCompartidosPartida
     {
-        public Usuario primerLugar;
-        public Usuario segundoLugar;
-        public Usuario tercerLugar;
+        public Usuario primerLugar = new Usuario();
+        public Usuario segundoLugar = new Usuario();
+        public Usuario tercerLugar = new Usuario();
         private readonly ConcurrentQueue<ImagenCarta> imagenesGrupoPendientes = new ConcurrentQueue<ImagenCarta>();
         public ObservableCollection<ImagenCarta> GruposDeImagenes { get; } = new ObservableCollection<ImagenCarta>();
         private readonly ConcurrentQueue<ImagenCarta> imagenesPendientes = new ConcurrentQueue<ImagenCarta>();
         public ObservableCollection<ImagenCarta> Imagenes { get; } = new ObservableCollection<ImagenCarta>();
         public ObservableCollection<JugadorEstadisticas> JugadorEstadisticas { get; set; } = new ObservableCollection<JugadorEstadisticas>();
         public ObservableCollection<Usuario> UsuarioEnpartida { get; set; } = new ObservableCollection<Usuario>();
-        public ObservableCollection<string> Podio { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<string> NombreEnPodio { get; set; } = new ObservableCollection<string>();
 
         public RecursosCompartidosPartida()
         {
-            Podio.Add("");
-            Podio.Add("");
-            Podio.Add("");
+
         }
 
         public void AsignarPodio(JugadorEstadisticas _primerLugar, JugadorEstadisticas _segundoLugar, JugadorEstadisticas _tercerLugar)

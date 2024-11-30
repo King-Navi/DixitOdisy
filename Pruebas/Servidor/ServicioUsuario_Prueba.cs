@@ -6,9 +6,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Pruebas.Servidor.Utilidades;
 using System;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Threading.Tasks;
+using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Manejador;
+using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Utilidades;
 
 namespace Pruebas.Servidor
@@ -151,8 +155,69 @@ namespace Pruebas.Servidor
             var respuesta= Task.Run(async() => await manejador.PingBDAsync());
             Assert.IsFalse(respuesta.Result, "El resutlado es falase");
         }
-        
+        # region Ping
+        [TestMethod]
+        public void Ping_DeberiaRetornarTrue()
+        {
+            var resultado = manejador.Ping();
+            Assert.IsTrue(resultado);
+        }
 
-        
+        #endregion
+
+        #region DesconectarUsuario
+        [TestMethod]
+        public async Task DesconectarUsuario_UsuarioConectado_DeberiaRemoverUsuarioDelDiccionario()
+        {
+            var usuario = new WcfServicioLibreria.Modelo.Usuario();
+            usuario.IdUsuario = 1;
+            usuario.Nombre = "Juan";
+            imitarUsuarioDAO.Setup(dao => dao.ObtenerUsuarioPorNombre(It.IsAny<string>())).Returns(new DAOLibreria.ModeloBD.Usuario()
+            {
+                idUsuario = 1
+            });
+            manejador.ObtenerSesionJugador(usuario);
+            implementacionCallback.Close();
+            await Task.Delay(TimeSpan.FromSeconds(2));
+            Assert.IsFalse(manejador.YaIniciadoSesion(usuario.Nombre));
+        }
+
+        [TestMethod]
+        public async Task DesconectarUsuario_UsuarioNoConectado_NoDeberiaRemoverUsuarioDelDiccionario()
+        {
+            var usuario = new WcfServicioLibreria.Modelo.Usuario();
+            usuario.IdUsuario = 2;
+            usuario.Nombre = "Pedro";
+            imitarUsuarioDAO.Setup(dao => dao.ObtenerUsuarioPorNombre(It.IsAny<string>())).Returns((DAOLibreria.ModeloBD.Usuario)null);
+            implementacionCallback.Close();
+            await Task.Delay(TimeSpan.FromSeconds(2));
+            Assert.IsFalse(manejador.YaIniciadoSesion(usuario.Nombre));
+        }
+
+        [TestMethod]
+        public async Task DesconectarUsuario_UsuarioConectado_DeberiaDispararEventos()
+        {
+            var usuario = new WcfServicioLibreria.Modelo.Usuario();
+            usuario.IdUsuario = 3;
+            usuario.Nombre = "Maria";
+            imitarUsuarioDAO.Setup(dao => dao.ObtenerUsuarioPorNombre(It.IsAny<string>())).Returns(new DAOLibreria.ModeloBD.Usuario()
+            {
+                idUsuario = 3
+            });
+            bool eventoClosedLlamado = false;
+            implementacionCallback.Closed += (emisor, evento) => eventoClosedLlamado = true;
+            manejador.ObtenerSesionJugador(usuario);
+            implementacionCallback.Close();
+            await Task.Delay(TimeSpan.FromSeconds(2));
+            Assert.IsTrue(eventoClosedLlamado);
+            Assert.IsFalse(manejador.YaIniciadoSesion(usuario.Nombre));
+        }
+
+
+
+        #endregion
+
+
+
     }
 }

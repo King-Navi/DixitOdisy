@@ -34,8 +34,8 @@ namespace WcfServicioLibreria.Contratos
         /// <param name="anfitrion">El anfitrión que realiza la expulsión.</param>
         /// <param name="jugadorAExpulsar">El identificador del jugador a expulsar de la sala.</param>
         /// <param name="idSala">El identificador de la sala de donde se expulsará al jugador.</param>
-        [OperationContract(IsOneWay = true)]
-        void ExpulsarJugadorSala(string anfitrion, string jugadorAExpulsar, string idSala);
+        [OperationContract]
+        Task<bool> ExpulsarJugadorSalaAsync(string anfitrion, string jugadorAExpulsar, string idSala);
     }
     [ServiceContract]
     public interface ISalaJugadorCallback

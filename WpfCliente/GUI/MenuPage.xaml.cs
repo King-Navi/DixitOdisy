@@ -26,7 +26,6 @@ namespace WpfCliente.GUI
         private EstadisticaUsuario estadisticas;
         public MenuPage()
         {
-            SingletonHilo.Instancia.Iniciar();
             KeepAlive = true;
             this.Loaded += CargarNuevoContexto;
             InitializeComponent();
@@ -36,7 +35,6 @@ namespace WpfCliente.GUI
             AbrirConexiones();
             ConfigurarTemporizadorNotificacion();
             InicializarEstadisticasAsync();
-
         }
         private void CargarNuevoContexto(object sender, RoutedEventArgs e)
         {
@@ -150,9 +148,9 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void ClicButtonCrearSala(object sender, RoutedEventArgs e)
+        private async void ClicButtonCrearSalaAsync(object sender, RoutedEventArgs e)
         {
-            _ = AbrirVentanaSalaAsync(null);
+            await AbrirVentanaSalaAsync(null);
         }
 
         private async Task AbrirVentanaSalaAsync(string idSala)

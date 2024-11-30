@@ -9,11 +9,7 @@
         <Border CornerRadius="11" Margin="2">
             <Grid x:Name="gridPrincipal" Height="100" Width="250" d:Background="#FFCECE90" >
                 <Image x:Name="imageAmigo" Source="{Binding FotoUsuario}"  d:Source="pack://application:,,,/WpfCliente;component/Recursos/profile.jpg" Width="60" Height="60" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="6,4,0,0" ></Image>
-                <Label x:Name="labelNombreUsuario" Content="{Binding Nombre}" d:Content="PedroSanchz27" FontFamily="Lucida Sans Unicode" Canvas.Left="85" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="89,0,0,0"></Label>
-                <Grid x:Name="gridInvitacionAmistad" Margin="81,70,10,10">
-                    <Button x:Name="buttonEnviarSolicitud" d:Content="Enviar solicitud de amistad" Click="ClicButtonEnviarSolicitud" Margin="1,-35,-1,35"></Button>
-                    <Button d:Content="Enviar solicitud de amistad" Click="ClicButtonEnviarSolicitud" Margin="1,-35,-1,35"></Button>
-                </Grid>
+                <TextBlock TextWrapping="Wrap" x:Name="textBlockNombreUsuario" Text="{Binding Nombre}" d:Text="PedroSanchz27" FontFamily="Lucida Sans Unicode" Canvas.Left="85" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="71,21,0,0" Height="30" Width="173"></TextBlock>
             </Grid>
         </Border>
     </Border>

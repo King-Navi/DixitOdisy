@@ -190,7 +190,7 @@ namespace WpfCliente.GUI
 
         private void EvaluarPalabrasProhibidas()
         {
-            if (textBoxNombreUsuario.Text?.ToLower().Contains(PALABRA_PROHIBIDA_GUEST) == true)
+            if (textBoxNombreUsuario.Text?.ToLower().Contains(PALABRA_RESERVADA_GUEST) == true)
             {
                 throw new FaultException<BaseDatosFalla>(new BaseDatosFalla());
             };

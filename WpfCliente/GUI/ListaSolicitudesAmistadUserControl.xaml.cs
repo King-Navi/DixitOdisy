@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
@@ -32,9 +33,7 @@ namespace WpfCliente.GUI
                     IdUsuario = SingletonCliente.Instance.IdUsuario,
                     Nombre = SingletonCliente.Instance.NombreUsuario
                 };
-
-                Window window = Window.GetWindow(this);
-                bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, window);
+                bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
                 if (!conexionExitosa)
                 {
                     return false;
@@ -42,11 +41,10 @@ namespace WpfCliente.GUI
 
                 try
                 {
-                    var listaSolicitudes = await Conexion.Amigos.ObtenerSolicitudesAmistadAsync(usuarioActual);
-
-                    if (listaSolicitudes == null || !listaSolicitudes.Any())
+                    var listaSolicitudes = SingletonCanal.Instancia.Amigos.ObtenerSolicitudesAmistad(usuarioActual);
+                    if (listaSolicitudes == null || listaSolicitudes.Count() == 0)
                     {
-                        labelNoHaySolicitudes.Visibility = Visibility.Visible;
+                        textBlockNoHaySolicitudes.Visibility = Visibility.Visible;
                         return false;
                     }
 
@@ -87,7 +85,7 @@ namespace WpfCliente.GUI
         public void ActualizarUI()
         {
             labelSolicitudes.Content = Idioma.labelSolicitudesAmistad;
-            labelNoHaySolicitudes.Content = Idioma.labelNoHaySolicitudes;
+            textBlockNoHaySolicitudes.Text = Idioma.labelNoHaySolicitudes;
         }
     }
 }

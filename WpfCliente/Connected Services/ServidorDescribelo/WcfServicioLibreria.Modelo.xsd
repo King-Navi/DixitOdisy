@@ -50,6 +50,14 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="SolicitudAmistad" nillable="true" type="tns:SolicitudAmistad" />
+  <xs:complexType name="InvitacionPartida">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodigoSala" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NombreEmisor" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NombreReceptor" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InvitacionPartida" nillable="true" type="tns:InvitacionPartida" />
   <xs:complexType name="UsuarioFalla">
     <xs:sequence>
       <xs:element minOccurs="0" name="EstaConectado" type="xs:boolean" />
@@ -104,14 +112,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="JugadorEstadisticas" nillable="true" type="tns:JugadorEstadisticas" />
-  <xs:complexType name="InvitacionPartida">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="CodigoSala" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="GamertagEmisor" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="GamertagReceptor" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="InvitacionPartida" nillable="true" type="tns:InvitacionPartida" />
   <xs:complexType name="Estadistica">
     <xs:sequence>
       <xs:element minOccurs="0" name="PartidasAnimalesJugadas" type="xs:int" />

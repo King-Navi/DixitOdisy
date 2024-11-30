@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
@@ -38,12 +39,12 @@ namespace WpfCliente.GUI
 
         private async Task<bool> EliminarAmigoAsync()
         {
-            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, Window.GetWindow(this));
+            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)
             {
                 return false;
             }
-            return Conexion.Amigos.EliminarAmigo(SingletonCliente.Instance.NombreUsuario,labelNombreAmigo.Content.ToString());
+            return SingletonCanal.Instancia.Amigos.EliminarAmigo(SingletonCliente.Instance.NombreUsuario,labelNombreAmigo.Content.ToString());
         }
 
         public void HabilitarBotones(bool esHabilitado)

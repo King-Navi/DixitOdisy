@@ -32,7 +32,18 @@ namespace WpfCliente.GUI
 
         private void ClicButtonAceptar(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            TratarCerrarVentana();
+        }
+        private void TratarCerrarVentana()
+        {
+            try
+            {
+                this.Close();
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+            }
         }
     }
 }

@@ -1,60 +1,42 @@
 ﻿using System;
 using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioUsuarioSesion
     {
-        public void ObtenerSessionJugador(Usuario usuario)
+        public bool ObtenerSesionJugador(Usuario usuario)
         {
-            if (usuario == null)
+            if (usuario == null || usuario.IdUsuario <= 0 || usuario.Nombre == null)
             {
-               return;
+               return false;
             }
             bool sesionAbierta = jugadoresConectadosDiccionario.ContainsKey(usuario.IdUsuario);
             if (!sesionAbierta)
             {
                 try
                 {
-                    IUsuarioSesionCallback contexto = contextoOperacion.GetCallbackChannel<IUsuarioSesionCallback>();
-                    usuario.UsuarioSesionCallBack = contexto;
-                    ICommunicationObject comunicacionObjecto = (ICommunicationObject)contexto;
-                    usuario.CerrandoEvento = (emisor, e) =>
-                    {
-                        Console.WriteLine(usuario.Nombre + " | "+ usuario.IdUsuario + " se está yendo. Clase" + emisor);
-                        comunicacionObjecto.Closing -= usuario.CerrandoEvento;
-                    };
-                    usuario.CerradoEvento = (emisor, e) =>
-                    {
-                        Console.WriteLine(usuario.Nombre + " | " + usuario.IdUsuario + " se ha ido. Clase" + emisor);
-                        comunicacionObjecto.Closed -= usuario.CerradoEvento;
-                        //Despues de este metodo el usario ya no existe porque se ocupa dispose
-                        DesconectarUsuario(usuario.IdUsuario);
-                    };
-                    usuario.FalloEvento = (emisor, e) =>
-                    {
-                        Console.WriteLine(usuario.Nombre + " ha fallado. Clase" + emisor);
-                        comunicacionObjecto.Faulted -= usuario.FalloEvento;
-                        //Despues de este metodo el usario ya no existe porque se ocupa dispose
-                        DesconectarUsuario(usuario.IdUsuario);
-                    };
-                    comunicacionObjecto.Closing += usuario.CerrandoEvento;
-                    comunicacionObjecto.Closed += usuario.CerradoEvento;
-                    comunicacionObjecto.Faulted += usuario.FalloEvento;
+                    IUsuarioSesionCallback contextoUsuario = contextoOperacion.GetCallbackChannel<IUsuarioSesionCallback>();
+                    Usuario nuevoUsuario = new Usuario(usuario.IdUsuario, usuario.Nombre , contextoUsuario);
+                    nuevoUsuario.DesconexionManejador = 
+                        new DesconectorEventoManejador( (ICommunicationObject)contextoUsuario, nuevoUsuario, nuevoUsuario.Nombre);
+                    ((UsuarioContexto)nuevoUsuario).DesconexionEvento += DesconectarUsuario;
                     sesionAbierta = true;
-                    if (ConectarUsuario(usuario))
+                    if (ConectarUsuario(nuevoUsuario))
                     {
-                        contexto.ObtenerSessionJugadorCallback(sesionAbierta);
+                        contextoUsuario.ObtenerSesionJugadorCallback();
+                        return true;
                     }
-
-
                 }
-                catch (CommunicationException)
+                catch (CommunicationException excepcion)
                 {
+                    jugadoresConectadosDiccionario.TryRemove(usuario.IdUsuario, out _);
+                    ManejadorExcepciones.ManejarErrorException(excepcion);
                 }
-
             }
             else
             {
@@ -64,6 +46,7 @@ namespace WcfServicioLibreria.Manejador
                 };
                 throw new FaultException<UsuarioFalla>(excepcion, new FaultReason("El usuario ya está conectado"));
             }
+            return false;
         }
 
         public bool ConectarUsuario(Usuario usuario)

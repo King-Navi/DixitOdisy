@@ -7,33 +7,32 @@ namespace WcfServidor
 {
     internal class DescribeloServiceHost : ServiceHost
     {
-        private readonly ManejadorPrincipal _manejadorPrincipal;
+        private readonly ManejadorPrincipal manejadorPrincipal;
 
-        public DescribeloServiceHost(ManejadorPrincipal manejadorPrincipal, Type serviceType, params Uri[] baseAddresses)
+        public DescribeloServiceHost(ManejadorPrincipal _manejadorPrincipal, Type serviceType, params Uri[] baseAddresses)
             : base(serviceType, baseAddresses)
         {
-            _manejadorPrincipal = manejadorPrincipal;
+            this.manejadorPrincipal = _manejadorPrincipal;
 
         }
 
         public List<string> JugadoresConectados()
         {
-            _manejadorPrincipal.JugadoresConectado();
+            manejadorPrincipal.JugadoresConectado();
 
             return null;
         }
 
         protected override void OnClosing()
         {
-            _manejadorPrincipal.CerrarAplicacion(); 
-            
+            manejadorPrincipal.CerrarAplicacion();
             base.OnClosing();
         }
 
         protected override void OnClosed()
         {
-            Console.WriteLine("Servidor atrapado!!!");
             base.OnClosed();
+            Console.WriteLine("Servidor atrapado!!!");
         }
     }
 }

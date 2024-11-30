@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" />
-  <xs:element name="AbrirCanalParaPeticiones">
+  <xs:element name="ConectarYBuscarAmigos">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q1:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="AbrirCanalParaPeticionesResponse">
+  <xs:element name="ConectarYBuscarAmigosResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="AbrirCanalParaPeticionesResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="ConectarYBuscarAmigosResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -104,14 +104,21 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="CambiarEstadoAmigo">
+  <xs:element name="RecibirInvitacionCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="amigo" nillable="true" type="q5:Amigo" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="invitacion" nillable="true" type="q5:InvitacionPartida" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="CambiarEstadoAmigoResponse">
+  <xs:element name="CambiarEstadoAmigoCallback">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="amigo" nillable="true" type="q6:Amigo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CambiarEstadoAmigoCallbackResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
@@ -119,7 +126,7 @@
   <xs:element name="ObtenerAmigoCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="amigo" nillable="true" type="q6:Amigo" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="amigo" nillable="true" type="q7:Amigo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -131,11 +138,21 @@
   <xs:element name="EliminarAmigoCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="amigo" nillable="true" type="q7:Amigo" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="amigo" nillable="true" type="q8:Amigo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EliminarAmigoCallbackResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerSesionJugadorCallback">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ObtenerSesionJugadorCallbackResponse">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
@@ -173,7 +190,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="idChat" nillable="true" type="xs:string" />
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="mensaje" nillable="true" type="q8:ChatMensaje" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="mensaje" nillable="true" type="q9:ChatMensaje" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -182,17 +199,17 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="RecibirMensajeCliente">
+  <xs:element name="RecibirMensajeClienteCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="mensaje" nillable="true" type="q9:ChatMensaje" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="mensaje" nillable="true" type="q10:ChatMensaje" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="VerificarCorreo">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q10:Usuario" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q11:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -207,6 +224,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="codigo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="correoUsuario" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -220,7 +238,7 @@
   <xs:element name="VerificarCorreoConGamertag">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q11:Usuario" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q12:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -235,7 +253,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="anfitrion" nillable="true" type="xs:string" />
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="configuracion" nillable="true" type="q12:ConfiguracionPartida" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="configuracion" nillable="true" type="q13:ConfiguracionPartida" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -279,6 +297,13 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="nombreUsuario" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="idPartida" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UnirsePartidaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UnirsePartidaResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -357,14 +382,14 @@
   <xs:element name="RecibirImagenCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="imagen" nillable="true" type="q13:ImagenCarta" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="imagen" nillable="true" type="q14:ImagenCarta" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RecibirGrupoImagenCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="imagen" nillable="true" type="q14:ImagenCarta" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="imagen" nillable="true" type="q15:ImagenCarta" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -376,14 +401,14 @@
   <xs:element name="ObtenerJugadorPartidaCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreNuevoEnSala" nillable="true" type="q15:Usuario" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreNuevoEnSala" nillable="true" type="q16:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="EliminarJugadorPartidaCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreRetiradoDeSala" nillable="true" type="q16:Usuario" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreRetiradoDeSala" nillable="true" type="q17:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -404,7 +429,7 @@
   <xs:element name="EnviarEstadisticas">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="estadisticas" nillable="true" type="q17:EstadisticasPartida" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="estadisticas" nillable="true" type="q18:EstadisticasPartida" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -423,7 +448,7 @@
   <xs:element name="RegistrarUsuario">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q18:Usuario" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q19:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -479,6 +504,13 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ComenzarPartidaAnfritionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ComenzarPartidaAnfritionResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="ExpulsarJugadorSala">
     <xs:complexType>
       <xs:sequence>
@@ -491,7 +523,7 @@
   <xs:element name="ObtenerJugadorSalaCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreNuevoEnSala" nillable="true" type="q19:Usuario" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreNuevoEnSala" nillable="true" type="q20:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -503,7 +535,7 @@
   <xs:element name="EliminarJugadorSalaCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreRetiradoDeSala" nillable="true" type="q20:Usuario" />
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="jugardoreRetiradoDeSala" nillable="true" type="q21:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -512,7 +544,7 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="EmpezarPartidaCallBack">
+  <xs:element name="EmpezarPartidaCallback">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="idPartida" nillable="true" type="xs:string" />
@@ -529,7 +561,7 @@
   <xs:element name="EditarUsuario">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuarioEditado" nillable="true" type="q21:Usuario" />
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuarioEditado" nillable="true" type="q22:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -589,7 +621,7 @@
   <xs:element name="ValidarCredencialesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="ValidarCredencialesResult" nillable="true" type="q22:Usuario" />
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="ValidarCredencialesResult" nillable="true" type="q23:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -608,31 +640,24 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ObtenerSessionJugador">
+  <xs:element name="ObtenerSesionJugador">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q23:Usuario" />
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q24:Usuario" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ObtenerSessionJugadorCallback">
+  <xs:element name="ObtenerSesionJugadorResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="esSesionAbierta" type="xs:boolean" />
+        <xs:element minOccurs="0" name="ObtenerSesionJugadorResult" type="xs:boolean" />
       </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="ObtenerSessionJugadorCallbackResponse">
-    <xs:complexType>
-      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="EnviarInvitacion">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="usuarioEmisor" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="codigoSala" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="usuarioReceptor" nillable="true" type="xs:string" />
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="invitacion" nillable="true" type="q25:InvitacionPartida" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -640,20 +665,6 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="EnviarInvitacionResult" type="xs:boolean" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="AbrirCanalParaInvitaciones">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="usuario" nillable="true" type="q24:Usuario" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RecibirInvitacion">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="invitacion" nillable="true" type="q25:InvitacionPartida" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

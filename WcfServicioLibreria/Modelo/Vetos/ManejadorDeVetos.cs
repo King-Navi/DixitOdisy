@@ -2,6 +2,7 @@
 using DAOLibreria.DAO;
 using System;
 using System.Threading.Tasks;
+using DAOLibreria.Interfaces;
 
 namespace WcfServicioLibreria.Modelo.Vetos
 {
@@ -10,7 +11,24 @@ namespace WcfServicioLibreria.Modelo.Vetos
         private const int ID_INVALIDO = 0;
         private const string NOMBRE_RESERVADO = "guest";
         private const int DIAS_PRIMER_VETO = 30;
-        public ManejadorDeVetos() { }
+        private readonly IVetoDAO vetoDAO;
+        private readonly IUsuarioDAO usuarioDAO;
+        private readonly IUsuarioCuentaDAO usuarioCuentaDAO;
+        private readonly IExpulsionDAO expulsionDAO;
+        public ManejadorDeVetos() 
+        {
+            vetoDAO = new VetoDAO();
+            usuarioDAO = new UsuarioDAO();
+            usuarioCuentaDAO = new UsuarioCuentaDAO();
+            expulsionDAO = new ExpulsionDAO();
+        }
+        public ManejadorDeVetos(IVetoDAO _vetoDAO, IUsuarioDAO _usuarioDAO, IUsuarioCuentaDAO _usuarioCuentaDAO, IExpulsionDAO _expulsionDAO) 
+        {
+            vetoDAO = _vetoDAO;
+            usuarioDAO = _usuarioDAO;
+            usuarioCuentaDAO = _usuarioCuentaDAO;
+            expulsionDAO = _expulsionDAO;
+        }
 
         public async Task<bool> VetaJugadorAsync(string nombreJugador)
         {
@@ -18,12 +36,12 @@ namespace WcfServicioLibreria.Modelo.Vetos
             {
                 return false;
             }
-            var usuarioModeloBaseDatos = UsuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
+            var usuarioModeloBaseDatos = usuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
             if (usuarioModeloBaseDatos ==null)
             {
                 return false;
             }
-            return await BuscarJugadorVeto(usuarioModeloBaseDatos);
+            return await BuscarJugadorVetoAsync(usuarioModeloBaseDatos);
         }
         public async Task<bool> RegistrarExpulsionJugadorAsync(string nombreJugador, string motivo, bool esHacker)
         {
@@ -31,23 +49,23 @@ namespace WcfServicioLibreria.Modelo.Vetos
             {
                 return false;
             }
-            var usuarioModeloBaseDatos = UsuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
+            var usuarioModeloBaseDatos = usuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
             if (usuarioModeloBaseDatos == null)
             {
                 return false;
             }
-            return await BuscarJugadorRegistrarExpulsion(usuarioModeloBaseDatos, motivo, esHacker);
+            return await BuscarJugadorRegistrarExpulsionAsync(usuarioModeloBaseDatos, motivo, esHacker);
         }
 
-        private async Task<bool> BuscarJugadorVeto(DAOLibreria.ModeloBD.Usuario usuarioModeloBaseDatos)
+        private async Task<bool> BuscarJugadorVetoAsync(DAOLibreria.ModeloBD.Usuario usuarioModeloBaseDatos)
         {
-            var idUsuarioCuenta = UsuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(usuarioModeloBaseDatos.idUsuarioCuenta);
-            if (idUsuarioCuenta == null || idUsuarioCuenta <= ID_INVALIDO)
+            var idUsuarioCuenta = usuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(usuarioModeloBaseDatos.idUsuarioCuenta);
+            if (idUsuarioCuenta <= ID_INVALIDO)
             {
                 return false;
             }
             
-            if (VetoDAO.ExisteTablaVetoPorIdCuenta((int)idUsuarioCuenta))
+            if (vetoDAO.ExisteTablaVetoPorIdCuenta((int)idUsuarioCuenta))
             {
                  return CrearRegistroVeto((int)idUsuarioCuenta, DateTime.Now.AddDays(DIAS_PRIMER_VETO), true);
             }
@@ -61,10 +79,10 @@ namespace WcfServicioLibreria.Modelo.Vetos
             }
 
         }
-        private async Task<bool> BuscarJugadorRegistrarExpulsion(DAOLibreria.ModeloBD.Usuario usuarioModeloBaseDatos , string motivo, bool esHacker)
+        private async Task<bool> BuscarJugadorRegistrarExpulsionAsync(DAOLibreria.ModeloBD.Usuario usuarioModeloBaseDatos , string motivo, bool esHacker)
         {
-            var idUsuarioCuenta = UsuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(usuarioModeloBaseDatos.idUsuarioCuenta);
-            if (idUsuarioCuenta == null || idUsuarioCuenta <= ID_INVALIDO)
+            var idUsuarioCuenta = usuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(usuarioModeloBaseDatos.idUsuarioCuenta);
+            if (idUsuarioCuenta <= ID_INVALIDO)
             {
                 return false;
             }
@@ -72,20 +90,20 @@ namespace WcfServicioLibreria.Modelo.Vetos
             {
                 return false;
             }
-            if (!ExpulsionDAO.TieneMasDeDiezExpulsionesSinPenalizar((int)idUsuarioCuenta))
+            if (!expulsionDAO.TieneMasDeDiezExpulsionesSinPenalizar((int)idUsuarioCuenta))
             {
-                return ExpulsionDAO.CrearRegistroExpulsion((int)idUsuarioCuenta, motivo, esHacker);
+                return expulsionDAO.CrearRegistroExpulsion((int)idUsuarioCuenta, motivo, esHacker);
             }
             else
             {
-                ExpulsionDAO.CambiarExpulsionesAFueronPenalizadas((int)idUsuarioCuenta);
+                expulsionDAO.CambiarExpulsionesAFueronPenalizadas((int)idUsuarioCuenta);
                 return await VetaJugadorAsync(usuarioModeloBaseDatos.gamertag);
             }
         }
 
         private bool CrearRegistroVeto(int idUsuarioCuenta, DateTime? fechaFin, bool esPermanente)
         {
-            return VetoDAO.CrearRegistroVeto(idUsuarioCuenta, fechaFin, esPermanente);
+            return vetoDAO.CrearRegistroVeto(idUsuarioCuenta, fechaFin, esPermanente);
         }
     }
 }

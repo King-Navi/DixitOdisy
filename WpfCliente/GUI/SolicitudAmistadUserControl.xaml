@@ -9,7 +9,7 @@
     <Border BorderBrush="Black" BorderThickness="4" CornerRadius="15" Width="303" Height="80">
         <Border CornerRadius="11" Margin="2" Width="303" Height="80">
             <Grid Height="80" Width="303" d:Background="Beige">
-                <Image x:Name="imageAmigo" Source="{Binding Foto}"  d:Source="pack://application:,,,/WpfCliente;component/Recursos/profile.jpg" Width="54" Height="46" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" ></Image>
+                <Image x:Name="imageAmigo" Source="{Binding BitmapImagen}"  d:Source="pack://application:,,,/WpfCliente;component/Recursos/profile.jpg" Width="54" Height="46" Canvas.Left="10" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" ></Image>
                 <Label x:Name="labelNombreAmigo" Content="{Binding Nombre}" FontFamily="Lucida Sans Unicode Bold" d:Content="PedroSanchz27" Canvas.Left="85" Canvas.Top="10" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="69,10,0,0"></Label>
                 <Button Content="Aceptar" x:Name="buttonAceptar" Background="YellowGreen" HorizontalAlignment="Left" Margin="163,43,0,0" VerticalAlignment="Top" Width="54" Click="ClicButtonAceptar"/>
                 <Button Content="Rechazar" x:Name="buttonRechazar" Background="Red" HorizontalAlignment="Left" Margin="222,43,0,0" VerticalAlignment="Top" Width="63" Click="ClicButtonRechazar"/>

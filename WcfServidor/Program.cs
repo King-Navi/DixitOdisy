@@ -9,8 +9,12 @@ namespace WcfServidor
     {
         static void Main(string[] args)
         {
-            var respuesta = InicializadorConfiguracion.IniciarConexion();
-            Console.WriteLine("Error en la conexión: " + respuesta.ToString());
+            var respuesta = InicializadorConfiguracion.ConfigurarConVariableEntorno("a");
+            if (!respuesta)
+            {
+                Console.WriteLine(respuesta);
+                return;
+            }
             Program programa = new Program();
             programa.IniciarServidor();
         }
@@ -49,12 +53,6 @@ namespace WcfServidor
                         break;
                 }
             }
-        }
-        public static class Llaves
-        {
-            public const string LLAVE_ERROR = "error";
-            public const string LLAVE_MENSAJE = "mensaje";
-            public const string LLAVE_BOOLEANO = "bool";
         }
     }
 }

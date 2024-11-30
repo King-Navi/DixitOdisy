@@ -10,7 +10,7 @@ namespace Pruebas.Servidor.Utilidades
         {
             byte[] entrada = new byte[longitud];
             Random aleatorio = new Random();
-            aleatorio.NextBytes(entrada); // Llena el buffer con datos aleatorios
+            aleatorio.NextBytes(entrada);
 
             return new MemoryStream(entrada);
         }
@@ -23,6 +23,10 @@ namespace Pruebas.Servidor.Utilidades
                 Correo = $"{nombre.ToLower()}@gmail.com",
                 FotoUsuario = GeneradorAleatorio.GenerarStreamAleatorio(20)
             };
+        }
+        public static int GenerarIdValido()
+        {
+            return new Random().Next(1, 9999);
         }
     }
 }

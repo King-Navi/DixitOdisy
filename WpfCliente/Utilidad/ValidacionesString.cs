@@ -1,14 +1,17 @@
 ﻿using System.Net.Mail;
 using System;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 
 namespace WpfCliente.Utilidad
 {
     public class ValidacionesString
     {
-        private const string GAMERTAG_VALIDO = "^[a-zA-Z0-9_]{5,20}$";
+        private const string CARACTERES_VALIDOS = "^[a-zA-Z0-9_]+$";
         private const string EMAIL_VALIDO = "^(?=.{5,100}$)[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         private const string SIMBOLOS_VALIDOS = "^(?=.*[\\W_])";
+        private const string NOMBRE_INVITADO = "guest";
+        private const string ESPACIO_CARACTER = " ";
         private const string PALABRA_RESERVADA_GUEST = "guest";
 
 
@@ -20,7 +23,7 @@ namespace WpfCliente.Utilidad
             {
                 return validacionGamertag;
             }
-            if (gamertag.Contains(" "))
+            if (gamertag.Contains(ESPACIO_CARACTER))
             {
                 return validacionGamertag;
             }
@@ -32,16 +35,28 @@ namespace WpfCliente.Utilidad
             {
                 return validacionGamertag;
             }
-
-            try
-            {
-                Regex regex = new Regex(GAMERTAG_VALIDO, RegexOptions.None, TimeSpan.FromMilliseconds(50));
-                return regex.IsMatch(gamertag.Trim());
-            }
-            catch (RegexMatchTimeoutException)
+            if (gamertag.Contains(NOMBRE_INVITADO))
             {
                 return validacionGamertag;
             }
+            if (gamertag.IndexOf(NOMBRE_INVITADO, StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                return validacionGamertag;
+            }
+            try
+            {
+                Regex regex = new Regex(CARACTERES_VALIDOS, RegexOptions.None, TimeSpan.FromMilliseconds(50));
+                return regex.IsMatch(gamertag.Trim());
+            }
+            catch (RegexMatchTimeoutException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
+            catch (Exception excepcion) 
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
+            return validacionGamertag;
 
         }
 
@@ -61,12 +76,16 @@ namespace WpfCliente.Utilidad
             {
                 MailAddress mail = new MailAddress(correo);
             }
-            catch (FormatException)
+            catch (FormatException excepcion)
             {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+
                 return validacionCorreo;
             }
-            catch(Exception)
+            catch(Exception excepcion)
             {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+
                 return validacionCorreo;
             }
 
@@ -75,10 +94,17 @@ namespace WpfCliente.Utilidad
                 Regex regex = new Regex(EMAIL_VALIDO, RegexOptions.None, TimeSpan.FromMilliseconds(50));
                 return regex.IsMatch(correo.Trim());
             }
-            catch (RegexMatchTimeoutException)
+            catch (RegexMatchTimeoutException excepcion)
             {
-                return validacionCorreo;
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+
             }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
+            return validacionCorreo;
+
         }
 
         public static bool EsSimboloValido(string password)

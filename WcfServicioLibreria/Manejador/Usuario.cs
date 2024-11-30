@@ -6,6 +6,7 @@ using System.IO;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Modelo.Excepciones;
 using WcfServicioLibreria.Utilidades;
@@ -14,31 +15,31 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioUsuario
     {
-        /// <summary>
-        /// Metodo que desconecta a un jugador y lo elimna de memoria. 
-        ///  Despues de ejecutar este metodo el usario ya no existe en memoria acausa del desechar()
-        /// </summary>
-        /// <param name="idJugador"></param>
-        public void DesconectarUsuario(int idJugador)
+        public void DesconectarUsuario(object sender, EventArgs e)
         {
             try
             {
-                if (jugadoresConectadosDiccionario.ContainsKey(idJugador))
+                if (sender is UsuarioContexto && e is UsuarioDesconectadoEventArgs eventoDesconexion)
                 {
-                    jugadoresConectadosDiccionario.TryRemove(idJugador, out UsuarioContexto usuario);
-                    lock (usuario)
+                    if (jugadoresConectadosDiccionario.ContainsKey(eventoDesconexion.IdUsuario))
                     {
-                        if (usuario != null)
+                        jugadoresConectadosDiccionario.TryRemove(eventoDesconexion.IdUsuario, out UsuarioContexto usuarioARemover);
+                        lock (usuarioARemover)
                         {
-                            usuario.EnDesconexion();
-                            usuario.Desechar();
+                            if (usuarioARemover != null)
+                            {
+                                usuarioARemover.EnDesconexion();
+                                usuarioARemover.Desechar();
+                                ((UsuarioContexto)usuarioARemover).DesconexionEvento += DesconectarUsuario;
+                            }
                         }
+                        usuarioDAO.ColocarUltimaConexion(eventoDesconexion.IdUsuario);
                     }
-                    UsuarioDAO.ColocarUltimaConexion(idJugador);
                 }
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
         }
 
@@ -58,15 +59,15 @@ namespace WcfServicioLibreria.Manejador
 
             try
             {
-                resultado = UsuarioDAO.EditarContraseniaPorGamertag(gamertag, nuevaContrasenia);
+                resultado = usuarioCuentaDAO.EditarContraseniaPorGamertag(gamertag, nuevaContrasenia);
             }
-            catch (CommunicationException ex)
+            catch (CommunicationException excepcion)
             {
-                Console.WriteLine($"Error al editar contraseña para el usuario {gamertag}: {ex.Message}");
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
-            catch (Exception ex)
+            catch (Exception execepcion)
             {
-                Console.WriteLine($"Error general al editar contraseña para el usuario {gamertag}: {ex.Message}");
+                ManejadorExcepciones.ManejarErrorException(execepcion);
             }
 
             return resultado;
@@ -96,12 +97,13 @@ namespace WcfServicioLibreria.Manejador
                     FotoPerfil = usuarioEditado.FotoUsuario != null ? Utilidad.StreamABytes(usuarioEditado.FotoUsuario) : null,
                     HashContrasenia = usuarioEditado.ContraseniaHASH ?? null,
                 };
-                bool consulta = DAOLibreria.DAO.UsuarioDAO.EditarUsuario(usuarioPerfilDTO);
+                bool consulta = usuarioDAO.EditarUsuario(usuarioPerfilDTO);
                 resultado = true;
 
             }
-            catch (Exception) 
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return resultado;
         }
@@ -121,10 +123,10 @@ namespace WcfServicioLibreria.Manejador
             WcfServicioLibreria.Modelo.Usuario usuario = null;
             try
             {
-                DAOLibreria.ModeloBD.UsuarioPerfilDTO usuarioConsulta = DAOLibreria.DAO.UsuarioDAO.ValidarCredenciales(gamertag, contrasenia);
+                DAOLibreria.ModeloBD.UsuarioPerfilDTO usuarioConsulta = usuarioDAO.ValidarCredenciales(gamertag, contrasenia);
                 if (usuarioConsulta != null)
                 {
-                    DAOLibreria.DAO.VetoDAO.VerificarVetoPorIdCuenta(usuarioConsulta.IdUsuarioCuenta);
+                    vetoDAO.VerificarVetoPorIdCuenta(usuarioConsulta.IdUsuarioCuenta);
                     usuario = new WcfServicioLibreria.Modelo.Usuario();
                     if (usuarioConsulta.FotoPerfil != null && usuarioConsulta.FotoPerfil.Length > 0)
                     {
@@ -138,7 +140,7 @@ namespace WcfServicioLibreria.Manejador
                 }
 
             }
-            catch(VetoEnProgresoExcepcion )
+            catch(VetoEnProgresoExcepcion)
             {
                 VetoFalla excepcion = new VetoFalla()
                 {
@@ -154,21 +156,16 @@ namespace WcfServicioLibreria.Manejador
                 };
                 throw new FaultException<VetoFalla>(excepcion, new FaultReason("Veto en permanete, y no vuelvas!!!"));
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
 
             return usuario;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="nombreUsuario"></param>
-        /// <returns>retorna true si contiene un usuario con el nombre, en caso contrario retorna false</returns>
         public bool YaIniciadoSesion(string nombreUsuario)
         {
-            DAOLibreria.ModeloBD.Usuario usuario = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorNombre(nombreUsuario);
+            DAOLibreria.ModeloBD.Usuario usuario = usuarioDAO.ObtenerUsuarioPorNombre(nombreUsuario);
             if (usuario == null)
             {
                 return false;
@@ -186,8 +183,9 @@ namespace WcfServicioLibreria.Manejador
                     Console.WriteLine(usuarioActual.Nombre);
 
                 }
-                catch (Exception)
+                catch (Exception excepcion)
                 {
+                    ManejadorExcepciones.ManejarErrorException(excepcion);
                 }
             }
         }

@@ -1,7 +1,6 @@
 ﻿using DAOLibreria.ModeloBD;
 using DAOLibreria.Utilidades;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
@@ -11,16 +10,17 @@ namespace DAOLibreria
 {
     public static class ConfiguradorConexion
     {
-        private static string NOMBRE_ARCHIVO_CONTEXTO = "DescribeloEntities";
-        private static string CARPETA = "ModeloBD";
-        private static string NOMBRE_ARCHIVO = "DescribeloBD";
+        private const string NOMBRE_CADENA_CONTEXTO = "DescribeloEntities";
+        private const string CARPETA = "ModeloBD";
+        private const string NOMBRE_MODELO_ENTIDAD = "DescribeloBD";
 
         public static bool ConfigurarCadenaConexion(string servidor, string nombreBD, string usuario, string contrasena)
         {
-            string nuevaCadenaConexion = $"metadata=res:///{CARPETA}.{NOMBRE_ARCHIVO}.csdl|res:///{CARPETA}.{NOMBRE_ARCHIVO}.ssdl|res://*/{CARPETA}.{NOMBRE_ARCHIVO}.msl;" +
+            string nuevaCadenaConexion = $"metadata=res://*/{CARPETA}.{NOMBRE_MODELO_ENTIDAD}.csdl|res://*/{CARPETA}.{NOMBRE_MODELO_ENTIDAD}.ssdl|res://*/{CARPETA}.{NOMBRE_MODELO_ENTIDAD}.msl;" +
                                          $"provider=System.Data.SqlClient;provider connection string=\"Server={servidor};Database={nombreBD};User Id={usuario};Password={contrasena};MultipleActiveResultSets=True;App=EntityFramework\";";
-            ActualizarCadenaConexionEnAppConfig(NOMBRE_ARCHIVO_CONTEXTO, nuevaCadenaConexion);
+            ActualizarCadenaConexionEnAppConfig(NOMBRE_CADENA_CONTEXTO, nuevaCadenaConexion);
             return ProbarConexion(servidor, nombreBD, usuario, contrasena);
+
         }
 
         public static bool ConfigurarCadenaConexion(string nombreVariableEntorno)
@@ -38,10 +38,10 @@ namespace DAOLibreria
                 string nombreBD = valoresLista[1];
                 string usuario = valoresLista[2];
                 string contrasena = valoresLista[3];
-                string nuevaCadenaConexion = $"metadata=res:///{CARPETA}.{NOMBRE_ARCHIVO}.csdl|res:///{CARPETA}.{NOMBRE_ARCHIVO}.ssdl|res://*/{CARPETA}.{NOMBRE_ARCHIVO}.msl;" +
+                string nuevaCadenaConexion = $"metadata=res://*/{CARPETA}.{NOMBRE_MODELO_ENTIDAD}.csdl|res://*/{CARPETA}.{NOMBRE_MODELO_ENTIDAD}.ssdl|res://*/{CARPETA}.{NOMBRE_MODELO_ENTIDAD}.msl;" +
                                              $"provider=System.Data.SqlClient;provider connection string=\"Server={servidor};Database={nombreBD};User Id={usuario};Password={contrasena};MultipleActiveResultSets=True;App=EntityFramework\";";
 
-                ActualizarCadenaConexionEnAppConfig(NOMBRE_ARCHIVO_CONTEXTO, nuevaCadenaConexion);
+                ActualizarCadenaConexionEnAppConfig(NOMBRE_CADENA_CONTEXTO, nuevaCadenaConexion);
 
                 resultado = ProbarConexion(valoresLista[0], valoresLista[1], valoresLista[2], valoresLista[3]);
             }
@@ -76,6 +76,7 @@ namespace DAOLibreria
             }
             config.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("connectionStrings");
+            Console.WriteLine(seccion);
         }
         public static bool ConfigurarCadenaConexionRuta()
         {
@@ -93,10 +94,10 @@ namespace DAOLibreria
                     string usuario = valores[2];
                     string contrasena = valores[3];
 
-                    string nuevaCadenaConexion = $"metadata=res:///{CARPETA}.{NOMBRE_ARCHIVO}.csdl|res:///{CARPETA}.{NOMBRE_ARCHIVO}.ssdl|res://*/{CARPETA}.{NOMBRE_ARCHIVO}.msl;" +
+                    string nuevaCadenaConexion = $"metadata=res://*/{CARPETA}.{NOMBRE_MODELO_ENTIDAD}.csdl|res://*/{CARPETA}.{NOMBRE_MODELO_ENTIDAD}.ssdl|res://*/{CARPETA}.{NOMBRE_MODELO_ENTIDAD}.msl;" +
                                              $"provider=System.Data.SqlClient;provider connection string=\"Server={servidor};Database={nombreBD};User Id={usuario};Password={contrasena};MultipleActiveResultSets=True;App=EntityFramework\";";
 
-                    ActualizarCadenaConexionEnAppConfig(NOMBRE_ARCHIVO_CONTEXTO, nuevaCadenaConexion);
+                    ActualizarCadenaConexionEnAppConfig(NOMBRE_CADENA_CONTEXTO, nuevaCadenaConexion);
 
                     resultado = ProbarConexion(servidor, nombreBD, usuario, contrasena);
                 }
@@ -150,13 +151,13 @@ namespace DAOLibreria
             string cadenaConexionSQL = $"Server={servidor};Database={nombreBD};User Id={usuario};Password={contrasena};";
             try
             {
-                //var primerIntento = Conexion.VerificarConexion();
-                //var segundoIntento = Conexion.VerificarConexion();
-                //var tercerIntento = Conexion.VerificarConexion();
-                //if (primerIntento && segundoIntento && tercerIntento)
-                //{
-                //    return true;
-                //}
+                var primerIntento = Conexion.VerificarConexion();
+                var segundoIntento = Conexion.VerificarConexion();
+                var tercerIntento = Conexion.VerificarConexion();
+                if (primerIntento && segundoIntento && tercerIntento)
+                {
+                    return true;
+                }
             }
             catch (SqlException exepcion)
             {

@@ -21,7 +21,7 @@ namespace Pruebas.Servidor.Utilidades
             }
         }
 
-        public void EmpezarPartidaCallBack(string idPartida)
+        public void EmpezarPartidaCallback(string idPartida)
         {
             seEmpezoPartida =true;
             this.idPartida = idPartida;

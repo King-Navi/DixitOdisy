@@ -1,24 +1,28 @@
 ﻿using DAOLibreria.Excepciones;
+using DAOLibreria.Interfaces;
 using DAOLibreria.ModeloBD;
 using DAOLibreria.Utilidades;
 using System;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Data.Entity.Infrastructure;
 
 namespace DAOLibreria.DAO
 {
-    public class EstadisticasDAO
+    public class EstadisticasDAO : IEstadisticasDAO
     {
         private const int AUMENTO_MAXIMO_PARTIDAS_JUGADAS = 1;
         private const int AUMENTO_MAXIMO_VICTORIAS = 1;
         private const int SIN_PARTIDAS_JUGADAS = 0;
         private const int SIN_VICTORIA = 0;
-        public static async Task<bool> AgregarEstadiscaPartidaAsync(int idEstadisticas, EstadisticasAcciones accion, int victoria)
+        public async Task<bool> AgregarEstadiscaPartidaAsync(int idEstadisticas, EstadisticasAcciones accion, int victoria)
         {
             if (victoria > AUMENTO_MAXIMO_VICTORIAS)
             {
-                throw new ActividadSospechosaExcepcion() { id = idEstadisticas };
+                throw new ActividadSospechosaExcepcion()
+                {
+                    Identificador = idEstadisticas
+                };
             }
             bool resultado = false;
             try
@@ -60,7 +64,7 @@ namespace DAOLibreria.DAO
             return resultado;
         }
 
-        public static Estadisticas RecuperarEstadisticas(int idEstadisticas)
+        public Estadisticas RecuperarEstadisticas(int idEstadisticas)
         {
             try
             {
@@ -83,7 +87,7 @@ namespace DAOLibreria.DAO
             return null;
         }
 
-        private static Action<Estadisticas> ObtenerAccion(EstadisticasAcciones accion)
+        private Action<Estadisticas> ObtenerAccion(EstadisticasAcciones accion)
         {
             switch (accion)
             {
@@ -102,7 +106,7 @@ namespace DAOLibreria.DAO
             }
         }
 
-        public static int ObtenerIdEstadisticaConIdUsuario(int idUsuario)
+        public int ObtenerIdEstadisticaConIdUsuario(int idUsuario)
         {
             try
             {

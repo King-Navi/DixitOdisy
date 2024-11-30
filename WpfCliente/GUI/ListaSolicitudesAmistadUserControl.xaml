@@ -26,7 +26,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
-                <Label x:Name="labelNoHaySolicitudes" Visibility="Collapsed" HorizontalContentAlignment="Center" Content="No hay solicitudes pendientes" FontFamily="Lucida Sans Unicode Bold" HorizontalAlignment="Center"  Margin="0,207,0,0" VerticalAlignment="Top" Width="320"/>
+                <TextBlock x:Name="textBlockNoHaySolicitudes" Visibility="Collapsed" TextAlignment="Center"  TextWrapping="Wrap" d:Text="No hay solicitudes pendientes" FontFamily="Lucida Sans Unicode Bold" HorizontalAlignment="Center"  Margin="0,207,0,0" VerticalAlignment="Top" Width="228"/>
             </Grid>
         </DockPanel>
     </Grid>

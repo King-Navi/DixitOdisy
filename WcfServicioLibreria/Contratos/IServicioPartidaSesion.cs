@@ -13,8 +13,8 @@ namespace WcfServicioLibreria.Contratos
         /// </summary>
         /// <param name="nombreUsuario">El nombre del usuario que desea unirse a la partida.</param>
         /// <param name="idPartida">El identificador único de la partida.</param>
-        [OperationContract(IsOneWay = true)]
-        Task UnirsePartida(string nombreUsuario, string idPartida);
+        [OperationContract]
+        Task<bool> UnirsePartidaAsync(string nombreUsuario, string idPartida);
 
         /// <summary>
         /// Confirma el movimiento de un jugador en una partida.
@@ -73,7 +73,7 @@ namespace WcfServicioLibreria.Contratos
         /// Este método notifica a todos los jugadores que la partida ha comenzado y ejecuta la lógica de inicio.
         /// </remarks>
         [OperationContract(IsOneWay = true)]
-        Task EmpezarPartida(string nombreJugador, string idPartida);
+        Task EmpezarPartidaAsync(string nombreJugador, string idPartida);
     }
     [ServiceContract]
     public interface IPartidaCallback

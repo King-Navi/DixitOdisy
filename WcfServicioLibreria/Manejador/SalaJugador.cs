@@ -2,31 +2,32 @@
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioSalaJugador
     {
-        public void ComenzarPartidaAnfrition(string nombre, string idSala , string idPartida)
+        public bool ComenzarPartidaAnfrition(string nombre, string idSala , string idPartida)
         {
+            var resultado = false;
             try
             {
                 salasDiccionario.TryGetValue(idSala, out Sala sala);
                 lock (sala)
                 {
-                    sala.AvisarComienzoPatida(nombre, idPartida);
+                    resultado = sala.AvisarComienzoPatida(nombre, idPartida);
                 }
+                return resultado;
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
-            };
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            return false;
         }
-        /// <summary>
-        /// Agrega a un jugador a una sala ya existente
-        /// </summary>
-        /// <param name="gamertag"></param>
-        /// <param name="idSala"></param>
-        public async Task AgregarJugadorSala(string gamertag, string idSala)
+
+        public async Task AgregarJugadorSalaAsync(string gamertag, string idSala)
         {
             if (!ValidarSala(idSala))
             {
@@ -50,14 +51,19 @@ namespace WcfServicioLibreria.Manejador
                 await sala.AvisarNuevoJugador(gamertag);
 
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
         }
 
         public void ExpulsarJugadorSala(string anfitrion, string jugadorAExpulsar, string idSala)
         {
             if (!ValidarSala(idSala))
+            {
+                return;
+            }
+            if (anfitrion.Equals(jugadorAExpulsar, StringComparison.OrdinalIgnoreCase))
             {
                 return;
             }
@@ -72,8 +78,9 @@ namespace WcfServicioLibreria.Manejador
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
         }
     }

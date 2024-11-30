@@ -11,48 +11,44 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioRegistro
     {
-
-        public bool RegistrarUsuario(Modelo.Usuario _usuario)
+        private const string NOMBRE_EN_USO = "Gamertag en uso";
+        public bool RegistrarUsuario(Modelo.Usuario usuarioNuevo)
         {
             bool resultado = false;
             try
             {
-                if (EsSha256Valido(_usuario.ContraseniaHASH))
+                if (EsSha256Valido(usuarioNuevo.ContraseniaHASH) && Utilidad.ValidarPropiedades(usuarioNuevo))
                 {
                     var usuarioCuenta = new UsuarioCuenta
                     {
-                        gamertag = _usuario.Nombre,
-                        hashContrasenia = _usuario.ContraseniaHASH.ToString(),
-                        correo = _usuario.Correo
+                        gamertag = usuarioNuevo.Nombre,
+                        hashContrasenia = usuarioNuevo.ContraseniaHASH.ToString(),
+                        correo = usuarioNuevo.Correo
                     };
-                    var usuario = new Usuario
+                    var usuarioModeloBaseDatos = new Usuario
                     {
-                        gamertag = _usuario.Nombre,
-                        fotoPerfil = Utilidad.StreamABytes(_usuario.FotoUsuario),
+                        gamertag = usuarioNuevo.Nombre,
+                        fotoPerfil = Utilidad.StreamABytes(usuarioNuevo.FotoUsuario),
                     };
-                    resultado = DAOLibreria.DAO.UsuarioDAO.RegistrarNuevoUsuario(usuario, usuarioCuenta);
+                    resultado = usuarioDAO.RegistrarNuevoUsuario(usuarioModeloBaseDatos, usuarioCuenta);
                 }
-            }catch (GamertagDuplicadoException)
+            }
+            catch (GamertagDuplicadoException)
             {
                 BaseDatosFalla excepcion = new BaseDatosFalla()
                 {
                     EsGamertagDuplicado = true
                 };
-                throw new FaultException<BaseDatosFalla>(excepcion, new FaultReason("Gamertag en uso"));
+                throw new FaultException<BaseDatosFalla>(excepcion, new FaultReason(NOMBRE_EN_USO));
             }
             catch (Exception excepcion)
             {
-                Console.WriteLine(excepcion);
-                Console.WriteLine(excepcion.StackTrace);
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
 
             return resultado;
         }
-        /// <summary>
-        /// Metodo para evaluar si cumple con nuestro criterio de encriptacion por SHA256
-        /// </summary>
-        /// <param name="hash"></param>
-        /// <returns>Si es valido retorna true, en caso contraio false</returns>
+
         public bool EsSha256Valido(string hash)
         {
             if (hash.Length != 64) return false;

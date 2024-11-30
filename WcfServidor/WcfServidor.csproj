@@ -62,9 +62,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Recursos\Animales\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\WcfServicioLibreria\WcfServicioLibreria.csproj">
       <Project>{a07aeff5-b5e9-44c4-87c5-9af85933de44}</Project>

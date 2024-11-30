@@ -1,24 +1,25 @@
 ﻿using DAOLibreria.Excepciones;
+using DAOLibreria.Interfaces;
 using DAOLibreria.ModeloBD;
 using DAOLibreria.Utilidades;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace DAOLibreria.DAO
 {
-    public static class SolicitudAmistadDAO
+    public class SolicitudAmistadDAO : ISolicitudAmistadDAO
     {
         private const string ESTADO_SOLICITUD_PENDIENTE = "Pendiente";
-        public static bool GuardarSolicitudAmistad(int idUsuarioRemitente, int idUsuarioDestinatario)
+        public bool GuardarSolicitudAmistad(int idUsuarioRemitente, int idUsuarioDestinatario)
         {
             if (idUsuarioRemitente == idUsuarioDestinatario)
             {
                 return false;
             }
-            if (SonAmigos(idUsuarioRemitente, idUsuarioDestinatario))
+            var amigos = new AmistadDAO();
+            if (amigos.SonAmigos(idUsuarioRemitente, idUsuarioDestinatario))
             {
                 bool existeAmistad = true;
                 bool existePeticion = false;
@@ -63,23 +64,7 @@ namespace DAOLibreria.DAO
             return false;
         }
 
-        private static bool SonAmigos(int idUsuarioRemitente, int idUsuarioDestinatario)
-        {
-            int idMayorUsuario = Math.Max(idUsuarioRemitente, idUsuarioDestinatario);
-            int idMenorUsuario = Math.Min(idUsuarioRemitente, idUsuarioDestinatario);
-
-            try
-            {
-                return AmistadDAO.SonAmigos(idMayorUsuario, idMenorUsuario);
-            }
-            catch (InvalidOperationException excepcion)
-            {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
-            }
-            return false;
-        }
-
-        public static bool ExisteSolicitudAmistad(int idRemitente, int idDestinatario)
+        public bool ExisteSolicitudAmistad(int idRemitente, int idDestinatario)
         {
             try
             {
@@ -98,7 +83,7 @@ namespace DAOLibreria.DAO
         }
 
 
-        public static List<Usuario> ObtenerSolicitudesAmistad(int idUsuario)
+        public List<Usuario> ObtenerSolicitudesAmistad(int idUsuario)
         {
             List<Usuario> usuariosRemitentes = new List<Usuario>();
             try
@@ -132,7 +117,7 @@ namespace DAOLibreria.DAO
         }
 
 
-        public static bool AceptarSolicitudAmistad(int idRemitente, int idDestinatario)
+        public bool AceptarSolicitudAmistad(int idRemitente, int idDestinatario)
         {
             try
             {
@@ -193,7 +178,7 @@ namespace DAOLibreria.DAO
         }
 
 
-        public static bool RechazarSolicitudAmistad(int idRemitente, int idDestinatario)
+        public bool RechazarSolicitudAmistad(int idRemitente, int idDestinatario)
         {
             try
             {

@@ -1,18 +1,20 @@
 ﻿using System;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioPartidaSesion
     {
 
-        public async Task UnirsePartida(string usuarioNombre, string idPartida)
+        public async Task<bool> UnirsePartidaAsync(string usuarioNombre, string idPartida)
         {
             if (!ValidarPartida(idPartida))
             {
-                return;
+                return false;
             }
             try
             {
@@ -21,10 +23,21 @@ namespace WcfServicioLibreria.Manejador
                 partida.AgregarJugador(usuarioNombre, contexto);
                 await partida.AvisarNuevoJugadorAsync(usuarioNombre);
                 partida.ConfirmarInclusionPartida(contexto);
+                return true;
             }
-            catch (Exception)
+            catch (InvalidOperationException excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            return false;
         }
 
         public void TratarAdivinar(string nombreJugador, string idPartida, string claveImagen)
@@ -46,9 +59,14 @@ namespace WcfServicioLibreria.Manejador
                     }
                 }
             }
-            catch (Exception)
+            catch (ArgumentNullException excepcion)
             {
-            };
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
         }
 
         public void ConfirmarMovimiento(string nombreJugador, string idPartida, string claveImagen, string pista = null)
@@ -74,9 +92,14 @@ namespace WcfServicioLibreria.Manejador
                     }
                 }
             }
-            catch (Exception)
+            catch (ArgumentNullException excepcion)
             {
-            };
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
         }
 
         public void ExpulsarJugadorPartida(string nombreJugador, string idPartida)
@@ -84,7 +107,7 @@ namespace WcfServicioLibreria.Manejador
             throw new NotImplementedException();
         }
 
-        public async Task EmpezarPartida(string nombreJugador, string idPartida) 
+        public async Task EmpezarPartidaAsync(string nombreJugador, string idPartida) 
         {
             if (!ValidarPartida(idPartida))
             {
@@ -95,9 +118,14 @@ namespace WcfServicioLibreria.Manejador
                 partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
                 await partida.EmpezarPartida();
             }
-            catch (Exception)
+            catch (ArgumentNullException excepcion)
             {
-            };
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
         }
 
         public async Task<bool> SolicitarImagenCartaAsync(string nombreJugador, string idPartida)
@@ -111,8 +139,13 @@ namespace WcfServicioLibreria.Manejador
                 partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
                 return await partida.EnviarImagen(nombreJugador);
             }
-            catch (Exception)
+            catch (ArgumentNullException excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using WpfCliente.Contexto;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
 using WpfCliente.ServidorDescribelo;
@@ -27,15 +28,15 @@ namespace WpfCliente.GUI
 
         private async void ClicButtonEnviarAsync(object sender, RoutedEventArgs e)
         {
-            bool conexionExitosa = await Conexion.VerificarConexion(HabilitarBotones, Window.GetWindow(this));
+            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)
             {
-                Application.Current.Shutdown();
+                SingletonGestorVentana.Instancia.NavegarA(new IniciarSesionPage());
                 return;
             }
             if (textBoxEnviarMensaje.Text.Length > MAXIMO_CARACTERES_PERMITIDOS || string.IsNullOrWhiteSpace(textBoxEnviarMensaje.Text))
             {
-                RecibirMensajeCliente(new ChatMensaje
+                RecibirMensajeClienteCallback(new ChatMensaje
                 {
                     Mensaje = Properties.Idioma.mensajeProfe,
                     HoraFecha = DateTime.Now,
@@ -65,9 +66,9 @@ namespace WpfCliente.GUI
             buttonAbrirChat.Visibility = Visibility.Visible;
         }
 
-        public void RecibirMensajeCliente(ChatMensaje mensaje)
+        public void RecibirMensajeClienteCallback(ChatMensaje mensaje)
         {
-            textBoxReceptorMensaje.Text += $"{Environment.NewLine} {mensaje.ToString()}";
+            textBoxReceptorMensaje.Text += $"{Environment.NewLine} {mensaje}";
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)

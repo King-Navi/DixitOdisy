@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using WpfCliente.Contexto;
 using WpfCliente.GUI;
 
 namespace WpfCliente.Utilidad
@@ -17,8 +18,15 @@ namespace WpfCliente.Utilidad
             (
                 tituloVentanaEmergente,
                 descripcionVentanaEmergente);
-            ventanaEmergente.Owner = ventana;
-            ventanaEmergente.ShowDialog();
+            try
+            {
+                ventanaEmergente.Owner = ventana;
+                ventanaEmergente.ShowDialog();
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
         }
 
         public static void CrearVentanaEmergente(string tituloVentanaEmergente, string descripcionVentanaEmergente, UserControl userControl)
@@ -31,13 +39,19 @@ namespace WpfCliente.Utilidad
                 tituloVentanaEmergente,
                 descripcionVentanaEmergente
             );
-            var ownerWindow = Window.GetWindow(userControl);
-            if (ownerWindow != null)
+            try
             {
-                ventanaEmergente.Owner = ownerWindow;
+                var ownerWindow = Window.GetWindow(userControl);
+                if (ownerWindow != null)
+                {
+                    ventanaEmergente.Owner = ownerWindow;
+                }
+                ventanaEmergente.ShowDialog();
             }
-
-            ventanaEmergente.ShowDialog();
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
         }
         public static void CrearVentanaEmergenteConCierre(string tituloVentanaEmergente, string descripcionVentanaEmergente, Window ventana)
         {
@@ -49,16 +63,15 @@ namespace WpfCliente.Utilidad
                 tituloVentanaEmergente,
                 descripcionVentanaEmergente
             );
-            ventanaEmergente.Owner = ventana;  
-            ventanaEmergente.ShowDialog();
-            CerrarSiNoEsInicioSesion(ventana);
-        }
-
-        private static void CerrarSiNoEsInicioSesion(Window ventana)
-        {
-            if (!(ventana is IniciarSesion))
+            try
             {
-                ventana.Close();
+                ventanaEmergente.Owner = ventana;
+                ventanaEmergente.ShowDialog();
+                SingletonGestorVentana.Instancia.RegresarSiNoEsInicio(ventana);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
         }
 

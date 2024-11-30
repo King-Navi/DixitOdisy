@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ModeloBD.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DescribeloBD.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Amigo">
           <Key>
             <PropertyRef Name="idMayor_usuario" />
@@ -13,6 +13,7 @@
           <Property Name="idMayor_usuario" Type="int" Nullable="false" />
           <Property Name="idMenor_usuario" Type="int" Nullable="false" />
           <Property Name="fechaInicioAmistad" Type="date" />
+          <Property Name="RelacionUnica" Type="varchar" MaxLength="21" StoreGeneratedPattern="Computed" />
         </EntityType>
         <EntityType Name="Estadisticas">
           <Key>
@@ -33,7 +34,7 @@
             <PropertyRef Name="idExpulsion" />
           </Key>
           <Property Name="idExpulsion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="motivo" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="motivo" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="fuePenalizado" Type="bit" Nullable="false" />
           <Property Name="esHacker" Type="bit" Nullable="false" />
           <Property Name="idUsuarioCuenta" Type="int" Nullable="false" />
@@ -174,7 +175,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ModeloBDStoreContainer">
+        <EntityContainer Name="DescribeloBDStoreContainer">
           <EntitySet Name="Amigo" EntityType="Self.Amigo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Estadisticas" EntityType="Self.Estadisticas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Expulsion" EntityType="Self.Expulsion" Schema="dbo" store:Type="Tables" />
@@ -215,10 +216,11 @@
             <End Role="Veto" EntitySet="Veto" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="ModeloBD" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="DescribeloBD" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Amigo">
           <Key>
             <PropertyRef Name="idMayor_usuario" />
@@ -227,6 +229,7 @@
           <Property Name="idMayor_usuario" Type="Int32" Nullable="false" />
           <Property Name="idMenor_usuario" Type="Int32" Nullable="false" />
           <Property Name="fechaInicioAmistad" Type="DateTime" Precision="0" />
+          <Property Name="RelacionUnica" Type="String" MaxLength="21" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
           <NavigationProperty Name="Usuario" Relationship="Self.FK_Amigo_UsuarioMayor" FromRole="Amigo" ToRole="Usuario" />
           <NavigationProperty Name="Usuario1" Relationship="Self.FK_Amigo_UsuarioMenor" FromRole="Amigo" ToRole="Usuario" />
         </EntityType>
@@ -250,11 +253,24 @@
             <PropertyRef Name="idExpulsion" />
           </Key>
           <Property Name="idExpulsion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="motivo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="motivo" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="fuePenalizado" Type="Boolean" Nullable="false" />
           <Property Name="esHacker" Type="Boolean" Nullable="false" />
           <Property Name="idUsuarioCuenta" Type="Int32" Nullable="false" />
           <NavigationProperty Name="UsuarioCuenta" Relationship="Self.FK_Expulsion_UsuarioCuenta" FromRole="Expulsion" ToRole="UsuarioCuenta" />
+        </EntityType>
+        <EntityType Name="SolicitudAmistad">
+          <Key>
+            <PropertyRef Name="idSolicitud" />
+          </Key>
+          <Property Name="idSolicitud" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idRemitente" Type="Int32" Nullable="false" />
+          <Property Name="idDestinatario" Type="Int32" Nullable="false" />
+          <Property Name="fechaSolicitud" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RelacionUnica" Type="String" MaxLength="21" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_SolicitudAmistad_Destinatario" FromRole="SolicitudAmistad" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="Self.FK_SolicitudAmistad_Remitente" FromRole="SolicitudAmistad" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -268,9 +284,9 @@
           <NavigationProperty Name="Amigo" Relationship="Self.FK_Amigo_UsuarioMayor" FromRole="Usuario" ToRole="Amigo" />
           <NavigationProperty Name="Amigo1" Relationship="Self.FK_Amigo_UsuarioMenor" FromRole="Usuario" ToRole="Amigo" />
           <NavigationProperty Name="Estadisticas" Relationship="Self.FK_Estadisticas_Usuario" FromRole="Usuario" ToRole="Estadisticas" />
+          <NavigationProperty Name="SolicitudAmistad" Relationship="Self.FK_SolicitudAmistad_Destinatario" FromRole="Usuario" ToRole="SolicitudAmistad" />
+          <NavigationProperty Name="SolicitudAmistad1" Relationship="Self.FK_SolicitudAmistad_Remitente" FromRole="Usuario" ToRole="SolicitudAmistad" />
           <NavigationProperty Name="UsuarioCuenta" Relationship="Self.FK_Usuario_UsuarioCuenta" FromRole="Usuario" ToRole="UsuarioCuenta" />
-          <NavigationProperty Name="SolicitudAmistad" Relationship="ModeloBD.FK_SolicitudAmistad_Destinatario" FromRole="Usuario" ToRole="SolicitudAmistad" />
-          <NavigationProperty Name="SolicitudAmistad1" Relationship="ModeloBD.FK_SolicitudAmistad_Remitente" FromRole="Usuario" ToRole="SolicitudAmistad" />
         </EntityType>
         <EntityType Name="UsuarioCuenta">
           <Key>
@@ -343,6 +359,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SolicitudAmistad_Destinatario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="SolicitudAmistad" Type="Self.SolicitudAmistad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="SolicitudAmistad">
+              <PropertyRef Name="idDestinatario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SolicitudAmistad_Remitente">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="SolicitudAmistad" Type="Self.SolicitudAmistad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="SolicitudAmistad">
+              <PropertyRef Name="idRemitente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Usuario_UsuarioCuenta">
           <End Role="UsuarioCuenta" Type="Self.UsuarioCuenta" Multiplicity="1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
@@ -371,6 +411,7 @@
           <EntitySet Name="Amigo" EntityType="Self.Amigo" />
           <EntitySet Name="Estadisticas" EntityType="Self.Estadisticas" />
           <EntitySet Name="Expulsion" EntityType="Self.Expulsion" />
+          <EntitySet Name="SolicitudAmistad" EntityType="Self.SolicitudAmistad" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" />
           <EntitySet Name="UsuarioCuenta" EntityType="Self.UsuarioCuenta" />
           <EntitySet Name="Veto" EntityType="Self.Veto" />
@@ -390,6 +431,14 @@
             <End Role="UsuarioCuenta" EntitySet="UsuarioCuenta" />
             <End Role="Expulsion" EntitySet="Expulsion" />
           </AssociationSet>
+          <AssociationSet Name="FK_SolicitudAmistad_Destinatario" Association="Self.FK_SolicitudAmistad_Destinatario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="SolicitudAmistad" EntitySet="SolicitudAmistad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SolicitudAmistad_Remitente" Association="Self.FK_SolicitudAmistad_Remitente">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="SolicitudAmistad" EntitySet="SolicitudAmistad" />
+          </AssociationSet>
           <AssociationSet Name="FK_Usuario_UsuarioCuenta" Association="Self.FK_Usuario_UsuarioCuenta">
             <End Role="UsuarioCuenta" EntitySet="UsuarioCuenta" />
             <End Role="Usuario" EntitySet="Usuario" />
@@ -398,70 +447,25 @@
             <End Role="UsuarioCuenta" EntitySet="UsuarioCuenta" />
             <End Role="Veto" EntitySet="Veto" />
           </AssociationSet>
-          <EntitySet Name="SolicitudAmistad" EntityType="ModeloBD.SolicitudAmistad" />
-          <AssociationSet Name="FK_SolicitudAmistad_Destinatario" Association="ModeloBD.FK_SolicitudAmistad_Destinatario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="SolicitudAmistad" EntitySet="SolicitudAmistad" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SolicitudAmistad_Remitente" Association="ModeloBD.FK_SolicitudAmistad_Remitente">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="SolicitudAmistad" EntitySet="SolicitudAmistad" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="SolicitudAmistad">
-          <Key>
-            <PropertyRef Name="idSolicitud" />
-          </Key>
-          <Property Name="idSolicitud" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="idRemitente" Type="Int32" Nullable="false" />
-          <Property Name="idDestinatario" Type="Int32" Nullable="false" />
-          <Property Name="fechaSolicitud" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="estado" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="RelacionUnica" Type="String" MaxLength="21" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
-          <NavigationProperty Name="Usuario" Relationship="ModeloBD.FK_SolicitudAmistad_Destinatario" FromRole="SolicitudAmistad" ToRole="Usuario" />
-          <NavigationProperty Name="Usuario1" Relationship="ModeloBD.FK_SolicitudAmistad_Remitente" FromRole="SolicitudAmistad" ToRole="Usuario" />
-        </EntityType>
-        <Association Name="FK_SolicitudAmistad_Destinatario">
-          <End Type="ModeloBD.Usuario" Role="Usuario" Multiplicity="1" />
-          <End Type="ModeloBD.SolicitudAmistad" Role="SolicitudAmistad" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="idUsuario" />
-            </Principal>
-            <Dependent Role="SolicitudAmistad">
-              <PropertyRef Name="idDestinatario" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SolicitudAmistad_Remitente">
-          <End Type="ModeloBD.Usuario" Role="Usuario" Multiplicity="1" />
-          <End Type="ModeloBD.SolicitudAmistad" Role="SolicitudAmistad" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="idUsuario" />
-            </Principal>
-            <Dependent Role="SolicitudAmistad">
-              <PropertyRef Name="idRemitente" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ModeloBDStoreContainer" CdmEntityContainer="DescribeloEntities">
+        <EntityContainerMapping StorageEntityContainer="DescribeloBDStoreContainer" CdmEntityContainer="DescribeloEntities">
           <EntitySetMapping Name="Amigo">
-            <EntityTypeMapping TypeName="ModeloBD.Amigo">
+            <EntityTypeMapping TypeName="DescribeloBD.Amigo">
               <MappingFragment StoreEntitySet="Amigo">
                 <ScalarProperty Name="idMayor_usuario" ColumnName="idMayor_usuario" />
                 <ScalarProperty Name="idMenor_usuario" ColumnName="idMenor_usuario" />
                 <ScalarProperty Name="fechaInicioAmistad" ColumnName="fechaInicioAmistad" />
+                <ScalarProperty Name="RelacionUnica" ColumnName="RelacionUnica" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Estadisticas">
-            <EntityTypeMapping TypeName="ModeloBD.Estadisticas">
+            <EntityTypeMapping TypeName="DescribeloBD.Estadisticas">
               <MappingFragment StoreEntitySet="Estadisticas">
                 <ScalarProperty Name="idEstadisticas" ColumnName="idEstadisticas" />
                 <ScalarProperty Name="partidasJugadas" ColumnName="partidasJugadas" />
@@ -476,7 +480,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Expulsion">
-            <EntityTypeMapping TypeName="ModeloBD.Expulsion">
+            <EntityTypeMapping TypeName="DescribeloBD.Expulsion">
               <MappingFragment StoreEntitySet="Expulsion">
                 <ScalarProperty Name="idExpulsion" ColumnName="idExpulsion" />
                 <ScalarProperty Name="motivo" ColumnName="motivo" />
@@ -486,8 +490,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SolicitudAmistad">
+            <EntityTypeMapping TypeName="DescribeloBD.SolicitudAmistad">
+              <MappingFragment StoreEntitySet="SolicitudAmistad">
+                <ScalarProperty Name="idSolicitud" ColumnName="idSolicitud" />
+                <ScalarProperty Name="idRemitente" ColumnName="idRemitente" />
+                <ScalarProperty Name="idDestinatario" ColumnName="idDestinatario" />
+                <ScalarProperty Name="fechaSolicitud" ColumnName="fechaSolicitud" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="RelacionUnica" ColumnName="RelacionUnica" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Usuario">
-            <EntityTypeMapping TypeName="ModeloBD.Usuario">
+            <EntityTypeMapping TypeName="DescribeloBD.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
                 <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
                 <ScalarProperty Name="gamertag" ColumnName="gamertag" />
@@ -498,7 +514,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UsuarioCuenta">
-            <EntityTypeMapping TypeName="ModeloBD.UsuarioCuenta">
+            <EntityTypeMapping TypeName="DescribeloBD.UsuarioCuenta">
               <MappingFragment StoreEntitySet="UsuarioCuenta">
                 <ScalarProperty Name="idUsuarioCuenta" ColumnName="idUsuarioCuenta" />
                 <ScalarProperty Name="gamertag" ColumnName="gamertag" />
@@ -508,25 +524,13 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Veto">
-            <EntityTypeMapping TypeName="ModeloBD.Veto">
+            <EntityTypeMapping TypeName="DescribeloBD.Veto">
               <MappingFragment StoreEntitySet="Veto">
                 <ScalarProperty Name="idVeto" ColumnName="idVeto" />
                 <ScalarProperty Name="fechaInicio" ColumnName="fechaInicio" />
                 <ScalarProperty Name="fechaFin" ColumnName="fechaFin" />
                 <ScalarProperty Name="esPermanente" ColumnName="esPermanente" />
                 <ScalarProperty Name="idUsuarioCuenta" ColumnName="idUsuarioCuenta" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SolicitudAmistad">
-            <EntityTypeMapping TypeName="ModeloBD.SolicitudAmistad">
-              <MappingFragment StoreEntitySet="SolicitudAmistad">
-                <ScalarProperty Name="RelacionUnica" ColumnName="RelacionUnica" />
-                <ScalarProperty Name="estado" ColumnName="estado" />
-                <ScalarProperty Name="fechaSolicitud" ColumnName="fechaSolicitud" />
-                <ScalarProperty Name="idDestinatario" ColumnName="idDestinatario" />
-                <ScalarProperty Name="idRemitente" ColumnName="idRemitente" />
-                <ScalarProperty Name="idSolicitud" ColumnName="idSolicitud" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

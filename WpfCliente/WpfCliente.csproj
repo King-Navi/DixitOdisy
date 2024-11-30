@@ -112,6 +112,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="GUI\PrincipalWindow.xaml.cs">
+      <DependentUpon>PrincipalWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ImplementacionesCallbacks\SingletonConexion.cs" />
+    <Compile Include="ImplementacionesCallbacks\SingletonSalaJugador.cs" />
+    <Compile Include="ImplementacionesCallbacks\SingletonInvitacionPartida.cs" />
+    <Compile Include="Interfaz\INavegacion.cs" />
+    <Compile Include="ManejadorAplicacion\SingletonGestorVentana.cs" />
     <Compile Include="Estilos\Control\ArcSpinner.cs" />
     <Compile Include="Estilos\Control\CogwheelSpinner.cs" />
     <Compile Include="Estilos\Control\DonutSpinner.cs" />
@@ -122,14 +130,14 @@
     <Compile Include="GUI\AmigoUserControl.xaml.cs">
       <DependentUpon>AmigoUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\CambiarContraseniaWindow.xaml.cs">
-      <DependentUpon>CambiarContraseniaWindow.xaml</DependentUpon>
+    <Compile Include="GUI\CambiarContraseniaPage.xaml.cs">
+      <DependentUpon>CambiarContraseniaPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\ChatUserControl.xaml.cs">
       <DependentUpon>ChatUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\EditarPerfilWindow.xaml.cs">
-      <DependentUpon>EditarPerfilWindow.xaml</DependentUpon>
+    <Compile Include="GUI\EditarPerfilPage.xaml.cs">
+      <DependentUpon>EditarPerfilPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\EsperaRestoJugadoresUserControl.xaml.cs">
       <DependentUpon>EsperaRestoJugadoresUserControl.xaml</DependentUpon>
@@ -149,8 +157,8 @@
     <Compile Include="GUI\ListaUsuariosSalaUserControl.xaml.cs">
       <DependentUpon>ListaUsuariosSalaUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\MenuWindow.xaml.cs">
-      <DependentUpon>MenuWindow.xaml</DependentUpon>
+    <Compile Include="GUI\MenuPage.xaml.cs">
+      <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\MostrarCartaModalWindow.xaml.cs">
       <DependentUpon>MostrarCartaModalWindow.xaml</DependentUpon>
@@ -158,14 +166,17 @@
     <Compile Include="GUI\NarradorSeleccionCartaUserControl.xaml.cs">
       <DependentUpon>NarradorSeleccionCartaUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\AmigosWindow.xaml.cs">
-      <DependentUpon>AmigosWindow.xaml</DependentUpon>
+    <Compile Include="GUI\AmigosPage.xaml.cs">
+      <DependentUpon>AmigosPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\PartidaWindow.xaml.cs">
-      <DependentUpon>PartidaWindow.xaml</DependentUpon>
+    <Compile Include="GUI\PartidaPage.xaml.cs">
+      <DependentUpon>PartidaPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\PerfilMenuDesplegableUserControl.xaml.cs">
       <DependentUpon>PerfilMenuDesplegableUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\ReconectandoWindow.xaml.cs">
+      <DependentUpon>ReconectandoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\UsuarioUserControl.xaml.cs">
       <DependentUpon>UsuarioUserControl.xaml</DependentUpon>
@@ -175,15 +186,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Idioma.resx</DependentUpon>
     </Compile>
+    <Compile Include="ImplementacionesCallbacks\SingletonUsuarioSesionJugador.cs" />
+    <Compile Include="Servidor\SolicitudAmistad.cs" />
     <Compile Include="Utilidad\RecursosCompartidosPartida.cs" />
-    <Compile Include="GUI\RegistrarUsuarioWindow.xaml.cs">
-      <DependentUpon>RegistrarUsuarioWindow.xaml</DependentUpon>
+    <Compile Include="GUI\RegistrarUsuarioPage.xaml.cs">
+      <DependentUpon>RegistrarUsuarioPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\ResumenRondaUserControl.xaml.cs">
       <DependentUpon>ResumenRondaUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\SalaEsperaWindow.xaml.cs">
-      <DependentUpon>SalaEsperaWindow.xaml</DependentUpon>
+    <Compile Include="GUI\SalaEsperaPage.xaml.cs">
+      <DependentUpon>SalaEsperaPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\SeleccionCartaUsercontrol.xaml.cs">
       <DependentUpon>SeleccionCartaUsercontrol.xaml</DependentUpon>
@@ -207,8 +220,8 @@
     <Compile Include="Utilidad\ComandoRele.cs" />
     <Compile Include="Utilidad\Correo.cs" />
     <Compile Include="Utilidad\EstadisticaUsuario.cs" />
-    <Compile Include="Utilidad\Servidor\Amigo.cs" />
-    <Compile Include="Utilidad\Servidor\ChatMensaje.cs" />
+    <Compile Include="Servidor\Amigo.cs" />
+    <Compile Include="Servidor\ChatMensaje.cs" />
     <Compile Include="Utilidad\Conexion.cs" />
     <Compile Include="Utilidad\CambiarIdioma.cs" />
     <Compile Include="Interfaz\IActualizacionUI.cs" />
@@ -217,16 +230,18 @@
     <Compile Include="GUI\CambiarIdiomaUserControl.xaml.cs">
       <DependentUpon>CambiarIdiomaUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\IniciarSesionWindow.xaml.cs">
-      <DependentUpon>IniciarSesionWindow.xaml</DependentUpon>
+    <Compile Include="GUI\IniciarSesionPage.xaml.cs">
+      <DependentUpon>IniciarSesionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilidad\Imagen.cs" />
     <Compile Include="Utilidad\ManejadorLogger.cs" />
     <Compile Include="Utilidad\ManejadorExcepciones.cs" />
-    <Compile Include="Utilidad\Servidor\Usuario.cs" />
+    <Compile Include="Servidor\Usuario.cs" />
+    <Compile Include="ImplementacionesCallbacks\SingletonAmigos.cs" />
+    <Compile Include="Utilidad\SingletonConexion.cs" />
     <Compile Include="Utilidad\Utilidades.cs" />
     <Compile Include="Utilidad\ServicioManejador.cs" />
-    <Compile Include="Utilidad\Servidor\ImagenCarta.cs" />
+    <Compile Include="Servidor\ImagenCarta.cs" />
     <Compile Include="Utilidad\SingletonCliente.cs" />
     <Compile Include="Utilidad\ValidacionExistenciaJuego.cs" />
     <Compile Include="Utilidad\ValidacionesString.cs" />
@@ -254,7 +269,7 @@
     <None Include="Connected Services\ServidorDescribelo\service.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ServidorDescribelo\service1.xsd">
+    <None Include="Connected Services\ServidorDescribelo\service2.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ServidorDescribelo\System.IO.xsd">
@@ -338,7 +353,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\CambiarContraseniaWindow.xaml">
+    <Page Include="GUI\CambiarContraseniaPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -350,7 +365,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\EditarPerfilWindow.xaml">
+    <Page Include="GUI\EditarPerfilPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -378,7 +393,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\MenuWindow.xaml">
+    <Page Include="GUI\MenuPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -390,11 +405,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\AmigosWindow.xaml">
+    <Page Include="GUI\AmigosPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\PartidaWindow.xaml">
+    <Page Include="GUI\PartidaPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -402,10 +417,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\RegistrarUsuarioWindow.xaml">
+    <Page Include="GUI\PrincipalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\ReconectandoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\RegistrarUsuarioPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\IniciarSesionWindow.xaml">
+    <Page Include="GUI\IniciarSesionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -413,7 +436,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\SalaEsperaWindow.xaml">
+    <Page Include="GUI\SalaEsperaPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -466,12 +489,6 @@
     <Resource Include="Recursos\cajaLogin.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Recursos\fondoLogin.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Recursos\mesaJuego.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Recursos\fondoJuego.png" />
   </ItemGroup>
   <ItemGroup>
@@ -497,12 +514,6 @@
   <ItemGroup>
     <Resource Include="Recursos\fondoSala.png" />
     <Resource Include="Recursos\fondoNotificaciones.png" />
-    <None Include="Connected Services\ServidorDescribelo\configuration91.svcinfo" />
-    <None Include="Connected Services\ServidorDescribelo\configuration.svcinfo" />
-    <None Include="Connected Services\ServidorDescribelo\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Resource Include="Recursos\agregarAmigo.png" />
     <Resource Include="Recursos\flechaRecargar.png" />
     <Resource Include="Recursos\amigos.png" />
@@ -517,10 +528,22 @@
     <Resource Include="Recursos\cerrarCruz.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Recursos\logoJuego.png" />
+  </ItemGroup>
+  <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\ServidorDescribelo\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Recursos\logoJuego.png" />
+    <None Include="Connected Services\ServidorDescribelo\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServidorDescribelo\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\ServidorDescribelo\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Recursos\pfp2.png" />

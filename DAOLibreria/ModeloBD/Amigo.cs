@@ -17,6 +17,7 @@ namespace DAOLibreria.ModeloBD
         public int idMayor_usuario { get; set; }
         public int idMenor_usuario { get; set; }
         public Nullable<System.DateTime> fechaInicioAmistad { get; set; }
+        public string RelacionUnica { get; set; }
     
         public virtual Usuario Usuario { get; set; }
         public virtual Usuario Usuario1 { get; set; }

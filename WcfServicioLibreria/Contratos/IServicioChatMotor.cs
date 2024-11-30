@@ -3,10 +3,6 @@ using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Contratos
 {
-    /// <summary>
-    /// Define un contrato de servicio para un sistema de chat, permitiendo la gestión de usuarios y el envío de mensajes.
-    /// Permite sesiones, aunque no es obligatorio mantener una.
-    /// </summary>
     [ServiceContract(SessionMode = SessionMode.Allowed, CallbackContract = typeof(IChatCallback))]
     public interface IServicioChatMotor
     {
@@ -39,7 +35,7 @@ namespace WcfServicioLibreria.Contratos
         /// </summary>
         /// <param name="mensaje">El mensaje de chat a enviar al cliente.</param>
         [OperationContract(IsOneWay = true)]
-        void RecibirMensajeCliente(ChatMensaje mensaje);
+        void RecibirMensajeClienteCallback(ChatMensaje mensaje);
 
     }
 }

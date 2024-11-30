@@ -640,4 +640,37 @@
   <data name="mensajeSeNecesitaReiniciar" xml:space="preserve">
     <value>You need to restart, please log back in.</value>
   </data>
+  <data name="buttonReconectar" xml:space="preserve">
+    <value>Reconnect</value>
+  </data>
+  <data name="tituloReconexionFallida" xml:space="preserve">
+    <value>Failed reconnection</value>
+  </data>
+  <data name="mensajeIntentoReconexion" xml:space="preserve">
+    <value>Attempt to reconnect failed, come back later.</value>
+  </data>
+  <data name="tituloGraciaPorJugar" xml:space="preserve">
+    <value>Thanks for playing</value>
+  </data>
+  <data name="mensajeConsideraRegistrarteInvitado" xml:space="preserve">
+    <value>Consider signing up for more features!</value>
+  </data>
+  <data name="mensajeCamposIntroducidosInvalidos" xml:space="preserve">
+    <value>The fields entered are not valid, check them</value>
+  </data>
+  <data name="labelContraseniaNoCoincide" xml:space="preserve">
+    <value>Passwords do not match</value>
+  </data>
+  <data name="tituloImagenSelecionada" xml:space="preserve">
+    <value>Selected image</value>
+  </data>
+  <data name="tituloReconectando" xml:space="preserve">
+    <value>Reconnecting</value>
+  </data>
+  <data name="tituloExpulsionInvalida" xml:space="preserve">
+    <value>Invalid expulsion</value>
+  </data>
+  <data name="mensajeNoAutoExpulsion" xml:space="preserve">
+    <value>You can't expel yourself</value>
+  </data>
 </root>

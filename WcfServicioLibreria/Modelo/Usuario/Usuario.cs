@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization;
+using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Enumerador;
+using WcfServicioLibreria.Evento;
 
 namespace WcfServicioLibreria.Modelo
 {
@@ -25,6 +27,15 @@ namespace WcfServicioLibreria.Modelo
             fotoUsuario = _fotoUsuario;
             nombre = _nombre;
         }
+
+        public Usuario(int _idUsuario, string _nombre, IUsuarioSesionCallback _usuarioSesionCallback) 
+                : base(_idUsuario, _nombre, _usuarioSesionCallback)
+        {
+                this.idUsuario = _idUsuario;
+                this.nombre = _nombre;
+                UsuarioSesionCallback = _usuarioSesionCallback;
+        }
+
 
         #endregion Campos
 

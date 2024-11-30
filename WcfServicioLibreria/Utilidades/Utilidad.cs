@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -19,11 +20,8 @@ namespace WcfServicioLibreria.Utilidades
                 return memoriaStream.ToArray();
             }
         }
-        /// <summary>
-        /// Genera un identificador único de 6 caracteres alfanuméricos para las salas.
-        /// </summary>
-        /// <returns>Un identificador de sala único.</returns>
-        public static string GenerarIdUnico()
+
+        public static string Generar6Caracteres()
         {
             const string CARACTERES = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             const int LONGITUD_ID = 6;
@@ -48,6 +46,36 @@ namespace WcfServicioLibreria.Utilidades
                 ManejadorExcepciones.ManejarFatalException(excepcion);
             }
             return resultado.ToString();
+        }
+
+        /// <summary>
+        /// Evalúa si todas las propiedades públicas de un objeto tienen un valor válido.
+        /// </summary>
+        /// <param name="objeto">El objeto a evaluar.</param>
+        /// <returns>True si todas las propiedades tienen valores válidos; False en caso contrario.</returns>
+        /// <exception cref="ArgumentNullException">Se lanza si el objeto es null.</exception>
+        public static bool ValidarPropiedades(object objeto)
+        {
+            if (objeto == null)
+            {
+                throw new ArgumentNullException(nameof(objeto), "El objeto no puede ser null.");
+            }
+            var propiedades = objeto.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (var propiedad in propiedades)
+            {
+                var valor = propiedad.GetValue(objeto);
+                if (valor == null)
+                {
+                    return false;
+                }
+                if (propiedad.PropertyType == typeof(string) && string.IsNullOrWhiteSpace((string)valor))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

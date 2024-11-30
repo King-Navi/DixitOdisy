@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAOLibreria.DAO;
+using System;
 using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Evento;
@@ -20,9 +21,9 @@ namespace WcfServicioLibreria.Manejador
             {
                 do
                 {
-                    idPartida = Utilidad.GenerarIdUnico();
+                    idPartida = Utilidad.Generar6Caracteres();
                 } while (salasDiccionario.ContainsKey(idPartida));
-                Partida partidaNueva = new Partida(idPartida, anfitrion, configuracion, Escritor);
+                Partida partidaNueva = new Partida(idPartida, anfitrion, configuracion, Escritor, new UsuarioDAO(), new EstadisticasDAO());
                 bool existeSala = partidasdDiccionario.TryAdd(idPartida, partidaNueva);
                 if (existeSala)
                 {
@@ -79,10 +80,9 @@ namespace WcfServicioLibreria.Manejador
                     }
 
                 }
-                catch (Exception)
+                catch (Exception excepcion)
                 {
-
-                    throw;
+                    ManejadorExcepciones.ManejarErrorException(excepcion);
                 }
             }
             return resultado;

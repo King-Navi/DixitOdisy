@@ -1,16 +1,17 @@
-﻿using DAOLibreria.ModeloBD;
-using System;
-using System.Linq;
-using DAOLibreria.Excepciones;
+﻿using DAOLibreria.Excepciones;
+using DAOLibreria.Interfaces;
 using DAOLibreria.Utilidades;
+using System;
 using System.Data.Entity.Infrastructure;
+using System.Linq;
+using DAOLibreria.ModeloBD;
 
 namespace DAOLibreria.DAO
 {
-    public class VetoDAO
+    public class VetoDAO : IVetoDAO
     {
         private const int ID_INVALIDO = 0;
-        public static bool ExisteTablaVetoPorIdCuenta(int idUsuarioCuenta)
+        public bool ExisteTablaVetoPorIdCuenta(int idUsuarioCuenta)
         {
             try
             {
@@ -29,7 +30,7 @@ namespace DAOLibreria.DAO
             }
             return false;
         }
-        public static bool CrearRegistroVeto(int idUsuarioCuenta, DateTime? fechaFin, bool esPermanente)
+        public bool CrearRegistroVeto(int idUsuarioCuenta, DateTime? fechaFin, bool esPermanente)
         {
             if (idUsuarioCuenta <= ID_INVALIDO)
             {
@@ -70,7 +71,7 @@ namespace DAOLibreria.DAO
             return false;
         }
 
-        public static bool VerificarVetoPorIdCuenta(int idUsuarioCuenta)
+        public bool VerificarVetoPorIdCuenta(int idUsuarioCuenta)
         {
             try
             {

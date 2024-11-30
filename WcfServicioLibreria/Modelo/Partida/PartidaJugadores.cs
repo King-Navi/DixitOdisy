@@ -13,13 +13,11 @@ using System.Threading;
 using ChatGPTLibreria;
 using ChatGPTLibreria.ModelosJSON;
 using System.Net.Http;
+using DAOLibreria.Interfaces;
+using DAOLibreria.DAO;
 
 namespace WcfServicioLibreria.Modelo
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <ref>https://refactoring.guru/es/design-patterns/strategy</ref>
     internal partial class Partida : IObservador
     {
         #region Constantes
@@ -84,6 +82,8 @@ namespace WcfServicioLibreria.Modelo
         public EventHandler partidaVaciaManejadorEvento;
         private event EventHandler TodosListos;
         private readonly Lazy<string[]> archivosCache;
+        private readonly IUsuarioDAO usuarioDAO;
+        private readonly IEstadisticasDAO estadisticasDAO;
         /// <summary>
         /// Precausion: Aumentar esto ocupara significativamente mas recursos
         /// </summary>
@@ -112,7 +112,7 @@ namespace WcfServicioLibreria.Modelo
         #endregion Propiedad
 
         #region Contructor
-        public Partida(string _idPartida, string _anfitrion, ConfiguracionPartida _configuracion, IEscribirDisco _escritorDisco)
+        public Partida(string _idPartida, string _anfitrion, ConfiguracionPartida _configuracion, IEscribirDisco _escritorDisco, IUsuarioDAO _usuarioDAO, IEstadisticasDAO _estadisticasDAO)
         {
             IdPartida = _idPartida;
             Anfitrion = _anfitrion;
@@ -127,13 +127,14 @@ namespace WcfServicioLibreria.Modelo
             Escritor = _escritorDisco;
             SolicitarImagen = new SolicitarImagen();
             estadisticasPartida = new EstadisticasPartida(_configuracion.Tematica);
-            TodosListos += (sender, e) =>
+            TodosListos += (emisor, evento) =>
             {
                 cancelacionEjecucionRonda= new CancellationTokenSource(); 
                 Task.Run(async () => await IniciarPartidaSeguroAsync(cancelacionEjecucionRonda.Token));
             };
             archivosCache = new Lazy<string[]>(() => Directory.GetFiles(rutaImagenes, "*.jpg"));
-
+            usuarioDAO = _usuarioDAO;
+            estadisticasDAO = _estadisticasDAO;
         }
         #endregion Contructor
 
@@ -208,11 +209,9 @@ namespace WcfServicioLibreria.Modelo
 
         private async Task<bool> SolicitarImagenChatGPTAsync(string nombreSolicitante)
         {
-
-            ImagenPedido64JSON imagenPedido = new ImagenPedido64JSON("Genera una imagen basada en la tematica " + Tematica + " debe ser rectangular y vertical");
-
+            ImagenPedido64JSON imagenPedido = new ImagenPedido64JSON("Genera una imagen basada en la tematica " + Tematica + " debe ser rectangular y vertical, " +
+                "tiene que ser muy buena por que es para el profe juan carlos");
             var respuesta = await SolicitarImagen.EjecutarImagenPrompt64JSON(imagenPedido, httpCliente);
-
             if (respuesta?.ImagenDatosList != null && respuesta.ImagenDatosList.Any())
             {
                 var imagenBytes = Convert.FromBase64String(respuesta.ImagenDatosList[0].Base64Imagen);
@@ -232,13 +231,21 @@ namespace WcfServicioLibreria.Modelo
                     callback?.RecibirImagenCallback(resultado);
                     return true;
                 }
-                catch (Exception)
+                catch (FormatException excepcion)
                 {
+                    ManejadorExcepciones.ManejarFatalException(excepcion);
+                }
+                catch (ArgumentException excepcion)
+                {
+                    ManejadorExcepciones.ManejarFatalException(excepcion);
+                }
+                catch (Exception excepcion)
+                {
+                    ManejadorExcepciones.ManejarFatalException(excepcion);
                 }
                 finally
                 {
                     semaphoreEnviandoImagenDeChatGPT.Release();
-
                 }
             }
             return false;
@@ -337,7 +344,7 @@ namespace WcfServicioLibreria.Modelo
 
         internal async Task AvisarNuevoJugadorAsync(string nombreJugador)
         {
-            DAOLibreria.ModeloBD.Usuario informacionUsuario = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
+            DAOLibreria.ModeloBD.Usuario informacionUsuario = usuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
             bool esInvitado = false;
             if (informacionUsuario == null)
             {
@@ -355,8 +362,21 @@ namespace WcfServicioLibreria.Modelo
                         fotoPerfil = File.ReadAllBytes(archivoAleatorio)
                     };
                 }
-                catch (Exception)
+                catch (ArgumentNullException excepcion)
                 {
+                    ManejadorExcepciones.ManejarFatalException(excepcion);
+                }
+                catch (ArgumentException excepcion)
+                {
+                    ManejadorExcepciones.ManejarFatalException(excepcion);
+                }
+                catch (IOException excepcion)
+                {
+                    ManejadorExcepciones.ManejarFatalException(excepcion);
+                }
+                catch (Exception excepcion)
+                {
+                    ManejadorExcepciones.ManejarFatalException(excepcion);
                 }
                 finally
                 {
@@ -403,7 +423,6 @@ namespace WcfServicioLibreria.Modelo
 
         private void AvisarRetiroJugador(string nombreUsuarioEliminado)
         {
-            //TODO:Revisar si se va alguien importante en un momento critico (Podemos ocupar estado para ciertos puntos de la partida)
             lock (jugadoresCallback)
             {
                 lock (jugadoresInformacion)
@@ -439,7 +458,6 @@ namespace WcfServicioLibreria.Modelo
 
         public async void DesconectarUsuario(string nombreJugador)
         {
-            //TODO: EVALUAR QUE EL QUE SE DESCONECTA NO SEA EL NARRADOR O ALGO IMPORTANTE
             AvisarRetiroJugador(nombreJugador);
             await RemoverJugadorAsync(nombreJugador);
         }
@@ -492,8 +510,9 @@ namespace WcfServicioLibreria.Modelo
             {
                 contexto.IniciarValoresPartidaCallback(true);
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarFatalException(excepcion);
 
             };
         }

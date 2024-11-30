@@ -1,11 +1,15 @@
-﻿using System;
+﻿using DAOLibreria.DAO;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Modelo
 {
@@ -53,9 +57,13 @@ namespace WcfServicioLibreria.Modelo
                 estadisticasPartida.AgregarDesdeOtraLista(ObtenerNombresJugadores());
                 await EjecutarRondasAsync(cancelacionToke);
             }
-            catch (Exception ex)
+            catch (ArgumentNullException excepcion)
             {
-                Console.WriteLine($"Error al ejecutar ronda {RondaActual} :  {ex.Message} ");
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
         }
 
@@ -72,17 +80,18 @@ namespace WcfServicioLibreria.Modelo
                     ++RondaActual;
                 }
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException excepcion)
             {
-                Console.WriteLine("La tarea fue cancelada.");
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             await TerminarPartidaAsync();
         }
 
-        private async Task EvaluarPuntosRondaAsync()  //FIXME
+        private async Task EvaluarPuntosRondaAsync()  
         {
             CalculoPuntosEnSituaciones();
             estadisticasPartida.CalcularPodio();
@@ -99,33 +108,40 @@ namespace WcfServicioLibreria.Modelo
 
                 }
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             CambiarPantalla(PANTALLA_ESTADISTICAS);
             await Task.Delay(TimeSpan.FromSeconds(TIEMPO_MOSTRAR_ESTADISTICAS));
 
         }
 
-        //TODO:
-        //Caso en el que todos adivinan la imagen correcta. CHECK
-        //Caso en el que nadie adivina la imagen correcta. CHECK
-        //Caso en el que algunos adivinan y otros no. CHECK
-        //Caso en el que uno o varios jugadores no seleccionan ninguna imagen. CHECK
         private void CalculoPuntosEnSituaciones()
         {
+            if (SelecionoCartaNarrador)
+            {
+                VerificarAciertos(out bool alguienAdivinoImagen, out bool todosAdivinaron, out int votosCorrectos);
+                AplicarPenalizacionNoParticipacion();
+                EvaluarCondicionesGlobales(votosCorrectos, todosAdivinaron);
+                AsignarPuntosPorConfundir();
+            }
+            else
+            {
+                AplicarPenlizacionNarrador();
+            }
+        }
 
-            // 1. Verificar quiénes adivinaron correctamente
-            VerificarAciertos(out bool alguienAdivinoImagen, out bool todosAdivinaron, out int votosCorrectos);
-
-            // 2. Aplicar penalización a los jugadores que no participaron
-            AplicarPenalizacionNoParticipacion();
-
-            // 3. Asignar puntos de penalización o bonificación si todos/nadie acertó
-            EvaluarCondicionesGlobales(votosCorrectos, todosAdivinaron);
-
-            // 4. Asignar puntos de confusión por votos de otros jugadores
-            AsignarPuntosPorConfundir();
+        private void AplicarPenlizacionNarrador()
+        {
+            foreach (var jugador in estadisticasPartida.Jugadores)
+            {
+                if (jugador.Nombre.Equals(NarradorActual, StringComparison.OrdinalIgnoreCase))
+                {
+                    jugador.Puntos -= PUNTOS_RESTADOS_NO_PARTICIPAR;
+                    Console.WriteLine($"No participo el narrador {jugador.Nombre}");
+                }
+            }
         }
 
         private void VerificarAciertos(out bool alguienAdivinoImagen, out bool todosAdivinaron, out int votosCorrectos)
@@ -232,24 +248,14 @@ namespace WcfServicioLibreria.Modelo
             RestablecerDesicionesJugadores();
             await EscogerNarradorAsync();
             AvisarQuienEsNarrador();
-
             await EsperarConfirmacionNarradorAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_NARRADOR));
-            //TODO: El narrador no escogio nada
-            //await El narrador no escogio nada
             if (SelecionoCartaNarrador)
             {
-
-                // Espera por la confirmación de los jugadores de la imagen que escogen segun la pista
                 await EsperarConfirmacionJugadoresAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_SELECCION));
-                //Ir a la pantalla para mostrar todas las cartas elegidas
                 MostrarGrupoCartas();
                 CambiarPantalla(PANTALLA_TODOS_CARTAS , NarradorActual);
                 await EsperarConfirmacionAdivinarAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_PARA_ADIVINAR));
 
-            }
-            else
-            {
-                //El narrador no escogio nada
             }
 
 
@@ -321,11 +327,7 @@ namespace WcfServicioLibreria.Modelo
                 }
             };
         }
-        /// <summary>
-        /// Cambia la pantalla para todos los jugadores excluyendo a uno
-        /// </summary>
-        /// <param name="numeroPantalla">El número de la pantalla a mostrar</param>
-        /// <param name="nombreExcluir">Indica si se debe excluir al narrador del cambio de pantalla</param>
+
         private void CambiarPantalla(int numeroPantalla, string nombreExcluir)
         {
             foreach (var nombre in ObtenerNombresJugadores().ToList())
@@ -342,8 +344,13 @@ namespace WcfServicioLibreria.Modelo
                         callback.CambiarPantallaCallback(numeroPantalla);
                     }
                 }
-                catch (Exception)
+                catch (CommunicationException excepcion)
                 {
+                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                }
+                catch (Exception excepcion)
+                {
+                    ManejadorExcepciones.ManejarErrorException(excepcion);
                 }
             }
         }
@@ -360,10 +367,13 @@ namespace WcfServicioLibreria.Modelo
                         callback?.NotificarNarradorCallback(false);
                     }
                 }
-                catch (Exception)
+                catch (Exception excepcion)
                 {
                     await RemoverJugadorAsync(nombre);
-                }
+                    
+                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                
+            }
             };
         }
 
@@ -384,15 +394,11 @@ namespace WcfServicioLibreria.Modelo
             }
             if (ClaveImagenCorrectaActual == null || PistaActual == null || NarradorActual == null)
             {
-                //TODO: Penalizar narrador
                 SelecionoCartaNarrador = false;
-
                 Console.Write($"Partida {IdPartida} el narrador {NarradorActual} no escogio nada se le penalizara");
                 return;
-
             }
             SelecionoCartaNarrador = true;
-
         }
 
         private async Task EsperarConfirmacionJugadoresAsync(TimeSpan tiempoEspera)
@@ -604,17 +610,17 @@ namespace WcfServicioLibreria.Modelo
                 var listaNoInvitado = jugadoresInformacion.Values
                     .Where(jugador => jugador.idUsuario > ID_INVALIDO)
                     .Select(jugador =>
-                    {
-                        try
                         {
-                            int idEstadistica = DAOLibreria.DAO.EstadisticasDAO.ObtenerIdEstadisticaConIdUsuario(jugador.idUsuario);
-                            return idEstadistica != 0 ? new Tuple<string, int>(jugador.gamertag, idEstadistica) : null;
-                        }
-                        catch (Exception)
-                        {
-                            return null;
-                        }
-                    })
+                            try
+                            {
+                                int idEstadistica = estadisticasDAO.ObtenerIdEstadisticaConIdUsuario(jugador.idUsuario);
+                                return idEstadistica != 0 ? new Tuple<string, int>(jugador.gamertag, idEstadistica) : null;
+                            }
+                            catch (Exception)
+                            {
+                                return null;
+                            }
+                        })
                     .Where(tuple => tuple != null)
                     .ToList();
 

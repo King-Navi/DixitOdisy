@@ -75,6 +75,11 @@ namespace WcfServicioLibreria
             var resultado = ConfiguradorConexion.ConfigurarCadenaConexion(nombreVariableEntorno);
             return resultado;
         }
+        public static bool ConfigurarConVariableEntorno(string nombreVariableEntorno)
+        {
+            var resultado = ConfiguradorConexion.ConfigurarCadenaConexion(nombreVariableEntorno);
+            return resultado;
+        }
 
         private static bool ConfigurarConArchivo()
         {
@@ -82,8 +87,6 @@ namespace WcfServicioLibreria
             var resultado = ConfiguradorConexion.ConfigurarCadenaConexionRuta();
             return resultado;
         }
-
-
 
     }
 }

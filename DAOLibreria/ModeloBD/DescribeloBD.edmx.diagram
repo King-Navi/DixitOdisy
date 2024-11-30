@@ -4,27 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9039ad4c41a54b45893f75b7a16e3b9f" Name="Diagram1" ZoomLevel="83">
-        <EntityTypeShape EntityType="ModeloBD.Amigo" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModeloBD.Estadisticas" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModeloBD.Expulsion" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModeloBD.Usuario" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModeloBD.UsuarioCuenta" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ModeloBD.Veto" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
-        <AssociationConnector Association="ModeloBD.FK_Amigo_UsuarioMayor" ManuallyRouted="false" />
-        <AssociationConnector Association="ModeloBD.FK_Amigo_UsuarioMenor" ManuallyRouted="false" />
-        <AssociationConnector Association="ModeloBD.FK_Estadisticas_Usuario" ManuallyRouted="false" />
-        <AssociationConnector Association="ModeloBD.FK_Expulsion_UsuarioCuenta" ManuallyRouted="false" />
-        <AssociationConnector Association="ModeloBD.FK_Usuario_UsuarioCuenta" ManuallyRouted="false" />
-        <AssociationConnector Association="ModeloBD.FK_Veto_UsuarioCuenta" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="ModeloBD.SolicitudAmistad" Width="1.5" PointX="5.25" PointY="11.5" />
-        <AssociationConnector Association="ModeloBD.FK_SolicitudAmistad_Destinatario" ManuallyRouted="true" >
-          <ConnectorPoint PointX="4.1814589669195481" PointY="10.384095052083333" />
-          <ConnectorPoint PointX="4.875" PointY="10.783325821314104" />
-          <ConnectorPoint PointX="4.875" PointY="13.255556214402404" />
-          <ConnectorPoint PointX="5.25" PointY="13.255556214402404" />
-        </AssociationConnector>
-        <AssociationConnector Association="ModeloBD.FK_SolicitudAmistad_Remitente" />
+      <Diagram DiagramId="f5bc5dee097c464d93d1087b77bc6c5b" Name="Diagram1">
+        <EntityTypeShape EntityType="DescribeloBD.Amigo" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DescribeloBD.Estadisticas" Width="1.5" PointX="5.25" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DescribeloBD.Expulsion" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DescribeloBD.SolicitudAmistad" Width="1.5" PointX="5.25" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DescribeloBD.Usuario" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DescribeloBD.UsuarioCuenta" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DescribeloBD.Veto" Width="1.5" PointX="3" PointY="14.375" IsExpanded="true" />
+        <AssociationConnector Association="DescribeloBD.FK_Amigo_UsuarioMayor" ManuallyRouted="false" />
+        <AssociationConnector Association="DescribeloBD.FK_Amigo_UsuarioMenor" ManuallyRouted="false" />
+        <AssociationConnector Association="DescribeloBD.FK_Estadisticas_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="DescribeloBD.FK_Expulsion_UsuarioCuenta" ManuallyRouted="false" />
+        <AssociationConnector Association="DescribeloBD.FK_SolicitudAmistad_Destinatario" ManuallyRouted="false" />
+        <AssociationConnector Association="DescribeloBD.FK_SolicitudAmistad_Remitente" ManuallyRouted="false" />
+        <AssociationConnector Association="DescribeloBD.FK_Usuario_UsuarioCuenta" ManuallyRouted="false" />
+        <AssociationConnector Association="DescribeloBD.FK_Veto_UsuarioCuenta" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

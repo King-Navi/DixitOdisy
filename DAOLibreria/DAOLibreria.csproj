@@ -97,10 +97,16 @@
     <Compile Include="Excepciones\SolicitudAmistadExcepcion.cs" />
     <Compile Include="Excepciones\VetoEnProgresoExcepcion.cs" />
     <Compile Include="Excepciones\VetoPermanenteExcepcion.cs" />
+    <Compile Include="Interfaces\IAmistadDAO.cs" />
+    <Compile Include="Interfaces\IEstadisticasDAO.cs" />
+    <Compile Include="Interfaces\IExpulsionDAO.cs" />
+    <Compile Include="Interfaces\ISolicitudAmistadDAO.cs" />
+    <Compile Include="Interfaces\IUsuarioCuentaDAO.cs" />
+    <Compile Include="Interfaces\IUsuarioDAO.cs" />
+    <Compile Include="Interfaces\IVetoDAO.cs" />
     <Compile Include="ModeloBD\Amigo.cs">
       <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModeloBD\Conexion.cs" />
     <Compile Include="ModeloBD\DescribeloBD.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -119,7 +125,6 @@
     <Compile Include="ModeloBD\Estadisticas.cs">
       <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModeloBD\EstadisticasAcciones.cs" />
     <Compile Include="ModeloBD\Expulsion.cs">
       <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
@@ -132,10 +137,12 @@
     <Compile Include="ModeloBD\UsuarioCuenta.cs">
       <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModeloBD\UsuarioPerfilDTO.cs" />
     <Compile Include="ModeloBD\Veto.cs">
       <DependentUpon>DescribeloBD.tt</DependentUpon>
     </Compile>
+    <Compile Include="Utilidades\Conexion.cs" />
+    <Compile Include="Utilidades\EstadisticasAcciones.cs" />
+    <Compile Include="Utilidades\UsuarioPerfilDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilidades\LoggerManejador.cs" />
     <Compile Include="Utilidades\ManejadorExcepciones.cs" />
@@ -154,6 +161,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="ModeloBD\DescribeloBD.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

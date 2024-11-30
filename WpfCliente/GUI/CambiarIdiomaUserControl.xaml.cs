@@ -42,7 +42,7 @@ namespace WpfCliente.GUI
             WpfCliente.Properties.Settings.Default.Save();
         }
 
-        private void clicImagenIdioma(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void ClicImagenIdioma(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             cambiarIdiomaMenuDesplegable.IsDropDownOpen = true;
         }

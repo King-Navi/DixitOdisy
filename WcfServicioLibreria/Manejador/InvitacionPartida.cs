@@ -2,66 +2,36 @@
 using System.Linq;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioInvitacionPartida
     {
-        public bool EnviarInvitacion(string gamertagEmisor, string codigoSala, string gamertagReceptor)
+        public bool EnviarInvitacion(InvitacionPartida invitacion)
         {
             try
             {
                 var jugador = jugadoresConectadosDiccionario.Values
                     .OfType<Usuario>()
-                    .FirstOrDefault(busqueda => busqueda.Nombre.Equals(gamertagReceptor, StringComparison.OrdinalIgnoreCase));
+                    .FirstOrDefault(busqueda => busqueda.Nombre.Equals(invitacion.NombreReceptor, StringComparison.OrdinalIgnoreCase));
 
                 if (jugador == null)
                 {
-                    Console.Error.WriteLine("El usuario receptor no está conectado.");
                     return false;
                 }
-                if (jugador.InvitacionPartidaCallBack is IInvitacionPartidaCallback callback)
+                if (jugador.UsuarioSesionCallback is IUsuarioSesionCallback callback)
                 {
-                    InvitacionPartida invitacion = new InvitacionPartida(gamertagEmisor, codigoSala, gamertagReceptor);
-                    callback?.RecibirInvitacion(invitacion);
-                    Console.WriteLine($"Invitación enviada a {gamertagReceptor} para unirse a la sala {codigoSala}");
+                    callback?.RecibirInvitacionCallback(invitacion);
                     return true;
                 }
-                Console.Error.WriteLine("El usuario receptor no está conectado.");
             }
-            catch (Exception ex)
+            catch (Exception excepcion)
             {
-                Console.Error.WriteLine($"Error al enviar invitación: {ex.Message}");
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
 
-        }
-
-        public void AbrirCanalParaInvitaciones(Usuario usuarioRemitente)
-        {
-            try
-            {
-                IInvitacionPartidaCallback contextoRemitente = contextoOperacion.GetCallbackChannel<IInvitacionPartidaCallback>();
-                if (jugadoresConectadosDiccionario.TryGetValue(usuarioRemitente.IdUsuario, out UsuarioContexto remitente))
-                {
-                    lock (remitente)
-                    {
-                        remitente.InvitacionPartidaCallBack = contextoRemitente;
-                    }
-                    Console.WriteLine($"Canal de invitaciones abierto para el usuario {usuarioRemitente.Nombre}");
-                }
-            }
-            catch (Exception ex)
-            {
-                if (jugadoresConectadosDiccionario.TryGetValue(usuarioRemitente.IdUsuario, out UsuarioContexto remitente))
-                {
-                    lock (remitente)
-                    {
-                        remitente.InvitacionPartidaCallBack = null;
-                    }
-                }
-                Console.Error.WriteLine($"Error al abrir canal de invitaciones para {usuarioRemitente.Nombre}: {ex.Message}");
-            }
         }
     }
 }

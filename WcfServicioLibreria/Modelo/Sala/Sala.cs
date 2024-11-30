@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DAOLibreria.DAO;
+using DAOLibreria.Interfaces;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -26,7 +28,7 @@ namespace WcfServicioLibreria.Modelo
         #region Campos
         private const int SALA_VACIA = 0;
         private string idCodigoSala;
-        private const int CANTIDAD_MINIMA_JUGADORES = 3;
+        private const int CANTIDAD_MINIMA_JUGADORES = 1;
         private const int CANTIDAD_MAXIMA_JUGADORES = 6;
         private readonly ConcurrentDictionary<string, ISalaJugadorCallback> jugadoresSalaCallbacks = new ConcurrentDictionary<string, ISalaJugadorCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
@@ -35,23 +37,23 @@ namespace WcfServicioLibreria.Modelo
         public EventHandler salaVaciaManejadorEvento;
         private readonly SemaphoreSlim semaphoreLeerFotoInvitado = new SemaphoreSlim(1, 1);
         private static readonly SemaphoreSlim semaphoreRemoverJugador = new SemaphoreSlim(1, 1);
+        private IUsuarioDAO usuarioDAO;
 
         private IManejadorVeto manejadorVeto;
         #endregion Campos
         #region Propiedades
-        public static int CantidadMaximaJugadores => CANTIDAD_MAXIMA_JUGADORES;
-        public static int CantidadMinimaJugadores => CANTIDAD_MINIMA_JUGADORES;
         public string IdCodigoSala { get => idCodigoSala; internal set => idCodigoSala = value; }
         public string Anfitrion { get; private set; }
 
         #endregion Propiedades
 
         #region Contructores
-        public Sala(string _idCodigoSala, string nombreUsuario)
+        public Sala(string _idCodigoSala, string nombreUsuario, IUsuarioDAO _usuarioDAO)
         {
             this.IdCodigoSala = _idCodigoSala;
             this.Anfitrion = nombreUsuario;
             manejadorVeto = new ManejadorDeVetos();
+            usuarioDAO = _usuarioDAO;
         }
 
         #endregion Contructores
@@ -192,7 +194,7 @@ namespace WcfServicioLibreria.Modelo
 
         private async Task<DAOLibreria.ModeloBD.Usuario> ObtenerInformacionUsuarioAsync(string nombreJugador)
         {
-            DAOLibreria.ModeloBD.Usuario informacionUsuario = DAOLibreria.DAO.UsuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
+            DAOLibreria.ModeloBD.Usuario informacionUsuario = usuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
             if (informacionUsuario == null)
             {
                 await semaphoreLeerFotoInvitado.WaitAsync();
@@ -331,13 +333,12 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        /// <summary>
-        /// El 
-        /// </summary>
-        /// <param name="nombreSolicitante"></param>
-        /// <param name="idPartida"></param>
         internal bool AvisarComienzoPatida(string nombreSolicitante, string idPartida)
         {
+            if (ContarJugadores() < CANTIDAD_MINIMA_JUGADORES)
+            {
+                return false;
+            }
             if (nombreSolicitante.Equals(Anfitrion, StringComparison.OrdinalIgnoreCase))
             {
 
@@ -350,7 +351,7 @@ namespace WcfServicioLibreria.Modelo
                             jugadoresSalaCallbacks.TryGetValue(nombre, out ISalaJugadorCallback callback);
                             try
                             {
-                                callback.EmpezarPartidaCallBack(idPartida);
+                                callback.EmpezarPartidaCallback(idPartida);
                             }
                             catch (Exception excepcion)
                             {

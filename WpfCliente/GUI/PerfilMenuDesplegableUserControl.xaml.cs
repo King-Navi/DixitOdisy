@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using WpfCliente.Contexto;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
 using WpfCliente.Utilidad;
@@ -19,31 +20,12 @@ namespace WpfCliente.GUI
 
         private void AbrirEditarVentana(object sender, RoutedEventArgs e)
         {
-            Window menuVentana = Window.GetWindow(this);
-            EditarPerfilWindow editarPerfilVentana = new EditarPerfilWindow(menuVentana);
-            editarPerfilVentana.Show();
-            Window MenuVentana = Window.GetWindow(this);  
-            if (MenuVentana != null)
-            {
-                editarPerfilVentana.Closed += (s, args) => {
-                    try
-                    {
-                        MenuVentana.Show();
-                    }
-                    catch (Exception ex)
-                    {
-                        ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
-                        Application.Current.Shutdown();
-                    }
-                };
-                MenuVentana.Hide();
-            }
+            SingletonGestorVentana.Instancia.NavegarA(new EditarPerfilPage());
         }
 
         private void CerrarSesion(object sender, RoutedEventArgs e)
         {
-            Window menuVentana = Window.GetWindow(this);
-            menuVentana.Close();
+            SingletonGestorVentana.Instancia.NavegarA(new IniciarSesionPage());
         }
 
         public void ActualizarUI()

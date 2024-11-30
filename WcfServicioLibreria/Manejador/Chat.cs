@@ -21,6 +21,17 @@ namespace WcfServicioLibreria.Manejador
                     resultado = true;
                     multiChat.EliminarChatManejadorEvento += BorrarChat;
                 }
+                else
+                {
+                }
+            }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarFatalException(excepcion);
+            }
+            catch (OverflowException excepcion)
+            {
+                ManejadorExcepciones.ManejarFatalException(excepcion);
             }
             catch (Exception excepcion)
             {

@@ -6,9 +6,9 @@ namespace WcfServicioLibreria.Modelo
     public class UsuarioFalla
     {
         [DataMember]
-        public bool EstaConectado { get; set; }
+        public bool EstaConectado { get; set; } = false;
         [DataMember]
-        public bool ExisteUsuario { get; set; }
+        public bool ExisteUsuario { get; set; } = false;
 
     }
 }

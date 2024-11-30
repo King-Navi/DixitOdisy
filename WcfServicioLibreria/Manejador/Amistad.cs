@@ -17,7 +17,6 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioAmistad
     {
-        private const int ID_INVALIDO = 0;
         public bool EnviarSolicitudAmistad(Modelo.Usuario remitente, string destinatario)
         {
             try
@@ -25,13 +24,13 @@ namespace WcfServicioLibreria.Manejador
                 int idRemitente = ObtenerIdPorNombre(remitente.Nombre);
                 int idDestinatario = ObtenerIdPorNombre(destinatario);
 
-            if (SonAmigos(idRemitente, idDestinatario))
-            {
-                bool existeAmistad = true;
-                bool existePeticion = false;
-                throw new FaultException<SolicitudAmistadFalla>(
-                    new SolicitudAmistadFalla(existeAmistad, existePeticion));
-            }
+                if (SonAmigos(idRemitente, idDestinatario))
+                {
+                    bool existeAmistad = true;
+                    bool existePeticion = false;
+                    throw new FaultException<SolicitudAmistadFalla>(
+                        new SolicitudAmistadFalla(existeAmistad, existePeticion));
+                }
 
                 if (GuardarSolicitudAmistad(idRemitente, idDestinatario))
                 {
@@ -56,13 +55,19 @@ namespace WcfServicioLibreria.Manejador
         {
             try
             {
-                return SolicitudAmistadDAO.GuardarSolicitudAmistad(idRemitente, idDestinatario);
+                return peticionAmistadDAO.GuardarSolicitudAmistad(idRemitente, idDestinatario);
             }
             catch (FaultException excepcion)
             {
                 ManejadorExcepciones.ManejarFatalException(excepcion);
-                return false;
             }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarFatalException(excepcion);
+            }
+
+            return false;
+
         }
 
         private int ObtenerIdPorNombre(string nombre)
@@ -70,7 +75,7 @@ namespace WcfServicioLibreria.Manejador
             int id = 0;
             try
             {
-                id = UsuarioDAO.ObtenerIdPorNombre(nombre);
+                id = usuarioDAO.ObtenerIdPorNombre(nombre);
             }
             catch (ArgumentNullException excepcion)
             {
@@ -101,7 +106,21 @@ namespace WcfServicioLibreria.Manejador
         {
             try
             {
-                return AmistadDAO.SonAmigos(idMasAlto, idMasBajo);
+                return amistadDAO.SonAmigos(idMasAlto, idMasBajo);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            return false;
+
+        }
+
+        private bool ExisteSolicitudAmistad(int idMasAlto, int idMasBajo)
+        {
+            try
+            {
+                return peticionAmistadDAO.ExisteSolicitudAmistad(idMasAlto, idMasBajo);
             }
             catch (InvalidOperationException excepcion)
             {
@@ -115,19 +134,13 @@ namespace WcfServicioLibreria.Manejador
             return false;
         }
 
-        public bool AbrirCanalParaPeticiones(Modelo.Usuario _usuarioRemitente)
+        public bool ConectarYBuscarAmigos(Modelo.Usuario usuarioRemitenteServidor)
         {
             try
             {
-                IAmistadCallBack contextoRemitente = contextoOperacion.GetCallbackChannel<IAmistadCallBack>();
-                jugadoresConectadosDiccionario.TryGetValue(_usuarioRemitente.IdUsuario, out UsuarioContexto remitente);
-                lock (remitente)
-                {
-                    remitente.AmistadSesionCallBack = contextoRemitente;
-                }
-                DAOLibreria.ModeloBD.Usuario usuarioRemitenteModeloBaseDatos = 
-                    UsuarioDAO.ObtenerUsuarioPorId(_usuarioRemitente.IdUsuario);
-                List<DAOLibreria.ModeloBD.Usuario> amigosConetados = EnviarListaAmigosAsync(_usuarioRemitente, contextoRemitente);
+                jugadoresConectadosDiccionario.TryGetValue(usuarioRemitenteServidor.IdUsuario, out UsuarioContexto remitente);
+                DAOLibreria.ModeloBD.Usuario usuarioRemitenteModeloBaseDatos = usuarioDAO.ObtenerUsuarioPorId(usuarioRemitenteServidor.IdUsuario);
+                List<DAOLibreria.ModeloBD.Usuario> amigosConetados = EnviarListaAmigosAsync(usuarioRemitenteServidor, remitente.UsuarioSesionCallback);
 
                 foreach (var usuarioDestino in amigosConetados)
                 {
@@ -147,13 +160,15 @@ namespace WcfServicioLibreria.Manejador
             return false;
         }
 
-        private List<DAOLibreria.ModeloBD.Usuario> EnviarListaAmigosAsync(Modelo.Usuario usuario, IAmistadCallBack contextoRemitente)
+        private List<DAOLibreria.ModeloBD.Usuario> EnviarListaAmigosAsync(Modelo.Usuario usuario, IUsuarioSesionCallback contextoRemitente)
         {
             List<DAOLibreria.ModeloBD.Usuario> usuariosModeloWCF = new List<DAOLibreria.ModeloBD.Usuario>();
 
             try
             {
-                List<DAOLibreria.ModeloBD.Usuario> usuariosModeloBaseDatos = AmistadDAO.RecuperarListaAmigos(usuario.IdUsuario);
+                IUsuarioSesionCallback contextoUsuarioSesion = contextoOperacion.GetCallbackChannel<IUsuarioSesionCallback>();
+
+                List<DAOLibreria.ModeloBD.Usuario> usuariosModeloBaseDatos = amistadDAO.RecuperarListaAmigos(usuario.IdUsuario);
                 foreach (DAOLibreria.ModeloBD.Usuario amigoDestinario in usuariosModeloBaseDatos)
                 {
                     EstadoAmigo estadoJugador;
@@ -175,7 +190,7 @@ namespace WcfServicioLibreria.Manejador
                         UltimaConexion = amigoDestinario.ultimaConexion.ToString()
 
                     };
-                    contextoRemitente?.ObtenerAmigoCallback(amigo);
+                    contextoUsuarioSesion?.ObtenerAmigoCallback(amigo);
                     if (amigo.Estado == EstadoAmigo.Conectado)
                     {
                         Modelo.Usuario usuarioModeloWCF = new Modelo.Usuario()
@@ -218,22 +233,18 @@ namespace WcfServicioLibreria.Manejador
                                 EventHandler desconexionHandlerDestinatario = null;
                                 desconexionHandlerRemitente = (sender, e) =>
                                 {
-                                    destinatario.AmigoDesconectado(_remitente, new UsuarioDesconectadoEventArgs(
-                                        ((Modelo.Usuario)remitente).Nombre, 
-                                        DateTime.Now));
-                                    remitente.DesconexionManejadorEvento -= desconexionHandlerRemitente;
+                                    destinatario.AmigoDesconectado(_remitente, new UsuarioDesconectadoEventArgs(((Modelo.Usuario)remitente).Nombre, DateTime.Now));
+                                    remitente.DesconexionEvento -= desconexionHandlerRemitente;
                                 };
 
                                 desconexionHandlerDestinatario = (sender, e) =>
                                 {
-                                    remitente.AmigoDesconectado(_destinatario, new UsuarioDesconectadoEventArgs(
-                                        ((Modelo.Usuario)destinatario).Nombre, 
-                                        DateTime.Now));
-                                    destinatario.DesconexionManejadorEvento -= desconexionHandlerDestinatario;
+                                    remitente.AmigoDesconectado(_destinatario, new UsuarioDesconectadoEventArgs(((Modelo.Usuario)destinatario).Nombre, DateTime.Now));
+                                    destinatario.DesconexionEvento -= desconexionHandlerDestinatario;
                                 };
 
-                                remitente.DesconexionManejadorEvento += desconexionHandlerRemitente;
-                                destinatario.DesconexionManejadorEvento += desconexionHandlerDestinatario;
+                                remitente.DesconexionEvento += desconexionHandlerRemitente;
+                                destinatario.DesconexionEvento += desconexionHandlerDestinatario;
 
                                 remitente.EnviarAmigoActulizadoCallback(new Amigo()
                                 {
@@ -259,18 +270,20 @@ namespace WcfServicioLibreria.Manejador
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+            catch (CommunicationException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
-
         }
-
         public List<SolicitudAmistad> ObtenerSolicitudesAmistad(Usuario usuario)
         {
             try
             {
-                List<DAOLibreria.ModeloBD.Usuario> usuariosSolicitantes = SolicitudAmistadDAO.ObtenerSolicitudesAmistad(usuario.IdUsuario);
+                List<DAOLibreria.ModeloBD.Usuario> usuariosSolicitantes = peticionAmistadDAO.ObtenerSolicitudesAmistad(usuario.IdUsuario);
                 List<SolicitudAmistad> usuariosModeloWCF = new List<SolicitudAmistad>();
                 foreach (DAOLibreria.ModeloBD.Usuario usuarioBD in usuariosSolicitantes)
                 {
@@ -299,28 +312,28 @@ namespace WcfServicioLibreria.Manejador
             {
                 EvaluarIdValido(idRemitente);
                 EvaluarIdValido(idDestinatario);
-                if (SolicitudAmistadDAO.AceptarSolicitudAmistad(idRemitente, idDestinatario))
+                if (peticionAmistadDAO.AceptarSolicitudAmistad(idRemitente, idDestinatario))
                 {
                     if (jugadoresConectadosDiccionario.ContainsKey(idDestinatario) &&
                         jugadoresConectadosDiccionario.ContainsKey(idRemitente))
                     {
-                        var usuarioDestinoConectado = UsuarioDAO.ObtenerUsuarioPorId(idDestinatario);
-                        var usuarioRemitenteConectado = UsuarioDAO.ObtenerUsuarioPorId(idRemitente);
+                        var usuarioDestinoConectado = usuarioDAO.ObtenerUsuarioPorId(idDestinatario);
+                        var usuarioRemitenteConectado = usuarioDAO.ObtenerUsuarioPorId(idRemitente);
                         AmigoConetado(usuarioRemitenteConectado, usuarioDestinoConectado);
                     }
-                    else if (jugadoresConectadosDiccionario.ContainsKey(idRemitente))
+                    else if (jugadoresConectadosDiccionario.ContainsKey(idDestinatario))
                     {
-                        jugadoresConectadosDiccionario.TryGetValue(idRemitente, out UsuarioContexto remitente);
-                        var amigoDestinario = UsuarioDAO.ObtenerUsuarioPorId(idDestinatario);
+                        jugadoresConectadosDiccionario.TryGetValue(idDestinatario, out UsuarioContexto destinatario);
+                        var amigoRemitente = usuarioDAO.ObtenerUsuarioPorId(idRemitente);
                         Modelo.Amigo amigo = new Modelo.Amigo()
                         {
-                            Nombre = amigoDestinario.gamertag,
+                            Nombre = amigoRemitente.gamertag,
                             Estado = EstadoAmigo.Desconectado,
-                            Foto = new MemoryStream(amigoDestinario.fotoPerfil),
-                            UltimaConexion = amigoDestinario.ultimaConexion.ToString()
+                            Foto = new MemoryStream(amigoRemitente.fotoPerfil),
+                            UltimaConexion = amigoRemitente.ultimaConexion.ToString()
 
                         };
-                        remitente.AmistadSesionCallBack?.ObtenerAmigoCallback(amigo);
+                        destinatario.UsuarioSesionCallback?.ObtenerAmigoCallback(amigo);
                     }
                     else
                     {
@@ -333,9 +346,9 @@ namespace WcfServicioLibreria.Manejador
                     return true;
                 }
             }
-            catch (FaultException<ServidorFalla> excepcion)
+            catch (FaultException<ServidorFalla>)
             {
-                throw excepcion;
+                throw;
             }
             catch (InvalidOperationException excepcion)
             {
@@ -345,6 +358,7 @@ namespace WcfServicioLibreria.Manejador
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
             }
+            
             return false;
 
         }
@@ -356,9 +370,8 @@ namespace WcfServicioLibreria.Manejador
             {
                 EvaluarIdValido(idRemitente);
                 EvaluarIdValido(idDestinatario);
-                return SolicitudAmistadDAO.RechazarSolicitudAmistad(idRemitente, idDestinatario); ;
+                return peticionAmistadDAO.RechazarSolicitudAmistad(idRemitente, idDestinatario); ;
             }
-
             catch (FaultException<ServidorFalla> excepcion)
             {
                 throw excepcion;
@@ -385,18 +398,18 @@ namespace WcfServicioLibreria.Manejador
             {
                 EvaluarIdValido(idRemitente);
                 EvaluarIdValido(idDestinatario);
-                if (AmistadDAO.EliminarAmigo(idMayorUsuario, idMenorUsuario))
+                if (amistadDAO.EliminarAmigo(idMayorUsuario, idMenorUsuario))
                 {
-                    if (jugadoresConectadosDiccionario.ContainsKey(idDestinatario) && 
+                    if (jugadoresConectadosDiccionario.ContainsKey(idDestinatario) &&
                         jugadoresConectadosDiccionario.ContainsKey(idRemitente))
                     {
                         jugadoresConectadosDiccionario.TryGetValue(idRemitente, out UsuarioContexto remitente);
                         jugadoresConectadosDiccionario.TryGetValue(idRemitente, out UsuarioContexto destinatario);
-                        remitente.AmistadSesionCallBack?.EliminarAmigoCallback(new Amigo()
+                        remitente.UsuarioSesionCallback?.EliminarAmigoCallback(new Amigo()
                         {
                             Nombre = usuarioDestinatarioNombre
                         });
-                        destinatario.AmistadSesionCallBack?.EliminarAmigoCallback(new Amigo()
+                        destinatario.UsuarioSesionCallback?.EliminarAmigoCallback(new Amigo()
                         {
                             Nombre = usuarioRemitenteNombre
                         });
@@ -404,7 +417,7 @@ namespace WcfServicioLibreria.Manejador
                     else if (jugadoresConectadosDiccionario.ContainsKey(idRemitente))
                     {
                         jugadoresConectadosDiccionario.TryGetValue(idRemitente, out UsuarioContexto remitente);
-                        remitente.AmistadSesionCallBack?.EliminarAmigoCallback(new Amigo()
+                        remitente.UsuarioSesionCallback?.EliminarAmigoCallback(new Amigo()
                         {
                             Nombre = usuarioDestinatarioNombre
                         });
@@ -420,13 +433,13 @@ namespace WcfServicioLibreria.Manejador
                     return true;
                 }
             }
-            catch(FaultException<ServidorFalla> excepcion)
+            catch (FaultException<ServidorFalla> excepcion)
             {
                 throw excepcion;
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return false;
 
@@ -439,5 +452,9 @@ namespace WcfServicioLibreria.Manejador
                 throw new ArgumentException();
             }
         }
+
     }
+
+
 }
+

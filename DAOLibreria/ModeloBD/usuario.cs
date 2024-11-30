@@ -36,10 +36,10 @@ namespace DAOLibreria.ModeloBD
         public virtual ICollection<Amigo> Amigo1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Estadisticas> Estadisticas { get; set; }
-        public virtual UsuarioCuenta UsuarioCuenta { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SolicitudAmistad> SolicitudAmistad { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SolicitudAmistad> SolicitudAmistad1 { get; set; }
+        public virtual UsuarioCuenta UsuarioCuenta { get; set; }
     }
 }

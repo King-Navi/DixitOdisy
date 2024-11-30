@@ -13,19 +13,15 @@ namespace WcfServicioLibreria.Modelo
     {
         #region Atributos
         private const int cantidadMaximaJugadores = 12;
-        private ConcurrentDictionary<string, IChatCallback> jugadores = new ConcurrentDictionary<string, IChatCallback>();
+        private readonly ConcurrentDictionary<string, IChatCallback> jugadores = new ConcurrentDictionary<string, IChatCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
         public EventHandler EliminarChatManejadorEvento;
         #endregion Atributos
-        #region Propiedades
 
-        #endregion Propiedades
         #region Contructor
-        public MultiChat(string _idChat) : base(_idChat)
-        {
-
-        }
+        public MultiChat(string _idChat) : base(_idChat) { }
         #endregion Constructor
+
         #region Metodos
         internal IReadOnlyCollection<string> ObtenerNombresJugadoresChat()
         {
@@ -87,7 +83,7 @@ namespace WcfServicioLibreria.Modelo
             ICollection<string> nombresUsuarios =  jugadores.Keys;
             foreach (string nombreUsuario in nombresUsuarios)
             {
-                jugadores[nombreUsuario].RecibirMensajeCliente(mensaje);
+                jugadores[nombreUsuario].RecibirMensajeClienteCallback(mensaje);
             }
         }
         IReadOnlyCollection<string> ObtenerLlaves()

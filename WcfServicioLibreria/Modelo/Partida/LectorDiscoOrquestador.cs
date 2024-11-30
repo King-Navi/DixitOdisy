@@ -12,22 +12,37 @@ namespace WcfServicioLibreria.Modelo
     {
 
         private readonly List<LectorDisco> lectoresDisco = new List<LectorDisco>();
-        private const int MAXIMO_LECTORESDISCO = 6;
+        private readonly int MAXIMO_LECTORESDISCO;
+        private readonly int LECTORESDISCO_CERO;
         private int indiceActual = 0;
         private readonly SemaphoreSlim semaforoAsignacion = new SemaphoreSlim(1, 1);
         public bool Desechado { get; private set; } = false;
 
         public LectorDiscoOrquestador(int cantidadLectores)
         {
-            if (cantidadLectores > MAXIMO_LECTORESDISCO)
+            if (cantidadLectores > MAXIMO_LECTORESDISCO || cantidadLectores <= LECTORESDISCO_CERO)
             {
-                cantidadLectores = MAXIMO_LECTORESDISCO;
+                for (int i = 0; i < cantidadLectores; i++)
+                {
+                    lectoresDisco.Add(new LectorDisco(i));
+
+                }
             }
-            for (int i = 0; i < cantidadLectores; i++)
+            else
             {
-                lectoresDisco.Add(new LectorDisco(i));
-            }
+                for (int i = 0; i < cantidadLectores; i++)
+                {
+                    lectoresDisco.Add(new LectorDisco(i));
+                }
+            }           
         }
+
+        public void AsignarTrabajo(string archivoPath, IPartidaCallback callback, bool usarGrupo = false)
+        {
+            var lectorMenosOcupado = lectoresDisco.OrderBy(busqueda => busqueda.ColaCount).First();
+            lectorMenosOcupado.EncolarLecturaEnvio(archivoPath, callback, usarGrupo);
+        }
+
         public async Task AsignarTrabajoRoundRobinAsync(string archivoPath, IPartidaCallback callback)
         {
             await semaforoAsignacion.WaitAsync();
@@ -41,7 +56,6 @@ namespace WcfServicioLibreria.Modelo
 
                 indiceActual = indiceActual % lectoresDisco.Count;
                 var lectorSeleccionado = lectoresDisco[indiceActual];
-                indiceActual = (indiceActual + 1) % lectoresDisco.Count;
                 lectorSeleccionado.EncolarLecturaEnvio(archivoPath, callback);
             }
             finally

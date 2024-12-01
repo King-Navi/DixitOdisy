@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -93,8 +94,13 @@ namespace WpfCliente.Utilidad
                 ServidorDescribelo.IServicioUsuario ping = new ServicioUsuarioClient();
                 resultado = await ping.PingBDAsync();
             }
-            catch (Exception)
+            catch (NullReferenceException excepcion)
             {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
             return resultado;
         }

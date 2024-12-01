@@ -17,22 +17,71 @@ namespace WpfCliente.Utilidad
         private const int RANGO_MAXIMO_IMAGENES = 6;
         private const int BITS_POR_BYTE = 8;
         private const int DESPLAZAMIENTO = 0;
+        private static byte[] fotoGlobal;
 
-        public static BitmapImage ConvertirStreamABitmapImagen(Stream stream)
+        public static BitmapImage ConvertirBytesABitmapImage(byte[] bytes)
         {
+            if (bytes == null || bytes.Length == 0)
+                return null;
 
-            BitmapImage bitmap = new BitmapImage();
-            try
+            using (var stream = new MemoryStream(bytes))
             {
+                BitmapImage bitmap = new BitmapImage();
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 bitmap.StreamSource = stream;
                 bitmap.EndInit();
                 bitmap.Freeze();
+                return bitmap;
             }
-            catch (Exception ex)
+        }
+
+        public static byte[] GuardarBitmapImageABytes(BitmapImage imageControl)
+        {
+            if (imageControl == null)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(ex);
+                return null;
+
+            }
+            if (fotoGlobal != null)
+            {
+                return fotoGlobal;    
+            }
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                PngBitmapEncoder encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(imageControl));
+                encoder.Save(memoryStream);
+                fotoGlobal = memoryStream.ToArray();
+                return fotoGlobal;
+            }
+        }
+
+        public static byte[] ObtenerFotoGlobal()
+        {
+            return fotoGlobal;
+        }
+
+        public static BitmapImage ConvertirStreamABitmapImagen(Stream stream)
+        {
+            if (stream == null || stream.Length == 0)
+                return null;
+
+            BitmapImage bitmap = new BitmapImage();
+            try
+            {
+                stream.Position = 0;
+                bitmap.BeginInit();
+                bitmap.StreamSource = stream;
+                bitmap.CacheOption = BitmapCacheOption.OnLoad; 
+                bitmap.EndInit();
+                bitmap.Freeze();
+                return bitmap;
+
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
                 bitmap = null;
             }
             return bitmap;

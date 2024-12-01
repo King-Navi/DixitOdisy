@@ -2,6 +2,7 @@
 using System.ServiceModel;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Modelo.Excepciones;
 
 namespace WcfServicioLibreria.Contratos
 {
@@ -14,6 +15,7 @@ namespace WcfServicioLibreria.Contratos
         /// <param name="nombreUsuario">El nombre del usuario que desea unirse a la partida.</param>
         /// <param name="idPartida">El identificador único de la partida.</param>
         [OperationContract]
+        [FaultContract(typeof(PartidaFalla))]
         Task<bool> UnirsePartidaAsync(string nombreUsuario, string idPartida);
 
         /// <summary>
@@ -50,21 +52,6 @@ namespace WcfServicioLibreria.Contratos
         void ExpulsarJugadorPartida(string nombreJugador, string idPartida);
 
         /// <summary>
-        /// Solicita una imagen para la carta de un jugador.
-        /// </summary>
-        /// <param name="nombreJugador">El nombre del jugador que solicita la imagen.</param>
-        /// <param name="idPartida">El identificador único de la partida.</param>
-        /// <returns>
-        /// Un <see cref="Task{bool}"/> que indica si la imagen se envió con éxito.
-        /// Devuelve <c>true</c> si se envió correctamente, de lo contrario <c>false</c>.
-        /// </returns>
-        /// <remarks>
-        /// Este método valida que la partida sea válida antes de enviar la imagen.
-        /// </remarks>
-        [OperationContract]
-        Task<bool> SolicitarImagenCartaAsync(string nombreJugador, string idPartida);
-
-        /// <summary>
         /// Inicia una partida después de validar su estado.
         /// </summary>
         /// <param name="nombreJugador">El nombre del jugador que solicita iniciar la partida.</param>
@@ -78,20 +65,14 @@ namespace WcfServicioLibreria.Contratos
     [ServiceContract]
     public interface IPartidaCallback
     {
-        [OperationContract]
+        [OperationContract(IsOneWay =true)]
         void IniciarValoresPartidaCallback(bool seUnio);
 
         [OperationContract(IsOneWay = true)]
         void TurnoPerdidoCallback();
 
         [OperationContract(IsOneWay = true)]
-        void RecibirImagenCallback(ImagenCarta imagen);
-
-        [OperationContract(IsOneWay = true)]
-        void RecibirGrupoImagenCallback(ImagenCarta imagen);
-
-        [OperationContract(IsOneWay = true)]
-        void FinalizarPartida();
+        void FinalizarPartidaCallback();
 
         [OperationContract(IsOneWay = true)]
         void ObtenerJugadorPartidaCallback(Usuario jugardoreNuevoEnSala);
@@ -109,9 +90,9 @@ namespace WcfServicioLibreria.Contratos
         [ServiceKnownTypeAttribute(typeof(EstadisticasPartida))]
         [ServiceKnownTypeAttribute(typeof(List<JugadorEstadisticas>))]
         [ServiceKnownTypeAttribute(typeof(JugadorEstadisticas))]
-        void EnviarEstadisticas(EstadisticasPartida estadisticas);
+        void EnviarEstadisticasCallback(EstadisticasPartida estadisticas);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void CambiarPantallaCallback(int numeroPantalla);
     }
 }

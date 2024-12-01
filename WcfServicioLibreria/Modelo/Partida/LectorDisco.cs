@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.IO;
+using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
@@ -28,11 +29,13 @@ namespace WcfServicioLibreria.Modelo
             tareaLectura = Task.Run( async () => await ProcesarColaLecturaEnvio(cancelarToken.Token));
         }
 
-        public void EncolarLecturaEnvio(string archivoPath, IPartidaCallback callback, bool usarGrupo = false)
+        public void EncolarLecturaEnvio(string archivoPath, IImagenCallback callback, bool usarGrupo = false)
         {
             LecturaTrabajo nuevotrabajo = new LecturaTrabajo(archivoPath, callback, usarGrupo);
             if (callback != null)
-            colaLectura.Add(nuevotrabajo);
+            {
+                colaLectura.Add(nuevotrabajo);
+            }
         }
 
         private async Task ProcesarColaLecturaEnvio(CancellationToken cancelacion)
@@ -61,21 +64,25 @@ namespace WcfServicioLibreria.Modelo
                                 };
                                 try
                                 {
+                                    EvaluarCanalValido(lecturaTrabajo.Callback);
                                     if (lecturaTrabajo.UsarGrupo)
                                     {
                                         lecturaTrabajo.Callback.RecibirGrupoImagenCallback(imagenCarta);
-                                        Console.WriteLine($"El {idLector} envio la imagen {nombreSinExtension}");
+                                        Console.WriteLine($"El {idLector} envio la imagen {nombreSinExtension} en modo grupo");
                                     }
                                     else
                                     {
                                         lecturaTrabajo.Callback.RecibirImagenCallback(imagenCarta);
-                                        Console.WriteLine($"El {idLector} envio la imagen {nombreSinExtension} en modo grupo");
+                                        Console.WriteLine($"El {idLector} envio la imagen {nombreSinExtension} ");
                                     }
+                                }
+                                catch (CommunicationException excecpione)
+                                {
+                                    ManejadorExcepciones.ManejarErrorException(excecpione);
                                 }
                                 catch (Exception excecpione)
                                 {
                                     ManejadorExcepciones.ManejarErrorException(excecpione);
-                                    Console.WriteLine($"Error en callback: {excecpione.Message}");
                                 }
                             }
                         }
@@ -83,9 +90,6 @@ namespace WcfServicioLibreria.Modelo
                         {
                             ManejadorExcepciones.ManejarErrorException(excecpione);
                             Console.WriteLine($"Error al leer la imagen: {excecpione.Message}");
-                        }
-                        finally
-                        {
                         }
                     }
                 }
@@ -101,6 +105,25 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
+        private void EvaluarCanalValido(IImagenCallback callback)
+        {
+            if (callback is ICommunicationObject canal)
+            {
+                if (canal.State == CommunicationState.Opened)
+                {
+                    return;
+                }
+                else
+                {
+                    throw new CommunicationException();
+                }
+            }
+            else
+            {
+                throw new CommunicationException();
+            };
+        }
+
         public void DetenerLectura()
         {
             if (lecturaYaDetenida) return; 
@@ -114,14 +137,14 @@ namespace WcfServicioLibreria.Modelo
             {
                 tareaLectura.Wait();
             }
-            catch (AggregateException ex)
+            catch (AggregateException excepcion)
             {
-                foreach (var e in ex.InnerExceptions)
+                foreach (var operacion in excepcion.InnerExceptions)
                 {
-                    if (e is OperationCanceledException)
+                    if (operacion is OperationCanceledException)
                         Console.WriteLine("Tarea cancelada correctamente.");
                     else
-                        Console.WriteLine($"Error en DetenerLectura: {e.Message}");
+                        Console.WriteLine($"Error en DetenerLectura: {operacion.Message}");
                 }
             }
             finally

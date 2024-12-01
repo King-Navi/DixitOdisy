@@ -25,7 +25,7 @@ namespace WpfCliente.Contexto
         private SingletonGestorVentana() { }
         public void Iniciar()
         {
-            
+
             PrincipalWindow ventanaPrincipal = new PrincipalWindow();
             VentanaPrincipal = ventanaPrincipal;
             ventanaPrincipal.Show();
@@ -51,7 +51,7 @@ namespace WpfCliente.Contexto
             return false;
         }
 
-            public bool LimpiarHistorial()
+        public bool LimpiarHistorial()
         {
             try
             {
@@ -85,11 +85,12 @@ namespace WpfCliente.Contexto
                 EvaluarMarcoNulo(nuevoMarco);
                 var ventana = VentanaPrincipal as INavegacion;
                 var marco = ventana?.MarcoNavegacion;
-               
+
                 if (marco != null)
                 {
                     marco.Navigated -= MarcoNavigacion;
                     EvaluarSiEsInicio(nuevoMarco);
+                    //EvaluarSiPartida(nuevoMarco);
                     marco.Navigate(nuevoMarco);
                     return true;
                 }
@@ -184,9 +185,9 @@ namespace WpfCliente.Contexto
 
         private void MarcoNavigacion(object sender, NavigationEventArgs e)
         {
-            if (!(sender is Frame marco)) 
-            { 
-                return; 
+            if (!(sender is Frame marco))
+            {
+                return;
             }
             if (marco != null)
             {
@@ -303,16 +304,16 @@ namespace WpfCliente.Contexto
         private void CerrarTodaConexion()
         {
             SingletonCanal.Instancia.CerrarTodaConexion();
-            Conexion.CerrarPartida();
+            SingletonPartida.Instancia.CerrarConexionPartida();
             SingletonChat.Instancia.CerrarConexionChat();
             SingletonSalaJugador.Instancia.CerrarConexion();
         }
         private void CerrarConexionSalaPartida()
         {
-            Conexion.CerrarPartida();
+            SingletonPartida.Instancia.CerrarConexionPartida();
             SingletonChat.Instancia.CerrarConexionChat();
             SingletonSalaJugador.Instancia.CerrarConexion();
-        } 
+        }
         private void CerrarConexionSala()
         {
             SingletonChat.Instancia.CerrarConexionChat();
@@ -320,7 +321,7 @@ namespace WpfCliente.Contexto
         }
     }
 
-    
+
 }
 
 

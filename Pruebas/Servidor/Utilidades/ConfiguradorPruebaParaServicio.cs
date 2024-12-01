@@ -29,7 +29,7 @@ namespace Pruebas.Servidor.Utilidades
         protected Mock<IContextoOperacion> mockContextoProvedor = new Mock<IContextoOperacion>();
         public UsuarioSesionCallbackImplementacion implementacionCallback;
 
-        protected ManejadorPrincipal manejador;
+        protected ManejadorPrincipal manejador ;
 
 
         public virtual void ConfigurarManejador()

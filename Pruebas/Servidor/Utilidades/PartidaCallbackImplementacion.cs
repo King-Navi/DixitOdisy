@@ -61,7 +61,7 @@ public class PartidaCallbackImplementacion : ICommunicationObjectImpl, IPartidaC
         semaphoreRecibirImagenCallback.Release();
     }
 
-    public void FinalizarPartida()
+    public void FinalizarPartidaCallback()
     {
         PartidaFinalizada = true;
         OnFinalizarPartida?.Invoke();
@@ -92,7 +92,7 @@ public class PartidaCallbackImplementacion : ICommunicationObjectImpl, IPartidaC
         //TODO:
     }
 
-    public void EnviarEstadisticas(EstadisticasPartida estadisticas)
+    public void EnviarEstadisticasCallback(EstadisticasPartida estadisticas)
     {
         //TODO: 
     }

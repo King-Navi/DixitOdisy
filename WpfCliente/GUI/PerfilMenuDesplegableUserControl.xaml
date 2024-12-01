@@ -6,13 +6,13 @@
              xmlns:local="clr-namespace:WpfCliente.GUI"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="200">
-    <Grid>
+    <Grid Unloaded="CerrandoUserControl" Loaded="CargadoUserControl">
         <Menu Width="50" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" HorizontalContentAlignment="Center" Margin="0,50,0,0" Background="{x:Null}">
             <MenuItem x:Name="menuItemPerfil" Header="Perfil" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Width="50">
                 <MenuItem x:Name="menuItemEditarPerfil" Header="Editar Perfil" Click="AbrirEditarVentana" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
                 <MenuItem x:Name="menuItemCerrarSesion" Header="Cerrar sesión" Click="CerrarSesion" HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
             </MenuItem>
         </Menu>
-        <Image x:Name="imagenPerfil" Height="50" VerticalAlignment="Top" Source="pack://application:,,,/WpfCliente;component/Recursos/profile.jpg" HorizontalAlignment="Right" Margin="0,0,0,0"/>
+        <Image x:Name="imagenPerfil" Height="50" VerticalAlignment="Top" d:Source="pack://application:,,,/WpfCliente;component/Recursos/profile.jpg" HorizontalAlignment="Right" Margin="0,0,0,0"/>
     </Grid>
 </UserControl>

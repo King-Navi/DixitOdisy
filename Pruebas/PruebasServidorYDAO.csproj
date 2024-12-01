@@ -89,8 +89,10 @@
     <Compile Include="DAO\VetoDAO_Prueba.cs" />
     <Compile Include="Servidor\EstadisticasPartida_Prueba.cs" />
     <Compile Include="Servidor\ManejarDeVetos_Prueba.cs" />
+    <Compile Include="Servidor\MediadorPartida_Prueba.cs" />
     <Compile Include="Servidor\ServicioAmigo_Prueba.cs" />
     <Compile Include="Servidor\ServicioCorreo_Prueba.cs" />
+    <Compile Include="Servidor\ServicioImagen_Prueba.cs" />
     <Compile Include="Servidor\ServicioInvitacionPartida_Prueba.cs" />
     <Compile Include="Servidor\ServicioPartida_Prueba.cs" />
     <Compile Include="Servidor\ServicioPartidaSesion_Prueba.cs" />
@@ -98,6 +100,7 @@
     <Compile Include="Servidor\ServicioSalaJugador_Prueba.cs" />
     <Compile Include="Servidor\ServicioUsuario_Prueba.cs" />
     <Compile Include="Servidor\Utilidades\ConfiguradorPruebaParaServicio.cs" />
+    <Compile Include="Servidor\Utilidades\ImagenCallbackImplementacion.cs" />
     <Compile Include="Servidor\Utilidades\InvitacionCallbackImplementacion.cs" />
     <Compile Include="Servidor\Utilidades\AmigosCallbackImplementacion.cs" />
     <Compile Include="Servidor\Utilidades\ICommunicationObjectImpl.cs" />

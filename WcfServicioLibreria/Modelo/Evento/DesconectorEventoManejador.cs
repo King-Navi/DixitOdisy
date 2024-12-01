@@ -14,11 +14,19 @@ namespace WcfServicioLibreria.Evento
 
         public DesconectorEventoManejador(ICommunicationObject communicationObject, IObservador _observador, string _clavePropietario)
         {
-            observador = _observador;
-            clavePropietario = _clavePropietario;
-            communicationObject.Closed += Cerrado;
-            communicationObject.Faulted += EnFalla;
-            desechado = false;
+            try
+            {
+                observador = _observador;
+                clavePropietario = _clavePropietario;
+                communicationObject.Closed += Cerrado;
+                communicationObject.Faulted += EnFalla;
+                desechado = false;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }   
         
         private void Cerrado(object sender, EventArgs e)

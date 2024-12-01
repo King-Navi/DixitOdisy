@@ -45,13 +45,13 @@
                         </Grid.ColumnDefinitions>
 
                         <Image Source="{Binding PrimerLugar.BitmapImagen}" d:Source="pack://application:,,,/Recursos/pfp1.png" Height="100" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Margin="0,-83,0,318" />
-                        <Label x:Name="labelPrimerLugar" Content="{Binding Podio[0]}" d:Content="Primer" Grid.Column="1" HorizontalAlignment="Center"        HorizontalContentAlignment="Center"  VerticalContentAlignment="Center"  Margin="0,22,0,287" Width="80" />
+                        <Label x:Name="labelPrimerLugar" Content="{Binding PrimerLugar.Nombre}" d:Content="Primer" Grid.Column="1" HorizontalAlignment="Center"        HorizontalContentAlignment="Center"  VerticalContentAlignment="Center"  Margin="0,22,0,287" Width="80" />
 
                         <Image Source="{Binding SegundoLugar.BitmapImagen}" d:Source="pack://application:,,,/Recursos/pfp2.png" Height="100" Width="100" Grid.Row="0" HorizontalAlignment="Center" Margin="0,-33,0,268" />
-                        <Label x:Name="labelSegundoLugar" Content="{Binding Podio[1]}" d:Content="Segundo" HorizontalAlignment="Center" Margin="0,68,0,229" HorizontalContentAlignment="Center"  VerticalContentAlignment="Center" />
+                        <Label x:Name="labelSegundoLugar" Content="{Binding SegundoLugar.Nombre}" d:Content="Segundo" HorizontalAlignment="Center" Margin="0,68,0,229" HorizontalContentAlignment="Center"  VerticalContentAlignment="Center" />
 
                         <Image Source="{Binding TercerLugar.BitmapImagen}" d:Source="pack://application:,,,/Recursos/pfp3.png" Height="100" Width="100" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Margin="0,-2,0,237" />
-                        <Label x:Name="labelTercerLugar"  Content="{Binding Podio[2]}" d:Content="Tercero" Grid.Column="2" HorizontalAlignment="Center" Margin="0,98,0,198"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                        <Label x:Name="labelTercerLugar"  Content="{Binding TercerLugar.Nombre}" d:Content="Tercero" Grid.Column="2" HorizontalAlignment="Center" Margin="0,98,0,198"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
                 </Grid>
             </StackPanel>

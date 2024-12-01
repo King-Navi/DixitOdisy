@@ -9,7 +9,7 @@ namespace WcfServicioLibreria.Modelo
         public bool Verificar(Partida partida)
         {
             bool resultado = false;
-            if (partida.CartasRestantes <= CARTA_CERO)
+            if (partida.mediadorImagen.ObtenerCartasRestantes() <= CARTA_CERO)
             {
                 resultado = true;
             };

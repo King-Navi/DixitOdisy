@@ -6,6 +6,8 @@ namespace WcfServicioLibreria.Modelo.Excepciones
     public class PartidaFalla
     {
         [DataMember]
-        public bool PartidaInvalida { get; set; }
+        public bool PartidaInvalida { get; set; } = false;
+        [DataMember]
+        public bool ErrorAlUnirse { get; set; } = false;
     }
 }

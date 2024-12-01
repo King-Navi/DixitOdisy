@@ -1,6 +1,7 @@
 ﻿using System.ServiceModel;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Modelo.Excepciones;
 
 namespace WcfServicioLibreria.Contratos
 {
@@ -15,8 +16,9 @@ namespace WcfServicioLibreria.Contratos
         /// <remarks>
         /// Este método es unidireccional y no devuelve una respuesta directa al llamador.
         /// </remarks>
-        [OperationContract(IsOneWay = true)]
-        Task AgregarJugadorSalaAsync(string usuario, string idSala);
+        [OperationContract]
+        [FaultContract(typeof(SalaFalla))]
+        Task<bool> AgregarJugadorSalaAsync(string usuario, string idSala);
 
         /// <summary>
         /// Permite al anfitrión de una sala comenzar una partida.

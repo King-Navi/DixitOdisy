@@ -18,9 +18,6 @@ namespace WpfCliente.ImplementacionesCallbacks
         public ServicioAmistadClient Amigos { get; private set; }
         
         public ObservableCollection<Amigo> ListaAmigos { get;  private set; } = new ObservableCollection<Amigo>();
-
-  
-
         private void LimpiarRecursosAmigos()
         {
             ListaAmigos?.Clear();

@@ -23,23 +23,28 @@ namespace WcfServicioLibreria.Manejador
                 {
                     idPartida = Utilidad.Generar6Caracteres();
                 } while (salasDiccionario.ContainsKey(idPartida));
-                Partida partidaNueva = new Partida(idPartida, anfitrion, configuracion, Escritor, new UsuarioDAO(), new EstadisticasDAO());
-                bool existeSala = partidasdDiccionario.TryAdd(idPartida, partidaNueva);
-                if (existeSala)
+                MediadorPartida medidador = new MediadorPartida(configuracion.Tematica);
+                Partida partidaNueva = new Partida(idPartida, anfitrion, configuracion, new EstadisticasDAO(), medidador);
+                ManejadorImagen manejadorImagen = new ManejadorImagen(Escritor, medidador, configuracion.Tematica);
+                partidaNueva.MostrarTodasLasCartas += manejadorImagen.EnMostrarImagenes;
+                partidaNueva.PartidaVaciaManejadorEvento += manejadorImagen.SeTerminoLectura;
+                bool existeSala = partidasDiccionario.TryAdd(idPartida, partidaNueva);
+                bool existeManejador = manejadoresImagenes.TryAdd(idPartida, manejadorImagen);
+                if (existeSala && existeManejador)
                 {
-                    partidaNueva.partidaVaciaManejadorEvento += BorrarPartida;
+                    partidaNueva.PartidaVaciaManejadorEvento += BorrarPartida;
                 }
                 else
                 {
+                    partidasDiccionario.TryRemove(idPartida, out _);
+                    manejadoresImagenes.TryRemove(idPartida, out _);
                     throw new Exception("No se creo la Partida");
                 }
             }
-            catch (CommunicationException excepcion)
-            {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
-            }
             catch (Exception excepcion)
             {
+                partidasDiccionario.TryRemove(idPartida, out _);
+                manejadoresImagenes.TryRemove(idPartida, out _);
                 ManejadorExcepciones.ManejarFatalException(excepcion);
             }
             return idPartida;
@@ -50,8 +55,8 @@ namespace WcfServicioLibreria.Manejador
             if (sender is Partida partida)
             {
                 PartidaVaciaEventArgs evento = e as PartidaVaciaEventArgs;
-                partida.partidaVaciaManejadorEvento -= BorrarSala;
-                partidasdDiccionario.TryRemove(evento.Partida.IdPartida, out _);
+                partida.PartidaVaciaManejadorEvento -= BorrarSala;
+                partidasDiccionario.TryRemove(evento.Partida.IdPartida, out _);
                 Console.WriteLine($"La partdia con ID {evento.Partida.IdPartida} está vacía y será eliminada.");
             };
         }
@@ -62,7 +67,7 @@ namespace WcfServicioLibreria.Manejador
             {
                 return false;
             }
-            bool result = partidasdDiccionario.ContainsKey(idPartida);
+            bool result = partidasDiccionario.ContainsKey(idPartida);
             return result;
         }
 
@@ -73,12 +78,8 @@ namespace WcfServicioLibreria.Manejador
             {
                 try
                 {
-                    lock (partidasdDiccionario)
-                    {
-                        partidasdDiccionario.TryGetValue(idPartida, out Partida partida);
-                        resultado = partida.SeLlamoEmpezarPartida;
-                    }
-
+                    partidasDiccionario.TryGetValue(idPartida, out Partida partida);
+                    resultado = partida.SeLlamoEmpezarPartida;
                 }
                 catch (Exception excepcion)
                 {

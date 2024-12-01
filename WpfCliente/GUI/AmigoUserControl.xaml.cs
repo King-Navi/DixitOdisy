@@ -16,17 +16,6 @@ namespace WpfCliente.GUI
             InitializeComponent();
             ColocarFondoColorAleatorio();
         }
-        public AmigoUserControl( Amigo amigo)
-        {
-            InitializeComponent();
-            labelNombreAmigo.Content = amigo.Nombre;
-            labelEstadoAmigo.Content = amigo.Estado;
-            labelUltimaConexion.Content = amigo.UltimaConexion;
-            imageAmigo.Source = Imagen.ConvertirStreamABitmapImagen(amigo.Foto);
-            ColocarFondoColorAleatorio();
-            
-        }
-
         private void ColocarFondoColorAleatorio()
         {
             this.Background = Utilidades.ObtenerColorAleatorio();
@@ -63,6 +52,16 @@ namespace WpfCliente.GUI
         public void HabilitarBotones(bool esHabilitado)
         {
             menuItemEliminarAmigo.IsEnabled = esHabilitado;
+        }
+
+        private void CerrandoUserControl(object sender, RoutedEventArgs e)
+        {
+            if (imageAmigo != null)
+            {
+                imageAmigo.Source = null;
+                imageAmigo = null;
+
+            }
         }
     }
 }

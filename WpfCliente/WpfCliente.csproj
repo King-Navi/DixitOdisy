@@ -115,6 +115,8 @@
     <Compile Include="GUI\PrincipalWindow.xaml.cs">
       <DependentUpon>PrincipalWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ImplementacionesCallbacks\SingletonGestorImagenes.cs" />
+    <Compile Include="ImplementacionesCallbacks\ReceptorImagen.cs" />
     <Compile Include="ImplementacionesCallbacks\SingletonChat.cs" />
     <Compile Include="ImplementacionesCallbacks\SingletonConexion.cs" />
     <Compile Include="ImplementacionesCallbacks\SingletonPartida.cs" />
@@ -187,7 +189,6 @@
     </Compile>
     <Compile Include="ImplementacionesCallbacks\SingletonUsuarioSesionJugador.cs" />
     <Compile Include="Servidor\SolicitudAmistad.cs" />
-    <Compile Include="Utilidad\RecursosCompartidosPartida.cs" />
     <Compile Include="GUI\RegistrarUsuarioPage.xaml.cs">
       <DependentUpon>RegistrarUsuarioPage.xaml</DependentUpon>
     </Compile>
@@ -216,6 +217,7 @@
       <DependentUpon>VerTodasCartasUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaz\IHabilitadorBotones.cs" />
+    <Compile Include="Utilidad\CollecionObservableSeguraHilos.cs" />
     <Compile Include="Utilidad\ComandoRele.cs" />
     <Compile Include="Utilidad\Correo.cs" />
     <Compile Include="Utilidad\EstadisticaUsuario.cs" />
@@ -237,6 +239,7 @@
     <Compile Include="Utilidad\ManejadorExcepciones.cs" />
     <Compile Include="Servidor\Usuario.cs" />
     <Compile Include="ImplementacionesCallbacks\SingletonAmigos.cs" />
+    <Compile Include="Utilidad\PantallasPartida.cs" />
     <Compile Include="Utilidad\Utilidades.cs" />
     <Compile Include="Utilidad\ServicioManejador.cs" />
     <Compile Include="Servidor\ImagenCarta.cs" />

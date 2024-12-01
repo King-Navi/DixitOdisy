@@ -6,10 +6,10 @@ namespace WcfServicioLibreria.Modelo
     {
 
         public string ArchivoPath { get; }
-        public IPartidaCallback Callback { get; }
+        public IImagenCallback Callback { get; }
         public bool UsarGrupo { get; }
 
-        public LecturaTrabajo(string archivoPath, IPartidaCallback callback, bool usarGrupo)
+        public LecturaTrabajo(string archivoPath, IImagenCallback callback, bool usarGrupo)
         {
             ArchivoPath = archivoPath;
             Callback = callback;

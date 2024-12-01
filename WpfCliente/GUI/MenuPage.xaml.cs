@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.ServiceModel;
+using System.ServiceModel.Configuration;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -160,30 +162,38 @@ namespace WpfCliente.GUI
             {
                 return;
             }
-            SalaEsperaPage ventanaSala = new SalaEsperaPage(idSala);
-            if (!SingletonGestorVentana.Instancia.NavegarA(ventanaSala))
+            try
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor,
-                    Properties.Idioma.mensajeErrorServidor,
-                    Window.GetWindow(this));
-                SingletonGestorVentana.Instancia.Regresar();
-                return;
+                SalaEsperaPage ventanaSala = new SalaEsperaPage(idSala);
+                if (!SingletonGestorVentana.Instancia.NavegarA(ventanaSala))
+                {
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor,
+                        Properties.Idioma.mensajeErrorServidor,
+                        Window.GetWindow(this));
+                    SingletonGestorVentana.Instancia.Regresar();
+                    return;
+                }
+            }
+            catch (Exception excepcion)
+            {
+
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
         }
 
-        private void ClicButtonUnirseSala(object sender, RoutedEventArgs e)
+        private async void ClicButtonUnirseSalaAsync(object sender, RoutedEventArgs e)
         {
             bool esInvitacion = false;
-            string _codigoSala = null;
-            _ = UnirseASalaAsync(esInvitacion, _codigoSala);
+            string codigoSala = null;
+            await UnirseASalaAsync(esInvitacion, codigoSala);
         }
 
-        private async Task UnirseASalaAsync(bool esInvitacion, string _codigoSala)
+        private async Task UnirseASalaAsync(bool esInvitacion, string codigoSalaParametro)
         {
             string codigoSala = "";
             if (esInvitacion)
             {
-                codigoSala = _codigoSala;
+                codigoSala = codigoSalaParametro;
             }
             else
             {
@@ -326,6 +336,15 @@ namespace WpfCliente.GUI
             await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA_CLIC_SEGUNDOS)); 
             buttonRefrescar.IsEnabled = true;
 
+        }
+
+        private void CerrandoPage(object sender, RoutedEventArgs e)
+        {
+            if (perfilMenuDesplegable != null)
+            {
+                perfilMenuDesplegable.LimpiarFoto();
+                stackPaneManeSuperiorDerecho.Children.Remove(perfilMenuDesplegable);
+            }
         }
     }
 }

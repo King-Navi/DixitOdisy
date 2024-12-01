@@ -81,19 +81,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ConfiguracionPartida" nillable="true" type="tns:ConfiguracionPartida" />
-  <xs:complexType name="ImagenCarta">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="IdImagen" nillable="true" type="xs:string" />
-      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="ImagenStream" nillable="true" type="q6:MemoryStream" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ImagenCarta" nillable="true" type="tns:ImagenCarta" />
   <xs:complexType name="EstadisticasPartida">
     <xs:sequence>
       <xs:element minOccurs="0" name="Jugadores" nillable="true" type="tns:ArrayOfJugadorEstadisticas" />
       <xs:element minOccurs="0" name="PrimerLugar" nillable="true" type="tns:JugadorEstadisticas" />
       <xs:element minOccurs="0" name="SegundoLugar" nillable="true" type="tns:JugadorEstadisticas" />
-      <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Enumerador" minOccurs="0" name="Tematica" type="q7:TematicaPartida" />
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Enumerador" minOccurs="0" name="Tematica" type="q6:TematicaPartida" />
       <xs:element minOccurs="0" name="TercerLugar" nillable="true" type="tns:JugadorEstadisticas" />
       <xs:element minOccurs="0" name="TotalRondas" type="xs:int" />
     </xs:sequence>
@@ -124,4 +117,11 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Estadistica" nillable="true" type="tns:Estadistica" />
+  <xs:complexType name="ImagenCarta">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IdImagen" nillable="true" type="xs:string" />
+      <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="ImagenStream" nillable="true" type="q7:MemoryStream" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ImagenCarta" nillable="true" type="tns:ImagenCarta" />
 </xs:schema>

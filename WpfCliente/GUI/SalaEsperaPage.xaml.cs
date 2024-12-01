@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -107,26 +108,40 @@ namespace WpfCliente.GUI
 
         private async void UnirseSalaAsync(string idSala)
         {
-            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
-            if (!conexionExitosa)
+            try
             {
-                return;
+                bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
+                if (!conexionExitosa)
+                {
+                    return;
+                }
+                if (!ValidacionExistenciaJuego.ExisteSala(idSala))
+                {
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloLobbyNoEncontrado, Properties.Idioma.mensajeLobbyNoEncontrado, Window.GetWindow(this));
+                    SingletonGestorVentana.Instancia.Regresar();
+                    return;
+                }
+                var resultado = SingletonSalaJugador.Instancia.AbrirConexionSala();
+                if (!resultado)
+                {
+                    SingletonGestorVentana.Instancia.Regresar();
+                    return;
+                }
+                await SingletonSalaJugador.Instancia.Sala.AgregarJugadorSalaAsync(SingletonCliente.Instance.NombreUsuario, idSala);
+                labelCodigo.Content += idSala;
+                UnirseChat();
             }
-            if (!ValidacionExistenciaJuego.ExisteSala(idSala))
+            catch (FaultException<SalaFalla>)
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloLobbyNoEncontrado, Properties.Idioma.mensajeLobbyNoEncontrado, Window.GetWindow(this));
+                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloSalaLlena,
+                    Idioma.mensajeSalaLlena,
+                    Window.GetWindow(this));
                 SingletonGestorVentana.Instancia.Regresar();
-                return;
             }
-            var resultado = SingletonSalaJugador.Instancia.AbrirConexionSala();
-            if (!resultado)
+            catch (Exception excepcion)
             {
-                SingletonGestorVentana.Instancia.Regresar();
-                return;
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
-            SingletonSalaJugador.Instancia.Sala.AgregarJugadorSala(SingletonCliente.Instance.NombreUsuario, idSala);
-            labelCodigo.Content += idSala;
-            UnirseChat();
         }
 
 
@@ -262,7 +277,7 @@ namespace WpfCliente.GUI
                 return;
             }
             SingletonCliente.Instance.IdPartida = idPartida;
-            OcultarVentanaHastaCierre();
+            AbrirPartida();
         }
 
 
@@ -291,7 +306,7 @@ namespace WpfCliente.GUI
                     var resultado = IniciarPartida(idPartida);
                     if (resultado)
                     {
-                        OcultarVentanaHastaCierre();
+                        AbrirPartida();
                     }
                 }
                 catch (Exception excepcion)
@@ -348,7 +363,7 @@ namespace WpfCliente.GUI
                 idPartida
             );
         }
-        private void OcultarVentanaHastaCierre()
+        private void AbrirPartida()
         {
             if (SingletonCliente.Instance.IdPartida == null)
             {
@@ -557,6 +572,24 @@ namespace WpfCliente.GUI
         private void ClicFlechaAtras(object sender, MouseButtonEventArgs e)
         {
             SingletonGestorVentana.Instancia.Regresar();
+        }
+
+        private void CerrandoPage(object sender, RoutedEventArgs e)
+        {
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
+            if (listaUsuarioSalaUserControl != null)
+            {
+                try
+                {
+                    
+                    listaUsuarioSalaUserControl = null;
+                    JugadoresSala = new ObservableCollection<Usuario>();
+                }
+                catch(Exception excepcion)
+                {
+                    ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                }
+            }
         }
     }
 }

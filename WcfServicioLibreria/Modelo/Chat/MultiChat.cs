@@ -40,17 +40,33 @@ namespace WcfServicioLibreria.Modelo
         public bool AgregarJugadorChat(string nombreUsuario, IChatCallback contexto)
         {
             bool resultado = false;
-            if (ContarJugadores() < cantidadMaximaJugadores)
+            try
             {
-                jugadores.AddOrUpdate(nombreUsuario, contexto, (key, oldValue) => contexto);
-                if (jugadores.TryGetValue(nombreUsuario, out IChatCallback contextoCambiado))
+                if (ContarJugadores() < cantidadMaximaJugadores)
                 {
-                    if (ReferenceEquals(contexto, contextoCambiado))
+                    jugadores.AddOrUpdate(nombreUsuario, contexto, (key, oldValue) => contexto);
+                    if (jugadores.TryGetValue(nombreUsuario, out IChatCallback contextoCambiado))
                     {
-                        eventosCommunication.TryAdd(nombreUsuario, new DesconectorEventoManejador((ICommunicationObject)contextoCambiado, this, nombreUsuario));
-                        resultado = true;
+                        if (ReferenceEquals(contexto, contextoCambiado))
+                        {
+                            eventosCommunication.TryAdd(nombreUsuario, new DesconectorEventoManejador((ICommunicationObject)contextoCambiado, this, nombreUsuario));
+                            resultado = true;
+                        }
                     }
                 }
+            }
+            catch (Exception excepcion)
+            {
+                try
+                {
+                    ((ICommunicationObject)contexto).Abort();
+                }
+                catch (Exception excepcionComunicacion)
+                {
+                    ManejadorExcepciones.ManejarErrorException(excepcionComunicacion);
+
+                }
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return resultado;
         }

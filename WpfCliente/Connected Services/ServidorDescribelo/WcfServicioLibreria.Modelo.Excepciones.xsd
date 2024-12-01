@@ -6,12 +6,25 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ServidorFalla" nillable="true" type="tns:ServidorFalla" />
+  <xs:complexType name="PartidaFalla">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorAlUnirse" type="xs:boolean" />
+      <xs:element minOccurs="0" name="PartidaInvalida" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PartidaFalla" nillable="true" type="tns:PartidaFalla" />
   <xs:complexType name="BaseDatosFalla">
     <xs:sequence>
       <xs:element minOccurs="0" name="EsGamertagDuplicado" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="BaseDatosFalla" nillable="true" type="tns:BaseDatosFalla" />
+  <xs:complexType name="SalaFalla">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EstaLlena" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SalaFalla" nillable="true" type="tns:SalaFalla" />
   <xs:complexType name="VetoFalla">
     <xs:sequence>
       <xs:element minOccurs="0" name="EnProgreso" type="xs:boolean" />

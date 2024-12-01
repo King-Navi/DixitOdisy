@@ -8,21 +8,22 @@ using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Modelo
 {
-    internal class LectorDiscoOrquestador
+    internal class LectorDiscoOrquestador : ILectorDiscoOrquestador
     {
 
         private readonly List<LectorDisco> lectoresDisco = new List<LectorDisco>();
-        private readonly int MAXIMO_LECTORESDISCO;
-        private readonly int LECTORESDISCO_CERO;
+        private const int MAXIMO_LECTORESDISCO = 6;
+        private const int LECTORESDISCO_CERO = 0;
+        private const int LECTORESDISCO_POR_DEFECTO = 2;
         private int indiceActual = 0;
         private readonly SemaphoreSlim semaforoAsignacion = new SemaphoreSlim(1, 1);
         public bool Desechado { get; private set; } = false;
 
         public LectorDiscoOrquestador(int cantidadLectores)
         {
-            if (cantidadLectores > MAXIMO_LECTORESDISCO || cantidadLectores <= LECTORESDISCO_CERO)
+            if (cantidadLectores > MAXIMO_LECTORESDISCO || cantidadLectores < LECTORESDISCO_CERO)
             {
-                for (int i = 0; i < cantidadLectores; i++)
+                for (int i = 0; i < LECTORESDISCO_POR_DEFECTO; i++)
                 {
                     lectoresDisco.Add(new LectorDisco(i));
 
@@ -37,13 +38,13 @@ namespace WcfServicioLibreria.Modelo
             }           
         }
 
-        public void AsignarTrabajo(string archivoPath, IPartidaCallback callback, bool usarGrupo = false)
+        public void AsignarTrabajo(string archivoPath, IImagenCallback callback, bool usarGrupo = false)
         {
             var lectorMenosOcupado = lectoresDisco.OrderBy(busqueda => busqueda.ColaCount).First();
             lectorMenosOcupado.EncolarLecturaEnvio(archivoPath, callback, usarGrupo);
         }
 
-        public async Task AsignarTrabajoRoundRobinAsync(string archivoPath, IPartidaCallback callback)
+        public async Task AsignarTrabajoRoundRobinAsync(string archivoPath, IImagenCallback callback, bool usarGrupo = false)
         {
             await semaforoAsignacion.WaitAsync();
             try
@@ -53,10 +54,9 @@ namespace WcfServicioLibreria.Modelo
                     ManejadorExcepciones.ManejarFatalException(new InvalidOperationException("No hay lectores disponibles para asignar el trabajo."));
                     throw new InvalidOperationException();
                 }
-
-                indiceActual = indiceActual % lectoresDisco.Count;
                 var lectorSeleccionado = lectoresDisco[indiceActual];
-                lectorSeleccionado.EncolarLecturaEnvio(archivoPath, callback);
+                indiceActual = (indiceActual + 1) % lectoresDisco.Count;
+                lectorSeleccionado.EncolarLecturaEnvio(archivoPath, callback, usarGrupo);
             }
             finally
             {

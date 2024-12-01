@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
@@ -12,11 +13,12 @@ namespace WpfCliente.GUI
     {
         public ObservableCollection<ImagenCarta> TodasImagenes { get; set; }
 
-        public VerTodasCartasUserControl(ObservableCollection<ImagenCarta> todasImagenes)
+        public VerTodasCartasUserControl()
         {
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
-            TodasImagenes = todasImagenes;
+            SingletonPartida.Instancia.MostrarPista += ColocarPista;
+            TodasImagenes = SingletonGestorImagenes.Instancia.imagenesDeTodos.ImagenCartasTodos;
             DataContext = this;
         }
 
@@ -24,7 +26,6 @@ namespace WpfCliente.GUI
         { 
             textBoxInstruccionPista.Text = Properties.Idioma.labelInstruccionPista;
         }
-
 
         public void ColocarPista(string pista)
         {

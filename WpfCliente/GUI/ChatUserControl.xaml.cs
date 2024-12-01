@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 using WpfCliente.Contexto;
 using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
@@ -13,6 +15,7 @@ namespace WpfCliente.GUI
     public partial class ChatUserControl : UserControl , IActualizacionUI , IHabilitadorBotones
     {
         private const int MAXIMO_CARACTERES_PERMITIDOS = 200;
+        private const int TIEMPO_ESPERA_SEGUNDOS = 10;
         public ChatUserControl()
         {
             this.Loaded += CargarNuevoContexto;
@@ -44,6 +47,14 @@ namespace WpfCliente.GUI
             {
                 SingletonGestorVentana.Instancia.NavegarA(new IniciarSesionPage());
                 return;
+            }
+            if (SingletonChat.Instancia.ChatMotor == null)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA_SEGUNDOS));
+                if (SingletonChat.Instancia.ChatMotor == null)
+                {
+                    return;
+                }
             }
 
             if (textBoxEnviarMensaje.Text.Length > MAXIMO_CARACTERES_PERMITIDOS || string.IsNullOrWhiteSpace(textBoxEnviarMensaje.Text))

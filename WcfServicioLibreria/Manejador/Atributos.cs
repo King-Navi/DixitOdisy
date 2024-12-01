@@ -12,7 +12,7 @@ using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Reentrant)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple)]
     public partial class ManejadorPrincipal
     {
         #region Sala
@@ -30,7 +30,8 @@ namespace WcfServicioLibreria.Manejador
         #endregion Chat
 
         #region Partida
-        private static readonly ConcurrentDictionary<string, Partida> partidasdDiccionario = new ConcurrentDictionary<string, Partida>();
+        private static readonly ConcurrentDictionary<string, ManejadorImagen> manejadoresImagenes= new ConcurrentDictionary<string, ManejadorImagen>();
+        private static readonly ConcurrentDictionary<string, Partida> partidasDiccionario = new ConcurrentDictionary<string, Partida>();
         #endregion Partida
 
         #region Correo

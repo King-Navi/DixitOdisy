@@ -32,7 +32,7 @@
                             <Image Source="{Binding BitmapImagen}" Width="130">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseLeftButtonDown">
-                                        <i:InvokeCommandAction Command="{Binding DataContext.ComandoImagenGlobal, RelativeSource={RelativeSource AncestorType=Window}}"
+                                        <i:InvokeCommandAction Command="{Binding DataContext.ComandoImagenGlobal, RelativeSource={RelativeSource AncestorType=Page}}"
                                                            CommandParameter="{Binding IdImagen}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>

@@ -672,4 +672,20 @@
   <data name="mensajeNoAutoExpulsion" xml:space="preserve">
     <value>No te puedes expulsar a ti mismo</value>
   </data>
+  <data name="tituloSalaLlena" xml:space="preserve">
+    <value>Sala de espera llena</value>
+  </data>
+  <data name="mensajeSalaLlena" xml:space="preserve">
+    <value>La sala a la que te intentas unir ya esta llena y no aceptan mas personas</value>
+  </data>
+  <data name="mensajeErrorUnirsePartida" xml:space="preserve">
+    <value>Inglés
+No te has podido unir a la partida, favor de revisar tu conexion</value>
+  </data>
+  <data name="tituloErrorUnirsePartida" xml:space="preserve">
+    <value>Error al unirse</value>
+  </data>
+  <data name="buttonSolicitarImagen" xml:space="preserve">
+    <value>Solicitar imagen</value>
+  </data>
 </root>

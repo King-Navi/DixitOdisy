@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Contexts;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Threading;
@@ -25,10 +26,13 @@ namespace WcfServicioLibreria.Modelo
         private const string CARPETA_FOTOS_INVITADOS = "FotosInvitados";
         #endregion
         #region Campos
+        public const int NO_UNISER = 0;
+        public const int UNISER = 1;
         private const int SALA_VACIA = 0;
+        private const int TIEMPO_DESECHO_SEGUNDOS = 10;
         private string idCodigoSala;
         private const int CANTIDAD_MINIMA_JUGADORES = 1;
-        private const int CANTIDAD_MAXIMA_JUGADORES = 6;
+        public const int CANTIDAD_MAXIMA_JUGADORES = 6;
         private readonly ConcurrentDictionary<string, ISalaJugadorCallback> jugadoresSalaCallbacks = new ConcurrentDictionary<string, ISalaJugadorCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
         private ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario> jugadoresInformacion = new ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario>();
@@ -37,7 +41,7 @@ namespace WcfServicioLibreria.Modelo
         private readonly SemaphoreSlim semaphoreLeerFotoInvitado = new SemaphoreSlim(1, 1);
         private static readonly SemaphoreSlim semaphoreRemoverJugador = new SemaphoreSlim(1, 1);
         private IUsuarioDAO usuarioDAO;
-
+        public int sePuedeUnir = UNISER;
         private IManejadorVeto manejadorVeto;
         #endregion Campos
         #region Propiedades
@@ -77,20 +81,36 @@ namespace WcfServicioLibreria.Modelo
             return jugadoresSalaCallbacks.Keys.ToList().AsReadOnly();
         }
 
-        public bool AgregarJugadorSala(string nombreJugador, ISalaJugadorCallback nuevoContexto)
+        public bool AgregarInformacionJugadorSala(string nombreJugador, ISalaJugadorCallback nuevoContexto)
         {
             bool resultado = false;
-            if (ContarJugadores() < CANTIDAD_MAXIMA_JUGADORES)
+            try
             {
-                jugadoresSalaCallbacks.AddOrUpdate(nombreJugador, nuevoContexto, (key, oldValue) => nuevoContexto);
-                if (jugadoresSalaCallbacks.TryGetValue(nombreJugador, out ISalaJugadorCallback contextoCambiado))
+                if (ContarJugadores() <= CANTIDAD_MAXIMA_JUGADORES)
                 {
-                    if (ReferenceEquals(nuevoContexto, contextoCambiado))
+                    jugadoresSalaCallbacks.AddOrUpdate(nombreJugador, nuevoContexto, (key, oldValue) => nuevoContexto);
+                    if (jugadoresSalaCallbacks.TryGetValue(nombreJugador, out ISalaJugadorCallback contextoCambiado))
                     {
-                        eventosCommunication.TryAdd(nombreJugador, new DesconectorEventoManejador((ICommunicationObject)contextoCambiado, this, nombreJugador));
-                        resultado = true;
+                        if (ReferenceEquals(nuevoContexto, contextoCambiado))
+                        {
+                            eventosCommunication.TryAdd(nombreJugador, new DesconectorEventoManejador((ICommunicationObject)contextoCambiado, this, nombreJugador));
+                            resultado = true;
+                        }
                     }
                 }
+            }
+            catch (Exception excepcion)
+            {
+                try
+                {
+                    ((ICommunicationObject)nuevoContexto).Abort();
+                }
+                catch (Exception excepcionComunicacion)
+                {
+                    ManejadorExcepciones.ManejarErrorException(excepcionComunicacion);
+
+                }
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return resultado;
         }
@@ -116,7 +136,7 @@ namespace WcfServicioLibreria.Modelo
 
                 if (ContarJugadores() == SALA_VACIA)
                 {
-                    EliminarSala();
+                    ProgramarEliminacionSala();
                 }
             }
             finally
@@ -125,29 +145,72 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
+        private void ProgramarEliminacionSala()
+        {
+            if (NO_UNISER == sePuedeUnir)
+            {
+                return;
+            }
+
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(TIEMPO_DESECHO_SEGUNDOS));
+                    EliminarSala();
+                }
+                catch (Exception excepcion)
+                {
+                    ManejadorExcepciones.ManejarFatalException(excepcion);
+                }
+            });
+        }
+
         private void EliminarSala()
         {
-            IReadOnlyCollection<string> claveJugadores = ObtenerNombresJugadoresSala();
-            foreach (var clave in claveJugadores)
+            try
             {
-                if (jugadoresSalaCallbacks.ContainsKey(clave))
+                IReadOnlyCollection<string> claveJugadores = ObtenerNombresJugadoresSala();
+                foreach (var clave in claveJugadores)
                 {
-                    ((ICommunicationObject)jugadoresSalaCallbacks[clave]).Close();
+                    if (jugadoresSalaCallbacks.ContainsKey(clave))
+                    {
+                        var callback = ((ICommunicationObject)jugadoresSalaCallbacks[clave]);
+                        if (callback.State == CommunicationState.Opening
+                            || callback.State == CommunicationState.Opened)
+                        {
+                            callback.Close();
+                        }
+                    }
                 }
+                jugadoresSalaCallbacks.Clear();
+
+                IReadOnlyCollection<string> claveEventos = ObtenerNombresJugadoresSala();
+                foreach (var clave in claveEventos)
+                {
+                    if (eventosCommunication.ContainsKey(clave))
+                    {
+                        var callback = ((ICommunicationObject)eventosCommunication[clave]);
+                        if (callback.State == CommunicationState.Opening
+                            || callback.State == CommunicationState.Opened)
+                        {
+                            callback.Close();
+                        }
+                    }
+                }
+                eventosCommunication.Clear();
+                sePuedeUnir = NO_UNISER;
+
+                EnSalaVacia();
             }
-            jugadoresSalaCallbacks.Clear();
-            IReadOnlyCollection<string> claveEventos = ObtenerNombresJugadoresSala();
-            foreach (var clave in claveEventos)
+            catch (CommunicationException excepcion)
             {
-                if (eventosCommunication.ContainsKey(clave))
-                {
-                    eventosCommunication[clave].Desechar();
-                }
+                ManejadorExcepciones.ManejarFatalException(excepcion);
             }
-            eventosCommunication.Clear();
-
-            EnSalaVacia();
-
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarFatalException(excepcion);
+            }
         }
 
         void DelegarRolAnfitrion()
@@ -333,6 +396,7 @@ namespace WcfServicioLibreria.Modelo
 
         internal bool AvisarComienzoPatida(string nombreSolicitante, string idPartida)
         {
+            sePuedeUnir = NO_UNISER;
             if (ContarJugadores() < CANTIDAD_MINIMA_JUGADORES)
             {
                 return false;

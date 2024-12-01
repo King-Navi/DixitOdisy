@@ -15,50 +15,46 @@ using ChatGPTLibreria.ModelosJSON;
 using System.Net.Http;
 using DAOLibreria.Interfaces;
 using DAOLibreria.DAO;
+using System.Runtime.Remoting.Contexts;
+using System.Runtime.InteropServices;
+using WcfServicioLibreria.Modelo.Excepciones;
+using WcfServicioLibreria.Modelo.Evento;
 
 namespace WcfServicioLibreria.Modelo
 {
     internal partial class Partida : IObservador
     {
         #region Constantes
-        #region Carpetas
-        private const string RUTA_RECURSOS = "Recursos";
-        private const string CARPETA_MIXTA = "Mixta";
-        private const string CARPETA_MITOLOGIA = "Mitologia";
-        private const string CARPETA_ANIMALES = "Animales";
-        private const string CARPETA_PAISES = "Paises";
-        private const string CARPETA_FOTOS_INVITADOS = "FotosInvitados";
-        #endregion Carpetas
-
         #region PantallasCliente
-        private const int PANTALLA_INICIO = 1;
-        private const int PANTALLA_NARRADOR_SELECION = 2;
-        private const int PANTALLA_JUGADOR_SELECION = 3;
-        private const int PANTALLA_TODOS_CARTAS = 4;
-        private const int PANTALLA_ESTADISTICAS = 5;
-        private const int PANTALLA_FIN_PARTIDA = 6;
-        private const int PANTALLA_ESPERA = 7;
+        public const int PANTALLA_INICIO = 1;
+        public const int PANTALLA_NARRADOR_SELECION = 2;
+        public const int PANTALLA_JUGADOR_SELECION = 3;
+        public const int PANTALLA_TODOS_CARTAS = 4;
+        public const int PANTALLA_ESTADISTICAS = 5;
+        public const int PANTALLA_FIN_PARTIDA = 6;
+        public const int PANTALLA_ESPERA = 7;
         #endregion PantallasCliente
 
         #region NumerosPartida
         private const int CANTIDAD_MINIMA_JUGADORES = 1; // 2
-        private const int TIEMPO_ESPERA_UNIRSE_JUGADORES = 20;// 20
+        private const int TIEMPO_ESPERA_UNIRSE_JUGADORES = 18;// 30
         private const int TIEMPO_ESPERA_NARRADOR = 40; // 40
         private const int TIEMPO_ESPERA_SELECCION = 10; //60
         private const int TIEMPO_ESPERA_PARA_ADIVINAR = 10; //60
         private const int TIEMPO_ESPERA = 5; //5
+        private const int TIEMPO_ENVIO_SEGUNDOS = 5;
         private const int NUM_JUGADOR_PARTIDA_VACIA = 0; //0
         private const int NUM_JUGADOR_NADIE_ACERTO = 0;//0
         private const int RONDAS_MINIMA_PARA_PUNTOS = 3; //3
         private const int NUMERO_MINIMO_RONDAS = 3; //3
-        private const int LIMITE_CARTAS_MINIMO = 0; //0
-        private const int NO_ARCHIVOS_RESTANTES = 0; //0
         private const int PUNTOS_RESTADOS_NO_PARTICIPAR = 1; //1
         private const int PUNTOS_ACIERTO = 1; //1
         private const int PUNTOS_PENALIZACION_NARRADOR = 2; //2
         private const int PUNTOS_MAXIMOS_RECIBIDOS_CONFUNDIR = 3; //3
         private const int TIEMPO_MOSTRAR_ESTADISTICAS = 15; //10
         private const int ID_INVALIDO = 0; //0 
+
+        private const int RONDA_INICIAL = 0;
         #endregion NumerosPartida
         #endregion Constantes
 
@@ -70,234 +66,93 @@ namespace WcfServicioLibreria.Modelo
         public ConfiguracionPartida Configuracion { get; private set; }
         private readonly EstadisticasPartida estadisticasPartida;
         private CancellationTokenSource cancelacionEjecucionRonda;
-        private readonly string rutaImagenes;
-        private static readonly Random random = new Random();
+        private static readonly Random aleatorio = new Random();
         private static readonly SemaphoreSlim semaphoreEscogerNarrador = new SemaphoreSlim(1, 1);
         private readonly SemaphoreSlim semaphoreEmpezarPartida = new SemaphoreSlim(1, 1);
-        private readonly SemaphoreSlim semaphoreLeerFotoInvitado = new SemaphoreSlim(1, 1);
-        private readonly SemaphoreSlim semaphoreEnviandoImagenDeChatGPT = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim semaphoreAgregarJugador = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim semaphoreLectura = new SemaphoreSlim(1, 1);
         private static readonly SemaphoreSlim semaphoreRemoverJugador = new SemaphoreSlim(1, 1);
-        private readonly object lockCartasRestantes = new object();
-        private static readonly HttpClient httpCliente = new HttpClient();
-        public EventHandler partidaVaciaManejadorEvento;
+        public EventHandler PartidaVaciaManejadorEvento;
         private event EventHandler TodosListos;
-        private readonly Lazy<string[]> archivosCache;
-        private readonly IUsuarioDAO usuarioDAO;
         private readonly IEstadisticasDAO estadisticasDAO;
-        /// <summary>
-        /// Precausion: Aumentar esto ocupara significativamente mas recursos
-        /// </summary>
-        private readonly LectorDiscoOrquestador lectorDiscoOrquetador = new LectorDiscoOrquestador(2); 
+        public readonly IMediadorImagen mediadorImagen;
+        public event EventHandler<RondaEventArgs> MostrarTodasLasCartas;
+
+
         #endregion Atributos
 
         #region Propiedad
         public string IdPartida { get; private set; }
         public string Anfitrion { get; private set; }
-        public string Tematica { get; private set; }
         public string NarradorActual { get; private set; }
         public string ClaveImagenCorrectaActual { get; private set; }
         public string PistaActual { get; private set; }
         public int RondaActual { get; private set; }
-        public int CartasRestantes { get; private set; }
         public bool SeLlamoEmpezarPartida { get; private set; } = false;
         public bool SeTerminoEsperaUnirse { get; private set; } = false;
         public bool SelecionoCartaNarrador { get; private set; } = false;
-        private ConcurrentBag<string> ImagenesUsadas { get; set; }
         public ConcurrentBag<string> JugadoresPendientes { get; private set; }
         private ConcurrentDictionary<string, List<string>> JugadorImagenPuesta { get; set; } = new ConcurrentDictionary<string, List<string>>();
-        private ConcurrentDictionary<string, List<string>> JugadorImagenElegida { get; set; }
-        private IEscribirDisco Escritor { get; set; }
-        private SolicitarImagen SolicitarImagen { get; set; }
+        private ConcurrentDictionary<string, List<string>> JugadorImagenElegida { get; set; } = new ConcurrentDictionary<string, List<string>>();
 
         #endregion Propiedad
 
         #region Contructor
-        public Partida(string _idPartida, string _anfitrion, ConfiguracionPartida _configuracion, IEscribirDisco _escritorDisco, IUsuarioDAO _usuarioDAO, IEstadisticasDAO _estadisticasDAO)
+        public Partida(string _idPartida, string _anfitrion, ConfiguracionPartida _configuracion, IEstadisticasDAO _estadisticasDAO, IMediadorImagen _mediadorImagen)
         {
             IdPartida = _idPartida;
             Anfitrion = _anfitrion;
             condicionVictoria = CrearCondicionVictoria(_configuracion);
-            rutaImagenes = CalcularRutaImagenes(_configuracion);
-            Tematica = _configuracion.Tematica.ToString();
-            CartasRestantes = Directory.GetFiles(rutaImagenes, "*.jpg").Length;
-            ImagenesUsadas = new ConcurrentBag<string>();
             JugadoresPendientes = new ConcurrentBag<string>();
             JugadorImagenElegida = new ConcurrentDictionary<string, List<string>>();
-            RondaActual = 0;
-            Escritor = _escritorDisco;
-            SolicitarImagen = new SolicitarImagen();
+            RondaActual = RONDA_INICIAL;
             estadisticasPartida = new EstadisticasPartida(_configuracion.Tematica);
             TodosListos += (emisor, evento) =>
             {
-                cancelacionEjecucionRonda= new CancellationTokenSource(); 
+                cancelacionEjecucionRonda = new CancellationTokenSource();
                 Task.Run(async () => await IniciarPartidaSeguroAsync(cancelacionEjecucionRonda.Token));
             };
-            archivosCache = new Lazy<string[]>(() => Directory.GetFiles(rutaImagenes, "*.jpg"));
-            usuarioDAO = _usuarioDAO;
             estadisticasDAO = _estadisticasDAO;
+            mediadorImagen = _mediadorImagen;
         }
         #endregion Contructor
 
         #region Metodos
 
-        #region Imagenes
-        public async Task<bool> EnviarImagen(string nombreSolicitante) 
-        {
-            Console.WriteLine($"Método EnviarImagen llamado.");
-            return await CalcularNuevaImagen(nombreSolicitante);
-
-        }
-
-        private async Task<bool> CalcularNuevaImagen(string nombreSolicitante)
-        {
-            bool resultado = false;
-            try
-            {
-                if (CartasRestantes <= LIMITE_CARTAS_MINIMO)
-                {
-                    resultado = await SolicitarImagenChatGPTAsync(nombreSolicitante); 
-                }
-                else
-                {
-                    resultado = await LeerImagenDiscoAsync(nombreSolicitante);
-                    lock (lockCartasRestantes)
-                    {
-                        CartasRestantes--;
-                    }
-                }
-            }
-            catch (Exception excepcion)
-            {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
-            }
-            return true;
-        }
-
-        private string[] ObtenerArchivosCache()
-        {
-            return archivosCache.Value;
-        }
-
-        private async Task<bool> LeerImagenDiscoAsync(string nombreSolicitante)
-        {
-            string[] archivosCache = ObtenerArchivosCache();
-
-            var archivosRestantes = archivosCache.Where(archivo => !ImagenesUsadas.Contains(Path.GetFileNameWithoutExtension(archivo))).ToArray();
-
-            if (archivosRestantes.Length == NO_ARCHIVOS_RESTANTES)
-            {
-                Console.WriteLine($"No quedan imágenes disponibles. Solicitud externa requerida para petion de {nombreSolicitante}");
-                return await SolicitarImagenChatGPTAsync(nombreSolicitante);
-            }
-            string archivoAleatorio = archivosRestantes[random.Next(archivosRestantes.Length)];
-            string nombreSinExtension = Path.GetFileNameWithoutExtension(archivoAleatorio);
-            try
-            {
-                jugadoresCallback.TryGetValue(nombreSolicitante, out IPartidaCallback callback);
-                await lectorDiscoOrquetador.AsignarTrabajoRoundRobinAsync(archivoAleatorio, callback);
-                ImagenesUsadas.Add(nombreSinExtension);
-                Console.WriteLine($"Se asignor {nombreSolicitante} el archivo {nombreSinExtension}");
-                return true;
-            }
-            catch (Exception excepcion)
-            {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
-                await TerminarPartidaAsync();
-                return false;
-            }
-        }
-
-        private async Task<bool> SolicitarImagenChatGPTAsync(string nombreSolicitante)
-        {
-            ImagenPedido64JSON imagenPedido = new ImagenPedido64JSON("Genera una imagen basada en la tematica " + Tematica + " debe ser rectangular y vertical, " +
-                "tiene que ser muy buena por que es para el profe juan carlos");
-            var respuesta = await SolicitarImagen.EjecutarImagenPrompt64JSON(imagenPedido, httpCliente);
-            if (respuesta?.ImagenDatosList != null && respuesta.ImagenDatosList.Any())
-            {
-                var imagenBytes = Convert.FromBase64String(respuesta.ImagenDatosList[0].Base64Imagen);
-                MemoryStream memoryStream = new MemoryStream(imagenBytes);
-                string rutaDestino = Path.Combine(rutaImagenes, $"{Guid.NewGuid()}.jpg");
-                Escritor.EncolarEscritura(memoryStream, rutaDestino);
-                ImagenCarta resultado = new ImagenCarta
-                {
-                    ImagenStream = memoryStream,
-                    IdImagen = Path.GetFileNameWithoutExtension(rutaDestino)
-                };
-                await semaphoreEnviandoImagenDeChatGPT.WaitAsync();
-                try
-                {
-                    jugadoresCallback.TryGetValue(nombreSolicitante, out IPartidaCallback callback);
-
-                    callback?.RecibirImagenCallback(resultado);
-                    return true;
-                }
-                catch (FormatException excepcion)
-                {
-                    ManejadorExcepciones.ManejarFatalException(excepcion);
-                }
-                catch (ArgumentException excepcion)
-                {
-                    ManejadorExcepciones.ManejarFatalException(excepcion);
-                }
-                catch (Exception excepcion)
-                {
-                    ManejadorExcepciones.ManejarFatalException(excepcion);
-                }
-                finally
-                {
-                    semaphoreEnviandoImagenDeChatGPT.Release();
-                }
-            }
-            return false;
-        }
-
-        private string CalcularRutaImagenes(ConfiguracionPartida configuracion)
-        {
-            string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, RUTA_RECURSOS);
-            switch (configuracion.Tematica)
-            {
-                case TematicaPartida.Mixta:
-                    return Path.Combine(ruta, CARPETA_MIXTA);
-                case TematicaPartida.Mitologia:
-                    return Path.Combine(ruta, CARPETA_MITOLOGIA);
-                case TematicaPartida.Animales:
-                    return Path.Combine(ruta, CARPETA_ANIMALES);
-                case TematicaPartida.Paises:
-                    return Path.Combine(ruta, CARPETA_PAISES);
-                default:
-                    return Path.Combine(ruta, CARPETA_MIXTA);
-            }
-        }
-        #endregion Imagenes
-
         #region ManejarEstadoPartida
         private void EnPartidaVacia()
         {
-            partidaVaciaManejadorEvento?.Invoke(this, new PartidaVaciaEventArgs(DateTime.Now, this));
+            PartidaVaciaManejadorEvento?.Invoke(this, new PartidaVaciaEventArgs(DateTime.Now, this));
         }
 
         private void EliminarPartida()
         {
-            IReadOnlyCollection<string> claveJugadores = ObtenerNombresJugadores();
-            foreach (var clave in claveJugadores)
+            try
             {
-                if (jugadoresCallback.ContainsKey(clave))
+                IReadOnlyCollection<string> claveJugadores = ObtenerNombresJugadores();
+                foreach (var clave in claveJugadores)
                 {
-                    ((ICommunicationObject)jugadoresCallback[clave]).Close();
+                    if (jugadoresCallback.ContainsKey(clave))
+                    {
+                        ((ICommunicationObject)jugadoresCallback[clave]).Close();
+                    }
                 }
+                jugadoresCallback.Clear();
+                IReadOnlyCollection<string> claveEventos = ObtenerNombresJugadores();
+                foreach (var clave in claveEventos)
+                {
+                    if (eventosCommunication.ContainsKey(clave))
+                    {
+                        eventosCommunication[clave].Desechar();
+                    }
+                }
+                eventosCommunication.Clear();
+                EnPartidaVacia();
             }
-            jugadoresCallback.Clear();
-            IReadOnlyCollection<string> claveEventos = ObtenerNombresJugadores();
-            foreach (var clave in claveEventos)
+            catch (Exception excepcion)
             {
-                if (eventosCommunication.ContainsKey(clave))
-                {
-                    eventosCommunication[clave].Desechar();
-                }
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
-            eventosCommunication.Clear();
-            lectorDiscoOrquetador.LiberarRecursos();
-            EnPartidaVacia();
         }
 
         #endregion ManejarEstadoPartida
@@ -327,131 +182,171 @@ namespace WcfServicioLibreria.Modelo
         #endregion InicializarPartida
 
         #region ManejoJugadores
-        internal bool AgregarJugador(string nombreJugador, IPartidaCallback nuevoContexto)
+
+
+        private static int tiempoEspera = 0;
+        private static readonly int tiempoMinimo = 16; 
+        private static readonly object lockTiempoEspera = new object();
+
+
+        public async Task<bool> AgregarJugadorAsync(string nombreJugador, IPartidaCallback nuevoContexto)
         {
-            bool resultado = false;
-            jugadoresCallback.AddOrUpdate(nombreJugador, nuevoContexto, (key, oldValue) => nuevoContexto);
-            if (jugadoresCallback.TryGetValue(nombreJugador, out IPartidaCallback contextoCambiado))
+
+            // Espera decreciente al principio del método
+            int esperaActual;
+            lock (lockTiempoEspera)
             {
-                if (ReferenceEquals(nuevoContexto, contextoCambiado))
+                esperaActual = tiempoEspera;
+                if (tiempoEspera > tiempoMinimo)
                 {
-                    eventosCommunication.TryAdd(nombreJugador, new DesconectorEventoManejador((ICommunicationObject)contextoCambiado, this, nombreJugador));
-                    resultado = true;
+                    tiempoEspera += 4; // Reducir tiempo en 2 segundos hasta llegar al mínimo.
                 }
             }
-            return resultado;
+            await Task.Delay(esperaActual * 1000); // Convertir a milisegundos
+
+            await semaphoreAgregarJugador.WaitAsync();
+            try
+            {
+                jugadoresCallback.AddOrUpdate(nombreJugador, nuevoContexto, (key, oldValue) => nuevoContexto);
+
+                if (jugadoresCallback.TryGetValue(nombreJugador, out IPartidaCallback contextoCambiado) &&
+                    ReferenceEquals(nuevoContexto, contextoCambiado))
+                {
+                    eventosCommunication.TryAdd(nombreJugador, new DesconectorEventoManejador((ICommunicationObject)contextoCambiado, this, nombreJugador));
+                    AvisarNuevoJugador(nombreJugador);
+                    ConfirmarInclusionPartida(nuevoContexto);
+                    return true;
+                }
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+                throw new FaultException<PartidaFalla>(new PartidaFalla()
+                {
+                    ErrorAlUnirse = true
+                });
+            }
+            finally
+            {
+                semaphoreAgregarJugador.Release();
+            }
+
+            return false;
         }
 
-        internal async Task AvisarNuevoJugadorAsync(string nombreJugador)
+
+        internal void AvisarNuevoJugador(string nombreJugadorConectandose)
         {
-            DAOLibreria.ModeloBD.Usuario informacionUsuario = usuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
-            bool esInvitado = false;
-            if (informacionUsuario == null)
+
+
+            try
             {
-                await semaphoreLeerFotoInvitado.WaitAsync();
-                try
+                UsuarioDAO consulta = new UsuarioDAO();
+                DAOLibreria.ModeloBD.Usuario informacionUsuarioNuevo = consulta.ObtenerUsuarioPorNombre(nombreJugadorConectandose);
+                bool esInvitado = false;
+
+                if (informacionUsuarioNuevo == null)
                 {
-                    string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, RUTA_RECURSOS, CARPETA_FOTOS_INVITADOS);
-                    var archivos = Directory.GetFiles(ruta, "*.png");
-                    string archivoAleatorio = archivos[random.Next(archivos.Length)];
+                    string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Rutas.RUTA_RECURSOS, Rutas.CARPETA_FOTOS_INVITADOS);
+                    var archivos = Directory.GetFiles(ruta, Rutas.EXTENSION_TODO_ARCHIVO_PNG);
+                    string archivoAleatorio = archivos[aleatorio.Next(archivos.Length)];
                     string nombreSinExtension = Path.GetFileNameWithoutExtension(archivoAleatorio);
                     esInvitado = true;
-                    informacionUsuario = new DAOLibreria.ModeloBD.Usuario
+                    informacionUsuarioNuevo = new DAOLibreria.ModeloBD.Usuario
                     {
-                        gamertag = nombreJugador, 
+                        gamertag = nombreJugadorConectandose,
                         fotoPerfil = File.ReadAllBytes(archivoAleatorio)
                     };
                 }
-                catch (ArgumentNullException excepcion)
+
+                jugadoresInformacion.TryAdd(nombreJugadorConectandose, informacionUsuarioNuevo);
+                Usuario usuario = new Usuario
                 {
-                    ManejadorExcepciones.ManejarFatalException(excepcion);
-                }
-                catch (ArgumentException excepcion)
+                    Nombre = informacionUsuarioNuevo.gamertag,
+                    FotoUsuario = null,
+                    EsInvitado = esInvitado
+                };
+
+                if (jugadoresCallback.TryGetValue(nombreJugadorConectandose, out IPartidaCallback nuevoCallback))
                 {
-                    ManejadorExcepciones.ManejarFatalException(excepcion);
-                }
-                catch (IOException excepcion)
-                {
-                    ManejadorExcepciones.ManejarFatalException(excepcion);
-                }
-                catch (Exception excepcion)
-                {
-                    ManejadorExcepciones.ManejarFatalException(excepcion);
-                }
-                finally
-                {
-                    semaphoreLeerFotoInvitado.Release();
-                }
-            }
-            lock (jugadoresCallback)
-            {
-                lock (jugadoresInformacion)
-                {
-                    jugadoresInformacion.TryAdd(nombreJugador, informacionUsuario);
-                    Usuario usuario = new Usuario
+                    var jugadoresCopia = jugadoresInformacion.Values.ToList();
+                    foreach (var jugadorExistente in jugadoresCopia)
                     {
-                        Nombre = informacionUsuario.gamertag,
-                        FotoUsuario = new MemoryStream(informacionUsuario.fotoPerfil),
-                        EsInvitado = esInvitado
-                    };
-                    if (jugadoresCallback.TryGetValue(nombreJugador, out IPartidaCallback nuevoCallback))
-                    {
-                        foreach (var jugadorExistente in jugadoresInformacion.Values)
+                        Usuario jugador = new Usuario
                         {
-                            Usuario jugador = new Usuario
-                            {
-                                Nombre = jugadorExistente.gamertag,
-                                FotoUsuario = new MemoryStream(jugadorExistente.fotoPerfil)
-                            };
+                            Nombre = jugadorExistente.gamertag,
+                            FotoUsuario = null
+                        };
+
+                        using (var fotoUsuarioExistente = new MemoryStream(jugadorExistente.fotoPerfil))
+                        {
+                            jugador.FotoUsuario = fotoUsuarioExistente;
                             nuevoCallback.ObtenerJugadorPartidaCallback(jugador);
                         }
                     }
+
                     foreach (var jugadorConectado in ObtenerNombresJugadores())
                     {
                         if (jugadoresCallback.TryGetValue(jugadorConectado, out IPartidaCallback callback))
                         {
-                            if (jugadorConectado != nombreJugador)
+                            if (jugadorConectado != nombreJugadorConectandose)
                             {
-                                callback.ObtenerJugadorPartidaCallback(usuario);
+                                using (var fotoUsuarioNuevo = new MemoryStream(informacionUsuarioNuevo.fotoPerfil))
+                                {
+                                    usuario.FotoUsuario = fotoUsuarioNuevo;
+                                    callback.ObtenerJugadorPartidaCallback(usuario);
+                                }
                             }
                         }
                     }
-
                 }
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarFatalException(excepcion);
+                throw;
             }
         }
 
+        internal void ConfirmarInclusionPartida(IPartidaCallback contexto)
+        {
+            try
+            {
+                contexto.IniciarValoresPartidaCallback(true);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarFatalException(excepcion);
+                throw;
+            }
+        }
+
+
+
         private void AvisarRetiroJugador(string nombreUsuarioEliminado)
         {
-            lock (jugadoresCallback)
-            {
-                lock (jugadoresInformacion)
-                {
-                    jugadoresInformacion.TryRemove(nombreUsuarioEliminado, out DAOLibreria.ModeloBD.Usuario usuarioEliminado);
-                    if (usuarioEliminado != null)
-                    {
-                        Usuario usuario = new Usuario
-                        {
-                            Nombre = usuarioEliminado.gamertag
-                        };
-                        foreach (var nombreJugador in ObtenerNombresJugadores())
-                        {
-                            jugadoresCallback.TryGetValue(nombreJugador, out IPartidaCallback callback);
-                            if (callback != null)
-                            {
-                                try
-                                {
-                                    callback.EliminarJugadorPartidaCallback(usuario);
 
-                                }
-                                catch (Exception)
-                                {
-                                }
-                            }
+            jugadoresInformacion.TryRemove(nombreUsuarioEliminado, out DAOLibreria.ModeloBD.Usuario usuarioEliminado);
+            if (usuarioEliminado != null)
+            {
+                Usuario usuario = new Usuario
+                {
+                    Nombre = usuarioEliminado.gamertag
+                };
+                foreach (var nombreJugador in ObtenerNombresJugadores())
+                {
+                    jugadoresCallback.TryGetValue(nombreJugador, out IPartidaCallback callback);
+                    if (callback != null)
+                    {
+                        try
+                        {
+                            callback.EliminarJugadorPartidaCallback(usuario);
+
+                        }
+                        catch (Exception)
+                        {
                         }
                     }
-
-
                 }
             }
         }
@@ -470,22 +365,18 @@ namespace WcfServicioLibreria.Modelo
                 jugadoresCallback.TryRemove(nombreJugador, out IPartidaCallback _);
                 eventosCommunication.TryRemove(nombreJugador, out DesconectorEventoManejador eventosJugador);
                 jugadoresInformacion.TryRemove(nombreJugador, out _);
-
                 eventosJugador?.Desechar();
-
                 if (ContarJugadores() == NUM_JUGADOR_PARTIDA_VACIA)
                 {
                     try
                     {
-                        cancelacionEjecucionRonda.Cancel();
-
+                        cancelacionEjecucionRonda?.Cancel();
                     }
                     catch (Exception excepcion)
                     {
                         ManejadorExcepciones.ManejarErrorException(excepcion);
-                    }                    
+                    }
                     EliminarPartida();
-                    lectorDiscoOrquetador.LiberarRecursos();
                 }
             }
             finally
@@ -493,7 +384,6 @@ namespace WcfServicioLibreria.Modelo
                 semaphoreRemoverJugador.Release();
             }
         }
-
         private IReadOnlyCollection<string> ObtenerNombresJugadores()
         {
             return jugadoresCallback.Keys.ToList().AsReadOnly();
@@ -504,19 +394,7 @@ namespace WcfServicioLibreria.Modelo
             return jugadoresCallback.Count;
         }
 
-        internal void ConfirmarInclusionPartida(IPartidaCallback contexto)
-        {
-            try
-            {
-                contexto.IniciarValoresPartidaCallback(true);
-            }
-            catch (Exception excepcion)
-            {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
-
-            };
-        }
-
+        
         #endregion ManejoJugadores
 
         #endregion Metodos

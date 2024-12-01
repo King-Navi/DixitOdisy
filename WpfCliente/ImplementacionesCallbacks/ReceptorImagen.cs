@@ -1,0 +1,173 @@
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using System.ServiceModel;
+using System.Text;
+using System.Threading.Tasks;
+using WpfCliente.ServidorDescribelo;
+using WpfCliente.Utilidad;
+
+namespace WpfCliente.ImplementacionesCallbacks
+{
+    [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Single)]
+    public class ReceptorImagen : IServicioImagenCallback
+    {
+        private readonly object lockImagenCartasMazo = new object();
+        private CollecionObservableSeguraHilos<ImagenCarta> imagenCartasMazo = new CollecionObservableSeguraHilos<ImagenCarta>();
+        public CollecionObservableSeguraHilos<ImagenCarta> ImagenCartasMazo
+        {
+            get
+            {
+                lock (lockImagenCartasMazo)
+                {
+                    return imagenCartasMazo;
+                }
+            }
+            set
+            {
+                lock (lockImagenCartasMazo)
+                {
+                    imagenCartasMazo = value;
+                }
+            }
+        }
+
+        private readonly object lockImagenCartasTodos = new object();
+        private CollecionObservableSeguraHilos<ImagenCarta> imagenCartasTodos = new CollecionObservableSeguraHilos<ImagenCarta>();
+        public CollecionObservableSeguraHilos<ImagenCarta> ImagenCartasTodos
+        {
+            get
+            {
+                lock (lockImagenCartasTodos)
+                {
+                    return imagenCartasTodos;
+                }
+            }
+            set
+            {
+                lock (lockImagenCartasTodos)
+                {
+                    imagenCartasTodos = value;
+                }
+            }
+        }
+        private readonly object bloquedoImagen = new object();
+        private readonly object lockCantidad = new object();
+
+        private ServicioImagenClient imagen;
+        public ServicioImagenClient Imagen
+        {
+            get
+            {
+                lock (bloquedoImagen)
+                {
+                    if (imagen == null 
+                        || (imagen.State != CommunicationState.Opened && imagen.State != CommunicationState.Opening))
+                    {
+                        if (imagen != null)
+                        {
+                            try
+                            {
+                                imagen.Close();
+                            }
+                            catch (Exception excepcion)
+                            {
+                                imagen.Abort();
+                                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                            }
+                        }
+                        AbrirConexionImagen();
+                    }
+
+                    return imagen;
+                }
+            }
+            set
+            {
+                lock (bloquedoImagen)
+                {
+                    imagen = value;
+                }
+            }
+        }
+
+        public ReceptorImagen()
+        {
+            AbrirConexionImagen();
+        }
+        public bool AbrirConexionImagen()
+        {
+            try
+            {
+                Imagen = null;
+                Imagen = new ServicioImagenClient(new InstanceContext(this));
+                return true;
+            }
+            catch (Exception excepcion)
+            {
+                CerrarConexionImagen();
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                return false;
+            }
+
+        }
+
+        public bool CerrarConexionImagen()
+        {
+            lock (bloquedoImagen) 
+            {
+                try
+                {
+                    if (imagen != null)
+                    {
+                        imagen.Close();
+                        imagen = null;
+                        return true;
+                    }
+                }
+                catch (Exception excepcion)
+                {
+                    imagen = null;
+                    imagen.Abort();
+                    ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                }
+                return false;
+            }
+        }
+
+        public void RecibirGrupoImagenCallback(ImagenCarta imagen)
+        {
+            if (imagen == null)
+            {
+                return;
+            }
+            ImagenCartasTodos.Add(imagen);
+        }
+
+        public void RecibirImagenCallback(ImagenCarta imagen)
+        {
+            if (imagen == null)
+            {
+                return;
+            }
+            ImagenCartasMazo.Add(imagen);
+        }
+
+        public int ObtenerCantidadCartasMazo()
+        {
+            lock (lockCantidad)
+            {
+                return ImagenCartasMazo.Count;
+            }
+        }
+
+        public int ObtenerCantidadCartasTodos()
+        {
+            lock (lockCantidad)
+            {
+                return ImagenCartasTodos.Count;
+            }
+        }
+    }
+}

@@ -95,6 +95,7 @@
   <ItemGroup>
     <Compile Include="Contratos\IServicioCorreo.cs" />
     <Compile Include="Contratos\IServicioEstadisticas.cs" />
+    <Compile Include="Contratos\IServicioImagen.cs" />
     <Compile Include="Contratos\IServicioInvitacionPartida.cs" />
     <Compile Include="Contratos\IServicioPartida.cs" />
     <Compile Include="Contratos\IServicioAmistad.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="Manejador\Chat.cs" />
     <Compile Include="Manejador\Correo.cs" />
     <Compile Include="Manejador\Estadisticas.cs" />
+    <Compile Include="Manejador\Imagen.cs" />
     <Compile Include="Manejador\InvitacionPartida.cs" />
     <Compile Include="Manejador\Partida.cs" />
     <Compile Include="Manejador\PartidaSesion.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="Enumerador\Enumerador.cs" />
     <Compile Include="Modelo\Evento\MultiChatVacioEventArgs.cs" />
     <Compile Include="Modelo\Evento\PartidaVaciaEventArgs.cs" />
+    <Compile Include="Modelo\Evento\RondaEventArgs.cs" />
     <Compile Include="Modelo\Evento\SalaVaciaEventArgs.cs" />
     <Compile Include="Modelo\Evento\UsuarioDesconectadoEventArgs.cs" />
     <Compile Include="InicializadorConfiguracion.cs" />
@@ -129,6 +132,7 @@
     <Compile Include="Manejador\ChatMotor.cs" />
     <Compile Include="Manejador\Usuario.cs" />
     <Compile Include="Modelo\Amistad\Amigo.cs" />
+    <Compile Include="Modelo\Excepciones\SalaFalla.cs" />
     <Compile Include="Modelo\Excepciones\ServidorFalla.cs" />
     <Compile Include="Modelo\Excepciones\SolicitudAmistadFalla.cs" />
     <Compile Include="Modelo\Evento\DesconectorEventoManejador.cs" />
@@ -146,6 +150,8 @@
     <Compile Include="Modelo\Partida\JugadorEstadisticasBase.cs" />
     <Compile Include="Modelo\Partida\LectorDiscoOrquestador.cs" />
     <Compile Include="Modelo\Partida\LecturaTrabajo.cs" />
+    <Compile Include="Modelo\Partida\ManejadorImagen.cs" />
+    <Compile Include="Modelo\Partida\MediadorPartida.cs" />
     <Compile Include="Modelo\Partida\PartidaGestorRondas.cs" />
     <Compile Include="Modelo\Partida\ICondicionVictoria.cs" />
     <Compile Include="Modelo\Partida\ImagenCarta.cs" />
@@ -161,9 +167,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilidades\ContextoOperacion.cs" />
     <Compile Include="Utilidades\IContextoOperacion.cs" />
+    <Compile Include="Utilidades\ILectorDiscoOrquestador.cs" />
+    <Compile Include="Utilidades\IManejadorImagen.cs" />
+    <Compile Include="Utilidades\IMediadorImagen.cs" />
     <Compile Include="Utilidades\IObservador.cs" />
     <Compile Include="Utilidades\LoggerManejador.cs" />
     <Compile Include="Utilidades\ManejadorExcepciones.cs" />
+    <Compile Include="Utilidades\Rutas.cs" />
     <Compile Include="Utilidades\Utilidad.cs" />
   </ItemGroup>
   <ItemGroup>

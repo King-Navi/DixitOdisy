@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfCliente.GUI"
         mc:Ignorable="d"
-        Height="770" Width="1200">
+        Height="770" Width="1200" Unloaded="CerrandoPage">
 
     <Page.Background>
         <ImageBrush ImageSource="/Recursos/fondoMenu.png" Stretch="Fill"/>
@@ -35,7 +35,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <StackPanel x:Name="stackPaneManeSuperiorDerecho" Grid.Row="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                 <Button x:Name="buttonAbrirEstadisticas" Width="50" Height="50" VerticalAlignment="Top" Margin="0,15,15,0" Click="ClicButtonAbrirEstadisticas">
                     <Button.Template>
                         <ControlTemplate TargetType="{x:Type Button}">
@@ -93,7 +93,7 @@
 
                     <Button x:Name="buttonUniserSala" Content="Unirse a sala de espera" FontFamily="ROG Fonts" 
                         Background="#E0DCC7" Foreground="Black" BorderThickness="4" BorderBrush="Black" 
-                        FontSize="24" Margin="10,5,10,10" Click="ClicButtonUnirseSala" />
+                        FontSize="24" Margin="10,5,10,10" Click="ClicButtonUnirseSalaAsync" />
                 </StackPanel>
 
             </StackPanel>

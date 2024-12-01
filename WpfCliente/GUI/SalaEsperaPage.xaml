@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfCliente.GUI"
         mc:Ignorable="d"
         Title="SalaEspera" MinWidth="1200" MinHeight="770" 
-        VerticalAlignment="Center" >
+        VerticalAlignment="Center" Unloaded="CerrandoPage" >
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="pack://application:,,,/WpfCliente;component/Recursos/fondoSala.png" Stretch="Fill"/>
@@ -26,7 +26,7 @@
 
         <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="701" Width="300">
             <Label x:Name="labelUsuariosLobby" Content="Usuarios en el lobby" FontFamily="Lucida Sans Unicode" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Background="#FFD8D2AB"/>
-            <local:ListaUsuariosSalaUserControl Height="692" />
+            <local:ListaUsuariosSalaUserControl x:Name="listaUsuarioSalaUserControl" Height="692" />
         </StackPanel>
 
         <StackPanel x:Name="stackPanePartida" Visibility="Visible" Orientation="Vertical" Background="Coral" HorizontalAlignment="Right" VerticalAlignment="Top"  Width="223" Margin="0,400,100,0">

@@ -8,7 +8,9 @@
         mc:Ignorable="d"
          MinHeight="670" MinWidth="520"
         Title="Partida" Height="683" Width="1131">
-    <Grid x:Name="gridPantalla1">
+
+    <Grid>
+
         <Grid>
             <Grid.Style>
                 <Style TargetType="Grid">
@@ -23,7 +25,7 @@
             <local:InicioRondaUserControl></local:InicioRondaUserControl>
         </Grid>
 
-        <Grid x:Name="gridPantalla2">
+        <Grid x:Name="gridPantallaCartaMazo">
             <Grid.Style>
                 <Style TargetType="Grid">
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -36,7 +38,7 @@
             </Grid.Style>
         </Grid>
 
-        <Grid x:Name="gridPantalla3" Background="Pink">
+        <Grid x:Name="gridPantallaCartasNarrador" Background="Pink">
             <Grid.Style>
                 <Style TargetType="Grid">
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -49,7 +51,7 @@
             </Grid.Style>
         </Grid>
 
-        <Grid x:Name="gridPantalla4" Background="Pink">
+        <Grid x:Name="gridPantallaTodasCartas" Background="Pink">
             <Grid.Style>
                 <Style TargetType="Grid">
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -62,7 +64,7 @@
             </Grid.Style>
         </Grid>
 
-        <Grid x:Name="gridPantalla5" Background="Pink">
+        <Grid x:Name="gridPantallaResumenRonda" Background="Pink">
             <Grid.Style>
                 <Style TargetType="Grid">
                     <Setter Property="Visibility" Value="Collapsed" />
@@ -108,8 +110,10 @@
                 <Button Height="80" Width="180" Content="SIMULACION pool cartas" Margin="941,450,10,137" Click="BORRAME_SImulacionCambioRonda"></Button>
                 <Button Height="80" Width="180" Content="SIMULACION soy jugador" Margin="951,334,0,253" Click="BORRAME_SImulacionCambioRondaSoyJugador"></Button>
                 <Button Height="80" Width="180" Content="SIMULACION soy narrador" Margin="951,217,0,370" Click="BORRAME_SImulacionCambioRondaSoyNarrador"></Button>
-                <Button Height="80" Width="180" Content="SIMULACION solictaImagen" Margin="951,96,0,491" Click="BORRAME_SImulacionSolicitarImagen"></Button>
-        </Grid>
+                <Button x:Name="buttonSolicitarImagen" Height="80" Width="180" d:Content="Solicitar imagen" Margin="27,576,924,27" Click="ClicButtonSolicitarImagenAsync"></Button>
+        <Image x:Name="imagenFlechaAtras" Source="/Recursos/flechaAtras.png" Margin="10,0,0,0" Cursor="Hand" MouseLeftButtonDown="ClicImagenFlechaAtras" Width="78" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
+    </Grid>
 
 
 

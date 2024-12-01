@@ -295,7 +295,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Rechazar.
+        ///   Looks up a localized string similar to Rechazar.
         /// </summary>
         public static string buttonRechazar {
             get {
@@ -345,6 +345,15 @@ namespace WpfCliente.Properties {
         public static string buttonSeleccionarIdioma {
             get {
                 return ResourceManager.GetString("buttonSeleccionarIdioma", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Solicitar imagen.
+        /// </summary>
+        public static string buttonSolicitarImagen {
+            get {
+                return ResourceManager.GetString("buttonSolicitarImagen", resourceCulture);
             }
         }
         
@@ -880,20 +889,20 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Los campos que ingresaste son inválidos.
-        /// </summary>
-        public static string mensajeCamposInvalidos {
-            get {
-                return ResourceManager.GetString("mensajeCamposInvalidos", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a No se pueden dejar campos vacíos.
+        ///   Looks up a localized string similar to Los campos introducidos no son valido, reviselos.
         /// </summary>
         public static string mensajeCamposIntroducidosInvalidos {
             get {
                 return ResourceManager.GetString("mensajeCamposIntroducidosInvalidos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Los campos que ingresaste son inválidos.
+        /// </summary>
+        public static string mensajeCamposInvalidos {
+            get {
+                return ResourceManager.GetString("mensajeCamposInvalidos", resourceCulture);
             }
         }
         
@@ -1033,6 +1042,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No te has podido unir a la partida, favor de revisar tu conexion.
+        /// </summary>
+        public static string mensajeErrorUnirsePartida {
+            get {
+                return ResourceManager.GetString("mensajeErrorUnirsePartida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Escogiendo narrador....
         /// </summary>
         public static string mensajeEscogiendoNarrador {
@@ -1105,7 +1123,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Invitación a partida de: .
+        ///   Looks up a localized string similar to Invitación a partida de: .
         /// </summary>
         public static string mensajeInvitacionPartida {
             get {
@@ -1186,7 +1204,16 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Necesitas reiniciar, porfavor vuelva a iniciar sesion..
+        ///   Looks up a localized string similar to La sala a la que te intentas unir ya esta llena y no aceptan mas personas.
+        /// </summary>
+        public static string mensajeSalaLlena {
+            get {
+                return ResourceManager.GetString("mensajeSalaLlena", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Necesitas reiniciar, porfavor vuelva a iniciar sesion..
         /// </summary>
         public static string mensajeSeNecesitaReiniciar {
             get {
@@ -1195,7 +1222,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El servidor no se encuentra disponible.
+        ///   Looks up a localized string similar to El servidor no se encuentra disponible.
         /// </summary>
         public static string mensajeServidorNoDisponible {
             get {
@@ -1375,7 +1402,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Campos inválidos.
+        ///   Looks up a localized string similar to Campos inválidos.
         /// </summary>
         public static string tituloCamposInvalidos {
             get {
@@ -1384,7 +1411,7 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a No se pudieron cargar los datos.
+        ///   Looks up a localized string similar to No se pudieron cargar los datos.
         /// </summary>
         public static string tituloCargarAmigosFalla {
             get {
@@ -1461,6 +1488,15 @@ namespace WpfCliente.Properties {
         public static string tituloErrorServidor {
             get {
                 return ResourceManager.GetString("tituloErrorServidor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error al unirse.
+        /// </summary>
+        public static string tituloErrorUnirsePartida {
+            get {
+                return ResourceManager.GetString("tituloErrorUnirsePartida", resourceCulture);
             }
         }
         
@@ -1668,6 +1704,15 @@ namespace WpfCliente.Properties {
         public static string tituloSalaEspera {
             get {
                 return ResourceManager.GetString("tituloSalaEspera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sala de espera llena.
+        /// </summary>
+        public static string tituloSalaLlena {
+            get {
+                return ResourceManager.GetString("tituloSalaLlena", resourceCulture);
             }
         }
         

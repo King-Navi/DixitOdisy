@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
@@ -12,11 +13,11 @@ namespace WpfCliente.GUI
     {
         public ObservableCollection<ImagenCarta> Imagenes { get; set; }
 
-        public NarradorSeleccionCartaUserControl(ObservableCollection<ImagenCarta> imagenes)
+        public NarradorSeleccionCartaUserControl()
         {
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento; 
-            Imagenes = imagenes;
+            Imagenes = SingletonGestorImagenes.Instancia.imagnesMazo.ImagenCartasMazo;
             this.Loaded += LoadedNarradorSeleccionCartaUsercontrol;
             DataContext = this;
 

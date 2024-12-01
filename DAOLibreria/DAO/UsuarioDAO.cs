@@ -12,6 +12,7 @@ namespace DAOLibreria.DAO
     public class UsuarioDAO : IUsuarioDAO
     {
         private const string PALABRA_RESERVADA_GUEST = "guest";
+        private const string PALABRA_RESERVADA_EL_INNOMBRABLE = "elrevo";
         private const string TABLA_USUARIO = "Usuario";
 
         public bool RegistrarNuevoUsuario(Usuario _usuario, UsuarioCuenta _usuarioCuenta)
@@ -23,7 +24,7 @@ namespace DAOLibreria.DAO
             }
             VerificarNombreUnico(_usuario.gamertag);
             VerificarNombreUnico(_usuarioCuenta.gamertag);
-
+            
             if (_usuario.gamertag != _usuarioCuenta.gamertag)
             {
                 return resultado;
@@ -355,6 +356,18 @@ namespace DAOLibreria.DAO
                 ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             return resultado;
+        }
+
+        private void NombresProhibidos(string nombre)
+        {
+            if (String.IsNullOrEmpty(nombre) || nombre.ToLower().Contains(PALABRA_RESERVADA_GUEST))
+            {
+                throw new ArgumentException();
+            }
+            if (String.IsNullOrEmpty(nombre) || nombre.ToLower().Contains(PALABRA_RESERVADA_EL_INNOMBRABLE))
+            {
+                throw new ArgumentException();
+            }
         }
     }
 }

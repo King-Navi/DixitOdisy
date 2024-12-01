@@ -1,8 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
@@ -43,9 +45,6 @@ namespace WpfCliente.GUI
             }
         }
 
-        public ObservableCollection<Usuario> JugadorEstadisticas { get; set; }
-        public ObservableCollection<string> Podio { get; set; }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -55,34 +54,16 @@ namespace WpfCliente.GUI
 
         public ResumenRondaUserControl()
         {
+            SingletonPartida.Instancia.EstadisticasEnviadas += MostrarPodio; 
             InitializeComponent();
             DataContext = this;
         }
-        public ResumenRondaUserControl(ObservableCollection<Usuario> listaJugadores, ObservableCollection<string> podio)
+
+        private void MostrarPodio()
         {
-            InitializeComponent();
-            DataContext = this;
-            JugadorEstadisticas = listaJugadores;
-            Podio = podio;
-        }
-        public void MostrarEnPodio(Usuario primerLugar, Usuario segundoLugar, Usuario tercerLugar)
-        {
-            Window window = Window.GetWindow(this);
-            if (primerLugar != null)
-            {
-                Podio[0] = primerLugar?.Nombre ?? Properties.Idioma.labelNoHayPrimerLugar;
-                PrimerLugar = Imagen.EsImagenValida(primerLugar.FotoUsuario, window) ? primerLugar : null; 
-            }
-            if (segundoLugar != null)
-            {
-                Podio[1] = segundoLugar?.Nombre ?? Properties.Idioma.labelNoHaySegundoLugar;
-                SegundoLugar = Imagen.EsImagenValida(segundoLugar.FotoUsuario, window) ? segundoLugar : null; 
-            }
-            if (tercerLugar != null)
-            {
-                Podio[2] = tercerLugar?.Nombre ?? Properties.Idioma.labelNoHayTercerLugar;
-                TercerLugar = Imagen.EsImagenValida(tercerLugar.FotoUsuario, window) ? tercerLugar : null; 
-            }
+            PrimerLugar = SingletonPartida.Instancia.PrimerLugar;
+            SegundoLugar = SingletonPartida.Instancia.SegundoLugar;
+            TercerLugar = SingletonPartida.Instancia.TercerLugar;
         }
     }
 }

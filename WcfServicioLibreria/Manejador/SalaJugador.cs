@@ -1,7 +1,10 @@
 ﻿using System;
+using System.ServiceModel;
+using System.Threading;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
+using WcfServicioLibreria.Modelo.Excepciones;
 using WcfServicioLibreria.Modelo.Vetos;
 using WcfServicioLibreria.Utilidades;
 
@@ -28,33 +31,61 @@ namespace WcfServicioLibreria.Manejador
             return false;
         }
 
-        public async Task AgregarJugadorSalaAsync(string gamertag, string idSala)
+        public async Task<bool> AgregarJugadorSalaAsync(string gamertag, string idSala)
         {
+
             if (!ValidarSala(idSala))
             {
-                return;
+                return false;
             }
             try
             {
                 ISalaJugadorCallback contexto = contextoOperacion.GetCallbackChannel<ISalaJugadorCallback>();
                 salasDiccionario.TryGetValue(idSala, out Modelo.Sala sala);
-                lock (sala)
+                var cantidadJugadores = sala.ObtenerNombresJugadoresSala().Count;
+                int disponible = sala.sePuedeUnir;
+                EvaluarDisponibilidad(cantidadJugadores , disponible );
+                foreach (var nombreJugadorEnSala in sala.ObtenerNombresJugadoresSala())
                 {
-                    foreach (var nombreJugadorEnSala in sala.ObtenerNombresJugadoresSala())
+                    if (nombreJugadorEnSala.Equals(gamertag, StringComparison.OrdinalIgnoreCase))
                     {
-                        if (nombreJugadorEnSala.Equals(gamertag, StringComparison.OrdinalIgnoreCase))
-                        {
-                            return;
-                        }
+                        return false;
                     }
-                    sala.AgregarJugadorSala(gamertag, contexto);
                 }
+                sala.AgregarInformacionJugadorSala(gamertag, contexto);
                 await sala.AvisarNuevoJugador(gamertag);
-
+                return true;
+            }
+            catch (FaultException<SalaFalla> excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+                throw new FaultException<SalaFalla>(new SalaFalla()
+                {
+                    EstaLlena = true
+                });
             }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            return false;
+        }
+
+        private void EvaluarDisponibilidad(int cantidadJugadores, int disponible)
+        {
+            if (cantidadJugadores >= Sala.CANTIDAD_MAXIMA_JUGADORES)
+            {
+                throw new FaultException<SalaFalla>(new SalaFalla()
+                {
+                    EstaLlena = true
+                });
+            }
+            if (disponible == Sala.NO_UNISER)
+            {
+                throw new FaultException<SalaFalla>(new SalaFalla()
+                {
+                    EstaLlena = true
+                });
             }
         }
 

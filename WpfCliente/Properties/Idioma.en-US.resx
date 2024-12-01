@@ -673,4 +673,19 @@
   <data name="mensajeNoAutoExpulsion" xml:space="preserve">
     <value>You can't expel yourself</value>
   </data>
+  <data name="tituloSalaLlena" xml:space="preserve">
+    <value>The lobby is full</value>
+  </data>
+  <data name="mensajeSalaLlena" xml:space="preserve">
+    <value>The room you are trying to join is already full and they are not accepting more people.</value>
+  </data>
+  <data name="mensajeErrorUnirsePartida" xml:space="preserve">
+    <value>You have not been able to join the game, please check your connection</value>
+  </data>
+  <data name="tituloErrorUnirsePartida" xml:space="preserve">
+    <value>Join error</value>
+  </data>
+  <data name="buttonSolicitarImagen" xml:space="preserve">
+    <value>Request image</value>
+  </data>
 </root>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -102,7 +103,9 @@ namespace WpfCliente.GUI
                 bool yaInicioSesion = servicio.YaIniciadoSesion(textBoxUsuario.Text);
                 if (yaInicioSesion)
                 {
-                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSesionIniciada, Properties.Idioma.mensajeSesionIniciada, Window.GetWindow(this));
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSesionIniciada, 
+                        Properties.Idioma.mensajeSesionIniciada, 
+                        Window.GetWindow(this));
                 }
                 else
                 {
@@ -111,7 +114,9 @@ namespace WpfCliente.GUI
                         BitmapImage imagenUsuario = Imagen.ConvertirStreamABitmapImagen(resultadoUsuario.FotoUsuario);
                         if (imagenUsuario == null)
                         {
-                            VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, Properties.Idioma.mensajeImagenInvalida, Window.GetWindow(this));
+                            VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, 
+                                Properties.Idioma.mensajeImagenInvalida, 
+                                Window.GetWindow(this));
                         }
                         else
                         {
@@ -127,6 +132,13 @@ namespace WpfCliente.GUI
             {
                 EvaluarExcepcion(veto);
                 return ;
+            }
+            catch (ArgumentException excepcion)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
+                                Properties.Idioma.mensajeImagenInvalida,
+                                Window.GetWindow(this));
+                return;
             }
             catch (Exception excepcion)
             {
@@ -157,6 +169,10 @@ namespace WpfCliente.GUI
 
         private void ConfigurarSingletonConUsuario(Usuario usuario, BitmapImage imagenUsuario)
         {
+            if (usuario == null || imagenUsuario == null)
+            {
+                throw new ArgumentNullException("El usuario o la imagen no pueden ser nulos.");
+            }
             SingletonCliente.Instance.NombreUsuario = textBoxUsuario.Text;
             SingletonCliente.Instance.IdUsuario = usuario.IdUsuario;
             SingletonCliente.Instance.FotoJugador = imagenUsuario;
@@ -200,14 +216,22 @@ namespace WpfCliente.GUI
             {
                 return;
             }
-            SalaEsperaPage ventanaSala = new SalaEsperaPage(idSala);
-            var resultado = SingletonGestorVentana.Instancia.NavegarA(ventanaSala);
-            if (!resultado)
+            try
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, Window.GetWindow(this));
-                SingletonGestorVentana.Instancia.NavegarA(new IniciarSesionPage());
-                return;
+                SalaEsperaPage ventanaSala = new SalaEsperaPage(idSala);
+                var resultado = SingletonGestorVentana.Instancia.NavegarA(ventanaSala);
+                if (!resultado)
+                {
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, Window.GetWindow(this));
+                    SingletonGestorVentana.Instancia.NavegarA(new IniciarSesionPage());
+                    return;
+                }
             }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorExcepcion(excepcion, Window.GetWindow(this));
+            }
+            
         }
 
         [DebuggerStepThrough]

@@ -13,12 +13,23 @@ namespace WcfServicioLibreria.Manejador
     {
         internal void BorrarSala(object sender, EventArgs e)
         {
-            if (sender is Sala sala)
+            try
             {
-                SalaVaciaEventArgs evento = e as SalaVaciaEventArgs;
-                sala.salaVaciaManejadorEvento -= BorrarSala;
-                salasDiccionario.TryRemove(evento.Sala.IdCodigoSala, out _);    
-                Console.WriteLine($"La sala con ID {evento.Sala.IdCodigoSala} está vacía y será eliminada.");
+                if (sender is Sala sala)
+                {
+                    SalaVaciaEventArgs evento = e as SalaVaciaEventArgs;
+                    sala.salaVaciaManejadorEvento -= BorrarSala;
+                    salasDiccionario.TryRemove(evento.Sala.IdCodigoSala, out _);
+                    Console.WriteLine($"La sala con ID {evento.Sala.IdCodigoSala} está vacía y será eliminada.");
+                }
+            }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarFatalException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarFatalException(excepcion);
             }
         }
        

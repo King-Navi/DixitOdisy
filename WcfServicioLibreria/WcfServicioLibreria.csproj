@@ -193,7 +193,16 @@
   <ItemGroup>
     <Content Include="Librerias\ChatGPTLibreria.dll" />
     <Content Include="Librerias\Newtonsoft.Json.dll" />
+    <Content Include="Recursos\Animales\014fb6b8-d343-48af-a37f-39ffef5ae38a.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\07564779-a639-4bed-b39b-7f61e2d696ee.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Animales\0b7806d1-133c-42f2-9c46-cb4021a35748.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\0d247f6e-152c-4c1c-8c0d-e230689f6725.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Animales\10615ce2-bd46-45cc-aa80-f9ddd85731fe.jpg">
@@ -205,28 +214,73 @@
     <Content Include="Recursos\Animales\1333c339-4c95-42ca-b418-d755f309ceca.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Animales\144a1751-172f-4968-a5f0-f4e5494be13f.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\17c971a7-fb26-4234-bf48-f6d3df3adcf1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Animales\22537de3-7592-4fb6-865f-05e69bf334a4.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\22cc356e-0ae3-4a36-bc1c-f64c16144250.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Animales\2722b3d6-d298-4325-a3c8-08e821de5284.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Animales\2817e55e-6844-42d7-bf75-aac4559c4d49.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Animales\2bbd340a-5243-417e-983b-b8174e8e50be.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\2cbec1fd-378f-4c20-8930-06933156be7a.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Animales\31765347-d928-4f8c-8550-eaa97e01aa7b.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Animales\336ffb65-1cf2-414f-9023-daac2a1e9729.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\383d4c6f-0b68-4355-9aeb-d37ad86f2d83.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\3a22ff94-2fd5-47f7-b27a-fc5831520cd8.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Animales\3aeea086-e8cb-4cf9-9218-fca479ba7e0c.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Animales\442de260-5869-4200-bef5-3596f0418b04.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Animales\4a090d09-92e6-4104-b469-b776d82c2558.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\4e0a6bd6-d06c-491e-b556-625adf5eaeb6.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\53797d9d-6ce0-450e-8552-7c741ad614ad.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Animales\5a838d02-4821-4014-9005-0aeaca377bc6.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Animales\5b91c50f-13fc-4f04-b0d9-456a00941aee.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\5c50248a-f342-4615-b5c6-e3596b6d1027.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\5f642d66-69ff-447f-a4b0-11d171417194.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\666fdf14-79a4-4154-b5de-342632e7c576.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\70560b43-6f0a-49c8-8fab-8fa7da9f6f0d.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Animales\76389fa1-e2d0-4c13-a4fe-259f2f7fe7ec.jpg">
@@ -238,7 +292,19 @@
     <Content Include="Recursos\Animales\7c8ca7b6-ffcc-4768-ac78-fde534a30614.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Animales\89bc9a9b-5b2a-4628-a3fd-12816810dfb0.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\89dceff3-e4e2-4257-80f6-ab1e989b7cc1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\8ad4c031-8113-431c-837b-7ecaba78f2b8.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Animales\9295fa23-c467-43aa-98ff-8cbdbea5d3da.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\95af4aea-7cb2-4f34-87c7-98893406e52d.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Animales\9cd586f9-1662-451e-b055-2c6cb3044e4b.jpg">
@@ -250,16 +316,46 @@
     <Content Include="Recursos\Animales\a0520453-4ce5-426c-abc7-e487818e831b.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Animales\a0a19740-5637-4c59-9d47-d766cb49f721.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\a31a4274-45bd-4009-821f-cfa76cf8bed5.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\a6ab158c-d5ab-4c8c-85e6-d433a13e2767.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Animales\a9c77ba3-8475-44f4-af24-7f2f6a073ef0.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Animales\ad6d2664-ac8d-41f0-bf50-e2bbe392b707.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Animales\b2abbf6f-68ed-4ec0-b676-7008ef735a4d.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\b42b0bc2-2d3f-4fba-84a9-11a50c5fbd68.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\b5193a1c-51f6-4af8-84e0-edd9562cdf52.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\b6eef546-50b7-49c8-a8a3-fa709b574159.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\b8bd7f44-757d-42db-8d4f-f02d7db53d2c.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Animales\cc01114a-92f4-498f-9bfc-91918c879d18.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Animales\cdfc2a19-0b48-42ed-bce7-6e529aaa6fc5.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\dcf56e8e-40a3-4be6-abf9-031e81f95831.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\df09a983-600b-435b-8a22-ef8073e507a0.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Animales\e2afc4b4-d047-4e6a-9757-9a72dc94e174.jpg">
@@ -269,6 +365,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Animales\f882ac99-c7ed-45bd-a9ef-3e9737417e55.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Animales\fa174872-8ce0-47f7-b5a6-a38cca895701.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Espacio\0ad5473f-f3cc-490e-a858-395a61b0dd4d.jpg">

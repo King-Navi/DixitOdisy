@@ -271,6 +271,9 @@
     <Content Include="Recursos\Animales\f882ac99-c7ed-45bd-a9ef-3e9737417e55.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Espacio\0ad5473f-f3cc-490e-a858-395a61b0dd4d.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Espacio\10ad2b51-4578-4fef-98f9-ae66cc399be3.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -281,6 +284,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Espacio\1d15b4f7-2fdd-4049-ace1-1ce3db496e0e.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\28ceb3a2-57ec-447f-baac-a896561303e8.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\2da95d7d-4d64-4c5b-ac09-b85838edfcbb.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\381a3b72-9b50-41f9-ac62-8e64d0954cd8.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Espacio\410c0880-b276-4879-8c98-2c7d23ff3ca4.jpg">
@@ -295,10 +307,31 @@
     <Content Include="Recursos\Espacio\4aeed03d-301f-45e0-8ff1-c5744626a536.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Espacio\4c50edfd-505d-454b-97aa-c4cbf2ed9b43.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\4f5de3b6-2164-4148-8c0a-c80bfd94f259.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Espacio\57afe8be-62e6-4b68-95a6-1c8450e4d546.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Espacio\590cf987-c171-4ee5-8ff1-e81f35463a0f.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Espacio\5efa7734-bd8c-48c8-8e85-499b20ab2c43.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\639f4ca2-e73a-4697-a965-0534e767fdf5.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\8c9d4bb1-579f-47ff-a5d6-b570570af17f.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\95f4e55a-01ce-4a2a-adc1-207cc81c3f02.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\a175b08c-6a2b-4f72-bdb8-45b8793667fa.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Espacio\a95ab678-fbb1-420d-a3d2-89cc76960ecc.jpg">
@@ -310,13 +343,28 @@
     <Content Include="Recursos\Espacio\b390521e-ac1a-44ae-b6e7-35838a7c1c5e.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Espacio\c6d17b9d-d8a8-44b3-8014-a29fc6ae8611.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\d9489402-6cba-4d3b-94b9-7da6420d7f14.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\da5a452d-acb4-4e8a-a780-860698c62fd8.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Espacio\ddbbd037-d9e6-40e1-9ee9-e9a66a9b0380.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Espacio\f4b31bc2-5c5a-47c6-830d-3a51861d8939.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Espacio\f4e404c4-5486-4d12-9412-1c278e4567ea.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Espacio\f90dadda-78e9-4672-922c-2874ae0e5d1a.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\f97298ef-baf2-47dc-9d8e-9f91f886cee8.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\FotosInvitados\perfil1.png">

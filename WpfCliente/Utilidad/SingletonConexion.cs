@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace WpfCliente.Utilidad
 {
     using System;
+    using System.Runtime.InteropServices;
     using System.Threading;
     using System.Windows;
     using WpfCliente.Contexto;
@@ -63,6 +64,22 @@ namespace WpfCliente.Utilidad
                         return;
                     }
                 }
+            }
+            catch (ObjectDisposedException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+            }
+            catch (ArgumentOutOfRangeException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+            }
+            catch (AbandonedMutexException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+            }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
             catch (Exception excepcion)
             {

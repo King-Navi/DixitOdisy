@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ServiceModel;
 using WpfCliente.ServidorDescribelo;
+using WpfCliente.Utilidad;
 
 namespace WpfCliente
 {
@@ -12,22 +14,32 @@ namespace WpfCliente
                 IServicioSala servicioSala = new ServicioSalaClient();
                 return servicioSala.ValidarSala(codigoSala);
             }
-            catch (Exception)
+            catch (EndpointNotFoundException enndpointException)
             {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(enndpointException);
+                return false;
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
                 return false;
             }
         }
         public static bool ExistePartida(string codigoPartida)
         {
-           
-
             try
             {
                 IServicioPartida servicioPartida = new ServicioPartidaClient();
                 return servicioPartida.ValidarPartida(codigoPartida);
             }
-            catch (Exception)
+            catch (EndpointNotFoundException enndpointException)
             {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(enndpointException);
+                return false;
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
                 return false;
             }
         }

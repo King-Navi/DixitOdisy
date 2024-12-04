@@ -31,7 +31,7 @@ C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Manejador\UsuarioSesi
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Manejador\Registro.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Manejador\Sala.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Manejador\SalaJugador.cs
-C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Manejador\ChatMotro.cs
+C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Manejador\ChatMotor.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Manejador\Usuario.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Modelo\Amistad\Amigo.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Modelo\Excepciones\ServidorFalla.cs
@@ -67,7 +67,7 @@ C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Properties\AssemblyIn
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\ContextoOperacion.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\IContextoOperacion.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\IObservador.cs
-C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\LoggerManajador.cs
+C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\LoggerManejador.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\ManejadorExcepciones.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\Utilidad.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Librerias\ChatGPTLibreria.dll

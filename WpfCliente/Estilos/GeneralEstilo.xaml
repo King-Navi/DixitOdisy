@@ -1,55 +1,46 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-        <!-- Estilo personalizado para TODOS los MenuItem -->
-        <Style TargetType="MenuItem">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="MenuItem">
-                        <Border Name="Border" 
+    <Style TargetType="MenuItem">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="MenuItem">
+                    <Border Name="Border" 
                             Background="{TemplateBinding Background}" 
                             BorderBrush="Black" BorderThickness="1" 
                             CornerRadius="4" Padding="5">
-                            <Grid>
-                                <!-- Muestra el contenido del MenuItem (Header) -->
-                                <ContentPresenter ContentSource="Header"
+                        <Grid>
+                            <ContentPresenter ContentSource="Header"
                                               VerticalAlignment="Center"
                                               HorizontalAlignment="Center" />
-                                <!-- Popup para los submenús -->
-                                <Popup IsOpen="{TemplateBinding IsSubmenuOpen}"
+                            <Popup IsOpen="{TemplateBinding IsSubmenuOpen}"
                                    Placement="Left"
                                    AllowsTransparency="True"
                                    Focusable="False">
-                                    <Border Background="SkyBlue" Padding="5" CornerRadius="4">
-                                        <StackPanel>
-                                            <!-- ItemsPresenter para mostrar los ítems del submenú -->
-                                            <ItemsPresenter />
-                                        </StackPanel>
-                                    </Border>
-                                </Popup>
-                            </Grid>
-                        </Border>
+                                <Border Background="SkyBlue" Padding="5" CornerRadius="4">
+                                    <StackPanel>
+                                        <ItemsPresenter />
+                                    </StackPanel>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </Border>
 
-                        <!-- Triggers para estados visuales -->
-                        <ControlTemplate.Triggers>
-                            <!-- Trigger cuando el ratón está sobre el MenuItem -->
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="skyblue" />
-                            </Trigger>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="skyblue" />
+                        </Trigger>
 
-                            <!-- Trigger cuando el submenú está abierto -->
-                            <Trigger Property="IsSubmenuOpen" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#FF6980FF" />
-                            </Trigger>
+                        <Trigger Property="IsSubmenuOpen" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="#FF6980FF" />
+                        </Trigger>
 
-                            <!-- Trigger para los ítems deshabilitados -->
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Foreground" Value="Gray" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <!-- Cambiar colores de fondo y fuente -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="Gray" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Background" Value="#E0DCC7" />
         <Setter Property="Foreground" Value="Black" />
         <Style.Triggers>
@@ -59,8 +50,9 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    <!--El ICON-->
+
     <Style TargetType="Window" BasedOn="{x:Null}">
         <Setter Property="Icon" Value="/Recursos/LogoApp.ico"/>
     </Style>
+    
 </ResourceDictionary>

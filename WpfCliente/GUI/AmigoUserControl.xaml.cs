@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -44,7 +45,19 @@ namespace WpfCliente.GUI
             {
                 return false;
             }
-            return SingletonCanal.Instancia.Amigos.EliminarAmigo(SingletonCliente.Instance.NombreUsuario,labelNombreAmigo.Content.ToString());
+            try
+            {
+                return SingletonCanal.Instancia.Amigos.EliminarAmigo(SingletonCliente.Instance.NombreUsuario, labelNombreAmigo.Content.ToString());
+            }
+            catch (FaultException<ServidorFalla> excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
+            return false;
         }
 
         public void HabilitarBotones(bool esHabilitado)

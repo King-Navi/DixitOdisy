@@ -12,6 +12,7 @@ namespace WpfCliente.GUI
     public partial class ChatUserControl : UserControl , IServicioChatMotorCallback , IActualizacionUI , IHabilitadorBotones
     {
         private const int MAXIMO_CARACTERES_PERMITIDOS = 200;
+        private string NOMBRE_DESCRIBELO = "Describelo";
         public ChatUserControl()
         {
             InitializeComponent();
@@ -40,7 +41,7 @@ namespace WpfCliente.GUI
                 {
                     Mensaje = Properties.Idioma.mensajeProfe,
                     HoraFecha = DateTime.Now,
-                    Nombre = "Describelo"
+                    Nombre = NOMBRE_DESCRIBELO
                 });
                 return;
             }

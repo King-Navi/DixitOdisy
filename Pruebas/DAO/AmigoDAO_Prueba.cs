@@ -54,32 +54,24 @@ namespace Pruebas.DAO
         public void EliminarAmigo_CuandoRelacionExiste_DeberiaRetornarTrue()
         {
             ConfigurarAmistad(ID_USUARIO_MAYOR, ID_USUARIO_MENOR);
-
             
             bool resultado = amistadDAO.EliminarAmigo(ID_USUARIO_MAYOR, ID_USUARIO_MENOR);
 
-            
             Assert.IsTrue(resultado, "El método debería devolver true cuando la relación de amistad existe y se elimina correctamente.");
         }
         [TestMethod]
         public void EliminarAmigo_CuandoRelacionNoExiste_DeberiaRetornarFalse()
         {
-            
-
-            
             bool resultado = amistadDAO.EliminarAmigo(ID_USUARIO_MAYOR, ID_USUARIO_MENOR);
 
-            
             Assert.IsFalse(resultado, "El método debería devolver false cuando no existe una relación de amistad entre los usuarios.");
         }
         [TestMethod]
         public void EliminarAmigo_CuandoIdsInvalidos_DeberiaRetornarFalse()
         {
             
-            
             bool resultado = amistadDAO.EliminarAmigo(ID_INVALIDO, ID_INVALIDO_SEGUNDO_EJEMPLO);
 
-            
             Assert.IsFalse(resultado, "El método debería devolver false cuando los IDs proporcionados son inválidos.");
         }
         #endregion
@@ -94,7 +86,6 @@ namespace Pruebas.DAO
             ConfigurarAmistad(6, ID_USUARIO_MENOR);
             
             var resultado = amistadDAO.RecuperarListaAmigos(ID_USUARIO_MENOR);
-
             
             Assert.IsNotNull(resultado, "El resultado no debería ser nulo.");
             Assert.AreEqual(2, resultado.Count, "El usuario debería tener 2 amigos.");
@@ -103,11 +94,7 @@ namespace Pruebas.DAO
         [TestMethod]
         public void RecuperarListaAmigos_CuandoUsuarioNoTieneAmigos_DeberiaRetornarListaVacia()
         {
-            
-
-            
             var resultado = amistadDAO.RecuperarListaAmigos(ID_INVALIDO);
-
             
             Assert.IsNotNull(resultado, "El resultado no debería ser nulo.");
             Assert.AreEqual(0, resultado.Count, "El usuario no debería tener amigos asociados.");
@@ -116,11 +103,7 @@ namespace Pruebas.DAO
         [TestMethod]
         public void RecuperarListaAmigos_CuandoUsuarioNoExiste_DeberiaRetornarListaVacia()
         {
-            
-
-            
             var resultado = amistadDAO.RecuperarListaAmigos(ID_INEXISTENTE);
-
             
             Assert.AreEqual(0, resultado.Count, "El resultado debería ser lista vacia cuando el usuario no existe.");
         }
@@ -131,21 +114,16 @@ namespace Pruebas.DAO
         [TestMethod]
         public void SonAmigos_CuandoUsuariosSonAmigos_DeberiaRetornarTrue()
         {
-            
             ConfigurarAmistad(ID_USUARIO_MAYOR, ID_USUARIO_MENOR);
             
             bool resultado = amistadDAO.SonAmigos(ID_USUARIO_MENOR, ID_USUARIO_MAYOR);
 
-            
             Assert.IsTrue(resultado, "El método debería devolver true cuando los usuarios son amigos.");
         }
         [TestMethod]
         public void SonAmigos_CuandoUsuariosNoSonAmigos_DeberiaRetornarFalse()
         {
-            
-            
             bool resultado = amistadDAO.SonAmigos(ID_USUARIO_MENOR, ID_USUARIO_MAYOR);
-
             
             Assert.IsFalse(resultado, "El método debería devolver false cuando los usuarios no son amigos.");
         }
@@ -153,15 +131,10 @@ namespace Pruebas.DAO
         [TestMethod]
         public void SonAmigos_CuandoUnoDeLosUsuariosNoExiste_DeberiaRetornarFalse()
         {
-            
-
-            
             bool resultado = amistadDAO.SonAmigos(ID_USUARIO_MAYOR, ID_INEXISTENTE);
 
-            
             Assert.IsFalse(resultado, "El método debería devolver false cuando uno de los usuarios no existe.");
         }
-
 
         #endregion
 

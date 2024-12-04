@@ -14,7 +14,6 @@ namespace Pruebas.DAO
             int id = 1;
             int resultado = estadisticasDAO.ObtenerIdEstadisticaConIdUsuario(id);
             Assert.AreEqual(resultado , -1, "Debe ser -1");
-
         }
 
 
@@ -23,7 +22,6 @@ namespace Pruebas.DAO
         {
             int idUsuario = 1;
                 int resultado = estadisticasDAO.ObtenerIdEstadisticaConIdUsuario(idUsuario);
-
             
             Assert.AreEqual(-1, resultado, "El método debería devolver -1 cuando no hay conexión a la base de datos.");
         }

@@ -35,16 +35,11 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void CrearSala_ParametroNull_RetornaFalse()
         {
-            
             string anfitrion = null;
 
-            
             string idSala = manejador.CrearSala(anfitrion);
 
-            
             Assert.IsNull(idSala, "El idsala es null.");
-
-
         }
         [TestMethod]
         public void CrearSala_ParametroValido_RetornaFalse()
@@ -64,13 +59,10 @@ namespace Pruebas.Servidor
          [TestMethod]
         public void CrearSala_ParametroConEspacios_RetornaFalse()
         {
-            
             string anfitrion = "         ";
 
-            
             string idSala = manejador.CrearSala(anfitrion);
 
-            
             Assert.IsNull(idSala, "El idsala es null.");
 
         }

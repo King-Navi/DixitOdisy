@@ -25,7 +25,6 @@ namespace WpfCliente.Contexto
         private SingletonGestorVentana() { }
         public void Iniciar()
         {
-            
             PrincipalWindow ventanaPrincipal = new PrincipalWindow();
             VentanaPrincipal = ventanaPrincipal;
             ventanaPrincipal.Show();
@@ -51,7 +50,7 @@ namespace WpfCliente.Contexto
             return false;
         }
 
-            public bool LimpiarHistorial()
+        public bool LimpiarHistorial()
         {
             try
             {

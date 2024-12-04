@@ -55,15 +55,15 @@ namespace WpfCliente.GUI
                     listaSolicitudesAmistadUserControl = nuevaListaSolicitudes;
                 }
             }
-            catch (Exception ex)
+            catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
             }
         }
 
-        private async void ClicButtonNuevaSolicitudAsync(object sender, MouseButtonEventArgs e)
+        private void ClicButtonNuevaSolicitud(object sender, MouseButtonEventArgs e)
         {
-            await IntentarEnviarSolicitudAsync();
+            _ = IntentarEnviarSolicitudAsync();
         }
 
         private async Task IntentarEnviarSolicitudAsync()
@@ -78,7 +78,8 @@ namespace WpfCliente.GUI
 
             if (ValidacionesString.EsGamertagValido(gamertagSolicitud) && gamertagSolicitud != SingletonCliente.Instance.NombreUsuario)
             {
-                try {
+                try 
+                {
                     if (await EnviarSolicitudAsync(gamertagSolicitud))
                     {
                         VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadExitosa, Window.GetWindow(this));

@@ -45,14 +45,14 @@ namespace WpfCliente.GUI
             pageCambiarContrasenia.Title = Properties.Idioma.tituloCambiarContrasenia; 
         }
 
-        private async void ClicButtonEditarContraseniaAsync(object sender, RoutedEventArgs e)
+        private void ClicButtonEditarContrasenia(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (ValidarCampos())
                 {
                     EncriptarContrasenia(passwordBoxContrasenia.Password);
-                    await GuardarCambiosUsuarioAsync(usuarioEditado);
+                    _ = GuardarCambiosUsuarioAsync(usuarioEditado);
                 }
             }
             catch (Exception excepcion)
@@ -160,6 +160,7 @@ namespace WpfCliente.GUI
                     Window.GetWindow(this));
             }
         }
+
         private void ClicButtonCancelar(object sender, RoutedEventArgs e)
         {
             SingletonGestorVentana.Instancia.Regresar();

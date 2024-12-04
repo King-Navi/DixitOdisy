@@ -191,8 +191,6 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task SolicitarImagenCarta_SolicitarVariasImagenes_DeberiaEnviarImagenes()
         {
-            
-            //PRECAUCION: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP 
             var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
@@ -217,8 +215,6 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task SolicitarImagenCarta_SolicitarMuchasImagenes_DeberiaEnviarImagenes()
         {
-            
-            //PRECAUCION: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP 
             var implementacionCallback = new PartidaCallbackImplementacion();
             mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 

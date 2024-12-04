@@ -394,22 +394,15 @@ namespace Pruebas.DAO
         [TestMethod]
         public void ValidarCredenciales_CuandoContraseniaEsIncorrecta_DeberiaRetornarNull()
         {
-            
-
-            
             UsuarioPerfilDTO usuario = usuarioDAO.ValidarCredenciales(POR_DEFECTO_NOMBRE, CONTRASENIA_INCORRECTA);
-
             
             Assert.IsNull(usuario, "No se debería retornar un usuario cuando la contraseña es incorrecta.");
         }
         [TestMethod]
         public void ValidarCredenciales_CuandoEsNulo_DeberiaRetornarNull()
         {
-            
-            
             UsuarioPerfilDTO usuario = usuarioDAO.ValidarCredenciales(null, null);
 
-            
             Assert.IsNull(usuario, "No se debería retornar un usuario cuando el gamertag no existe en la base de datos.");
         }
         #endregion ValidarCredenciales

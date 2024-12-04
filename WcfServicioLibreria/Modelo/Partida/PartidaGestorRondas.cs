@@ -247,12 +247,12 @@ namespace WcfServicioLibreria.Modelo
         {
             RestablecerDesicionesJugadores();
             await EscogerNarradorAsync();
-            AvisarQuienEsNarrador();
+            await AvisarQuienEsNarrador();
             await EsperarConfirmacionNarradorAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_NARRADOR));
             if (SelecionoCartaNarrador)
             {
                 await EsperarConfirmacionJugadoresAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_SELECCION));
-                MostrarGrupoCartas();
+                await MostrarGrupoCartas();
                 CambiarPantalla(PANTALLA_TODOS_CARTAS , NarradorActual);
                 await EsperarConfirmacionAdivinarAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_PARA_ADIVINAR));
 
@@ -262,7 +262,7 @@ namespace WcfServicioLibreria.Modelo
 
         }
 
-        private async void MostrarGrupoCartas()
+        private async Task MostrarGrupoCartas()
         {
             string[] archivosCache = ObtenerArchivosCache();
             var archivoRutaMap = archivosCache.ToDictionary(ruta => Path.GetFileNameWithoutExtension(ruta), ruta => ruta);
@@ -355,7 +355,7 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        private async void AvisarQuienEsNarrador()
+        private async Task AvisarQuienEsNarrador()
         {
             foreach (var nombre in ObtenerNombresJugadores().ToList())
             {

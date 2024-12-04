@@ -41,7 +41,7 @@ namespace WpfCliente.GUI
 
                 try
                 {
-                    var listaSolicitudes = SingletonCanal.Instancia.Amigos.ObtenerSolicitudesAmistad(usuarioActual);
+                    var listaSolicitudes = await SingletonCanal.Instancia.Amigos.ObtenerSolicitudesAmistadAsync(usuarioActual);
                     if (listaSolicitudes == null || listaSolicitudes.Count() == 0)
                     {
                         textBlockNoHaySolicitudes.Visibility = Visibility.Visible;

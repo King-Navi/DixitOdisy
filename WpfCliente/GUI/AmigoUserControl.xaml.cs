@@ -47,7 +47,7 @@ namespace WpfCliente.GUI
             }
             try
             {
-                return SingletonCanal.Instancia.Amigos.EliminarAmigo(SingletonCliente.Instance.NombreUsuario, labelNombreAmigo.Content.ToString());
+                return await SingletonCanal.Instancia.Amigos.EliminarAmigoAsync(SingletonCliente.Instance.NombreUsuario, labelNombreAmigo.Content.ToString());
             }
             catch (FaultException<ServidorFalla> excepcion)
             {

@@ -98,8 +98,8 @@ namespace WpfCliente.GUI
                 await EvaluarConexionAsync();
                 ServidorDescribelo.IServicioUsuario servicio = new ServidorDescribelo.ServicioUsuarioClient();
                 string contraseniaHash = Encriptacion.OcuparSHA256(passwordBoxContrasenia.Password);
-                Usuario resultadoUsuario = servicio.ValidarCredenciales(textBoxUsuario.Text, contraseniaHash);
-                bool yaInicioSesion = servicio.YaIniciadoSesion(textBoxUsuario.Text);
+                Usuario resultadoUsuario = await servicio.ValidarCredencialesAsync(textBoxUsuario.Text, contraseniaHash);
+                bool yaInicioSesion = await servicio.YaIniciadoSesionAsync(textBoxUsuario.Text);
                 if (yaInicioSesion)
                 {
                     VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSesionIniciada, Properties.Idioma.mensajeSesionIniciada, Window.GetWindow(this));

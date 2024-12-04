@@ -65,13 +65,13 @@ namespace WcfServicioLibreria.Modelo.Vetos
                 return false;
             }
             
-            if (vetoDAO.ExisteTablaVetoPorIdCuenta((int)idUsuarioCuenta))
+            if (vetoDAO.ExisteTablaVetoPorIdCuenta(idUsuarioCuenta))
             {
-                 return CrearRegistroVeto((int)idUsuarioCuenta, DateTime.Now.AddDays(DIAS_PRIMER_VETO), true);
+                 return CrearRegistroVeto(idUsuarioCuenta, DateTime.Now.AddDays(DIAS_PRIMER_VETO), true);
             }
             else if (await Conexion.VerificarConexionAsync())
             {
-                return CrearRegistroVeto((int)idUsuarioCuenta, null, true);
+                return CrearRegistroVeto(idUsuarioCuenta, null, true);
             }
             else
             {
@@ -90,13 +90,13 @@ namespace WcfServicioLibreria.Modelo.Vetos
             {
                 return false;
             }
-            if (!expulsionDAO.TieneMasDeDiezExpulsionesSinPenalizar((int)idUsuarioCuenta))
+            if (!expulsionDAO.TieneMasDeDiezExpulsionesSinPenalizar(idUsuarioCuenta))
             {
-                return expulsionDAO.CrearRegistroExpulsion((int)idUsuarioCuenta, motivo, esHacker);
+                return expulsionDAO.CrearRegistroExpulsion(idUsuarioCuenta, motivo, esHacker);
             }
             else
             {
-                expulsionDAO.CambiarExpulsionesAFueronPenalizadas((int)idUsuarioCuenta);
+                expulsionDAO.CambiarExpulsionesAFueronPenalizadas(idUsuarioCuenta);
                 return await VetaJugadorAsync(usuarioModeloBaseDatos.gamertag);
             }
         }

@@ -37,7 +37,7 @@ namespace DAOLibreria.DAO
                     }
                     if (estadistica != null)
                     {
-                        context.Entry(estadistica).Reload();
+                        await context.Entry(estadistica).ReloadAsync();
                     }
                     estadistica.partidasJugadas = (estadistica.partidasJugadas ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS;
                     estadistica.partidasGanadas = (estadistica.partidasGanadas ?? SIN_VICTORIA) + victoria;

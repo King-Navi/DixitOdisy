@@ -68,7 +68,7 @@ namespace WpfCliente.GUI
             {
                 return;
             }
-            CrearCuenta();
+            await CrearCuenta();
         }
 
 
@@ -102,7 +102,7 @@ namespace WpfCliente.GUI
             SingletonGestorVentana.Instancia.Regresar();
         }
 
-        private async void CrearCuenta()
+        private async Task CrearCuenta()
         {
             if (ValidarCampos() && Correo.VerificarCorreo(textBoxCorreo.Text, Window.GetWindow(this)) && rutaAbsolutaImagen != null)
             {
@@ -144,7 +144,7 @@ namespace WpfCliente.GUI
                 {
                     using (MemoryStream memoryStream = new MemoryStream())
                     {
-                        fileStream.CopyTo(memoryStream);
+                        await fileStream.CopyToAsync(memoryStream);
                         memoryStream.Position = 0;
 
                         bool resultado = await servicio.RegistrarUsuarioAsync(new Usuario()

@@ -31,7 +31,7 @@ namespace WpfCliente.GUI
             {
                 InitializeComponent();
                 EsconderOpciones();
-                VerificarConexionAsync();
+                _ = VerificarConexionAsync();
                 ConfiguracionPartidaPorDefecto();
                 if (idSala == null)
                 {
@@ -42,7 +42,7 @@ namespace WpfCliente.GUI
                 {
                     SingletonCliente.Instance.IdSala = idSala;
                     SingletonCliente.Instance.IdChat = idSala;
-                    UnirseSalaAsync(idSala);
+                    _ = UnirseSalaAsync(idSala);
                 }
                 DataContext = this;
                 CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
@@ -124,9 +124,9 @@ namespace WpfCliente.GUI
                 SingletonGestorVentana.Instancia.Regresar();
                 return;
             }
-            SingletonSalaJugador.Instancia.Sala.AgregarJugadorSala(SingletonCliente.Instance.NombreUsuario, idSala);
+            await SingletonSalaJugador.Instancia.Sala.AgregarJugadorSalaAsync(SingletonCliente.Instance.NombreUsuario, idSala);
             labelCodigo.Content += idSala;
-            UnirseChatAsync();
+            _ = UnirseChatAsync();
         }
 
 
@@ -151,10 +151,10 @@ namespace WpfCliente.GUI
 
         }
 
-        private async void UnirseChatAsync()
+        private async Task UnirseChatAsync()
         {
             await Conexion.AbrirConexionChatMotorCallbackAsync(chatUserControl);
-            var resultado = Conexion.ChatMotor.AgregarUsuarioChat(SingletonCliente.Instance.IdChat, SingletonCliente.Instance.NombreUsuario);
+            var resultado = await Conexion.ChatMotor.AgregarUsuarioChatAsync(SingletonCliente.Instance.IdChat, SingletonCliente.Instance.NombreUsuario);
             if (!resultado)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorInesperado, Properties.Idioma.mensajeErrorInesperado, Window.GetWindow(this));
@@ -174,7 +174,7 @@ namespace WpfCliente.GUI
                 SingletonCliente.Instance.IdChat = SingletonCliente.Instance.IdSala;
 
                 CrearChat();
-                UnirseSalaAsync(SingletonCliente.Instance.IdSala);
+                _ = UnirseSalaAsync(SingletonCliente.Instance.IdSala);
             }
             catch (Exception excepcion)
             {
@@ -427,7 +427,7 @@ namespace WpfCliente.GUI
             }
             try
             {
-                resultado = SingletonCanal.Instancia.InvitacionPartida.EnviarInvitacion(new InvitacionPartida
+                resultado = await SingletonCanal.Instancia.InvitacionPartida.EnviarInvitacionAsync(new InvitacionPartida
                 {
                     CodigoSala = SingletonCliente.Instance.IdSala,
                     NombreEmisor = SingletonCliente.Instance.NombreUsuario,
@@ -527,7 +527,7 @@ namespace WpfCliente.GUI
                     {
                         throw new ArgumentException();
                     }
-                    SingletonSalaJugador.Instancia.Sala.ExpulsarJugadorSala(
+                    await SingletonSalaJugador.Instancia.Sala.ExpulsarJugadorSalaAsync(
                         SingletonCliente.Instance.NombreUsuario,
                         usuario.Nombre,
                         SingletonCliente.Instance.IdSala);

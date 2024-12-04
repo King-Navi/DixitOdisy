@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.ServiceModel;
+using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Enumerador;
 using WcfServicioLibreria.Evento;
@@ -222,66 +223,26 @@ namespace WcfServicioLibreria.Manejador
                     && jugadoresConectadosDiccionario.TryGetValue(_destinatario.idUsuario, out UsuarioContexto destinatario))
                 {
                     {
-                        lock (remitente)
+
+                        EventHandler desconexionHandlerRemitente = null;
+                        EventHandler desconexionHandlerDestinatario = null;
+                        desconexionHandlerRemitente = (emisor, evento) =>
                         {
-                            lock (destinatario)
-                            {
-                                EventHandler desconexionHandlerRemitente = null;
-                                EventHandler desconexionHandlerDestinatario = null;
-                                desconexionHandlerRemitente = (sender, e) =>
-                                {
-                                    destinatario.AmigoDesconectado(_remitente, new UsuarioDesconectadoEventArgs(((Modelo.Usuario)remitente).Nombre, DateTime.Now));
-                                    remitente.DesconexionEvento -= desconexionHandlerRemitente;
-                                };
+                            destinatario.AmigoDesconectado(_remitente, new UsuarioDesconectadoEventArgs(((Modelo.Usuario)remitente).Nombre, DateTime.Now));
+                            remitente.DesconexionEvento -= desconexionHandlerRemitente;
+                        };
 
-                                desconexionHandlerDestinatario = (sender, e) =>
-                                {
-                                    remitente.AmigoDesconectado(_destinatario, new UsuarioDesconectadoEventArgs(((Modelo.Usuario)destinatario).Nombre, DateTime.Now));
-                                    destinatario.DesconexionEvento -= desconexionHandlerDestinatario;
-                                };
+                        desconexionHandlerDestinatario = (emisor, evento) =>
+                        {
+                            remitente.AmigoDesconectado(_destinatario, new UsuarioDesconectadoEventArgs(((Modelo.Usuario)destinatario).Nombre, DateTime.Now));
+                            destinatario.DesconexionEvento -= desconexionHandlerDestinatario;
+                        };
 
-                                remitente.DesconexionEvento += desconexionHandlerRemitente;
-                                destinatario.DesconexionEvento += desconexionHandlerDestinatario;
+                        remitente.DesconexionEvento += desconexionHandlerRemitente;
+                        destinatario.DesconexionEvento += desconexionHandlerDestinatario;
 
-                                try
-                                {
-                                    remitente.EnviarAmigoActulizadoCallback(new Amigo()
-                                    {
-                                        Foto = _destinatario.fotoPerfil,
-                                        Nombre = _destinatario.gamertag,
-                                        Estado = EstadoAmigo.Conectado,
-                                        UltimaConexion = _destinatario.ultimaConexion.ToString()
-
-                                    });
-                                }
-                                catch (TimeoutException excepcion)
-                                {
-                                    ManejadorExcepciones.ManejarErrorException(excepcion);
-                                }
-                                catch (CommunicationException excepcion)
-                                {
-                                    ManejadorExcepciones.ManejarErrorException(excepcion);
-                                }
-                                try
-                                {
-                                    destinatario.EnviarAmigoActulizadoCallback(new Amigo()
-                                    {
-                                        Foto = _remitente.fotoPerfil,
-                                        Nombre = _remitente.gamertag,
-                                        Estado = EstadoAmigo.Conectado,
-                                        UltimaConexion = _remitente.ultimaConexion.ToString()
-                                    });
-                                }
-                                catch (TimeoutException excepcion)
-                                {
-                                    ManejadorExcepciones.ManejarErrorException(excepcion);
-                                }
-                                catch (CommunicationException excepcion)
-                                {
-                                    ManejadorExcepciones.ManejarErrorException(excepcion);
-                                }
-                            }
-                        }
+                        Task.Run(() => ActualizarAmigo(remitente, _destinatario, EstadoAmigo.Conectado));
+                        Task.Run(() => ActualizarAmigo(destinatario, _remitente, EstadoAmigo.Conectado));
                     }
                 }
             }
@@ -298,6 +259,32 @@ namespace WcfServicioLibreria.Manejador
                 ManejadorExcepciones.ManejarErrorException(excepcion);
             }
         }
+
+        private void ActualizarAmigo(UsuarioContexto contexto, DAOLibreria.ModeloBD.Usuario amigo, EstadoAmigo estado)
+        {
+            try
+            {
+                contexto.EnviarAmigoActulizadoCallback(new Amigo()
+                {
+                    Foto = amigo.fotoPerfil,
+                    Nombre = amigo.gamertag,
+                    Estado = estado,
+                    UltimaConexion = amigo.ultimaConexion.ToString()
+                });
+            }
+            catch (TimeoutException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (CommunicationException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+        }
+
+
+
+
 
         public List<SolicitudAmistad> ObtenerSolicitudesAmistad(Usuario usuario)
         {
@@ -340,7 +327,7 @@ namespace WcfServicioLibreria.Manejador
                         var usuarioDestinoConectado = usuarioDAO.ObtenerUsuarioPorId(idDestinatario);
                         var usuarioRemitenteConectado = usuarioDAO.ObtenerUsuarioPorId(idRemitente);
                         AmigoConetado(usuarioRemitenteConectado, usuarioDestinoConectado);
-                    } 
+                    }
                     else if (jugadoresConectadosDiccionario.ContainsKey(idDestinatario))
                     {
                         jugadoresConectadosDiccionario.TryGetValue(idDestinatario, out UsuarioContexto destinatario);
@@ -378,7 +365,7 @@ namespace WcfServicioLibreria.Manejador
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
             }
-            
+
             return false;
 
         }

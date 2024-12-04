@@ -20,7 +20,7 @@ namespace WcfServicioLibreria.Modelo
     {
 
         private const int LIMITE_CARTAS_MINIMO = 0;
-        private const int LECTORESDISCO = 3;
+        private const int LECTORESDISCO = 6;
         private IMediadorImagen mediadorImagen;
         private readonly TematicaPartida tematica;
         private IEscribirDisco escritor;

@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
+using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI

@@ -94,7 +94,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void VerificarConexionAsync()
+        private async Task VerificarConexionAsync()
         {
             bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)

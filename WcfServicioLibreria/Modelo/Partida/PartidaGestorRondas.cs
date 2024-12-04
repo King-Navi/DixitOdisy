@@ -245,7 +245,7 @@ namespace WcfServicioLibreria.Modelo
             if (SelecionoCartaNarrador)
             {
                 await EsperarConfirmacionJugadoresAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_SELECCION));
-                MostrarGrupoCartas();
+                await EnMostrarTodasCartas();
                 CambiarPantalla(PANTALLA_TODOS_CARTAS , NarradorActual);
                 await EsperarConfirmacionAdivinarAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_PARA_ADIVINAR));
             }

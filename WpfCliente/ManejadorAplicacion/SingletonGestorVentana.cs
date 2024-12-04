@@ -83,7 +83,7 @@ namespace WpfCliente.Contexto
                 {
                     marco.Navigated -= MarcoNavigacion;
                     EvaluarSiEsInicio(nuevoMarco);
-                    EvaluarSiPartida(nuevoMarco);
+                    EvaluarSiEsPartida(nuevoMarco);
                     marco.Navigate(nuevoMarco);
                     return true;
                 }
@@ -97,6 +97,35 @@ namespace WpfCliente.Contexto
                 ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
             return false;
+        }
+
+
+        private void EvaluarSiEsPartida(Page nuevaPagina)
+        {
+            try
+            {
+                EvaluarMarcoNulo(nuevaPagina);
+                var ventana = VentanaPrincipal as INavegacion;
+                var marco = ventana?.MarcoNavegacion;
+                if (marco == null)
+                {
+                    throw new ArgumentNullException(nameof(nuevaPagina));
+                }
+                if (nuevaPagina is PartidaPage)
+                {
+                    CerrarConexionSala();
+                    LimpiarHistorial();
+                    return;
+                }
+            }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
         }
 
         private void EvaluarSiEsInicio(Page nuevaPagina)

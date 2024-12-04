@@ -31,13 +31,13 @@ namespace WpfCliente.ImplementacionesCallbacks
         {
             try
             {
-                Task.Run(() =>
+                Task.Run(async () =>
                 {
                     try
                     {
                         for (int i = 0; i < MAXIMO_IMAGENES_MAZO; i++)
                         {
-                            SingletonGestorImagenes.Instancia.imagnesMazo.Imagen.SolicitarImagenCartaAsync(SingletonCliente.Instance.IdPartida);
+                            await SingletonGestorImagenes.Instancia.imagnesMazo.Imagen.SolicitarImagenCartaAsync(SingletonCliente.Instance.IdPartida);
                         }
                     }
                     catch (Exception excepcion)

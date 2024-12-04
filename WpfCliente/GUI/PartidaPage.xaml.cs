@@ -255,6 +255,8 @@ namespace WpfCliente.GUI
                     SingletonGestorVentana.Instancia.NavegarA(new MenuPage());
                     SingletonGestorVentana.Instancia.LimpiarHistorial();
                 }
+                SingletonPartida.Instancia.CerrarConexionPartida();
+                SingletonChat.Instancia.CerrarConexionChat();
             }
             else
             {

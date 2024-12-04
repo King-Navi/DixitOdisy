@@ -62,7 +62,12 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\WcfServicioLibreria\WcfServicioLibreria.csproj">
+      <Project>{a07aeff5-b5e9-44c4-87c5-9af85933de44}</Project>
+      <Name>WcfServicioLibreria</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

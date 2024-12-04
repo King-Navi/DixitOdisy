@@ -60,7 +60,7 @@ namespace WpfCliente.GUI
 
             try
             {
-                var resultado = SingletonCanal.Instancia.Amigos.AceptarSolicitudAmistad(solicitudAmistadActual.Remitente.IdUsuario, SingletonCliente.Instance.IdUsuario);
+                var resultado = await SingletonCanal.Instancia.Amigos.AceptarSolicitudAmistadAsync(solicitudAmistadActual.Remitente.IdUsuario, SingletonCliente.Instance.IdUsuario);
 
                 if (!resultado)
                 {

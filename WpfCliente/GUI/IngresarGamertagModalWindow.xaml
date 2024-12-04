@@ -34,8 +34,24 @@
             <RowDefinition Height="10"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Label x:Name="labelIngresarGamertag" Content="Ingrese su gamertag" FontFamily="Lucida Sans Unicode" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Foreground="Black" Grid.Row="1" Height="38" Width="217" HorizontalContentAlignment="Center"/>
-        <TextBox  x:Name="textBoxGamertag" Grid.Row="0" Width="260" Height="25" Margin="60,29,60,11" MaxLength="20" Grid.RowSpan="3"/>
-        <Button x:Name="buttonAceptar" Content="Aceptar" FontFamily="Lucida Sans Unicode" Grid.Row="2" Width="74" HorizontalAlignment="Center" Margin="0,45,0,-37" Click="ClicButtonAceptar"/>
+        <Label x:Name="labelIngresarGamertag" 
+               Content="Ingrese su gamertag" 
+               FontFamily="Lucida Sans Unicode" 
+               HorizontalAlignment="Center" VerticalAlignment="Center" 
+               FontSize="14" Foreground="Black" 
+               Grid.Row="1" Height="38" Width="217" 
+               HorizontalContentAlignment="Center"/>
+        <TextBox  x:Name="textBoxGamertag" 
+                  Grid.Row="0" 
+                  Width="260" Height="25" 
+                  Margin="60,29,60,11" 
+                  MaxLength="20" Grid.RowSpan="3"/>
+        <Button x:Name="buttonAceptar" 
+                Content="Aceptar" 
+                FontFamily="Lucida Sans Unicode" 
+                Grid.Row="2" Width="74" 
+                HorizontalAlignment="Center" 
+                Margin="0,45,0,-37" 
+                Click="ClicButtonAceptar"/>
     </Grid>
 </Window>

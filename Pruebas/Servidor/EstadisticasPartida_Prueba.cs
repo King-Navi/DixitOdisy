@@ -13,7 +13,6 @@ namespace Pruebas.Servidor
     [TestClass]
     public class EstadisticasPartida_Prueba : ConfiguradorPruebaParaServicio
     {
-        // Constantes de Nombres y IDs
         private const string NOMBRE_JUGADOR_GANADOR = "Jugador1";
         private const int ID_JUGADOR_GANADOR = 1;
         private const string NOMBRE_JUGADOR = "Jugador2";

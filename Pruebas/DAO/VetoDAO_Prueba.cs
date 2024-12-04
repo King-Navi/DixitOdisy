@@ -30,10 +30,10 @@ namespace Pruebas.DAO
         [TestMethod]
         public async Task VerificarConexionAsync_CuandoConexionEsExitosa_DeberiaRetornarTrue()
         {
-                        
+
             bool resultado = await DAOLibreria.ModeloBD.Conexion.VerificarConexionAsync();
 
-            
+
             Assert.IsTrue(resultado, "El método debería devolver true cuando la conexión a la base de datos es exitosa.");
         }
         [TestMethod]
@@ -42,87 +42,70 @@ namespace Pruebas.DAO
             DateTime fechaFin = DateTime.Now.AddDays(7);
             bool esPermanente = false;
             AgregarVeto(IDUSUARIOCUENTA_PRUEBA, DateTime.Now, esPermanente, fechaFin);
-            
+
             bool resultado = vetoDAO.ExisteTablaVetoPorIdCuenta(IDUSUARIOCUENTA_PRUEBA);
 
-            
+
             Assert.IsTrue(resultado, "El método debería retornar true.");
         }
         [TestMethod]
         public void ExisteVetoPorIdCuenta_IdCuentaSinVetoTabla_DeberiaRetornarFalse()
         {
-            
-            // Precondición: El ID NO debe existir en la base de datos con un veto asociado
-            int idUsuarioCuenta = -1321; 
-
-            
+            int idUsuarioCuenta = -1321;
             bool resultado = vetoDAO.ExisteTablaVetoPorIdCuenta(idUsuarioCuenta);
 
-            
             Assert.IsFalse(resultado, "El método debería retornar false cuando el idUsuarioCuenta no tiene una tabla asociada.");
         }
         [TestMethod]
         public void CrearRegistroVeto_CuandoDatosValidos_DeberiaRetornarTrue()
         {
-            
-            int idUsuarioCuenta = 2; 
+            int idUsuarioCuenta = 2;
             DateTime? fechaFin = DateTime.Now.AddDays(7);
             bool esPermanente = false;
 
-            
             bool resultado = vetoDAO.CrearRegistroVeto(idUsuarioCuenta, fechaFin, esPermanente);
 
-            
             Assert.IsTrue(resultado, "El método debería devolver true cuando los datos son válidos y el veto se crea correctamente.");
         }
         [TestMethod]
         public void CrearRegistroVeto_CuandoIdUsuarioCuentaInvalido_DeberiaRetornarFalse()
         {
-            
-            int idUsuarioCuenta = -14; // ID de usuario inválido
+
+            int idUsuarioCuenta = -14;
             DateTime fechaFin = DateTime.Now.AddDays(7);
             bool esPermanente = false;
-            
+
             bool resultado = vetoDAO.CrearRegistroVeto(idUsuarioCuenta, fechaFin, esPermanente);
 
-            
             Assert.IsFalse(resultado, "El método debería devolver false cuando el ID de usuario cuenta es inválido.");
         }
 
         [TestMethod]
         public void VerificarVetoPorIdCuenta_CuandoNoHayVetos_DeberiaRetornarFalse()
         {
-            
-
-            
             bool resultado = vetoDAO.VerificarVetoPorIdCuenta(IDUSUARIOCUENTA_PRUEBA);
 
-            
             Assert.IsFalse(resultado, "El método debería devolver false cuando no hay vetos asociados al ID.");
-        }
+        } 
+
         [TestMethod]
         [ExpectedException(typeof(VetoPermanenteExcepcion))]
         public void VerificarVetoPorIdCuenta_CuandoHayVetoPermanente_DeberiaLanzarExcepcion()
         {
-            
-            // Un ID con veto permanente
             AgregarVetoPermanente(IDUSUARIOCUENTA_PRUEBA);
             
             vetoDAO.VerificarVetoPorIdCuenta(IDUSUARIOCUENTA_PRUEBA);
-
         }
+
         [TestMethod]
         [ExpectedException(typeof(VetoEnProgresoExcepcion))]
         public void VerificarVetoPorIdCuenta_CuandoHayVetoEnProgreso_DeberiaLanzarExcepcion()
         {
-            
             DateTime fechaFin = DateTime.Now.AddDays(7);
             bool esPermanente = false;
             AgregarVeto(IDUSUARIOCUENTA_PRUEBA, DateTime.Now, esPermanente, fechaFin);
-
             
             vetoDAO.VerificarVetoPorIdCuenta(IDUSUARIOCUENTA_PRUEBA);
-
         }
         public void AgregarVetoPermanente(int idUsuarioCuenta)
         {

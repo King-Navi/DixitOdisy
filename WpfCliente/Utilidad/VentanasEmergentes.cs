@@ -23,10 +23,19 @@ namespace WpfCliente.Utilidad
                 ventanaEmergente.Owner = ventana;
                 ventanaEmergente.ShowDialog();
             }
+            catch (ArgumentException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
+
         }
 
         public static void CrearVentanaEmergente(string tituloVentanaEmergente, string descripcionVentanaEmergente, UserControl userControl)
@@ -48,10 +57,19 @@ namespace WpfCliente.Utilidad
                 }
                 ventanaEmergente.ShowDialog();
             }
+            catch (ArgumentException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
+
         }
         public static void CrearVentanaEmergenteConCierre(string tituloVentanaEmergente, string descripcionVentanaEmergente, Window ventana)
         {
@@ -69,10 +87,19 @@ namespace WpfCliente.Utilidad
                 ventanaEmergente.ShowDialog();
                 SingletonGestorVentana.Instancia.RegresarSiNoEsInicio(ventana);
             }
+            catch (ArgumentException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
+
         }
 
         public static string AbrirVentanaModalGamertag(Window ventana)
@@ -82,20 +109,24 @@ namespace WpfCliente.Utilidad
             try
             {
                 ventanaModal.Owner = ventana;
+                bool? resultado = ventanaModal.ShowDialog();
+
+                if (resultado == true)
+                {
+                    valorObtenido = ventanaModal.ValorIngresado;
+                }
+            }
+            catch (ArgumentException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
             catch (InvalidOperationException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
-            }
-            bool? resultado = ventanaModal.ShowDialog();
-
-            if (resultado == true)
-            {
-                valorObtenido = ventanaModal.ValorIngresado;
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
 
             return valorObtenido;
@@ -108,20 +139,24 @@ namespace WpfCliente.Utilidad
             try
             {
                 ventanaModal.Owner = ventana;
+                bool? resultado = ventanaModal.ShowDialog();
+
+                if (resultado == true)
+                {
+                    valorObtenido = ventanaModal.ValorIngresado;
+                }
+            }
+            catch (ArgumentException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
             catch (InvalidOperationException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
-            }
-            bool? resultado = ventanaModal.ShowDialog();
-
-            if (resultado == true)
-            {
-                valorObtenido = ventanaModal.ValorIngresado;
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
 
             return valorObtenido;
@@ -134,21 +169,24 @@ namespace WpfCliente.Utilidad
             try
             {
                 ventanaModal.Owner = ventana;
+                bool? resultado = ventanaModal.ShowDialog();
+                if (resultado == true && !ventanaModal.ValorIngresado.Contains(" ") && ventanaModal.ValorIngresado != null)
+                {
+                    valorObtenido = ventanaModal.ValorIngresado;
+                }
+            }
+            catch (ArgumentException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
             catch (InvalidOperationException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
-            bool? resultado = ventanaModal.ShowDialog();
-            if (resultado == true && !ventanaModal.ValorIngresado.Contains(" ") && ventanaModal.ValorIngresado != null)
-            {
-                valorObtenido = ventanaModal.ValorIngresado;
-            }
-
 
             return valorObtenido;
         }
@@ -160,19 +198,23 @@ namespace WpfCliente.Utilidad
             try
             {
                 ventanaModal.Owner = window;
+                bool? resultado = ventanaModal.ShowDialog();
+                if (resultado == true && !ventanaModal.ValorIngresado.Contains(" "))
+                {
+                    valorObtenido = ventanaModal.ValorIngresado;
+                }
+            }
+            catch (ArgumentException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
             catch (InvalidOperationException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
-            catch (Exception ex)
+            catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
-            }
-            bool? resultado = ventanaModal.ShowDialog();
-            if (resultado == true && !ventanaModal.ValorIngresado.Contains(" "))
-            {
-                valorObtenido = ventanaModal.ValorIngresado;
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
 
             return valorObtenido;

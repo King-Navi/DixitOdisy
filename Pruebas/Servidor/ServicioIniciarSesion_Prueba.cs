@@ -29,7 +29,6 @@ namespace Pruebas.Servidor
             .Setup(dao => dao.ObtenerUsuarioPorNombre(It.IsAny<string>()))
             .Returns((string gamertag) =>
                 {
-                    // Simula el comportamiento del método
                     if (gamertag == "UsuarioExistente")
                     {
                         return new Usuario
@@ -38,7 +37,7 @@ namespace Pruebas.Servidor
                             gamertag = "UsuarioExistente",
                         };
                     }
-                    return null; // Devuelve null si no encuentra el usuario
+                    return null;
                 });
             var nombreValido = "UsuarioExistente";
             var contraseniaValida = "contraseniaValida";

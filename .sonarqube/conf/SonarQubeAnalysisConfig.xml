@@ -139,7 +139,7 @@
     <Property Name="sonar.java.jvmframeworkconfig.activate">true</Property>
     <Property Name="sonar.updatecenter.url">https://downloads.sonarsource.com/sonarqube/update/update-center.properties</Property>
     <Property Name="sonar.core.id">147B411E-AZNKrrF5OCDMX41RTs55</Property>
-    <Property Name="sonar.core.startTime">26/11/2024 08:52:00 p. m.</Property>
+    <Property Name="sonar.core.startTime">04/12/2024 07:48:43 a. m.</Property>
   </ServerSettings>
   <LocalSettings>
     <Property Name="sonar.host.url">http://localhost:9000</Property>
@@ -158,7 +158,6 @@
             <Path>C:\Users\unaay\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.CSharp.dll</Path>
             <Path>C:\Users\unaay\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.dll</Path>
             <Path>C:\Users\unaay\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.ShimLayer.dll</Path>
-            <Path>C:\Users\unaay\AppData\Local\Temp\.sonarqube\resources\0\THIRD-PARTY-NOTICES.txt</Path>
           </AssemblyPaths>
         </AnalyzerPlugin>
         <AnalyzerPlugin Key="vbnet" Version="9.32.0.97167" StaticResourceName="SonarAnalyzer-9.32.0.97167.zip">
@@ -168,7 +167,6 @@
             <Path>C:\Users\unaay\AppData\Local\Temp\.sonarqube\resources\1\SonarAnalyzer.dll</Path>
             <Path>C:\Users\unaay\AppData\Local\Temp\.sonarqube\resources\1\SonarAnalyzer.ShimLayer.dll</Path>
             <Path>C:\Users\unaay\AppData\Local\Temp\.sonarqube\resources\1\SonarAnalyzer.VisualBasic.dll</Path>
-            <Path>C:\Users\unaay\AppData\Local\Temp\.sonarqube\resources\1\THIRD-PARTY-NOTICES.txt</Path>
           </AssemblyPaths>
         </AnalyzerPlugin>
       </AnalyzerPlugins>
@@ -188,7 +186,6 @@
             <Path>C:\Users\unaay\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.CSharp.dll</Path>
             <Path>C:\Users\unaay\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.dll</Path>
             <Path>C:\Users\unaay\AppData\Local\Temp\.sonarqube\resources\0\SonarAnalyzer.ShimLayer.dll</Path>
-            <Path>C:\Users\unaay\AppData\Local\Temp\.sonarqube\resources\0\THIRD-PARTY-NOTICES.txt</Path>
           </AssemblyPaths>
         </AnalyzerPlugin>
         <AnalyzerPlugin Key="vbnet" Version="9.32.0.97167" StaticResourceName="SonarAnalyzer-9.32.0.97167.zip">
@@ -198,7 +195,6 @@
             <Path>C:\Users\unaay\AppData\Local\Temp\.sonarqube\resources\1\SonarAnalyzer.dll</Path>
             <Path>C:\Users\unaay\AppData\Local\Temp\.sonarqube\resources\1\SonarAnalyzer.ShimLayer.dll</Path>
             <Path>C:\Users\unaay\AppData\Local\Temp\.sonarqube\resources\1\SonarAnalyzer.VisualBasic.dll</Path>
-            <Path>C:\Users\unaay\AppData\Local\Temp\.sonarqube\resources\1\THIRD-PARTY-NOTICES.txt</Path>
           </AssemblyPaths>
         </AnalyzerPlugin>
       </AnalyzerPlugins>

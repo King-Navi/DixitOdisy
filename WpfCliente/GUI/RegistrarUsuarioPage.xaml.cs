@@ -19,9 +19,8 @@ namespace WpfCliente.GUI
     {
         private string rutaAbsolutaImagen;
         private const string ESTILO_NORMAL_TEXTO = "TextBoxEstiloNormal";
-        private const string ESTILO_NORMAL_CONTRASENIA = "PasswordBoxEstiloError";
         private const string ERROR_ESTILO_TEXTO = "TextBoxEstiloError";
-        private const string PALABRA_PROHIBIDA_GUEST = "guest";
+        private const string PALABRA_RESERVADA_GUEST = "guest";
         public RegistrarUsuarioPage()
         {
             KeepAlive = false;
@@ -69,7 +68,7 @@ namespace WpfCliente.GUI
             {
                 return;
             }
-            CrearCuenta();
+            await CrearCuenta();
         }
 
 
@@ -103,7 +102,7 @@ namespace WpfCliente.GUI
             SingletonGestorVentana.Instancia.Regresar();
         }
 
-        private async void CrearCuenta()
+        private async Task CrearCuenta()
         {
             if (ValidarCampos() && Correo.VerificarCorreo(textBoxCorreo.Text, Window.GetWindow(this)) && rutaAbsolutaImagen != null)
             {
@@ -145,7 +144,7 @@ namespace WpfCliente.GUI
                 {
                     using (MemoryStream memoryStream = new MemoryStream())
                     {
-                        fileStream.CopyTo(memoryStream);
+                        await fileStream.CopyToAsync(memoryStream);
                         memoryStream.Position = 0;
 
                         bool resultado = await servicio.RegistrarUsuarioAsync(new Usuario()
@@ -191,7 +190,7 @@ namespace WpfCliente.GUI
 
         private void EvaluarPalabrasProhibidas()
         {
-            if (textBoxNombreUsuario.Text?.ToLower().Contains(PALABRA_PROHIBIDA_GUEST) == true)
+            if (textBoxNombreUsuario.Text?.ToLower().Contains(PALABRA_RESERVADA_GUEST) == true)
             {
                 throw new FaultException<BaseDatosFalla>(new BaseDatosFalla());
             };
@@ -248,8 +247,6 @@ namespace WpfCliente.GUI
             {
                 textBoxNombreUsuario.Style = (Style)FindResource(ESTILO_NORMAL_TEXTO);
                 textBoxCorreo.Style = (Style)FindResource(ESTILO_NORMAL_TEXTO);
-                passwordBoxContrasenia.Style = (Style)FindResource(ESTILO_NORMAL_CONTRASENIA);
-                passwordBoxRepetirContrasenia.Style = (Style)FindResource(ESTILO_NORMAL_CONTRASENIA);
             }
             catch (ResourceReferenceKeyNotFoundException excepcion)
             {

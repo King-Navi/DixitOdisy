@@ -15,6 +15,7 @@ namespace WpfCliente.GUI
     {
         private const int MAXIMO_CARACTERES_PERMITIDOS = 200;
         private const int TIEMPO_ESPERA_SEGUNDOS = 10;
+        private string NOMBRE_DESCRIBELO = "Describelo";
         public ChatUserControl()
         {
             this.Loaded += CargarNuevoContexto;
@@ -62,7 +63,7 @@ namespace WpfCliente.GUI
                 {
                     Mensaje = Properties.Idioma.mensajeProfe,
                     HoraFecha = DateTime.Now,
-                    Nombre = "Describelo"
+                    Nombre = NOMBRE_DESCRIBELO
                 });
                 return;
             }

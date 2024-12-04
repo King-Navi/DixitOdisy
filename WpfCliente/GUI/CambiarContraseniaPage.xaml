@@ -50,23 +50,76 @@
         <Label HorizontalAlignment="Center" Foreground="White" Content="Cambiar contraseña" x:Name="labelCambioContrasenia"  FontFamily="Lucida Sans Unicode Bold" FontSize="33" HorizontalContentAlignment="Center" Margin="0,82,0,602" Width="494"/>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,673,0,0">
-            <Button Content="Cancelar cambios" x:Name="buttonCancelarCambio" Click="ClicButtonCancelar"  Background="#E0DCC7" Width="200" Height="51" FontSize="20" Margin="0,0,20,0"/>
-            <Button Content="Cambiar contraseña" x:Name="buttonEditarContrasenia"  Click="ClicButtonEditarContraseniaAsync"  Background="#E0DCC7" Height="51" Width="210" FontSize="20"/>
+            <Button Content="Cancelar cambios" 
+                    x:Name="buttonCancelarCambio" 
+                    Click="ClicButtonCancelar"  
+                    Background="#E0DCC7" 
+                    Width="200" Height="51" 
+                    FontSize="20" Margin="0,0,20,0"/>
+            <Button Content="Cambiar contraseña" 
+                    x:Name="buttonEditarContrasenia"  
+                    Click="ClicButtonEditarContrasenia"  
+                    Background="#E0DCC7" 
+                    Height="51" Width="210" FontSize="20"/>
         </StackPanel>
 
         <Border Background="#E0DCC7" HorizontalAlignment="Center" VerticalAlignment="Center" Width="782" Height="413" CornerRadius="20">
             <StackPanel Orientation="Horizontal" Background="#E0DCC7" HorizontalAlignment="Left" VerticalAlignment="Center" Width="754" Height="365" Margin="10,0,0,0">
 
                 <StackPanel Orientation="Vertical" Margin="10,0" Width="794">
-                    <Label HorizontalAlignment="Center" Content="Edita tu contraseña" x:Name="labelContrasenia" Width="455" FontFamily="Lucida Sans Unicode" FontSize="33"/>
-                    <PasswordBox x:Name="passwordBoxContrasenia" Height="41" Width="454" FontSize="27"/>
-                    <Label x:Name="labelContraseniasNoCoinciden" Visibility="Collapsed" Content="Las contraseñas no coinciden" HorizontalAlignment="Left" Foreground="#FFF40000" Height="28" RenderTransformOrigin="0.426,0.32" Width="422" FontSize="14" FontWeight="Bold" FontFamily="Arial"/>
-                    <Label HorizontalAlignment="Center" Content="Confirma tu contraseña" x:Name="labelRepetirContrasenia" FontFamily="Lucida Sans Unicode" FontSize="33" Width="449"/>
-                    <PasswordBox x:Name="passwordBoxRepetirContrasenia" Height="43" Width="454" FontSize="27"/>
-                    <Label x:Name="labelContraseniaInstruccion" Content="La contraseña debe contener:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Black" Height="31" RenderTransformOrigin="0.426,0.32" Width="217" FontSize="14" FontWeight="Bold" FontFamily="Arial"/>
-                    <Label x:Name="labelContraseniaMinimo" Content="Al menos 5 caracteres" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF40000" Height="28" RenderTransformOrigin="0.426,0.32" Width="180" FontSize="14" FontWeight="Bold" FontFamily="Arial"/>
-                    <Label x:Name="labelContraseniaMaximo" Content="No mas de 20 caracteres" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF40000" Height="28" RenderTransformOrigin="0.426,0.32" Width="233" FontSize="14" FontWeight="Bold" FontFamily="Arial"/>
-                    <Label x:Name="labelContraseniaSimbolos" Content="Al menos un símbolo (ej. !,#,$,%,&amp;)" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF40000" Height="28" RenderTransformOrigin="0.426,0.32" Width="251" FontSize="14" FontWeight="Bold" FontFamily="Arial"/>
+                    <Label HorizontalAlignment="Center" 
+                           Content="Edita tu contraseña" 
+                           x:Name="labelContrasenia" 
+                           Width="455" 
+                           FontFamily="Lucida Sans Unicode" 
+                           FontSize="33"/>
+                    <PasswordBox 
+                        x:Name="passwordBoxContrasenia" 
+                        Height="41" 
+                        Width="454" 
+                        FontSize="27"/>
+                    <Label x:Name="labelContraseniasNoCoinciden"
+                          Visibility="Collapsed" 
+                           Content="Las contraseñas no coinciden" 
+                           HorizontalAlignment="Left" Foreground="#FFF40000" 
+                           Height="28" RenderTransformOrigin="0.426,0.32" 
+                           Width="422" FontSize="14" 
+                           FontWeight="Bold" FontFamily="Arial"/>
+                    <Label HorizontalAlignment="Center" 
+                           Content="Confirma tu contraseña" 
+                           x:Name="labelRepetirContrasenia" 
+                           FontFamily="Lucida Sans Unicode" 
+                           FontSize="33" Width="449"/>
+                    <PasswordBox x:Name="passwordBoxRepetirContrasenia" 
+                                 Height="43" Width="454" 
+                                 FontSize="27"/>
+                    <Label x:Name="labelContraseniaInstruccion" 
+                           Content="La contraseña debe contener:" 
+                           HorizontalAlignment="Left" 
+                           VerticalAlignment="Top" 
+                           Foreground="Black" 
+                           Height="31" RenderTransformOrigin="0.426,0.32" 
+                           Width="217" FontSize="14" FontWeight="Bold" 
+                           FontFamily="Arial"/>
+                    <Label x:Name="labelContraseniaMinimo" 
+                           Content="Al menos 5 caracteres" 
+                           HorizontalAlignment="Left" VerticalAlignment="Top" 
+                           Foreground="#FFF40000" Height="28" 
+                           RenderTransformOrigin="0.426,0.32" Width="180" 
+                           FontSize="14" FontWeight="Bold" FontFamily="Arial"/>
+                    <Label x:Name="labelContraseniaMaximo" 
+                           Content="No mas de 20 caracteres" 
+                           HorizontalAlignment="Left" VerticalAlignment="Top" 
+                           Foreground="#FFF40000" Height="28" 
+                           RenderTransformOrigin="0.426,0.32" Width="233" 
+                           FontSize="14" FontWeight="Bold" FontFamily="Arial"/>
+                    <Label x:Name="labelContraseniaSimbolos" 
+                           Content="Al menos un símbolo (ej. !,#,$,%,&amp;)" 
+                           HorizontalAlignment="Left" VerticalAlignment="Top" 
+                           Foreground="#FFF40000" Height="28" 
+                           RenderTransformOrigin="0.426,0.32"
+                           Width="251" FontSize="14" 
+                           FontWeight="Bold" FontFamily="Arial"/>
                 </StackPanel>
             </StackPanel>
         </Border>

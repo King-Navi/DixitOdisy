@@ -1,4 +1,10 @@
 ﻿C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\App.xaml.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\PrincipalWindow.xaml.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\ImplementacionesCallbacks\SingletonConexion.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\ImplementacionesCallbacks\SingletonSalaJugador.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\ImplementacionesCallbacks\SingletonInvitacionPartida.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Interfaz\INavegacion.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\ManejadorAplicacion\SingletonGestorVentana.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Estilos\Control\ArcSpinner.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Estilos\Control\CogwheelSpinner.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Estilos\Control\DonutSpinner.cs
@@ -7,26 +13,28 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Estilos\Control\ThreeDotsAnima
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Estilos\Control\WaveAnimation.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Estilos\Converters\DiameterAndThicknessToStrokeDashArrayConverter.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\AmigoUserControl.xaml.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\CambiarContraseniaWindow.xaml.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\CambiarContraseniaPage.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\ChatUserControl.xaml.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\EditarPerfilWindow.xaml.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\EditarPerfilPage.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\EsperaRestoJugadoresUserControl.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\IngresarGamertagModalWindow.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\InicioRondaUserControl.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\ListaAmigosUserControl.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\ListaSolicitudesAmistadUserControl.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\ListaUsuariosSalaUserControl.xaml.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\MenuWindow.xaml.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\MenuPage.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\MostrarCartaModalWindow.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\NarradorSeleccionCartaUserControl.xaml.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\AmigosWindow.xaml.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\PartidaWindow.xaml.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\AmigosPage.xaml.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\PartidaPage.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\PerfilMenuDesplegableUserControl.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\UsuarioUserControl.xaml.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\ImplementacionesCallbacks\SingletonUsuarioSesionJugador.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Servidor\SolicitudAmistad.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\RecursosCompartidosPartida.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\RegistrarUsuarioWindow.xaml.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\RegistrarUsuarioPage.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\ResumenRondaUserControl.xaml.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\SalaEsperaWindow.xaml.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\SalaEsperaPage.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\SeleccionCartaUsercontrol.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\SolicitudAmistadUserControl.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\UnirseSalaModalWindow.xaml.cs
@@ -37,22 +45,24 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Interfaz\IHabilitadorBotones.c
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ComandoRele.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Correo.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\EstadisticaUsuario.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Servidor\Amigo.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Servidor\ChatMensaje.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Servidor\Amigo.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Servidor\ChatMensaje.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Conexion.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\CambiarIdioma.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Interfaz\IActualizacionUI.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Encriptacion.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\IdiomaGuardo.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\CambiarIdiomaUserControl.xaml.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\IniciarSesionWindow.xaml.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\IniciarSesionPage.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Imagen.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ManejadorLogger.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ManejadorExcepciones.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Servidor\Usuario.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Servidor\Usuario.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\ImplementacionesCallbacks\SingletonAmigos.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\SingletonConexion.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Utilidades.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ServicioManejador.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Servidor\ImagenCarta.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Servidor\ImagenCarta.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\SingletonCliente.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ValidacionExistenciaJuego.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ValidacionesString.cs
@@ -63,7 +73,7 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Properties\Idioma.es-MX.resx
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Properties\Idioma.resx
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDescribelo\service.wsdl
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDescribelo\service.xsd
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDescribelo\service1.xsd
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDescribelo\service2.xsd
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDescribelo\System.IO.xsd
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDescribelo\System.Threading.Tasks.xsd
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDescribelo\System.xsd

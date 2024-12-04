@@ -43,7 +43,10 @@
                 FontWeight="Bold"
                 Click="ClicButtonCerrarChat" Width="20" Height="20"/>
         </Grid>
-        <Button x:Name="buttonAbrirChat" Width="120" Height="120" Click="ClicButtonAbrirChat" Cursor="Hand" VerticalAlignment="Bottom" HorizontalAlignment="Right" >
+        <Button x:Name="buttonAbrirChat" 
+                Width="120" Height="120" 
+                Click="ClicButtonAbrirChat" Cursor="Hand" 
+                VerticalAlignment="Bottom" HorizontalAlignment="Right" >
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Grid>

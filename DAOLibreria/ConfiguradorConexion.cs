@@ -124,7 +124,7 @@ namespace DAOLibreria
             {
                 string contenidoArchivo = File.ReadAllText(rutaArchivo);
                 string[] partes = contenidoArchivo.Split(';');
-                if (partes.Length == 4)
+                if (partes.Length == 5)
                 {
                     foreach (string parte in partes)
                     {

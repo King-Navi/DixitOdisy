@@ -19,7 +19,6 @@ namespace WpfCliente.Contexto
         private SingletonGestorVentana() { }
         public void Iniciar()
         {
-
             PrincipalWindow ventanaPrincipal = new PrincipalWindow();
             VentanaPrincipal = ventanaPrincipal;
             ventanaPrincipal.Show();
@@ -79,12 +78,12 @@ namespace WpfCliente.Contexto
                 EvaluarMarcoNulo(nuevoMarco);
                 var ventana = VentanaPrincipal as INavegacion;
                 var marco = ventana?.MarcoNavegacion;
-
+               
                 if (marco != null)
                 {
                     marco.Navigated -= MarcoNavigacion;
                     EvaluarSiEsInicio(nuevoMarco);
-                    //EvaluarSiPartida(nuevoMarco);
+                    EvaluarSiPartida(nuevoMarco);
                     marco.Navigate(nuevoMarco);
                     return true;
                 }

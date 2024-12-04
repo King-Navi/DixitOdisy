@@ -31,12 +31,13 @@ namespace WpfCliente.GUI
             ActualizarUI();
             AbrirConexiones();
             ConfigurarTemporizadorNotificacion();
-            InicializarEstadisticasAsync();
+            _ = InicializarEstadisticasAsync();
+
         }
 
 
 
-        private async void InicializarEstadisticasAsync()
+        private async Task InicializarEstadisticasAsync()
         {
             var resutlado = await Conexion.VerificarConexionAsync(null, null);
             if (!resutlado)
@@ -76,7 +77,7 @@ namespace WpfCliente.GUI
                     SingletonGestorVentana.Instancia.Regresar();
                     return;
                 }
-                EvaluarAperturaDeCanalesAsync(resultadoUsuarioSesion);
+                _ = EvaluarAperturaDeCanalesAsync(resultadoUsuarioSesion);
             }
             catch(CommunicationException excepcion)
             {
@@ -89,7 +90,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void EvaluarAperturaDeCanalesAsync(bool esNecesarioAbrir)
+        private async Task EvaluarAperturaDeCanalesAsync(bool esNecesarioAbrir)
         {
             if (!esNecesarioAbrir)
                 return;
@@ -307,7 +308,7 @@ namespace WpfCliente.GUI
             buttonRefrescar.IsEnabled = false;
             try
             {
-                estadisticas.SolicitarEstadisticas(SingletonCliente.Instance.IdUsuario);
+                await estadisticas.SolicitarEstadisticasAsync(SingletonCliente.Instance.IdUsuario);
                 textBlockPartidasGanadas.Text = estadisticas.Estadistica.PartidasGanadas.ToString();
                 textBlockPartidasJugadas.Text = estadisticas.Estadistica.PartidasJugadas.ToString();
                 textBlockNombre.Text = SingletonCliente.Instance.NombreUsuario;

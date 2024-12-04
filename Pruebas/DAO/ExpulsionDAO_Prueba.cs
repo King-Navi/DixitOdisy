@@ -9,7 +9,6 @@ namespace Pruebas.DAO
     [TestClass]
     public class ExpulsionDAO_Prueba : ConfiguracionPruebaBD
     {
-        //precondicion: ID fijo para todas las pruebas
         private const int IDUSUARIOCUENTA_PRUEBA = 2;
         private const string MOTIVO_PRUEBA = "PRUEBA MOTIVO";
         private const bool ES_HACKER_FALSE = false;

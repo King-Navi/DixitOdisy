@@ -34,7 +34,7 @@ namespace WpfCliente.GUI
                 SingletonSalaJugador.Instancia.EmepzarPartida += EmpezarPartidaCallback;
                 JugadoresSala = SingletonSalaJugador.Instancia.JugadoresSala;
                 EsconderOpciones();
-                VerificarConexionAsync();
+                _ = VerificarConexionAsync();
                 ConfiguracionPartidaPorDefecto();
                 if (idSala == null)
                 {
@@ -45,7 +45,7 @@ namespace WpfCliente.GUI
                 {
                     SingletonCliente.Instance.IdSala = idSala;
                     SingletonCliente.Instance.IdChat = idSala;
-                    UnirseSalaAsync(idSala);
+                    _ = UnirseSalaAsync(idSala);
                 }
                 DataContext = this;
                 ActualizarUI();
@@ -104,7 +104,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void UnirseSalaAsync(string idSala)
+        private async Task UnirseSalaAsync(string idSala)
         {
             try
             {
@@ -187,7 +187,7 @@ namespace WpfCliente.GUI
                 SingletonCliente.Instance.IdChat = SingletonCliente.Instance.IdSala;
 
                 CrearChat();
-                UnirseSalaAsync(SingletonCliente.Instance.IdSala);
+                _ = UnirseSalaAsync(SingletonCliente.Instance.IdSala);
             }
             catch (Exception excepcion)
             {
@@ -440,7 +440,7 @@ namespace WpfCliente.GUI
             }
             try
             {
-                resultado = SingletonCanal.Instancia.InvitacionPartida.EnviarInvitacion(new InvitacionPartida
+                resultado = await SingletonCanal.Instancia.InvitacionPartida.EnviarInvitacionAsync(new InvitacionPartida
                 {
                     CodigoSala = SingletonCliente.Instance.IdSala,
                     NombreEmisor = SingletonCliente.Instance.NombreUsuario,
@@ -540,7 +540,7 @@ namespace WpfCliente.GUI
                     {
                         throw new ArgumentException();
                     }
-                    SingletonSalaJugador.Instancia.Sala.ExpulsarJugadorSala(
+                    await SingletonSalaJugador.Instancia.Sala.ExpulsarJugadorSalaAsync(
                         SingletonCliente.Instance.NombreUsuario,
                         usuario.Nombre,
                         SingletonCliente.Instance.IdSala);

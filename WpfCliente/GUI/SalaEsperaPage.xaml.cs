@@ -52,7 +52,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                 SingletonGestorVentana.Instancia.Regresar();
             }
         }
@@ -67,7 +67,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
         }
 
@@ -90,7 +90,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
         }
 
@@ -138,7 +138,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
         }
 
@@ -159,7 +159,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
 
         }
@@ -191,7 +191,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, Window.GetWindow(this));
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion, Window.GetWindow(this));
                 SingletonGestorVentana.Instancia.Regresar();
             }
 
@@ -210,7 +210,7 @@ namespace WpfCliente.GUI
             catch (Exception excepcion)
             {
                 SingletonGestorVentana.Instancia.Regresar();
-                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, Window.GetWindow(this));
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion, Window.GetWindow(this));
             }
 
         }
@@ -228,7 +228,7 @@ namespace WpfCliente.GUI
             catch (Exception excepcion)
             {
                 SingletonGestorVentana.Instancia.Regresar();
-                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, Window.GetWindow(this));
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion, Window.GetWindow(this));
             }
             return false;
         }
@@ -262,7 +262,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
         }
 
@@ -309,7 +309,7 @@ namespace WpfCliente.GUI
                 }
                 catch (Exception excepcion)
                 {
-                    ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
                 }
 
             }
@@ -337,7 +337,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             EvaluarCantidaRondas();
             EvaluarCondicionVictoria();
@@ -418,7 +418,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception ex)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(ex);
             }
             bool? resultado = ventanaModal.ShowDialog();
 
@@ -449,7 +449,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloInvitacionPartida,
                     Properties.Idioma.mensajeInvitacionFallida,
                     Window.GetWindow(this));
@@ -551,7 +551,7 @@ namespace WpfCliente.GUI
                 }
                 catch (Exception excepcion)
                 {
-                    ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
                 }
             }
             await Task.Delay(TimeSpan.FromSeconds(TIEMPO_CLIC_EXPULSION_SEGUNDOS));
@@ -585,7 +585,7 @@ namespace WpfCliente.GUI
                 }
                 catch(Exception excepcion)
                 {
-                    ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
                 }
             }
         }

@@ -16,12 +16,12 @@ namespace WpfCliente
             }
             catch (EndpointNotFoundException enndpointException)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(enndpointException);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(enndpointException);
                 return false;
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
                 return false;
             }
         }
@@ -34,12 +34,12 @@ namespace WpfCliente
             }
             catch (EndpointNotFoundException enndpointException)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(enndpointException);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(enndpointException);
                 return false;
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
                 return false;
             }
         }

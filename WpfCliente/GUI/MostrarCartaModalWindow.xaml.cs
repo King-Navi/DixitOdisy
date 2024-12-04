@@ -54,11 +54,11 @@ namespace WpfCliente.GUI
             }
             catch (InvalidOperationException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (Exception excepcion)
             { 
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion); 
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion); 
             }
         }
 

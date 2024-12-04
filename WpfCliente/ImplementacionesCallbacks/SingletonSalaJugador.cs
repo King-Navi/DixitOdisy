@@ -40,7 +40,7 @@ namespace WpfCliente.ImplementacionesCallbacks
             catch (Exception excepcion)
             {
                 CerrarConexion();
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                 return false;
             }
 
@@ -64,7 +64,7 @@ namespace WpfCliente.ImplementacionesCallbacks
             catch (Exception excepcion)
             {
                 Sala = null;
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                 return false;
             }
             return true;

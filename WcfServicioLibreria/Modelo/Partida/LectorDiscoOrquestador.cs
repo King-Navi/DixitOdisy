@@ -51,7 +51,7 @@ namespace WcfServicioLibreria.Modelo
             {
                 if (lectoresDisco.Count == 0)
                 {
-                    ManejadorExcepciones.ManejarFatalException(new InvalidOperationException("No hay lectores disponibles para asignar el trabajo."));
+                    ManejadorExcepciones.ManejarExcepcionFatal(new InvalidOperationException("No hay lectores disponibles para asignar el trabajo."));
                     throw new InvalidOperationException();
                 }
                 var lectorSeleccionado = lectoresDisco[indiceActual];

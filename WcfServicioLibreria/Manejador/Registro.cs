@@ -39,17 +39,17 @@ namespace WcfServicioLibreria.Manejador
                 {
                     EsGamertagDuplicado = true
                 };
-                ManejadorExcepciones.ManejarErrorException(excepcionGamertag);
+                ManejadorExcepciones.ManejarExcepcionError(excepcionGamertag);
                 throw new FaultException<BaseDatosFalla>(excepcionBaseDatos, new FaultReason(NOMBRE_EN_USO));
 
             }
             catch (ArgumentNullException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
 
             return resultado;

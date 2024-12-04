@@ -63,10 +63,10 @@ namespace WcfServicioLibreria.Modelo
                 }
                 catch (Exception excepcionComunicacion)
                 {
-                    ManejadorExcepciones.ManejarErrorException(excepcionComunicacion);
+                    ManejadorExcepciones.ManejarExcepcionError(excepcionComunicacion);
 
                 }
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             return resultado;
         }

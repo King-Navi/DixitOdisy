@@ -47,7 +47,7 @@ namespace WcfServicioLibreria.Modelo
                 }
                 catch (Exception excecpion)
                 {
-                    ManejadorExcepciones.ManejarErrorException(excecpion);
+                    ManejadorExcepciones.ManejarExcepcionError(excecpion);
                 }
             }
         }
@@ -61,7 +61,7 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (Exception excecpion)
             {
-                ManejadorExcepciones.ManejarErrorException(excecpion);
+                ManejadorExcepciones.ManejarExcepcionError(excecpion);
             }
         }
 

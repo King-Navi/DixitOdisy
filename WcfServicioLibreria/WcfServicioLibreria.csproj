@@ -171,7 +171,7 @@
     <Compile Include="Utilidades\IManejadorImagen.cs" />
     <Compile Include="Utilidades\IMediadorImagen.cs" />
     <Compile Include="Utilidades\IObservador.cs" />
-    <Compile Include="Utilidades\LoggerManejador.cs" />
+    <Compile Include="Utilidades\ManejadorBitacora.cs" />
     <Compile Include="Utilidades\ManejadorExcepciones.cs" />
     <Compile Include="Utilidades\Rutas.cs" />
     <Compile Include="Utilidades\Utilidad.cs" />

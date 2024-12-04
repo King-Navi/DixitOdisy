@@ -148,7 +148,7 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
         }
 
@@ -209,7 +209,7 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 throw new FaultException<PartidaFalla>(new PartidaFalla()
                 {
                     ErrorAlUnirse = true
@@ -292,7 +292,7 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
                 throw;
             }
         }
@@ -305,7 +305,7 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
                 throw;
             }
         }
@@ -363,7 +363,7 @@ namespace WcfServicioLibreria.Modelo
                     }
                     catch (Exception excepcion)
                     {
-                        ManejadorExcepciones.ManejarErrorException(excepcion);
+                        ManejadorExcepciones.ManejarExcepcionError(excepcion);
                     }
                     EliminarPartida();
                 }

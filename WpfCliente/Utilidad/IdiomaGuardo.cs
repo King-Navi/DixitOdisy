@@ -53,7 +53,7 @@ namespace WpfCliente.Persistencia
             }
             catch (CultureNotFoundException ex)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(ex);
             }
         }
         /// <summary>
@@ -69,7 +69,7 @@ namespace WpfCliente.Persistencia
             }
             catch (CultureNotFoundException ex)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(ex);
             }
         }
     }

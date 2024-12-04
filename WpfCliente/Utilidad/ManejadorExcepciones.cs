@@ -8,16 +8,17 @@ namespace WpfCliente.Utilidad
 {
     public static class ManejadorExcepciones
     {
-        private static readonly ILogger logger = ManejadorLogger.ObtenerLogger();
-        private const string MENSAJE_ERROR_EXCEPTION = "Error exception:\n";
-        private const string MENSAJE_FATAL_EXCEPTION = "Fatal exception:\n";
-        private const string MENSAJE_COMPONENT_ERROR_EXCEPTION = "Component error exception:\n";
-        private const string MENSAJE_COMPONENT_FATAL_EXCEPTION = "Component fatal exception:\n";
-        private const string MENSAJE_TIPO_EXCEPCION = "Tipo de excepción: ";
+        private static readonly ILogger bitacora = ManejadorBitacora.ObtenerBitacora();
+        private const string MENSAJE_ERROR_EXCEPTION = "Error exception:";
+        private const string MENSAJE_FATAL_EXCEPTION = "Fatal exception:";
+        private const string MENSAJE_COMPONENT_ERROR_EXCEPTION = "Component error exception:";
+        private const string MENSAJE_COMPONENT_FATAL_EXCEPTION = "Component fatal exception:";
+        private const string MENSAJE_EXCEPTION_TYPE = "Exception type:";
 
-        public static void ManejarErrorExcepcion(Exception excepcion, Window ventana)
+        public static void ManejarExcepcionError(Exception excepcion, Window ventana)
         {
-            logger.Error(MENSAJE_ERROR_EXCEPTION + MENSAJE_TIPO_EXCEPCION +  excepcion.GetType() + "\n" + excepcion.Message + "\n" + excepcion.StackTrace + "\n");
+            bitacora.Error("{MENSAJE_ERROR_EXCEPTION} {MENSAJE_EXCEPTION_TYPE} {ExceptionType} \n {Message} \n {StackTrace}",
+                MENSAJE_ERROR_EXCEPTION, MENSAJE_EXCEPTION_TYPE, excepcion.GetType(), excepcion.Message, excepcion.StackTrace);
 
             if (ventana != null)
             {
@@ -26,9 +27,10 @@ namespace WpfCliente.Utilidad
             }
         }
 
-        public static void ManejarFatalExcepcion(Exception excepcion, Window ventana)
+        public static void ManejarExcepcionFatal(Exception excepcion, Window ventana)
         {
-            logger.Fatal(MENSAJE_FATAL_EXCEPTION + excepcion.Message + "\n" + excepcion.StackTrace + "\n");
+            bitacora.Fatal("{MENSAJE_FATAL_EXCEPTION} \n {Message} \n {StackTrace}",
+                MENSAJE_FATAL_EXCEPTION, excepcion.Message, excepcion.StackTrace);
 
             if (ventana != null)
             {
@@ -37,14 +39,16 @@ namespace WpfCliente.Utilidad
             }
         }
 
-        public static void ManejarComponenteErrorExcepcion(Exception excepcion)
+        public static void ManejarExcepcionErrorComponente(Exception excepcion)
         {
-            logger.Error(MENSAJE_COMPONENT_ERROR_EXCEPTION + MENSAJE_TIPO_EXCEPCION + excepcion.GetType() + "\n" + excepcion.Message + "\n" + excepcion.StackTrace + "\n");
+            bitacora.Error("{MENSAJE_COMPONENT_ERROR_EXCEPTION} {MENSAJE_EXCEPTION_TYPE} {ExceptionType} \n {Message} \n {StackTrace}",
+                MENSAJE_COMPONENT_ERROR_EXCEPTION, MENSAJE_EXCEPTION_TYPE, excepcion.GetType(), excepcion.Message, excepcion.StackTrace);
         }
 
-        public static void ManejarComponenteFatalExcepcion(Exception excepcion)
+        public static void ManejarExcepcionFatalComponente(Exception excepcion)
         {
-            logger.Fatal(MENSAJE_COMPONENT_FATAL_EXCEPTION + MENSAJE_TIPO_EXCEPCION + excepcion.GetType() + "\n" + excepcion.Message + "\n" + excepcion.StackTrace + "\n");
+            bitacora.Fatal("{MENSAJE_COMPONENT_FATAL_EXCEPTION} {MENSAJE_EXCEPTION_TYPE} {ExceptionType} \n {Message} \n {StackTrace}",
+                MENSAJE_COMPONENT_FATAL_EXCEPTION, MENSAJE_EXCEPTION_TYPE, excepcion.GetType(), excepcion.Message, excepcion.StackTrace);
         }
     }
 }

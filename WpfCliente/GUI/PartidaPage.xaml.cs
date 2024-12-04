@@ -114,11 +114,11 @@ namespace WpfCliente.GUI
             }
             catch (NullReferenceException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
         }
         private async void ComandoSeleccionCorrectaAsync(string idImagen)
@@ -170,7 +170,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
         }
 
@@ -223,12 +223,12 @@ namespace WpfCliente.GUI
                         Properties.Idioma.mensajeErrorUnirsePartida,
                         Window.GetWindow(this));
                 SalirDePartida();
-                ManejadorExcepciones.ManejarErrorExcepcion(excepcion, Window.GetWindow(this));
+                ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
             }
             catch (Exception excepcion)
             {
                 SalirDePartida();
-                ManejadorExcepciones.ManejarErrorExcepcion(excepcion, Window.GetWindow(this));
+                ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
             }
         }
 

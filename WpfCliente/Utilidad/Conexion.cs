@@ -7,7 +7,7 @@ using WpfCliente.ServidorDescribelo;
 namespace WpfCliente.Utilidad
 {
     public static class Conexion
-    {   
+    {
         private static async Task<bool> HacerPingAsync()
         {
             bool resultado = false;
@@ -18,12 +18,12 @@ namespace WpfCliente.Utilidad
             }
             catch (EndpointNotFoundException enndpointException)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(enndpointException);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(enndpointException);
                 return resultado;
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                 return resultado;
             }
             return resultado;
@@ -39,7 +39,7 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                 return resultado;
             }
             return resultado;
@@ -73,7 +73,7 @@ namespace WpfCliente.Utilidad
             return true;
         }
 
-        
+
 
 
         private static void DeshabilitarVentana(Window ventana, bool estado)
@@ -94,11 +94,11 @@ namespace WpfCliente.Utilidad
             }
             catch (NullReferenceException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             return resultado;
         }

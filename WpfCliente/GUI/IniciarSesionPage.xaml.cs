@@ -94,7 +94,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
                 camposValidos = true;
                 throw;
             }
@@ -146,12 +146,12 @@ namespace WpfCliente.GUI
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
                                 Properties.Idioma.mensajeImagenInvalida,
                                 Window.GetWindow(this));
-                ManejadorExcepciones.ManejarErrorExcepcion(excepcion, Window.GetWindow(this));
+                ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
                 return;
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorExcepcion(excepcion, Window.GetWindow(this));
+                ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
             }
         }
 
@@ -238,7 +238,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorExcepcion(excepcion, Window.GetWindow(this));
+                ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
             }
             
         }

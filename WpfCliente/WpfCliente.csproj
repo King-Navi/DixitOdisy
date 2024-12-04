@@ -235,7 +235,7 @@
       <DependentUpon>IniciarSesionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilidad\Imagen.cs" />
-    <Compile Include="Utilidad\ManejadorLogger.cs" />
+    <Compile Include="Utilidad\ManejadorBitacora.cs" />
     <Compile Include="Utilidad\ManejadorExcepciones.cs" />
     <Compile Include="Servidor\Usuario.cs" />
     <Compile Include="ImplementacionesCallbacks\SingletonAmigos.cs" />

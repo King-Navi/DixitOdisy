@@ -3,16 +3,16 @@ using Serilog;
 
 namespace WcfServicioLibreria.Utilidades
 {
-    public static class LoggerManejador
+    public static class ManejadorBitacora
     {
         private const string FORMATO_FECHA = "dd-MM-yyyy";
         private const string NOMBRE_LOG = "Log";
         private const string SEPARADOR_NOMBRE_FECHA = "_";
         private const string EXTENSION_LOG = ".txt";
         private const string NOMBRE_CARPETA_INCIDENTES = "Logs";
-        private static ILogger logger;
+        private static ILogger bitacora;
 
-        private static void ConfigurarLogger(string logFilePath)
+        private static void ConfigurarBitacora(string logFilePath)
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
@@ -24,7 +24,7 @@ namespace WcfServicioLibreria.Utilidades
         {
             DateTime fechaActual = DateTime.Today;
             string fecha = fechaActual.ToString(FORMATO_FECHA);
-            string archivoLoggerNombre = NOMBRE_LOG + SEPARADOR_NOMBRE_FECHA + fecha + EXTENSION_LOG;
+            string archivoBitacoraNombre = NOMBRE_LOG + SEPARADOR_NOMBRE_FECHA + fecha + EXTENSION_LOG;
 
             string rutaBase = AppDomain.CurrentDomain.BaseDirectory;
             string rutaLogs = System.IO.Path.Combine(rutaBase, NOMBRE_CARPETA_INCIDENTES);
@@ -32,21 +32,21 @@ namespace WcfServicioLibreria.Utilidades
             {
                 System.IO.Directory.CreateDirectory(rutaLogs);
             }
-            string rutaLogger = System.IO.Path.Combine(rutaLogs, archivoLoggerNombre);
+            string rutaBitacora = System.IO.Path.Combine(rutaLogs, archivoBitacoraNombre);
 
-            return rutaLogger;
+            return rutaBitacora;
         }
 
-        public static ILogger ObtenerLogger()
+        public static ILogger ObtenerBitacora()
         {
-            if (logger == null)
+            if (bitacora == null)
             {
-                string rutaLogger = ContruirRutaArchivo();
-                ConfigurarLogger(rutaLogger);
+                string rutaBitacora = ContruirRutaArchivo();
+                ConfigurarBitacora(rutaBitacora);
             }
 
-            logger = Log.Logger;
-            return logger;
+            bitacora = Log.Logger;
+            return bitacora;
         }
     }
 }

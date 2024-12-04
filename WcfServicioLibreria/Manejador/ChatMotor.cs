@@ -31,7 +31,7 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             return false;
         }
@@ -49,7 +49,7 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
         }
     }

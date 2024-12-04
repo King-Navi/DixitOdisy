@@ -52,7 +52,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
         }
 
@@ -170,11 +170,11 @@ namespace WpfCliente.GUI
             }
             catch (IOException ex)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(ex);
             }
             catch (ArgumentNullException ex)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(ex);
             }
             catch (FaultException<BaseDatosFalla>)
             {
@@ -183,7 +183,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception ex)
             {
-                ManejadorExcepciones.ManejarFatalExcepcion(ex, Window.GetWindow(this));
+                ManejadorExcepciones.ManejarExcepcionFatal(ex, Window.GetWindow(this));
             }
             return false;
         }
@@ -209,7 +209,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
         }
 
@@ -250,15 +250,15 @@ namespace WpfCliente.GUI
             }
             catch (ResourceReferenceKeyNotFoundException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             catch (ArgumentNullException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             labelCorreoInvalido.Visibility = Visibility.Hidden;
             labelCorreoExistente.Visibility = Visibility.Hidden;

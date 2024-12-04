@@ -58,11 +58,11 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (ArgumentNullException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
         }
 
@@ -81,11 +81,11 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (OperationCanceledException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             await TerminarPartidaAsync();
         }
@@ -104,7 +104,7 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             CambiarPantalla(PANTALLA_ESTADISTICAS);
             await Task.Delay(TimeSpan.FromSeconds(TIEMPO_MOSTRAR_ESTADISTICAS));
@@ -271,11 +271,11 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (TimeoutException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (CommunicationException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
 
         }
@@ -321,11 +321,11 @@ namespace WcfServicioLibreria.Modelo
                 }
                 catch (TimeoutException excepcion)
                 {
-                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 }
                 catch (CommunicationException excepcion)
                 {
-                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 }
             };
         }
@@ -348,11 +348,11 @@ namespace WcfServicioLibreria.Modelo
                 }
                 catch (CommunicationException excepcion)
                 {
-                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 }
                 catch (Exception excepcion)
                 {
-                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 }
             }
         }
@@ -371,16 +371,16 @@ namespace WcfServicioLibreria.Modelo
                 }
                 catch (TimeoutException excepcion)
                 {
-                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 }
                 catch (CommunicationException excepcion)
                 {
-                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 }
                 catch (Exception excepcion)
                 {
                     await RemoverJugadorAsync(nombre);
-                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 }
             };
         }
@@ -446,15 +446,15 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (TimeoutException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (CommunicationException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
         }
 
@@ -487,16 +487,16 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (TimeoutException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (CommunicationException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {
                 DesconectarUsuario(narrador);
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             finally
             {
@@ -601,11 +601,11 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (CommunicationException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             MostrarPistaJugadores();
 
@@ -633,7 +633,7 @@ namespace WcfServicioLibreria.Modelo
                             }
                             catch (Exception excepcion)
                             {
-                                ManejadorExcepciones.ManejarErrorException(excepcion);
+                                ManejadorExcepciones.ManejarExcepcionError(excepcion);
                             }
                             return null;
                         })
@@ -663,15 +663,15 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (TimeoutException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (CommunicationException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
         }
 
@@ -692,15 +692,15 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (TimeoutException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (CommunicationException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
         }
     }

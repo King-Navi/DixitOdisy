@@ -35,7 +35,7 @@ namespace WpfCliente.ImplementacionesCallbacks
             catch (Exception excepcion)
             {
                 CerrarConexionUsuarioSesion();
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                 return false;
             }
 
@@ -54,7 +54,7 @@ namespace WpfCliente.ImplementacionesCallbacks
             catch (Exception excepcion)
             {
                 UsuarioSesion = null;
-                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, null);
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion, null);
                 return false;
             }
             return true;

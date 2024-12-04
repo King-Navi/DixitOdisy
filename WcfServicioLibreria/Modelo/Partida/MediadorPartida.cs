@@ -46,15 +46,15 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (ArgumentNullException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (InvalidOperationException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             finally
             {
@@ -83,7 +83,7 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             return null;
         }

@@ -7,7 +7,102 @@ using WpfCliente.ServidorDescribelo;
 namespace WpfCliente.Utilidad
 {
     public static class Conexion
+<<<<<<< HEAD
     {   
+=======
+    {
+        public static ServicioChatMotorClient ChatMotor { get; private set; }
+        public static ServicioPartidaSesionClient Partida { get; private set; }
+        public static Task<bool> AbrirConexionChatMotorCallbackAsync(IServicioChatMotorCallback callback)
+        {
+            ChatMotor = null;
+            Task<bool> resultado = Task.FromResult(false);
+            if (ChatMotor != null)
+            {
+                resultado = Task.FromResult(true);
+            }
+            else
+            {
+                try
+                {
+                    ChatMotor = new ServicioChatMotorClient(new System.ServiceModel.InstanceContext(callback));
+                    resultado = Task.FromResult(true);
+                }
+                catch (Exception excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionFatal(excepcion, null);
+                }
+            }
+            return resultado;
+        }
+
+        public static Task<bool> AbrirConexionPartidaCallbackAsync(IServicioPartidaSesionCallback callback)
+        {
+            Partida = null;
+            Task<bool> resultado = Task.FromResult(false);
+            if (Partida != null)
+            {
+                resultado = Task.FromResult(true);
+            }
+            else
+            {
+                try
+                {
+                    Partida = new ServicioPartidaSesionClient(new System.ServiceModel.InstanceContext(callback));
+                    resultado = Task.FromResult(true);
+                }
+                catch (Exception excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionFatal(excepcion, null);
+                }
+            }
+            return resultado;
+        }
+    
+        public static void CerrarChatMotor()
+        {
+            try
+            {
+                if (ChatMotor != null)
+                {
+                    ChatMotor?.Close();
+                }
+
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+            finally
+            {
+                ChatMotor = null;
+            }
+        } 
+      
+        public static bool CerrarPartida()
+        {
+            try
+            {
+                if (Partida != null)
+                {
+                    Partida.Close();
+                    Partida = null;
+                }
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion, null);
+                return false;
+            }
+            finally
+            {
+                Partida = null;
+            }
+            return true;
+        }
+
+    
+>>>>>>> 04/12/2024
         private static async Task<bool> HacerPingAsync()
         {
             bool resultado = false;
@@ -18,12 +113,12 @@ namespace WpfCliente.Utilidad
             }
             catch (EndpointNotFoundException enndpointException)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(enndpointException);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(enndpointException);
                 return resultado;
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                 return resultado;
             }
             return resultado;
@@ -39,7 +134,7 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                 return resultado;
             }
             return resultado;
@@ -92,13 +187,20 @@ namespace WpfCliente.Utilidad
                 ServidorDescribelo.IServicioUsuario ping = new ServicioUsuarioClient();
                 resultado = await ping.PingBDAsync();
             }
+<<<<<<< HEAD
             catch (NullReferenceException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
+=======
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+                return resultado;
+>>>>>>> 04/12/2024
             }
             return resultado;
         }

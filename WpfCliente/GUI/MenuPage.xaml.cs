@@ -55,12 +55,12 @@ namespace WpfCliente.GUI
             catch (NullReferenceException excepcion)
             {
                 gridEstadisticas.Visibility = Visibility.Collapsed;
-                ManejadorExcepciones.ManejarErrorExcepcion(excepcion, Window.GetWindow(this));
+                ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
             }
             catch (Exception excepcion)
             {
                 gridEstadisticas.Visibility = Visibility.Collapsed;
-                ManejadorExcepciones.ManejarErrorExcepcion(excepcion, Window.GetWindow(this));
+                ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
             }
         }
 
@@ -82,11 +82,11 @@ namespace WpfCliente.GUI
             catch(CommunicationException excepcion)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor,Properties.Idioma.mensajeErrorServidor, Window.GetWindow(this));
-                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, Window.GetWindow(this));
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion, Window.GetWindow(this));
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalExcepcion(excepcion, Window.GetWindow(this));
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion, Window.GetWindow(this));
             }
         }
 
@@ -132,11 +132,11 @@ namespace WpfCliente.GUI
             }
             catch(CommunicationException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
         }
 
@@ -167,7 +167,7 @@ namespace WpfCliente.GUI
             catch (Exception excepcion)
             {
 
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
         }
 
@@ -316,7 +316,7 @@ namespace WpfCliente.GUI
             catch (Exception excepcion)
             {
                 gridEstadisticas.Visibility = Visibility.Collapsed;
-                ManejadorExcepciones.ManejarErrorExcepcion(excepcion, Window.GetWindow(this));
+                ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
                 bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
                 if (!conexionExitosa)
                 {

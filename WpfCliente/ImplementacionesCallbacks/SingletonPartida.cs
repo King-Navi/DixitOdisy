@@ -57,7 +57,7 @@ namespace WpfCliente.ImplementacionesCallbacks
             catch (Exception excepcion)
             {
                 CerrarConexionPartida();
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                 return false;
             }
 
@@ -78,18 +78,18 @@ namespace WpfCliente.ImplementacionesCallbacks
             {
                 Partida?.Abort();
                 Partida = null;
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (TimeoutException excepcion)
             {
                 Partida?.Abort();
                 Partida = null;
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (Exception excepcion)
             {
                 Partida = null;
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             SingletonGestorImagenes.Instancia.CerrarConexionImagenes();
             return false;
@@ -107,7 +107,7 @@ namespace WpfCliente.ImplementacionesCallbacks
                     }
                     catch (Exception excepcion)
                     {
-                        ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                        ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                     }
                 }
             }
@@ -135,7 +135,7 @@ namespace WpfCliente.ImplementacionesCallbacks
                     }
                     catch (Exception excepcion)
                     {
-                        ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                        ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                     }
                 }
             }
@@ -159,11 +159,11 @@ namespace WpfCliente.ImplementacionesCallbacks
             }
             catch (ArgumentNullException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
         }
 
@@ -182,11 +182,11 @@ namespace WpfCliente.ImplementacionesCallbacks
             }
             catch (ArgumentNullException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
         }
 
@@ -216,7 +216,7 @@ namespace WpfCliente.ImplementacionesCallbacks
                     }
                     catch (Exception excepcion)
                     {
-                        ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                        ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                     }
                 }
             }
@@ -230,7 +230,7 @@ namespace WpfCliente.ImplementacionesCallbacks
             }
             catch (Exception exccepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(exccepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(exccepcion);
             }
         }
         private async Task UnirseChat()
@@ -258,7 +258,7 @@ namespace WpfCliente.ImplementacionesCallbacks
                     }
                     catch (Exception excepcion)
                     {
-                        ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                        ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                     }
                 }
             }

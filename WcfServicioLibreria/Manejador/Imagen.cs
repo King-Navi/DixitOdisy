@@ -22,11 +22,11 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (ArgumentNullException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             return false;
         }
@@ -45,11 +45,11 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (ArgumentNullException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             return false;
         }

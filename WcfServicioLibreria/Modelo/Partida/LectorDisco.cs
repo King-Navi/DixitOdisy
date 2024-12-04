@@ -68,14 +68,14 @@ namespace WcfServicioLibreria.Modelo
                         }
                         catch (Exception excecpione)
                         {
-                            ManejadorExcepciones.ManejarErrorException(excecpione);
+                            ManejadorExcepciones.ManejarExcepcionError(excecpione);
                         }
                     }
                 }
             }
             catch (Exception excecpiones)
             {
-                ManejadorExcepciones.ManejarFatalException( excecpiones);
+                ManejadorExcepciones.ManejarExcepcionFatal( excecpiones);
             }
         }
 
@@ -99,22 +99,22 @@ namespace WcfServicioLibreria.Modelo
                     }
                     catch (CommunicationException excecpione)
                     {
-                        ManejadorExcepciones.ManejarErrorException(excecpione);
+                        ManejadorExcepciones.ManejarExcepcionError(excecpione);
                     }
                     catch (Exception excecpione)
                     {
-                        ManejadorExcepciones.ManejarErrorException(excecpione);
+                        ManejadorExcepciones.ManejarExcepcionError(excecpione);
                     }
                 });
                 
             }
             catch (ArgumentNullException excecpione)
             {
-                ManejadorExcepciones.ManejarErrorException(excecpione);
+                ManejadorExcepciones.ManejarExcepcionError(excecpione);
             }
             catch (Exception excecpione)
             {
-                ManejadorExcepciones.ManejarErrorException(excecpione);
+                ManejadorExcepciones.ManejarExcepcionError(excecpione);
             }
         }
 
@@ -152,11 +152,11 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (AggregateException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excecpione)
             {
-                ManejadorExcepciones.ManejarErrorException(excecpione);
+                ManejadorExcepciones.ManejarExcepcionError(excecpione);
             }
             finally
             {

@@ -35,7 +35,7 @@ namespace WpfCliente.ImplementacionesCallbacks
             catch (Exception excepcion)
             {
                 CerrarConexionChat();
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                 return false;
             }
 
@@ -55,7 +55,7 @@ namespace WpfCliente.ImplementacionesCallbacks
             catch (Exception excepcion)
             {
                 ChatMotor = null;
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                 return false;
             }
             return true;

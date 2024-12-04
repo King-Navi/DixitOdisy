@@ -44,7 +44,7 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
                 throw new FaultException("Ocurrió un error inesperado al guardar la solicitud de amistad.");
             }
         }
@@ -57,11 +57,11 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (FaultException excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
             }
 
             return false;
@@ -77,11 +77,11 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (ArgumentNullException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             return id;
 
@@ -108,7 +108,7 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             return false;
 
@@ -122,11 +122,11 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (InvalidOperationException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
 
             return false;
@@ -148,11 +148,11 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (ArgumentNullException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
             }
 
             return false;
@@ -205,11 +205,11 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (ArgumentNullException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
 
             return usuariosModeloWCF;
@@ -248,15 +248,15 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (ArgumentNullException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (CommunicationException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
         }
 
@@ -274,11 +274,11 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (TimeoutException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (CommunicationException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
         }
 
@@ -308,7 +308,7 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             return null;
         }
@@ -359,11 +359,11 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (InvalidOperationException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
 
             return false;
@@ -384,11 +384,11 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (InvalidOperationException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             return false;
         }
@@ -445,7 +445,7 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             return false;
 

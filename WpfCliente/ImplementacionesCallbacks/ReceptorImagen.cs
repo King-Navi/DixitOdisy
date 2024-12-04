@@ -69,7 +69,7 @@ namespace WpfCliente.ImplementacionesCallbacks
                             catch (Exception excepcion)
                             {
                                 imagen.Abort();
-                                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
                             }
                         }
                         AbrirConexionImagen();
@@ -102,7 +102,7 @@ namespace WpfCliente.ImplementacionesCallbacks
             catch (Exception excepcion)
             {
                 CerrarConexionImagen();
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                 return false;
             }
 
@@ -125,7 +125,7 @@ namespace WpfCliente.ImplementacionesCallbacks
                 {
                     imagen = null;
                     imagen.Abort();
-                    ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                 }
                 return false;
             }

@@ -13,11 +13,11 @@ namespace WcfServicioLibreria.Utilidades
 			}
 			catch (InvalidOperationException excecpion)
 			{
-				ManejadorExcepciones.ManejarErrorException(excecpion);
+				ManejadorExcepciones.ManejarExcepcionError(excecpion);
 			}
 			catch (Exception excecpion)
 			{
-                ManejadorExcepciones.ManejarErrorException(excecpion);
+                ManejadorExcepciones.ManejarExcepcionError(excecpion);
             }
 			return default;
         }

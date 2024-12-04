@@ -38,7 +38,7 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
         }
 
@@ -62,11 +62,11 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (CommunicationException excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception execepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(execepcion);
+                ManejadorExcepciones.ManejarExcepcionError(execepcion);
             }
 
             return resultado;
@@ -102,7 +102,7 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             return resultado;
         }
@@ -157,7 +157,7 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
 
             return usuario;
@@ -183,7 +183,7 @@ namespace WcfServicioLibreria.Manejador
                 }
                 catch (Exception excepcion)
                 {
-                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 }
             }
         }

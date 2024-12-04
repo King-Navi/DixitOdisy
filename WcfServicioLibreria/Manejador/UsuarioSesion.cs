@@ -34,7 +34,7 @@ namespace WcfServicioLibreria.Manejador
                 catch (CommunicationException excepcion)
                 {
                     jugadoresConectadosDiccionario.TryRemove(usuario.IdUsuario, out _);
-                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 }
             }
             else

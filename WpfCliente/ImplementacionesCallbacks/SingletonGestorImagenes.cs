@@ -42,17 +42,17 @@ namespace WpfCliente.ImplementacionesCallbacks
                     }
                     catch (Exception excepcion)
                     {
-                        ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                        ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
                     }
                 });
             }
             catch (ArgumentNullException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
            
         }

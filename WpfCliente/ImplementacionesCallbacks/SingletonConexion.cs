@@ -22,7 +22,7 @@ namespace WpfCliente.ImplementacionesCallbacks
             catch (Exception excepcion)
             {
                 CerrarTodaConexion();
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                 return false;
             }
         }

@@ -79,11 +79,11 @@ namespace WpfCliente.GUI
             }
             catch (TimeoutException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
         }
 

@@ -44,7 +44,7 @@ namespace WcfServicioLibreria.Manejador
             {
                 partidasDiccionario.TryRemove(idPartida, out _);
                 manejadoresImagenes.TryRemove(idPartida, out _);
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
             }
             return idPartida;
         }
@@ -82,7 +82,7 @@ namespace WcfServicioLibreria.Manejador
                 }
                 catch (Exception excepcion)
                 {
-                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 }
             }
             return resultado;

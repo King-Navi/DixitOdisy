@@ -63,7 +63,7 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
             }
             return true;
         }
@@ -85,7 +85,7 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
             }
             finally
             {
@@ -116,7 +116,7 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
                 return false;
             }
         }
@@ -153,7 +153,7 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
                 return null;
             }
         }
@@ -170,15 +170,15 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (FormatException excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
             }
             catch (ArgumentException excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
             }
         }
 
@@ -209,7 +209,7 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             foreach (var rutaImagen in rutasCompletas)
             {
@@ -219,15 +219,15 @@ namespace WcfServicioLibreria.Modelo
                 }
                 catch (TimeoutException excepcion)
                 {
-                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 }
                 catch (CommunicationException excepcion)
                 {
-                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 }
                 catch (Exception excepcion)
                 {
-                    ManejadorExcepciones.ManejarErrorException(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 }
             }
         }

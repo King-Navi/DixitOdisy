@@ -26,15 +26,15 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (ArgumentNullException excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
             }
             catch (OverflowException excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarFatalException(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
             }
             return resultado;
         }

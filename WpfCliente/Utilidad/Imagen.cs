@@ -81,7 +81,11 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+<<<<<<< HEAD
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+=======
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(ex);
+>>>>>>> 04/12/2024
                 bitmap = null;
             }
             return bitmap;
@@ -106,7 +110,7 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
                 throw;
             }
         }
@@ -139,25 +143,25 @@ namespace WpfCliente.Utilidad
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
                     Properties.Idioma.mensajeArchivoNoEncontrado, ventana);
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             catch (UnauthorizedAccessException excepcion)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
                     Properties.Idioma.mensajeAccesoDenegadoArchivo, ventana);
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             catch (FileFormatException excepcion)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
                     Properties.Idioma.mensajeArchivoInvalido, ventana);
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             catch (Exception excepcion)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
                     excepcion.Message, ventana);
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             return resultado;
         }
@@ -178,11 +182,11 @@ namespace WpfCliente.Utilidad
             }
             catch (FileFormatException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             catch (NotSupportedException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             return null;
         }
@@ -218,25 +222,25 @@ namespace WpfCliente.Utilidad
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
                     Properties.Idioma.mensajeArchivoNoEncontrado, ventana);
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             catch (UnauthorizedAccessException excepcion)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
                     Properties.Idioma.mensajeAccesoDenegadoArchivo, ventana);
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             catch (FileFormatException excepcion)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
                     Properties.Idioma.mensajeArchivoInvalido, ventana);
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             catch (Exception excepcion)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
                     excepcion.Message, ventana);
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             return resultado;
         }

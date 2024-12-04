@@ -1,12 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using Pruebas.Servidor.Utilidades;
-using System.Collections.Concurrent;
 using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
-using WcfServicioLibreria.Manejador;
 using WcfServicioLibreria.Modelo;
-using WcfServicioLibreria.Utilidades;
 
 namespace Pruebas.Servidor
 {

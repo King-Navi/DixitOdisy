@@ -1,19 +1,10 @@
-﻿using DAOLibreria;
-using DAOLibreria.DAO;
-using DAOLibreria.Interfaces;
-using DAOLibreria.ModeloBD;
+﻿using DAOLibreria.ModeloBD;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Pruebas.Servidor.Utilidades;
 using System;
-using System.Collections.Concurrent;
 using System.IO;
 using System.Threading.Tasks;
-using WcfServicioLibreria.Contratos;
-using WcfServicioLibreria.Evento;
-using WcfServicioLibreria.Manejador;
-using WcfServicioLibreria.Modelo;
-using WcfServicioLibreria.Utilidades;
 
 namespace Pruebas.Servidor
 {

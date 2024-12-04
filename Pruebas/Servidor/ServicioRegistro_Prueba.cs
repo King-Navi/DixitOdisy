@@ -2,10 +2,7 @@
 using Moq;
 using Pruebas.Servidor.Utilidades;
 using System;
-using System.IO;
-using WcfServicioLibreria.Manejador;
 using WcfServicioLibreria.Modelo;
-using WcfServicioLibreria.Utilidades;
 
 namespace Pruebas.Servidor
 {

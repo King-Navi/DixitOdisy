@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
 namespace WpfCliente.ImplementacionesCallbacks
 {
-    [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Single)]
+    [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     public class ReceptorImagen : IServicioImagenCallback
     {
         private readonly object lockImagenCartasMazo = new object();

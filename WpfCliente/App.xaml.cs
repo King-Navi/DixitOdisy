@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using WpfCliente.Contexto;
-using WpfCliente.GUI;
 using WpfCliente.Persistencia;
 
 namespace WpfCliente

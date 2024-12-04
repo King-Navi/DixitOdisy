@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization;
-using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Utilidades;
@@ -41,7 +40,7 @@ namespace WcfServicioLibreria.Modelo
                         Nombre = usuarioDatos.gamertag,
                         Estado = Enumerador.EstadoAmigo.Desconectado,
                         UltimaConexion = usuarioDatos.ultimaConexion.ToString(),
-                        Foto = new MemoryStream(usuarioDatos.fotoPerfil)
+                        Foto = usuarioDatos.fotoPerfil
                     };
 
                     UsuarioSesionCallback?.CambiarEstadoAmigoCallback(amigo);

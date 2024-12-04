@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.ServiceModel;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -75,6 +72,7 @@ namespace WpfCliente.GUI
                 OnPropertyChanged();
             }
         }
+        private MostrarCartaModalWindow ventanaModalCartas;
 
         public PartidaPage(string idPartida)
         {
@@ -98,19 +96,30 @@ namespace WpfCliente.GUI
 
         private void InicializarComponenetes()
         {
-            chatUserControl.IsEnabled = false;
-            ComandoImagenGlobal = new ComandoRele<string>(ComandoImagenPorId);
-            ComandoImagenSelecionCorrecta = new ComandoRele<string>(ComandoSeleccionCorrectaAsync,
-                (param) => ComandoHabilitado);
-            narradorSeleccionCartasUserControl = new NarradorSeleccionCartaUserControl();
-            seleccionCartasUserControl = new SeleccionCartaUserControl();
-            verTodasCartasUserControl = new VerTodasCartasUserControl();
-            resumenRondaUserControl = new ResumenRondaUserControl();
-            gridPantallaCartaMazo.Children.Add(seleccionCartasUserControl);
-            gridPantallaCartasNarrador.Children.Add(narradorSeleccionCartasUserControl);
-            gridPantallaTodasCartas.Children.Add(verTodasCartasUserControl);
-            gridPantallaResumenRonda.Children.Add(resumenRondaUserControl);
-            PantallaActual = PantallasPartida.PANTALLA_INICIO;
+            try
+            {
+                chatUserControl.IsEnabled = false;
+                ComandoImagenGlobal = new ComandoRele<string>(ComandoImagenPorId);
+                ComandoImagenSelecionCorrecta = new ComandoRele<string>(ComandoSeleccionCorrectaAsync,
+                    (param) => ComandoHabilitado);
+                narradorSeleccionCartasUserControl = new NarradorSeleccionCartaUserControl();
+                seleccionCartasUserControl = new SeleccionCartaUserControl();
+                verTodasCartasUserControl = new VerTodasCartasUserControl();
+                resumenRondaUserControl = new ResumenRondaUserControl();
+                gridPantallaCartaMazo.Children.Add(seleccionCartasUserControl);
+                gridPantallaCartasNarrador.Children.Add(narradorSeleccionCartasUserControl);
+                gridPantallaTodasCartas.Children.Add(verTodasCartasUserControl);
+                gridPantallaResumenRonda.Children.Add(resumenRondaUserControl);
+                PantallaActual = PantallasPartida.PANTALLA_INICIO;
+            }
+            catch (NullReferenceException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
         }
         private async void ComandoSeleccionCorrectaAsync(string idImagen)
         {
@@ -119,9 +128,9 @@ namespace WpfCliente.GUI
                     .RealizarConsultaSegura(lista => lista.FirstOrDefault(busqueda => busqueda.IdImagen == idImagen));
             if (imagenAEscoger == null)
                 return;
-            MostrarCartaModalWindow ventanaModal = new MostrarCartaModalWindow(false, imagenAEscoger.BitmapImagen);
-            bool? resultado = ventanaModal.ShowDialog();
-            string pista = ventanaModal.Pista;
+            ventanaModalCartas = new MostrarCartaModalWindow(false, imagenAEscoger.BitmapImagen, () => ventanaModalCartas?.Close());
+            bool? resultado = ventanaModalCartas.ShowDialog();
+            string pista = ventanaModalCartas.Pista;
             if ((bool)resultado)
             {
                 contadorSeleccionAdivinar++;
@@ -155,7 +164,14 @@ namespace WpfCliente.GUI
             (ComandoImagenSelecionCorrecta as ComandoRele<string>)?.RaiseCanExecuteChanged();
 
             PantallaActual = numeroPantalla;
-
+            try
+            {
+                ventanaModalCartas?.Close();
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
         }
 
         public void NotificarNarrador(bool esNarrador)
@@ -268,8 +284,8 @@ namespace WpfCliente.GUI
             if (imagenEscogida == null)
                 return;
             string claveImagen = imagenEscogida.IdImagen;
-            MostrarCartaModalWindow ventanaModal = new MostrarCartaModalWindow(false, imagenEscogida.BitmapImagen);
-            bool? resultado = ventanaModal.ShowDialog();
+            ventanaModalCartas = new MostrarCartaModalWindow(false, imagenEscogida.BitmapImagen , () => ventanaModalCartas?.Close());
+            bool? resultado = ventanaModalCartas.ShowDialog();
             if ((bool)resultado)
             {
                 contadorSeleccion++;
@@ -298,9 +314,9 @@ namespace WpfCliente.GUI
                .RealizarConsultaSegura(lista => lista.FirstOrDefault(busqueda => busqueda.IdImagen == id));
             if (imagenAEscoger == null)
                 return;
-            MostrarCartaModalWindow ventanaModal = new MostrarCartaModalWindow(true, imagenAEscoger.BitmapImagen);
-            bool? resultado = ventanaModal.ShowDialog();
-            string pista = ventanaModal.Pista;
+            ventanaModalCartas = new MostrarCartaModalWindow(true, imagenAEscoger.BitmapImagen, () => ventanaModalCartas?.Close());
+            bool? resultado = ventanaModalCartas.ShowDialog();
+            string pista = ventanaModalCartas.Pista;
             if ((bool)resultado)
             {
                 contadorSeleccion++;

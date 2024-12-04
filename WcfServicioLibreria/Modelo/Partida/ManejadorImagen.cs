@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using System.Collections.Concurrent;
@@ -21,21 +20,18 @@ namespace WcfServicioLibreria.Modelo
     {
 
         private const int LIMITE_CARTAS_MINIMO = 0;
-        private const int NO_ARCHIVOS_RESTANTES = 0;
-        private IEscribirDisco escritor;
+        private const int LECTORESDISCO = 3;
         private IMediadorImagen mediadorImagen;
         private readonly TematicaPartida tematica;
-        private readonly Random random = new Random();
+        private IEscribirDisco escritor;
         private readonly SemaphoreSlim semaphoreLectura = new SemaphoreSlim(1, 1);
-        private readonly ConcurrentBag<string> imagenesUsadas = new ConcurrentBag<string>();
-        private readonly Lazy<string[]> archivosCache;
         private static readonly HttpClient httpCliente = new HttpClient();
         private readonly string rutaImagenes;
         private List<string> listaActualElegida;
         /// <summary>
         /// Precausion: Aumentar esto ocupara significativamente mas recursos
         /// </summary>
-        private readonly ILectorDiscoOrquestador lectorDiscoOrquetador = new LectorDiscoOrquestador(1);
+        private readonly ILectorDiscoOrquestador lectorDiscoOrquetador = new LectorDiscoOrquestador(LECTORESDISCO);
         public ManejadorImagen(IEscribirDisco _escritor, IMediadorImagen _mediadorImagen, TematicaPartida _tematica)
         {
             escritor = _escritor;

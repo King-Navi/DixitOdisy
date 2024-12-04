@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
-using WpfCliente.Interfaz;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
@@ -16,11 +11,25 @@ namespace WpfCliente.ImplementacionesCallbacks
     {
         private const string UTILIMA_CONEXION_CONECTADO = "";
         public ServicioAmistadClient Amigos { get; private set; }
-        
-        public ObservableCollection<Amigo> ListaAmigos { get;  private set; } = new ObservableCollection<Amigo>();
+        private readonly object listaAmigoBloqueo = new object();
+        public CollecionObservableSeguraHilos<Amigo> ListaAmigos { get; private set; } = new CollecionObservableSeguraHilos<Amigo>();
         private void LimpiarRecursosAmigos()
         {
-            ListaAmigos?.Clear();
+            try
+            {
+                lock (listaAmigoBloqueo)
+                {
+                    ListaAmigos?.Clear(); 
+                }
+            }
+            catch (NullReferenceException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
         }
 
         public bool AbrirConexionAmistad()
@@ -40,12 +49,16 @@ namespace WpfCliente.ImplementacionesCallbacks
                 Amigos = new ServicioAmistadClient(new System.ServiceModel.InstanceContext(this));
                 return true;
             }
+            catch (CommunicationException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
             catch (Exception excepcion)
             {
                 CerrarConexionAmigos();
                 ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
-                return false;
             }
+            return false;
 
         }
 
@@ -60,6 +73,10 @@ namespace WpfCliente.ImplementacionesCallbacks
                     Amigos = null;
                 }
             }
+            catch (NullReferenceException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
             catch (Exception excepcion)
             {
                 Amigos = null;
@@ -71,54 +88,72 @@ namespace WpfCliente.ImplementacionesCallbacks
 
         public void CambiarEstadoAmigoCallback(Amigo amigo)
         {
-            amigo.BitmapImagen = Imagen.ConvertirStreamABitmapImagen(amigo.Foto);
+            amigo.BitmapImagen = Imagen.ConvertirBytesABitmapImage(amigo.Foto);
             if (amigo != null)
             {
-                if (amigo.Estado == EstadoAmigo.Conectado)
+                lock (listaAmigoBloqueo)
                 {
-                    var amigoAEliminar = ListaAmigos.FirstOrDefault(busqueda =>
-                        busqueda.Nombre.Equals(amigo.Nombre, StringComparison.OrdinalIgnoreCase));
-                    if (amigoAEliminar != null)
+                    if (amigo.Estado == EstadoAmigo.Conectado)
                     {
-                        ListaAmigos.Remove(amigoAEliminar);
-                        amigo.UltimaConexion = UTILIMA_CONEXION_CONECTADO;
-                        amigo.EstadoActual = Properties.Idioma.labelConectado;
-                        ListaAmigos.Insert(0, amigo);
+                        var amigoAEliminar = ListaAmigos.FirstOrDefault(busqueda =>
+                            busqueda.Nombre.Equals(amigo.Nombre, StringComparison.OrdinalIgnoreCase));
+                        if (amigoAEliminar != null)
+                        {
+                            ListaAmigos.Remove(amigoAEliminar);
+                            amigo.UltimaConexion = UTILIMA_CONEXION_CONECTADO;
+                            amigo.EstadoActual = Properties.Idioma.labelConectado;
+                            ListaAmigos.Insert(0, amigo);
+                        }
                     }
-                }
-                else
-                {
-                    var amigoAEliminar = ListaAmigos.FirstOrDefault(busqueda =>
-                        busqueda.Nombre.Equals(amigo.Nombre, StringComparison.OrdinalIgnoreCase));
-                    if (amigoAEliminar != null)
+                    else
                     {
-                        ListaAmigos.Remove(amigoAEliminar);
-                        amigo.EstadoActual = Properties.Idioma.labelDesconectado;
-                        ListaAmigos.Insert(0, amigo);
-                    }
+                        var amigoAEliminar = ListaAmigos.FirstOrDefault(busqueda =>
+                            busqueda.Nombre.Equals(amigo.Nombre, StringComparison.OrdinalIgnoreCase));
+                        if (amigoAEliminar != null)
+                        {
+                            ListaAmigos.Remove(amigoAEliminar);
+                            amigo.EstadoActual = Properties.Idioma.labelDesconectado;
+                            ListaAmigos.Insert(0, amigo);
+                        }
+                    } 
                 }
             }
         }
 
         public void ObtenerAmigoCallback(Amigo amigo)
         {
-            if (amigo == null)
+            try
             {
-                return;
-            }
-            else
-            {
-                if (amigo.Estado == EstadoAmigo.Desconectado)
+                if (amigo == null)
                 {
-                    amigo.EstadoActual = Properties.Idioma.labelDesconectado;
+                    return;
                 }
-                if (amigo.Estado == EstadoAmigo.Conectado)
+                else
                 {
-                    amigo.EstadoActual = Properties.Idioma.labelConectado;
-                    amigo.UltimaConexion = UTILIMA_CONEXION_CONECTADO;
+                    lock (listaAmigoBloqueo)
+                    {
+                        if (amigo.Estado == EstadoAmigo.Desconectado)
+                        {
+                            amigo.EstadoActual = Properties.Idioma.labelDesconectado;
+                        }
+                        if (amigo.Estado == EstadoAmigo.Conectado)
+                        {
+                            amigo.EstadoActual = Properties.Idioma.labelConectado;
+                            amigo.UltimaConexion = UTILIMA_CONEXION_CONECTADO;
+
+                        }
+                        ListaAmigos.Add(amigo);
+                    }
 
                 }
-                ListaAmigos.Add(amigo);
+            }
+            catch (NullReferenceException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
         }
 
@@ -128,12 +163,26 @@ namespace WpfCliente.ImplementacionesCallbacks
             {
                 return;
             }
-            var amigoAEliminar = ListaAmigos.FirstOrDefault(busqueda =>
-                busqueda.Nombre.Equals(amigo.Nombre, StringComparison.OrdinalIgnoreCase));
-
-            if (amigoAEliminar != null)
+            try
             {
-                ListaAmigos.Remove(amigoAEliminar);
+                lock (listaAmigoBloqueo)
+                {
+                    var amigoAEliminar = ListaAmigos.FirstOrDefault(busqueda =>
+                                    busqueda.Nombre.Equals(amigo.Nombre, StringComparison.OrdinalIgnoreCase));
+
+                    if (amigoAEliminar != null)
+                    {
+                        ListaAmigos.Remove(amigoAEliminar);
+                    } 
+                }
+            }
+            catch (NullReferenceException excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
             }
         }
     }

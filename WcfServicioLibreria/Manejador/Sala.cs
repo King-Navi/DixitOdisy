@@ -1,6 +1,5 @@
 ﻿using DAOLibreria.DAO;
 using System;
-using System.Runtime.InteropServices;
 using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Evento;

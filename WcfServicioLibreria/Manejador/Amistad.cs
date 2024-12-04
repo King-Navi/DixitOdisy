@@ -1,11 +1,8 @@
-﻿using DAOLibreria.DAO;
-using DAOLibreria.Excepciones;
+﻿using DAOLibreria.Excepciones;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.ServiceModel;
-using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Enumerador;
 using WcfServicioLibreria.Evento;
@@ -186,7 +183,7 @@ namespace WcfServicioLibreria.Manejador
                     {
                         Nombre = amigoDestinario.gamertag,
                         Estado = estadoJugador,
-                        Foto = new MemoryStream(amigoDestinario.fotoPerfil),
+                        Foto = amigoDestinario.fotoPerfil,
                         UltimaConexion = amigoDestinario.ultimaConexion.ToString()
 
                     };
@@ -250,7 +247,7 @@ namespace WcfServicioLibreria.Manejador
                                 {
                                     remitente.EnviarAmigoActulizadoCallback(new Amigo()
                                     {
-                                        Foto = new MemoryStream(_destinatario.fotoPerfil),
+                                        Foto = _destinatario.fotoPerfil,
                                         Nombre = _destinatario.gamertag,
                                         Estado = EstadoAmigo.Conectado,
                                         UltimaConexion = _destinatario.ultimaConexion.ToString()
@@ -269,7 +266,7 @@ namespace WcfServicioLibreria.Manejador
                                 {
                                     destinatario.EnviarAmigoActulizadoCallback(new Amigo()
                                     {
-                                        Foto = new MemoryStream(_remitente.fotoPerfil),
+                                        Foto = _remitente.fotoPerfil,
                                         Nombre = _remitente.gamertag,
                                         Estado = EstadoAmigo.Conectado,
                                         UltimaConexion = _remitente.ultimaConexion.ToString()
@@ -352,7 +349,7 @@ namespace WcfServicioLibreria.Manejador
                         {
                             Nombre = amigoRemitente.gamertag,
                             Estado = EstadoAmigo.Desconectado,
-                            Foto = new MemoryStream(amigoRemitente.fotoPerfil),
+                            Foto = amigoRemitente.fotoPerfil,
                             UltimaConexion = amigoRemitente.ultimaConexion.ToString()
 
                         };

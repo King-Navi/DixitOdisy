@@ -1,12 +1,9 @@
-﻿using DAOLibreria.DAO;
-using DAOLibreria.Interfaces;
+﻿using DAOLibreria.Interfaces;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Runtime.Remoting.Contexts;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Threading;

@@ -152,8 +152,6 @@ namespace WpfCliente.ServidorDescribelo {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Amigo", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.IO.MemoryStream))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.IO.FileStream))]
     public partial class Amigo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -163,7 +161,7 @@ namespace WpfCliente.ServidorDescribelo {
         private WpfCliente.ServidorDescribelo.EstadoAmigo EstadoField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.IO.Stream FotoField;
+        private byte[] FotoField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NombreField;
@@ -195,7 +193,7 @@ namespace WpfCliente.ServidorDescribelo {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.IO.Stream Foto {
+        public byte[] Foto {
             get {
                 return this.FotoField;
             }

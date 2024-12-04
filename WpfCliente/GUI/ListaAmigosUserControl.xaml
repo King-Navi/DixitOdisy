@@ -18,7 +18,7 @@
             </StackPanel>
             <Grid>
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ItemsControl x:Name="itemsControlAmigos" Background="#A9A9A9" ItemsSource="{Binding Amigos}">
+                    <ItemsControl x:Name="itemsControlAmigos" Background="#A9A9A9" ItemsSource="{Binding ListaAmigos}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Vertical" HorizontalAlignment="Left" />
@@ -27,7 +27,7 @@
 
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <local:AmigoUserControl DataContext="{Binding}" />
+                                <local:AmigoUserControl DataContext="{Binding }" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>

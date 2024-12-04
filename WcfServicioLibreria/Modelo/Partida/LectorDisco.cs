@@ -17,6 +17,7 @@ namespace WcfServicioLibreria.Modelo
         private readonly Task tareaLectura;
         private bool detener = false;
         private bool lecturaYaDetenida = false; 
+        private readonly int CERO = 0; 
         public int ColaCount => colaLectura.Count;
 
         public LectorDisco()
@@ -44,7 +45,7 @@ namespace WcfServicioLibreria.Modelo
             {
                 while (!detener || !colaLectura.IsCompleted)
                 {
-                    foreach (var lecturaTrabajo in colaLectura.GetConsumingEnumerable())
+                    foreach (var lecturaTrabajo in colaLectura.GetConsumingEnumerable(cancelacion))
                     {
                         try
                         {
@@ -52,7 +53,7 @@ namespace WcfServicioLibreria.Modelo
                             using (var fileStream = new FileStream(lecturaTrabajo.ArchivoPath, FileMode.Open, FileAccess.Read, FileShare.Read, 16384, useAsync: true))
                             {
                                 imagenBytes = new byte[fileStream.Length];
-                                await fileStream.ReadAsync(imagenBytes, 0, (int)fileStream.Length);
+                                await fileStream.ReadAsync(imagenBytes, CERO, (int)fileStream.Length);
                             }
                             string nombreSinExtension = Path.GetFileNameWithoutExtension(lecturaTrabajo.ArchivoPath);
                             using (var imagenStream = new MemoryStream(imagenBytes))
@@ -62,34 +63,12 @@ namespace WcfServicioLibreria.Modelo
                                     IdImagen = nombreSinExtension,
                                     ImagenStream = imagenStream
                                 };
-                                try
-                                {
-                                    EvaluarCanalValido(lecturaTrabajo.Callback);
-                                    if (lecturaTrabajo.UsarGrupo)
-                                    {
-                                        lecturaTrabajo.Callback.RecibirGrupoImagenCallback(imagenCarta);
-                                        Console.WriteLine($"El {idLector} envio la imagen {nombreSinExtension} en modo grupo");
-                                    }
-                                    else
-                                    {
-                                        lecturaTrabajo.Callback.RecibirImagenCallback(imagenCarta);
-                                        Console.WriteLine($"El {idLector} envio la imagen {nombreSinExtension} ");
-                                    }
-                                }
-                                catch (CommunicationException excecpione)
-                                {
-                                    ManejadorExcepciones.ManejarErrorException(excecpione);
-                                }
-                                catch (Exception excecpione)
-                                {
-                                    ManejadorExcepciones.ManejarErrorException(excecpione);
-                                }
+                                EnviarImagenHilo(lecturaTrabajo, imagenCarta);
                             }
                         }
                         catch (Exception excecpione)
                         {
                             ManejadorExcepciones.ManejarErrorException(excecpione);
-                            Console.WriteLine($"Error al leer la imagen: {excecpione.Message}");
                         }
                     }
                 }
@@ -97,11 +76,45 @@ namespace WcfServicioLibreria.Modelo
             catch (Exception excecpiones)
             {
                 ManejadorExcepciones.ManejarFatalException( excecpiones);
-                Console.WriteLine($"[{idLector}] Procesamiento cancelado.");
             }
-            finally
+        }
+
+        private void EnviarImagenHilo(LecturaTrabajo lecturaTrabajo , ImagenCarta imagenCarta)
+        {
+            try
             {
-                Console.WriteLine($"[{idLector}] Tarea finalizada.");
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        EvaluarCanalValido(lecturaTrabajo.Callback);
+                        if (lecturaTrabajo.UsarGrupo)
+                        {
+                            lecturaTrabajo.Callback.RecibirGrupoImagenCallback(imagenCarta);
+                        }
+                        else
+                        {
+                            lecturaTrabajo.Callback.RecibirImagenCallback(imagenCarta);
+                        }
+                    }
+                    catch (CommunicationException excecpione)
+                    {
+                        ManejadorExcepciones.ManejarErrorException(excecpione);
+                    }
+                    catch (Exception excecpione)
+                    {
+                        ManejadorExcepciones.ManejarErrorException(excecpione);
+                    }
+                });
+                
+            }
+            catch (ArgumentNullException excecpione)
+            {
+                ManejadorExcepciones.ManejarErrorException(excecpione);
+            }
+            catch (Exception excecpione)
+            {
+                ManejadorExcepciones.ManejarErrorException(excecpione);
             }
         }
 
@@ -139,13 +152,11 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (AggregateException excepcion)
             {
-                foreach (var operacion in excepcion.InnerExceptions)
-                {
-                    if (operacion is OperationCanceledException)
-                        Console.WriteLine("Tarea cancelada correctamente.");
-                    else
-                        Console.WriteLine($"Error en DetenerLectura: {operacion.Message}");
-                }
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excecpione)
+            {
+                ManejadorExcepciones.ManejarErrorException(excecpione);
             }
             finally
             {

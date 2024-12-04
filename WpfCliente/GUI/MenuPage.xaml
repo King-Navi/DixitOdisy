@@ -98,7 +98,7 @@
 
             </StackPanel>
         </Grid>
-        <local:ListaAmigosUserControl x:Name="amigosUserControl" HorizontalAlignment="Left" ></local:ListaAmigosUserControl>
+        <local:ListaAmigosUserControl x:Name="listaAmigosUserControl" HorizontalAlignment="Left" ></local:ListaAmigosUserControl>
 
         <Grid x:Name="gridEstadisticas" Width="300" Height="300" Background="#FFECECEC" 
                   HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed" Margin="890,0,0,0">

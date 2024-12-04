@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
-using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
@@ -52,16 +51,6 @@ namespace WpfCliente.GUI
         public void HabilitarBotones(bool esHabilitado)
         {
             menuItemEliminarAmigo.IsEnabled = esHabilitado;
-        }
-
-        private void CerrandoUserControl(object sender, RoutedEventArgs e)
-        {
-            if (imageAmigo != null)
-            {
-                imageAmigo.Source = null;
-                imageAmigo = null;
-
-            }
         }
     }
 }

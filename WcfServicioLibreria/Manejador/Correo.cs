@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Utilidades;
-using System.Runtime.InteropServices;
 
 namespace WcfServicioLibreria.Manejador
 {

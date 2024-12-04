@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.ServiceModel;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using WpfCliente.GUI;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
@@ -17,8 +10,7 @@ namespace WpfCliente.ImplementacionesCallbacks
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Single)]
     public class SingletonPartida : IServicioPartidaSesionCallback
     {
-        private const int MAXIMO_IMAGENES_MAZO = 6;
-        private const int CERO_IMAGENES_MAZO = 0;
+        
         private static readonly Lazy<SingletonPartida> instancia = new Lazy<SingletonPartida>(() => new SingletonPartida());
         public static SingletonPartida Instancia => instancia.Value;
         public ServicioPartidaSesionClient Partida { get; set; }
@@ -28,7 +20,6 @@ namespace WpfCliente.ImplementacionesCallbacks
         public CollecionObservableSeguraHilos<JugadorEstadisticas> JugadoresEstadisticas { get; set; } = new CollecionObservableSeguraHilos<JugadorEstadisticas>();
         public CollecionObservableSeguraHilos<Usuario> UsuariosEnPartida { get; set; } = new CollecionObservableSeguraHilos<Usuario>();
 
-        private Task tareaProcesamientoImagenes;
         public event Action<int> CambiarPantalla;
         public event Action<bool> NotificarEsNarrador;
         public event Action<string> MostrarPista;
@@ -244,6 +235,7 @@ namespace WpfCliente.ImplementacionesCallbacks
         }
         private async Task UnirseChat()
         {
+            SingletonGestorImagenes.Instancia.PeticionImagenesHilo();
             SingletonChat.Instancia.AbrirConexionChat();
             await SingletonChat.Instancia.ChatMotor.AgregarUsuarioChatAsync(SingletonCliente.Instance.IdChat,
                 SingletonCliente.Instance.NombreUsuario);

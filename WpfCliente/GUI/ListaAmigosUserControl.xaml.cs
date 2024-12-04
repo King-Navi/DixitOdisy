@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Threading;
 using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
@@ -16,7 +14,6 @@ namespace WpfCliente.GUI
 {
     public partial class ListaAmigosUserControl : UserControl, IActualizacionUI
     {
-        public ObservableCollection<Amigo> Amigos { get; set; } = new ObservableCollection<Amigo>();
         private bool desechado = false;
         private DispatcherTimer timer;
         private DateTime ultimaActualizacion;
@@ -26,10 +23,16 @@ namespace WpfCliente.GUI
         {
             InitializeComponent();
             IniciarHora();
-            DataContext = this;
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             ActualizarUI();
-            Amigos = SingletonCanal.Instancia.ListaAmigos;
+            try
+            {
+                DataContext = SingletonCanal.Instancia;
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+            }
         }
 
         private void IniciarHora()
@@ -61,7 +64,7 @@ namespace WpfCliente.GUI
                 timer = null;
             }
             desechado = true;
-        }   
+        }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
         {
@@ -76,8 +79,6 @@ namespace WpfCliente.GUI
         private void CerrandoUserControl(object sender, RoutedEventArgs e)
         {
             CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
-            Desechar();
-
         }
 
     }

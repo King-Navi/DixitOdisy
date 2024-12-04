@@ -1,15 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
-using WcfServicioLibreria.Manejador;
 using WcfServicioLibreria.Modelo;
-using WcfServicioLibreria.Utilidades;
-using WcfServicioLibreria.Enumerador;
-using DAOLibreria;
 using System.IO;
 using Pruebas.Servidor.Utilidades;
 

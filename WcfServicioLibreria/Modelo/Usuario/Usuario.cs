@@ -3,7 +3,6 @@ using System.IO;
 using System.Runtime.Serialization;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Enumerador;
-using WcfServicioLibreria.Evento;
 
 namespace WcfServicioLibreria.Modelo
 {

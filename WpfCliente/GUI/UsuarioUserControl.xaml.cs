@@ -1,8 +1,4 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-using WpfCliente.ImplementacionesCallbacks;
-using WpfCliente.ServidorDescribelo;
+﻿using System.Windows.Controls;
 using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Runtime.InteropServices;
-using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
-using WcfServicioLibreria.Modelo.Excepciones;
 using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador

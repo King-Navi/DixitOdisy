@@ -80,12 +80,6 @@ namespace WcfServicioLibreria.Manejador
 
         #endregion
 
-        public ManejadorPrincipal(IContextoOperacion _contextoOperacion, IEscribirDisco _escribirDisco)
-        {
-            this.contextoOperacion = _contextoOperacion;
-            Escritor = _escribirDisco;
-
-        }
 
         public ManejadorPrincipal(IContextoOperacion contextoOperacion, IVetoDAO vetoDAO, IUsuarioDAO usuarioDAO, IUsuarioCuentaDAO usuarioCuentaDAO, 
             ISolicitudAmistadDAO peticionAmistadDAO, IExpulsionDAO expulsionDAO, IEstadisticasDAO estadisticasDAO, IAmistadDAO amistadDAO)

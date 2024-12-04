@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -78,17 +77,26 @@ namespace WpfCliente.GUI
         private bool ValidarCampos()
         {
             bool camposValidos = true;
-
-            if (!ValidacionesString.EsGamertagValido(textBoxUsuario.Text))
+            try
             {
-                textBoxUsuario.Style = (Style)FindResource(RECURSOS_ESTILO_TEXTBOX_ERROR);
-                camposValidos = false;
+
+                if (!ValidacionesString.EsGamertagValido(textBoxUsuario.Text))
+                {
+                    textBoxUsuario.Style = (Style)FindResource(RECURSOS_ESTILO_TEXTBOX_ERROR);
+                    camposValidos = false;
+                }
+
+                if (string.IsNullOrWhiteSpace(passwordBoxContrasenia.Password) || passwordBoxContrasenia.Password.Contains(" "))
+                {
+                    textBoxContrasenia.Style = (Style)FindResource(RECURSOS_ESTILO_TEXTBOX_ERROR);
+                    camposValidos = false;
+                }
             }
-
-            if (string.IsNullOrWhiteSpace(passwordBoxContrasenia.Password) || passwordBoxContrasenia.Password.Contains(" "))
+            catch (Exception excepcion)
             {
-                textBoxContrasenia.Style = (Style)FindResource(RECURSOS_ESTILO_TEXTBOX_ERROR); 
-                camposValidos = false;
+                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                camposValidos = true;
+                throw;
             }
             return camposValidos;
         }
@@ -138,6 +146,7 @@ namespace WpfCliente.GUI
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida,
                                 Properties.Idioma.mensajeImagenInvalida,
                                 Window.GetWindow(this));
+                ManejadorExcepciones.ManejarErrorExcepcion(excepcion, Window.GetWindow(this));
                 return;
             }
             catch (Exception excepcion)

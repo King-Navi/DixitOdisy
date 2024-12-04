@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Diagnostics;
 using System.IO;
 using WcfServicioLibreria.Enumerador;
 using WcfServicioLibreria.Modelo;

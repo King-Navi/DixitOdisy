@@ -1,6 +1,5 @@
 ﻿using DAOLibreria.DAO;
 using DAOLibreria.Excepciones;
-using DAOLibreria.Interfaces;
 using DAOLibreria.ModeloBD;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pruebas.DAO.Utilidades;

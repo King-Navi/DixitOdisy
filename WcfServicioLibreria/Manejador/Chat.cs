@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Modelo;

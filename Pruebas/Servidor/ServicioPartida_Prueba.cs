@@ -1,8 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
-using WcfServicioLibreria.Manejador;
-using WcfServicioLibreria.Utilidades;
 using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Enumerador;
 using WcfServicioLibreria.Contratos;

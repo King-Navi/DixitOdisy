@@ -2,7 +2,6 @@
 using Serilog;
 using WpfCliente.GUI;
 using System.Windows;
-using Serilog.Core;
 using WpfCliente.Contexto;
 
 namespace WpfCliente.Utilidad

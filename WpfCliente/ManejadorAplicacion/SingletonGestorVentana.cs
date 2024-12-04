@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using WpfCliente.GUI;
 using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
-using WpfCliente.Properties;
 using WpfCliente.Utilidad;
-using System.Linq;
 
 
 namespace WpfCliente.Contexto

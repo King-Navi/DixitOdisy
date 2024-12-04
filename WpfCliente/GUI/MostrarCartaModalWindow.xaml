@@ -5,20 +5,65 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfCliente.GUI"
         AllowsTransparency="True"
-        Background="Transparent"
         WindowStyle="None"
+        Background="Transparent"
+        ResizeMode="NoResize" 
         WindowStartupLocation="CenterOwner"
+        MouseDown="VentanaRatonAbajo"
         mc:Ignorable="d"
         d:Title="MostrarCartaModalWindow" Height="451" Width="334" >
     <Grid>
         <Image x:Name="imagenElegida" Width="300" ></Image>
-        <TextBox x:Name="textBoxPista" Height="50" Margin="32,364,114,21" />
-        <Button Content="Selecionar" x:Name="buttonSeleccionar" Height="50" Margin="220,364,46,21" Click="ClicButtonEnviarPista" />
-        <Button Background="Transparent"  HorizontalAlignment="Right"  VerticalAlignment="Top" Margin="0,20,20,0" Click="ClicButtonCerrar" >
-            <Button.Clip>
-                <EllipseGeometry Center="50,50" RadiusX="50" RadiusY="50"/>
-            </Button.Clip>
-            <Image Source="pack://application:,,,/WpfCliente;component/Recursos/cerrarCruz.png" Stretch="Uniform" Width="80" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+        <TextBox x:Name="textBoxPista"
+         Height="50"
+         Margin="9,391,126,10"
+         d:Text="Escribe aquí..."
+         VerticalContentAlignment="Center"
+         Padding="10"
+         Foreground="Black">
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Background" Value="#FFF5F5F5" />
+                    <Setter Property="BorderBrush" Value="#007ACC" />
+                    <Setter Property="BorderThickness" Value="2" />
+                    <Setter Property="Padding" Value="10" />
+                    <Setter Property="FontSize" Value="14" />
+                    <Style.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" Value="#005A9E" />
+                            <Setter Property="Background" Value="#E6F7FF" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="#004080" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
+        <Button x:Name="buttonSeleccionar"
+        Height="50"
+        Width="100"
+        Margin="224,391,10,10"
+        Content="Seleccionar"
+        Click="ClicButtonEnviarPista">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                    CornerRadius="8"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    BorderBrush="{TemplateBinding BorderBrush}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+            <Button.Background>#007ACC</Button.Background>
+            <Button.Foreground>White</Button.Foreground>
         </Button>
+        <Button Background="Transparent" HorizontalAlignment="Right" VerticalAlignment="Top" 
+                Margin="0,10,10,0" Width="30" Height="30" Click="ClicButtonCerrar">
+            <Image Source="pack://application:,,,/WpfCliente;component/Recursos/cerrarCruz.png"  Stretch="Uniform"/>
+        </Button>
+        <TextBlock TextAlignment="Center" x:Name="textBlockAdvertenciaPista" TextWrapping="Wrap" Visibility="Visible" d:Text="La pista no puede ser vacia" HorizontalAlignment="Center" VerticalAlignment="Top" Background="Black" Foreground="Red" Width="230" Height="49"/>
     </Grid>
 </Window>

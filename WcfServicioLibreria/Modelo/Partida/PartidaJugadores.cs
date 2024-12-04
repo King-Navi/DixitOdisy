@@ -10,13 +10,8 @@ using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
-using ChatGPTLibreria;
-using ChatGPTLibreria.ModelosJSON;
-using System.Net.Http;
 using DAOLibreria.Interfaces;
 using DAOLibreria.DAO;
-using System.Runtime.Remoting.Contexts;
-using System.Runtime.InteropServices;
 using WcfServicioLibreria.Modelo.Excepciones;
 using WcfServicioLibreria.Modelo.Evento;
 
@@ -70,7 +65,6 @@ namespace WcfServicioLibreria.Modelo
         private static readonly SemaphoreSlim semaphoreEscogerNarrador = new SemaphoreSlim(1, 1);
         private readonly SemaphoreSlim semaphoreEmpezarPartida = new SemaphoreSlim(1, 1);
         private readonly SemaphoreSlim semaphoreAgregarJugador = new SemaphoreSlim(1, 1);
-        private readonly SemaphoreSlim semaphoreLectura = new SemaphoreSlim(1, 1);
         private static readonly SemaphoreSlim semaphoreRemoverJugador = new SemaphoreSlim(1, 1);
         public EventHandler PartidaVaciaManejadorEvento;
         private event EventHandler TodosListos;
@@ -92,8 +86,8 @@ namespace WcfServicioLibreria.Modelo
         public bool SeTerminoEsperaUnirse { get; private set; } = false;
         public bool SelecionoCartaNarrador { get; private set; } = false;
         public ConcurrentBag<string> JugadoresPendientes { get; private set; }
-        private ConcurrentDictionary<string, List<string>> JugadorImagenPuesta { get; set; } = new ConcurrentDictionary<string, List<string>>();
-        private ConcurrentDictionary<string, List<string>> JugadorImagenElegida { get; set; } = new ConcurrentDictionary<string, List<string>>();
+        private ConcurrentDictionary<string, List<string>> ImagenPuestasPisina { get; set; } = new ConcurrentDictionary<string, List<string>>();
+        private ConcurrentDictionary<string, List<string>> ImagenElegidaPorJugador { get; set; } = new ConcurrentDictionary<string, List<string>>();
 
         #endregion Propiedad
 
@@ -104,7 +98,7 @@ namespace WcfServicioLibreria.Modelo
             Anfitrion = _anfitrion;
             condicionVictoria = CrearCondicionVictoria(_configuracion);
             JugadoresPendientes = new ConcurrentBag<string>();
-            JugadorImagenElegida = new ConcurrentDictionary<string, List<string>>();
+            ImagenElegidaPorJugador = new ConcurrentDictionary<string, List<string>>();
             RondaActual = RONDA_INICIAL;
             estadisticasPartida = new EstadisticasPartida(_configuracion.Tematica);
             TodosListos += (emisor, evento) =>

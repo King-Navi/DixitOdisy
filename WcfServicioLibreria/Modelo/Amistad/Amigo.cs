@@ -11,7 +11,7 @@ namespace WcfServicioLibreria.Modelo
     public class Amigo
     {
         [DataMember]
-        public Stream Foto { get; set; }
+        public byte[] Foto { get; set; }
         [DataMember]
         public string Nombre { get; set; }
         [DataMember]
@@ -22,7 +22,7 @@ namespace WcfServicioLibreria.Modelo
 
         public Amigo() { }
 
-        public Amigo(Stream foto, string nombre, EstadoAmigo estado)
+        public Amigo(byte[] foto, string nombre, EstadoAmigo estado)
         {
             Foto = foto;
             Nombre = nombre;

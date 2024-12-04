@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.ServiceModel;
+﻿using System.Collections.Concurrent;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
 

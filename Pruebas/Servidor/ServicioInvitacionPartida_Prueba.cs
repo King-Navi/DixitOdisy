@@ -1,9 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using WcfServicioLibreria.Contratos;
-using WcfServicioLibreria.Modelo;
-using WcfServicioLibreria.Manejador;
-using WcfServicioLibreria.Utilidades;
 using Pruebas.Servidor.Utilidades;
 using System;
 

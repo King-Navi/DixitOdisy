@@ -1,7 +1,6 @@
 ﻿using System.Net.Mail;
 using System;
 using System.Text.RegularExpressions;
-using System.Runtime.InteropServices;
 
 namespace WpfCliente.Utilidad
 {

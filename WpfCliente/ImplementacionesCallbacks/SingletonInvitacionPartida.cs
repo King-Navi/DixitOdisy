@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
-using WpfCliente.Interfaz;
 using System.ServiceModel;
 
 namespace WpfCliente.ImplementacionesCallbacks

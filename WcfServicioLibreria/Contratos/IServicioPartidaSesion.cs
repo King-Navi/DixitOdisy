@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel;
 using System.Threading.Tasks;
+using WcfServicioLibreria.Enumerador;
 using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Modelo.Excepciones;
 

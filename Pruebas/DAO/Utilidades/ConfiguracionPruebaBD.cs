@@ -3,7 +3,6 @@ using DAOLibreria.DAO;
 using DAOLibreria.ModeloBD;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 
 namespace Pruebas.DAO.Utilidades
 {

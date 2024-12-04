@@ -1,14 +1,12 @@
-﻿using DAOLibreria.DAO;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Enumerador;
 using WcfServicioLibreria.Modelo.Evento;
 using WcfServicioLibreria.Utilidades;
 
@@ -102,8 +100,6 @@ namespace WcfServicioLibreria.Modelo
                 {
                     jugadoresCallback.TryGetValue(nombre, out IPartidaCallback callback);
                     callback.EnviarEstadisticasCallback(estadisticasPartida);
-
-
                 }
             }
             catch (Exception excepcion)
@@ -137,7 +133,6 @@ namespace WcfServicioLibreria.Modelo
                 if (jugador.Nombre.Equals(NarradorActual, StringComparison.OrdinalIgnoreCase))
                 {
                     jugador.Puntos -= PUNTOS_RESTADOS_NO_PARTICIPAR;
-                    Console.WriteLine($"No participo el narrador {jugador.Nombre}");
                 }
             }
         }
@@ -148,7 +143,7 @@ namespace WcfServicioLibreria.Modelo
             todosAdivinaron = true;
             votosCorrectos = 0;
 
-            foreach (var jugadorEleccion in JugadorImagenElegida)
+            foreach (var jugadorEleccion in ImagenElegidaPorJugador)
             {
                 string nombreJugador = jugadorEleccion.Key;
                 List<string> imagenesSeleccionadas = jugadorEleccion.Value;
@@ -185,7 +180,7 @@ namespace WcfServicioLibreria.Modelo
             foreach (var jugador in estadisticasPartida.Jugadores)
             {
                 if (jugador.Nombre != NarradorActual
-                    && JugadorImagenElegida.TryGetValue(jugador.Nombre, out var imagenesSeleccionadas)
+                    && ImagenElegidaPorJugador.TryGetValue(jugador.Nombre, out var imagenesSeleccionadas)
                     && (imagenesSeleccionadas == null || !imagenesSeleccionadas.Any()))
                 {
                     jugador.Puntos -= PUNTOS_RESTADOS_NO_PARTICIPAR;
@@ -211,7 +206,7 @@ namespace WcfServicioLibreria.Modelo
 
         private void AsignarPuntosPorConfundir()
         {
-            foreach (var jugadorEleccion in JugadorImagenElegida)
+            foreach (var jugadorEleccion in ImagenElegidaPorJugador)
             {
                 string nombreJugador = jugadorEleccion.Key;
                 List<string> imagenesSeleccionadas = jugadorEleccion.Value;
@@ -224,7 +219,7 @@ namespace WcfServicioLibreria.Modelo
 
                     foreach (var imagenId in imagenesSeleccionadas)
                     {
-                        int votosRecibidos = JugadorImagenElegida
+                        int votosRecibidos = ImagenElegidaPorJugador
                             .Where(j => j.Key != nombreJugador)
                             .Count(j => j.Value.Contains(imagenId));
 
@@ -253,16 +248,41 @@ namespace WcfServicioLibreria.Modelo
                 await EnMostrarTodasCartas();
                 CambiarPantalla(PANTALLA_TODOS_CARTAS, NarradorActual);
                 await EsperarConfirmacionAdivinarAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_PARA_ADIVINAR));
-
             }
+            else
+            {
+                EnviarMensajePenalizacion(NarradorActual);
+            }
+        }
 
-
+        private void EnviarMensajePenalizacion(string narradorActual)
+        {
+            if (String.IsNullOrEmpty(narradorActual))
+            {
+                return;
+            };
+            try
+            {
+                jugadoresCallback.TryGetValue(narradorActual, out IPartidaCallback callback);
+                if (true)
+                {
+                    
+                }
+            }
+            catch (TimeoutException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (CommunicationException excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
 
         }
 
         public async Task EnMostrarTodasCartas()
         {
-            var todasLasImagenes = JugadorImagenPuesta.Values.SelectMany(lista => lista).ToList();
+            var todasLasImagenes = ImagenPuestasPisina.Values.SelectMany(lista => lista).ToList();
             RondaEventArgs evento = new RondaEventArgs(todasLasImagenes);
             MostrarTodasLasCartas?.Invoke(this, evento);
             await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ENVIO_SEGUNDOS));
@@ -293,7 +313,11 @@ namespace WcfServicioLibreria.Modelo
                 try
                 {
                     jugadoresCallback.TryGetValue(nombre, out IPartidaCallback callback);
-                    callback.CambiarPantallaCallback(numeroPantalla);
+                    if (((ICommunicationObject)callback).State != CommunicationState.Opened)
+                    {
+                        continue;
+                    }
+                    callback.TurnoPerdidoCallback();
                 }
                 catch (TimeoutException excepcion)
                 {
@@ -441,9 +465,9 @@ namespace WcfServicioLibreria.Modelo
             PistaActual = null;
             SelecionoCartaNarrador = false;
             JugadoresPendientes = new ConcurrentBag<string>(jugadoresCallback.Keys);
-            JugadorImagenElegida.Clear();
-            JugadorImagenPuesta.Clear();
-            JugadorImagenPuesta = new ConcurrentDictionary<string, List<string>>();
+            ImagenElegidaPorJugador.Clear();
+            ImagenPuestasPisina.Clear();
+            ImagenPuestasPisina = new ConcurrentDictionary<string, List<string>>();
         }
 
         private async Task EscogerNarradorAsync()
@@ -493,7 +517,7 @@ namespace WcfServicioLibreria.Modelo
                 {
                     JugadoresPendientes.TryTake(out nombreJugador);
                 }
-                JugadorImagenElegida.AddOrUpdate(
+                ImagenElegidaPorJugador.AddOrUpdate(
                     nombreJugador,
                     new List<string> { claveImagen },
                     (llave, listaExistente) =>
@@ -521,7 +545,7 @@ namespace WcfServicioLibreria.Modelo
                 {
                     JugadoresPendientes.TryTake(out nombreJugador);
                 }
-                JugadorImagenPuesta.AddOrUpdate(
+                ImagenPuestasPisina.AddOrUpdate(
                     nombreJugador,
                     new List<string> { claveImagen },
                     (llave, listaExistente) =>
@@ -550,7 +574,7 @@ namespace WcfServicioLibreria.Modelo
                 {
                     JugadoresPendientes.TryTake(out nombreJugador);
                 }
-                JugadorImagenElegida.AddOrUpdate(
+                ImagenElegidaPorJugador.AddOrUpdate(
                     nombreJugador,
                     new List<string> { claveImagen },
                     (key, existingList) =>
@@ -562,7 +586,7 @@ namespace WcfServicioLibreria.Modelo
                         return existingList;
                     }
                 );
-                JugadorImagenPuesta.AddOrUpdate(
+                ImagenPuestasPisina.AddOrUpdate(
                    nombreJugador,
                    new List<string> { claveImagen },
                    (llave, listaExistente) =>
@@ -575,26 +599,26 @@ namespace WcfServicioLibreria.Modelo
                    }
                );
             }
-            catch (Exception)
+            catch (CommunicationException excepcion)
             {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarErrorException(excepcion);
             }
             MostrarPistaJugadores();
 
         }
 
         private async Task TerminarPartidaAsync()
-        //FIXME: Este metodo termina la partida independientemente de lo que este pasando
         {
-            //Cacular los puntos de rondas menores a 3 no hacer nada
-            await CalcularPuntos();
-
-            //Avisar a todos de la terminacion
+            await EnviarResultadoBaseDatos();
             AvisarPartidaTerminada();
-            //Eliminar la partida (despues de esto la partida ya no existe)
             EliminarPartida();
         }
 
-        private async Task CalcularPuntos()
+        private async Task EnviarResultadoBaseDatos()
         {
             if (RondaActual > RONDAS_MINIMA_PARA_PUNTOS)
             {
@@ -607,10 +631,11 @@ namespace WcfServicioLibreria.Modelo
                                 int idEstadistica = estadisticasDAO.ObtenerIdEstadisticaConIdUsuario(jugador.idUsuario);
                                 return idEstadistica != 0 ? new Tuple<string, int>(jugador.gamertag, idEstadistica) : null;
                             }
-                            catch (Exception)
+                            catch (Exception excepcion)
                             {
-                                return null;
+                                ManejadorExcepciones.ManejarErrorException(excepcion);
                             }
+                            return null;
                         })
                     .Where(tuple => tuple != null)
                     .ToList();
@@ -629,6 +654,10 @@ namespace WcfServicioLibreria.Modelo
                 foreach (var nombre in jugadoresCallback)
                 {
                     jugadoresCallback.TryGetValue(nombre.ToString(), out IPartidaCallback callback);
+                    if (((ICommunicationObject)callback).State != CommunicationState.Opened)
+                    {
+                        continue;
+                    }
                     callback?.FinalizarPartidaCallback();
                 }
             }
@@ -653,16 +682,13 @@ namespace WcfServicioLibreria.Modelo
 
         private void MostrarPistaJugadores()
         {
-
             try
             {
                 foreach (var nombre in ObtenerNombresJugadores())
                 {
-
                     jugadoresCallback.TryGetValue(nombre.ToString(), out IPartidaCallback callback);
                     callback?.MostrarPistaCallback(this.PistaActual);
                 }
-
             }
             catch (TimeoutException excepcion)
             {
@@ -676,11 +702,7 @@ namespace WcfServicioLibreria.Modelo
             {
                 ManejadorExcepciones.ManejarErrorException(excepcion);
             }
-
         }
-
-
-        
     }
     #endregion Ronda
 }

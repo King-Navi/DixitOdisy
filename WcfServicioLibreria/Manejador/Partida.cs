@@ -1,6 +1,5 @@
 ﻿using DAOLibreria.DAO;
 using System;
-using System.ServiceModel;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Modelo;
@@ -25,7 +24,7 @@ namespace WcfServicioLibreria.Manejador
                 } while (salasDiccionario.ContainsKey(idPartida));
                 MediadorPartida medidador = new MediadorPartida(configuracion.Tematica);
                 Partida partidaNueva = new Partida(idPartida, anfitrion, configuracion, new EstadisticasDAO(), medidador);
-                ManejadorImagen manejadorImagen = new ManejadorImagen(Escritor, medidador, configuracion.Tematica);
+                ManejadorImagen manejadorImagen = new ManejadorImagen(Escritor ,medidador, configuracion.Tematica);
                 partidaNueva.MostrarTodasLasCartas += manejadorImagen.EnMostrarImagenes;
                 partidaNueva.PartidaVaciaManejadorEvento += manejadorImagen.SeTerminoLectura;
                 bool existeSala = partidasDiccionario.TryAdd(idPartida, partidaNueva);

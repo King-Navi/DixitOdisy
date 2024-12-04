@@ -92,17 +92,41 @@ namespace DAOLibreria.DAO
             switch (accion)
             {
                 case EstadisticasAcciones.IncrementarPartidasMitologia:
-                    return estadistica => { estadistica.vecesTematicaMitologia = (estadistica.vecesTematicaMitologia ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS; };
+                    return estadistica => 
+                    { 
+                        estadistica.vecesTematicaMitologia = 
+                            (estadistica.vecesTematicaMitologia ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS; 
+                    };
                 case EstadisticasAcciones.IncrementarPartidaMixta:
-                    return estadistica => { estadistica.vecesTematicaMixto = (estadistica.vecesTematicaMixto ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS; };
+                    return estadistica => 
+                    { 
+                        estadistica.vecesTematicaMixto = 
+                            (estadistica.vecesTematicaMixto ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS; 
+                    };
                 case EstadisticasAcciones.IncrementarPartidaEspacio:
-                    return estadistica => { estadistica.vecesTematicaEspacio = (estadistica.vecesTematicaEspacio ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS; };
+                    return estadistica => 
+                    { 
+                        estadistica.vecesTematicaEspacio = 
+                            (estadistica.vecesTematicaEspacio ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS; 
+                    };
                 case EstadisticasAcciones.IncrementarPartidaAnimales:
-                    return estadistica => { estadistica.vecesTematicaAnimales = (estadistica.vecesTematicaAnimales ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS; };
+                    return estadistica => 
+                    { 
+                        estadistica.vecesTematicaAnimales = 
+                            (estadistica.vecesTematicaAnimales ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS; 
+                    };
                 case EstadisticasAcciones.IncrementarPartidaPaises:
-                    return estadistica => { estadistica.vecesTematicaPaises = (estadistica.vecesTematicaPaises ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS; };
+                    return estadistica =>
+                    { 
+                        estadistica.vecesTematicaPaises = 
+                            (estadistica.vecesTematicaPaises ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS;
+                    };
                 default:
-                    return estadistica => { estadistica.vecesTematicaMixto = (estadistica.vecesTematicaMixto ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS; };
+                    return estadistica =>
+                    {
+                        estadistica.vecesTematicaMixto = 
+                            (estadistica.vecesTematicaMixto ?? SIN_PARTIDAS_JUGADAS) + AUMENTO_MAXIMO_PARTIDAS_JUGADAS; 
+                    };
             }
         }
 

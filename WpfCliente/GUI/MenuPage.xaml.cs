@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using System.ServiceModel;
-using System.ServiceModel.Configuration;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using WpfCliente.Contexto;
 using WpfCliente.ImplementacionesCallbacks;
@@ -29,7 +25,6 @@ namespace WpfCliente.GUI
         public MenuPage()
         {
             KeepAlive = true;
-            this.Loaded += CargarNuevoContexto;
             InitializeComponent();
             SingletonCanal.Instancia.InvitacionRecibida += RecibirInvitacion;
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
@@ -38,13 +33,7 @@ namespace WpfCliente.GUI
             ConfigurarTemporizadorNotificacion();
             InicializarEstadisticasAsync();
         }
-        private void CargarNuevoContexto(object sender, RoutedEventArgs e)
-        {
-            if (this.DataContext == null)
-            {
-                this.DataContext = this;
-            }
-        }
+
 
 
         private async void InicializarEstadisticasAsync()
@@ -226,7 +215,7 @@ namespace WpfCliente.GUI
             buttonCrearSala.IsEnabled = esHabilitado;
             buttonUniserSala.IsEnabled = esHabilitado;
             perfilMenuDesplegable.IsEnabled = esHabilitado;
-            amigosUserControl.IsEnabled = esHabilitado;
+            listaAmigosUserControl.IsEnabled = esHabilitado;
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
@@ -340,11 +329,8 @@ namespace WpfCliente.GUI
 
         private void CerrandoPage(object sender, RoutedEventArgs e)
         {
-            if (perfilMenuDesplegable != null)
-            {
-                perfilMenuDesplegable.LimpiarFoto();
-                stackPaneManeSuperiorDerecho.Children.Remove(perfilMenuDesplegable);
-            }
+            CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
         }
+
     }
 }

@@ -4,7 +4,6 @@ using DAOLibreria.ModeloBD;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pruebas.DAO.Utilidades;
 using System;
-using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 

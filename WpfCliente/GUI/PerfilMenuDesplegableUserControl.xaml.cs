@@ -1,12 +1,10 @@
 ﻿using System;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using WpfCliente.Contexto;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
-using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
@@ -16,8 +14,8 @@ namespace WpfCliente.GUI
         public PerfilMenuDesplegableUserControl()
         {
             InitializeComponent();
-            Loaded += CargadoUserControl;
             Unloaded += CerrandoUserControl;
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
         }
 
         private void AbrirEditarVentana(object sender, RoutedEventArgs e)
@@ -44,14 +42,9 @@ namespace WpfCliente.GUI
 
         private void CerrandoUserControl(object sender, RoutedEventArgs e)
         {
-            if (imagenPerfil == null)
-            {
-                return;
-            }
             try
             {
                 CambiarIdioma.LenguajeCambiado -= LenguajeCambiadoManejadorEvento;
-                imagenPerfil.Source = null;
             }
             catch (NullReferenceException excepcion)
             {
@@ -63,23 +56,15 @@ namespace WpfCliente.GUI
             }
 
         }
-        public void LimpiarFoto()
-        {
-            imagenPerfil = null;
-        }
+
 
 
         private void CargadoUserControl(object sender, RoutedEventArgs e)
         {
-            if (imagenPerfil.Source != null)
-            {
-                return;
-            }
             try
             {
                 Imagen.GuardarBitmapImageABytes(SingletonCliente.Instance.FotoJugador);
                 BitmapImage bitmapImagen = Imagen.ConvertirBytesABitmapImage(Imagen.ObtenerFotoGlobal());
-                CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
                 ActualizarUI();
                 imagenPerfil.Source = bitmapImagen;
             }

@@ -32,22 +32,23 @@ namespace WcfServicioLibreria.Modelo
 
         #region NumerosPartida
         private const int CANTIDAD_MINIMA_JUGADORES = 1; // 2
-        private const int TIEMPO_ESPERA_UNIRSE_JUGADORES = 18;// 30
+        private const int TIEMPO_ESPERA_UNIRSE_JUGADORES = 20;
         private const int TIEMPO_ESPERA_NARRADOR = 40; // 40
-        private const int TIEMPO_ESPERA_SELECCION = 10; //60
+        private const int TIEMPO_ESPERA_SELECCION = 20; //60
         private const int TIEMPO_ESPERA_PARA_ADIVINAR = 10; //60
-        private const int TIEMPO_ESPERA = 5; //5
+        private const int TIEMPO_ESPERA = 5;
         private const int TIEMPO_ENVIO_SEGUNDOS = 5;
-        private const int NUM_JUGADOR_PARTIDA_VACIA = 0; //0
-        private const int NUM_JUGADOR_NADIE_ACERTO = 0;//0
-        private const int RONDAS_MINIMA_PARA_PUNTOS = 3; //3
-        private const int NUMERO_MINIMO_RONDAS = 3; //3
-        private const int PUNTOS_RESTADOS_NO_PARTICIPAR = 1; //1
-        private const int PUNTOS_ACIERTO = 1; //1
-        private const int PUNTOS_PENALIZACION_NARRADOR = 2; //2
-        private const int PUNTOS_MAXIMOS_RECIBIDOS_CONFUNDIR = 3; //3
-        private const int TIEMPO_MOSTRAR_ESTADISTICAS = 15; //10
-        private const int ID_INVALIDO = 0; //0 
+        private const int NUM_JUGADOR_PARTIDA_VACIA = 0; 
+        private const int NUM_JUGADOR_NADIE_ACERTO = 0;
+        private const int RONDAS_MINIMA_PARA_PUNTOS = 3;
+        private const int NUMERO_MINIMO_RONDAS = 3;
+        private const int PUNTOS_RESTADOS_NO_PARTICIPAR = 1;
+        private const int PUNTOS_ACIERTO = 1;
+        private const int PUNTOS_PENALIZACION_NARRADOR = 2;
+        private const int PUNTOS_MAXIMOS_RECIBIDOS_CONFUNDIR = 3;
+        private const int TIEMPO_MOSTRAR_ESTADISTICAS = 15;
+        private const int ID_INVALIDO = 0;
+        private const int TIEMPO_ESPERA_MILISEGUNDOS = 1000;
 
         private const int RONDA_INICIAL = 0;
         #endregion NumerosPartida
@@ -71,7 +72,9 @@ namespace WcfServicioLibreria.Modelo
         private readonly IEstadisticasDAO estadisticasDAO;
         public readonly IMediadorImagen mediadorImagen;
         public event EventHandler<RondaEventArgs> MostrarTodasLasCartas;
-
+        private static int tiempoEspera = 0;
+        private static readonly int tiempoMinimo = 16;
+        private static readonly object lockTiempoEspera = new object();
 
         #endregion Atributos
 
@@ -177,26 +180,18 @@ namespace WcfServicioLibreria.Modelo
 
         #region ManejoJugadores
 
-
-        private static int tiempoEspera = 0;
-        private static readonly int tiempoMinimo = 16; 
-        private static readonly object lockTiempoEspera = new object();
-
-
         public async Task<bool> AgregarJugadorAsync(string nombreJugador, IPartidaCallback nuevoContexto)
         {
-
-            // Espera decreciente al principio del método
             int esperaActual;
             lock (lockTiempoEspera)
             {
                 esperaActual = tiempoEspera;
                 if (tiempoEspera > tiempoMinimo)
                 {
-                    tiempoEspera += 4; // Reducir tiempo en 2 segundos hasta llegar al mínimo.
+                    tiempoEspera += 4;
                 }
             }
-            await Task.Delay(esperaActual * 1000); // Convertir a milisegundos
+            await Task.Delay(esperaActual * TIEMPO_ESPERA_MILISEGUNDOS);
 
             await semaphoreAgregarJugador.WaitAsync();
             try

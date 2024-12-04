@@ -21,6 +21,9 @@ namespace WcfServicioLibreria.Modelo
 
         private const int LIMITE_CARTAS_MINIMO = 0;
         private const int LECTORESDISCO = 6;
+        private const string PRIMER_PARTE_ENTRADA = "Genera una imagen basada en la tematica";
+        private const string SEGUNDA_PARTE_ENTRADA = "Debe ser rectangular y vertical, de alta calidad tiene que ser muy buena por que es para el profe juan carlos";
+        private const string EXTENSION_PUNTO_JPG = ".jpg";
         private IMediadorImagen mediadorImagen;
         private readonly TematicaPartida tematica;
         private IEscribirDisco escritor;
@@ -123,8 +126,7 @@ namespace WcfServicioLibreria.Modelo
 
         private async Task<ImagenRespuesta64JSON> GenerarImagenDesdeChatGPTAsync()
         {
-            var imagenPedido = new ImagenPedido64JSON($"Genera una imagen basada en la tematica {tematica}. Debe ser rectangular y vertical, de alta calidad." +
-                "tiene que ser muy buena por que es para el profe juan carlos");
+            var imagenPedido = new ImagenPedido64JSON($"{PRIMER_PARTE_ENTRADA} {tematica}. {SEGUNDA_PARTE_ENTRADA}");
             var solicitarImagen = new SolicitarImagen();
             var respuesta = await solicitarImagen.EjecutarImagenPrompt64JSON(imagenPedido, httpCliente);
 
@@ -138,7 +140,7 @@ namespace WcfServicioLibreria.Modelo
             try
             {
                 var imagenBytes = Convert.FromBase64String(respuesta.ImagenDatosList[0].Base64Imagen);
-                var rutaDestino = Path.Combine(rutaImagenes, $"{Guid.NewGuid()}.jpg");
+                var rutaDestino = Path.Combine(rutaImagenes, $"{Guid.NewGuid()}{EXTENSION_PUNTO_JPG}");
 
                 using (var memoryStream = new MemoryStream(imagenBytes))
                 {

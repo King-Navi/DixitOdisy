@@ -11,6 +11,7 @@ namespace WcfServicioLibreria.Utilidades
         public const string CARPETA_MITOLOGIA = "Mitologia";
         public const string CARPETA_ANIMALES = "Animales";
         public const string CARPETA_PAISES = "Paises";
+        public const string CARPETA_ESPACIO = "Espacio";
         public const string EXTENSION_TODO_ARCHIVO_JPG = "*.jpg";
         public const string EXTENSION_TODO_ARCHIVO_PNG = "*.png";
         public const string CARPETA_FOTOS_INVITADOS = "FotosInvitados";
@@ -28,6 +29,8 @@ namespace WcfServicioLibreria.Utilidades
                     return Path.Combine(ruta, CARPETA_ANIMALES);
                 case TematicaPartida.Paises:
                     return Path.Combine(ruta, CARPETA_PAISES);
+                case TematicaPartida.Espacio:
+                    return Path.Combine(ruta, CARPETA_ESPACIO);
                 default:
                     return Path.Combine(ruta, CARPETA_MIXTA);
             }

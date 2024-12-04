@@ -474,15 +474,15 @@ namespace WpfCliente.GUI
 
         private void EvaluarTematicaSelecionada()
         {
-
             var tematicas = new Dictionary<RadioButton, TematicaPartida>
             {
                 { radioButtonMixta, TematicaPartida.Mixta },
                 { radioButtonAnimales, TematicaPartida.Animales },
                 { radioButtonPaises, TematicaPartida.Paises },
-                { radioButtonMitologia, TematicaPartida.Mitologia }
-            };
+                { radioButtonMitologia, TematicaPartida.Mitologia },
+                { radioButtonEspacio, TematicaPartida.Espacio }
 
+            };
             foreach (var entrada in tematicas)
             {
                 if (entrada.Key.IsChecked == true)

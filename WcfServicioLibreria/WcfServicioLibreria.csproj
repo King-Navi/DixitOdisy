@@ -271,6 +271,54 @@
     <Content Include="Recursos\Animales\f882ac99-c7ed-45bd-a9ef-3e9737417e55.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Espacio\10ad2b51-4578-4fef-98f9-ae66cc399be3.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\18db8777-a9dc-4dbf-bc62-0e6d215c19a4.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\1b471563-5c3c-4c97-b2ee-44c5a92ab435.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\1d15b4f7-2fdd-4049-ace1-1ce3db496e0e.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\410c0880-b276-4879-8c98-2c7d23ff3ca4.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\4630338e-e15d-48bc-86c0-b6db4d9ad72c.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\49dc9ba2-2d68-4199-824a-0f6dbe39a0c2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\4aeed03d-301f-45e0-8ff1-c5744626a536.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\57afe8be-62e6-4b68-95a6-1c8450e4d546.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\5efa7734-bd8c-48c8-8e85-499b20ab2c43.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\a95ab678-fbb1-420d-a3d2-89cc76960ecc.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\aee71a47-1c52-4d1a-8ed0-f67a5ef50b07.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\b390521e-ac1a-44ae-b6e7-35838a7c1c5e.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\ddbbd037-d9e6-40e1-9ee9-e9a66a9b0380.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\f4b31bc2-5c5a-47c6-830d-3a51861d8939.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Espacio\f90dadda-78e9-4672-922c-2874ae0e5d1a.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\FotosInvitados\perfil1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -354,6 +402,9 @@
     <Content Include="Recursos\Mixta\00eb92ce-5651-462e-9995-a9900e9162ea.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mixta\03ba74a6-b786-40b0-827d-5c9a9d6af117.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mixta\071681fe-f3ad-4a45-86fc-35622fc56b3c.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -378,7 +429,22 @@
     <Content Include="Recursos\Mixta\141133e4-5557-41c8-b20d-a20646dce6d9.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mixta\154ae3c1-e8f8-4d2f-98f7-a0547670681e.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mixta\163c9753-2efb-41d4-a575-59112e2b4b18.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\19706dfd-8550-4c7a-9e48-9ccb9b2fd5e9.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\2335b07b-e89d-480d-8e51-552004d310a6.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\241f9ba7-1dd7-4c62-b8c4-48eb6f9615fa.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\2a84cd3f-34a9-4ee8-8a3b-1d1b4520f049.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\2a886945-1d6d-4009-acc1-befcb3bdcf82.jpg">
@@ -387,7 +453,25 @@
     <Content Include="Recursos\Mixta\32240dd8-aeeb-494d-8f73-c0fc5f525774.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mixta\34f018a4-bc82-4dbb-8bfd-fe7571359aac.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\36facaea-0c37-42df-b879-8fe789c163fd.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\3e03da86-ae34-4c54-a159-86025ffbe948.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\40f53b27-eac0-4bd0-8f79-28f2403c426c.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mixta\437a416e-999b-476e-8303-bae917c68c72.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\473c1745-b1c6-4f1d-a174-7193561432cf.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\4a34e13e-a5cb-44c7-b409-f742be3b7ea7.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\4b3178c4-95e6-4126-8f40-83b1e2cec99f.jpg">
@@ -396,19 +480,49 @@
     <Content Include="Recursos\Mixta\4bc7a014-811c-4fa4-9a48-481df43a72e8.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mixta\5b50ea25-c91c-4f10-9b14-15f398506adb.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mixta\5cd69b34-c5ac-436a-9d40-aa86f8c8718f.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\618f6970-396b-4ad6-8adf-b41a311298fb.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mixta\61b3c16c-a9c7-4f94-8a93-73c32045556c.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\6b9607de-7115-4a91-88dd-68fafa5120c5.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\6e8cc111-b9fa-4460-87ee-bb3a05f95d44.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\734b88be-ec6e-4e2e-91ee-aa80ad190275.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mixta\75103b86-91ae-44e9-acdf-eed04ad82fa0.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\793d1021-b6c2-4f1a-8428-8372d446ad0f.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\7a04f5cc-d278-4807-91e9-9a09a041e485.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\7ad6270d-06f0-455b-afbc-dd8007472cac.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mixta\7da01bbe-b27a-4183-a5b7-2b0c098f7fe7.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\7f0a6267-5363-4cec-8281-249395e1d608.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mixta\80f50fc5-123f-44a6-b986-4341b71d5f59.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\81d03222-6b76-4d6c-8346-c96d21a75ab1.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\8748ddb1-233d-4f1a-8471-98dbbbd380dc.jpg">
@@ -417,13 +531,25 @@
     <Content Include="Recursos\Mixta\87b64448-17b9-4cf3-955e-a298ceae27da.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mixta\92ae1d7f-ecf3-4567-b5ed-37a3056f8baf.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\931575b4-1336-4196-9646-64391e320ede.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mixta\94ee37e3-743a-484f-97c9-f50ca7e4c4c0.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\9e476c0b-96fd-44fa-9dec-f43beefff12f.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mixta\a3c57763-3a91-4750-9fb4-6283e254c995.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mixta\a4841251-0422-44e0-adf5-09605461bd45.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\a73bbf2f-6ad1-4327-9ab9-b8b39e0d44d3.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\ae1aa774-4ae8-4246-a946-c538ef81f39d.jpg">
@@ -435,28 +561,64 @@
     <Content Include="Recursos\Mixta\b702b2a9-b205-40ae-af84-738b55d5087a.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mixta\bab6903f-89aa-40c6-8ff7-7ef79c3f0df0.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\bbfa39ff-6e05-4c85-95e5-5ad93cb3340a.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\bca4a989-6847-4759-aadf-ca7dbdcc089b.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mixta\c43217e1-2ad8-482b-939d-42d0e6b3ac77.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\c45f8ce5-a7ef-4092-ae47-535f2942633a.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\c4c57472-a666-4767-a48c-aa569e8a1873.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\cbc0d503-e9af-4f44-8b5e-7187a615a91c.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mixta\cbd1cc72-ddec-4c46-bd0e-23fe6a0b343a.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mixta\cf3a8016-cc49-48c5-b21c-ca12530b1655.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\d1032f19-c105-4988-a0be-cc455398263f.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\d433da14-a472-4f20-90d2-13233438c92a.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\d5b70c27-b391-45fe-b9e4-074d2d28fc1d.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mixta\d7eec438-f271-4763-bec3-5469eb12b7d1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mixta\d9d743e9-9571-4734-a47c-0eef13f31aee.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mixta\e3b754df-13a8-4975-b49f-08f96c49f4d0.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mixta\e536fa54-f267-4acc-a11a-b185c6ec75ed.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\e5915315-5422-4eea-bdf7-f0a5b096bc21.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\e7a4372a-a84d-464b-b8e7-9198694af403.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\e96a6122-6e07-4f58-baa0-27acb08e10c8.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\f3d4a8c8-e9b9-4b51-976e-912f61f39cee.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\f74b0636-3764-4750-af6b-1de8da9bdfde.jpg">
@@ -466,6 +628,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\f933b729-012f-44a9-a6f0-f1262099eb57.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\f9f8dc92-6120-48eb-a36b-c3ad0ed4408b.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\fdbc91a5-3c2c-4235-9022-9a3dfec8d987.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\fdff9367-3617-4d64-8652-982f8a3aa418.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\ff493db8-5bfe-48b8-9925-89a91a43c694.jpg">
@@ -478,9 +649,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Recursos\Espacio\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <VSToolsPath Condition="'$(VSToolsPath)' == '' and '$(VisualStudioVersion)' != '' and '$(VisualStudioVersion)' != '11.0'">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

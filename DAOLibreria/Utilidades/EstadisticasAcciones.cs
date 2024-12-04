@@ -7,5 +7,6 @@
         IncrementarPartidaEspacio,
         IncrementarPartidaAnimales,
         IncrementarPartidaPaises
+
     }
 }

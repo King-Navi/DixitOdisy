@@ -62,6 +62,7 @@
                         <RadioButton Name="radioButtonAnimales" Content="[Animales]" Margin="5" GroupName="Tematica"/>
                         <RadioButton Name="radioButtonPaises" Content="[Paises]" Margin="5" GroupName="Tematica"/>
                         <RadioButton Name="radioButtonMitologia" Content="[Mitologia]" Margin="5" GroupName="Tematica"/>
+                        <RadioButton Name="radioButtonEspacio" Content="[Espacio]" Margin="5" GroupName="Tematica"/>
                     </WrapPanel>
                 </GroupBox>
 

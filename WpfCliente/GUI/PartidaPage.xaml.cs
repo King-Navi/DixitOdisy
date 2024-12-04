@@ -183,11 +183,7 @@ namespace WpfCliente.GUI
         {
             if (EsNarrador)
             {
-<<<<<<< HEAD
                 AvanzarPantalla(PantallasPartida.PANTALLA_ESPERA);
-=======
-                ManejadorExcepciones.ManejarExcepcionErrorComponente(exccepcion);
->>>>>>> 04/12/2024
             }
         }
 

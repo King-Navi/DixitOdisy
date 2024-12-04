@@ -10,7 +10,7 @@ namespace DAOLibreria.Utilidades
         private const string EXTENSION_LOG = ".txt";
         private static ILogger bitacora;
 
-        private static void ConfigurarLogger(string logFilePath)
+        private static void ConfigurarBitacora(string logFilePath)
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
@@ -40,7 +40,7 @@ namespace DAOLibreria.Utilidades
             if (bitacora == null)
             {
                 string rutaBitacora = ContruirRutaArchivo();
-                ConfigurarLogger(rutaBitacora);
+                ConfigurarBitacora(rutaBitacora);
             }
 
             bitacora = Log.Logger;

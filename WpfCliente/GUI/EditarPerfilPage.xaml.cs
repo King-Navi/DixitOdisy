@@ -74,9 +74,9 @@ namespace WpfCliente.GUI
                 BitmapImage bitmap = SingletonCliente.Instance.FotoJugador;
                 imageFotoJugador.Source = bitmap;
             }
-            catch (Exception ex)
+            catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(ex);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
         }
 

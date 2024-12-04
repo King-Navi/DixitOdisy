@@ -81,11 +81,7 @@ namespace WpfCliente.Utilidad
             }
             catch (Exception excepcion)
             {
-<<<<<<< HEAD
                 ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
-=======
-                ManejadorExcepciones.ManejarExcepcionFatalComponente(ex);
->>>>>>> 04/12/2024
                 bitmap = null;
             }
             return bitmap;

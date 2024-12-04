@@ -119,11 +119,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-<<<<<<< HEAD
-                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
-=======
-                ManejadorExcepciones.ManejarExcepcionFatalComponente(ex);
->>>>>>> 04/12/2024
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCargarAmigosFalla, Properties.Idioma.mensajeCargarAmigosFalla, this);
             }
             return false;

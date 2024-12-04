@@ -57,7 +57,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
         }
 
@@ -99,7 +99,7 @@ namespace WpfCliente.GUI
                 }
                 catch (Exception excepcion)
                 {
-                    ManejadorExcepciones.ManejarErrorExcepcion(excepcion, Window.GetWindow(this));
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
                 }
             }
         }
@@ -137,7 +137,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                 return false;
             }
         }

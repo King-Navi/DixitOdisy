@@ -17,19 +17,19 @@ namespace WpfCliente.Utilidad
             }
             catch (FaultException excepcionDeServicio)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeServicio);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionDeServicio);
             }
             catch (CommunicationException excepcionDeComunicacion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeComunicacion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionDeComunicacion);
             }
             catch (TimeoutException excepcionDeTiempoExcedido)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeTiempoExcedido);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionDeTiempoExcedido);
             }
             catch (Exception excepcionGeneral)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionGeneral);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionGeneral);
             }
             finally
             {
@@ -39,7 +39,7 @@ namespace WpfCliente.Utilidad
                 }
                 catch (Exception excepcionAbortar)
                 {
-                    ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionAbortar);
+                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionAbortar);
                 }
             }
         }
@@ -55,19 +55,19 @@ namespace WpfCliente.Utilidad
             }
             catch (FaultException excepcionDeServicio)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeServicio);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionDeServicio);
             }
             catch (CommunicationException excepcionDeComunicacion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeComunicacion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionDeComunicacion);
             }
             catch (TimeoutException excepcionDeTiempoExcedido)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeTiempoExcedido);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionDeTiempoExcedido);
             }
             catch (Exception excepcionGeneral)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionGeneral);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionGeneral);
             }
             finally
             {
@@ -77,7 +77,7 @@ namespace WpfCliente.Utilidad
                 }
                 catch (Exception excepcionAbortar)
                 {
-                    ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionAbortar);
+                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionAbortar);
                 }
             }
             return default;
@@ -93,19 +93,19 @@ namespace WpfCliente.Utilidad
             }
             catch (FaultException excepcionDeServicio)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeServicio);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionDeServicio);
             }
             catch (CommunicationException excepcionDeComunicacion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeComunicacion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionDeComunicacion);
             }
             catch (TimeoutException excepcionDeTiempoExcedido)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeTiempoExcedido);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionDeTiempoExcedido);
             }
             catch (Exception excepcionGeneral)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionGeneral);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionGeneral);
             }
             finally
             {
@@ -115,7 +115,7 @@ namespace WpfCliente.Utilidad
                 }
                 catch (Exception excepcionAbortar)
                 {
-                    ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionAbortar);
+                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionAbortar);
                 }
             }
         }
@@ -131,19 +131,19 @@ namespace WpfCliente.Utilidad
             }
             catch (FaultException excepcionDeServicio)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeServicio);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionDeServicio);
             }
             catch (CommunicationException excepcionDeComunicacion)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeComunicacion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionDeComunicacion);
             }
             catch (TimeoutException excepcionDeTiempoExcedido)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionDeTiempoExcedido);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionDeTiempoExcedido);
             }
             catch (Exception excepcionGeneral)
             {
-                ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionGeneral);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionGeneral);
             }
             finally
             {
@@ -153,7 +153,7 @@ namespace WpfCliente.Utilidad
                 }
                 catch (Exception excepcionAbortar)
                 {
-                    ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcionAbortar);
+                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcionAbortar);
                 }
             }
             return default;

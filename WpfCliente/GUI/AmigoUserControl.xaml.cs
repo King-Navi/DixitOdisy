@@ -49,11 +49,7 @@ namespace WpfCliente.GUI
             }
             catch (Exception excepcion)
             {
-<<<<<<< HEAD
                 ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
-=======
-                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
->>>>>>> 04/12/2024
             }
             return false;
         }

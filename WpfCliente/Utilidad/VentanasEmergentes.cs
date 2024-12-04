@@ -25,15 +25,15 @@ namespace WpfCliente.Utilidad
             }
             catch (ArgumentException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (InvalidOperationException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
 
         }
@@ -59,15 +59,15 @@ namespace WpfCliente.Utilidad
             }
             catch (ArgumentException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (InvalidOperationException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
 
         }
@@ -89,15 +89,15 @@ namespace WpfCliente.Utilidad
             }
             catch (ArgumentException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (InvalidOperationException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
 
         }
@@ -118,15 +118,15 @@ namespace WpfCliente.Utilidad
             }
             catch (ArgumentException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (InvalidOperationException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
 
             return valorObtenido;
@@ -148,15 +148,15 @@ namespace WpfCliente.Utilidad
             }
             catch (ArgumentException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (InvalidOperationException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
 
             return valorObtenido;
@@ -177,15 +177,15 @@ namespace WpfCliente.Utilidad
             }
             catch (ArgumentException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (InvalidOperationException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
 
             return valorObtenido;
@@ -206,15 +206,15 @@ namespace WpfCliente.Utilidad
             }
             catch (ArgumentException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (InvalidOperationException excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarComponenteFatalExcepcion(excepcion);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
 
             return valorObtenido;

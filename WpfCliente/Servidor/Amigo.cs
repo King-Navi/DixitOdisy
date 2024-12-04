@@ -36,15 +36,15 @@ namespace WpfCliente.ServidorDescribelo
                 }
                 catch (FileFormatException excepcion)
                 {
-                    ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
                 }
                 catch (NotSupportedException excepcion)
                 {
-                    ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
                 }
                 catch (Exception excepcion)
                 {
-                    ManejadorExcepciones.ManejarComponenteErrorExcepcion(excepcion);
+                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
                 }
                 return Imagen.CargarImagenDesdeRecursos();
             }

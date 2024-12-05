@@ -13,8 +13,11 @@ C:\Users\unaay\source\repos\DixitOdisy\Pruebas\DAO\VetoDAONoConexion_Prueba.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\DAO\VetoDAO_Prueba.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\EstadisticasPartida_Prueba.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\ManejarDeVetos_Prueba.cs
+C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\MediadorPartida_Prueba.cs
+C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Puntaje_Prueba.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\ServicioAmigo_Prueba.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\ServicioCorreo_Prueba.cs
+C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\ServicioImagen_Prueba.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\ServicioInvitacionPartida_Prueba.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\ServicioPartida_Prueba.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\ServicioPartidaSesion_Prueba.cs
@@ -22,6 +25,7 @@ C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\ServicioSala_Prueba.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\ServicioSalaJugador_Prueba.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\ServicioUsuario_Prueba.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\ConfiguradorPruebaParaServicio.cs
+C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\ImagenCallbackImplementacion.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\InvitacionCallbackImplementacion.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\AmigosCallbackImplementacion.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\ICommunicationObjectImpl.cs

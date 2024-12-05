@@ -29,9 +29,10 @@ C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\ModeloBD\UsuarioCuenta.cs
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\ModeloBD\Veto.cs
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\Utilidades\Conexion.cs
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\Utilidades\EstadisticasAcciones.cs
+C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\Interfaces\IConexion.cs
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\Utilidades\UsuarioPerfilDTO.cs
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\Properties\AssemblyInfo.cs
-C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\Utilidades\LoggerManejador.cs
+C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\Utilidades\ManejadorBitacora.cs
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\Utilidades\ManejadorExcepciones.cs
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\ModeloBD\DescribeloBD.Context.tt
 C:\Users\unaay\source\repos\DixitOdisy\DAOLibreria\ModeloBD\DescribeloBD.tt

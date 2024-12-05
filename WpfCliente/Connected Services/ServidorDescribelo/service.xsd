@@ -347,6 +347,11 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="EmpezarPartidaResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
   <xs:element name="IniciarValoresPartidaCallback">
     <xs:complexType>
       <xs:sequence>

@@ -60,7 +60,7 @@ namespace WcfServicioLibreria.Contratos
         /// <remarks>
         /// Este método notifica a todos los jugadores que la partida ha comenzado y ejecuta la lógica de inicio.
         /// </remarks>
-        [OperationContract(IsOneWay = true)]
+        [OperationContract]
         Task EmpezarPartidaAsync(string nombreJugador, string idPartida);
     }
     [ServiceContract]

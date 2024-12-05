@@ -123,8 +123,8 @@ namespace WpfCliente.ImplementacionesCallbacks
                 }
                 catch (Exception excepcion)
                 {
-                    imagen = null;
                     imagen.Abort();
+                    imagen = null;
                     ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                 }
                 return false;

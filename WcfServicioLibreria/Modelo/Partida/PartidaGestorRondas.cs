@@ -218,7 +218,7 @@ namespace WcfServicioLibreria.Modelo
                     {
                         continue;
                     }
-                    callback.TurnoPerdidoCallback();
+                    callback.CambiarPantallaCallback(numeroPantalla);
                 }
                 catch (TimeoutException excepcion)
                 {

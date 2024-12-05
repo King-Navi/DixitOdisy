@@ -183,8 +183,8 @@ namespace WcfServicioLibreria.Modelo
 
         public async Task EnMostrarTodasCartas()
         {
-            var todasLasImagenes = ImagenesTodosGrupo.Values.SelectMany(lista => lista).ToList();
-            RondaEventArgs evento = new RondaEventArgs(todasLasImagenes);
+            var todasLasImagenesGrupo = ImagenesTodosGrupo.Values.SelectMany(lista => lista).ToList();
+            RondaEventArgs evento = new RondaEventArgs(todasLasImagenesGrupo);
             MostrarTodasLasCartas?.Invoke(this, evento);
             await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ENVIO_SEGUNDOS));
         }
@@ -427,11 +427,10 @@ namespace WcfServicioLibreria.Modelo
                         return listaExistente;
                     }
                 );
-
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
-
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
         }
 
@@ -439,26 +438,23 @@ namespace WcfServicioLibreria.Modelo
         {
             try
             {
-                lock (JugadoresPendientes)
-                {
-                    JugadoresPendientes.TryTake(out nombreJugador);
-                }
+                JugadoresPendientes.TryTake(out nombreJugador);
                 ImagenesTodosGrupo.AddOrUpdate(
-                    nombreJugador,
-                    new List<string> { claveImagen },
-                    (llave, listaExistente) =>
-                    {
-                        if (!listaExistente.Contains(claveImagen))
-                        {
-                            listaExistente.Add(claveImagen);
-                        }
-                        return listaExistente;
-                    }
-                );
+                   nombreJugador,
+                   new List<string> { claveImagen },
+                   (llave, listaExistente) =>
+                   {
+                       if (!listaExistente.Contains(claveImagen))
+                       {
+                           listaExistente.Add(claveImagen);
+                       }
+                       return listaExistente;
+                   }
+               );
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
-
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
         }
 

@@ -71,6 +71,35 @@ namespace WpfCliente.Contexto
             return false;
         }
 
+
+        public bool NavegarAMenuDesdePartida(MenuPage nuevoMarco)
+        {
+            try
+            {
+                CerrarConexionPartida();
+                EvaluarMarcoNulo(nuevoMarco);
+                var ventana = VentanaPrincipal as INavegacion;
+                var marco = ventana?.MarcoNavegacion;
+
+                if (marco != null)
+                {
+                    marco.Navigated -= MarcoNavigacion;
+                    marco.Navigate(nuevoMarco);
+                    return true;
+                }
+            }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+            return false;
+        }
+
+
         public bool NavegarA(Page nuevoMarco)
         {
             try
@@ -340,6 +369,11 @@ namespace WpfCliente.Contexto
         {
             SingletonChat.Instancia.CerrarConexionChat();
             SingletonSalaJugador.Instancia.CerrarConexion();
+        }
+        private void CerrarConexionPartida()
+        {
+            SingletonChat.Instancia.CerrarConexionChat();
+            SingletonPartida.Instancia.CerrarConexionPartida();
         }
     }
 

@@ -1,4 +1,5 @@
 ﻿using DAOLibreria.Interfaces;
+using DAOLibreria.ModeloBD;
 using Moq;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
@@ -26,16 +27,14 @@ namespace Pruebas.Servidor.Utilidades
         protected Mock<IConexion> imitacionConexion = new Mock<IConexion>();
         public UsuarioSesionCallbackImplementacion implementacionCallback;
 
-        protected ManejadorPrincipal manejador ;
-
-
+        protected ManejadorPrincipal manejador;
         public virtual void ConfigurarManejador()
         {
             imitacionConexion.Setup(conexion => conexion.VerificarConexionAsync())
                 .Returns(Task.FromResult(true));
             imitacionConexion.Setup(conexion => conexion.VerificarConexion())
                 .Returns(true);
-        manejador = new ManejadorPrincipal(
+             manejador = new ManejadorPrincipal(
                 imitacionContextoProvedor.Object,
                 imitarVetoDAO.Object,
                 imitarUsuarioDAO.Object,

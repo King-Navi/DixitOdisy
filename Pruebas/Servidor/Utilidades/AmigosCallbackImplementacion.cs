@@ -9,10 +9,9 @@ namespace Pruebas.Servidor.Utilidades
         ConcurrentDictionary<string, Amigo> amigos = new ConcurrentDictionary<string, Amigo>();
         public void CambiarEstadoAmigoCallback(Amigo amigo)
         {
-            amigos.AddOrUpdate(amigo.Nombre,
+               amigos.AddOrUpdate(amigo.Nombre,
                 amigo,                  
-                (clave, viejoValor) => amigo    
-            );
+                (clave, viejoValor) => amigo);
 
         }
 

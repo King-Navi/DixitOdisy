@@ -251,6 +251,8 @@ namespace WpfCliente.GUI
             if (SingletonCliente.Instance.NombreUsuario != null 
                 && SingletonCliente.Instance.NombreUsuario is string nombre)
             {
+                SingletonPartida.Instancia.CerrarConexionPartida();
+                SingletonChat.Instancia.CerrarConexionChat();
                 if (String.IsNullOrEmpty(nombre) || nombre.ToLower().Contains(NOMBRE_RESERVADO))
                 {
                     SingletonGestorVentana.Instancia.NavegarA(new IniciarSesionPage());
@@ -258,11 +260,9 @@ namespace WpfCliente.GUI
                 }
                 else
                 {
-                    SingletonGestorVentana.Instancia.NavegarA(new MenuPage());
+                    SingletonGestorVentana.Instancia.NavegarAMenuDesdePartida(new MenuPage());
                     SingletonGestorVentana.Instancia.LimpiarHistorial();
                 }
-                SingletonPartida.Instancia.CerrarConexionPartida();
-                SingletonChat.Instancia.CerrarConexionChat();
             }
             else
             {

@@ -5,7 +5,7 @@ using Path = System.IO.Path;
 
 namespace WpfCliente.Utilidad
 {
-    internal class Utilidades
+    public static class Utilidades
     {
         public const double OPACIDAD_MAXIMA = 1;
         public const double OPACIDAD_MINIMA = 0.5;

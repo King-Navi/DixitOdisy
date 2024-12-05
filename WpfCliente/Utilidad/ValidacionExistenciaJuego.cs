@@ -5,7 +5,7 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente
 {
-    public class ValidacionExistenciaJuego
+    public static class ValidacionExistenciaJuego
     {
         public static bool ExisteSala(string codigoSala)
         {

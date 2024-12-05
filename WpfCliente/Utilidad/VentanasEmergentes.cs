@@ -6,7 +6,7 @@ using WpfCliente.GUI;
 
 namespace WpfCliente.Utilidad
 {
-    public class VentanasEmergentes
+    public static class VentanasEmergentes
     {
         public static void CrearVentanaEmergente(string tituloVentanaEmergente, string descripcionVentanaEmergente, Window ventana)
         {

@@ -3,7 +3,7 @@ using WpfCliente.ServidorDescribelo;
 
 namespace WpfCliente.Utilidad
 {
-    public class Correo
+    public static class Correo
     {
         public static bool VerificarCorreo(string correo, Window ventana)
         {

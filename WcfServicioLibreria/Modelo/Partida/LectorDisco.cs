@@ -12,6 +12,7 @@ namespace WcfServicioLibreria.Modelo
     internal class LectorDisco
     {
         private readonly int idLector;
+        long TAMANO_MAXIMO_BYTES = 5 * 1024 * 1024;
         private readonly BlockingCollection<LecturaTrabajo> colaLectura = new BlockingCollection<LecturaTrabajo>();
         private readonly CancellationTokenSource cancelarToken = new CancellationTokenSource(); 
         private readonly Task tareaLectura;
@@ -48,12 +49,31 @@ namespace WcfServicioLibreria.Modelo
                     foreach (var lecturaTrabajo in colaLectura.GetConsumingEnumerable(cancelacion))
                     {
                         try
-                        {
+                        {  
                             byte[] imagenBytes;
                             using (var fileStream = new FileStream(lecturaTrabajo.ArchivoPath, FileMode.Open, FileAccess.Read, FileShare.Read, 16384, useAsync: true))
                             {
+                                if (fileStream.Length > TAMANO_MAXIMO_BYTES)
+                                {
+                                    throw new ArgumentException($"El archivo {lecturaTrabajo.ArchivoPath} excede el tamaño permitido de {TAMANO_MAXIMO_BYTES / (1024 * 1024)} MB.");
+                                }
                                 imagenBytes = new byte[fileStream.Length];
-                                await fileStream.ReadAsync(imagenBytes, CERO, (int)fileStream.Length);
+                                int bytesTotalesLeidos = 0;
+
+                                while (bytesTotalesLeidos < fileStream.Length)
+                                {
+                                    int bytesLeidos = await fileStream.ReadAsync(imagenBytes, bytesTotalesLeidos, (int)(fileStream.Length - bytesTotalesLeidos), cancelacion);
+                                    if (bytesLeidos == 0)
+                                    {
+                                        break;
+                                    }
+
+                                    bytesTotalesLeidos += bytesLeidos;
+                                }
+                                if (bytesTotalesLeidos != fileStream.Length)
+                                {
+                                    throw new IOException($"No se pudieron leer todos los bytes del archivo {lecturaTrabajo.ArchivoPath}.");
+                                }
                             }
                             string nombreSinExtension = Path.GetFileNameWithoutExtension(lecturaTrabajo.ArchivoPath);
                             using (var imagenStream = new MemoryStream(imagenBytes))

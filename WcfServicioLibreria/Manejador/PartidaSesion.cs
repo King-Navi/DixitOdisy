@@ -107,6 +107,7 @@ namespace WcfServicioLibreria.Manejador
 
         public void ExpulsarJugadorPartida(string nombreJugador, string idPartida)
         {
+            //TODO: 
             throw new NotImplementedException();
         }
 

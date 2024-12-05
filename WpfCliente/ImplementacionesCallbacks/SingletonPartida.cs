@@ -265,7 +265,7 @@ namespace WpfCliente.ImplementacionesCallbacks
         }
         public void TurnoPerdidoCallback()
         {
-            throw new NotImplementedException();
+                //TODO: 
         }
     }
 }

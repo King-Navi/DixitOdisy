@@ -169,6 +169,10 @@ namespace WpfCliente.GUI
             {
                 ventanaModalCartas?.Close();
             }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);

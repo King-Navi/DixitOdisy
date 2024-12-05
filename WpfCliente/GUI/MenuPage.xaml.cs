@@ -74,7 +74,8 @@ namespace WpfCliente.GUI
                     VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorServidor,
                         Properties.Idioma.mensajeErrorServidor,
                         Window.GetWindow(this));
-                    SingletonGestorVentana.Instancia.Regresar();
+                    SingletonGestorVentana.Instancia.NavegarA(new IniciarSesionPage());
+                    SingletonGestorVentana.Instancia.LimpiarHistorial();
                     return;
                 }
                 _ = EvaluarAperturaDeCanalesAsync(resultadoUsuarioSesion);

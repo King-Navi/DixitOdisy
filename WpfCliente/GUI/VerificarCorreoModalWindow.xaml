@@ -1,43 +1,105 @@
-﻿<Window x:Class="WpfCliente.GUI.VerificarCorreoModalWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfCliente.GUI"
-        mc:Ignorable="d"
-        WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize"
-        Title="Verificar correo" Height="148" Width="400">
+﻿<Window 
+    x:Class="WpfCliente.GUI.VerificarCorreoModalWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:WpfCliente.GUI"
+    mc:Ignorable="d"
+    WindowStartupLocation="CenterScreen"
+    ResizeMode="NoResize"
+    Title="Verificar correo" 
+    Height="148" 
+    Width="400">
     <Window.Background>
-        <ImageBrush ImageSource="pack://application:,,,/WpfCliente;component/Recursos/cajaLogin.png" Stretch="UniformToFill"/>
+        <ImageBrush 
+            ImageSource="pack://application:,,,/WpfCliente;component/Recursos/cajaLogin.png" 
+            Stretch="UniformToFill" />
     </Window.Background>
     <Window.Resources>
-        <Style TargetType="{x:Type TextBox}" >
+        <Style 
+            TargetType="{x:Type TextBox}">
             <Style.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="7" />
+                <Style 
+                    TargetType="{x:Type Border}">
+                    <Setter 
+                        Property="CornerRadius" 
+                        Value="7" />
                 </Style>
             </Style.Resources>
         </Style>
-        <Style TargetType="{x:Type Button}" >
+        <Style 
+            TargetType="{x:Type Button}">
             <Style.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="6" />
+                <Style 
+                    TargetType="{x:Type Border}">
+                    <Setter 
+                        Property="CornerRadius" 
+                        Value="6" />
                 </Style>
             </Style.Resources>
         </Style>
     </Window.Resources>
-
-    <Grid Margin="10">
+    <Grid 
+        Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition 
+                Height="Auto" />
+            <RowDefinition 
+                Height="10" />
+            <RowDefinition 
+                Height="Auto" />
         </Grid.RowDefinitions>
-        <Label x:Name="labelIngresarCodigo" Content="Ingrese el código" FontFamily="Lucida Sans Unicode" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14" Foreground="Black" Grid.Row="1" HorizontalContentAlignment="Center" Height="38" Width="360"/>
-        <TextBox  x:Name="textBoxCodigo" MaxLength="6" Grid.Row="0" Width="260" Height="25" Margin="60,34,60,6" Grid.RowSpan="3"/>
-        <Button x:Name="buttonAceptar" Content="Aceptar" FontFamily="Lucida Sans Unicode" Background="#E0DCC7" Grid.Row="2" Width="100" HorizontalAlignment="Center" Margin="0,38,0,-30"  Height="30" Click="ClicButtonAceptar"/>
-        <Label x:Name="labelCodigoInvalido" Content="Codigo invalido" HorizontalAlignment="Left" Margin="261,32,0,0" Grid.Row="1" VerticalAlignment="Top" Visibility="Collapsed" FontFamily="Lucida Sans Unicode" FontSize="6" Grid.RowSpan="2"/>
-        <Label x:Name="labelInstruccionesVerificacionCorreo" Content="Te enviamos un código al correo que ingresaste" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,-16,0,0" VerticalAlignment="Top" Grid.RowSpan="2" Width="360"/>
+        <Label 
+            x:Name="labelIngresarCodigo" 
+            Content="Ingrese el código" 
+            FontFamily="Lucida Sans Unicode" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" 
+            FontSize="14" 
+            Foreground="Black" 
+            Grid.Row="1" 
+            HorizontalContentAlignment="Center" 
+            Height="38" 
+            Width="360" />
+        <TextBox 
+            x:Name="textBoxCodigo" 
+            MaxLength="6" 
+            Grid.Row="0" 
+            Width="260" 
+            Height="25" 
+            Margin="60,34,60,6" 
+            Grid.RowSpan="3" />
+        <Button 
+            x:Name="buttonAceptar" 
+            Content="Aceptar" 
+            FontFamily="Lucida Sans Unicode" 
+            Background="#E0DCC7" 
+            Grid.Row="2" 
+            Width="100" 
+            HorizontalAlignment="Center" 
+            Margin="0,38,0,-30" 
+            Height="30" 
+            Click="ClicButtonAceptar" />
+        <Label 
+            x:Name="labelCodigoInvalido" 
+            Content="Código inválido" 
+            HorizontalAlignment="Left" 
+            Margin="261,32,0,0" 
+            Grid.Row="1" 
+            VerticalAlignment="Top" 
+            Visibility="Collapsed" 
+            FontFamily="Lucida Sans Unicode" 
+            FontSize="6" 
+            Grid.RowSpan="2" />
+        <Label 
+            x:Name="labelInstruccionesVerificacionCorreo" 
+            Content="Te enviamos un código al correo que ingresaste" 
+            HorizontalContentAlignment="Center" 
+            HorizontalAlignment="Center" 
+            Margin="0,-16,0,0" 
+            VerticalAlignment="Top" 
+            Grid.RowSpan="2" 
+            Width="360" />
     </Grid>
 </Window>

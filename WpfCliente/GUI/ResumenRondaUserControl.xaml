@@ -5,53 +5,135 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfCliente.GUI"
              mc:Ignorable="d" 
-             MinHeight="670" MinWidth="520"
-             d:DesignHeight="450" d:DesignWidth="800">
+             MinHeight="670" 
+             MinWidth="520"
+             d:DesignHeight="450" 
+             d:DesignWidth="800">
     <Grid >
         <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FFC300FF" Offset="0"/>
-                <GradientStop Color="#FF290235" Offset="1"/>
-                <GradientStop Color="#FF56385F" Offset="0.7"/>
-                <GradientStop Color="#FF5F336D" Offset="0.315"/>
+            <LinearGradientBrush 
+                EndPoint="0.5,1" 
+                StartPoint="0.5,0">
+                <GradientStop 
+                    Color="#FFC300FF" 
+                    Offset="0"/>
+                <GradientStop 
+                    Color="#FF290235" 
+                    Offset="1"/>
+                <GradientStop 
+                    Color="#FF56385F" 
+                    Offset="0.7"/>
+                <GradientStop 
+                    Color="#FF5F336D" 
+                    Offset="0.315"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <DockPanel LastChildFill="True">
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal"  HorizontalAlignment="Right">
+        <DockPanel 
+            LastChildFill="True">
+            <StackPanel 
+                DockPanel.Dock="Top" 
+                Orientation="Horizontal"  
+                HorizontalAlignment="Right">
 
             </StackPanel>
 
-            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Background="Coral" HorizontalAlignment="Center">
+            <StackPanel 
+                DockPanel.Dock="Bottom" 
+                Orientation="Horizontal" 
+                Background="Coral" 
+                HorizontalAlignment="Center">
 
             </StackPanel>
 
-            <StackPanel DockPanel.Dock="Left" Orientation="Vertical">
+            <StackPanel 
+                DockPanel.Dock="Left" 
+                Orientation="Vertical">
 
             </StackPanel>
 
-            <StackPanel Orientation="Vertical" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel 
+                Orientation="Vertical" 
+                Background="Transparent" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center">
                 <Grid>
-                    <Image Source="pack://application:,,,/WpfCliente;component/Recursos/podioJugador.png" Height="250" Width="460" HorizontalAlignment="Center"/>
+                    <Image 
+                        Source="pack://application:,,,/WpfCliente;component/Recursos/podioJugador.png" 
+                        Height="250" 
+                        Width="460" 
+                        HorizontalAlignment="Center"/>
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
+                            <RowDefinition 
+                                Height="*" />
+                            <RowDefinition 
+                                Height="Auto" />
+                            <RowDefinition 
+                                Height="*" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition 
+                                Width="2*" />
+                            <ColumnDefinition 
+                                Width="*" />
+                            <ColumnDefinition 
+                                Width="2*" />
                         </Grid.ColumnDefinitions>
 
-                        <Image Source="{Binding PrimerLugar.BitmapImagen}" d:Source="pack://application:,,,/Recursos/pfp1.png" Height="100" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Margin="0,-83,0,318" />
-                        <Label x:Name="labelPrimerLugar" Content="{Binding PrimerLugar.Nombre}" d:Content="Primer" Grid.Column="1" HorizontalAlignment="Center"        HorizontalContentAlignment="Center"  VerticalContentAlignment="Center"  Margin="0,22,0,287" Width="80" />
+                        <Image 
+                            Source="{Binding PrimerLugar.BitmapImagen}" 
+                            d:Source="pack://application:,,,/Recursos/pfp1.png" 
+                            Height="100" 
+                            Grid.Row="0" 
+                            Grid.Column="1" 
+                            HorizontalAlignment="Center" 
+                            Margin="0,-83,0,318" />
+                        <Label 
+                            x:Name="labelPrimerLugar" 
+                            Content="{Binding PrimerLugar.Nombre}" 
+                            d:Content="Primer" 
+                            Grid.Column="1" 
+                            HorizontalAlignment="Center"        
+                            HorizontalContentAlignment="Center"  
+                            VerticalContentAlignment="Center"  
+                            Margin="0,22,0,287" 
+                            Width="80" />
 
-                        <Image Source="{Binding SegundoLugar.BitmapImagen}" d:Source="pack://application:,,,/Recursos/pfp2.png" Height="100" Width="100" Grid.Row="0" HorizontalAlignment="Center" Margin="0,-33,0,268" />
-                        <Label x:Name="labelSegundoLugar" Content="{Binding SegundoLugar.Nombre}" d:Content="Segundo" HorizontalAlignment="Center" Margin="0,68,0,229" HorizontalContentAlignment="Center"  VerticalContentAlignment="Center" />
+                        <Image 
+                            Source="{Binding SegundoLugar.BitmapImagen}" 
+                            d:Source="pack://application:,,,/Recursos/pfp2.png" 
+                            Height="100" 
+                            Width="100" 
+                            Grid.Row="0" 
+                            HorizontalAlignment="Center" 
+                            Margin="0,-33,0,268" />
+                        <Label 
+                            x:Name="labelSegundoLugar" 
+                            Content="{Binding SegundoLugar.Nombre}" 
+                            d:Content="Segundo" 
+                            HorizontalAlignment="Center" 
+                            Margin="0,68,0,229" 
+                            HorizontalContentAlignment="Center"  
+                            VerticalContentAlignment="Center" />
 
-                        <Image Source="{Binding TercerLugar.BitmapImagen}" d:Source="pack://application:,,,/Recursos/pfp3.png" Height="100" Width="100" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Margin="0,-2,0,237" />
-                        <Label x:Name="labelTercerLugar"  Content="{Binding TercerLugar.Nombre}" d:Content="Tercero" Grid.Column="2" HorizontalAlignment="Center" Margin="0,98,0,198"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                        <Image 
+                            Source="{Binding TercerLugar.BitmapImagen}" 
+                            d:Source="pack://application:,,,/Recursos/pfp3.png" 
+                            Height="100" 
+                            Width="100" 
+                            Grid.Row="0"
+                            Grid.Column="2" 
+                            HorizontalAlignment="Center" 
+                            Margin="0,-2,0,237" />
+                        <Label 
+                            x:Name="labelTercerLugar"  
+                            Content="{Binding TercerLugar.Nombre}" 
+                            d:Content="Tercero" 
+                            Grid.Column="2" 
+                            HorizontalAlignment="Center" 
+                            Margin="0,98,0,198"  
+                            HorizontalContentAlignment="Center" 
+                            VerticalContentAlignment="Center" />
                     </Grid>
                 </Grid>
             </StackPanel>

@@ -7,13 +7,14 @@
         mc:Ignorable="d"
          ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterOwner" PreviewKeyDown="VistaPreviaTeclaPresionada">
+        WindowStartupLocation="CenterOwner" 
+        PreviewKeyDown="VistaPreviaTeclaPresionada">
     <Grid>
-        <Frame NavigationUIVisibility="Hidden" x:Name="FrameVentanaContenedora"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Center" >
-
+        <Frame 
+            NavigationUIVisibility="Hidden" 
+            x:Name="FrameVentanaContenedora"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center" >
         </Frame>
     </Grid>
-    
 </Window>

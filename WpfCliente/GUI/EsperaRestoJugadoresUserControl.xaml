@@ -6,27 +6,46 @@
              xmlns:local="clr-namespace:WpfCliente.GUI"
              xmlns:bc="clr-namespace:WpfCliente.Estilos"
              mc:Ignorable="d" 
-              MinHeight="670" MinWidth="520"
-             d:DesignHeight="450" d:DesignWidth="800" Unloaded="CerrandoUserControl">
+             MinHeight="670" 
+             MinWidth="520"
+             d:DesignHeight="450" 
+             d:DesignWidth="800" 
+             Unloaded="CerrandoUserControl">
     <Grid >
         <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FF290024" Offset="0.988"/>
-                <GradientStop Color="#FFCBA2FD"/>
-                <GradientStop Color="#FF9F72D6" Offset="0.195"/>
-                <GradientStop Color="#FF56014B" Offset="0.484"/>
+            <LinearGradientBrush 
+                EndPoint="0.5,1" 
+                StartPoint="0.5,0">
+                <GradientStop 
+                    Color="#FF290024" 
+                    Offset="0.988"/>
+                <GradientStop 
+                    Color="#FFCBA2FD"/>
+                <GradientStop 
+                    Color="#FF9F72D6" 
+                    Offset="0.195"/>
+                <GradientStop 
+                    Color="#FF56014B" 
+                    Offset="0.484"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <TextBlock x:Name="labelEsperandoJugadores" Text="Esperando a otros jugadores..." 
+        <TextBlock x:Name="labelEsperandoJugadores" 
+                   Text="Esperando a otros jugadores..." 
                    HorizontalAlignment="Center" 
                    VerticalAlignment="Center" 
                    Width="160" Height="80"
                    FontSize="20"
                    TextAlignment="Center" 
                    TextWrapping="Wrap" Foreground="White"></TextBlock>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="300
-                    " Height="300" Margin="0,0,0,30">
-            <bc:CogwheelSpinner Foreground="#FFFFBFFD" Color="#FFD652FF" Duration="0:0:1.0"/>
+        <StackPanel HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Width="300" 
+                    Height="300" 
+                    Margin="0,0,0,30">
+            <bc:CogwheelSpinner 
+                Foreground="#FFFFBFFD" 
+                Color="#FFD652FF" 
+                Duration="0:0:1.0"/>
         </StackPanel>
         
     </Grid>

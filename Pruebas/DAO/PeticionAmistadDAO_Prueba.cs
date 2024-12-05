@@ -159,9 +159,9 @@ namespace Pruebas.DAO
                     context.SaveChanges();
                 }
             }
-            catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+            catch (System.Data.Entity.Validation.DbEntityValidationException excepcion)
             {
-                foreach (var validationError in ex.EntityValidationErrors)
+                foreach (var validationError in excepcion.EntityValidationErrors)
                 {
                     foreach (var error in validationError.ValidationErrors)
                     {

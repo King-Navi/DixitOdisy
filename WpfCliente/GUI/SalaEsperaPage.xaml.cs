@@ -416,9 +416,9 @@ namespace WpfCliente.GUI
                 ventanaModal.Owner = Window.GetWindow(this);
 
             }
-            catch (Exception ex)
+            catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarExcepcionErrorComponente(ex);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             bool? resultado = ventanaModal.ShowDialog();
 

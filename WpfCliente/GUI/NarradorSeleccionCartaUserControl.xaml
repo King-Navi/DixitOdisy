@@ -6,21 +6,51 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:WpfCliente.GUI"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             MinHeight="670" MinWidth="520" Loaded="LoadedNarradorSeleccionCartaUsercontrol" Unloaded="CerrandoNarradorSeleccionCartaUsercontrol">
+             d:DesignHeight="450" 
+             d:DesignWidth="800"
+             MinHeight="670" 
+             MinWidth="520" 
+             Loaded="LoadedNarradorSeleccionCartaUsercontrol" 
+             Unloaded="CerrandoNarradorSeleccionCartaUsercontrol">
     <Grid >
         <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FF5D0094" Offset="0"/>
-                <GradientStop Color="#FF865BFF" Offset="1"/>
-                <GradientStop Color="#FF4D017B" Offset="0.717"/>
-                <GradientStop Color="#FFB73FFF" Offset="0.348"/>
+            <LinearGradientBrush 
+                EndPoint="0.5,1" 
+                StartPoint="0.5,0">
+                <GradientStop 
+                    Color="#FF5D0094" 
+                    Offset="0"/>
+                <GradientStop 
+                    Color="#FF865BFF" 
+                    Offset="1"/>
+                <GradientStop 
+                    Color="#FF4D017B" 
+                    Offset="0.717"/>
+                <GradientStop 
+                    Color="#FFB73FFF" 
+                    Offset="0.348"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Label x:Name="labelNarrador" Content="¡Eres el narrador!" FontSize="35" HorizontalAlignment="Center" Margin="0,10,0,0" Unloaded="CerrandoUserControl"></Label>
-        <TextBlock x:Name="labelInstruccionNarrador" Text="Escoge una carata y coloca una pista, ¡Que no sea muy sencilla o perderas!" TextWrapping="Wrap" Width="450" TextAlignment="Center" FontSize="25" HorizontalAlignment="Center" Margin="0,70,0,0"  Foreground="White"></TextBlock>
+        <Label 
+            x:Name="labelNarrador" 
+            Content="¡Eres el narrador!" 
+            FontSize="35" 
+            HorizontalAlignment="Center" 
+            Margin="0,10,0,0" 
+            Unloaded="CerrandoUserControl"></Label>
+        <TextBlock 
+            x:Name="labelInstruccionNarrador" 
+            Text="Escoge una carata y coloca una pista, ¡Que no sea muy sencilla o perderas!" 
+            TextWrapping="Wrap" 
+            Width="450" 
+            TextAlignment="Center" 
+            FontSize="25" 
+            HorizontalAlignment="Center" 
+            Margin="0,70,0,0"  
+            Foreground="White"></TextBlock>
         <Grid Margin="0,140,0,0">
-            <ItemsControl ItemsSource="{Binding Imagenes}">
+            <ItemsControl 
+                ItemsSource="{Binding Imagenes}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="3" Rows="2"/>
@@ -32,8 +62,10 @@
                             <Image Source="{Binding BitmapImagen}" Width="130">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseLeftButtonDown">
-                                        <i:InvokeCommandAction Command="{Binding DataContext.ComandoImagenGlobal, RelativeSource={RelativeSource AncestorType=Page}}"
-                                                           CommandParameter="{Binding IdImagen}" />
+                                        <i:InvokeCommandAction 
+                                            Command="{Binding DataContext.ComandoImagenGlobal, 
+                                            RelativeSource={RelativeSource AncestorType=Page}}"
+                                            CommandParameter="{Binding IdImagen}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </Image>

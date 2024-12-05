@@ -1,38 +1,87 @@
-﻿<Window x:Class="WpfCliente.GUI.VentanaEmergenteModalWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfCliente.GUI"
-        mc:Ignorable="d"
-        Title="VentanaEmergente" Height="185" Width="515"
-        WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize"
-        Background="Transparent">
+﻿<Window 
+    x:Class="WpfCliente.GUI.VentanaEmergenteModalWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:WpfCliente.GUI"
+    mc:Ignorable="d"
+    Title="VentanaEmergente" 
+    Height="185" 
+    Width="515"
+    WindowStartupLocation="CenterScreen"
+    ResizeMode="NoResize"
+    Background="Transparent">
     <Window.Resources>
-        <Style TargetType="{x:Type Button}">
+        <Style 
+            TargetType="{x:Type Button}">
             <Style.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="6" />
+                <Style 
+                    TargetType="{x:Type Border}">
+                    <Setter 
+                        Property="CornerRadius" 
+                        Value="6" />
                 </Style>
             </Style.Resources>
         </Style>
     </Window.Resources>
-
-    <Grid Height="150" Width="500">
-        <Border CornerRadius="25" Background="#F9F5E9" Padding="20">
+    <Grid 
+        Height="150" 
+        Width="500">
+        <Border 
+            CornerRadius="25" 
+            Background="#F9F5E9" 
+            Padding="20">
             <Grid>
-                <Label x:Name="labelTituloVentanaEmergente" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="Black" FontFamily="Lucida Sans Unicode" FontSize="18" Content="Título de la Ventana Emergente" Width="460"/>
-                <Label x:Name="labelDescripcionVentanaEmergente" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Black" FontFamily="Lucida Sans Unicode" FontSize="12" Height="24" Width="360"/>
-                <Button x:Name="buttonAceptar" Content="Aceptar" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Height="40" Margin="360,0,0,-2" FontFamily="Lucida Sans Unicode Bold Italic" Foreground="Black" Background="#E3DAC9" BorderBrush="Black" FontSize="16" Click="ClicButtonAceptar" Cursor="Hand"/>
-                <TextBlock x:Name="textBlockDescripcionVentanaEmergente" TextWrapping="Wrap" Text="Descripción de la ventana emergente" Margin="0,38,0,38" />
-                <Rectangle Margin="-20,33,-20,76" RenderTransformOrigin="0.5,0.5" Fill="Black">
+                <Label 
+                    x:Name="labelTituloVentanaEmergente" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Top" 
+                    Foreground="Black" 
+                    FontFamily="Lucida Sans Unicode" 
+                    FontSize="18" 
+                    Content="Título de la Ventana Emergente" 
+                    Width="460" />
+                <Label 
+                    x:Name="labelDescripcionVentanaEmergente" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    Foreground="Black" 
+                    FontFamily="Lucida Sans Unicode" 
+                    FontSize="12" 
+                    Height="24" 
+                    Width="360" />
+                <Button 
+                    x:Name="buttonAceptar" 
+                    Content="Aceptar" 
+                    HorizontalAlignment="Left" 
+                    VerticalAlignment="Bottom" 
+                    Width="100" 
+                    Height="40" 
+                    Margin="360,0,0,-2" 
+                    FontFamily="Lucida Sans Unicode Bold Italic" 
+                    Foreground="Black" 
+                    Background="#E3DAC9" 
+                    BorderBrush="Black" 
+                    FontSize="16" 
+                    Click="ClicButtonAceptar" 
+                    Cursor="Hand" />
+                <TextBlock 
+                    x:Name="textBlockDescripcionVentanaEmergente" 
+                    TextWrapping="Wrap" 
+                    Text="Descripción de la ventana emergente" 
+                    Margin="0,38,0,38" />
+                <Rectangle 
+                    Margin="-20,33,-20,76" 
+                    RenderTransformOrigin="0.5,0.5" 
+                    Fill="Black">
                     <Rectangle.RenderTransform>
                         <TransformGroup>
-                            <ScaleTransform ScaleY="-1"/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
+                            <ScaleTransform 
+                                ScaleY="-1" />
+                            <SkewTransform />
+                            <RotateTransform />
+                            <TranslateTransform />
                         </TransformGroup>
                     </Rectangle.RenderTransform>
                 </Rectangle>

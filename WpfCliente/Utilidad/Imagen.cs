@@ -40,7 +40,7 @@ namespace WpfCliente.Utilidad
         {
             if (imageControl == null)
             {
-                return null;
+                return new byte[0];
 
             }
             if (fotoGlobal != null)

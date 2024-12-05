@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace WpfCliente.Utilidad
 {
-    public class ValidacionesString
+    public static class ValidacionesString
     {
         public const string CARACTERES_VALIDOS = "^[a-zA-Z0-9_]+$";
         public const string EMAIL_VALIDO = "^(?=.{5,100}$)[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";

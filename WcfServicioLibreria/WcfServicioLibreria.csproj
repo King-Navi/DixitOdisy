@@ -157,6 +157,7 @@
     <Compile Include="Modelo\Partida\ImagenCarta.cs" />
     <Compile Include="Modelo\Partida\LectorDisco.cs" />
     <Compile Include="Modelo\Partida\InvitacionPartida.cs" />
+    <Compile Include="Modelo\Partida\Puntaje.cs" />
     <Compile Include="Modelo\Sala\Sala.cs" />
     <Compile Include="Modelo\Usuario\UsuarioContexto.cs" />
     <Compile Include="Modelo\Partida\PartidaJugadores.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Utilidades\IManejadorImagen.cs" />
     <Compile Include="Utilidades\IMediadorImagen.cs" />
     <Compile Include="Utilidades\IObservador.cs" />
+    <Compile Include="Utilidades\IPuntaje.cs" />
     <Compile Include="Utilidades\ManejadorBitacora.cs" />
     <Compile Include="Utilidades\ManejadorExcepciones.cs" />
     <Compile Include="Utilidades\Rutas.cs" />

@@ -149,9 +149,9 @@ namespace DAOLibreria
             bool resultado = false;
             try
             {
-                var primerIntento = Conexion.VerificarConexion();
-                var segundoIntento = Conexion.VerificarConexion();
-                var tercerIntento = Conexion.VerificarConexion();
+                var primerIntento = (new Conexion()).VerificarConexion();
+                var segundoIntento = (new Conexion()).VerificarConexion();
+                var tercerIntento = (new Conexion()).VerificarConexion();
                 if (primerIntento && segundoIntento && tercerIntento)
                 {
                     return true;

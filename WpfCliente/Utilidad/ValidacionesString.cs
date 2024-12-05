@@ -6,12 +6,16 @@ namespace WpfCliente.Utilidad
 {
     public class ValidacionesString
     {
-        private const string CARACTERES_VALIDOS = "^[a-zA-Z0-9_]+$";
-        private const string EMAIL_VALIDO = "^(?=.{5,100}$)[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-        private const string SIMBOLOS_VALIDOS = "^(?=.*[\\W_])";
-        private const string NOMBRE_INVITADO = "guest";
-        private const string ESPACIO_CARACTER = " ";
-        private const string PALABRA_RESERVADA_GUEST = "guest";
+        public const string CARACTERES_VALIDOS = "^[a-zA-Z0-9_]+$";
+        public const string EMAIL_VALIDO = "^(?=.{5,100}$)[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        public const string SIMBOLOS_VALIDOS = "^(?=.*[\\W_])";
+        public const string NOMBRE_INVITADO = "guest";
+        public const string ESPACIO_CARACTER = " ";
+        public const string PALABRA_RESERVADA_GUEST = "guest";
+        public const int TIEMPO_MILISEGUNDOS = 50;
+        public const int LONGITUD_MAXIMA_GAMERTAG = 20;
+        public const int CERO = 0;
+
 
 
         public static bool EsGamertagValido(string gamertag)
@@ -19,6 +23,10 @@ namespace WpfCliente.Utilidad
             bool validacionGamertag = false;
 
             if (string.IsNullOrWhiteSpace(gamertag))
+            {
+                return validacionGamertag;
+            }
+            if (gamertag.Length > LONGITUD_MAXIMA_GAMERTAG)
             {
                 return validacionGamertag;
             }
@@ -30,7 +38,7 @@ namespace WpfCliente.Utilidad
             {
                 return validacionGamertag;
             }
-            if (gamertag.IndexOf(PALABRA_RESERVADA_GUEST, StringComparison.OrdinalIgnoreCase) >= 0)
+            if (gamertag.IndexOf(PALABRA_RESERVADA_GUEST, StringComparison.OrdinalIgnoreCase) >= CERO)
             {
                 return validacionGamertag;
             }
@@ -38,13 +46,13 @@ namespace WpfCliente.Utilidad
             {
                 return validacionGamertag;
             }
-            if (gamertag.IndexOf(NOMBRE_INVITADO, StringComparison.OrdinalIgnoreCase) >= 0)
+            if (gamertag.IndexOf(NOMBRE_INVITADO, StringComparison.OrdinalIgnoreCase) >= CERO)
             {
                 return validacionGamertag;
             }
             try
             {
-                Regex regex = new Regex(CARACTERES_VALIDOS, RegexOptions.None, TimeSpan.FromMilliseconds(50));
+                Regex regex = new Regex(CARACTERES_VALIDOS, RegexOptions.None, TimeSpan.FromMilliseconds(TIEMPO_MILISEGUNDOS));
                 return regex.IsMatch(gamertag.Trim());
             }
             catch (RegexMatchTimeoutException excepcion)
@@ -90,7 +98,7 @@ namespace WpfCliente.Utilidad
 
             try
             {
-                Regex regex = new Regex(EMAIL_VALIDO, RegexOptions.None, TimeSpan.FromMilliseconds(50));
+                Regex regex = new Regex(EMAIL_VALIDO, RegexOptions.None, TimeSpan.FromMilliseconds(TIEMPO_MILISEGUNDOS));
                 return regex.IsMatch(correo.Trim());
             }
             catch (RegexMatchTimeoutException excepcion)
@@ -110,7 +118,7 @@ namespace WpfCliente.Utilidad
         {
             try
             {
-                Regex regex = new Regex(SIMBOLOS_VALIDOS, RegexOptions.None, TimeSpan.FromMilliseconds(50));
+                Regex regex = new Regex(SIMBOLOS_VALIDOS, RegexOptions.None, TimeSpan.FromMilliseconds(TIEMPO_MILISEGUNDOS));
 
                 return regex.IsMatch(password.Trim());
             }

@@ -28,7 +28,7 @@ namespace Pruebas.Servidor
         public void ObtenerSessionJugadorCallback_SeAbreElCanal_DeberiaRetornarTrue()
         {
             var implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
-            mockContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
+            imitacionContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
              .Returns(implementacionCallback);
             var usuario = new Usuario { IdUsuario = 1, Nombre = "PruebaUsuario" };
             manejador.ObtenerSesionJugador(usuario);
@@ -42,7 +42,7 @@ namespace Pruebas.Servidor
         public void ObtenerSessionJugadorCallback_SeCierraElCanal_DeberiaRetornarTrue()
         { 
             var implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
-            mockContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
+            imitacionContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
              .Returns(implementacionCallback);
             var usuario = new Usuario { IdUsuario = 1, Nombre = "PruebaUsuario" };
             manejador.ObtenerSesionJugador(usuario);
@@ -58,7 +58,7 @@ namespace Pruebas.Servidor
         public void ObtenerSessionJugadorCallback_YaHaIniciadoSesion_DeberiaRetornarUsuarioFalla()
         {
             var implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
-            mockContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())   
+            imitacionContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())   
                 .Returns(implementacionCallback);
             var usuario = new Usuario { IdUsuario = 1, Nombre = "PruebaUsuario" };
             var usuarioRepetido = new Usuario { IdUsuario = 1, Nombre = "PruebaUsuario" };
@@ -72,7 +72,7 @@ namespace Pruebas.Servidor
         public void ObtenerSessionJugadorCallback_EnDesconeccion_DeberiaRetornarFalse()
         {
             var implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
-            mockContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
+            imitacionContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
                 .Returns(implementacionCallback);
             var usuario = new Usuario { IdUsuario = 1, Nombre = "PruebaUsuario" };
             manejador.ObtenerSesionJugador(usuario);
@@ -87,7 +87,7 @@ namespace Pruebas.Servidor
         public void ObtenerSessionJugadorCallback_EsNulo_DeberiaRetornarFalse()
         {
             var implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
-            mockContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
+            imitacionContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
                 .Returns(implementacionCallback);
             Usuario usuario = null;
             manejador.ObtenerSesionJugador(usuario);

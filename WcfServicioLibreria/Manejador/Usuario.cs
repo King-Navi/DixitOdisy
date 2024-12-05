@@ -114,7 +114,7 @@ namespace WcfServicioLibreria.Manejador
 
         public async Task<bool> PingBDAsync()
         {
-            return await DAOLibreria.ModeloBD.Conexion.VerificarConexionAsync();
+            return await (new Conexion()).VerificarConexionAsync();
         }
 
         public WcfServicioLibreria.Modelo.Usuario ValidarCredenciales(string gamertag, string contrasenia)

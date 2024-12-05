@@ -19,6 +19,7 @@ namespace WcfServicioLibreria.Modelo
     {
         private const int VICTORIA = 1;
         private const int DERROTA = 0;
+        private const int CERO_RONDAS = 0;
         [DataMember]
         public TematicaPartida Tematica { get; private set; }
         [DataMember]
@@ -37,7 +38,7 @@ namespace WcfServicioLibreria.Modelo
         {
             Tematica = tematica;
             Jugadores = new List<JugadorEstadisticas>();
-            TotalRondas = 0;
+            TotalRondas = CERO_RONDAS;
             PrimerLugar = null;
             SegundoLugar = null;
             TercerLugar = null;
@@ -47,7 +48,7 @@ namespace WcfServicioLibreria.Modelo
         {
             Tematica = tematica;
             Jugadores = new List<JugadorEstadisticas>();
-            TotalRondas = 0;
+            TotalRondas = CERO_RONDAS;
             PrimerLugar = null;
             SegundoLugar = null;
             TercerLugar = null;
@@ -127,7 +128,7 @@ namespace WcfServicioLibreria.Modelo
 
             foreach (var usuario in usuariosEnPartida)
             {
-                var jugadorExistente = Jugadores.FirstOrDefault(j => j.Nombre == usuario);
+                var jugadorExistente = Jugadores.FirstOrDefault(busqueda => busqueda.Nombre == usuario);
                 if (jugadorExistente == null)
                 {
                     Jugadores.Add(new JugadorEstadisticas(usuario));

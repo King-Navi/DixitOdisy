@@ -24,7 +24,7 @@ namespace Pruebas.Servidor
             mockCallback
                 .Setup(callback => callback.RecibirImagenCallback(It.IsAny<ImagenCarta>()))
                 .Verifiable();
-            mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionPartidaCallback);
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionPartidaCallback);
 
         }
         [TestCleanup]

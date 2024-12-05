@@ -3,6 +3,9 @@ using DAOLibreria.DAO;
 using System;
 using System.Threading.Tasks;
 using DAOLibreria.Interfaces;
+using WcfServicioLibreria.Utilidades;
+using System.Data.SqlClient;
+using System.Security;
 
 namespace WcfServicioLibreria.Modelo.Vetos
 {
@@ -15,6 +18,7 @@ namespace WcfServicioLibreria.Modelo.Vetos
         private readonly IUsuarioDAO usuarioDAO;
         private readonly IUsuarioCuentaDAO usuarioCuentaDAO;
         private readonly IExpulsionDAO expulsionDAO;
+        public IConexion Conexion { get; set; }
         public ManejadorDeVetos() 
         {
             vetoDAO = new VetoDAO();
@@ -32,78 +36,134 @@ namespace WcfServicioLibreria.Modelo.Vetos
 
         public async Task<bool> VetaJugadorAsync(string nombreJugador)
         {
-            if (nombreJugador.ToLower().Contains(NOMBRE_RESERVADO))
+            try
             {
-                return false;
+                if (nombreJugador.ToLower().Contains(NOMBRE_RESERVADO))
+                {
+                    return false;
+                }
+                var usuarioModeloBaseDatos = usuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
+                if (usuarioModeloBaseDatos == null)
+                {
+                    throw new Exception();
+                }
+                return await BuscarJugadorVetoAsync(usuarioModeloBaseDatos);
             }
-            var usuarioModeloBaseDatos = usuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
-            if (usuarioModeloBaseDatos ==null)
+            catch (NullReferenceException excepcion)
             {
-                return false;
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
-            return await BuscarJugadorVetoAsync(usuarioModeloBaseDatos);
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
+            }
+            return false;
         }
         public async Task<bool> RegistrarExpulsionJugadorAsync(string nombreJugador, string motivo, bool esHacker)
         {
-            if (nombreJugador.ToLower().Contains(NOMBRE_RESERVADO))
+            try
             {
-                return false;
+                if (nombreJugador.ToLower().Contains(NOMBRE_RESERVADO))
+                {
+                    return false;
+                }
+                var usuarioModeloBaseDatos = usuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
+                if (usuarioModeloBaseDatos == null)
+                {
+                    throw new Exception();
+                }
+                return await BuscarJugadorRegistrarExpulsionAsync(usuarioModeloBaseDatos, motivo, esHacker);
             }
-            var usuarioModeloBaseDatos = usuarioDAO.ObtenerUsuarioPorNombre(nombreJugador);
-            if (usuarioModeloBaseDatos == null)
+            catch (NullReferenceException excepcion)
             {
-                return false;
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
-            return await BuscarJugadorRegistrarExpulsionAsync(usuarioModeloBaseDatos, motivo, esHacker);
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
+            }
+            return false;
         }
 
         private async Task<bool> BuscarJugadorVetoAsync(DAOLibreria.ModeloBD.Usuario usuarioModeloBaseDatos)
         {
-            var idUsuarioCuenta = usuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(usuarioModeloBaseDatos.idUsuarioCuenta);
-            if (idUsuarioCuenta <= ID_INVALIDO)
+            try
             {
-                return false;
+                var idUsuarioCuenta = usuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(usuarioModeloBaseDatos.idUsuarioCuenta);
+                if (idUsuarioCuenta <= ID_INVALIDO)
+                {
+                    throw new Exception();
+                }
+
+                if (vetoDAO.ExisteTablaVetoPorIdCuenta(idUsuarioCuenta))
+                {
+                    return CrearRegistroVeto(idUsuarioCuenta, DateTime.Now.AddDays(DIAS_PRIMER_VETO), true);
+                }
+                else if (await Conexion.VerificarConexionAsync())
+                {
+                    return CrearRegistroVeto(idUsuarioCuenta, null, true);
+                }
             }
-            
-            if (vetoDAO.ExisteTablaVetoPorIdCuenta(idUsuarioCuenta))
+            catch (NullReferenceException excepcion)
             {
-                 return CrearRegistroVeto(idUsuarioCuenta, DateTime.Now.AddDays(DIAS_PRIMER_VETO), true);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
-            else if (await Conexion.VerificarConexionAsync())
+            catch (Exception excepcion)
             {
-                return CrearRegistroVeto(idUsuarioCuenta, null, true);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
-            else
-            {
-                return false;
-            }
+            return false;
 
         }
         private async Task<bool> BuscarJugadorRegistrarExpulsionAsync(DAOLibreria.ModeloBD.Usuario usuarioModeloBaseDatos , string motivo, bool esHacker)
         {
-            var idUsuarioCuenta = usuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(usuarioModeloBaseDatos.idUsuarioCuenta);
-            if (idUsuarioCuenta <= ID_INVALIDO)
+            try
             {
-                return false;
+                var idUsuarioCuenta = usuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(usuarioModeloBaseDatos.idUsuarioCuenta);
+                if (idUsuarioCuenta <= ID_INVALIDO)
+                {
+                    throw new Exception();
+                }
+                if (!await Conexion.VerificarConexionAsync())
+                {
+                    throw new Exception();
+                }
+                if (!expulsionDAO.TieneMasDeDiezExpulsionesSinPenalizar(idUsuarioCuenta))
+                {
+                    return expulsionDAO.CrearRegistroExpulsion(idUsuarioCuenta, motivo, esHacker);
+                }
+                else
+                {
+                    expulsionDAO.CambiarExpulsionesAFueronPenalizadas(idUsuarioCuenta);
+                    return await VetaJugadorAsync(usuarioModeloBaseDatos.gamertag);
+                }
             }
-            if (!await Conexion.VerificarConexionAsync())
+            catch (NullReferenceException excepcion)
             {
-                return false;
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
-            if (!expulsionDAO.TieneMasDeDiezExpulsionesSinPenalizar(idUsuarioCuenta))
+            catch (Exception excepcion)
             {
-                return expulsionDAO.CrearRegistroExpulsion(idUsuarioCuenta, motivo, esHacker);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
-            else
-            {
-                expulsionDAO.CambiarExpulsionesAFueronPenalizadas(idUsuarioCuenta);
-                return await VetaJugadorAsync(usuarioModeloBaseDatos.gamertag);
-            }
+            return false;
         }
 
         private bool CrearRegistroVeto(int idUsuarioCuenta, DateTime? fechaFin, bool esPermanente)
         {
-            return vetoDAO.CrearRegistroVeto(idUsuarioCuenta, fechaFin, esPermanente);
+            try
+            {
+                return vetoDAO.CrearRegistroVeto(idUsuarioCuenta, fechaFin, esPermanente);
+            }
+            catch (NullReferenceException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
+            }
+            return false;
         }
     }
 }

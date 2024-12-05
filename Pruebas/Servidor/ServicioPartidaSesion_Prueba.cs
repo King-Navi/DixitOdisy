@@ -37,7 +37,7 @@ namespace Pruebas.Servidor
             
             var implementacionCallback = new PartidaCallbackImplementacion();
 
-            mockContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IPartidaCallback>())
+            imitacionContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IPartidaCallback>())
                                .Returns(implementacionCallback);
 
             var usuario = new Usuario { IdUsuario = 19, Nombre = "navi" };
@@ -58,7 +58,7 @@ namespace Pruebas.Servidor
             string idPartidaInexistente = "partidaNoExistente";
 
             var implementacionCallback = new PartidaCallbackImplementacion();
-            mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             
             await manejador.UnirsePartidaAsync(gamertag, idPartidaInexistente);
@@ -75,7 +75,7 @@ namespace Pruebas.Servidor
         {
             
             var implementacionCallback = new PartidaCallbackImplementacion();
-            mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             var usuario = new Usuario { IdUsuario = 19, Nombre = "navi" };
 
@@ -95,7 +95,7 @@ namespace Pruebas.Servidor
         {
             
             var implementacionCallback = new PartidaCallbackImplementacion();
-            mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             var usuarioExistente = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var usuarioNuevo = new Usuario { IdUsuario = 19, Nombre = "navi" };
@@ -117,7 +117,7 @@ namespace Pruebas.Servidor
         {
             
             var implementacionCallback = new PartidaCallbackImplementacion();
-            mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             var usuarioExistente = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var usuarioNuevo = new Usuario { IdUsuario = 1, Nombre = "NaviKing" };
@@ -140,7 +140,7 @@ namespace Pruebas.Servidor
         {
             
             var implementacionCallback = new PartidaCallbackImplementacion();
-            mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
 
             var usuarioExistente = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var invitado = new Usuario { IdUsuario = -1, Nombre = "GUESTNoExisteEnBD" };
@@ -167,7 +167,7 @@ namespace Pruebas.Servidor
         public async Task EmpezarPartida_NoHaySuficienteJugadores_EliminaPartida()
         {
             var implementacionCallback = new PartidaCallbackImplementacion();
-            mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
             int EsperaJugadores = 22;
             var anfitrion = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var idPartida = manejador.CrearPartida(anfitrion.Nombre, configuracionGenerica);
@@ -187,7 +187,7 @@ namespace Pruebas.Servidor
         {
             Assert.Fail(); 
             var implementacionCallback = new PartidaCallbackImplementacion();
-            mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
             var anfitrion = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var idPartida = manejador.CrearPartida(anfitrion.Nombre, configuracionGenerica);
 
@@ -203,7 +203,7 @@ namespace Pruebas.Servidor
         public async Task EmpezarPartida_IdNull_RetornaVoid()
         {
             var implementacionCallback = new PartidaCallbackImplementacion();
-            mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
             var anfitrion = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var idPartida = manejador.CrearPartida(anfitrion.Nombre, configuracionGenerica);
 

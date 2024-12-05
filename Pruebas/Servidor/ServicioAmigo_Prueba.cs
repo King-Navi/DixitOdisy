@@ -39,11 +39,11 @@ namespace Pruebas.Servidor
             
             var implementacionCallbackAmistad = new Utilidades.UsuarioSesionCallbackImplementacion();
 
-            mockContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
+            imitacionContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
                                .Returns(implementacionCallbackAmistad);
             var implementacionCallbackUsarioSeion = new Utilidades.UsuarioSesionCallbackImplementacion();
 
-            mockContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
+            imitacionContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
                                .Returns(implementacionCallbackUsarioSeion);
 
             manejador.ObtenerSesionJugador(new WcfServicioLibreria.Modelo.Usuario()

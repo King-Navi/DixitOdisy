@@ -1,4 +1,4 @@
-﻿using System.Collections.Concurrent;
+﻿ using System.Collections.Concurrent;
 using System;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Evento;
@@ -42,10 +42,6 @@ namespace WcfServicioLibreria.Modelo
         private const int NUM_JUGADOR_NADIE_ACERTO = 0;
         private const int RONDAS_MINIMA_PARA_PUNTOS = 3;
         private const int NUMERO_MINIMO_RONDAS = 3;
-        private const int PUNTOS_RESTADOS_NO_PARTICIPAR = 1;
-        private const int PUNTOS_ACIERTO = 1;
-        private const int PUNTOS_PENALIZACION_NARRADOR = 2;
-        private const int PUNTOS_MAXIMOS_RECIBIDOS_CONFUNDIR = 3;
         private const int TIEMPO_MOSTRAR_ESTADISTICAS = 15;
         private const int ID_INVALIDO = 0;
         private const int ID_INVALIDO_ESTADISTICAS = 0;
@@ -90,7 +86,7 @@ namespace WcfServicioLibreria.Modelo
         public bool SeTerminoEsperaUnirse { get; private set; } = false;
         public bool SelecionoCartaNarrador { get; private set; } = false;
         public ConcurrentBag<string> JugadoresPendientes { get; private set; }
-        private ConcurrentDictionary<string, List<string>> ImagenPuestasPisina { get; set; } = new ConcurrentDictionary<string, List<string>>();
+        private ConcurrentDictionary<string, List<string>> ImagenesTodosGrupo { get; set; } = new ConcurrentDictionary<string, List<string>>();
         private ConcurrentDictionary<string, List<string>> ImagenElegidaPorJugador { get; set; } = new ConcurrentDictionary<string, List<string>>();
 
         #endregion Propiedad

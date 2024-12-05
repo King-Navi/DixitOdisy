@@ -166,7 +166,7 @@ namespace Pruebas.Servidor
         public async void ValidarPartida_PartidaTodosJugadoresAbandonan_NoExisteEnDiccionario()
         {
             var implementacionCallback = new PartidaCallbackImplementacion();
-            mockContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
             var usuarioAnfritrion = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var usuarioNuevo = new Usuario { IdUsuario = 1, Nombre = "NaviKing" };
             var idPartida = manejador.CrearPartida(usuarioAnfritrion.Nombre, configuracionGenerica);

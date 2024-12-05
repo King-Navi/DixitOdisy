@@ -1,5 +1,6 @@
 ﻿using DAOLibreria.Interfaces;
 using Moq;
+using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Manejador;
 using WcfServicioLibreria.Utilidades;
@@ -21,7 +22,8 @@ namespace Pruebas.Servidor.Utilidades
         protected Mock<IExpulsionDAO> imitarExpulsionDAO = new Mock<IExpulsionDAO>();
         protected Mock<IEstadisticasDAO> imitarEstadisticasDAO = new Mock<IEstadisticasDAO>();
         protected Mock<IAmistadDAO> imitarAmistadDAO = new Mock<IAmistadDAO>();
-        protected Mock<IContextoOperacion> mockContextoProvedor = new Mock<IContextoOperacion>();
+        protected Mock<IContextoOperacion> imitacionContextoProvedor = new Mock<IContextoOperacion>();
+        protected Mock<IConexion> imitacionConexion = new Mock<IConexion>();
         public UsuarioSesionCallbackImplementacion implementacionCallback;
 
         protected ManejadorPrincipal manejador ;
@@ -29,8 +31,12 @@ namespace Pruebas.Servidor.Utilidades
 
         public virtual void ConfigurarManejador()
         {
-            manejador = new ManejadorPrincipal(
-                mockContextoProvedor.Object,
+            imitacionConexion.Setup(conexion => conexion.VerificarConexionAsync())
+                .Returns(Task.FromResult(true));
+            imitacionConexion.Setup(conexion => conexion.VerificarConexion())
+                .Returns(true);
+        manejador = new ManejadorPrincipal(
+                imitacionContextoProvedor.Object,
                 imitarVetoDAO.Object,
                 imitarUsuarioDAO.Object,
                 imitarUsuarioCuentaDAO.Object,
@@ -41,7 +47,7 @@ namespace Pruebas.Servidor.Utilidades
             );
             idAleatorioValido = GeneradorAleatorio.GenerarIdValido();
             implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
-            mockContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
+            imitacionContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
                 .Returns(implementacionCallback);
         }
         public void ConfigurarImitadores()

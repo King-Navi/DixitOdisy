@@ -1,14 +1,15 @@
-﻿using DAOLibreria.Utilidades;
+﻿using DAOLibreria.Interfaces;
+using DAOLibreria.Utilidades;
 using System;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace DAOLibreria.ModeloBD
 {
-    public static class Conexion
+    public class Conexion : IConexion
     {
         private const string CONSULTA_DE_PRUEBA = "SELECT 1";
-        public static async Task<bool> VerificarConexionAsync()
+        public async Task<bool> VerificarConexionAsync()
         {
             try
             {
@@ -23,7 +24,7 @@ namespace DAOLibreria.ModeloBD
                 return false;
             }
         }
-        public static bool VerificarConexion()
+        public bool VerificarConexion()
         {
             try
             {

@@ -14,7 +14,6 @@ namespace WcfServicioLibreria.Modelo
 {
     internal partial class Partida
     {
-
         #region Ronda
         public async Task EmpezarPartida()
         {
@@ -48,7 +47,6 @@ namespace WcfServicioLibreria.Modelo
                 semaphoreEmpezarPartida.Release();
             }
         }
-
         private async Task IniciarPartidaSeguroAsync(CancellationToken cancelacionToke)
         {
             try
@@ -115,10 +113,12 @@ namespace WcfServicioLibreria.Modelo
         {
             if (SelecionoCartaNarrador)
             {
-                VerificarAciertos(out bool alguienAdivinoImagen, out bool todosAdivinaron, out int votosCorrectos);
-                AplicarPenalizacionNoParticipacion();
-                EvaluarCondicionesGlobales(votosCorrectos, todosAdivinaron);
-                AsignarPuntosPorConfundir();
+                IPuntaje puntaje = new Puntaje(NarradorActual, 
+                    estadisticasPartida.Jugadores, 
+                    ImagenElegidaPorJugador, 
+                    ImagenesTodosGrupo,
+                    ClaveImagenCorrectaActual);
+                puntaje.CalcularPuntaje();
             }
             else
             {
@@ -132,106 +132,7 @@ namespace WcfServicioLibreria.Modelo
             {
                 if (jugador.Nombre.Equals(NarradorActual, StringComparison.OrdinalIgnoreCase))
                 {
-                    jugador.Puntos -= PUNTOS_RESTADOS_NO_PARTICIPAR;
-                }
-            }
-        }
-
-        private void VerificarAciertos(out bool alguienAdivinoImagen, out bool todosAdivinaron, out int votosCorrectos)
-        {
-            alguienAdivinoImagen = false;
-            todosAdivinaron = true;
-            votosCorrectos = 0;
-
-            foreach (var jugadorEleccion in ImagenElegidaPorJugador)
-            {
-                string nombreJugador = jugadorEleccion.Key;
-                List<string> imagenesSeleccionadas = jugadorEleccion.Value;
-
-                var jugador = estadisticasPartida.Jugadores.SingleOrDefault(j => j.Nombre == nombreJugador);
-
-                if (jugador != null)
-                {
-                    bool jugadorAdivinoCorrectamente = false;
-
-                    foreach (var imagenId in imagenesSeleccionadas)
-                    {
-                        if (imagenId == ClaveImagenCorrectaActual)
-                        {
-                            jugador.Puntos += PUNTOS_ACIERTO;
-                            votosCorrectos++;
-                            alguienAdivinoImagen = true;
-                            jugadorAdivinoCorrectamente = true;
-                            Console.WriteLine($"Adivino {jugador.Nombre}");
-                            break;
-                        }
-                    }
-
-                    if (!jugadorAdivinoCorrectamente)
-                    {
-                        todosAdivinaron = false;
-                    }
-                }
-            }
-        }
-
-        private void AplicarPenalizacionNoParticipacion()
-        {
-            foreach (var jugador in estadisticasPartida.Jugadores)
-            {
-                if (jugador.Nombre != NarradorActual
-                    && ImagenElegidaPorJugador.TryGetValue(jugador.Nombre, out var imagenesSeleccionadas)
-                    && (imagenesSeleccionadas == null || !imagenesSeleccionadas.Any()))
-                {
-                    jugador.Puntos -= PUNTOS_RESTADOS_NO_PARTICIPAR;
-                    Console.WriteLine($"No participo {jugador.Nombre}");
-                }
-            }
-        }
-
-        private void EvaluarCondicionesGlobales(int votosCorrectos, bool todosAdivinaron)
-        {
-            if (votosCorrectos == NUM_JUGADOR_NADIE_ACERTO || votosCorrectos == estadisticasPartida.Jugadores.Count)
-            {
-                Console.WriteLine("Todos o nadie acertó");
-                foreach (var jugador in estadisticasPartida.Jugadores)
-                {
-                    if (jugador.Nombre != NarradorActual)
-                    {
-                        jugador.Puntos += PUNTOS_PENALIZACION_NARRADOR;
-                    }
-                }
-            }
-        }
-
-        private void AsignarPuntosPorConfundir()
-        {
-            foreach (var jugadorEleccion in ImagenElegidaPorJugador)
-            {
-                string nombreJugador = jugadorEleccion.Key;
-                List<string> imagenesSeleccionadas = jugadorEleccion.Value;
-
-                var jugador = estadisticasPartida.Jugadores.SingleOrDefault(j => j.Nombre == nombreJugador);
-
-                if (jugador != null && jugador.Nombre != NarradorActual)
-                {
-                    int puntosPorConfundir = 0;
-
-                    foreach (var imagenId in imagenesSeleccionadas)
-                    {
-                        int votosRecibidos = ImagenElegidaPorJugador
-                            .Where(j => j.Key != nombreJugador)
-                            .Count(j => j.Value.Contains(imagenId));
-
-                        puntosPorConfundir += Math.Min(PUNTOS_MAXIMOS_RECIBIDOS_CONFUNDIR - puntosPorConfundir, votosRecibidos);
-
-                        if (puntosPorConfundir >= PUNTOS_MAXIMOS_RECIBIDOS_CONFUNDIR)
-                        {
-                            break;
-                        }
-                    }
-
-                    jugador.Puntos += puntosPorConfundir;
+                    jugador.Puntos -= Puntaje.PUNTOS_RESTADOS_NO_PARTICIPAR;
                 }
             }
         }
@@ -266,7 +167,7 @@ namespace WcfServicioLibreria.Modelo
                 jugadoresCallback.TryGetValue(narradorActual, out IPartidaCallback callback);
                 if (true)
                 {
-                    
+
                 }
             }
             catch (TimeoutException excepcion)
@@ -282,7 +183,7 @@ namespace WcfServicioLibreria.Modelo
 
         public async Task EnMostrarTodasCartas()
         {
-            var todasLasImagenes = ImagenPuestasPisina.Values.SelectMany(lista => lista).ToList();
+            var todasLasImagenes = ImagenesTodosGrupo.Values.SelectMany(lista => lista).ToList();
             RondaEventArgs evento = new RondaEventArgs(todasLasImagenes);
             MostrarTodasLasCartas?.Invoke(this, evento);
             await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ENVIO_SEGUNDOS));
@@ -466,8 +367,8 @@ namespace WcfServicioLibreria.Modelo
             SelecionoCartaNarrador = false;
             JugadoresPendientes = new ConcurrentBag<string>(jugadoresCallback.Keys);
             ImagenElegidaPorJugador.Clear();
-            ImagenPuestasPisina.Clear();
-            ImagenPuestasPisina = new ConcurrentDictionary<string, List<string>>();
+            ImagenesTodosGrupo.Clear();
+            ImagenesTodosGrupo = new ConcurrentDictionary<string, List<string>>();
         }
 
         private async Task EscogerNarradorAsync()
@@ -513,10 +414,7 @@ namespace WcfServicioLibreria.Modelo
         {
             try
             {
-                lock (JugadoresPendientes)
-                {
-                    JugadoresPendientes.TryTake(out nombreJugador);
-                }
+                JugadoresPendientes.TryTake(out nombreJugador);
                 ImagenElegidaPorJugador.AddOrUpdate(
                     nombreJugador,
                     new List<string> { claveImagen },
@@ -545,7 +443,7 @@ namespace WcfServicioLibreria.Modelo
                 {
                     JugadoresPendientes.TryTake(out nombreJugador);
                 }
-                ImagenPuestasPisina.AddOrUpdate(
+                ImagenesTodosGrupo.AddOrUpdate(
                     nombreJugador,
                     new List<string> { claveImagen },
                     (llave, listaExistente) =>
@@ -586,7 +484,7 @@ namespace WcfServicioLibreria.Modelo
                         return existingList;
                     }
                 );
-                ImagenPuestasPisina.AddOrUpdate(
+                ImagenesTodosGrupo.AddOrUpdate(
                    nombreJugador,
                    new List<string> { claveImagen },
                    (llave, listaExistente) =>

@@ -90,6 +90,7 @@
     <Compile Include="Servidor\EstadisticasPartida_Prueba.cs" />
     <Compile Include="Servidor\ManejarDeVetos_Prueba.cs" />
     <Compile Include="Servidor\MediadorPartida_Prueba.cs" />
+    <Compile Include="Servidor\Puntaje_Prueba.cs" />
     <Compile Include="Servidor\ServicioAmigo_Prueba.cs" />
     <Compile Include="Servidor\ServicioCorreo_Prueba.cs" />
     <Compile Include="Servidor\ServicioImagen_Prueba.cs" />

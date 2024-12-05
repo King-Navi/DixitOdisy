@@ -1,5 +1,6 @@
 ﻿using DAOLibreria;
 using DAOLibreria.DAO;
+using DAOLibreria.ModeloBD;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pruebas.DAO.Utilidades;
 using System;
@@ -14,7 +15,7 @@ namespace Pruebas.DAO
         [TestMethod]
         public async Task VerificarConexionAsync_CuandoConexionFalla_DeberiaRetornarFalse()
         {
-            bool resultado = await DAOLibreria.ModeloBD.Conexion.VerificarConexionAsync();
+            bool resultado = await (new Conexion()).VerificarConexionAsync();
 
             Assert.IsFalse(resultado, "El método debería devolver false cuando la conexión a la base de datos falla.");
 

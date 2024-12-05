@@ -30,10 +30,7 @@ namespace Pruebas.DAO
         [TestMethod]
         public async Task VerificarConexionAsync_CuandoConexionEsExitosa_DeberiaRetornarTrue()
         {
-
-            bool resultado = await DAOLibreria.ModeloBD.Conexion.VerificarConexionAsync();
-
-
+            bool resultado = await (new Conexion()).VerificarConexionAsync();
             Assert.IsTrue(resultado, "El método debería devolver true cuando la conexión a la base de datos es exitosa.");
         }
         [TestMethod]
@@ -42,10 +39,7 @@ namespace Pruebas.DAO
             DateTime fechaFin = DateTime.Now.AddDays(7);
             bool esPermanente = false;
             AgregarVeto(IDUSUARIOCUENTA_PRUEBA, DateTime.Now, esPermanente, fechaFin);
-
             bool resultado = vetoDAO.ExisteTablaVetoPorIdCuenta(IDUSUARIOCUENTA_PRUEBA);
-
-
             Assert.IsTrue(resultado, "El método debería retornar true.");
         }
         [TestMethod]

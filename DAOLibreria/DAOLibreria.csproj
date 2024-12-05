@@ -142,6 +142,7 @@
     </Compile>
     <Compile Include="Utilidades\Conexion.cs" />
     <Compile Include="Utilidades\EstadisticasAcciones.cs" />
+    <Compile Include="Interfaces\IConexion.cs" />
     <Compile Include="Utilidades\UsuarioPerfilDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilidades\ManejadorBitacora.cs" />

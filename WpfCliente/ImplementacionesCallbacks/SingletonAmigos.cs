@@ -103,6 +103,7 @@ namespace WpfCliente.ImplementacionesCallbacks
                             amigo.UltimaConexion = UTILIMA_CONEXION_CONECTADO;
                             amigo.EstadoActual = Properties.Idioma.labelConectado;
                             ListaAmigos.Insert(0, amigo);
+                            return;
                         }
                     }
                     else
@@ -115,8 +116,10 @@ namespace WpfCliente.ImplementacionesCallbacks
                             amigo.EstadoActual = Properties.Idioma.labelDesconectado;
                             ListaAmigos.Insert(0, amigo);
                         }
+                        return;
                     } 
                 }
+                ObtenerAmigoCallback(amigo);
             }
         }
 

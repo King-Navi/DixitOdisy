@@ -46,6 +46,7 @@ namespace WpfCliente.GUI
 
         private async void ClicButtonAceptarAsync(object sender, RoutedEventArgs e)
         {
+            this.IsEnabled = false;
             await AceptarSolicitudAsync(solicitudAmistadActual);
         }
 
@@ -89,6 +90,7 @@ namespace WpfCliente.GUI
 
         private async void ClicButtonRechazarAsync(object sender, RoutedEventArgs e)
         {
+            this.IsEnabled = false;
             await RechazarSolicitudAsync();
         }
 

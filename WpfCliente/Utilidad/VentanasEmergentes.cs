@@ -85,7 +85,7 @@ namespace WpfCliente.Utilidad
             {
                 ventanaEmergente.Owner = ventana;
                 ventanaEmergente.ShowDialog();
-                SingletonGestorVentana.Instancia.RegresarSiNoEsInicio(ventana);
+                SingletonGestorVentana.Instancia.NavegarA(new IniciarSesionPage());
             }
             catch (ArgumentException excepcion)
             {

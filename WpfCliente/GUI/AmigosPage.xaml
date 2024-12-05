@@ -26,7 +26,7 @@
                Source="pack://application:,,,/WpfCliente;component/Recursos/agregarAmigo.png" 
                Margin="50,608,1042,45" 
                Cursor="Hand" 
-               MouseLeftButtonDown="ClicButtonNuevaSolicitud"/>
+               MouseLeftButtonDown="ClicButtonNuevaSolicitudAsync"/>
         <Grid>
             <local:ListaSolicitudesAmistadUserControl x:Name="listaSolicitudesAmistadUserControl" 
                 HorizontalAlignment="Center" 

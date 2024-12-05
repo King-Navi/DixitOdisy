@@ -142,7 +142,7 @@ namespace WcfServicioLibreria.Manejador
 
                 foreach (var usuarioDestino in amigosConetados)
                 {
-                    AmigoConetado(usuarioRemitenteModeloBaseDatos, usuarioDestino);
+                    AmigoConetadoActualizar(usuarioRemitenteModeloBaseDatos, usuarioDestino);
                 }
                 return true;
             }
@@ -215,7 +215,7 @@ namespace WcfServicioLibreria.Manejador
             return usuariosModeloWCF;
         }
 
-        private void AmigoConetado(DAOLibreria.ModeloBD.Usuario _remitente, DAOLibreria.ModeloBD.Usuario _destinatario)
+        private void AmigoConetadoActualizar(DAOLibreria.ModeloBD.Usuario _remitente, DAOLibreria.ModeloBD.Usuario _destinatario)
         {
             try
             {
@@ -281,6 +281,7 @@ namespace WcfServicioLibreria.Manejador
                 ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
         }
+       
 
 
 
@@ -326,7 +327,7 @@ namespace WcfServicioLibreria.Manejador
                     {
                         var usuarioDestinoConectado = usuarioDAO.ObtenerUsuarioPorId(idDestinatario);
                         var usuarioRemitenteConectado = usuarioDAO.ObtenerUsuarioPorId(idRemitente);
-                        AmigoConetado(usuarioRemitenteConectado, usuarioDestinoConectado);
+                        AmigoConetadoActualizar(usuarioRemitenteConectado, usuarioDestinoConectado);
                     }
                     else if (jugadoresConectadosDiccionario.ContainsKey(idDestinatario))
                     {

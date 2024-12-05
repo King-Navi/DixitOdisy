@@ -61,9 +61,9 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void ClicButtonNuevaSolicitud(object sender, MouseButtonEventArgs e)
+        private async void ClicButtonNuevaSolicitudAsync(object sender, MouseButtonEventArgs e)
         {
-            _ = IntentarEnviarSolicitudAsync();
+            await IntentarEnviarSolicitudAsync();
         }
 
         private async Task IntentarEnviarSolicitudAsync()

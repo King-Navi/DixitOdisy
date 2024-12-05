@@ -152,11 +152,11 @@ namespace WcfServicioLibreria.Modelo
             }
             else
             {
-                EnviarMensajePenalizacion(NarradorActual);
+                EnviarMensajePerdidaTurno(NarradorActual);
             }
         }
 
-        private void EnviarMensajePenalizacion(string narradorActual)
+        private void EnviarMensajePerdidaTurno(string narradorActual)
         {
             if (String.IsNullOrEmpty(narradorActual))
             {
@@ -165,9 +165,9 @@ namespace WcfServicioLibreria.Modelo
             try
             {
                 jugadoresCallback.TryGetValue(narradorActual, out IPartidaCallback callback);
-                if (true)
+                if (((ICommunicationObject)callback).State == CommunicationState.Opened)
                 {
-
+                    callback.TurnoPerdidoCallback();
                 }
             }
             catch (TimeoutException excepcion)

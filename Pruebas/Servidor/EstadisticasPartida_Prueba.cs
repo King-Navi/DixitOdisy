@@ -20,9 +20,9 @@ namespace Pruebas.Servidor
         private const string NOMBRE_JUGADOR3 = "Jugador3";
         private const int PUNTAJE_GANADOR = 100000;
         private const int PUNTAJE_GENERICO = 10;
-        private JugadorEstadisticas jugadorGanador = new JugadorEstadisticas(NOMBRE_JUGADOR_GANADOR, PUNTAJE_GANADOR);
-        private JugadorEstadisticas jugadorCasula_1 = new JugadorEstadisticas(NOMBRE_JUGADOR, PUNTAJE_GENERICO);
-        private JugadorEstadisticas jugadorCasula_2 = new JugadorEstadisticas(NOMBRE_JUGADOR3, PUNTAJE_GENERICO);
+        private JugadorPuntaje jugadorGanador = new JugadorPuntaje(NOMBRE_JUGADOR_GANADOR, PUNTAJE_GANADOR);
+        private JugadorPuntaje jugadorCasula_1 = new JugadorPuntaje(NOMBRE_JUGADOR, PUNTAJE_GENERICO);
+        private JugadorPuntaje jugadorCasula_2 = new JugadorPuntaje(NOMBRE_JUGADOR3, PUNTAJE_GENERICO);
 
         [TestInitialize]
         public override void ConfigurarManejador()
@@ -44,8 +44,8 @@ namespace Pruebas.Servidor
         {
             
             var estadisticasPartida = new EstadisticasPartida(TematicaPartida.Animales, imitarEstadisticasDAO.Object);
-            estadisticasPartida.Jugadores.Add(new JugadorEstadisticas(NOMBRE_JUGADOR_GANADOR, PUNTAJE_GANADOR));
-            estadisticasPartida.Jugadores.Add(new JugadorEstadisticas(NOMBRE_JUGADOR, PUNTAJE_GENERICO));
+            estadisticasPartida.Jugadores.Add(new JugadorPuntaje(NOMBRE_JUGADOR_GANADOR, PUNTAJE_GANADOR));
+            estadisticasPartida.Jugadores.Add(new JugadorPuntaje(NOMBRE_JUGADOR, PUNTAJE_GENERICO));
 
             var listaTuplaNombreIdEstadistica = new List<Tuple<string, int>>
             {
@@ -81,9 +81,9 @@ namespace Pruebas.Servidor
         {
             var tematica = TematicaPartida.Animales;
             var estadisticasPartida = new EstadisticasPartida(tematica, imitarEstadisticasDAO.Object);
-            var ejemploJugador100puntos = new JugadorEstadisticas(NOMBRE_JUGADOR_GANADOR);
+            var ejemploJugador100puntos = new JugadorPuntaje(NOMBRE_JUGADOR_GANADOR);
             ejemploJugador100puntos.Puntos = 100;
-            var ejemploJugador50puntos = new JugadorEstadisticas(NOMBRE_JUGADOR);
+            var ejemploJugador50puntos = new JugadorPuntaje(NOMBRE_JUGADOR);
             ejemploJugador50puntos.Puntos = 50;
             estadisticasPartida.Jugadores.Add(ejemploJugador100puntos);
             estadisticasPartida.Jugadores.Add(ejemploJugador50puntos);
@@ -124,9 +124,9 @@ namespace Pruebas.Servidor
         {
             
             var estadisticasPartida = new EstadisticasPartida(TematicaPartida.Mixta);
-            estadisticasPartida.Jugadores.Add(new JugadorEstadisticas(NOMBRE_JUGADOR_GANADOR, 100));
-            estadisticasPartida.Jugadores.Add(new JugadorEstadisticas(NOMBRE_JUGADOR3, 100));
-            estadisticasPartida.Jugadores.Add(new JugadorEstadisticas(NOMBRE_JUGADOR, 100));
+            estadisticasPartida.Jugadores.Add(new JugadorPuntaje(NOMBRE_JUGADOR_GANADOR, 100));
+            estadisticasPartida.Jugadores.Add(new JugadorPuntaje(NOMBRE_JUGADOR3, 100));
+            estadisticasPartida.Jugadores.Add(new JugadorPuntaje(NOMBRE_JUGADOR, 100));
 
             
             estadisticasPartida.CalcularPodio();
@@ -142,8 +142,8 @@ namespace Pruebas.Servidor
         {
             
             var estadisticasPartida = new EstadisticasPartida(TematicaPartida.Mixta);
-            estadisticasPartida.Jugadores.Add(new JugadorEstadisticas(NOMBRE_JUGADOR_GANADOR, 100));
-            estadisticasPartida.Jugadores.Add(new JugadorEstadisticas(NOMBRE_JUGADOR, 100));
+            estadisticasPartida.Jugadores.Add(new JugadorPuntaje(NOMBRE_JUGADOR_GANADOR, 100));
+            estadisticasPartida.Jugadores.Add(new JugadorPuntaje(NOMBRE_JUGADOR, 100));
 
             
             estadisticasPartida.CalcularPodio();

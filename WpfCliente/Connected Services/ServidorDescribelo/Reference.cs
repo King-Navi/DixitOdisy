@@ -707,19 +707,19 @@ namespace WpfCliente.ServidorDescribelo {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private WpfCliente.ServidorDescribelo.JugadorEstadisticas[] JugadoresField;
+        private WpfCliente.ServidorDescribelo.JugadorPuntaje[] JugadoresField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private WpfCliente.ServidorDescribelo.JugadorEstadisticas PrimerLugarField;
+        private WpfCliente.ServidorDescribelo.JugadorPuntaje PrimerLugarField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private WpfCliente.ServidorDescribelo.JugadorEstadisticas SegundoLugarField;
+        private WpfCliente.ServidorDescribelo.JugadorPuntaje SegundoLugarField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private WpfCliente.ServidorDescribelo.TematicaPartida TematicaField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private WpfCliente.ServidorDescribelo.JugadorEstadisticas TercerLugarField;
+        private WpfCliente.ServidorDescribelo.JugadorPuntaje TercerLugarField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int TotalRondasField;
@@ -735,7 +735,7 @@ namespace WpfCliente.ServidorDescribelo {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public WpfCliente.ServidorDescribelo.JugadorEstadisticas[] Jugadores {
+        public WpfCliente.ServidorDescribelo.JugadorPuntaje[] Jugadores {
             get {
                 return this.JugadoresField;
             }
@@ -748,7 +748,7 @@ namespace WpfCliente.ServidorDescribelo {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public WpfCliente.ServidorDescribelo.JugadorEstadisticas PrimerLugar {
+        public WpfCliente.ServidorDescribelo.JugadorPuntaje PrimerLugar {
             get {
                 return this.PrimerLugarField;
             }
@@ -761,7 +761,7 @@ namespace WpfCliente.ServidorDescribelo {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public WpfCliente.ServidorDescribelo.JugadorEstadisticas SegundoLugar {
+        public WpfCliente.ServidorDescribelo.JugadorPuntaje SegundoLugar {
             get {
                 return this.SegundoLugarField;
             }
@@ -787,7 +787,7 @@ namespace WpfCliente.ServidorDescribelo {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public WpfCliente.ServidorDescribelo.JugadorEstadisticas TercerLugar {
+        public WpfCliente.ServidorDescribelo.JugadorPuntaje TercerLugar {
             get {
                 return this.TercerLugarField;
             }
@@ -824,9 +824,9 @@ namespace WpfCliente.ServidorDescribelo {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="JugadorEstadisticas", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="JugadorPuntaje", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
     [System.SerializableAttribute()]
-    public partial class JugadorEstadisticas : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class JugadorPuntaje : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;

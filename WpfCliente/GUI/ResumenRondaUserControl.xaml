@@ -7,6 +7,27 @@
              mc:Ignorable="d" 
              MinHeight="670" MinWidth="520"
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="JugadoresPuntaje">
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="{Binding Nombre}" Margin="0,0,10,0" />
+                <TextBlock Text="{Binding Puntos}" Margin="0,0,10,0" />
+                <Button Content="Acción" Margin="0,0,10,0" Click="ClicButtonExpulsar">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding MostrarBoton}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
     <Grid >
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -17,16 +38,14 @@
             </LinearGradientBrush>
         </Grid.Background>
         <DockPanel LastChildFill="True">
-            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal"  HorizontalAlignment="Right">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal"  HorizontalAlignment="Right"></StackPanel>
 
-            </StackPanel>
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Background="Coral" HorizontalAlignment="Center"></StackPanel>
 
-            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Background="Coral" HorizontalAlignment="Center">
-
-            </StackPanel>
-
-            <StackPanel DockPanel.Dock="Left" Orientation="Vertical">
-
+            <StackPanel DockPanel.Dock="Left" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <StackPanel d:Background="Aqua" d:Height="400" d:Width="100" Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <ItemsControl ItemsSource="{Binding Jugadores}" ItemTemplate="{StaticResource JugadoresPuntaje}" HorizontalAlignment="Left" />
+                </StackPanel>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -53,6 +72,7 @@
                         <Image Source="{Binding TercerLugar.BitmapImagen}" d:Source="pack://application:,,,/Recursos/pfp3.png" Height="100" Width="100" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Margin="0,-2,0,237" />
                         <Label x:Name="labelTercerLugar"  Content="{Binding TercerLugar.Nombre}" d:Content="Tercero" Grid.Column="2" HorizontalAlignment="Center" Margin="0,98,0,198"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                     </Grid>
+                    
                 </Grid>
             </StackPanel>
         </DockPanel>

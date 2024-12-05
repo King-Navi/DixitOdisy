@@ -16,14 +16,14 @@ namespace WcfServicioLibreria.Modelo
         public const int MAXIMO_VECES_RECIBIR_PUNTOS_CONFUNDIR = 3;
         public const int PUNTOS_RESTADOS_NO_PARTICIPAR = 1;
         public string NarradorActual {  get; private set; }
-        public List<JugadorEstadisticas> Jugadores { get; private set; }
+        public List<JugadorPuntaje> Jugadores { get; private set; }
         public ConcurrentDictionary<string, List<string>> ImagenesTodosGrupo { get; private set; }
         public ConcurrentDictionary<string, List<string>> ImagenElegidaPorJugador { get; private set; }
         public string ClaveImagenCorrectaActual { get; private set; }
         public bool AlguienAdivino { get; private set; }
 
         public Puntaje(string narradorActual, 
-            List<JugadorEstadisticas> jugadores, 
+            List<JugadorPuntaje> jugadores, 
             ConcurrentDictionary<string, List<string>> imagenElegidaPorJugador, 
             ConcurrentDictionary<string, List<string>> imagenPuestasPisina, 
             string claveImagenCorrectaActual)
@@ -35,9 +35,9 @@ namespace WcfServicioLibreria.Modelo
             ImagenesTodosGrupo = imagenPuestasPisina;
         }
 
-        private List<JugadorEstadisticas> ClonarJugadores(List<JugadorEstadisticas> jugadoresOriginales)
+        private List<JugadorPuntaje> ClonarJugadores(List<JugadorPuntaje> jugadoresOriginales)
         {
-            return jugadoresOriginales.Select(j => new JugadorEstadisticas(j.Nombre)
+            return jugadoresOriginales.Select(j => new JugadorPuntaje(j.Nombre)
             {
                 Puntos = j.Puntos
             }).ToList();
@@ -68,7 +68,7 @@ namespace WcfServicioLibreria.Modelo
             return false;
         }
 
-        public void VerificarAciertos(List<JugadorEstadisticas> jugadores, out bool todosAdivinaron, out int votosTotalesCorrectos)
+        public void VerificarAciertos(List<JugadorPuntaje> jugadores, out bool todosAdivinaron, out int votosTotalesCorrectos)
         {
             todosAdivinaron = true;
             votosTotalesCorrectos = 0;
@@ -114,7 +114,7 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        public void AplicarPenalizacionNoParticipacion(List<JugadorEstadisticas> jugadores)
+        public void AplicarPenalizacionNoParticipacion(List<JugadorPuntaje> jugadores)
         {
             try
             {
@@ -144,7 +144,7 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        public void EvaluarCondicionesGlobales(List<JugadorEstadisticas> jugadores, int votosCorrectos, bool todosAdivinaron)
+        public void EvaluarCondicionesGlobales(List<JugadorPuntaje> jugadores, int votosCorrectos, bool todosAdivinaron)
         {
             try
             {
@@ -165,7 +165,7 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        public void AsignarPuntosPorConfundir(List<JugadorEstadisticas> jugadores)
+        public void AsignarPuntosPorConfundir(List<JugadorPuntaje> jugadores)
         {
             try
             {

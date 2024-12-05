@@ -30,7 +30,7 @@ namespace Pruebas.Servidor
         private const string IMAGEN_Z = "ImagenZ";
 
 
-        private void ImprimirPuntajes(List<JugadorEstadisticas> jugadores)
+        private void ImprimirPuntajes(List<JugadorPuntaje> jugadores)
         {
             Console.WriteLine("-----Puntajes de los jugadores-----");
             foreach (var jugador in jugadores)
@@ -45,10 +45,10 @@ namespace Pruebas.Servidor
         public void CalcularPuntaje_SiOcurreExcepcionTodoNulo_NoModificaPuntajes()
         {
             // Arrange
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1) { Puntos = 5 },
-                new JugadorEstadisticas(JUGADOR_2) { Puntos = 3 }
+                new JugadorPuntaje(JUGADOR_1) { Puntos = 5 },
+                new JugadorPuntaje(JUGADOR_2) { Puntos = 3 }
             };
             var puntaje = new Puntaje(JUGADOR_2, jugadores, null, null, null);
             ImprimirPuntajes(jugadores);
@@ -62,10 +62,10 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void CalcularPuntaje_SiOcurreExcepcion_NoModificaPuntajes()
         {
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1) { Puntos = 5 },
-                new JugadorEstadisticas(JUGADOR_2) { Puntos = 3 }
+                new JugadorPuntaje(JUGADOR_1) { Puntos = 5 },
+                new JugadorPuntaje(JUGADOR_2) { Puntos = 3 }
             };
             var puntaje = new Puntaje(JUGADOR_2, jugadores, new ConcurrentDictionary<string, List<string>>(), null, null);
             ImprimirPuntajes(jugadores);
@@ -83,10 +83,10 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void VerificarAciertos_CuandoJugadorAdivinaCorrectamente_DeberiaAsignarPuntosYRegistrarAcierto()
         {
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(JUGADOR_2)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(JUGADOR_2)
             };
 
             var imagenesPorJugador = new ConcurrentDictionary<string, List<string>>
@@ -109,11 +109,11 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void VerificarAciertos_TodosAdivinanCorrectamente_DeberiaAsignarPuntosYRegistrarTodosAdivinaron()
         {
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(JUGADOR_2),
-                new JugadorEstadisticas(NARRADOR)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(JUGADOR_2),
+                new JugadorPuntaje(NARRADOR)
             };
 
             var imagenesElegidasPorJugador = new ConcurrentDictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase)
@@ -135,11 +135,11 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void VerificarAciertos_NingunJugadorAdivina_DeberiaNoAsignarPuntosYRegistrarNadieAdivino()
         {
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(JUGADOR_2),
-                new JugadorEstadisticas(NARRADOR)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(JUGADOR_2),
+                new JugadorPuntaje(NARRADOR)
             };
 
             var imagenesElegidasPorJugador = new ConcurrentDictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase)
@@ -161,11 +161,11 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void VerificarAciertos_UnJugadorAdivinaOtroNo_DeberiaAsignarPuntosYRegistrarParcialmente()
         {
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(JUGADOR_2),
-                new JugadorEstadisticas(NARRADOR)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(JUGADOR_2),
+                new JugadorPuntaje(NARRADOR)
             };
             var imagenesElegidasPorJugador = new ConcurrentDictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase)
             {
@@ -186,10 +186,10 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void VerificarAciertos_JugadorSeleccionaVariasImagenesUnaEsCorrecta_DeberiaAsignarPuntos()
         {
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(NARRADOR)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(NARRADOR)
             };
 
             var imagenesElegidasPorJugador = new ConcurrentDictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase)
@@ -209,10 +209,10 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void VerificarAciertos_JugadorSeleccionaVariasImagenes_NingunaEsCorrecta_NoDeberiaAsignarPuntos()
         {
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(NARRADOR)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(NARRADOR)
             };
             var imagenesElegidasPorJugador = new ConcurrentDictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase)
             {
@@ -230,10 +230,10 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void VerificarAciertos_JugadorNoEligioImagen_NoDeberiaAsignarPuntos()
         {
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(NARRADOR)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(NARRADOR)
             };
             var imagenesElegidasPorJugador = new ConcurrentDictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
             var puntaje = new Puntaje(NARRADOR, jugadores, imagenesElegidasPorJugador, null, IMAGEN_CORRECTA);
@@ -248,10 +248,10 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void VerificarAciertos_JugadorEligeImagenConMayusculas_DeberiaAsignarPuntos()
         {
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(NARRADOR)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(NARRADOR)
             };
             var imagenesElegidasPorJugador = new ConcurrentDictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase)
             {
@@ -273,10 +273,10 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void AplicarPenalizacionNoParticipacion_JugadorNoEligioImagen_DeberiaPenalizar()
         {
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(NARRADOR)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(NARRADOR)
             };
             var imagenesElegidasPorJugador = new ConcurrentDictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
             var imagenesTodosGrupo = new ConcurrentDictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
@@ -290,10 +290,10 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void AplicarPenalizacionNoParticipacion_JugadorNoColocoImagen_DeberiaPenalizar()
         {
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(NARRADOR)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(NARRADOR)
             };
             var imagenesElegidasPorJugador = new ConcurrentDictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
             imagenesElegidasPorJugador[JUGADOR_1] = new List<string> { IMAGEN_X }; 
@@ -306,10 +306,10 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void AplicarPenalizacionNoParticipacion_JugadorNoParticipoEnNingunaAccion_DeberiaPenalizar()
         {
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(NARRADOR)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(NARRADOR)
             };
             var imagenesElegidasPorJugador = new ConcurrentDictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
             var imagenesTodosGrupo = new ConcurrentDictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
@@ -322,9 +322,9 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void AplicarPenalizacionNoParticipacion_NarradorNoEsPenalizado()
         {
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(NARRADOR)
+                new JugadorPuntaje(NARRADOR)
             };
             var imagenesElegidasPorJugador = new ConcurrentDictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
             var imagenesTodosGrupo = new ConcurrentDictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
@@ -337,12 +337,12 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void AplicarPenalizacionNoParticipacion_MultiplesJugadoresAlgunosNoParticipan_CorrectaPenalizacion()
         {
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(JUGADOR_2),
-                new JugadorEstadisticas(JUGADOR_3),
-                new JugadorEstadisticas(NARRADOR)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(JUGADOR_2),
+                new JugadorPuntaje(JUGADOR_3),
+                new JugadorPuntaje(NARRADOR)
             };
             var imagenesElegidasPorJugador = new ConcurrentDictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
             imagenesElegidasPorJugador[JUGADOR_1] = new List<string> { IMAGEN_X }; 
@@ -366,11 +366,11 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void EvaluarCondicionesGlobales_TodosAdivinaron_AsignarPuntosANoNarradores()
         {
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(JUGADOR_2),
-                new JugadorEstadisticas(NARRADOR)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(JUGADOR_2),
+                new JugadorPuntaje(NARRADOR)
             };
             int votosCorrectos = 2;
             bool todosAdivinaron = true;
@@ -387,10 +387,10 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void EvaluarCondicionesGlobales_VotosCorrectosIgualNumeroJugadores_AsignarPuntosANoNarradores()
         {
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(NARRADOR)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(NARRADOR)
             };
             int votosCorrectos = 2;
             bool todosAdivinaron = false;
@@ -404,11 +404,11 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void EvaluarCondicionesGlobales_NingunaCondicionCumplida_NoAsignarPuntos()
         {
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(JUGADOR_2),
-                new JugadorEstadisticas(NARRADOR)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(JUGADOR_2),
+                new JugadorPuntaje(NARRADOR)
             };
             int votosCorrectos = 1; 
             bool todosAdivinaron = false;
@@ -437,11 +437,11 @@ namespace Pruebas.Servidor
             imagenElegidaPorJugador[JUGADOR_1] = new List<string> { IMAGEN_X };
             imagenElegidaPorJugador[JUGADOR_2] = new List<string> { IMAGEN_A };
             imagenElegidaPorJugador[JUGADOR_3] = new List<string> { IMAGEN_Y };
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(JUGADOR_2),
-                new JugadorEstadisticas(JUGADOR_3)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(JUGADOR_2),
+                new JugadorPuntaje(JUGADOR_3)
             };
             string NarradorActual = JUGADOR_3;
             var puntaje = new Puntaje(NarradorActual, jugadores, imagenElegidaPorJugador, imagenesTodosGrupo, IMAGEN_CORRECTA);
@@ -465,13 +465,13 @@ namespace Pruebas.Servidor
             imagenElegidaPorJugador[JUGADOR_3] = new List<string> { IMAGEN_A };
             imagenElegidaPorJugador[JUGADOR_4] = new List<string> { IMAGEN_A };
             imagenElegidaPorJugador[JUGADOR_5] = new List<string> { IMAGEN_F };
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(JUGADOR_2),
-                new JugadorEstadisticas(JUGADOR_3),
-                new JugadorEstadisticas(JUGADOR_4),
-                new JugadorEstadisticas(JUGADOR_5)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(JUGADOR_2),
+                new JugadorPuntaje(JUGADOR_3),
+                new JugadorPuntaje(JUGADOR_4),
+                new JugadorPuntaje(JUGADOR_5)
             };
             string NarradorActual = JUGADOR_5;
             var puntaje = new Puntaje(NarradorActual, jugadores, imagenElegidaPorJugador, imagenesTodosGrupo, IMAGEN_CORRECTA);
@@ -497,14 +497,14 @@ namespace Pruebas.Servidor
                 [JUGADOR_6] = new List<string> { IMAGEN_A }
             };
 
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(JUGADOR_2),
-                new JugadorEstadisticas(JUGADOR_3),
-                new JugadorEstadisticas(JUGADOR_4),
-                new JugadorEstadisticas(JUGADOR_5),
-                new JugadorEstadisticas(JUGADOR_6)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(JUGADOR_2),
+                new JugadorPuntaje(JUGADOR_3),
+                new JugadorPuntaje(JUGADOR_4),
+                new JugadorPuntaje(JUGADOR_5),
+                new JugadorPuntaje(JUGADOR_6)
             };
 
 
@@ -535,11 +535,11 @@ namespace Pruebas.Servidor
 
             };
 
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(NARRADOR),
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(JUGADOR_2)
+                new JugadorPuntaje(NARRADOR),
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(JUGADOR_2)
             };
 
             var puntaje = new Puntaje(NARRADOR, jugadores, imagenElegidaPorJugador, imagenesTodosGrupo, IMAGEN_A);
@@ -563,10 +563,10 @@ namespace Pruebas.Servidor
                 [JUGADOR_2] = new List<string> { IMAGEN_B }
             };
 
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(JUGADOR_2)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(JUGADOR_2)
             };
 
             string NarradorActual = NARRADOR;
@@ -593,12 +593,12 @@ namespace Pruebas.Servidor
                 [JUGADOR_4] = new List<string> { IMAGEN_A, IMAGEN_B },
             };
 
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(JUGADOR_2),
-                new JugadorEstadisticas(JUGADOR_3),
-                new JugadorEstadisticas(JUGADOR_4)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(JUGADOR_2),
+                new JugadorPuntaje(JUGADOR_3),
+                new JugadorPuntaje(JUGADOR_4)
             };
 
             string NarradorActual = JUGADOR_3;
@@ -627,12 +627,12 @@ namespace Pruebas.Servidor
                 [JUGADOR_4] = new List<string> { IMAGEN_A, IMAGEN_B },
             };
 
-            var jugadores = new List<JugadorEstadisticas>
+            var jugadores = new List<JugadorPuntaje>
             {
-                new JugadorEstadisticas(JUGADOR_1),
-                new JugadorEstadisticas(JUGADOR_2),
-                new JugadorEstadisticas(JUGADOR_3),
-                new JugadorEstadisticas(JUGADOR_4)
+                new JugadorPuntaje(JUGADOR_1),
+                new JugadorPuntaje(JUGADOR_2),
+                new JugadorPuntaje(JUGADOR_3),
+                new JugadorPuntaje(JUGADOR_4)
             };
 
             string NarradorActual = JUGADOR_3;

@@ -17,7 +17,7 @@ namespace WpfCliente.ImplementacionesCallbacks
         public Usuario PrimerLugar { get; private set; } = new Usuario();
         public Usuario SegundoLugar { get; private set; } = new Usuario();
         public Usuario TercerLugar { get; private set; } = new Usuario();
-        public CollecionObservableSeguraHilos<JugadorEstadisticas> JugadoresEstadisticas { get; set; } = new CollecionObservableSeguraHilos<JugadorEstadisticas>();
+        public CollecionObservableSeguraHilos<JugadorPuntaje> JugadoresEstadisticas { get; set; } = new CollecionObservableSeguraHilos<JugadorPuntaje>();
         public CollecionObservableSeguraHilos<Usuario> UsuariosEnPartida { get; set; } = new CollecionObservableSeguraHilos<Usuario>();
 
         public event Action<int> CambiarPantalla;
@@ -197,7 +197,7 @@ namespace WpfCliente.ImplementacionesCallbacks
                 Nombre = "",
                 FotoUsuario = null
             };
-            JugadoresEstadisticas = new CollecionObservableSeguraHilos<JugadorEstadisticas>(estadisticas.Jugadores);
+            JugadoresEstadisticas = new CollecionObservableSeguraHilos<JugadorPuntaje>(estadisticas.Jugadores);
             PrimerLugar = UsuariosEnPartida.FirstOrDefault(busqueda => busqueda.Nombre == estadisticas.PrimerLugar?.Nombre) ?? new Usuario();
             SegundoLugar = UsuariosEnPartida.FirstOrDefault(busqueda => busqueda.Nombre == estadisticas.SegundoLugar?.Nombre) ?? new Usuario();
             TercerLugar = UsuariosEnPartida.FirstOrDefault(busqueda => busqueda.Nombre == estadisticas.TercerLugar?.Nombre) ?? new Usuario();

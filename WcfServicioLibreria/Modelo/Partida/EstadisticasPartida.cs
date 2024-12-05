@@ -14,7 +14,7 @@ namespace WcfServicioLibreria.Modelo
 {
     [DataContract]
     [KnownType(typeof(TematicaPartida))]
-    [KnownType(typeof(List<JugadorEstadisticas>))]
+    [KnownType(typeof(List<JugadorPuntaje>))]
     public class EstadisticasPartida
     {
         private const int VICTORIA = 1;
@@ -23,21 +23,21 @@ namespace WcfServicioLibreria.Modelo
         [DataMember]
         public TematicaPartida Tematica { get; private set; }
         [DataMember]
-        public List<JugadorEstadisticas> Jugadores { get; set; } 
+        public List<JugadorPuntaje> Jugadores { get; set; } 
         [DataMember]
         public int TotalRondas { get; set; } 
         [DataMember]
-        public JugadorEstadisticas PrimerLugar { get; set; }
+        public JugadorPuntaje PrimerLugar { get; set; }
         [DataMember]
-        public JugadorEstadisticas SegundoLugar { get; set; }
+        public JugadorPuntaje SegundoLugar { get; set; }
         [DataMember]
-        public JugadorEstadisticas TercerLugar { get; set; }
+        public JugadorPuntaje TercerLugar { get; set; }
         private ManejadorDeVetos ManejadorVetos { get; set; } = new ManejadorDeVetos();
         private IEstadisticasDAO estadisticasDAO;
         public EstadisticasPartida(TematicaPartida tematica)
         {
             Tematica = tematica;
-            Jugadores = new List<JugadorEstadisticas>();
+            Jugadores = new List<JugadorPuntaje>();
             TotalRondas = CERO_RONDAS;
             PrimerLugar = null;
             SegundoLugar = null;
@@ -47,7 +47,7 @@ namespace WcfServicioLibreria.Modelo
         public EstadisticasPartida(TematicaPartida tematica, IEstadisticasDAO _estadisticasDAO)
         {
             Tematica = tematica;
-            Jugadores = new List<JugadorEstadisticas>();
+            Jugadores = new List<JugadorPuntaje>();
             TotalRondas = CERO_RONDAS;
             PrimerLugar = null;
             SegundoLugar = null;
@@ -131,7 +131,7 @@ namespace WcfServicioLibreria.Modelo
                 var jugadorExistente = Jugadores.FirstOrDefault(busqueda => busqueda.Nombre == usuario);
                 if (jugadorExistente == null)
                 {
-                    Jugadores.Add(new JugadorEstadisticas(usuario));
+                    Jugadores.Add(new JugadorPuntaje(usuario));
                 }
             }
         }

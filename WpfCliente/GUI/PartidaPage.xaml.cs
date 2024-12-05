@@ -360,6 +360,12 @@ namespace WpfCliente.GUI
 
         }
 
+        private void BORRAME_SImulacionCambioRondaStats(object sender, RoutedEventArgs e)
+        {
+            CambiarPantalla(PantallasPartida.PANTALLA_ESTADISTICAS);
+
+        }
+
         private async void ClicButtonSolicitarImagenAsync(object sender, RoutedEventArgs e)
         {
             
@@ -376,5 +382,6 @@ namespace WpfCliente.GUI
         {
             buttonSolicitarImagen.Content = Idioma.buttonSolicitarImagen;
         }
+
     }
 }

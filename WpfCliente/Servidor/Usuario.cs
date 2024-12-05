@@ -2,6 +2,7 @@
 using System;
 using System.Windows.Media.Imaging;
 using WpfCliente.Utilidad;
+using System.ComponentModel;
 
 namespace WpfCliente.ServidorDescribelo
 {

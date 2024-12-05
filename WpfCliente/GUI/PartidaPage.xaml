@@ -110,6 +110,8 @@
         <Button Height="80" Width="180" Content="SIMULACION pool cartas" Margin="941,450,10,137" Click="BORRAME_SImulacionCambioRonda"></Button>
         <Button Height="80" Width="180" Content="SIMULACION soy jugador" Margin="951,334,0,253" Click="BORRAME_SImulacionCambioRondaSoyJugador"></Button>
         <Button Height="80" Width="180" Content="SIMULACION soy narrador" Margin="951,217,0,370" Click="BORRAME_SImulacionCambioRondaSoyNarrador"></Button>
+        <Button Height="80" Width="180" Content="SIMULACION ir estadisicas" Margin="951,217,0,370" Click="BORRAME_SImulacionCambioRondaStats"></Button>
+
         <Button x:Name="buttonSolicitarImagen" Height="80" Width="180" d:Content="Solicitar imagen" Margin="27,576,924,27" Click="ClicButtonSolicitarImagenAsync"></Button>
         <Image x:Name="imagenFlechaAtras" Source="/Recursos/flechaAtras.png" Margin="10,0,0,0" Cursor="Hand" MouseLeftButtonDown="ClicImagenFlechaAtras" Width="78" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <TextBlock TextAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="39" Width="600" Margin="0,634,0,0" Background="Black" Foreground="White"/>

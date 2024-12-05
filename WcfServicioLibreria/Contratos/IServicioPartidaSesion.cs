@@ -89,8 +89,8 @@ namespace WcfServicioLibreria.Contratos
 
         [OperationContract(IsOneWay = true)]
         [ServiceKnownTypeAttribute(typeof(EstadisticasPartida))]
-        [ServiceKnownTypeAttribute(typeof(List<JugadorEstadisticas>))]
-        [ServiceKnownTypeAttribute(typeof(JugadorEstadisticas))]
+        [ServiceKnownTypeAttribute(typeof(List<JugadorPuntaje>))]
+        [ServiceKnownTypeAttribute(typeof(JugadorPuntaje))]
         void EnviarEstadisticasCallback(EstadisticasPartida estadisticas);
 
         [OperationContract(IsOneWay = true)]

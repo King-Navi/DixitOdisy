@@ -3,19 +3,19 @@
 namespace WcfServicioLibreria.Modelo
 {
     [DataContract]
-    public class JugadorEstadisticas
+    public class JugadorPuntaje
     {
         [DataMember]
         public string Nombre { get; set; }
 
         [DataMember]
         public int Puntos { get; set; }
-        public JugadorEstadisticas(string nombre)
+        public JugadorPuntaje(string nombre)
         {
             Nombre = nombre;
             Puntos = 0;
         }
-        public JugadorEstadisticas(string nombre, int  puntos)
+        public JugadorPuntaje(string nombre, int  puntos)
         {
             Nombre = nombre;
             Puntos = puntos;

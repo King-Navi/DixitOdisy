@@ -147,7 +147,7 @@
     <Compile Include="Modelo\Partida\CondicionVictoriaCartasAgotadas.cs" />
     <Compile Include="Modelo\Partida\ConfiguracionPartida.cs" />
     <Compile Include="Modelo\Partida\EstadisticasPartida.cs" />
-    <Compile Include="Modelo\Partida\JugadorEstadisticasBase.cs" />
+    <Compile Include="Modelo\Partida\JugadorPuntaje.cs" />
     <Compile Include="Modelo\Partida\LectorDiscoOrquestador.cs" />
     <Compile Include="Modelo\Partida\LecturaTrabajo.cs" />
     <Compile Include="Modelo\Partida\ManejadorImagen.cs" />
@@ -686,6 +686,9 @@
     <Content Include="Recursos\Mixta\03ba74a6-b786-40b0-827d-5c9a9d6af117.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mixta\045f5832-f53b-4544-9a7a-c391f020684e.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mixta\071681fe-f3ad-4a45-86fc-35622fc56b3c.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -737,6 +740,12 @@
     <Content Include="Recursos\Mixta\34f018a4-bc82-4dbb-8bfd-fe7571359aac.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mixta\35639dd0-1b41-426e-a554-2d61eda51249.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\36385689-8931-4110-a725-1dc8a5b94cc8.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mixta\36facaea-0c37-42df-b879-8fe789c163fd.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -761,6 +770,9 @@
     <Content Include="Recursos\Mixta\4bc7a014-811c-4fa4-9a48-481df43a72e8.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mixta\5817d6d8-95d9-4805-8059-bafcaa198843.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mixta\5b50ea25-c91c-4f10-9b14-15f398506adb.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -779,7 +791,13 @@
     <Content Include="Recursos\Mixta\6e8cc111-b9fa-4460-87ee-bb3a05f95d44.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mixta\6f7fe3b0-cb31-45fc-9d7d-edf509784f97.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mixta\734b88be-ec6e-4e2e-91ee-aa80ad190275.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\73d9d553-2871-4576-b11c-d565470e6edf.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\75103b86-91ae-44e9-acdf-eed04ad82fa0.jpg">
@@ -806,10 +824,19 @@
     <Content Include="Recursos\Mixta\81d03222-6b76-4d6c-8346-c96d21a75ab1.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mixta\8632a231-6d24-4283-b61a-8283139efd46.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mixta\8748ddb1-233d-4f1a-8471-98dbbbd380dc.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\87b64448-17b9-4cf3-955e-a298ceae27da.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\89add8a9-2154-4624-a636-99fb983d7ab9.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\9055c1b0-ca87-4fbc-886c-2666771d7fc6.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\92ae1d7f-ecf3-4567-b5ed-37a3056f8baf.jpg">
@@ -819,6 +846,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\94ee37e3-743a-484f-97c9-f50ca7e4c4c0.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\9b2cdb8a-ff7b-4b70-b768-e0e592a9d9c3.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\9e476c0b-96fd-44fa-9dec-f43beefff12f.jpg">
@@ -839,6 +869,9 @@
     <Content Include="Recursos\Mixta\af8b8fcf-90b7-45b9-b41c-c5cbe7a2ed0e.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Recursos\Mixta\b6f82542-119f-457d-ac73-ea3b22f7ab7e.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Mixta\b702b2a9-b205-40ae-af84-738b55d5087a.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -846,6 +879,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\bbfa39ff-6e05-4c85-95e5-5ad93cb3340a.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\bc064de5-b049-46c1-9166-ee442b2f2724.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\bca4a989-6847-4759-aadf-ca7dbdcc089b.jpg">
@@ -870,6 +906,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\d1032f19-c105-4988-a0be-cc455398263f.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\d20536ec-9b1f-42e0-96ca-0d3457f9e803.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\d433da14-a472-4f20-90d2-13233438c92a.jpg">
@@ -897,6 +936,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\e96a6122-6e07-4f58-baa0-27acb08e10c8.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Mixta\ea1d29da-8fac-4903-8ce2-78f6d9e1704a.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Mixta\f3d4a8c8-e9b9-4b51-976e-912f61f39cee.jpg">

@@ -924,7 +924,52 @@
     <Content Include="Recursos\Paises\01c81451-f1fc-4f2e-b9fd-4d57c4c60968.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Recursos\Paises\e0835ab0-36e0-4480-86f7-e4b7b17ce5eb.jpg">
+    <Content Include="Recursos\Paises\0c9e1c62-9f64-4bf6-82f2-5189b44cf98b.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Paises\17a41809-fd68-4ea9-86e3-6f6246d0e915.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Paises\37124a56-ea12-4656-8927-770dcf8cea85.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Paises\4d7c47ea-b1a5-4867-999b-1cb0c3681911.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Paises\522ed0e5-1e5b-4287-b957-7b1964bf55c6.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Paises\759d4899-ae0c-4c4f-92ff-e481fb7bbcb9.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Paises\8768596e-5335-4b10-868f-de7c2896a37a.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Paises\91e2a39c-2d2d-43b8-81de-29a1370659de.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Paises\a2164860-c2ad-407a-ad2f-ccbd01585f70.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Paises\ad858421-b4b4-4fca-a0bc-d03385643ca9.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Paises\c1c961fb-bd40-47a4-bd16-872d45972fee.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Paises\c404cdb5-4169-4a8d-90f8-af91647a1107.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Paises\c57f29e8-eab8-4a73-bb7f-a90bc7fcf976.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Paises\cb7b6eaa-fa58-4dc7-b19d-5b072c14197f.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Paises\f2660135-f4cc-414d-9da0-6288b6ee40de.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\Paises\fedbe66b-f655-45b2-88d7-9ff9df89f1a3.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

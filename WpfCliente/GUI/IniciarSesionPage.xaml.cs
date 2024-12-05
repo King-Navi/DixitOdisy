@@ -16,7 +16,7 @@ namespace WpfCliente.GUI
 {
     public partial class IniciarSesionPage : Page,  IActualizacionUI, IHabilitadorBotones
     {
-        private const string RECURSOS_ESTILO_TEXTBOX_ERROR = "ErrorTextBoxStyle";
+        private const string RECURSOS_ESTILO_TEXTBOX_ERROR = "TextBoxEstiloError";
         public IniciarSesionPage()
         {
             KeepAlive = false;
@@ -95,8 +95,7 @@ namespace WpfCliente.GUI
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
-                camposValidos = true;
-                throw;
+                camposValidos = false;
             }
             return camposValidos;
         }

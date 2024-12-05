@@ -5,33 +5,74 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfCliente.GUI" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
-             MinHeight="670" MinWidth="750">
+             MinHeight="670" 
+             MinWidth="750">
     <Grid>
         <Grid.Background>
-            <LinearGradientBrush EndPoint="0.3,1" StartPoint="1,0" SpreadMethod="Reflect">
-                <GradientStop Color="#FFC50012"/>
-                <GradientStop Color="#FF540017" Offset="1"/>
-                <GradientStop Color="#FF7D0022" Offset="0.693"/>
-                <GradientStop Color="#FFCC0038" Offset="0.377"/>
+            <LinearGradientBrush
+                EndPoint="0.3,1" 
+                StartPoint="1,0" 
+                SpreadMethod="Reflect">
+                <GradientStop 
+                    Color="#FFC50012"/>
+                <GradientStop 
+                    Color="#FF540017" 
+                    Offset="1"/>
+                <GradientStop 
+                    Color="#FF7D0022" 
+                    Offset="0.693"/>
+                <GradientStop 
+                    Color="#FFCC0038" 
+                    Offset="0.377"/>
             </LinearGradientBrush>
 
         </Grid.Background>
-        <Label x:Name="labelPista" d:Content="Pista: Pizaaa"      Content  = "Pista: "   Background="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="60" FontSize="26" Foreground="White"></Label>
-        <TextBox x:Name="textBoxInstruccionPista" IsReadOnly="True" Text="¡Escoge la carta correcta en base a la pista!" Background="{x:Null}" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,0,0" FontSize="20" BorderBrush="{x:Null}" Foreground="White"/>
-        <Grid Margin="0,100,0,0" Unloaded="CerrandoUserControl">
+        <Label 
+            x:Name="labelPista" 
+            d:Content="Pista: Pizaaa"      
+            Content  = "Pista: "   
+            Background="{x:Null}" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Top" 
+            Height="60" 
+            FontSize="26" 
+            Foreground="White"></Label>
+        <TextBox 
+            x:Name="textBoxInstruccionPista" 
+            IsReadOnly="True" 
+            Text="¡Escoge la carta correcta en base a la pista!" 
+            Background="{x:Null}" 
+            Height="40" 
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Top" 
+            Margin="0,60,0,0" 
+            FontSize="20" 
+            BorderBrush="{x:Null}" 
+            Foreground="White"/>
+        <Grid 
+            Margin="0,100,0,0" 
+            Unloaded="CerrandoUserControl">
             <ItemsControl ItemsSource="{Binding TodasImagenes}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Columns="3" Rows="2"/>
+                        <UniformGrid 
+                            Columns="3" 
+                            Rows="2"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Vertical" >
-                            <Image Source="{Binding BitmapImagen}" Width="130">
+                        <StackPanel 
+                            Orientation="Vertical" >
+                            <Image 
+                                Source="{Binding BitmapImagen}" 
+                                Width="130">
                                 <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="MouseLeftButtonDown">
-                                        <i:InvokeCommandAction Command="{Binding DataContext.ComandoImagenSelecionCorrecta, RelativeSource={RelativeSource AncestorType=Page}}"
+                                    <i:EventTrigger 
+                                        EventName="MouseLeftButtonDown">
+                                        <i:InvokeCommandAction 
+                                            Command="{Binding DataContext.ComandoImagenSelecionCorrecta, 
+                                            RelativeSource={RelativeSource AncestorType=Page}}"
                                                         CommandParameter="{Binding IdImagen}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>

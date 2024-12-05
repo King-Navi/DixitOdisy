@@ -39,7 +39,6 @@ namespace WcfServicioLibreria.Modelo
         private static readonly SemaphoreSlim semaphoreRemoverJugador = new SemaphoreSlim(1, 1);
         private IUsuarioDAO usuarioDAO;
         public int sePuedeUnir = UNISER;
-        private IManejadorVeto manejadorVeto;
         #endregion Campos
         #region Propiedades
         public string IdCodigoSala { get => idCodigoSala; internal set => idCodigoSala = value; }
@@ -52,7 +51,6 @@ namespace WcfServicioLibreria.Modelo
         {
             this.IdCodigoSala = _idCodigoSala;
             this.Anfitrion = nombreUsuario;
-            manejadorVeto = new ManejadorDeVetos();
             usuarioDAO = _usuarioDAO;
         }
 
@@ -304,15 +302,11 @@ namespace WcfServicioLibreria.Modelo
 
         private void NotificarNuevoJugador(string nombreJugador, Usuario usuario, bool esInvitado)
         {
-            lock (jugadoresSalaCallbacks)
+            if (jugadoresSalaCallbacks.TryGetValue(nombreJugador, out ISalaJugadorCallback nuevoCallback))
             {
-                if (jugadoresSalaCallbacks.TryGetValue(nombreJugador, out ISalaJugadorCallback nuevoCallback))
-                {
-                    NotificarJugadorExistente(nuevoCallback, esInvitado);
-                }
-
-                NotificarJugadoresConectados(nombreJugador, usuario);
+                NotificarJugadorExistente(nuevoCallback, esInvitado);
             }
+            NotificarJugadoresConectados(nombreJugador, usuario);
         }
 
         private void NotificarJugadorExistente(ISalaJugadorCallback nuevoCallback, bool esInvitado)

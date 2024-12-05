@@ -168,22 +168,22 @@ namespace WpfCliente.GUI
                     }
                 }
             }
-            catch (IOException ex)
+            catch (IOException excepcion)
             {
-                ManejadorExcepciones.ManejarExcepcionErrorComponente(ex);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
-            catch (ArgumentNullException ex)
+            catch (ArgumentNullException excepcion)
             {
-                ManejadorExcepciones.ManejarExcepcionErrorComponente(ex);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             catch (FaultException<BaseDatosFalla>)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloUsuarioExiste, 
                     Properties.Idioma.mensajeUsuarioYaExiste, Window.GetWindow(this));
             }
-            catch (Exception ex)
+            catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarExcepcionFatal(ex, Window.GetWindow(this));
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion, Window.GetWindow(this));
             }
             return false;
         }

@@ -5,28 +5,57 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfCliente.GUI"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="450">
-    <Grid Width="320" Height="500" >
-        <DockPanel LastChildFill="True">
-            <StackPanel d:Background="#E0DCC7" DockPanel.Dock="Top">
-                <Label x:Name="labelSolicitudes" HorizontalContentAlignment="Center" FontFamily="Lucida Sans Unicode Bold" BorderBrush="Black" BorderThickness="3" d:Content="Solicitudes de amistad"></Label>
+             d:DesignHeight="600" 
+             d:DesignWidth="450">
+    <Grid 
+        Width="320" 
+        Height="500" >
+        <DockPanel 
+            LastChildFill="True">
+            <StackPanel 
+                d:Background="#E0DCC7" 
+                DockPanel.Dock="Top">
+                <Label 
+                    x:Name="labelSolicitudes" 
+                    HorizontalContentAlignment="Center" 
+                    FontFamily="Lucida Sans Unicode Bold" 
+                    BorderBrush="Black" 
+                    BorderThickness="3" 
+                    d:Content="Solicitudes de amistad"></Label>
             </StackPanel>
             <Grid>
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ItemsControl x:Name="itemsControlAmigos" Background="#A9A9A9" ItemsSource="{Binding Solicitudes}" >
+                <ScrollViewer 
+                    VerticalScrollBarVisibility="Auto">
+                    <ItemsControl 
+                        x:Name="itemsControlAmigos" 
+                        Background="#A9A9A9" 
+                        ItemsSource="{Binding Solicitudes}" >
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" />
+                                <StackPanel 
+                                    Orientation="Vertical" 
+                                    HorizontalAlignment="Left" />
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <local:SolicitudAmistadUserControl DataContext="{Binding}"/>
+                                <local:SolicitudAmistadUserControl 
+                                    DataContext="{Binding}"/>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
-                <TextBlock x:Name="textBlockNoHaySolicitudes" Visibility="Collapsed" TextAlignment="Center"  TextWrapping="Wrap" d:Text="No hay solicitudes pendientes" FontFamily="Lucida Sans Unicode Bold" HorizontalAlignment="Center"  Margin="0,207,0,0" VerticalAlignment="Top" Width="228"/>
+                <TextBlock 
+                    x:Name="textBlockNoHaySolicitudes" 
+                    Visibility="Collapsed" 
+                    TextAlignment="Center"  
+                    TextWrapping="Wrap" 
+                    d:Text="No hay solicitudes pendientes" 
+                    FontFamily="Lucida Sans Unicode Bold" 
+                    HorizontalAlignment="Center"  
+                    Margin="0,207,0,0" 
+                    VerticalAlignment="Top" 
+                    Width="228"/>
             </Grid>
         </DockPanel>
     </Grid>

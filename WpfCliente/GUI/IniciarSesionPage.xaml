@@ -1,114 +1,259 @@
-﻿<Page x:Class="WpfCliente.GUI.IniciarSesionPage"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        xmlns:p="clr-namespace:WpfCliente.Properties"
-        xmlns:local="clr-namespace:WpfCliente.GUI"
-        mc:Ignorable="d" 
-        d:Title="Login"
-        Height="770" Width="1200"
-        Background="Gray">
-
+﻿<Page 
+    x:Class="WpfCliente.GUI.IniciarSesionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:p="clr-namespace:WpfCliente.Properties"
+    xmlns:local="clr-namespace:WpfCliente.GUI"
+    mc:Ignorable="d" 
+    d:Title="Login"
+    Height="770" 
+    Width="1200"
+    Background="Gray">
     <Page.Resources>
-        <Style TargetType="{x:Type TextBox}" >
+        <Style 
+            TargetType="{x:Type TextBox}">
             <Style.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="7" />
+                <Style 
+                    TargetType="{x:Type Border}">
+                    <Setter 
+                        Property="CornerRadius" 
+                        Value="7" />
                 </Style>
             </Style.Resources>
         </Style>
-        <Style TargetType="{x:Type Button}" >
+        <Style 
+            TargetType="{x:Type Button}">
             <Style.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="6" />
+                <Style 
+                    TargetType="{x:Type Border}">
+                    <Setter 
+                        Property="CornerRadius" 
+                        Value="6" />
                 </Style>
             </Style.Resources>
         </Style>
-
-        <Style TargetType="{x:Type TextBox}" x:Key="TextBoxNormal">
+        <Style 
+            TargetType="{x:Type TextBox}" 
+            x:Key="TextBoxNormal">
             <Style.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="7" />
+                <Style 
+                    TargetType="{x:Type Border}">
+                    <Setter 
+                        Property="CornerRadius" 
+                        Value="7" />
                 </Style>
             </Style.Resources>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="Foreground" Value="#CDCDCD" />
-            <Setter Property="Tag" Value="UserName" />
+            <Setter 
+                Property="Background" 
+                Value="White" />
+            <Setter 
+                Property="Foreground" 
+                Value="#CDCDCD" />
+            <Setter 
+                Property="Tag" 
+                Value="UserName" />
         </Style>
-
-        <Style TargetType="{x:Type TextBox}" x:Key="TextBoxEstiloError">
+        <Style 
+            TargetType="{x:Type TextBox}" 
+            x:Key="TextBoxEstiloError">
             <Style.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="7" />
-
+                <Style 
+                    TargetType="{x:Type Border}">
+                    <Setter 
+                        Property="CornerRadius" 
+                        Value="7" />
                 </Style>
             </Style.Resources>
-            <Setter Property="Background" Value="#FF0800"/>
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="Tag" Value="UserName" />
+            <Setter 
+                Property="Background" 
+                Value="#FF0800" />
+            <Setter 
+                Property="Foreground" 
+                Value="Black" />
+            <Setter 
+                Property="Tag" 
+                Value="UserName" />
         </Style>
-
     </Page.Resources>
-
-    <Viewbox Stretch="Fill">
-
-        <Grid Height="770" Width="1200">
+    <Viewbox 
+        Stretch="Fill">
+        <Grid 
+            Height="770" 
+            Width="1200">
             <Grid.RowDefinitions>
-                <RowDefinition Height="31*"/>
-                <RowDefinition Height="79*"/>
+                <RowDefinition 
+                    Height="31*" />
+                <RowDefinition 
+                    Height="79*" />
             </Grid.RowDefinitions>
             <Grid.Background>
-                <ImageBrush ImageSource="pack://application:,,,/WpfCliente;component/Recursos/fondoJuego.png"/>
+                <ImageBrush 
+                    ImageSource="pack://application:,,,/WpfCliente;component/Recursos/fondoJuego.png" />
             </Grid.Background>
-
-            <Image Source="pack://application:,,,/WpfCliente;component/Recursos/cajaLogin.png" HorizontalAlignment="Left" VerticalAlignment="Top"  Stretch="Fill" Height="574" Width="511" Margin="337,71,0,0" Grid.RowSpan="3"/>
-
-            <Label x:Name="labelTitulo" FontFamily="ROG Fonts Bold"  ToolTip="Autores: Iván y U Náay" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="58" Foreground="Black" Margin="354,95,0,0" Content="Descríbelo" Height="114" Width="480" />
-
-
-            <Label x:Name="labelUsuario" FontFamily="Lucida Sans Unicode" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="24" Foreground="Black" 
-            Content="Usuario" Margin="416,0,0,534" Grid.RowSpan="2" Height="38" Width="106"/>
-
-            <TextBox x:Name="textBoxUsuario" MaxLength="20"  FontFamily="Lucida Sans Unicode Bold" FontSize="22" Foreground="Black"
-            VerticalContentAlignment="Center" Margin="416,24,410,482" Grid.Row="2"
-            BorderBrush="Gray" BorderThickness="2" Background="White" />
-
-            <Label x:Name="labelContrasenia" FontFamily="Lucida Sans Unicode" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="24" Foreground="Black" 
-            Content="Contraseña" Margin="416,0,0,428" Grid.Row="1" Height="38" Width="153"/>
-
-            <TextBox x:Name="textBoxContrasenia" MaxLength="20" FontFamily="Lucida Sans Unicode Bold" FontSize="22" Foreground="Black"
-            VerticalContentAlignment="Center" Margin="416,130,410,377" Grid.Row="2"
-            Focusable="False" BorderBrush="Gray" BorderThickness="2" Background="White"/>
-
-
-            <Border CornerRadius="10" BorderThickness="1" BorderBrush="Transparent" Margin="416,130,410,377" Grid.Row="2" >
-                <PasswordBox x:Name="passwordBoxContrasenia" MaxLength="20"  FontSize="22" FontFamily="Lucida Sans Unicode Bold" 
-                             Foreground="Black" VerticalContentAlignment="Center" BorderBrush="Transparent" 
-                             Background="Transparent" KeyDown="TeclaPresionadaEnter"  />
+            <Image 
+                Source="pack://application:,,,/WpfCliente;component/Recursos/cajaLogin.png" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                Stretch="Fill" 
+                Height="574" 
+                Width="511" 
+                Margin="337,71,0,0" 
+                Grid.RowSpan="3" />
+            <Label 
+                x:Name="labelTitulo" 
+                FontFamily="ROG Fonts Bold" 
+                ToolTip="Autores: Iván y U Náay" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                FontSize="58" 
+                Foreground="Black" 
+                Margin="354,95,0,0" 
+                Content="Descríbelo" 
+                Height="114" 
+                Width="480" />
+            <Label 
+                x:Name="labelUsuario" 
+                FontFamily="Lucida Sans Unicode" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Bottom" 
+                FontSize="24" 
+                Foreground="Black" 
+                Content="Usuario" 
+                Margin="416,0,0,534" 
+                Grid.RowSpan="2" 
+                Height="38" 
+                Width="106" />
+            <TextBox 
+                x:Name="textBoxUsuario" 
+                MaxLength="20" 
+                FontFamily="Lucida Sans Unicode Bold" 
+                FontSize="22" 
+                Foreground="Black"
+                VerticalContentAlignment="Center" 
+                Margin="416,24,410,482" 
+                Grid.Row="2"
+                BorderBrush="Gray" 
+                BorderThickness="2" 
+                Background="White" />
+            <Label 
+                x:Name="labelContrasenia" 
+                FontFamily="Lucida Sans Unicode" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Bottom" 
+                FontSize="24" 
+                Foreground="Black" 
+                Content="Contraseña" 
+                Margin="416,0,0,428" 
+                Grid.Row="1" 
+                Height="38" 
+                Width="153" />
+            <TextBox 
+                x:Name="textBoxContrasenia" 
+                MaxLength="20" 
+                FontFamily="Lucida Sans Unicode Bold" 
+                FontSize="22" 
+                Foreground="Black"
+                VerticalContentAlignment="Center" 
+                Margin="416,130,410,377" 
+                Grid.Row="2"
+                Focusable="False" 
+                BorderBrush="Gray" 
+                BorderThickness="2" 
+                Background="White" />
+            <Border 
+                CornerRadius="10" 
+                BorderThickness="1" 
+                BorderBrush="Transparent" 
+                Margin="416,130,410,377" 
+                Grid.Row="2">
+                <PasswordBox 
+                    x:Name="passwordBoxContrasenia" 
+                    MaxLength="20" 
+                    FontSize="22" 
+                    FontFamily="Lucida Sans Unicode Bold" 
+                    Foreground="Black" 
+                    VerticalContentAlignment="Center" 
+                    BorderBrush="Transparent" 
+                    Background="Transparent" 
+                    KeyDown="TeclaPresionadaEnter" />
             </Border>
-
-            <Button x:Name="buttonOlvidarContrasenia" Margin="413,181,631,351" Grid.Row="2" Foreground="#8dadb6" Background="Transparent" BorderThickness="0" Cursor="Hand" Click="ClicButtonOlvidarContrasenia"/>
-
-            <Button x:Name="buttonIniciarSesion" Background="#E0DCC7" Foreground="Black" BorderBrush="Gray" BorderThickness="2"
-            FontFamily="Lucida Sans Unicode" FontSize="24" Content="Iniciar sesión" 
-            Margin="416,246,410,260" Grid.Row="2" Cursor="Hand" Click="CliButtonIniciarSesionAsync" />
-
-            <Button x:Name="buttonRegistrar" Background="Transparent" Foreground="#8dadb6" BorderThickness="0"
-            FontFamily="Lucida Sans Unicode" FontSize="18" Content="¿Nuevo en el juego? Registrarse"  Margin="416,298,410,208" Grid.Row="2" Cursor="Hand" Click="ClicButtonRegistrar"/>
-
-            <Button x:Name="buttonJugarComoInvitado" Background="#E0DCC7" Foreground="Black" BorderBrush="Gray" BorderThickness="2" 
-                FontFamily="Lucida Sans Unicode" FontSize="18" 
-                Content="Jugar como invitado" Margin="360,366,643,145" Grid.Row="1" Cursor="Hand" Click="ClicButtonJugarComoInvitado"  />
-
-            <Label x:Name="labelCredencialesIncorrectas" Content="Credenciales incorrectas" Visibility="Collapsed" HorizontalAlignment="Left" Margin="416,208,0,0" Grid.Row="1" VerticalAlignment="Top" Width="374" FontFamily="Lucida Sans Unicode Bold" FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="#FFFF5959" Height="33"/>
-
-            <Image Source="/Recursos/cajaLogin.png" Stretch="Fill" HorizontalAlignment="Left" Height="66" Margin="953,13,0,0" VerticalAlignment="Top" Width="234"/>
-
-            <local:CambiarIdiomaMenuDesplegable x:Name="cambiarIdiomaUserControl" Margin="0,28,32,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-
-
+            <Button 
+                x:Name="buttonOlvidarContrasenia" 
+                Margin="413,181,631,351" 
+                Grid.Row="2" 
+                Foreground="#8dadb6" 
+                Background="Transparent" 
+                BorderThickness="0" 
+                Cursor="Hand" 
+                Click="ClicButtonOlvidarContrasenia" />
+            <Button 
+                x:Name="buttonIniciarSesion" 
+                Background="#E0DCC7" 
+                Foreground="Black" 
+                BorderBrush="Gray" 
+                BorderThickness="2"
+                FontFamily="Lucida Sans Unicode" 
+                FontSize="24" 
+                Content="Iniciar sesión" 
+                Margin="416,246,410,260" 
+                Grid.Row="2" 
+                Cursor="Hand" 
+                Click="CliButtonIniciarSesionAsync" />
+            <Button 
+                x:Name="buttonRegistrar" 
+                Background="Transparent" 
+                Foreground="#8dadb6" 
+                BorderThickness="0"
+                FontFamily="Lucida Sans Unicode" 
+                FontSize="18" 
+                Content="¿Nuevo en el juego? Registrarse" 
+                Margin="416,298,410,208" 
+                Grid.Row="2" 
+                Cursor="Hand" 
+                Click="ClicButtonRegistrar" />
+            <Button 
+                x:Name="buttonJugarComoInvitado" 
+                Background="#E0DCC7" 
+                Foreground="Black" 
+                BorderBrush="Gray" 
+                BorderThickness="2" 
+                FontFamily="Lucida Sans Unicode" 
+                FontSize="18" 
+                Content="Jugar como invitado" 
+                Margin="360,366,643,145" 
+                Grid.Row="1" 
+                Cursor="Hand" 
+                Click="ClicButtonJugarComoInvitado" />
+            <Label 
+                x:Name="labelCredencialesIncorrectas" 
+                Content="Credenciales incorrectas" 
+                Visibility="Collapsed" 
+                HorizontalAlignment="Left" 
+                Margin="416,208,0,0" 
+                Grid.Row="1" 
+                VerticalAlignment="Top" 
+                Width="374" 
+                FontFamily="Lucida Sans Unicode Bold" 
+                FontSize="14" 
+                VerticalContentAlignment="Center" 
+                HorizontalContentAlignment="Center" 
+                Foreground="#FFFF5959" 
+                Height="33" />
+            <Image 
+                Source="/Recursos/cajaLogin.png" 
+                Stretch="Fill" 
+                HorizontalAlignment="Left" 
+                Height="66" 
+                Margin="953,13,0,0" 
+                VerticalAlignment="Top" 
+                Width="234" />
+            <local:CambiarIdiomaMenuDesplegable 
+                x:Name="cambiarIdiomaUserControl" 
+                Margin="0,28,32,0" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Top" />
         </Grid>
     </Viewbox>
-
 </Page>

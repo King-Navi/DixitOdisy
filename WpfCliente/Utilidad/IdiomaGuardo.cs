@@ -51,9 +51,9 @@ namespace WpfCliente.Persistencia
                 Thread.CurrentThread.CurrentCulture = new CultureInfo(codigoLenguaje);
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(codigoLenguaje);
             }
-            catch (CultureNotFoundException ex)
+            catch (CultureNotFoundException excepcion)
             {
-                ManejadorExcepciones.ManejarExcepcionErrorComponente(ex);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
         }
         /// <summary>
@@ -67,9 +67,9 @@ namespace WpfCliente.Persistencia
                 Thread.CurrentThread.CurrentCulture = new CultureInfo(lenguajeSelecionado);
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(lenguajeSelecionado);
             }
-            catch (CultureNotFoundException ex)
+            catch (CultureNotFoundException excepcion)
             {
-                ManejadorExcepciones.ManejarExcepcionErrorComponente(ex);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
         }
     }

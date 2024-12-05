@@ -13,11 +13,18 @@
 
         <Grid>
             <Grid.Style>
-                <Style TargetType="Grid">
-                    <Setter Property="Visibility" Value="Collapsed" />
+                <Style 
+                    TargetType="Grid">
+                    <Setter 
+                        Property="Visibility" 
+                        Value="Collapsed" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding PantallaActual}" Value="1">
-                            <Setter Property="Visibility" Value="Visible"/>
+                        <DataTrigger 
+                            Binding="{Binding PantallaActual}" 
+                            Value="1">
+                            <Setter 
+                                Property="Visibility" 
+                                Value="Visible"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -25,79 +32,133 @@
             <local:InicioRondaUserControl></local:InicioRondaUserControl>
         </Grid>
 
-        <Grid x:Name="gridPantallaCartaMazo">
+        <Grid 
+            x:Name="gridPantallaCartaMazo">
             <Grid.Style>
-                <Style TargetType="Grid">
-                    <Setter Property="Visibility" Value="Collapsed" />
+                <Style 
+                    TargetType="Grid">
+                    <Setter 
+                        Property="Visibility" 
+                        Value="Collapsed" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding PantallaActual}" Value="2">
-                            <Setter Property="Visibility" Value="Visible"/>
+                        <DataTrigger 
+                            Binding="{Binding PantallaActual}" 
+                            Value="2">
+                            <Setter 
+                                Property="Visibility" 
+                                Value="Visible"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
         </Grid>
 
-        <Grid x:Name="gridPantallaCartasNarrador" Background="Pink">
+        <Grid 
+            x:Name="gridPantallaCartasNarrador" 
+            Background="Pink">
             <Grid.Style>
-                <Style TargetType="Grid">
-                    <Setter Property="Visibility" Value="Collapsed" />
+                <Style 
+                    TargetType="Grid">
+                    <Setter 
+                        Property="Visibility" 
+                        Value="Collapsed" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding PantallaActual}" Value="3">
-                            <Setter Property="Visibility" Value="Visible"/>
+                        <DataTrigger 
+                            Binding="{Binding PantallaActual}"
+                            Value="3">
+                            <Setter 
+                                Property="Visibility" 
+                                Value="Visible"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
         </Grid>
 
-        <Grid x:Name="gridPantallaTodasCartas" Background="Pink">
+        <Grid 
+            x:Name="gridPantallaTodasCartas" 
+            Background="Pink">
             <Grid.Style>
-                <Style TargetType="Grid">
-                    <Setter Property="Visibility" Value="Collapsed" />
+                <Style 
+                    TargetType="Grid">
+                    <Setter 
+                        Property="Visibility" 
+                        Value="Collapsed" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding PantallaActual}" Value="4">
-                            <Setter Property="Visibility" Value="Visible"/>
+                        <DataTrigger 
+                            Binding="{Binding PantallaActual}" 
+                            Value="4">
+                            <Setter 
+                                Property="Visibility" 
+                                Value="Visible"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
         </Grid>
 
-        <Grid x:Name="gridPantallaResumenRonda" Background="Pink">
+        <Grid 
+            x:Name="gridPantallaResumenRonda" 
+            Background="Pink">
             <Grid.Style>
-                <Style TargetType="Grid">
-                    <Setter Property="Visibility" Value="Collapsed" />
+                <Style 
+                    TargetType="Grid">
+                    <Setter 
+                        Property="Visibility" 
+                        Value="Collapsed" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding PantallaActual}" Value="5">
-                            <Setter Property="Visibility" Value="Visible"/>
+                        <DataTrigger 
+                            Binding="{Binding PantallaActual}" 
+                            Value="5">
+                            <Setter 
+                                Property="Visibility" 
+                                Value="Visible"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
         </Grid>
 
-        <Grid x:Name="gridPantalla6" Background="Purple">
+        <Grid 
+            x:Name="gridPantalla6" 
+            Background="Purple">
             <Grid.Style>
-                <Style TargetType="Grid">
-                    <Setter Property="Visibility" Value="Collapsed" />
+                <Style 
+                    TargetType="Grid">
+                    <Setter 
+                        Property="Visibility" 
+                        Value="Collapsed" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding PantallaActual}" Value="6">
-                            <Setter Property="Visibility" Value="Visible"/>
+                        <DataTrigger 
+                            Binding="{Binding PantallaActual}" 
+                            Value="6">
+                            <Setter 
+                                Property="Visibility" 
+                                Value="Visible"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
-            <Label Content="FIN DE LA PARTIDA" FontSize="80"></Label>
+            <Label 
+                Content="FIN DE LA PARTIDA" 
+                FontSize="80"></Label>
         </Grid>
 
-        <Grid x:Name="gridPantalla7" >
+        <Grid 
+            x:Name="gridPantalla7" >
             <Grid.Style>
-                <Style TargetType="Grid">
-                    <Setter Property="Visibility" Value="Collapsed" />
+                <Style 
+                    TargetType="Grid">
+                    <Setter 
+                        Property="Visibility" 
+                        Value="Collapsed" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding PantallaActual}" Value="7">
-                            <Setter Property="Visibility" Value="Visible"/>
+                        <DataTrigger 
+                            Binding="{Binding PantallaActual}" 
+                            Value="7">
+                            <Setter 
+                                Property="Visibility" 
+                                Value="Visible"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -117,7 +178,4 @@
         <TextBlock TextAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="39" Width="600" Margin="0,634,0,0" Background="Black" Foreground="White"/>
 
     </Grid>
-
-
-
 </Page>

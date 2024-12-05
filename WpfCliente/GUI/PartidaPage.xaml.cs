@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using WpfCliente.Contexto;
 using WpfCliente.ImplementacionesCallbacks;
@@ -242,6 +243,7 @@ namespace WpfCliente.GUI
 
         private void SalirDePartida()
         {
+            BindingOperations.ClearAllBindings(this);
             if (SingletonCliente.Instance.NombreUsuario != null 
                 && SingletonCliente.Instance.NombreUsuario is string nombre)
             {

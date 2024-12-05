@@ -629,7 +629,7 @@ namespace WcfServicioLibreria.Modelo
                             try
                             {
                                 int idEstadistica = estadisticasDAO.ObtenerIdEstadisticaConIdUsuario(jugador.idUsuario);
-                                return idEstadistica != 0 ? new Tuple<string, int>(jugador.gamertag, idEstadistica) : null;
+                                return idEstadistica != ID_INVALIDO_ESTADISTICAS ? new Tuple<string, int>(jugador.gamertag, idEstadistica) : null;
                             }
                             catch (Exception excepcion)
                             {

@@ -11,12 +11,12 @@
         WindowStartupLocation="CenterOwner"
         MouseDown="VentanaRatonAbajo"
         mc:Ignorable="d"
-        d:Title="MostrarCartaModalWindow" Height="451" Width="334" >
-    <Grid>
+        d:Title="MostrarCartaModalWindow" >
+    <Grid Width="300">
         <Image x:Name="imagenElegida" Width="300" ></Image>
         <TextBox x:Name="textBoxPista"
          Height="50"
-         Margin="9,391,126,10"
+         Margin="10,391,126,10"
          d:Text="Escribe aquí..."
          VerticalContentAlignment="Center"
          Padding="10"
@@ -44,9 +44,9 @@
         <Button x:Name="buttonSeleccionar"
         Height="50"
         Width="100"
-        Margin="224,391,10,10"
+        Margin="190,391,10,10"
         Content="Seleccionar"
-        Click="ClicButtonEnviarPista">
+        Click="ClicButtonSelecionar">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
                     <Border Background="{TemplateBinding Background}"

@@ -48,6 +48,7 @@ namespace WcfServicioLibreria.Modelo
         private const int PUNTOS_MAXIMOS_RECIBIDOS_CONFUNDIR = 3;
         private const int TIEMPO_MOSTRAR_ESTADISTICAS = 15;
         private const int ID_INVALIDO = 0;
+        private const int ID_INVALIDO_ESTADISTICAS = 0;
         private const int TIEMPO_ESPERA_MILISEGUNDOS = 1000;
 
         private const int RONDA_INICIAL = 0;

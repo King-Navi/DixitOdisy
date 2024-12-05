@@ -11,6 +11,7 @@ namespace WpfCliente.GUI
     {
         public string Pista {  get; set; }
         private readonly Action enCierreAccion;
+        private readonly bool soyNarrador;
         public MostrarCartaModalWindow(bool esNarrador, BitmapImage imagen, Action cerrarVenana)
         {
             InitializeComponent();
@@ -18,11 +19,12 @@ namespace WpfCliente.GUI
             DataContext = this;
             cerrarVenana = enCierreAccion;
             imagenElegida.Source = imagen;
+            soyNarrador = esNarrador;
             if (!esNarrador)
             {
                 textBoxPista.Visibility = Visibility.Collapsed;
             }
-            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento; ActualizarUI();
+            CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento; 
         }
 
         protected override void OnClosed(EventArgs e)
@@ -31,14 +33,17 @@ namespace WpfCliente.GUI
             enCierreAccion?.Invoke();
         }
 
-        private void ClicButtonEnviarPista(object sender, RoutedEventArgs e)
+        private void ClicButtonSelecionar(object sender, RoutedEventArgs e)
         {
-            Pista = textBoxPista.Text;
-            if (string.IsNullOrWhiteSpace(Pista) || Pista.Contains(" "))
+            if (soyNarrador)
             {
-                textBlockAdvertenciaPista.Visibility = Visibility.Visible;
-                textBlockAdvertenciaPista.Text = Idioma.mensajeAdvertenciaPista;
-                return;
+                Pista = textBoxPista.Text;
+                if (string.IsNullOrWhiteSpace(Pista) || Pista.Contains(" "))
+                {
+                    textBlockAdvertenciaPista.Visibility = Visibility.Visible;
+                    textBlockAdvertenciaPista.Text = Idioma.mensajeAdvertenciaPista;
+                    return;
+                }
             }
             DialogResult = true;
         }
@@ -74,9 +79,24 @@ namespace WpfCliente.GUI
 
         public void ActualizarUI()
         {
-            textBlockAdvertenciaPista.Text = Idioma.mensajeAdvertenciaPista;
-            this.Title = Properties.Idioma.tituloMostrarCarta;  
-            buttonSeleccionar.Content = Properties.Idioma.buttonAceptar;
+            try
+            {
+                textBlockAdvertenciaPista.Text = Idioma.mensajeAdvertenciaPista;
+                this.Title = Properties.Idioma.tituloMostrarCarta;
+                buttonSeleccionar.Content = Properties.Idioma.buttonAceptar;
+            }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
         }
     }
 }

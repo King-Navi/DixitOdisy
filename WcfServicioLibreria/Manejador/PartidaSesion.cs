@@ -131,6 +131,5 @@ namespace WcfServicioLibreria.Manejador
             }
         }
 
-       
     }
 }

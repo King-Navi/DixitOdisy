@@ -75,8 +75,12 @@ namespace WpfCliente.GUI
             {
                 return;
             }
+            if (gamertagSolicitud != SingletonCliente.Instance.NombreUsuario)
+            {
+                
+            }
 
-            if (ValidacionesString.EsGamertagValido(gamertagSolicitud) && gamertagSolicitud != SingletonCliente.Instance.NombreUsuario)
+            if (ValidacionesString.EsGamertagValido(gamertagSolicitud))
             {
                 try 
                 {
@@ -106,7 +110,7 @@ namespace WpfCliente.GUI
 
         private async Task<bool> EnviarSolicitudAsync(string gamertagReceptor)
         {
-            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
+            bool conexionExitosa = await Conexion.VerificarConexionConBaseDatosSinCierreAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)
             {
                 return false;

@@ -113,6 +113,7 @@ namespace WpfCliente.ImplementacionesCallbacks
                         if (amigoAEliminar != null)
                         {
                             ListaAmigos.Remove(amigoAEliminar);
+                            amigo.UltimaConexion = DateTime.Now.ToString();
                             amigo.EstadoActual = Properties.Idioma.labelDesconectado;
                             ListaAmigos.Insert(0, amigo);
                         }

@@ -448,30 +448,9 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void BORRAME_SImulacionCambioRonda(object sender, RoutedEventArgs e)
-        {
-            CambiarPantalla(PantallasPartida.PANTALLA_TODOS_CARTAS);
-        }
         public async void ClicImagenFlechaAtrasAsync(object sender, RoutedEventArgs e)
         {
             await SalirDePartidaAsync();
-        }
-        private void BORRAME_SImulacionCambioRondaSoyJugador(object sender, RoutedEventArgs e)
-        {
-            NotificarNarrador(false);
-
-        }
-
-        private void BORRAME_SImulacionCambioRondaSoyNarrador(object sender, RoutedEventArgs e)
-        {
-            NotificarNarrador(true);
-
-        }
-
-        private void BORRAME_SImulacionCambioRondaStats(object sender, RoutedEventArgs e)
-        {
-            CambiarPantalla(PantallasPartida.PANTALLA_ESTADISTICAS);
-
         }
 
         private async void ClicButtonSolicitarImagenAsync(object sender, RoutedEventArgs e)

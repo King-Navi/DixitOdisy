@@ -150,7 +150,6 @@ namespace WpfCliente.GUI
             {
                 buttonConfigurarPartida.IsEnabled = esHabilitado;
                 buttonEmpezarPartida.IsEnabled = esHabilitado;
-                buttonGuardarCambios.IsEnabled = esHabilitado;
                 buttonInvitarAmigos.IsEnabled = esHabilitado;
                 chatUserControl.IsEnabled = esHabilitado;
                 stakePaneListaExpulsion.IsEnabled = esHabilitado;
@@ -258,7 +257,6 @@ namespace WpfCliente.GUI
                 radioButtonFinCartas.Content = Idioma.buttonFinCartas;
                 radioButtonFinRondas.Content = Idioma.buttonFinRondas;
                 labelExpulsarUsuario.Content = Idioma.buttonExpulsar;
-                buttonGuardarCambios.Content = Idioma.buttonGuardarCambios;
                 labelNumeroRondas.Content = Idioma.labelNumeroRondas;
             }
             catch (Exception excepcion)

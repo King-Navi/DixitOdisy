@@ -21,6 +21,8 @@ namespace WpfCliente.GUI
         private const string ESTILO_NORMAL_TEXTO = "TextBoxEstiloNormal";
         private const string ERROR_ESTILO_TEXTO = "TextBoxEstiloError";
         private const string PALABRA_RESERVADA_GUEST = "guest";
+        private const int LONGITUD_MINIMA_CONTRASENIA = 5;
+        private const int LONGITUD_MAXIMA_CONTRASENIA = 20;
         public RegistrarUsuarioPage()
         {
             KeepAlive = false;
@@ -271,13 +273,13 @@ namespace WpfCliente.GUI
         private bool ValidarCaracteristicasContrasenia()
         {
             bool isValid = false;
-            if (passwordBoxContrasenia.Password.Trim().Length >= 5)
+            if (passwordBoxContrasenia.Password.Trim().Length >= LONGITUD_MINIMA_CONTRASENIA)
             {
                 labelContraseniaMinimo.Foreground = Brushes.Green;
                 isValid = true;
             }
 
-            if (passwordBoxContrasenia.Password.Trim().Length <= 20)
+            if (passwordBoxContrasenia.Password.Trim().Length <= LONGITUD_MAXIMA_CONTRASENIA)
             {
                 labelContraseniaMaximo.Foreground = Brushes.Green;
                 isValid = true;

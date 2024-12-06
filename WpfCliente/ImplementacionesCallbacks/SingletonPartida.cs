@@ -126,8 +126,15 @@ namespace WpfCliente.ImplementacionesCallbacks
             }
             if (numeroPantalla == PantallasPartida.PANTALLA_TODOS_CARTAS)
             {
-                await SingletonGestorImagenes.Instancia.imagenesDeTodos.Imagen
-                    .MostrarTodasImagenesAsync(SingletonCliente.Instance.IdPartida);
+                try
+                {
+                    await SingletonGestorImagenes.Instancia.imagenesDeTodos.Imagen
+                                .MostrarTodasImagenesAsync(SingletonCliente.Instance.IdPartida);
+                }
+                catch (Exception excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
+                }
             }
             if (CambiarPantalla != null)
             {

@@ -47,6 +47,7 @@ namespace WcfServicioLibreria.Modelo
         private const int ID_INVALIDO = 0;
         private const int ID_INVALIDO_ESTADISTICAS = 0;
         private const int TIEMPO_ESPERA_MILISEGUNDOS = 1000;
+        private const int TIEMPO_AUMENTO_ENTRADA_SEGUNDOS = 4;
 
         private const int RONDA_INICIAL = 0;
         #endregion NumerosPartida
@@ -185,7 +186,7 @@ namespace WcfServicioLibreria.Modelo
                 esperaActual = tiempoEspera;
                 if (tiempoEspera > tiempoMinimo)
                 {
-                    tiempoEspera += 4;
+                    tiempoEspera += TIEMPO_AUMENTO_ENTRADA_SEGUNDOS;
                 }
             }
             await Task.Delay(esperaActual * TIEMPO_ESPERA_MILISEGUNDOS);

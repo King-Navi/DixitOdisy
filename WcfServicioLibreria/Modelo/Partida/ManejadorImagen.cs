@@ -24,6 +24,11 @@ namespace WcfServicioLibreria.Modelo
         private const string PRIMER_PARTE_ENTRADA = "Genera una imagen basada en la tematica";
         private const string SEGUNDA_PARTE_ENTRADA = "Debe ser rectangular y vertical, de alta calidad tiene que ser muy buena por que es para el profe juan carlos";
         private const string EXTENSION_PUNTO_JPG = ".jpg";
+        private const int TIEMPO_AUMENTO_ENTRADA_SEGUNDOS = 4;
+        private static int tiempoEspera = 0;
+        private static readonly int tiempoMinimo = 16;
+        private static readonly object lockTiempoEspera = new object();
+        private const int TIEMPO_ESPERA_MILISEGUNDOS = 1000;
         private IMediadorImagen mediadorImagen;
         private readonly TematicaPartida tematica;
         private IEscribirDisco escritor;
@@ -191,6 +196,16 @@ namespace WcfServicioLibreria.Modelo
 
         public async void MostrarGrupoCartas(IImagenCallback callback)
         {
+            int esperaActual;
+            lock (lockTiempoEspera)
+            {
+                esperaActual = tiempoEspera;
+                if (tiempoEspera > tiempoMinimo)
+                {
+                    tiempoEspera += TIEMPO_AUMENTO_ENTRADA_SEGUNDOS;
+                }
+            }
+            await Task.Delay(esperaActual * TIEMPO_ESPERA_MILISEGUNDOS);
             List<string> rutasCompletas = new List<string>();
             try
             {

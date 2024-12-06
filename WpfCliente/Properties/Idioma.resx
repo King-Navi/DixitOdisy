@@ -702,7 +702,10 @@
   <data name="buttonEspacio" xml:space="preserve">
     <value>Espacio</value>
   </data>
-  <data name="mensajeNoSolicitudTuMismo" xml:space="preserve">
-    <value>No te puedes enviar solicitud a ti mismo</value>
+  <data name="tituloErrorPartida" xml:space="preserve">
+    <value>Error al iniciar la partida</value>
+  </data>
+  <data name="mensajeErrorPartida" xml:space="preserve">
+    <value>Jugadores fuera del rango de jugadores para iniciar una partida</value>
   </data>
 </root>

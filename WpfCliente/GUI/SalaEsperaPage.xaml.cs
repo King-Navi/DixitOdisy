@@ -21,6 +21,8 @@ namespace WpfCliente.GUI
         private bool visibleConfigurarPartida = false;
         private const int NUMERO_RONDAS_PORDEFECTO = 3;
         private const int TIEMPO_CLIC_EXPULSION_SEGUNDOS = 5;
+        private const int MINIMO_JUGADORES = 3;
+        private const int MAXIMO_JUGADORES = 4;
         private ConfiguracionPartida ConfiguracionPartida { get; set; }
 
         public SalaEsperaPage(string idSala)
@@ -287,6 +289,11 @@ namespace WpfCliente.GUI
                 SingletonGestorVentana.Instancia.Regresar();
                 return;
             }
+            if (JugadoresSala.Count < MINIMO_JUGADORES || JugadoresSala.Count > MAXIMO_JUGADORES)
+            {
+                MostrarVentanaNoPuedeIniciarPartida();
+                return;
+            }
             if (!ValidarExistenciaSala())
             {
                 MostrarVentanaSalaNoEncontrada();
@@ -324,6 +331,15 @@ namespace WpfCliente.GUI
             VentanasEmergentes.CrearVentanaEmergenteConCierre(
                 Properties.Idioma.tituloLobbyNoEncontrado,
                 Idioma.mensajeLobbyNoDisponible,
+                Window.GetWindow(this)
+            );
+        }
+
+        private void MostrarVentanaNoPuedeIniciarPartida()
+        {
+            VentanasEmergentes.CrearVentanaEmergenteConCierre(
+                Properties.Idioma.tituloErrorPartida,
+                Idioma.mensajeErrorPartida,
                 Window.GetWindow(this)
             );
         }

@@ -1078,6 +1078,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Jugadores fuera del rango de jugadores para iniciar una partida.
+        /// </summary>
+        public static string mensajeErrorPartida {
+            get {
+                return ResourceManager.GetString("mensajeErrorPartida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No se pudo establecer conexión con el servidor.
         /// </summary>
         public static string mensajeErrorServidor {
@@ -1236,15 +1245,6 @@ namespace WpfCliente.Properties {
         public static string mensajeNoHuboCambios {
             get {
                 return ResourceManager.GetString("mensajeNoHuboCambios", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a No te puedes enviar solicitud a ti mismo.
-        /// </summary>
-        public static string mensajeNoSolicitudTuMismo {
-            get {
-                return ResourceManager.GetString("mensajeNoSolicitudTuMismo", resourceCulture);
             }
         }
         
@@ -1533,6 +1533,15 @@ namespace WpfCliente.Properties {
         public static string tituloErrorInesperado {
             get {
                 return ResourceManager.GetString("tituloErrorInesperado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error al iniciar la partida.
+        /// </summary>
+        public static string tituloErrorPartida {
+            get {
+                return ResourceManager.GetString("tituloErrorPartida", resourceCulture);
             }
         }
         

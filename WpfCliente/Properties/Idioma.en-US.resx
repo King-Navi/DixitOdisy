@@ -703,7 +703,10 @@
   <data name="buttonEspacio" xml:space="preserve">
     <value>Space</value>
   </data>
-  <data name="mensajeNoSolicitudTuMismo" xml:space="preserve">
-    <value>You cant send an friend request to yourself</value>
+  <data name="tituloErrorPartida" xml:space="preserve">
+    <value>Error starting the game</value>
+  </data>
+  <data name="mensajeErrorPartida" xml:space="preserve">
+    <value>Players out of range to start a game</value>
   </data>
 </root>

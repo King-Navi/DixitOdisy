@@ -125,8 +125,7 @@
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Top" 
                 Width="893" 
-                Height="479" 
-                Margin="0,118,0,0">
+                Height="547" Margin="0,82,0,0">
                 <StackPanel 
                     Orientation="Vertical" 
                     Margin="10,0">
@@ -157,7 +156,7 @@
                 </StackPanel>
                 <StackPanel 
                     Orientation="Vertical" 
-                    Margin="10,0">
+                    Margin="10,0" Height="503">
                     <Label 
                         x:Name="labelCorreo" 
                         Content="Edita tu correo" 

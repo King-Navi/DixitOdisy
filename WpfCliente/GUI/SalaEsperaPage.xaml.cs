@@ -21,6 +21,8 @@ namespace WpfCliente.GUI
         private bool visibleConfigurarPartida = false;
         private const int NUMERO_RONDAS_PORDEFECTO = 3;
         private const int TIEMPO_CLIC_EXPULSION_SEGUNDOS = 5;
+        private const int MINIMO_JUGADORES = 3;
+        private const int MAXIMO_JUGADORES = 4;
         private ConfiguracionPartida ConfiguracionPartida { get; set; }
 
         public SalaEsperaPage(string idSala)
@@ -287,6 +289,12 @@ namespace WpfCliente.GUI
                 SingletonGestorVentana.Instancia.Regresar();
                 return;
             }
+            if (JugadoresSala.Count < MINIMO_JUGADORES || JugadoresSala.Count > MAXIMO_JUGADORES)
+            {
+                MostrarVentanaNoPuedeIniciarPartida();
+                this.IsEnabled = true;
+                return;
+            }
             if (!ValidarExistenciaSala())
             {
                 MostrarVentanaSalaNoEncontrada();
@@ -324,6 +332,15 @@ namespace WpfCliente.GUI
             VentanasEmergentes.CrearVentanaEmergenteConCierre(
                 Properties.Idioma.tituloLobbyNoEncontrado,
                 Idioma.mensajeLobbyNoDisponible,
+                Window.GetWindow(this)
+            );
+        }
+
+        private void MostrarVentanaNoPuedeIniciarPartida()
+        {
+            VentanasEmergentes.CrearVentanaEmergente(
+                Properties.Idioma.tituloErrorPartida,
+                Idioma.mensajeErrorPartida,
                 Window.GetWindow(this)
             );
         }
@@ -376,39 +393,56 @@ namespace WpfCliente.GUI
 
         private void ClicButtonCopiar(object sender, MouseButtonEventArgs e)
         {
-            if (labelCodigo.Content != null)
+            try
             {
-                Clipboard.SetText(labelCodigo.Content.ToString());
+                if (labelCodigo.Content != null)
+                {
+                    Clipboard.SetText(labelCodigo.Content.ToString());
 
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCodigoCopiado,
-                    Properties.Idioma.mensajeCodigoCopiado,
-                    Window.GetWindow(this));
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCodigoCopiado,
+                        Properties.Idioma.mensajeCodigoCopiado,
+                        Window.GetWindow(this));
+                }
+            }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
         }
 
         private async void ClicButtonInvitarAmigosAsync(object sender, RoutedEventArgs e)
         {
             string gamertagInvitado = AbrirVentanaModalGamertag();
-            if (gamertagInvitado != null && gamertagInvitado != SingletonCliente.Instance.NombreUsuario)
+            
+            if(gamertagInvitado == SingletonCliente.Instance.NombreUsuario)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(
+                    Properties.Idioma.tituloInvitacionPartida,
+                    Properties.Idioma.mensajeAutoInvitacion,
+                    Window.GetWindow(this));
+                return;
+            }
+
+            if (gamertagInvitado != null)
             {
                 if (await EnviarInvitacionAsync(gamertagInvitado))
                 {
-                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloInvitacionPartida,
+                    VentanasEmergentes.CrearVentanaEmergente(
+                        Properties.Idioma.tituloInvitacionPartida,
                         Properties.Idioma.mensajeInvitacionExitosa,
                         Window.GetWindow(this));
                 }
                 else
                 {
-                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloInvitacionPartida,
+                    VentanasEmergentes.CrearVentanaEmergente(
+                        Properties.Idioma.tituloInvitacionPartida,
                         Properties.Idioma.mensajeInvitacionFallida,
                         Window.GetWindow(this));
                 }
-            }
-            else
-            {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloInvitacionPartida,
-                    Properties.Idioma.mensajeInvitacionFallida,
-                    Window.GetWindow(this));
             }
         }
 

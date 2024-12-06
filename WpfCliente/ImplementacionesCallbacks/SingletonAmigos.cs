@@ -5,7 +5,7 @@ using System.ServiceModel;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
-namespace WpfCliente.ImplementacionesCallbacks 
+namespace WpfCliente.ImplementacionesCallbacks
 {
     public partial class SingletonCanal : IServicioAmistadCallback
     {
@@ -19,7 +19,7 @@ namespace WpfCliente.ImplementacionesCallbacks
             {
                 lock (listaAmigoBloqueo)
                 {
-                    ListaAmigos?.Clear(); 
+                    ListaAmigos?.Clear();
                 }
             }
             catch (NullReferenceException excepcion)
@@ -118,7 +118,7 @@ namespace WpfCliente.ImplementacionesCallbacks
                             ListaAmigos.Insert(0, amigo);
                         }
                         return;
-                    } 
+                    }
                 }
                 ObtenerAmigoCallback(amigo);
             }
@@ -169,15 +169,12 @@ namespace WpfCliente.ImplementacionesCallbacks
             }
             try
             {
-                lock (listaAmigoBloqueo)
-                {
-                    var amigoAEliminar = ListaAmigos.FirstOrDefault(busqueda =>
-                                    busqueda.Nombre.Equals(amigo.Nombre, StringComparison.OrdinalIgnoreCase));
+                var amigoAEliminar = ListaAmigos.FirstOrDefault(busqueda =>
+                                busqueda.Nombre.Equals(amigo.Nombre, StringComparison.OrdinalIgnoreCase));
 
-                    if (amigoAEliminar != null)
-                    {
-                        ListaAmigos.Remove(amigoAEliminar);
-                    } 
+                if (amigoAEliminar != null)
+                {
+                    ListaAmigos.Remove(amigoAEliminar);
                 }
             }
             catch (NullReferenceException excepcion)

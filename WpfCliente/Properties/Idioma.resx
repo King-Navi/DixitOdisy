@@ -702,8 +702,17 @@
   <data name="buttonEspacio" xml:space="preserve">
     <value>Espacio</value>
   </data>
-  <data name="mensajeNoSolicitudTuMismo" xml:space="preserve">
-    <value>No te puedes enviar solicitud a ti mismo</value>
+  <data name="tituloErrorPartida" xml:space="preserve">
+    <value>Error al iniciar la partida</value>
+  </data>
+  <data name="mensajeErrorPartida" xml:space="preserve">
+    <value>Jugadores fuera del rango de jugadores para iniciar una partida</value>
+  </data>
+  <data name="mensajeAutoInvitacion" xml:space="preserve">
+    <value>No te puedes invitar a ti mismo</value>
+  </data>
+  <data name="labelCredencialesIncorrectas" xml:space="preserve">
+    <value>Credenciales incorrectas</value>
   </data>
   <data name="mensajeNoAutoSolicitud" xml:space="preserve">
     <value>No se puede enviar solicitud de amistad a ti mismo.</value>

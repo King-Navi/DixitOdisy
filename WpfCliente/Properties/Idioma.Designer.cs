@@ -520,6 +520,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Credenciales incorrectas.
+        /// </summary>
+        public static string labelCredencialesIncorrectas {
+            get {
+                return ResourceManager.GetString("labelCredencialesIncorrectas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Desconectado .
         /// </summary>
         public static string labelDesconectado {
@@ -934,6 +943,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No te puedes invitar a ti mismo.
+        /// </summary>
+        public static string mensajeAutoInvitacion {
+            get {
+                return ResourceManager.GetString("mensajeAutoInvitacion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cambios aplicados con éxito.
         /// </summary>
         public static string mensajeCambiosAplicadosExito {
@@ -1083,6 +1101,15 @@ namespace WpfCliente.Properties {
         public static string mensajeErrorInesperado {
             get {
                 return ResourceManager.GetString("mensajeErrorInesperado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Jugadores fuera del rango de jugadores para iniciar una partida.
+        /// </summary>
+        public static string mensajeErrorPartida {
+            get {
+                return ResourceManager.GetString("mensajeErrorPartida", resourceCulture);
             }
         }
         
@@ -1254,15 +1281,6 @@ namespace WpfCliente.Properties {
         public static string mensajeNoHuboCambios {
             get {
                 return ResourceManager.GetString("mensajeNoHuboCambios", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Busca una cadena traducida similar a No te puedes enviar solicitud a ti mismo.
-        /// </summary>
-        public static string mensajeNoSolicitudTuMismo {
-            get {
-                return ResourceManager.GetString("mensajeNoSolicitudTuMismo", resourceCulture);
             }
         }
         
@@ -1560,6 +1578,15 @@ namespace WpfCliente.Properties {
         public static string tituloErrorInesperado {
             get {
                 return ResourceManager.GetString("tituloErrorInesperado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Error al iniciar la partida.
+        /// </summary>
+        public static string tituloErrorPartida {
+            get {
+                return ResourceManager.GetString("tituloErrorPartida", resourceCulture);
             }
         }
         

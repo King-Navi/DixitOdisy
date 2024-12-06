@@ -32,7 +32,7 @@ namespace WcfServicioLibreria.Modelo
         #endregion PantallasCliente
 
         #region NumerosPartida
-        private const int CANTIDAD_MINIMA_JUGADORES = 2; 
+        private const int CANTIDAD_MINIMA_JUGADORES = 3; 
         private const int TIEMPO_ESPERA_UNIRSE_JUGADORES = 20;
         private const int TIEMPO_ESPERA_NARRADOR = 30; 
         private const int TIEMPO_ESPERA_SELECCION = 25; 

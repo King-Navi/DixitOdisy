@@ -34,9 +34,9 @@ namespace WcfServicioLibreria.Modelo
         #region NumerosPartida
         private const int CANTIDAD_MINIMA_JUGADORES = 1; // 2
         private const int TIEMPO_ESPERA_UNIRSE_JUGADORES = 20;
-        private const int TIEMPO_ESPERA_NARRADOR = 5; // 30
-        private const int TIEMPO_ESPERA_SELECCION = 5; //25
-        private const int TIEMPO_ESPERA_PARA_ADIVINAR = 5; //40
+        private const int TIEMPO_ESPERA_NARRADOR = 20; // 30
+        private const int TIEMPO_ESPERA_SELECCION = 20; //25
+        private const int TIEMPO_ESPERA_PARA_ADIVINAR = 20; //40
         private const int TIEMPO_ESPERA = 5;
         private const int TIEMPO_ENVIO_SEGUNDOS = 5;
         private const int NUM_JUGADOR_PARTIDA_VACIA = 0; 

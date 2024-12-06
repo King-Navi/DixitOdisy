@@ -17,7 +17,7 @@ namespace WpfCliente.Utilidad
         private const int RANGO_MAXIMO_IMAGENES = 6;
         private const int BITS_POR_BYTE = 8;
         private const int DESPLAZAMIENTO = 0;
-        private static byte[] fotoGlobal;
+        public static byte[] fotoGlobal;
 
         public static BitmapImage ConvertirBytesABitmapImage(byte[] bytes)
         {
@@ -38,23 +38,22 @@ namespace WpfCliente.Utilidad
 
         public static byte[] GuardarBitmapImageABytes(BitmapImage imageControl)
         {
-            if (imageControl == null)
+            try
             {
-                return new byte[0];
-
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    PngBitmapEncoder encoder = new PngBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create(imageControl));
+                    encoder.Save(memoryStream);
+                    fotoGlobal = memoryStream.ToArray();
+                    return fotoGlobal;
+                }
             }
-            if (fotoGlobal != null)
+            catch (Exception excepcion)
             {
-                return fotoGlobal;    
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
-            using (MemoryStream memoryStream = new MemoryStream())
-            {
-                PngBitmapEncoder encoder = new PngBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(imageControl));
-                encoder.Save(memoryStream);
-                fotoGlobal = memoryStream.ToArray();
-                return fotoGlobal;
-            }
+            return new Byte[0];
         }
 
         public static byte[] ObtenerFotoGlobal()

@@ -534,6 +534,7 @@ namespace WcfServicioLibreria.Modelo
         {
             await EnviarResultadoBaseDatos();
             AvisarPartidaTerminada();
+            await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
             EliminarPartida();
         }
 

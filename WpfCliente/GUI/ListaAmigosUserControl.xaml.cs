@@ -45,7 +45,7 @@ namespace WpfCliente.GUI
             timer.Start();
         }
 
-        [DebuggerStepThrough]
+        [DebuggerHidden]
         private void HoraActual(object sender, EventArgs e)
         {
             DateTime horaActual = DateTime.Now;
@@ -54,7 +54,14 @@ namespace WpfCliente.GUI
             {
                 Dispatcher.Invoke(() =>
                 {
-                    labelHora.Content = horaActual.ToString(FORMATO_HORA);
+                    try
+                    {
+                        labelHora.Content = horaActual.ToString(FORMATO_HORA);
+                    }
+                    catch (Exception excepcion)
+                    {
+                        ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
+                    }
                 });
                 ultimaActualizacion = horaActual;
             }

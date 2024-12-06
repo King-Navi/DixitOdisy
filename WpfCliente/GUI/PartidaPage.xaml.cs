@@ -128,6 +128,7 @@ namespace WpfCliente.GUI
                 buttonSolicitarImagen.IsEnabled = false;
                 chatUserControl.Visibility = Visibility.Hidden;
                 chatUserControl.IsEnabled = false;
+                CambiarPantalla(PantallasPartida.PANTALLA_FIN_PARTIDA);
             }
             catch (NullReferenceException excepcion)
             {

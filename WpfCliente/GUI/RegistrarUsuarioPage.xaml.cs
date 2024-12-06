@@ -222,6 +222,9 @@ namespace WpfCliente.GUI
             ObtenerEstilos();
             if (!ValidarCaracteristicasContrasenia())
             {
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCamposInvalidos,
+                    Properties.Idioma.mensajeCamposInvalidos,
+                    Window.GetWindow(this));
                 isValid = false;
             }
 
@@ -273,6 +276,12 @@ namespace WpfCliente.GUI
         private bool ValidarCaracteristicasContrasenia()
         {
             bool isValid = false;
+
+            if (passwordBoxContrasenia.Password.Contains(" "))
+            {
+                isValid = false;
+            }
+
             if (passwordBoxContrasenia.Password.Trim().Length >= LONGITUD_MINIMA_CONTRASENIA)
             {
                 labelContraseniaMinimo.Foreground = Brushes.Green;

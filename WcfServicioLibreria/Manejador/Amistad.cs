@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
@@ -47,8 +48,14 @@ namespace WcfServicioLibreria.Manejador
             }
             catch (SolicitudAmistadExcepcion excepcion)
             {
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
                 throw new FaultException<SolicitudAmistadFalla>(
                     new SolicitudAmistadFalla(excepcion.ExisteAmistad, excepcion.ExistePeticion));
+            }
+            catch (FaultException<SolicitudAmistadFalla> excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
+                throw;
             }
             catch (Exception excepcion)
             {

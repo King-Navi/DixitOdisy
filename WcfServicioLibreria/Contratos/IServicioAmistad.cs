@@ -27,6 +27,7 @@ namespace WcfServicioLibreria.Contratos
         /// <exception cref="SolicitudAmistadFalla">Se lanza si hay un error al enviar la solicitud.</exception>
         [OperationContract]
         [FaultContract(typeof(SolicitudAmistadFalla))]
+        [FaultContract(typeof(FaultException<SolicitudAmistad>))]
         bool EnviarSolicitudAmistad (Usuario usuarioRemitente, string destinatario);
         /// <summary>
         /// Obtiene la lista de solicitudes de amistad pendientes de un usuario.

@@ -907,6 +907,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No se puede enviar solicitud de amistad, ya eres su amigo..
+        /// </summary>
+        public static string mensajeAmigoExistente {
+            get {
+                return ResourceManager.GetString("mensajeAmigoExistente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a El archivo no es una imagen válida..
         /// </summary>
         public static string mensajeArchivoInvalido {
@@ -1222,6 +1231,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No se puede enviar solicitud de amistad a ti mismo..
+        /// </summary>
+        public static string mensajeNoAutoSolicitud {
+            get {
+                return ResourceManager.GetString("mensajeNoAutoSolicitud", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a No puedes registrarte sin foto de perfil.
         /// </summary>
         public static string mensajeNoHayFotoDePerfil {
@@ -1299,6 +1317,15 @@ namespace WpfCliente.Properties {
         public static string mensajeSesionIniciada {
             get {
                 return ResourceManager.GetString("mensajeSesionIniciada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No se puede enviar solicitud de amistad, ya tienes una tuya..
+        /// </summary>
+        public static string mensajeSolicitudAmigoYaexistente {
+            get {
+                return ResourceManager.GetString("mensajeSolicitudAmigoYaexistente", resourceCulture);
             }
         }
         

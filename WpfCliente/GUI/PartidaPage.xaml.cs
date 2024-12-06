@@ -85,7 +85,7 @@ namespace WpfCliente.GUI
             KeepAlive = false;
             SingletonPartida.Instancia.CambiarPantalla += CambiarPantalla;
             SingletonPartida.Instancia.NotificarEsNarrador += NotificarNarrador;
-            SingletonPartida.Instancia.MostrarPista += this.MostrarPista;
+            SingletonPartida.Instancia.MostrarPista += MostrarPista;
             SingletonPartida.Instancia.DesbloquearChat += DesbloqueoChat;
             SingletonPartida.Instancia.PerdisteTurno += PerdisteTurno;
             SingletonPartida.Instancia.TeHanExpulsado += EnExpulsion;
@@ -99,7 +99,7 @@ namespace WpfCliente.GUI
 
         private void EnExpulsion()
         {
-            TerminoPartida();
+            TerminoPartidaAsync();
             try
             {
                 textBlockPerdisteTurno.Text = Idioma.labelHasSidoExpulsado;
@@ -119,7 +119,7 @@ namespace WpfCliente.GUI
             }
         }
 
-        private void TerminoPartida()
+        private async void TerminoPartidaAsync()
         {
             try
             {
@@ -127,6 +127,7 @@ namespace WpfCliente.GUI
                 buttonSolicitarImagen.IsEnabled = false;
                 chatUserControl.Visibility = Visibility.Hidden;
                 chatUserControl.IsEnabled = false;
+                PantallaActual = PantallasPartida.PANTALLA_FIN_PARTIDA;
             }
             catch (NullReferenceException excepcion)
             {
@@ -240,7 +241,7 @@ namespace WpfCliente.GUI
         {
             if (numeroPantalla == PantallasPartida.PANTALLA_FIN_PARTIDA)
             {
-                TerminoPartida();
+                TerminoPartidaAsync();
                 return;
             }
             if (primeraEjecucion)
@@ -257,7 +258,6 @@ namespace WpfCliente.GUI
                 comandoHabilitado = true;
             }
             (ComandoImagenSelecionCorrecta as ComandoRele<string>)?.RaiseCanExecuteChanged();
-
             PantallaActual = numeroPantalla;
             try
             {

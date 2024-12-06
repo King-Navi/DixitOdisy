@@ -706,4 +706,13 @@ No te has podido unir a la partida, favor de revisar tu conexion</value>
   <data name="mensajeNoSolicitudTuMismo" xml:space="preserve">
     <value>No te puedes enviar solicitud a ti mismo</value>
   </data>
+  <data name="mensajeNoAutoSolicitud" xml:space="preserve">
+    <value>No se puede enviar solicitud de amistad a ti mismo.</value>
+  </data>
+  <data name="mensajeSolicitudAmigoYaexistente" xml:space="preserve">
+    <value>No se puede enviar solicitud de amistad, ya tienes una tuya.</value>
+  </data>
+  <data name="mensajeAmigoExistente" xml:space="preserve">
+    <value>No se puede enviar solicitud de amistad, ya eres su amigo.</value>
+  </data>
 </root>

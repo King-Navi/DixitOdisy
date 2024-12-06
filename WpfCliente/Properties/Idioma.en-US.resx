@@ -706,4 +706,13 @@
   <data name="mensajeNoSolicitudTuMismo" xml:space="preserve">
     <value>You cant send an friend request to yourself</value>
   </data>
+  <data name="mensajeNoAutoSolicitud" xml:space="preserve">
+    <value>You cannot send friend request to yourself.</value>
+  </data>
+  <data name="mensajeSolicitudAmigoYaexistente" xml:space="preserve">
+    <value>You can't send friend requests, you already have one of yours.</value>
+  </data>
+  <data name="mensajeAmigoExistente" xml:space="preserve">
+    <value>No se puede enviar solicitud de amistad, ya eres su amigo.</value>
+  </data>
 </root>

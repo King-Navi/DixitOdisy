@@ -20,7 +20,6 @@ namespace WpfCliente.ImplementacionesCallbacks
         public Usuario SegundoLugar { get; private set; } = new Usuario();
         public Usuario TercerLugar { get; private set; } = new Usuario();
         public CollecionObservableSeguraHilos<Usuario> UsuariosEnPartida { get; set; } = new CollecionObservableSeguraHilos<Usuario>();
-
         public event Action<int> CambiarPantalla;
         public event Action<bool> NotificarEsNarrador;
         public event Action<string> MostrarPista;

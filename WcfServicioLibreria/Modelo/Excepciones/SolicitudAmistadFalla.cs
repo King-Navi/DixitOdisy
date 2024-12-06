@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace WcfServicioLibreria.Modelo 
 {
@@ -6,10 +7,10 @@ namespace WcfServicioLibreria.Modelo
     public class SolicitudAmistadFalla
     {
         [DataMember]
-        public bool ExisteAmistad { get; set; }
+        public bool ExisteAmistad { get; set; } = false;
 
         [DataMember]
-        public bool ExistePeticion { get; set; }
+        public bool ExistePeticion { get; set; } = false;
 
         [DataMember]
         public string Mensaje { get; set; }

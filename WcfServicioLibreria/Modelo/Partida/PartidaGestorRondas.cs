@@ -39,6 +39,7 @@ namespace WcfServicioLibreria.Modelo
                 }
                 else
                 {
+                    Console.Write("No se incio partida");
                     await TerminarPartidaAsync();
                 }
             }
@@ -76,7 +77,6 @@ namespace WcfServicioLibreria.Modelo
                     await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
                     ++RondaActual;
                 }
-                CambiarPantalla(PANTALLA_FIN_PARTIDA);
             }
             catch (OperationCanceledException excepcion)
             {
@@ -530,6 +530,8 @@ namespace WcfServicioLibreria.Modelo
 
         private async Task TerminarPartidaAsync()
         {
+            CambiarPantalla(PANTALLA_FIN_PARTIDA);
+            await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
             await EnviarResultadoBaseDatos();
             AvisarPartidaTerminada();
             await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));

@@ -77,12 +77,13 @@ namespace WpfCliente.GUI
                 return;
             }
 
-            if (gamertagSolicitud != SingletonCliente.Instance.NombreUsuario)
+            if (gamertagSolicitud.Equals(SingletonCliente.Instance.NombreUsuario))
             {
                 VentanasEmergentes.CrearVentanaEmergente(
                     Properties.Idioma.tituloSolicitudAmistad,
-                    Properties.Idioma.mensajeSolicitudAmistadFallida, 
+                    Properties.Idioma.mensajeNoAutoSolicitud, 
                     Window.GetWindow(this));
+                return;
             }
 
             if (ValidacionesString.EsGamertagValido(gamertagSolicitud))
@@ -97,14 +98,6 @@ namespace WpfCliente.GUI
                     {
                         VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadFallida, Window.GetWindow(this));
                     }
-                }
-                catch (FaultException<SolicitudAmistadFalla> excepcion)
-                {
-                    VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloSolicitudAmistad, excepcion.Detail.Mensaje, Window.GetWindow(this));
-                }
-                catch (FaultException excepcion)
-                {
-                    VentanasEmergentes.CrearVentanaEmergente(Idioma.mensajeErrorInesperado, excepcion.Message, Window.GetWindow(this));
                 }
                 catch (Exception excepcion)
                 {
@@ -140,7 +133,14 @@ namespace WpfCliente.GUI
             }
             catch (FaultException<SolicitudAmistadFalla> excepcion)
             {
-                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloSolicitudAmistad, excepcion.Detail.Mensaje, Window.GetWindow(this));
+                if (excepcion.Detail.ExisteAmistad)
+                {
+                    VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloSolicitudAmistad, Idioma.mensajeAmigoExistente, Window.GetWindow(this));
+                }
+                else if (excepcion.Detail.ExistePeticion)
+                {
+                    VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloSolicitudAmistad, Idioma.mensajeSolicitudAmigoYaexistente, Window.GetWindow(this));
+                }
                 return false;
             }
             catch (FaultException excepcion)

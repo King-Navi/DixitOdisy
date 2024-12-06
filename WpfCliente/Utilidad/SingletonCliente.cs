@@ -25,5 +25,16 @@ namespace WpfCliente.Utilidad
         public string ContraniaHash { get; set; }
         public string Correo { get; set; }
         public BitmapImage FotoJugador { get; set; }
+
+        public void LimpiarSingleton()
+        {
+            IdUsuario = 0;
+            IdSala = null;
+            IdChat = null;
+            NombreUsuario = null;
+            ContraniaHash = null;
+            Correo = null;
+            FotoJugador = null;
+        }
     }
 }

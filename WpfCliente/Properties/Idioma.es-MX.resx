@@ -700,4 +700,7 @@ No te has podido unir a la partida, favor de revisar tu conexion</value>
   <data name="labelHasSidoExpulsado" xml:space="preserve">
     <value>Has sido expulsado de la partida</value>
   </data>
+  <data name="buttonEspacio" xml:space="preserve">
+    <value>Espacio</value>
+  </data>
 </root>

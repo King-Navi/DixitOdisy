@@ -700,4 +700,7 @@
   <data name="labelHasSidoExpulsado" xml:space="preserve">
     <value>You have been kicked from the game</value>
   </data>
+  <data name="buttonEspacio" xml:space="preserve">
+    <value>Space</value>
+  </data>
 </root>

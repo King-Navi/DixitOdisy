@@ -36,14 +36,14 @@ namespace WpfCliente.Utilidad
             }
         }
 
-        public static byte[] GuardarBitmapImageABytes(BitmapImage imageControl)
+        public static byte[] GuardarBitmapImageABytes(BitmapImage imagenControl)
         {
             try
             {
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
                     PngBitmapEncoder encoder = new PngBitmapEncoder();
-                    encoder.Frames.Add(BitmapFrame.Create(imageControl));
+                    encoder.Frames.Add(BitmapFrame.Create(imagenControl));
                     encoder.Save(memoryStream);
                     fotoGlobal = memoryStream.ToArray();
                     return fotoGlobal;
@@ -52,8 +52,8 @@ namespace WpfCliente.Utilidad
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
+                return new byte[0];
             }
-            return new Byte[0];
         }
 
         public static byte[] ObtenerFotoGlobal()
@@ -72,7 +72,7 @@ namespace WpfCliente.Utilidad
                 stream.Position = 0;
                 bitmap.BeginInit();
                 bitmap.StreamSource = stream;
-                bitmap.CacheOption = BitmapCacheOption.OnLoad; 
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 bitmap.EndInit();
                 bitmap.Freeze();
                 return bitmap;

@@ -23,6 +23,7 @@ namespace WpfCliente.GUI
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             DataContext = this;
             labelPista.Content = Properties.Idioma.labelEsperandoPista;
+            ActualizarUI();
         }
 
    

@@ -65,8 +65,8 @@ namespace WpfCliente.GUI
             {
                 Imagen.GuardarBitmapImageABytes(SingletonCliente.Instance.FotoJugador);
                 BitmapImage bitmapImagen = Imagen.ConvertirBytesABitmapImage(Imagen.ObtenerFotoGlobal());
-                ActualizarUI();
                 imagenPerfil.Source = bitmapImagen;
+                ActualizarUI();
             }
             catch (NullReferenceException excepcion)
             {

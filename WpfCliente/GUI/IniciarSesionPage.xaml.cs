@@ -123,6 +123,7 @@ namespace WpfCliente.GUI
                     if (resultadoUsuario != null)
                     {
                         BitmapImage imagenUsuario = Imagen.ConvertirStreamABitmapImagen(resultadoUsuario.FotoUsuario);
+                        Imagen.GuardarBitmapImageABytes(imagenUsuario);
                         if (imagenUsuario == null)
                         {
                             VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloImagenInvalida, 

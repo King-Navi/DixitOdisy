@@ -213,6 +213,7 @@ namespace WpfCliente.GUI
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloEditarUsuario, 
                     Properties.Idioma.mensajeUsuarioEditadoConExito, 
                     Window.GetWindow(this));
+
                 CerrarSesion();
             }
             else
@@ -302,6 +303,7 @@ namespace WpfCliente.GUI
 
         private void CerrarSesion()
         {
+            SingletonCliente.Instance.LimpiarSingleton();
             SingletonGestorVentana.Instancia.LimpiarHistorial();
             SingletonGestorVentana.Instancia.NavegarA(new IniciarSesionPage());
         }

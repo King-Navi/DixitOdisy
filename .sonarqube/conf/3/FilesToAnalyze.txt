@@ -59,6 +59,7 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\IdiomaGuardo.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\CambiarIdiomaUserControl.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\IniciarSesionPage.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\Imagen.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\JugadorPuntajeConvertidor.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\JugadorTablaPuntaje.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ManejadorBitacora.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Utilidad\ManejadorExcepciones.cs

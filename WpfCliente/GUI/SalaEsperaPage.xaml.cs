@@ -254,6 +254,7 @@ namespace WpfCliente.GUI
                 radioButtonMitologia.Content = Idioma.buttonMitologia;
                 radioButtonMixta.Content = Idioma.buttonMixta;
                 radioButtonPaises.Content = Idioma.buttonPaises;
+                radioButtonEspacio.Content = Idioma.buttonEspacio;
                 radioButtonFinCartas.Content = Idioma.buttonFinCartas;
                 radioButtonFinRondas.Content = Idioma.buttonFinRondas;
                 labelExpulsarUsuario.Content = Idioma.buttonExpulsar;

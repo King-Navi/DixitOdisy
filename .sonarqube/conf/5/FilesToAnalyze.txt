@@ -28,7 +28,7 @@ C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\ConfiguradorP
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\ImagenCallbackImplementacion.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\InvitacionCallbackImplementacion.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\AmigosCallbackImplementacion.cs
-C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\ICommunicationObjectImpl.cs
+C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\CommunicationObjectImplementado.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\PartidaCallbackImplementacion.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\SalaCallbackImpl.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\UsuarioSesionCallbackImplementacion.cs

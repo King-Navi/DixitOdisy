@@ -206,31 +206,37 @@
         </Grid>
         <local:ChatUserControl x:Name="chatUserControl"></local:ChatUserControl>
 
-        <!-- Botones de simulación (para depuración) -->
-        <Button Height="80" Width="180" Content="SIMULACION pool cartas" 
-                Margin="941,450,10,137" Click="BORRAME_SImulacionCambioRonda" />
-        <Button Height="80" Width="180" Content="SIMULACION soy jugador" 
-                Margin="951,334,0,253" Click="BORRAME_SImulacionCambioRondaSoyJugador" />
-        <Button Height="80" Width="180" Content="SIMULACION soy narrador" 
-                Margin="951,217,0,370" Click="BORRAME_SImulacionCambioRondaSoyNarrador" />
-        <Button Height="80" Width="180" Content="SIMULACION ir estadísticas" 
-                Margin="951,217,0,370" Click="BORRAME_SImulacionCambioRondaStats" />
 
-        <Button x:Name="buttonSolicitarImagen" Height="80" Width="180" 
-                d:Content="Solicitar imagen" Margin="27,576,924,27" 
-                Click="ClicButtonSolicitarImagenAsync"
-                IsEnabled="False"
-                Style="{StaticResource EstiloBotonSolicitarImagen}"/>
+        <Button 
+            x:Name="buttonSolicitarImagen" 
+            Height="80" Width="180" 
+            d:Content="Solicitar imagen" 
+            Margin="27,576,924,27" 
+            Click="ClicButtonSolicitarImagenAsync"
+            IsEnabled="False"
+            Style="{StaticResource EstiloBotonSolicitarImagen}"/>
         
-        <Image x:Name="imagenFlechaAtras" Source="/Recursos/flechaAtras.png" 
-               Margin="10,0,0,0" Cursor="Hand" 
-               MouseLeftButtonDown="ClicImagenFlechaAtrasAsync" 
-               Width="78" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Image 
+            x:Name="imagenFlechaAtras" 
+            Source="/Recursos/flechaAtras.png" 
+            Margin="10,0,0,0" 
+            Cursor="Hand" 
+            MouseLeftButtonDown="ClicImagenFlechaAtrasAsync" 
+            Width="78"
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" />
         
-        <TextBlock x:Name="textBlockPerdisteTurno" TextAlignment="Center" 
-                   HorizontalAlignment="Center" TextWrapping="Wrap" 
-                   Text="¡Perdiste tu turno!" VerticalAlignment="Top" 
-                   Height="39" Width="600" Margin="0,634,0,0" 
-                   Background="Black" Foreground="White" />
+        <TextBlock 
+            x:Name="textBlockPerdisteTurno" 
+            TextAlignment="Center" 
+            HorizontalAlignment="Center" 
+            TextWrapping="Wrap" 
+            Text="¡Perdiste tu turno!" 
+            VerticalAlignment="Top" 
+            Height="39" 
+            Width="600" 
+            Margin="0,634,0,0" 
+            Background="Black" 
+            Foreground="White" />
     </Grid>
 </Page>

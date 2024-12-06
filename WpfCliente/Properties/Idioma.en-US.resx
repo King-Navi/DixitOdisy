@@ -709,4 +709,10 @@
   <data name="mensajeErrorPartida" xml:space="preserve">
     <value>Players out of range to start a game</value>
   </data>
+  <data name="mensajeAutoInvitacion" xml:space="preserve">
+    <value>You can't invite yourself</value>
+  </data>
+  <data name="labelCredencialesIncorrectas" xml:space="preserve">
+    <value>Incorrect credentials</value>
+  </data>
 </root>

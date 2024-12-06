@@ -708,4 +708,10 @@
   <data name="mensajeErrorPartida" xml:space="preserve">
     <value>Jugadores fuera del rango de jugadores para iniciar una partida</value>
   </data>
+  <data name="mensajeAutoInvitacion" xml:space="preserve">
+    <value>No te puedes invitar a ti mismo</value>
+  </data>
+  <data name="labelCredencialesIncorrectas" xml:space="preserve">
+    <value>Credenciales incorrectas</value>
+  </data>
 </root>

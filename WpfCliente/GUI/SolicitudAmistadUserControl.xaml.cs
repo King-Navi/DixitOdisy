@@ -48,6 +48,7 @@ namespace WpfCliente.GUI
         {
             this.IsEnabled = false;
             await AceptarSolicitudAsync(solicitudAmistadActual);
+            EsconderSolicitud();
         }
 
         private async Task<bool> AceptarSolicitudAsync(SolicitudAmistad solicitud)
@@ -92,6 +93,7 @@ namespace WpfCliente.GUI
         {
             this.IsEnabled = false;
             await RechazarSolicitudAsync();
+            EsconderSolicitud();
         }
 
         private async Task<bool> RechazarSolicitudAsync()
@@ -134,6 +136,11 @@ namespace WpfCliente.GUI
             buttonRechazar.IsEnabled = esHabilitado;
             buttonAceptar.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
             buttonRechazar.Opacity = esHabilitado ? Utilidades.OPACIDAD_MAXIMA : Utilidades.OPACIDAD_MINIMA;
+        }
+
+        private void EsconderSolicitud()
+        {
+            this.Visibility = Visibility.Collapsed;
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)

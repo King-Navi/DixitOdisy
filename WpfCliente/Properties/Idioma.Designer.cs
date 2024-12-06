@@ -520,6 +520,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Credenciales incorrectas.
+        /// </summary>
+        public static string labelCredencialesIncorrectas {
+            get {
+                return ResourceManager.GetString("labelCredencialesIncorrectas", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Desconectado .
         /// </summary>
         public static string labelDesconectado {
@@ -921,6 +930,15 @@ namespace WpfCliente.Properties {
         public static string mensajeArchivoNoEncontrado {
             get {
                 return ResourceManager.GetString("mensajeArchivoNoEncontrado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a No te puedes invitar a ti mismo.
+        /// </summary>
+        public static string mensajeAutoInvitacion {
+            get {
+                return ResourceManager.GetString("mensajeAutoInvitacion", resourceCulture);
             }
         }
         

@@ -36,6 +36,7 @@ namespace WpfCliente.GUI
             labelTitulo.Content = Properties.Idioma.tituloJuego;
             labelUsuario.Content = Properties.Idioma.labelUsuario;
             labelContrasenia.Content = Properties.Idioma.labelContrasenia;
+            labelCredencialesIncorrectas.Content = Properties.Idioma.labelCredencialesIncorrectas;
             buttonOlvidarContrasenia.Content = Properties.Idioma.buttonOlvidarContrasenia;
             buttonIniciarSesion.Content = Properties.Idioma.buttonIniciarSesion;
             buttonRegistrar.Content = Properties.Idioma.buttonRegistrarse;

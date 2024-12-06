@@ -40,7 +40,6 @@ namespace WcfServicioLibreria.Modelo
                 string rutaCompletaAleatoria = archivosRestantes[aleatorio.Value.Next(archivosRestantes.Length)];
                 string nombreSinExtension = Path.GetFileNameWithoutExtension(rutaCompletaAleatoria);
                 ImagenesUsadas.Add(nombreSinExtension);
-                Console.WriteLine($"Se utilizo el archivo {nombreSinExtension}");
                 CartasRestantes--;
                 return (rutaCompletaAleatoria, nombreSinExtension);
             }

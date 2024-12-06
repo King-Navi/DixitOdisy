@@ -45,7 +45,6 @@ namespace WcfServicioLibreria.Manejador
             {
                 MultiChatVacioEventArgs evento = e as MultiChatVacioEventArgs;
                 chat.EliminarChatManejadorEvento -= BorrarChat;
-                Console.WriteLine($"El chat con ID {evento.Chat.IdChat} está vacío y será eliminada.");
                 salasDiccionario.TryRemove(evento.Chat.IdChat, out _);
             }
         }

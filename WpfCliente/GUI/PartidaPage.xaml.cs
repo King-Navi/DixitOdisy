@@ -88,7 +88,6 @@ namespace WpfCliente.GUI
             SingletonPartida.Instancia.MostrarPista += this.MostrarPista;
             SingletonPartida.Instancia.DesbloquearChat += DesbloqueoChat;
             SingletonPartida.Instancia.PerdisteTurno += PerdisteTurno;
-            SingletonPartida.Instancia.SeTerminoPartida += TerminoPartida;
             SingletonPartida.Instancia.TeHanExpulsado += EnExpulsion;
             InitializeComponent();
             InicializarComponenetes();
@@ -128,7 +127,6 @@ namespace WpfCliente.GUI
                 buttonSolicitarImagen.IsEnabled = false;
                 chatUserControl.Visibility = Visibility.Hidden;
                 chatUserControl.IsEnabled = false;
-                CambiarPantalla(PantallasPartida.PANTALLA_FIN_PARTIDA);
             }
             catch (NullReferenceException excepcion)
             {

@@ -99,7 +99,6 @@ namespace WcfServicioLibreria.Modelo
                                 votosTotalesCorrectos++;
                                 AlguienAdivino = true;
                                 jugadorAdivinoCorrectamente = true;
-                                Console.WriteLine($"Adivino {jugador.Nombre}");
                                 break;
                             }
                         }
@@ -138,7 +137,6 @@ namespace WcfServicioLibreria.Modelo
                     if (noEligioImagen || noPusoImagen)
                     {
                         jugador.Puntos -= PUNTOS_RESTADOS_NO_PARTICIPAR;
-                        Console.WriteLine($"No participó completamente {jugador.Nombre}");
                     }
                 }
 

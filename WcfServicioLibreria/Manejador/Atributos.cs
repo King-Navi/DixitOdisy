@@ -108,7 +108,6 @@ namespace WcfServicioLibreria.Manejador
         }
         public void CerrarAplicacion()
         {
-            Console.WriteLine("Guardando las ultimas imagenes...");
             Task.Run(async () => await Escritor.DetenerAsync());
             EliminadorCadena.EliminarConnectionStringDelArchivo();
             eliminadorCodigos.Dispose();

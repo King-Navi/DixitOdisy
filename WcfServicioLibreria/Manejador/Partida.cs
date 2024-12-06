@@ -56,7 +56,6 @@ namespace WcfServicioLibreria.Manejador
                 PartidaVaciaEventArgs evento = e as PartidaVaciaEventArgs;
                 partida.PartidaVaciaManejadorEvento -= BorrarSala;
                 partidasDiccionario.TryRemove(evento.Partida.IdPartida, out _);
-                Console.WriteLine($"La partdia con ID {evento.Partida.IdPartida} está vacía y será eliminada.");
             };
         }
 

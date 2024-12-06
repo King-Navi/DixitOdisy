@@ -70,7 +70,6 @@ namespace WcfServicioLibreria.Modelo
             {
                 while (!VerificarCondicionVictoria() && ContarJugadores() >= CANTIDAD_MINIMA_JUGADORES && !cancelacionToke.IsCancellationRequested)
                 {
-                    Console.WriteLine("Ronda: " + RondaActual);
                     await EjecutarRondaAsync();
                     await EvaluarPuntosRondaAsync();
                     CambiarPantalla(PANTALLA_INICIO);
@@ -412,7 +411,6 @@ namespace WcfServicioLibreria.Modelo
                 jugadoresCallback.TryGetValue(narrador, out IPartidaCallback callbackNarrador);
                 callbackNarrador.NotificarNarradorCallback(true);
                 NarradorActual = narrador;
-                Console.WriteLine("Se escogio a " + narrador + " como narrador");
             }
             catch (TimeoutException excepcion)
             {

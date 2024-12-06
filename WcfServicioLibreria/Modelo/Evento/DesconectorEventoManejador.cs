@@ -30,14 +30,12 @@ namespace WcfServicioLibreria.Evento
         
         private void Cerrado(object sender, EventArgs e)
         {
-            Console.WriteLine(clavePropietario + " se ha ido de la " + sender.ToString()+ " (Closed).");
             DesuscribirEventos((ICommunicationObject)sender);
             observador?.DesconectarUsuario(clavePropietario);
         }
 
         private void EnFalla(object sender, EventArgs e)
         {
-            Console.WriteLine(clavePropietario +" ha fallado de la" + sender.ToString() + " (Faulted).");
             DesuscribirEventos((ICommunicationObject)sender);
             observador?.DesconectarUsuario(clavePropietario);
         }

@@ -17,11 +17,6 @@ namespace DAOLibreria
                     config.ConnectionStrings.ConnectionStrings.Remove(NOMBRE);
                     config.Save(ConfigurationSaveMode.Modified);
                     ConfigurationManager.RefreshSection("connectionStrings");
-                    Console.WriteLine($"Connection string '{NOMBRE}' eliminado del archivo de configuración.");
-                }
-                else
-                {
-                    Console.WriteLine($"Connection string '{NOMBRE}' no encontrado en el archivo.");
                 }
             }
             catch (ConfigurationErrorsException excepcion)

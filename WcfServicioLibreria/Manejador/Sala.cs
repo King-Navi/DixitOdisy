@@ -19,7 +19,6 @@ namespace WcfServicioLibreria.Manejador
                     SalaVaciaEventArgs evento = e as SalaVaciaEventArgs;
                     sala.salaVaciaManejadorEvento -= BorrarSala;
                     salasDiccionario.TryRemove(evento.Sala.IdCodigoSala, out _);
-                    Console.WriteLine($"La sala con ID {evento.Sala.IdCodigoSala} está vacía y será eliminada.");
                 }
             }
             catch (ArgumentNullException excepcion)

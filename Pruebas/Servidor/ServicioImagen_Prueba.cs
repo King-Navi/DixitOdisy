@@ -104,8 +104,9 @@ namespace Pruebas.Servidor
         public async Task SolicitarImagenCarta_SolicitarImagenHastaDIOS_DeberiaEnviarImagenes()
         {
 
-            //PRECAUCION: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP y escribir en disco
-            //PRECAUCION: Este metodo gasta credito (DINERO REAL), solo para mostrar a profe descomentar la linea de abajo
+            //Precaucion:: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP y escribir en disco
+            //Este metodo gasta credito (DINERO REAL), solo para mostrar a profe descomentar la linea de abajo
+            //Se conceta a la API de OpenIA par pedir una imagen a IA
             string rutaCarpeta = null;
             //rutaCarpeta = Path.Combine("..", "..", "..", "WcfServicioLibreria", "Recursos", "Mitologia");
             if (!Directory.Exists(rutaCarpeta))

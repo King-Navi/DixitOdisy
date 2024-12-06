@@ -17,23 +17,23 @@ namespace WcfServicioLibreria.Modelo
         private const int LECTORESDISCO_POR_DEFECTO = 2;
         private int indiceActual = 0;
         private readonly SemaphoreSlim semaforoAsignacion = new SemaphoreSlim(1, 1);
+        public const string MENSAJE_OPERACION_INVALIDA = "No hay lectores disponibles para asignar el trabajo.";
         public bool Desechado { get; private set; } = false;
 
         public LectorDiscoOrquestador(int cantidadLectores)
         {
-            if (cantidadLectores > MAXIMO_LECTORESDISCO || cantidadLectores < LECTORESDISCO_CERO)
+            if (cantidadLectores > MAXIMO_LECTORESDISCO || cantidadLectores <= LECTORESDISCO_CERO)
             {
-                for (int i = 0; i < LECTORESDISCO_POR_DEFECTO; i++)
+                for (int iteracion = 0; iteracion < LECTORESDISCO_POR_DEFECTO; iteracion++)
                 {
-                    lectoresDisco.Add(new LectorDisco(i));
-
+                    lectoresDisco.Add(new LectorDisco(iteracion));
                 }
             }
             else
             {
-                for (int i = 0; i < cantidadLectores; i++)
+                for (int iteracion = 0; iteracion < cantidadLectores; iteracion++)
                 {
-                    lectoresDisco.Add(new LectorDisco(i));
+                    lectoresDisco.Add(new LectorDisco(iteracion));
                 }
             }           
         }
@@ -51,7 +51,7 @@ namespace WcfServicioLibreria.Modelo
             {
                 if (lectoresDisco.Count == 0)
                 {
-                    ManejadorExcepciones.ManejarExcepcionFatal(new InvalidOperationException("No hay lectores disponibles para asignar el trabajo."));
+                    ManejadorExcepciones.ManejarExcepcionFatal(new InvalidOperationException(MENSAJE_OPERACION_INVALIDA));
                     throw new InvalidOperationException();
                 }
                 var lectorSeleccionado = lectoresDisco[indiceActual];

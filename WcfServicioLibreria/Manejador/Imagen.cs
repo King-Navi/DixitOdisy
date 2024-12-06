@@ -18,7 +18,7 @@ namespace WcfServicioLibreria.Manejador
             {
                 var contexto = contextoOperacion.GetCallbackChannel<IImagenCallback>();
                 manejadoresImagenes.TryGetValue(idPartida, out ManejadorImagen manejadorImagen);
-                return await manejadorImagen.EnviarImagen(contexto);
+                return await manejadorImagen.EnviarImagenAsync(contexto);
             }
             catch (ArgumentNullException excepcion)
             {
@@ -40,7 +40,7 @@ namespace WcfServicioLibreria.Manejador
             {
                 var contexto = contextoOperacion.GetCallbackChannel<IImagenCallback>();
                 manejadoresImagenes.TryGetValue(idPartida, out ManejadorImagen manejadorImagen);
-                manejadorImagen.MostrarGrupoCartas(contexto);
+                manejadorImagen.MostrarGrupoCartasAsync(contexto);
                 return true;
             }
             catch (ArgumentNullException excepcion)

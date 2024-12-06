@@ -12,7 +12,7 @@ namespace WcfServicioLibreria.Modelo
     internal class LectorDisco
     {
         private readonly int idLector;
-        long TAMANO_MAXIMO_BYTES = 5 * 1024 * 1024;
+        public const long TAMANO_MAXIMO_BYTES = 5 * 1024 * 1024;
         private readonly BlockingCollection<LecturaTrabajo> colaLectura = new BlockingCollection<LecturaTrabajo>();
         private readonly CancellationTokenSource cancelarToken = new CancellationTokenSource(); 
         private readonly Task tareaLectura;

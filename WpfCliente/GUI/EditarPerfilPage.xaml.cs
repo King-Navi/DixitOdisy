@@ -234,7 +234,9 @@ namespace WpfCliente.GUI
             if (!ValidarCaracteristicasContrasenia())
             {
                 isValid = false;
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCamposInvalidos,Properties.Idioma.mensajeCamposInvalidos, Window.GetWindow(this));
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCamposInvalidos,
+                    Properties.Idioma.mensajeCamposInvalidos, 
+                    Window.GetWindow(this));
             }
 
             if (!ValidacionesString.EsCorreoValido(textBoxCorreo.Text.Trim()))

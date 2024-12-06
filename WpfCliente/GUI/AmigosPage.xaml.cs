@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -76,7 +77,15 @@ namespace WpfCliente.GUI
                 return;
             }
 
-            if (ValidacionesString.EsGamertagValido(gamertagSolicitud) && gamertagSolicitud != SingletonCliente.Instance.NombreUsuario)
+            if (gamertagSolicitud != SingletonCliente.Instance.NombreUsuario)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(
+                    Properties.Idioma.tituloSolicitudAmistad,
+                    Properties.Idioma.mensajeSolicitudAmistadFallida, 
+                    Window.GetWindow(this));
+            }
+
+            if (ValidacionesString.EsGamertagValido(gamertagSolicitud))
             {
                 try 
                 {
@@ -101,6 +110,10 @@ namespace WpfCliente.GUI
                 {
                     ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
                 }
+            }
+            else
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeCamposInvalidos, Window.GetWindow(this));
             }
         }
 

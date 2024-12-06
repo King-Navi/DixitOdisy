@@ -703,4 +703,7 @@
   <data name="buttonEspacio" xml:space="preserve">
     <value>Space</value>
   </data>
+  <data name="mensajeNoSolicitudTuMismo" xml:space="preserve">
+    <value>You cant send an friend request to yourself</value>
+  </data>
 </root>

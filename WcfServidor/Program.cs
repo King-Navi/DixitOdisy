@@ -9,7 +9,7 @@ namespace WcfServidor
     {
         static void Main(string[] args)
         {
-            var respuesta = InicializadorConfiguracion.ConfigurarConVariableEntorno("a");
+            var respuesta = InicializadorConfiguracion.IniciarConexion();
             if (!respuesta)
             {
                 return;

@@ -703,4 +703,7 @@ No te has podido unir a la partida, favor de revisar tu conexion</value>
   <data name="buttonEspacio" xml:space="preserve">
     <value>Espacio</value>
   </data>
+  <data name="mensajeNoSolicitudTuMismo" xml:space="preserve">
+    <value>No te puedes enviar solicitud a ti mismo</value>
+  </data>
 </root>

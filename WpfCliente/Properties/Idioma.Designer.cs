@@ -1240,6 +1240,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a No te puedes enviar solicitud a ti mismo.
+        /// </summary>
+        public static string mensajeNoSolicitudTuMismo {
+            get {
+                return ResourceManager.GetString("mensajeNoSolicitudTuMismo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a PROFE ESE TEXTO NO SE VALE.
         /// </summary>
         public static string mensajeProfe {

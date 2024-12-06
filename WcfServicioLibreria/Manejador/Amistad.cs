@@ -30,6 +30,14 @@ namespace WcfServicioLibreria.Manejador
                         new SolicitudAmistadFalla(existeAmistad, existePeticion));
                 }
 
+                if (ExisteSolicitudAmistad(idRemitente, idDestinatario))
+                {
+                    bool existeAmistad = false;
+                    bool existePeticion = true;
+                    throw new FaultException<SolicitudAmistadFalla>(
+                        new SolicitudAmistadFalla(existeAmistad, existePeticion));
+                }
+
                 if (GuardarSolicitudAmistad(idRemitente, idDestinatario))
                 {
                     return true;

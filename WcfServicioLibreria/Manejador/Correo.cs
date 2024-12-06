@@ -42,13 +42,17 @@ namespace WcfServicioLibreria.Manejador
                     smtpClient.EnableSsl = true;
 
                     string asunto = "--------------------------";
-                    string cuerpo = "-----> " + codigo + "<-----";
+                    string cuerpo = "-----> " + codigo + " <-----";
                     using (MailMessage mail = new MailMessage(CORREO_DESCRIBELO, correoUsuario, asunto, cuerpo))
                     {
                         await smtpClient.SendMailAsync(mail);
                     }
                 }
                 return true;
+            }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {

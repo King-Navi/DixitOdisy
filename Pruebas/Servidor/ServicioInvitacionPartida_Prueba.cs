@@ -3,6 +3,7 @@ using Moq;
 using Pruebas.Servidor.Utilidades;
 using System;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Modelo;
 
 namespace Pruebas.Servidor
@@ -26,46 +27,40 @@ namespace Pruebas.Servidor
             base.LimpiadorTodo();
         }
 
-        //[TestMethod]
-        //public void EnviarInvitacion_UsuarioConectado_DeberiaEnviarExitosamente()
-        //{
+        [TestMethod]
+        public void EnviarInvitacion_UsuarioConectado_DeberiaEnviarExitosamente()
+        {
+            var receptor = new Usuario
+            {
+                IdUsuario = 1,
+                Nombre = "unaay123",
+                UsuarioSesionCallback = implementacionCallback
+            };
 
-        //    var callbackInvitacionMock = new Mock<IUsuarioSesionCallback>();
+            var gamertagEmisor = "EmisorPrueba";
+            var codigoSala = "123456";
+            var gamertagReceptor = receptor.Nombre;
 
-        //    var receptor = new Usuario
-        //    {
-        //        IdUsuario = 1,
-        //        Nombre = "ReceptorPrueba",
-        //    };
+            _ = manejador.ConectarUsuario(receptor);
 
-        //    var gamertagEmisor = "EmisorPrueba";
-        //    var codigoSala = "123456";
-        //    var gamertagReceptor = "ReceptorPrueba";
+            var resultado = manejador.EnviarInvitacion(new InvitacionPartida(gamertagEmisor, codigoSala, gamertagReceptor));
 
-
-        //    _ = manejador.ConectarUsuario(receptor);
-        //    var resultado = manejador.EnviarInvitacion(gamertagEmisor, codigoSala, gamertagReceptor);
-
-
-        //    Assert.IsTrue(resultado, "La invitación debería haberse enviado correctamente.");
-        //    callbackInvitacionMock.Verify(c => c.RecibirInvitacionCallback(It.IsAny<InvitacionPartida>()), Times.Once, "El callback debería haber sido llamado exactamente una vez.");
-        //    manejador.DesconectarUsuario(receptor.IdUsuario);
-        //}
+            Assert.IsTrue(resultado, "La invitación debería haberse enviado correctamente.");
+            Assert.IsTrue(implementacionCallback.InvitacionEnviada, "El callback debería haber sido llamado exactamente una vez.");
+        }
 
 
-        //[TestMethod]
-        //public void EnviarInvitacion_UsuarioNoConectado_DeberiaFallar()
-        //{
+        [TestMethod]
+        public void EnviarInvitacion_UsuarioNoConectado_DeberiaFallar()
+        {
+            var gamertagEmisor = "EmisorPrueba";
+            var codigoSala = "Sala123";
+            var gamertagReceptor = "ReceptorNoConectado";
 
-        //    var gamertagEmisor = "EmisorPrueba";
-        //    var codigoSala = "Sala123";
-        //    var gamertagReceptor = "ReceptorNoConectado";
+            var resultado = manejador.EnviarInvitacion(new InvitacionPartida(gamertagEmisor, codigoSala, gamertagReceptor));
 
-
-        //    var resultado = manejador.EnviarInvitacion(gamertagEmisor, codigoSala, gamertagReceptor);
-
-
-        //    Assert.IsFalse(resultado, "La invitación no debería haberse enviado porque el receptor no está conectado.");
-        //}
+            Assert.IsFalse(resultado, "La invitación debería haber fallado al enviarse.");
+            Assert.IsFalse(implementacionCallback.InvitacionEnviada, "El callback debería haber sido llamado exactamente cero veces.");
+        }
     }
 }

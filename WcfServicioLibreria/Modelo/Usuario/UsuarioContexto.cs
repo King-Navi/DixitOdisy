@@ -13,7 +13,7 @@ namespace WcfServicioLibreria.Modelo
         protected int idUsuario;
         protected String nombre;
         private bool desechado = false;
-        public IUsuarioSesionCallback UsuarioSesionCallback { get; protected set; }
+        public IUsuarioSesionCallback UsuarioSesionCallback { get; set; }
         public EventHandler DesconexionEvento;
         public DesconectorEventoManejador DesconexionManejador { get; set; }
 

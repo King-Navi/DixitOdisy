@@ -48,7 +48,7 @@ namespace WpfCliente.ImplementacionesCallbacks
             {
                 if (ChatMotor != null)
                 {
-                    ChatMotor.Close();
+                    ChatMotor.Abort();
                     ChatMotor = null;
                 }
             }

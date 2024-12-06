@@ -16,7 +16,6 @@ namespace WpfCliente.ImplementacionesCallbacks
                 AbrirConexionAmistad();
                 AbrirConexionUsuarioSesion();
                 AbrirConexionInvitacionParitda();
-                LimpiarRecursos();
                 return true;
             }
             catch (Exception excepcion)

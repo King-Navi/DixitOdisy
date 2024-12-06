@@ -103,7 +103,6 @@ namespace WcfServicioLibreria.Modelo
                 catch (Exception excepcionComunicacion)
                 {
                     ManejadorExcepciones.ManejarExcepcionError(excepcionComunicacion);
-
                 }
                 ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }

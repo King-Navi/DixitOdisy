@@ -525,7 +525,6 @@ namespace WpfCliente.GUI
 
         private async void ClicButtonEliminarUsuarioAsync(object sender, RoutedEventArgs e)
         {
-            this.IsEnabled = false;
             bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)
             {
@@ -534,6 +533,8 @@ namespace WpfCliente.GUI
             }
             if (sender is Button boton && boton.DataContext is Usuario usuario)
             {
+                boton.IsEnabled = false;
+                boton.Visibility = Visibility.Hidden;
                 try
                 {
                     if (SingletonCliente.Instance.NombreUsuario.Equals(usuario.Nombre, StringComparison.OrdinalIgnoreCase))
@@ -553,9 +554,24 @@ namespace WpfCliente.GUI
                 {
                     ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
                 }
+                finally
+                {
+                    try
+                    {
+                        boton.IsEnabled = true;
+                        boton.Visibility = Visibility.Visible;
+                    }
+                    catch (InvalidOperationException excepcion)
+                    {
+                        ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
+                    }
+                    catch (Exception excepcion)
+                    {
+                        ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
+                    }
+                }
             }
             await Task.Delay(TimeSpan.FromSeconds(TIEMPO_CLIC_EXPULSION_SEGUNDOS));
-            this.IsEnabled = true;
         }
 
         private void ClicImagenFlechaAtras(object sender, MouseButtonEventArgs e)

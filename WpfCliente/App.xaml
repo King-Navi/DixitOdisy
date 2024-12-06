@@ -3,15 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:WpfCliente"
              xmlns:sys="clr-namespace:System;assembly=mscorlib">
-
-    
     <Application.Resources>
-
-       
         <ResourceDictionary>
             <sys:String x:Key="EspañolTag">es-MX</sys:String>
             <sys:String x:Key="EnglishTag">en-US</sys:String>
-            <!-- Enlazar el Resource Dictionary -->
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Estilos/GeneralEstilo.xaml" />
                 <ResourceDictionary  Source="pack://application:,,,/WpfCliente;component/Estilos/ArcSpinner.xaml"></ResourceDictionary>

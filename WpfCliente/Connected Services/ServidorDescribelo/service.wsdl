@@ -311,6 +311,9 @@
   <wsdl:message name="IServicioPartidaSesion_ExpulsarJugadorPartida_InputMessage">
     <wsdl:part name="parameters" element="tns:ExpulsarJugadorPartida" />
   </wsdl:message>
+  <wsdl:message name="IServicioPartidaSesion_ExpulsarJugadorPartida_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ExpulsarJugadorPartidaResponse" />
+  </wsdl:message>
   <wsdl:message name="IServicioPartidaSesion_EmpezarPartida_InputMessage">
     <wsdl:part name="parameters" element="tns:EmpezarPartida" />
   </wsdl:message>
@@ -651,6 +654,7 @@
     </wsdl:operation>
     <wsdl:operation name="ExpulsarJugadorPartida">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioPartidaSesion/ExpulsarJugadorPartida" message="tns:IServicioPartidaSesion_ExpulsarJugadorPartida_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/ExpulsarJugadorPartidaResponse" message="tns:IServicioPartidaSesion_ExpulsarJugadorPartida_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="EmpezarPartida">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioPartidaSesion/EmpezarPartida" message="tns:IServicioPartidaSesion_EmpezarPartida_InputMessage" />
@@ -1095,6 +1099,9 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="EmpezarPartida">
       <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/EmpezarPartida" style="document" />

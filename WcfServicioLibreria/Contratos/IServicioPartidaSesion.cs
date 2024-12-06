@@ -49,8 +49,8 @@ namespace WcfServicioLibreria.Contratos
         /// </summary>
         /// <param name="nombreJugador">El nombre del jugador que será expulsado.</param>
         /// <param name="idPartida">El identificador único de la partida.</param>
-        [OperationContract(IsOneWay = true)]
-        void ExpulsarJugadorPartida(string nombreJugador, string idPartida);
+        [OperationContract]
+        Task<bool> ExpulsarJugadorPartida(string anfitrion, string jugadorAExpulsar, string idPartida);
 
         /// <summary>
         /// Inicia una partida después de validar su estado.
@@ -66,33 +66,59 @@ namespace WcfServicioLibreria.Contratos
     [ServiceContract]
     public interface IPartidaCallback
     {
+        /// <summary>
+        /// Notifica al cliente si se unió correctamente a la partida.
+        /// </summary>
+        /// <param name="seUnio">True si el jugador se unió con éxito, false en caso contrario.</param>
         [OperationContract(IsOneWay =true)]
         void IniciarValoresPartidaCallback(bool seUnio);
-
+        /// <summary>
+        /// Notifica al cliente que perdió su turno.
+        /// </summary>
         [OperationContract(IsOneWay = true)]
         void TurnoPerdidoCallback();
-
+        /// <summary>
+        /// Notifica al cliente que la partida ha finalizado.
+        /// </summary>
         [OperationContract(IsOneWay = true)]
         void FinalizarPartidaCallback();
-
+        /// <summary>
+        /// Notifica al cliente que un nuevo jugador se ha unido a la sala.
+        /// </summary>
+        /// <param name="jugardoreNuevoEnSala">Información del jugador que se unió.</param>
         [OperationContract(IsOneWay = true)]
         void ObtenerJugadorPartidaCallback(Usuario jugardoreNuevoEnSala);
-
+        /// <summary>
+        /// Notifica al cliente que un jugador se ha retirado de la sala.
+        /// </summary>
+        /// <param name="jugardoreRetiradoDeSala">Información del jugador que se retiró.</param>
         [OperationContract(IsOneWay = true)]
         void EliminarJugadorPartidaCallback(Usuario jugardoreRetiradoDeSala);
-
+        /// <summary>
+        /// Notifica al cliente si ha sido asignado como narrador de la partida.
+        /// </summary>
+        /// <param name="esNarrador">True si el cliente es el narrador, false en caso contrario.</param>
         [OperationContract(IsOneWay = true)]
         void NotificarNarradorCallback(bool esNarrador);
-
+        /// <summary>
+        /// Envía una pista al cliente durante la partida.
+        /// </summary>
+        /// <param name="pista">Texto de la pista.</param>
         [OperationContract(IsOneWay = true)]
         void MostrarPistaCallback(string pista);
-
+        /// <summary>
+        /// Envía estadísticas actualizadas de la partida al cliente.
+        /// </summary>
+        /// <param name="estadisticas">Objeto que contiene las estadísticas de la partida.</param>
         [OperationContract(IsOneWay = true)]
         [ServiceKnownTypeAttribute(typeof(EstadisticasPartida))]
         [ServiceKnownTypeAttribute(typeof(List<JugadorPuntaje>))]
         [ServiceKnownTypeAttribute(typeof(JugadorPuntaje))]
-        void EnviarEstadisticasCallback(EstadisticasPartida estadisticas);
-
+        void EnviarEstadisticasCallback(EstadisticasPartida estadisticas, bool esAnfitrion);
+        /// <summary>
+        /// Cambia la pantalla actual del cliente a la especificada por el servidor.
+        /// </summary>
+        /// <param name="numeroPantalla">Número de la pantalla a la que se debe cambiar.</param>
         [OperationContract(IsOneWay = true)]
         void CambiarPantallaCallback(int numeroPantalla);
     }

@@ -380,8 +380,8 @@ namespace Pruebas.Servidor
             var jugador1 = jugadores.Single(busqueda => busqueda.Nombre == JUGADOR_1);
             var jugador2 = jugadores.Single(busqueda => busqueda.Nombre == JUGADOR_2);
             Assert.AreEqual(0, narrador.Puntos, "El narrador no debería recibir puntos.");
-            Assert.AreEqual(Puntaje.PUNTOS_PENALIZACION_NARRADOR, jugador1.Puntos, $"{JUGADOR_1} debería recibir puntos de penalización al narrador.");
-            Assert.AreEqual(Puntaje.PUNTOS_PENALIZACION_NARRADOR, jugador2.Puntos, $"{JUGADOR_2} debería recibir puntos de penalización al narrador.");
+            Assert.AreEqual(Puntaje.PUNTOS_AUMNETO_NO_ESCOGIO_NARRADOR, jugador1.Puntos, $"{JUGADOR_1} debería recibir puntos de penalización al narrador.");
+            Assert.AreEqual(Puntaje.PUNTOS_AUMNETO_NO_ESCOGIO_NARRADOR, jugador2.Puntos, $"{JUGADOR_2} debería recibir puntos de penalización al narrador.");
         }
 
         [TestMethod]
@@ -399,7 +399,7 @@ namespace Pruebas.Servidor
             var narrador = jugadores.Single(busqueda => busqueda.Nombre == NARRADOR);
             var jugador1 = jugadores.Single(busqueda => busqueda.Nombre == JUGADOR_1);
             Assert.AreEqual(0, narrador.Puntos, "El narrador no debería recibir puntos.");
-            Assert.AreEqual(Puntaje.PUNTOS_PENALIZACION_NARRADOR, jugador1.Puntos, $"{JUGADOR_1} debería recibir puntos de penalización al narrador.");
+            Assert.AreEqual(Puntaje.PUNTOS_AUMNETO_NO_ESCOGIO_NARRADOR, jugador1.Puntos, $"{JUGADOR_1} debería recibir puntos de penalización al narrador.");
         }
         [TestMethod]
         public void EvaluarCondicionesGlobales_NingunaCondicionCumplida_NoAsignarPuntos()

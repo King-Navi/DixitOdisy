@@ -58,6 +58,14 @@ namespace WcfServicioLibreria.Modelo
                 indiceActual = (indiceActual + 1) % lectoresDisco.Count;
                 lectorSeleccionado.EncolarLecturaEnvio(archivoPath, callback, usarGrupo);
             }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
+            }
             finally
             {
                 semaforoAsignacion.Release();

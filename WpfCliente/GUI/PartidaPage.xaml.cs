@@ -5,8 +5,10 @@ using System.Runtime.CompilerServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 using WpfCliente.Contexto;
 using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
@@ -25,7 +27,8 @@ namespace WpfCliente.GUI
         private int contadorSeleccion = 0;
         private int contadorSeleccionAdivinar = 0;
         private const int INICIALIZAR_CONTADOR = 0;
-        private const int TIEMPO_CARTA_SEGUNDOS = 3;
+        private const int TIEMPO_CARTA_SEGUNDOS = 6;
+        private const int TIEMPO_MENSAJE_SEGUNDOS = 3;
         private const string NOMBRE_RESERVADO= "guest";
         public ICommand ComandoImagenGlobal { get; set; }
         public ICommand ComandoImagenSelecionCorrecta { get; set; }
@@ -74,6 +77,8 @@ namespace WpfCliente.GUI
             }
         }
         private MostrarCartaModalWindow ventanaModalCartas;
+        private DispatcherTimer temporizador;
+        private bool primeraEjecucion = true;
 
         public PartidaPage(string idPartida)
         {
@@ -82,12 +87,92 @@ namespace WpfCliente.GUI
             SingletonPartida.Instancia.NotificarEsNarrador += NotificarNarrador;
             SingletonPartida.Instancia.MostrarPista += this.MostrarPista;
             SingletonPartida.Instancia.DesbloquearChat += DesbloqueoChat;
+            SingletonPartida.Instancia.PerdisteTurno += PerdisteTurno;
+            SingletonPartida.Instancia.SeTerminoPartida += TerminoPartida;
+            SingletonPartida.Instancia.TeHanExpulsado += EnExpulsion;
             InitializeComponent();
             InicializarComponenetes();
             DataContext = this;
             UnirsePartidaAsync(idPartida);
             ActualizarUI();
+            textBlockPerdisteTurno.Visibility = Visibility.Collapsed;
+        }
 
+        private void EnExpulsion()
+        {
+            TerminoPartida();
+            try
+            {
+                textBlockPerdisteTurno.Text = Idioma.labelHasSidoExpulsado;
+                textBlockPerdisteTurno.Visibility = Visibility.Visible;
+            }
+            catch (NullReferenceException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+        }
+
+        private void TerminoPartida()
+        {
+            try
+            {
+                buttonSolicitarImagen.Visibility = Visibility.Hidden;
+                buttonSolicitarImagen.IsEnabled = false;
+                chatUserControl.Visibility = Visibility.Hidden;
+                chatUserControl.IsEnabled = false;
+            }
+            catch (NullReferenceException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+            SingletonPartida.Instancia.CerrarConexionPartida();
+            SingletonChat.Instancia.CerrarConexionChat();
+        }
+
+        private void PerdisteTurno()
+        {
+            try
+            {
+                textBlockPerdisteTurno.Visibility = Visibility.Visible;
+                temporizador = new DispatcherTimer
+                {
+                    Interval = TimeSpan.FromSeconds(TIEMPO_MENSAJE_SEGUNDOS)
+                };
+                temporizador.Tick += (emisor, argumentos) =>
+                {
+                    textBlockPerdisteTurno.Visibility = Visibility.Collapsed;
+                    temporizador.Stop();
+                };
+                temporizador.Start();
+            }
+            catch (NullReferenceException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
         }
 
         public void DesbloqueoChat()
@@ -154,6 +239,16 @@ namespace WpfCliente.GUI
 
         public void CambiarPantalla(int numeroPantalla)
         {
+            if (numeroPantalla == PantallasPartida.PANTALLA_FIN_PARTIDA)
+            {
+                TerminoPartida();
+                return;
+            }
+            if (primeraEjecucion)
+            {
+                buttonSolicitarImagen.IsEnabled = true;
+                primeraEjecucion = false;
+            }
             if (esNarrador && numeroPantalla == PantallasPartida.PANTALLA_TODOS_CARTAS)
             {
                 comandoHabilitado = false;
@@ -380,9 +475,35 @@ namespace WpfCliente.GUI
 
         private async void ClicButtonSolicitarImagenAsync(object sender, RoutedEventArgs e)
         {
-            
-            await SingletonGestorImagenes.Instancia.imagnesMazo.Imagen.SolicitarImagenCartaAsync(SingletonCliente.Instance.IdPartida);
-            await Task.Delay(TimeSpan.FromSeconds(TIEMPO_CARTA_SEGUNDOS));
+            buttonSolicitarImagen.IsEnabled = false;
+            try
+            {
+                var numeroCartasActual = 
+                    SingletonGestorImagenes.Instancia.imagnesMazo.ImagenCartasMazo.ContarSeguro();
+
+                if (numeroCartasActual > SingletonGestorImagenes.MAXIMO_IMAGENES_MAZO)
+                {
+                    await SingletonGestorImagenes.Instancia.imagnesMazo.Imagen
+                        .SolicitarImagenCartaAsync(SingletonCliente.Instance.IdPartida);
+                    await Task.Delay(TimeSpan.FromSeconds(TIEMPO_CARTA_SEGUNDOS));
+                }
+            }
+            catch (CommunicationException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
+            }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
+            }
+            finally
+            {
+                buttonSolicitarImagen.IsEnabled = true;
+            }
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
@@ -393,6 +514,8 @@ namespace WpfCliente.GUI
         public void ActualizarUI()
         {
             buttonSolicitarImagen.Content = Idioma.buttonSolicitarImagen;
+            textBlockPerdisteTurno.Text = Idioma.labelPerdisteTurno;
+            labelFinPartida.Content = Idioma.labelFinPartida;
         }
 
     }

@@ -74,8 +74,10 @@ namespace WcfServicioLibreria.Modelo
                     await EjecutarRondaAsync();
                     await EvaluarPuntosRondaAsync();
                     CambiarPantalla(PANTALLA_INICIO);
+                    await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
                     ++RondaActual;
                 }
+                CambiarPantalla(PANTALLA_FIN_PARTIDA);
             }
             catch (OperationCanceledException excepcion)
             {
@@ -98,11 +100,16 @@ namespace WcfServicioLibreria.Modelo
                 {
                     if (jugadoresCallback.TryGetValue(nombre, out IPartidaCallback callback))
                     {
+                        bool esAnfitrion = false;
+                        if (nombre.Equals(Anfitrion, StringComparison.OrdinalIgnoreCase))
+                        {
+                            esAnfitrion = true;
+                        }
                         Task _ = Task.Run(() =>
                         {
                             try
                             {
-                                callback.EnviarEstadisticasCallback(estadisticasPartida);
+                                callback.EnviarEstadisticasCallback(estadisticasPartida, esAnfitrion);
                             }
                             catch (Exception excepcion)
                             {
@@ -160,6 +167,10 @@ namespace WcfServicioLibreria.Modelo
                 await EsperarEleccionesJugadoresAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_SELECCION));
                 await EnMostrarTodasCartas();
                 CambiarPantalla(PANTALLA_TODOS_CARTAS , NarradorActual);
+                JugadoresPendientes = new ConcurrentDictionary<string, bool>(
+                    jugadoresCallback.ToDictionary(
+                    pair => pair.Key,
+                    pair => true));
                 await EsperarConfirmacionAdivinarAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_PARA_ADIVINAR));
             }
             else
@@ -206,7 +217,7 @@ namespace WcfServicioLibreria.Modelo
             var cancelacion = new CancellationTokenSource();
             var tareaEsperaJugadores = Task.Delay(tiempoEspera, cancelacion.Token);
 
-            while (!tareaEsperaJugadores.IsCompleted)
+            while (JugadoresPendientes.Any())
             {
                 if (tareaEsperaJugadores.IsCompleted)
                 {
@@ -214,6 +225,12 @@ namespace WcfServicioLibreria.Modelo
                 }
 
                 await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
+            }
+
+            if (!tareaEsperaJugadores.IsCompleted)
+            {
+                cancelacion.Cancel();
+                PenalizarJugadoresSinConfirmar();
             }
 
         }
@@ -345,7 +362,7 @@ namespace WcfServicioLibreria.Modelo
         {
             try
             {
-                foreach (var jugador in JugadoresPendientes)
+                foreach (var jugador in JugadoresPendientes.Keys)
                 {
                     if (jugadoresCallback.TryGetValue(jugador, out var callback))
                     {
@@ -373,7 +390,10 @@ namespace WcfServicioLibreria.Modelo
             ClaveImagenCorrectaActual = null;
             PistaActual = null;
             SelecionoCartaNarrador = false;
-            JugadoresPendientes = new ConcurrentBag<string>(jugadoresCallback.Keys);
+            JugadoresPendientes = new ConcurrentDictionary<string, bool>(
+                jugadoresCallback.ToDictionary(
+                pair => pair.Key,
+                pair => true));
             ImagenElegidaPorJugador.Clear();
             ImagenesTodosGrupo.Clear();
             ImagenesTodosGrupo = new ConcurrentDictionary<string, List<string>>();
@@ -422,8 +442,7 @@ namespace WcfServicioLibreria.Modelo
         {
             try
             {
-                Console.WriteLine($" ConfirmarTurnoAdivinarJugador   Me llamo  {nombreJugador}");
-                JugadoresPendientes.TryTake(out nombreJugador);
+                JugadoresPendientes.TryRemove(nombreJugador, out _);
                 ImagenElegidaPorJugador.AddOrUpdate(
                     nombreJugador,
                     new List<string> { claveImagen },
@@ -436,7 +455,6 @@ namespace WcfServicioLibreria.Modelo
                         return listaExistente;
                     }
                 );
-                Console.WriteLine($"Me llamo y lo agregue a las lista de eleciones {nombreJugador}");
             }
             catch (Exception excepcion)
             {
@@ -448,8 +466,7 @@ namespace WcfServicioLibreria.Modelo
         {
             try
             {
-                Console.WriteLine($"ConfirmacionTurnoEleccionJugador Me llamo para su imagen {nombreJugador}");
-                //JugadoresPendientes.TryTake(out nombreJugador);
+                JugadoresPendientes.TryRemove(nombreJugador, out _);
                 ImagenesTodosGrupo.AddOrUpdate(
                    nombreJugador,
                    new List<string> { claveImagen },
@@ -462,8 +479,6 @@ namespace WcfServicioLibreria.Modelo
                        return listaExistente;
                    }
                );
-                Console.WriteLine($"Me llamo y lo agregie a las lista de todos {nombreJugador}");
-
             }
             catch (Exception excepcion)
             {
@@ -477,8 +492,7 @@ namespace WcfServicioLibreria.Modelo
             this.PistaActual = pista;
             try
             {
-                Console.WriteLine($"Me llamo el narrador {nombreJugador}");
-                JugadoresPendientes.TryTake(out nombreJugador );
+                JugadoresPendientes.TryRemove(nombreJugador, out _);
                 ImagenElegidaPorJugador.AddOrUpdate(
                     nombreJugador,
                     new List<string> { claveImagen },
@@ -503,7 +517,6 @@ namespace WcfServicioLibreria.Modelo
                        return listaExistente;
                    }
                );
-                Console.WriteLine($"Me llamo el narrador {nombreJugador} y lo agregie a las listas");
             }
             catch (CommunicationException excepcion)
             {
@@ -545,7 +558,6 @@ namespace WcfServicioLibreria.Modelo
                         })
                     .Where(tuple => tuple != null)
                     .ToList();
-
                 if (listaNoInvitado.Any())
                 {
                     await estadisticasPartida.GuardarPuntajeAsync(listaNoInvitado);
@@ -560,18 +572,28 @@ namespace WcfServicioLibreria.Modelo
                 foreach (var nombre in jugadoresCallback)
                 {
                     jugadoresCallback.TryGetValue(nombre.ToString(), out IPartidaCallback callback);
-                    if (((ICommunicationObject)callback).State != CommunicationState.Opened)
+                    Task.Run(() =>
                     {
-                        continue;
-                    }
-                    callback?.FinalizarPartidaCallback();
+                        try
+                        {
+                            callback?.FinalizarPartidaCallback();
+                        }
+                        catch (TimeoutException excepcion)
+                        {
+                            ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                        }
+                        catch (CommunicationException excepcion)
+                        {
+                            ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                        }
+                        catch (Exception excepcion)
+                        {
+                            ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                        }
+                    });
                 }
             }
-            catch (TimeoutException excepcion)
-            {
-                ManejadorExcepciones.ManejarExcepcionError(excepcion);
-            }
-            catch (CommunicationException excepcion)
+            catch (ArgumentNullException excepcion)
             {
                 ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }

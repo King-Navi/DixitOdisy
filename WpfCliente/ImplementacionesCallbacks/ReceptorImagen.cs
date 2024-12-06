@@ -64,11 +64,10 @@ namespace WpfCliente.ImplementacionesCallbacks
                         {
                             try
                             {
-                                imagen.Close();
+                                imagen.Abort();
                             }
                             catch (Exception excepcion)
                             {
-                                imagen.Abort();
                                 ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
                             }
                         }

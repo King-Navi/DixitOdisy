@@ -17,6 +17,7 @@ namespace WpfCliente.GUI
     public partial class IniciarSesionPage : Page,  IActualizacionUI, IHabilitadorBotones
     {
         private const string RECURSOS_ESTILO_TEXTBOX_ERROR = "TextBoxEstiloError";
+        private const int MAXIMO_CARACTERES_PERMITIDOS = 20;
         public IniciarSesionPage()
         {
             KeepAlive = false;
@@ -58,7 +59,7 @@ namespace WpfCliente.GUI
             SingletonGestorVentana.Instancia.NavegarA(new RegistrarUsuarioPage());
         }
 
-        private async void CliButtonIniciarSesionAsync(object sender, RoutedEventArgs e)
+        private async void ClicButtonIniciarSesionAsync(object sender, RoutedEventArgs e)
         {
             if (ValidarCampos())
             {
@@ -79,7 +80,10 @@ namespace WpfCliente.GUI
             bool camposValidos = true;
             try
             {
-
+                if (passwordBoxContrasenia != null && passwordBoxContrasenia.Password.Length >= 20)
+                {
+                    camposValidos = false;
+                }
                 if (!ValidacionesString.EsGamertagValido(textBoxUsuario.Text))
                 {
                     textBoxUsuario.Style = (Style)FindResource(RECURSOS_ESTILO_TEXTBOX_ERROR);

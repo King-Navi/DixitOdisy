@@ -20,6 +20,7 @@ namespace Pruebas.Servidor
         public override void ConfigurarManejador()
         {
             base.ConfigurarManejador();
+            ConfigurarImitadores();
             imitarVetoDAO.Setup(dao => dao.ExisteTablaVetoPorIdCuenta(It.IsAny<int>())).Returns(false);
             imitarVetoDAO.Setup(dao => dao.CrearRegistroVeto(It.IsAny<int>(), It.IsAny<DateTime?>(), It.IsAny<bool>())).Returns(true);
             imitarVetoDAO.Setup(dao => dao.VerificarVetoPorIdCuenta(It.IsAny<int>())).Returns(true);
@@ -35,24 +36,18 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void AceptarSolicitudAmistad_CuandoIdsSonValidosYAmbosConectados_DeberiaRetornarTrue()
         {
-
-            
-            var implementacionCallbackAmistad = new Utilidades.UsuarioSesionCallbackImplementacion();
-
+            var implementacionCallbackAmistadPrimero = new Utilidades.UsuarioSesionCallbackImplementacion();
             imitacionContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
-                               .Returns(implementacionCallbackAmistad);
-            var implementacionCallbackUsarioSeion = new Utilidades.UsuarioSesionCallbackImplementacion();
-
-            imitacionContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
-                               .Returns(implementacionCallbackUsarioSeion);
-
+                .Returns(implementacionCallbackAmistadPrimero);
             manejador.ObtenerSesionJugador(new WcfServicioLibreria.Modelo.Usuario()
             {
                 IdUsuario = ID_USUARIO_MENOR,
                 Nombre = NOMBRE_ID_MENOR,
                 ContraseniaHASH = CONTRASNIAHASH_ID_MENOR
             });
-
+            var implementacionCallbackUsarioSesion = new Utilidades.UsuarioSesionCallbackImplementacion();
+            imitacionContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
+                .Returns(implementacionCallbackUsarioSesion);
             manejador.ObtenerSesionJugador(new WcfServicioLibreria.Modelo.Usuario()
             {
                 IdUsuario =ID_USUARIO_MAYOR,
@@ -65,7 +60,7 @@ namespace Pruebas.Servidor
             bool resultado = manejador.AceptarSolicitudAmistad(ID_USUARIO_MAYOR,ID_USUARIO_MENOR);
 
             
-            Assert.IsTrue(implementacionCallbackAmistad.SesionAbierta , "La sesion deberia estar abierta");
+            Assert.IsTrue(implementacionCallbackUsarioSesion.SesionAbierta , "La sesion deberia estar abierta");
             Assert.IsTrue(resultado, "El método debería devolver true cuando ambos usuarios están conectados y la solicitud de amistad se acepta.");
 
         }

@@ -17,6 +17,7 @@ namespace WpfCliente.GUI
             InitializeComponent();
             Loaded += InicioRondaUserControlCargado;
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
+            ActualizarUI();
         }
 
         public void ActualizarUI()

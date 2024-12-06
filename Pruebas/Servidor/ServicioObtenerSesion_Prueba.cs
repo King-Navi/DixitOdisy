@@ -29,6 +29,11 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void ObtenerSessionJugadorCallback_SeAbreElCanal_DeberiaRetornarTrue()
         {
+            imitarUsuarioDAO.Setup(dao => dao.ObtenerUsuarioPorNombre(It.IsAny<string>())).Returns(new DAOLibreria.ModeloBD.Usuario()
+            {
+                idUsuario = 1,
+                gamertag = "PruebaUsuario"
+            });
             var implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
             imitacionContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
              .Returns(implementacionCallback);
@@ -42,7 +47,12 @@ namespace Pruebas.Servidor
 
         [TestMethod]
         public void ObtenerSessionJugadorCallback_SeCierraElCanal_DeberiaRetornarTrue()
-        { 
+        {
+            imitarUsuarioDAO.Setup(dao => dao.ObtenerUsuarioPorNombre(It.IsAny<string>())).Returns(new DAOLibreria.ModeloBD.Usuario()
+            {
+                idUsuario = 1,
+                gamertag = "PruebaUsuario"
+            });
             var implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
             imitacionContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())
              .Returns(implementacionCallback);
@@ -59,6 +69,11 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void ObtenerSessionJugadorCallback_YaHaIniciadoSesion_DeberiaRetornarUsuarioFalla()
         {
+            imitarUsuarioDAO.Setup(dao => dao.ObtenerUsuarioPorNombre(It.IsAny<string>())).Returns(new DAOLibreria.ModeloBD.Usuario()
+            {
+                idUsuario = 1,
+                gamertag = "PruebaUsuario"
+            });
             var implementacionCallback = new Utilidades.UsuarioSesionCallbackImplementacion();
             imitacionContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IUsuarioSesionCallback>())   
                 .Returns(implementacionCallback);

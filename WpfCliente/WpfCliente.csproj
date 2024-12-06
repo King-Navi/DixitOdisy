@@ -235,6 +235,7 @@
       <DependentUpon>IniciarSesionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilidad\Imagen.cs" />
+    <Compile Include="Utilidad\JugadorPuntajeConvertidor.cs" />
     <Compile Include="Utilidad\JugadorTablaPuntaje.cs" />
     <Compile Include="Utilidad\ManejadorBitacora.cs" />
     <Compile Include="Utilidad\ManejadorExcepciones.cs" />

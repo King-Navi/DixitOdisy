@@ -14,6 +14,7 @@ using DAOLibreria.Interfaces;
 using DAOLibreria.DAO;
 using WcfServicioLibreria.Modelo.Excepciones;
 using WcfServicioLibreria.Modelo.Evento;
+using System.Security.Policy;
 
 namespace WcfServicioLibreria.Modelo
 {
@@ -33,9 +34,9 @@ namespace WcfServicioLibreria.Modelo
         #region NumerosPartida
         private const int CANTIDAD_MINIMA_JUGADORES = 1; // 2
         private const int TIEMPO_ESPERA_UNIRSE_JUGADORES = 20;
-        private const int TIEMPO_ESPERA_NARRADOR = 40; // 40
-        private const int TIEMPO_ESPERA_SELECCION = 20; //60
-        private const int TIEMPO_ESPERA_PARA_ADIVINAR = 40; //60
+        private const int TIEMPO_ESPERA_NARRADOR = 5; // 30
+        private const int TIEMPO_ESPERA_SELECCION = 5; //25
+        private const int TIEMPO_ESPERA_PARA_ADIVINAR = 5; //40
         private const int TIEMPO_ESPERA = 5;
         private const int TIEMPO_ENVIO_SEGUNDOS = 5;
         private const int NUM_JUGADOR_PARTIDA_VACIA = 0; 
@@ -85,7 +86,7 @@ namespace WcfServicioLibreria.Modelo
         public bool SeLlamoEmpezarPartida { get; private set; } = false;
         public bool SeTerminoEsperaUnirse { get; private set; } = false;
         public bool SelecionoCartaNarrador { get; private set; } = false;
-        public ConcurrentBag<string> JugadoresPendientes { get; private set; }
+        public ConcurrentDictionary<string, bool> JugadoresPendientes { get; private set; } = new ConcurrentDictionary<string, bool>();
         private ConcurrentDictionary<string, List<string>> ImagenesTodosGrupo { get; set; } = new ConcurrentDictionary<string, List<string>>();
         private ConcurrentDictionary<string, List<string>> ImagenElegidaPorJugador { get; set; } = new ConcurrentDictionary<string, List<string>>();
 
@@ -97,7 +98,6 @@ namespace WcfServicioLibreria.Modelo
             IdPartida = _idPartida;
             Anfitrion = _anfitrion;
             condicionVictoria = CrearCondicionVictoria(_configuracion);
-            JugadoresPendientes = new ConcurrentBag<string>();
             ImagenElegidaPorJugador = new ConcurrentDictionary<string, List<string>>();
             RondaActual = RONDA_INICIAL;
             estadisticasPartida = new EstadisticasPartida(_configuracion.Tematica);

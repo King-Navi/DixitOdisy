@@ -84,7 +84,9 @@ namespace WcfServicioLibreria.Manejador
             if (usuarioEditado.ContraseniaHASH != null)
             {
                 if (!EsSha256Valido(usuarioEditado.ContraseniaHASH))
+                {
                     return resultado;
+                }
             }
             try
             {
@@ -97,7 +99,7 @@ namespace WcfServicioLibreria.Manejador
                     HashContrasenia = usuarioEditado.ContraseniaHASH ?? null,
                 };
                 bool consulta = usuarioDAO.EditarUsuario(usuarioPerfilDTO);
-                resultado = true;
+                resultado = consulta;
 
             }
             catch (Exception excepcion)

@@ -55,15 +55,15 @@ namespace WcfServicioLibreria.Modelo
                             {
                                 if (fileStream.Length > TAMANO_MAXIMO_BYTES)
                                 {
-                                    throw new ArgumentException($"El archivo {lecturaTrabajo.ArchivoPath} excede el tamaño permitido de {TAMANO_MAXIMO_BYTES / (1024 * 1024)} MB.");
+                                    throw new ArgumentException($"El archivo {lecturaTrabajo.ArchivoPath} excede el tamaño permitido de 5 MB.");
                                 }
                                 imagenBytes = new byte[fileStream.Length];
-                                int bytesTotalesLeidos = 0;
+                                int bytesTotalesLeidos = CERO;
 
                                 while (bytesTotalesLeidos < fileStream.Length)
                                 {
                                     int bytesLeidos = await fileStream.ReadAsync(imagenBytes, bytesTotalesLeidos, (int)(fileStream.Length - bytesTotalesLeidos), cancelacion);
-                                    if (bytesLeidos == 0)
+                                    if (bytesLeidos == CERO)
                                     {
                                         break;
                                     }

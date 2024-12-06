@@ -6,7 +6,7 @@ using WcfServicioLibreria.Modelo;
 
 namespace Pruebas.Servidor.Utilidades
 {
-    public class SalaCallbackImpl : ICommunicationObjectImpl, ISalaJugadorCallback
+    public class SalaCallbackImpl : CommunicationObjectImplementado, ISalaJugadorCallback
     {
         public ObservableCollection<Usuario> JugadoresEnSala { get; set; } = new ObservableCollection<Usuario>();
         private bool seEmpezoPartida = false;

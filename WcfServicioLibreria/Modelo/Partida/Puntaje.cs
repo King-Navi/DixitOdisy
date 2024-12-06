@@ -11,10 +11,11 @@ namespace WcfServicioLibreria.Modelo
     public class Puntaje : IPuntaje
     {
         public const int PUNTOS_ACIERTO = 3;
-        public const int PUNTOS_PENALIZACION_NARRADOR = 2;
+        public const int PUNTOS_AUMNETO_NO_ESCOGIO_NARRADOR = 2;
         public const int PUNTOS_RECIBIDOS_CONFUNDIR = 3;
         public const int MAXIMO_VECES_RECIBIR_PUNTOS_CONFUNDIR = 3;
         public const int PUNTOS_RESTADOS_NO_PARTICIPAR = 2;
+        public const int NADIE_ACERTO = 0;
         public string NarradorActual { get; private set; }
         public List<JugadorPuntaje> Jugadores { get; private set; }
         public ConcurrentDictionary<string, List<string>> ImagenesTodosGrupo { get; private set; }
@@ -152,7 +153,7 @@ namespace WcfServicioLibreria.Modelo
         {
             try
             {
-                if (todosAdivinaron || votosCorrectos == jugadores.Count)
+                if (todosAdivinaron ||  votosCorrectos == NADIE_ACERTO)
                 {
                     foreach (var jugador in jugadores)
                     {
@@ -160,7 +161,7 @@ namespace WcfServicioLibreria.Modelo
                         {
                             continue;
                         }
-                        jugador.Puntos += PUNTOS_PENALIZACION_NARRADOR;
+                        jugador.Puntos += PUNTOS_AUMNETO_NO_ESCOGIO_NARRADOR;
                     }
                 }
             }

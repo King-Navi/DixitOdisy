@@ -83,18 +83,29 @@ namespace WpfCliente.ImplementacionesCallbacks
 
         public void EliminarJugadorSalaCallback(Usuario jugardoreRetiradoDeSala)
         {
-            if (jugardoreRetiradoDeSala == null || String.IsNullOrEmpty(jugardoreRetiradoDeSala.Nombre))
+            try
             {
-                return;
+                if (jugardoreRetiradoDeSala == null || String.IsNullOrEmpty(jugardoreRetiradoDeSala.Nombre))
+                {
+                    return;
+                }
+                var jugadorARemover = JugadoresSala?.FirstOrDefault(jugador => jugador.Nombre == jugardoreRetiradoDeSala.Nombre);
+                if (jugadorARemover != null)
+                {
+                    JugadoresSala.Remove(jugadorARemover);
+                }
+                if (jugardoreRetiradoDeSala.Nombre.Equals(SingletonCliente.Instance.NombreUsuario, StringComparison.OrdinalIgnoreCase))
+                {
+                    SingletonGestorVentana.Instancia.Regresar();
+                }
             }
-            var jugadorARemover = JugadoresSala?.FirstOrDefault(jugador => jugador.Nombre == jugardoreRetiradoDeSala.Nombre);
-            if (jugadorARemover != null)
+            catch (ArgumentNullException excepcion)
             {
-                JugadoresSala.Remove(jugadorARemover);
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
-            if (jugardoreRetiradoDeSala.Nombre.Equals(SingletonCliente.Instance.NombreUsuario, StringComparison.OrdinalIgnoreCase))
+            catch (Exception excepcion)
             {
-                SingletonGestorVentana.Instancia.Regresar();
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
         }
 

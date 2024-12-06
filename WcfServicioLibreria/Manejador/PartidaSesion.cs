@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Modelo.Excepciones;
+using WcfServicioLibreria.Modelo.Vetos;
 using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Manejador
@@ -80,13 +81,10 @@ namespace WcfServicioLibreria.Manejador
             }
             if (String.IsNullOrEmpty(nombreJugador))
             {
-
-                Console.WriteLine("Es nulo");
                 return;
             }
             try
             {
-                Console.WriteLine($"Me llamo {nombreJugador}");
                 partidasDiccionario.TryGetValue(idPartida, out Partida partida);
                 var narrador = partida.NarradorActual;
                 if (narrador == nombreJugador && pista != null)
@@ -109,10 +107,39 @@ namespace WcfServicioLibreria.Manejador
             }
         }
 
-        public void ExpulsarJugadorPartida(string nombreJugador, string idPartida)
+        public async Task<bool> ExpulsarJugadorPartida(string anfitrion, string jugadorAExpulsar, string idPartida)
         {
-            //TODO: 
-            throw new NotImplementedException();
+            if (!ValidarPartida(idPartida))
+            {
+                return false;
+            }
+            if (anfitrion.Equals(jugadorAExpulsar, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+            try
+            {
+                partidasDiccionario.TryGetValue(idPartida, out Modelo.Partida partida);
+                if (String.IsNullOrEmpty(anfitrion))
+                {
+                    return false;
+                }
+                if (partida.Anfitrion.Equals(anfitrion, StringComparison.OrdinalIgnoreCase))
+                {
+                    ManejadorDeVetos veto = new ManejadorDeVetos();
+                    var resultado = await veto.RegistrarExpulsionJugadorAsync(jugadorAExpulsar, MOTIVO_EXPULSION_SALA, false);
+                    lock (partida)
+                    {
+                        partida.DesconectarUsuario(jugadorAExpulsar);
+                    }
+                    return true;
+                }
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
+            }
+            return false;
         }
 
         public async Task EmpezarPartidaAsync(string nombreJugador, string idPartida)

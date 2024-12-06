@@ -11,14 +11,14 @@ namespace WcfServicioLibreria.Evento
         private string clavePropietario;
         private bool desechado;
 
-        public DesconectorEventoManejador(ICommunicationObject communicationObject, IObservador _observador, string _clavePropietario)
+        public DesconectorEventoManejador(ICommunicationObject communicationObjecto, IObservador _observador, string _clavePropietario)
         {
             try
             {
                 observador = _observador;
                 clavePropietario = _clavePropietario;
-                communicationObject.Closed += Cerrado;
-                communicationObject.Faulted += EnFalla;
+                communicationObjecto.Closed += Cerrado;
+                communicationObjecto.Faulted += EnFalla;
                 desechado = false;
             }
             catch (Exception)

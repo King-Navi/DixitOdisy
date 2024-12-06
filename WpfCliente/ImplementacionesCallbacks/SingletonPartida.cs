@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
+using WpfCliente.Contexto;
 using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
 
@@ -17,16 +19,18 @@ namespace WpfCliente.ImplementacionesCallbacks
         public Usuario PrimerLugar { get; private set; } = new Usuario();
         public Usuario SegundoLugar { get; private set; } = new Usuario();
         public Usuario TercerLugar { get; private set; } = new Usuario();
-        public CollecionObservableSeguraHilos<JugadorPuntaje> JugadoresEstadisticas { get; set; } = new CollecionObservableSeguraHilos<JugadorPuntaje>();
         public CollecionObservableSeguraHilos<Usuario> UsuariosEnPartida { get; set; } = new CollecionObservableSeguraHilos<Usuario>();
 
         public event Action<int> CambiarPantalla;
         public event Action<bool> NotificarEsNarrador;
         public event Action<string> MostrarPista;
+        public event Action<List<JugadorTablaPuntaje>> SeActualizoPuntajes;
         public event Action EstadisticasEnviadas;
         public event Action DesbloquearChat;
         public event Action SeTerminoPartida;
         public event Action InicioPartida;
+        public event Action PerdisteTurno;
+        public event Action TeHanExpulsado;
 
 
         private SingletonPartida() 
@@ -158,10 +162,18 @@ namespace WpfCliente.ImplementacionesCallbacks
         {
             try
             {
+                if (jugardoreRetiradoDeSala == null || String.IsNullOrEmpty(jugardoreRetiradoDeSala.Nombre))
+                {
+                    return;
+                }
                 var usuarioAEliminar = UsuariosEnPartida?.FirstOrDefault(busqueda => busqueda.Nombre == jugardoreRetiradoDeSala.Nombre);
                 if (usuarioAEliminar != null)
                 {
                     UsuariosEnPartida?.Remove(usuarioAEliminar);
+                }
+                if (jugardoreRetiradoDeSala.Nombre.Equals(SingletonCliente.Instance.NombreUsuario, StringComparison.OrdinalIgnoreCase))
+                {
+                    TeHanExpulsado?.Invoke();
                 }
             }
             catch (ArgumentNullException excepcion)
@@ -197,18 +209,27 @@ namespace WpfCliente.ImplementacionesCallbacks
             }
         }
 
-        public void EnviarEstadisticasCallback(EstadisticasPartida estadisticas)
+        public void EnviarEstadisticasCallback(EstadisticasPartida estadisticas, bool esAnfitrion)
         {
-            Usuario usuarioPorDefecto = new Usuario()
+            try
             {
-                Nombre = "",
-                FotoUsuario = null
-            };
-            JugadoresEstadisticas = new CollecionObservableSeguraHilos<JugadorPuntaje>(estadisticas.Jugadores);
-            PrimerLugar = UsuariosEnPartida.FirstOrDefault(busqueda => busqueda.Nombre == estadisticas.PrimerLugar?.Nombre) ?? new Usuario();
-            SegundoLugar = UsuariosEnPartida.FirstOrDefault(busqueda => busqueda.Nombre == estadisticas.SegundoLugar?.Nombre) ?? new Usuario();
-            TercerLugar = UsuariosEnPartida.FirstOrDefault(busqueda => busqueda.Nombre == estadisticas.TercerLugar?.Nombre) ?? new Usuario();
-            EstadisticasEnviadas?.Invoke();
+                var listaModeloServidor = new List<JugadorPuntaje>(estadisticas.Jugadores);
+                var listaModeloCliente = new List<JugadorTablaPuntaje>();
+                List<JugadorTablaPuntaje> listaResultado = JugadorPuntajeConvertidor.ConvertirAListaJugadorTablaPuntaje(listaModeloServidor, esAnfitrion);
+                PrimerLugar = UsuariosEnPartida.FirstOrDefault(busqueda => busqueda.Nombre == estadisticas.PrimerLugar?.Nombre) ?? new Usuario();
+                SegundoLugar = UsuariosEnPartida.FirstOrDefault(busqueda => busqueda.Nombre == estadisticas.SegundoLugar?.Nombre) ?? new Usuario();
+                TercerLugar = UsuariosEnPartida.FirstOrDefault(busqueda => busqueda.Nombre == estadisticas.TercerLugar?.Nombre) ?? new Usuario();
+                EstadisticasEnviadas?.Invoke();
+                SeActualizoPuntajes?.Invoke(listaResultado);
+            }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
         }
 
         public void FinalizarPartidaCallback()
@@ -242,11 +263,18 @@ namespace WpfCliente.ImplementacionesCallbacks
         }
         private async Task UnirseChat()
         {
-            SingletonGestorImagenes.Instancia.PeticionImagenesHilo();
-            SingletonChat.Instancia.AbrirConexionChat();
-            await SingletonChat.Instancia.ChatMotor.AgregarUsuarioChatAsync(SingletonCliente.Instance.IdChat,
-                SingletonCliente.Instance.NombreUsuario);
-            DesbloquearChat?.Invoke();
+            try
+            {
+                SingletonGestorImagenes.Instancia.PeticionImagenesHilo();
+                SingletonChat.Instancia.AbrirConexionChat();
+                await SingletonChat.Instancia.ChatMotor.AgregarUsuarioChatAsync(SingletonCliente.Instance.IdChat,
+                    SingletonCliente.Instance.NombreUsuario);
+                DesbloquearChat?.Invoke();
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
         }
 
         public void MostrarPistaCallback(string pista)
@@ -272,7 +300,14 @@ namespace WpfCliente.ImplementacionesCallbacks
         }
         public void TurnoPerdidoCallback()
         {
-                //TODO: 
+            try
+            {
+                PerdisteTurno?.Invoke();
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
         }
     }
 }

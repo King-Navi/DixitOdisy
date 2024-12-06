@@ -14,17 +14,14 @@ namespace Pruebas.Servidor
     [TestClass]
     public class ServicioImagen_Prueba : ConfiguradorPruebaParaServicio
     {
-        private Mock<IImagenCallback> mockCallback = new Mock<IImagenCallback>();
+        private ImagenCallbackImplementacion ImagenCallbackImplementacion { get; set; } = new ImagenCallbackImplementacion();
         private PartidaCallbackImplementacion implementacionPartidaCallback = new PartidaCallbackImplementacion();
 
         [TestInitialize]
         public override void ConfigurarManejador()
         {
             base.ConfigurarManejador();
-            mockCallback
-                .Setup(callback => callback.RecibirImagenCallback(It.IsAny<ImagenCarta>()))
-                .Verifiable();
-            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionPartidaCallback);
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IImagenCallback>()).Returns(ImagenCallbackImplementacion);
 
         }
         [TestCleanup]
@@ -32,27 +29,23 @@ namespace Pruebas.Servidor
         public override void LimpiadorTodo()
         {
             base.LimpiadorTodo();
-            mockCallback = null;
+            ImagenCallbackImplementacion = null;
         }
-
-
 
         #region SolicitarImagen
         [TestMethod]
         public async Task SolicitarImagenCarta_PartidaValida_DeberiaEnviarImagen()
         {
-
             var usuario = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var configuracionGenerica = new ConfiguracionPartida(TematicaPartida.Mixta, CondicionVictoriaPartida.PorCantidadRondas, 6);
             var idPartida = manejador.CrearPartida(usuario.Nombre, configuracionGenerica);
-
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionPartidaCallback);
             await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IImagenCallback>()).Returns(ImagenCallbackImplementacion);
 
             await manejador.SolicitarImagenCartaAsync(idPartida);
             await Task.Delay(TimeSpan.FromSeconds(10));
-
-            mockCallback.Verify(callback => callback.RecibirImagenCallback(It.Is<ImagenCarta>(imagen => imagen.IdImagen == It.IsAny<string>())));
-
+            Assert.IsTrue(ImagenCallbackImplementacion.ImagenCartasMazo.Count == 1);
             if (implementacionCallback != null)
             {
                 implementacionCallback.Close();
@@ -62,20 +55,19 @@ namespace Pruebas.Servidor
         public async Task SolicitarImagenCarta_SolicitarVariasImagenes_DeberiaEnviarImagenes()
         {
 
-            //PRECAUCION: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP 
-
+            //Precaucion: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP 
             var usuario = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var configuracionGenerica = new ConfiguracionPartida(TematicaPartida.Mixta, CondicionVictoriaPartida.PorCantidadRondas, 6);
             var idPartida = manejador.CrearPartida(usuario.Nombre, configuracionGenerica);
-
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionPartidaCallback);
             await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
-
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IImagenCallback>()).Returns(ImagenCallbackImplementacion);
             await manejador.SolicitarImagenCartaAsync(idPartida);
             await manejador.SolicitarImagenCartaAsync(idPartida);
             await manejador.SolicitarImagenCartaAsync(idPartida);
             await Task.Delay(TimeSpan.FromSeconds(10));
 
-            mockCallback.Verify(callback => callback.RecibirImagenCallback(It.IsAny<ImagenCarta>()), Times.Exactly(3));
+            Assert.IsTrue(ImagenCallbackImplementacion.ImagenCartasMazo.Count == 3);
 
             if (implementacionCallback != null)
             {
@@ -85,15 +77,13 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task SolicitarImagenCarta_SolicitarMuchasImagenes_DeberiaEnviarImagenes()
         {
-
-            //PRECAUCION: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP 
-
+            //Precaucion: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP 
             var usuario = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var configuracionGenerica = new ConfiguracionPartida(TematicaPartida.Mixta, CondicionVictoriaPartida.PorCantidadRondas, 6);
             var idPartida = manejador.CrearPartida(usuario.Nombre, configuracionGenerica);
-
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionPartidaCallback);
             await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
-
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IImagenCallback>()).Returns(ImagenCallbackImplementacion);
             var tareasSolicitudes = new List<Task>();
             var numeroSolicitudes = 12;
             for (int i = 0; i < numeroSolicitudes; i++)
@@ -104,7 +94,7 @@ namespace Pruebas.Servidor
             await Task.WhenAll(tareasSolicitudes);
             await Task.Delay(TimeSpan.FromSeconds(10));
 
-            mockCallback.Verify(callback => callback.RecibirImagenCallback(It.IsAny<ImagenCarta>()), Times.Exactly(numeroSolicitudes));
+            Assert.IsTrue(ImagenCallbackImplementacion.ImagenCartasMazo.Count == numeroSolicitudes);
             if (implementacionCallback != null)
             {
                 implementacionCallback.Close();
@@ -129,9 +119,9 @@ namespace Pruebas.Servidor
             var usuario = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var configuracionGenerica = new ConfiguracionPartida(TematicaPartida.Mitologia, CondicionVictoriaPartida.PorCantidadRondas, 6);
             var idPartida = manejador.CrearPartida(usuario.Nombre, configuracionGenerica);
-
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionPartidaCallback);
             await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
-
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IImagenCallback>()).Returns(ImagenCallbackImplementacion);
             foreach (var archivo in archivosJpg)
             {
                 await manejador.SolicitarImagenCartaAsync(idPartida);
@@ -139,7 +129,7 @@ namespace Pruebas.Servidor
             await manejador.SolicitarImagenCartaAsync(idPartida);
             await Task.Delay(TimeSpan.FromSeconds(15));
 
-            mockCallback.Verify(callback => callback.RecibirImagenCallback(It.IsAny<ImagenCarta>()), Times.Exactly(archivosJpg.Length + 1));
+            Assert.IsTrue(ImagenCallbackImplementacion.ImagenCartasMazo.Count == archivosJpg.Length +1);
             if (implementacionCallback != null)
             {
                 implementacionCallback.Close();

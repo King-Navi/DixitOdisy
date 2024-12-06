@@ -281,11 +281,6 @@ namespace WcfServicioLibreria.Manejador
                 ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
         }
-       
-
-
-
-
 
         public List<SolicitudAmistad> ObtenerSolicitudesAmistad(Usuario usuario)
         {
@@ -328,6 +323,7 @@ namespace WcfServicioLibreria.Manejador
                         var usuarioDestinoConectado = usuarioDAO.ObtenerUsuarioPorId(idDestinatario);
                         var usuarioRemitenteConectado = usuarioDAO.ObtenerUsuarioPorId(idRemitente);
                         AmigoConetadoActualizar(usuarioRemitenteConectado, usuarioDestinoConectado);
+                        return true;
                     }
                     else if (jugadoresConectadosDiccionario.ContainsKey(idDestinatario))
                     {

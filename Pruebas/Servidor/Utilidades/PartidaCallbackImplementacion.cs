@@ -7,7 +7,7 @@ using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
 
 [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
-public class PartidaCallbackImplementacion : ICommunicationObjectImpl, IPartidaCallback
+public class PartidaCallbackImplementacion : CommunicationObjectImplementado, IPartidaCallback
 {
     public int RondaActual { get; private set; }
     public bool TurnoPerdido { get; private set; }
@@ -17,13 +17,19 @@ public class PartidaCallbackImplementacion : ICommunicationObjectImpl, IPartidaC
     public ConcurrentDictionary<string, Usuario> JugadoresEnPartida { get; private set; } = new ConcurrentDictionary<string, Usuario>();
     public bool Ping { get; set; }
     private readonly SemaphoreSlim semaphoreRecibirImagenCallback = new SemaphoreSlim(1, 1);
-
+    private bool EsNarrador { get; set; }
+    private string PistaActual { get; set; }
+    private EstadisticasPartida EstadisticasPartida { get; set; }
+    private int NumeroPantallaActual { get; set; }
+    private bool SeUnioAPartida { get; set; }
+    private ImagenCarta GrupoImagenActual { get; set; }
     public event Action<int> OnAvanzarRonda;
     public event Action OnTurnoPerdido;
     public event Action<ImagenCarta> OnRecibirImagen;
     public event Action OnFinalizarPartida;
     public event Action<Usuario> OnObtenerJugadorSala;
     public event Action<Usuario> OnEliminarJugadorSala;
+
 
     public PartidaCallbackImplementacion()
     {
@@ -84,33 +90,32 @@ public class PartidaCallbackImplementacion : ICommunicationObjectImpl, IPartidaC
 
     public void NotificarNarradorCallback(bool esNarrador)
     {
-        //TODO:
+        this.EsNarrador = esNarrador;
     }
 
     public void MostrarPistaCallback(string pista)
     {
-        //TODO:
+        this.PistaActual = pista;
     }
 
-    public void EnviarEstadisticasCallback(EstadisticasPartida estadisticas)
+    public void EnviarEstadisticasCallback(EstadisticasPartida estadisticas, bool esNarrrador)
     {
-        //TODO: 
+        this.EstadisticasPartida = estadisticas;
+        this.EsNarrador = esNarrrador;
     }
 
     public void CambiarPantallaCallback(int numeroPantalla)
     {
-        //TODO: 
-
+        this.NumeroPantallaActual = numeroPantalla;
     }
 
     public void IniciarValoresPartidaCallback(bool seUnio)
     {
-        //TODO: 
-
+        this.SeUnioAPartida = seUnio;
     }
 
     public void RecibirGrupoImagenCallback(ImagenCarta imagen)
     {
-        //TODO: 
+        this.GrupoImagenActual = imagen;
     }
 }

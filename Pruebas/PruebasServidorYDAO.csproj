@@ -104,7 +104,7 @@
     <Compile Include="Servidor\Utilidades\ImagenCallbackImplementacion.cs" />
     <Compile Include="Servidor\Utilidades\InvitacionCallbackImplementacion.cs" />
     <Compile Include="Servidor\Utilidades\AmigosCallbackImplementacion.cs" />
-    <Compile Include="Servidor\Utilidades\ICommunicationObjectImpl.cs" />
+    <Compile Include="Servidor\Utilidades\CommunicationObjectImplementado.cs" />
     <Compile Include="Servidor\Utilidades\PartidaCallbackImplementacion.cs" />
     <Compile Include="Servidor\Utilidades\SalaCallbackImpl.cs" />
     <Compile Include="Servidor\Utilidades\UsuarioSesionCallbackImplementacion.cs" />

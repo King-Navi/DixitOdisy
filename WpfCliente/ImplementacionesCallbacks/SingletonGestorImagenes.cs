@@ -9,7 +9,7 @@ namespace WpfCliente.ImplementacionesCallbacks
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Single)]
     public class SingletonGestorImagenes
     {
-        private const int MAXIMO_IMAGENES_MAZO = 6;
+        public const int MAXIMO_IMAGENES_MAZO = 6;
         private static readonly Lazy<SingletonGestorImagenes> instancia = new Lazy<SingletonGestorImagenes>(() => new SingletonGestorImagenes());
         public ReceptorImagen imagnesMazo = new ReceptorImagen();
         public ReceptorImagen imagenesDeTodos = new ReceptorImagen();

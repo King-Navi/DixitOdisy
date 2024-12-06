@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Modelo;
 using WcfServicioLibreria.Utilidades;
+using System.Diagnostics;
 
 namespace WcfServicioLibreria.Manejador
 {
@@ -89,6 +90,7 @@ namespace WcfServicioLibreria.Manejador
             }
         }
 
+        [DebuggerStepThrough]
         private static void EliminarCodigosExpirados(object state)
         {
             var ahora = DateTime.UtcNow;

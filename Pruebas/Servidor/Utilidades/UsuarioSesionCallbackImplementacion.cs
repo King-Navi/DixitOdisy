@@ -32,6 +32,7 @@ namespace Pruebas.Servidor.Utilidades
             Closing?.Invoke(this, EventArgs.Empty);
             State = CommunicationState.Closed;
             Closed?.Invoke(this, EventArgs.Empty);
+            SesionAbierta = false;
         }
 
         public void Close()
@@ -40,6 +41,7 @@ namespace Pruebas.Servidor.Utilidades
             Closing?.Invoke(this, EventArgs.Empty);
             State = CommunicationState.Closed;
             Closed?.Invoke(this, EventArgs.Empty);
+            SesionAbierta = false;
         }
 
         public void Close(TimeSpan timeout)
@@ -48,6 +50,7 @@ namespace Pruebas.Servidor.Utilidades
             Closing?.Invoke(this, EventArgs.Empty);
             State = CommunicationState.Closed;
             Closed?.Invoke(this, EventArgs.Empty);
+            SesionAbierta = false;
         }
 
         public void Open()

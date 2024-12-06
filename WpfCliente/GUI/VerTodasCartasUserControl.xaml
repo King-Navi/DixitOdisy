@@ -40,7 +40,7 @@
         <TextBox 
             x:Name="textBoxInstruccionPista" 
             IsReadOnly="True" 
-            Text="¡Escoge la carta correcta en base a la pista!" 
+            d:Text="¡Escoge la carta correcta en base a la pista!" 
             Background="{x:Null}" 
             Height="40" 
             HorizontalAlignment="Center" 

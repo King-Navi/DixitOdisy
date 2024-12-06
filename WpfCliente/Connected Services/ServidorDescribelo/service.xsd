@@ -334,8 +334,16 @@
   <xs:element name="ExpulsarJugadorPartida">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="nombreJugador" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="anfitrion" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="jugadorAExpulsar" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="idPartida" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ExpulsarJugadorPartidaResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ExpulsarJugadorPartidaResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -401,6 +409,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="estadisticas" nillable="true" type="q16:EstadisticasPartida" />
+        <xs:element minOccurs="0" name="esAnfitrion" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

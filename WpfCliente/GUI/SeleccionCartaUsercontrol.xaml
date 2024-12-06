@@ -45,7 +45,7 @@
         <TextBox 
             TextAlignment="Center" 
             x:Name="labelInstrucciones" 
-            Text="En base a la pista escoge una carta, ¡Confunde a tus contrincantes!" 
+            d:Text="En base a la pista escoge una carta, ¡Confunde a tus contrincantes!" 
             HorizontalAlignment="Center" 
             VerticalAlignment="Top" 
             IsReadOnly="True" 

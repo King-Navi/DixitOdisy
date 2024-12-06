@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace Pruebas.Servidor.Utilidades
 {
-    public class ICommunicationObjectImpl : ICommunicationObject
+    public class CommunicationObjectImplementado : ICommunicationObject
     {
 
         public CommunicationState State { get; private set; } = CommunicationState.Opened;

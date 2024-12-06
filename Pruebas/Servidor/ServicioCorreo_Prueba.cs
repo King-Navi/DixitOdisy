@@ -2,6 +2,7 @@
 using Moq;
 using Pruebas.Servidor.Utilidades;
 using System;
+using System.Threading.Tasks;
 using WcfServicioLibreria.Modelo;
 
 namespace Pruebas.Servidor
@@ -30,7 +31,7 @@ namespace Pruebas.Servidor
         }
         #region VerificarCorreo
         [TestMethod]
-        public async void VerificarCorreo_CorreoValido_RetornaTrue()
+        public async Task VerificarCorreo_CorreoValido_RetornaTrue()
         {
             Usuario usuario = new Usuario
             {
@@ -41,7 +42,7 @@ namespace Pruebas.Servidor
         }
 
         [TestMethod]
-        public async void VerificarCorreo_CorreoInvalido_RetornaFalse()
+        public async Task VerificarCorreo_CorreoInvalido_RetornaFalse()
         {
             Usuario usuario = new Usuario();
             usuario.Correo = CORREO_INVALIDO;
@@ -49,11 +50,11 @@ namespace Pruebas.Servidor
  
             bool result = await manejador.VerificarCorreoAsync(usuario);
 
-            Assert.IsTrue(result, "El código ha sido enviado al correo");
+            Assert.IsFalse(result, "El código no ha sido enviado al correo");
         }
 
         [TestMethod]
-        public async void VerificarCorreo_UsuarioNulo_RetornaFalse()
+        public async Task VerificarCorreo_UsuarioNulo_RetornaFalse()
         {
             bool result = await manejador.VerificarCorreoAsync(null);
 
@@ -71,7 +72,7 @@ namespace Pruebas.Servidor
             Assert.IsFalse(result, "El código recibido no coincide con el generado.");
         }
         [TestMethod]
-        public async void VerificarCodigo_CuandoCodigoNulo_DeberiaRetornarTrue()
+        public async Task VerificarCodigo_CuandoCodigoNulo_DeberiaRetornarTrue()
         {
             
             await manejador.VerificarCorreoAsync(new Usuario()
@@ -84,7 +85,7 @@ namespace Pruebas.Servidor
             Assert.IsFalse(resultado, "El método debería devolver true cuando el código recibido coincide con el guardado.");
         }
         [TestMethod]
-        public async void VerificarCodigo_CuandoNulo_DeberiaRetornarTrue()
+        public async Task VerificarCodigo_CuandoNulo_DeberiaRetornarTrue()
         {
             
             await manejador.VerificarCorreoAsync(new Usuario()
@@ -101,7 +102,7 @@ namespace Pruebas.Servidor
 
         #region EnviarCorreoAsync
         [TestMethod]
-        public async void EnviarCorreoAsync_CuandoDatosSonValidos_DeberiaRetornarTrue()
+        public async Task EnviarCorreoAsync_CuandoDatosSonValidos_DeberiaRetornarTrue()
         {
 
             string codigoValido = "123456";
@@ -111,7 +112,7 @@ namespace Pruebas.Servidor
             Assert.IsTrue(resultado, "El método debería devolver true cuando el correo se envía correctamente.");
         }
         [TestMethod]
-        public async void EnviarCorreoAsync_CuandoCorreoEsInvalido_DeberiaRetornarTrue()
+        public async Task EnviarCorreoAsync_CuandoCorreoEsInvalido_DeberiaRetornarTrue()
         {
             string codigoValido = "123456";
 
@@ -121,7 +122,7 @@ namespace Pruebas.Servidor
         }
 
         [TestMethod]
-        public async void EnviarCorreoAsync_CuandoServidorNoDisponible_DeberiaRetornarFalse()
+        public async Task EnviarCorreoAsync_CuandoServidorNoDisponible_DeberiaRetornarFalse()
         {
             string codigo = "123456";
 

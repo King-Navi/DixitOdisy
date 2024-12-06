@@ -74,11 +74,7 @@ namespace Pruebas.Servidor
                  {
                      return false;
                  });
-
-            
             bool resultado = manejador.EditarUsuario(usuario);
-
-            
             Assert.IsFalse(resultado, "El método debería retornar false cuando se actualiza el usuario con datos válidos.");
         }
         [TestMethod]

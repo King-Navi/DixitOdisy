@@ -547,6 +547,24 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to La partida termino....
+        /// </summary>
+        public static string labelFinPartida {
+            get {
+                return ResourceManager.GetString("labelFinPartida", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Has sido expulsado de la partida.
+        /// </summary>
+        public static string labelHasSidoExpulsado {
+            get {
+                return ResourceManager.GetString("labelHasSidoExpulsado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ingrese el código que le enviamos a su correo.
         /// </summary>
         public static string labelIngresarCodigoCorreo {
@@ -754,6 +772,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ¡Perdiste tu turno!.
+        /// </summary>
+        public static string labelPerdisteTurno {
+            get {
+                return ResourceManager.GetString("labelPerdisteTurno", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to La pista es .
         /// </summary>
         public static string labelPista {
@@ -813,6 +840,15 @@ namespace WpfCliente.Properties {
         public static string labelTematica {
             get {
                 return ResourceManager.GetString("labelTematica", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (Tú).
+        /// </summary>
+        public static string labelTu {
+            get {
+                return ResourceManager.GetString("labelTu", resourceCulture);
             }
         }
         

@@ -35,8 +35,6 @@ namespace WpfCliente.GUI
 
         }
 
-
-
         private async Task InicializarEstadisticasAsync()
         {
             var resutlado = await Conexion.VerificarConexionAsync(null, null);

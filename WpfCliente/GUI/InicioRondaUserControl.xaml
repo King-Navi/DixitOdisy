@@ -50,7 +50,7 @@
             Orientation="Vertical">
             <TextBlock 
                 x:Name="textBlockEmpezandoRonda" 
-                Text="Empezando ronda..." 
+                d:Text="Empezando ronda..." 
                 FontSize="24" 
                 FontWeight="Bold" 
                 Foreground="Purple" 
@@ -63,7 +63,7 @@
                 Duration="0:0:1.0" />
             <TextBlock 
                 x:Name="textBlockEscogiendoNarrador" 
-                Text="Escogiendo narrador..." 
+                d:Text="Escogiendo narrador..." 
                 FontSize="18" 
                 Foreground="Black" 
                 HorizontalAlignment="Center" 

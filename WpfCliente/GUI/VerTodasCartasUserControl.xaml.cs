@@ -20,6 +20,7 @@ namespace WpfCliente.GUI
             SingletonPartida.Instancia.MostrarPista += ColocarPista;
             TodasImagenes = SingletonGestorImagenes.Instancia.imagenesDeTodos.ImagenCartasTodos;
             DataContext = this;
+            ActualizarUI();
         }
 
         public void ActualizarUI()

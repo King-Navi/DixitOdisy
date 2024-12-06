@@ -200,7 +200,7 @@
                 Margin="416,246,410,260" 
                 Grid.Row="2" 
                 Cursor="Hand" 
-                Click="CliButtonIniciarSesionAsync" />
+                Click="ClicButtonIniciarSesionAsync" />
             <Button 
                 x:Name="buttonRegistrar" 
                 Background="Transparent" 

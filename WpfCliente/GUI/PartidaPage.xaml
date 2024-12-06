@@ -8,7 +8,45 @@
         mc:Ignorable="d"
          MinHeight="670" MinWidth="520"
         Title="Partida" Height="683" Width="1131">
-
+    <Page.Resources>
+        <Style x:Key="EstiloBotonSolicitarImagen" TargetType="Button">
+            <Setter Property="Background" Value="#007ACC" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="BorderBrush" Value="#005A9E" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Padding" Value="10,5" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="8"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <!-- Cambiar color al pasar el mouse -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#005A9E" />
+                                <Setter Property="BorderBrush" Value="#003F73" />
+                            </Trigger>
+                            <!-- Cambiar color al presionar -->
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#003F73" />
+                                <Setter Property="BorderBrush" Value="#001F40" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
     <Grid>
 
         <Grid>
@@ -121,7 +159,7 @@
 
         <Grid 
             x:Name="gridPantalla6" 
-            Background="Purple">
+            Background="#FF330211">
             <Grid.Style>
                 <Style 
                     TargetType="Grid">
@@ -139,13 +177,13 @@
                     </Style.Triggers>
                 </Style>
             </Grid.Style>
-            <Label 
-                Content="FIN DE LA PARTIDA" 
-                FontSize="80"></Label>
+            <Label x:Name="labelFinPartida" 
+                d:Content="FIN DE LA PARTIDA" 
+                FontSize="80" HorizontalAlignment="Center" 
+                VerticalAlignment="Center" Foreground="White"/>
         </Grid>
 
-        <Grid 
-            x:Name="gridPantalla7" >
+        <Grid >
             <Grid.Style>
                 <Style 
                     TargetType="Grid">
@@ -168,14 +206,31 @@
         </Grid>
         <local:ChatUserControl x:Name="chatUserControl"></local:ChatUserControl>
 
-        <Button Height="80" Width="180" Content="SIMULACION pool cartas" Margin="941,450,10,137" Click="BORRAME_SImulacionCambioRonda"></Button>
-        <Button Height="80" Width="180" Content="SIMULACION soy jugador" Margin="951,334,0,253" Click="BORRAME_SImulacionCambioRondaSoyJugador"></Button>
-        <Button Height="80" Width="180" Content="SIMULACION soy narrador" Margin="951,217,0,370" Click="BORRAME_SImulacionCambioRondaSoyNarrador"></Button>
-        <Button Height="80" Width="180" Content="SIMULACION ir estadisicas" Margin="951,217,0,370" Click="BORRAME_SImulacionCambioRondaStats"></Button>
+        <!-- Botones de simulación (para depuración) -->
+        <Button Height="80" Width="180" Content="SIMULACION pool cartas" 
+                Margin="941,450,10,137" Click="BORRAME_SImulacionCambioRonda" />
+        <Button Height="80" Width="180" Content="SIMULACION soy jugador" 
+                Margin="951,334,0,253" Click="BORRAME_SImulacionCambioRondaSoyJugador" />
+        <Button Height="80" Width="180" Content="SIMULACION soy narrador" 
+                Margin="951,217,0,370" Click="BORRAME_SImulacionCambioRondaSoyNarrador" />
+        <Button Height="80" Width="180" Content="SIMULACION ir estadísticas" 
+                Margin="951,217,0,370" Click="BORRAME_SImulacionCambioRondaStats" />
 
-        <Button x:Name="buttonSolicitarImagen" Height="80" Width="180" d:Content="Solicitar imagen" Margin="27,576,924,27" Click="ClicButtonSolicitarImagenAsync"></Button>
-        <Image x:Name="imagenFlechaAtras" Source="/Recursos/flechaAtras.png" Margin="10,0,0,0" Cursor="Hand" MouseLeftButtonDown="ClicImagenFlechaAtrasAsync" Width="78" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <TextBlock TextAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="39" Width="600" Margin="0,634,0,0" Background="Black" Foreground="White"/>
-
+        <Button x:Name="buttonSolicitarImagen" Height="80" Width="180" 
+                d:Content="Solicitar imagen" Margin="27,576,924,27" 
+                Click="ClicButtonSolicitarImagenAsync"
+                IsEnabled="False"
+                Style="{StaticResource EstiloBotonSolicitarImagen}"/>
+        
+        <Image x:Name="imagenFlechaAtras" Source="/Recursos/flechaAtras.png" 
+               Margin="10,0,0,0" Cursor="Hand" 
+               MouseLeftButtonDown="ClicImagenFlechaAtrasAsync" 
+               Width="78" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        
+        <TextBlock x:Name="textBlockPerdisteTurno" TextAlignment="Center" 
+                   HorizontalAlignment="Center" TextWrapping="Wrap" 
+                   Text="¡Perdiste tu turno!" VerticalAlignment="Top" 
+                   Height="39" Width="600" Margin="0,634,0,0" 
+                   Background="Black" Foreground="White" />
     </Grid>
 </Page>

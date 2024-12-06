@@ -688,4 +688,16 @@
   <data name="buttonSolicitarImagen" xml:space="preserve">
     <value>Request image</value>
   </data>
+  <data name="labelPerdisteTurno" xml:space="preserve">
+    <value>You missed your turn!</value>
+  </data>
+  <data name="labelFinPartida" xml:space="preserve">
+    <value>The game ended...</value>
+  </data>
+  <data name="labelTu" xml:space="preserve">
+    <value>(You)</value>
+  </data>
+  <data name="labelHasSidoExpulsado" xml:space="preserve">
+    <value>You have been kicked from the game</value>
+  </data>
 </root>

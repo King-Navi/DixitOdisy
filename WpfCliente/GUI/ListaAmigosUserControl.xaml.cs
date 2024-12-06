@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Threading;
 using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
 using WpfCliente.Properties;
-using WpfCliente.ServidorDescribelo;
 using WpfCliente.Utilidad;
+using System.Timers;
+using Timer = System.Timers.Timer;
+
 
 namespace WpfCliente.GUI
 {
     public partial class ListaAmigosUserControl : UserControl, IActualizacionUI
     {
         private bool desechado = false;
-        private DispatcherTimer timer;
+        private Timer timer;
         private DateTime ultimaActualizacion;
         private const string FORMATO_HORA = "HH:mm:ss";
         private const int VALOR_PARA_INTERVALO = 500;
@@ -37,9 +39,9 @@ namespace WpfCliente.GUI
 
         private void IniciarHora()
         {
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(VALOR_PARA_INTERVALO);
-            timer.Tick += HoraActual;
+            timer = new Timer(VALOR_PARA_INTERVALO);
+            timer.Elapsed += HoraActual;
+            timer.AutoReset = true;
             timer.Start();
         }
 
@@ -47,25 +49,16 @@ namespace WpfCliente.GUI
         private void HoraActual(object sender, EventArgs e)
         {
             DateTime horaActual = DateTime.Now;
+
             if (horaActual.Second != ultimaActualizacion.Second)
             {
-                labelHora.Content = horaActual.ToString(FORMATO_HORA);
+                Dispatcher.Invoke(() =>
+                {
+                    labelHora.Content = horaActual.ToString(FORMATO_HORA);
+                });
                 ultimaActualizacion = horaActual;
             }
         }
-
-        private void Desechar()
-        {
-            if (desechado) return;
-            if (timer != null)
-            {
-                timer.Stop();
-                timer.Tick -= HoraActual;
-                timer = null;
-            }
-            desechado = true;
-        }
-
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)
         {
             ActualizarUI();

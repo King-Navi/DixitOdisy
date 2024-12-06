@@ -2,6 +2,7 @@
 using Moq;
 using Pruebas.Servidor.Utilidades;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Enumerador;
 using WcfServicioLibreria.Modelo;
 
 namespace Pruebas.Servidor
@@ -9,8 +10,11 @@ namespace Pruebas.Servidor
     [TestClass]
     public class ServicioSala_Prueba : ConfiguradorPruebaParaServicio
     {
-        private ConfiguracionPartida configuracionGenerica;
-
+        private ConfiguracionPartida configuracionGenerica =new ConfiguracionPartida(
+            TematicaPartida.Mitologia,           
+            CondicionVictoriaPartida.PorCartasAgotadas, 
+            10                                    
+        );
         [TestInitialize]
         public override void ConfigurarManejador()
         {

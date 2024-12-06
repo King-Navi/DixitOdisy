@@ -234,6 +234,7 @@ namespace WpfCliente.GUI
             if (!ValidarCaracteristicasContrasenia())
             {
                 isValid = false;
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCamposInvalidos,Properties.Idioma.mensajeCamposInvalidos, Window.GetWindow(this));
             }
 
             if (!ValidacionesString.EsCorreoValido(textBoxCorreo.Text.Trim()))
@@ -256,12 +257,18 @@ namespace WpfCliente.GUI
 
         private bool ValidarCaracteristicasContrasenia()
         {
-            if (string.IsNullOrEmpty(textBoxContrasenia.Password) && string.IsNullOrEmpty(textBoxRepetirContrasenia.Password))
+            bool isValid = true;
+
+            if (textBoxContrasenia.Password.Contains(" "))
             {
-                return true;
+                isValid = false;
             }
 
-            bool isValid = true;
+            if (string.IsNullOrEmpty(textBoxContrasenia.Password) && string.IsNullOrEmpty(textBoxRepetirContrasenia.Password))
+            {
+                isValid = false;
+            }
+
 
             if (textBoxContrasenia.Password.Trim().Length >= LONGITUD_MINIMA_CONTRASENIA)
             {

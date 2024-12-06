@@ -397,6 +397,12 @@ namespace WpfCliente.GUI
                         Properties.Idioma.mensajeInvitacionExitosa,
                         Window.GetWindow(this));
                 }
+                else
+                {
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloInvitacionPartida,
+                        Properties.Idioma.mensajeInvitacionFallida,
+                        Window.GetWindow(this));
+                }
             }
             else
             {

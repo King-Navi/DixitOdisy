@@ -14,8 +14,8 @@ namespace WpfCliente.GUI
 {
     public partial class CambiarContraseniaPage : Page, IActualizacionUI, IHabilitadorBotones
     {
-        private const int MINIMO_CARACTERES = 5;
-        private const int MAXIMO_CARACTERES = 20;
+        private const int LONGITUD_MINIMA_CONTRASENIA = 5;
+        private const int LONGITUD_MAXIMA_CONTRASENIA = 20;
         Usuario usuarioEditado = new Usuario();
         public CambiarContraseniaPage(string gamertag)
         {
@@ -87,7 +87,7 @@ namespace WpfCliente.GUI
         {
             bool isValid = true;
 
-            if (passwordBoxContrasenia.Password.Trim().Length >= MINIMO_CARACTERES)
+            if (passwordBoxContrasenia.Password.Trim().Length >= LONGITUD_MINIMA_CONTRASENIA)
             {
                 labelContraseniaMinimo.Foreground = Brushes.Green;
             }
@@ -96,7 +96,7 @@ namespace WpfCliente.GUI
                 isValid = false;
             }
 
-            if (passwordBoxContrasenia.Password.Trim().Length <= MAXIMO_CARACTERES)
+            if (passwordBoxContrasenia.Password.Trim().Length <= LONGITUD_MAXIMA_CONTRASENIA)
             {
                 labelContraseniaMaximo.Foreground = Brushes.Green;
             }

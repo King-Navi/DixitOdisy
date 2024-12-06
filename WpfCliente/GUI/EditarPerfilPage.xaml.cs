@@ -17,6 +17,8 @@ namespace WpfCliente.GUI
         private bool cambioImagen = false;
         private const string RECURSO_ESTILO_CORREO = "TextBoxEstiloNormal";
         private const string RECURSO_ESTILO_CORREO_ERROR = "TextBoxEstiloError";
+        private const int LONGITUD_MINIMA_CONTRASENIA = 5;
+        private const int LONGITUD_MAXIMA_CONTRASENIA = 20;
 
         public EditarPerfilPage()
         {
@@ -261,7 +263,7 @@ namespace WpfCliente.GUI
 
             bool isValid = true;
 
-            if (textBoxContrasenia.Password.Trim().Length >= 5)
+            if (textBoxContrasenia.Password.Trim().Length >= LONGITUD_MINIMA_CONTRASENIA)
             {
                 labelContraseniaMinimo.Foreground = Brushes.Green;
             }
@@ -270,7 +272,7 @@ namespace WpfCliente.GUI
                 isValid = false;
             }
 
-            if (textBoxContrasenia.Password.Trim().Length <= 20)
+            if (textBoxContrasenia.Password.Trim().Length <= LONGITUD_MAXIMA_CONTRASENIA)
             {
                 labelContraseniaMaximo.Foreground = Brushes.Green;
             }

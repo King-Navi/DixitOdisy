@@ -29,7 +29,7 @@ namespace WcfServicioLibreria.Modelo
         private const int TIEMPO_DESECHO_SEGUNDOS = 10;
         private string idCodigoSala;
         private const int CANTIDAD_MINIMA_JUGADORES = 1;
-        public const int CANTIDAD_MAXIMA_JUGADORES = 6;
+        public const int CANTIDAD_MAXIMA_JUGADORES = 4;
         private readonly ConcurrentDictionary<string, ISalaJugadorCallback> jugadoresSalaCallbacks = new ConcurrentDictionary<string, ISalaJugadorCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
         private ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario> jugadoresInformacion = new ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario>();

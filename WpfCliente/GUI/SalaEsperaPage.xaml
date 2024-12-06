@@ -83,7 +83,7 @@
             x:Name="stakePaneListaExpulsion" 
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
-            Margin="226,234,0,0" 
+            Margin="226,175,0,0" 
             Background="Coral">
             <Label 
                 x:Name="labelExpulsarUsuario" 

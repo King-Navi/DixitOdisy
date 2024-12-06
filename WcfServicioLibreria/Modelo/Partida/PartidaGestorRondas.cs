@@ -96,8 +96,20 @@ namespace WcfServicioLibreria.Modelo
             {
                 foreach (var nombre in ObtenerNombresJugadores().ToList())
                 {
-                    jugadoresCallback.TryGetValue(nombre, out IPartidaCallback callback);
-                    callback.EnviarEstadisticasCallback(estadisticasPartida);
+                    if (jugadoresCallback.TryGetValue(nombre, out IPartidaCallback callback))
+                    {
+                        Task _ = Task.Run(() =>
+                        {
+                            try
+                            {
+                                callback.EnviarEstadisticasCallback(estadisticasPartida);
+                            }
+                            catch (Exception excepcion)
+                            {
+                                ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                            }
+                        });
+                    }
                 }
             }
             catch (Exception excepcion)
@@ -145,7 +157,7 @@ namespace WcfServicioLibreria.Modelo
             await EsperarConfirmacionNarradorAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_NARRADOR));
             if (SelecionoCartaNarrador)
             {
-                await EsperarConfirmacionJugadoresAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_SELECCION));
+                await EsperarEleccionesJugadoresAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_SELECCION));
                 await EnMostrarTodasCartas();
                 CambiarPantalla(PANTALLA_TODOS_CARTAS , NarradorActual);
                 await EsperarConfirmacionAdivinarAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_PARA_ADIVINAR));
@@ -191,14 +203,13 @@ namespace WcfServicioLibreria.Modelo
 
         private async Task EsperarConfirmacionAdivinarAsync(TimeSpan tiempoEspera)
         {
-            var tiempoParaJugadores = new CancellationTokenSource();
-            var tareaEsperaJugadores = Task.Delay(tiempoEspera, tiempoParaJugadores.Token);
+            var cancelacion = new CancellationTokenSource();
+            var tareaEsperaJugadores = Task.Delay(tiempoEspera, cancelacion.Token);
 
             while (!tareaEsperaJugadores.IsCompleted)
             {
                 if (tareaEsperaJugadores.IsCompleted)
                 {
-                    Console.WriteLine("Tiempo agotado para los jugadores");
                     break;
                 }
 
@@ -295,7 +306,6 @@ namespace WcfServicioLibreria.Modelo
             {
                 if (tareaEsperaNarrador.IsCompleted)
                 {
-                    Console.WriteLine("Tiempo agotado para el narrador");
                     break;
                 }
 
@@ -304,22 +314,20 @@ namespace WcfServicioLibreria.Modelo
             if (ClaveImagenCorrectaActual == null || PistaActual == null || NarradorActual == null)
             {
                 SelecionoCartaNarrador = false;
-                Console.Write($"Partida {IdPartida} el narrador {NarradorActual} no escogio nada se le penalizara");
                 return;
             }
             SelecionoCartaNarrador = true;
         }
 
-        private async Task EsperarConfirmacionJugadoresAsync(TimeSpan tiempoEspera)
+        private async Task EsperarEleccionesJugadoresAsync(TimeSpan tiempoEspera)
         {
-            var tiempoParaJugadores = new CancellationTokenSource();
-            var tareaEsperaJugadores = Task.Delay(tiempoEspera, tiempoParaJugadores.Token);
+            var cancelacion = new CancellationTokenSource();
+            var tareaEsperaJugadores = Task.Delay(tiempoEspera, cancelacion.Token);
 
             while (JugadoresPendientes.Any())
             {
                 if (tareaEsperaJugadores.IsCompleted)
                 {
-                    Console.WriteLine("Tiempo agotado para los jugadores");
                     break;
                 }
 
@@ -328,7 +336,7 @@ namespace WcfServicioLibreria.Modelo
 
             if (!tareaEsperaJugadores.IsCompleted)
             {
-                tiempoParaJugadores.Cancel();
+                cancelacion.Cancel();
                 PenalizarJugadoresSinConfirmar();
             }
         }
@@ -414,6 +422,7 @@ namespace WcfServicioLibreria.Modelo
         {
             try
             {
+                Console.WriteLine($" ConfirmarTurnoAdivinarJugador   Me llamo  {nombreJugador}");
                 JugadoresPendientes.TryTake(out nombreJugador);
                 ImagenElegidaPorJugador.AddOrUpdate(
                     nombreJugador,
@@ -427,6 +436,7 @@ namespace WcfServicioLibreria.Modelo
                         return listaExistente;
                     }
                 );
+                Console.WriteLine($"Me llamo y lo agregue a las lista de eleciones {nombreJugador}");
             }
             catch (Exception excepcion)
             {
@@ -438,7 +448,8 @@ namespace WcfServicioLibreria.Modelo
         {
             try
             {
-                JugadoresPendientes.TryTake(out nombreJugador);
+                Console.WriteLine($"ConfirmacionTurnoEleccionJugador Me llamo para su imagen {nombreJugador}");
+                //JugadoresPendientes.TryTake(out nombreJugador);
                 ImagenesTodosGrupo.AddOrUpdate(
                    nombreJugador,
                    new List<string> { claveImagen },
@@ -451,6 +462,8 @@ namespace WcfServicioLibreria.Modelo
                        return listaExistente;
                    }
                );
+                Console.WriteLine($"Me llamo y lo agregie a las lista de todos {nombreJugador}");
+
             }
             catch (Exception excepcion)
             {
@@ -464,10 +477,8 @@ namespace WcfServicioLibreria.Modelo
             this.PistaActual = pista;
             try
             {
-                lock (JugadoresPendientes)
-                {
-                    JugadoresPendientes.TryTake(out nombreJugador);
-                }
+                Console.WriteLine($"Me llamo el narrador {nombreJugador}");
+                JugadoresPendientes.TryTake(out nombreJugador );
                 ImagenElegidaPorJugador.AddOrUpdate(
                     nombreJugador,
                     new List<string> { claveImagen },
@@ -492,6 +503,7 @@ namespace WcfServicioLibreria.Modelo
                        return listaExistente;
                    }
                );
+                Console.WriteLine($"Me llamo el narrador {nombreJugador} y lo agregie a las listas");
             }
             catch (CommunicationException excepcion)
             {
@@ -581,14 +593,29 @@ namespace WcfServicioLibreria.Modelo
                 foreach (var nombre in ObtenerNombresJugadores())
                 {
                     jugadoresCallback.TryGetValue(nombre.ToString(), out IPartidaCallback callback);
-                    callback?.MostrarPistaCallback(this.PistaActual);
+
+                    Task.Run(() =>
+                    {
+                        try
+                        {
+                            callback?.MostrarPistaCallback(this.PistaActual);
+                        }
+                        catch (TimeoutException excepcion)
+                        {
+                            ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                        }
+                        catch (CommunicationException excepcion)
+                        {
+                            ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                        }
+                        catch (Exception excepcion)
+                        {
+                            ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                        }
+                    });
                 }
             }
-            catch (TimeoutException excepcion)
-            {
-                ManejadorExcepciones.ManejarExcepcionError(excepcion);
-            }
-            catch (CommunicationException excepcion)
+            catch (ArgumentNullException excepcion)
             {
                 ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }

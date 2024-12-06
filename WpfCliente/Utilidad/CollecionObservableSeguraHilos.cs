@@ -31,12 +31,6 @@ namespace WpfCliente.Utilidad
                 return false;
             }
         }
-
-        private new IEnumerator<T> GetEnumerator()
-        {
-            throw new InvalidOperationException();
-        }
-
         protected override void InsertItem(int index, T item)
         {
             lock (sincronizarBloqueo)

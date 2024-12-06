@@ -101,7 +101,7 @@ namespace WpfCliente.GUI
             {
                 chatUserControl.IsEnabled = false;
                 ComandoImagenGlobal = new ComandoRele<string>(ComandoImagenPorId);
-                ComandoImagenSelecionCorrecta = new ComandoRele<string>(ComandoSeleccionCorrectaAsync,
+                ComandoImagenSelecionCorrecta = new ComandoRele<string>(ComandoTratarAdivinarAsync,
                     (param) => ComandoHabilitado);
                 narradorSeleccionCartasUserControl = new NarradorSeleccionCartaUserControl();
                 seleccionCartasUserControl = new SeleccionCartaUserControl();
@@ -122,7 +122,7 @@ namespace WpfCliente.GUI
                 ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
         }
-        private async void ComandoSeleccionCorrectaAsync(string idImagen)
+        private async void ComandoTratarAdivinarAsync(string idImagen)
         {
             ImagenCarta imagenAEscoger =
                 SingletonGestorImagenes.Instancia.imagenesDeTodos.ImagenCartasTodos
@@ -273,15 +273,15 @@ namespace WpfCliente.GUI
         }
 
 
-        public void ComandoImagenPorId(string id)
+        public void ComandoImagenPorId(string claveImagen)
         {
             if (EsNarrador)
             {
-                EscogerImagenNarradorAsync(id);
+                EscogerImagenNarradorAsync(claveImagen);
             }
             else
             {
-                EscogerImagenPorIdAsync(id);
+                EscogerImagenPorIdAsync(claveImagen);
             }
         }
 
@@ -330,7 +330,8 @@ namespace WpfCliente.GUI
                 contadorSeleccion++;
                 SingletonGestorImagenes.Instancia.imagnesMazo.ImagenCartasMazo.Remove(imagenAEscoger);
                 await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
-                await SingletonPartida.Instancia.Partida.ConfirmarMovimientoAsync(SingletonCliente.Instance.NombreUsuario, 
+                await SingletonPartida.Instancia.Partida.ConfirmarMovimientoAsync(
+                    SingletonCliente.Instance.NombreUsuario, 
                     SingletonCliente.Instance.IdPartida, 
                     imagenAEscoger.IdImagen, 
                     pista);

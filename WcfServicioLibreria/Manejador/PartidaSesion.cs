@@ -22,7 +22,7 @@ namespace WcfServicioLibreria.Manejador
                 IPartidaCallback contexto = contextoOperacion.GetCallbackChannel<IPartidaCallback>();
                 partidasDiccionario.TryGetValue(idPartida, out Partida partida);
                 await partida.AgregarJugadorAsync(usuarioNombre, contexto);
-                
+
                 return true;
             }
             catch (FaultException<PartidaFalla> excepcion)
@@ -78,21 +78,25 @@ namespace WcfServicioLibreria.Manejador
             {
                 return;
             }
+            if (String.IsNullOrEmpty(nombreJugador))
+            {
+
+                Console.WriteLine("Es nulo");
+                return;
+            }
             try
             {
+                Console.WriteLine($"Me llamo {nombreJugador}");
                 partidasDiccionario.TryGetValue(idPartida, out Partida partida);
-                lock (partida)
+                var narrador = partida.NarradorActual;
+                if (narrador == nombreJugador && pista != null)
                 {
-                    var narrador = partida.NarradorActual;
-                    if (narrador == nombreJugador && pista != null)
-                    {
-                        partida.ConfirmarTurnoNarrador(nombreJugador, claveImagen, pista);
+                    partida.ConfirmarTurnoNarrador(nombreJugador, claveImagen, pista);
 
-                    }
-                    else
-                    {
-                        partida.ConfirmacionTurnoEleccionJugador(nombreJugador, claveImagen);
-                    }
+                }
+                else
+                {
+                    partida.ConfirmacionTurnoEleccionJugador(nombreJugador, claveImagen);
                 }
             }
             catch (ArgumentNullException excepcion)

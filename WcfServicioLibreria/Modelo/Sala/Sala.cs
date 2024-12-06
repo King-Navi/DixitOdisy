@@ -311,43 +311,72 @@ namespace WcfServicioLibreria.Modelo
 
         private void NotificarJugadorExistente(ISalaJugadorCallback nuevoCallback, bool esInvitado)
         {
-            foreach (var jugadorExistente in jugadoresInformacion.Values)
+            try
             {
-                Usuario jugador = new Usuario
+                foreach (var jugadorExistente in jugadoresInformacion.Values)
                 {
-                    Nombre = jugadorExistente.gamertag,
-                    FotoUsuario = new MemoryStream(jugadorExistente.fotoPerfil),
-                    EsInvitado = esInvitado
-                };
-                try
-                {
-                    nuevoCallback?.ObtenerJugadorSalaCallback(jugador);
-                }
-                catch (Exception excepcion)
-                {
-                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
-                }
-            }
-        }
-
-        private void NotificarJugadoresConectados(string nombreJugador, Usuario usuario)
-        {
-            foreach (var jugadorConectado in ObtenerNombresJugadoresSala())
-            {
-                if (jugadoresSalaCallbacks.TryGetValue(jugadorConectado, out ISalaJugadorCallback callback))
-                {
-                    if (jugadorConectado != nombreJugador)
+                    Usuario jugador = new Usuario
+                    {
+                        Nombre = jugadorExistente.gamertag,
+                        FotoUsuario = new MemoryStream(jugadorExistente.fotoPerfil),
+                        EsInvitado = esInvitado
+                    };
+                    Task.Run(() =>
                     {
                         try
                         {
-                            callback?.ObtenerJugadorSalaCallback(usuario);
+                            nuevoCallback?.ObtenerJugadorSalaCallback(jugador);
                         }
                         catch (Exception excepcion)
                         {
                             ManejadorExcepciones.ManejarExcepcionError(excepcion);
                         }
+                    });
+                }
+            }
+            catch (NullReferenceException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
+            }
+        }
+
+        private void NotificarJugadoresConectados(string nombreJugador, Usuario usuario)
+        {
+            try
+            {
+                foreach (var jugadorConectado in ObtenerNombresJugadoresSala())
+                {
+                    if (jugadoresSalaCallbacks.TryGetValue(jugadorConectado, out ISalaJugadorCallback callback))
+                    {
+                        if (jugadorConectado != nombreJugador)
+                        {
+
+                            Task.Run(() =>
+                            {
+                                try
+                                {
+                                    callback?.ObtenerJugadorSalaCallback(usuario);
+                                }
+                                catch (Exception excepcion)
+                                {
+                                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                                }
+                            });
+                        }
                     }
                 }
+            }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
         }
 

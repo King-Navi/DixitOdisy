@@ -35,7 +35,7 @@ namespace WcfServicioLibreria.Modelo
         private const int TIEMPO_ESPERA_UNIRSE_JUGADORES = 20;
         private const int TIEMPO_ESPERA_NARRADOR = 40; // 40
         private const int TIEMPO_ESPERA_SELECCION = 20; //60
-        private const int TIEMPO_ESPERA_PARA_ADIVINAR = 20; //60
+        private const int TIEMPO_ESPERA_PARA_ADIVINAR = 40; //60
         private const int TIEMPO_ESPERA = 5;
         private const int TIEMPO_ENVIO_SEGUNDOS = 5;
         private const int NUM_JUGADOR_PARTIDA_VACIA = 0; 

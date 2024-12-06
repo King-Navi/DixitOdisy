@@ -56,7 +56,6 @@ namespace WcfServicioLibreria.Modelo
         {
             try
             {
-                Console.WriteLine($"{this.nombre} + {amigo.Nombre}");
                 UsuarioSesionCallback.CambiarEstadoAmigoCallback(amigo);
             }
             catch (Exception excecpion)

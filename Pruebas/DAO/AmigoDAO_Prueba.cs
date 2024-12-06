@@ -13,6 +13,7 @@ namespace Pruebas.DAO
     {
         private const int ID_USUARIO_MENOR = 1;
         private const int ID_USUARIO_MAYOR = 2;
+        private const int ID_USUARIO_AUN_MAYOR = 1005;
         private const int ID_INVALIDO_SEGUNDO_EJEMPLO = -2;
         private AmistadDAO amistadDAO = new AmistadDAO();
 
@@ -80,8 +81,8 @@ namespace Pruebas.DAO
         public void RecuperarListaAmigos_CuandoUsuarioTieneAmigos_DeberiaRetornarListaAmigos()
         {
             
-            ConfigurarAmistad(7, ID_USUARIO_MENOR);
-            ConfigurarAmistad(6, ID_USUARIO_MENOR);
+            ConfigurarAmistad(ID_USUARIO_MAYOR, ID_USUARIO_MENOR);
+            ConfigurarAmistad(ID_USUARIO_AUN_MAYOR , ID_USUARIO_MENOR);
             
             var resultado = amistadDAO.RecuperarListaAmigos(ID_USUARIO_MENOR);
             

@@ -6,9 +6,10 @@ namespace Pruebas.Servidor.Utilidades
 {
     public partial class UsuarioSesionCallbackImplementacion : IUsuarioSesionCallback
     {
-        public void RecibirInvitacionCallback(InvitacionPartida invitacion)
+        public bool InvitacionEnviada { get; private set; }
+    public void RecibirInvitacionCallback(InvitacionPartida invitacion)
         {
-            throw new NotImplementedException();
+            InvitacionEnviada = true;
         }
     }
 }

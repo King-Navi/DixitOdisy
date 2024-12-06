@@ -62,6 +62,7 @@ namespace Pruebas.DAO
 
             Assert.IsTrue(resultado, "El resultado debería ser verdadero.");
         }
+
         [TestMethod]
         public async Task AgregarEstadisticaPartida_MultiplesAcciones_DeberiaActualizarEstadisticas()
         {

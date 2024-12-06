@@ -26,8 +26,10 @@ namespace WcfServicioLibreria.Manejador
                         return multiChat.AgregarJugadorChat(nombreUsuario, contexto);
                     
                 }
-               
-
+            }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {

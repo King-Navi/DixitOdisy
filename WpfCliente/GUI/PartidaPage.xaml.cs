@@ -211,13 +211,13 @@ namespace WpfCliente.GUI
                     VentanasEmergentes.CrearVentanaEmergenteConCierre(Properties.Idioma.tituloErrorInesperado,
                         Properties.Idioma.mensajeErrorInesperado,
                         Window.GetWindow(this));
-                    SalirDePartida();
+                    await SalirDePartidaAsync();
                     return;
                 }
                 var resultado = SingletonPartida.Instancia.AbrirConexionPartida();
                 if (!resultado)
                 {
-                    SalirDePartida();
+                    await SalirDePartidaAsync();
                     return;
                 }
                 await SingletonPartida.Instancia.Partida.UnirsePartidaAsync(SingletonCliente.Instance.NombreUsuario, idPartida);
@@ -227,12 +227,12 @@ namespace WpfCliente.GUI
                 VentanasEmergentes.CrearVentanaEmergenteConCierre(Properties.Idioma.tituloErrorUnirsePartida,
                         Properties.Idioma.mensajeErrorUnirsePartida,
                         Window.GetWindow(this));
-                SalirDePartida();
+                await SalirDePartidaAsync();
                 ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
             }
             catch (Exception excepcion)
             {
-                SalirDePartida();
+                await SalirDePartidaAsync();
                 ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
             }
         }
@@ -245,14 +245,21 @@ namespace WpfCliente.GUI
             verTodasCartasUserControl.IsEnabled = esHabilitado;
         }
 
-        private void SalirDePartida()
+        private async Task SalirDePartidaAsync()
         {
             BindingOperations.ClearAllBindings(this);
+            SingletonPartida.Instancia.CerrarConexionPartida();
+            SingletonChat.Instancia.CerrarConexionChat();
+            bool resultado = await Conexion.VerificarConexionAsync(HabilitarBotones,Window.GetWindow(this));
+            if (!resultado)
+            {
+                SingletonGestorVentana.Instancia.NavegarA(new IniciarSesionPage());
+                return;
+            }
+
             if (SingletonCliente.Instance.NombreUsuario != null 
                 && SingletonCliente.Instance.NombreUsuario is string nombre)
             {
-                SingletonPartida.Instancia.CerrarConexionPartida();
-                SingletonChat.Instancia.CerrarConexionChat();
                 if (String.IsNullOrEmpty(nombre) || nombre.ToLower().Contains(NOMBRE_RESERVADO))
                 {
                     SingletonGestorVentana.Instancia.NavegarA(new IniciarSesionPage());
@@ -349,9 +356,9 @@ namespace WpfCliente.GUI
         {
             CambiarPantalla(PantallasPartida.PANTALLA_TODOS_CARTAS);
         }
-        public void ClicImagenFlechaAtras(object sender, RoutedEventArgs e)
+        public async void ClicImagenFlechaAtrasAsync(object sender, RoutedEventArgs e)
         {
-            SalirDePartida();
+            await SalirDePartidaAsync();
         }
         private void BORRAME_SImulacionCambioRondaSoyJugador(object sender, RoutedEventArgs e)
         {

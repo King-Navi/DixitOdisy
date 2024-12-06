@@ -69,7 +69,7 @@ namespace WpfCliente.ImplementacionesCallbacks
             {
                 if (Partida != null)
                 {
-                    Partida.Close();
+                    Partida.Abort();
                     Partida = null;
                     return true;
                 }
@@ -142,9 +142,16 @@ namespace WpfCliente.ImplementacionesCallbacks
         }
         public async void PrepararseParaRonda()
         {
-            await UnirseChat();
-            await Partida.EmpezarPartidaAsync(SingletonCliente.Instance.NombreUsuario, 
-                SingletonCliente.Instance.IdPartida);
+            try
+            {
+                await UnirseChat();
+                await Partida.EmpezarPartidaAsync(SingletonCliente.Instance.NombreUsuario,
+                    SingletonCliente.Instance.IdPartida);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
         }
 
         public void EliminarJugadorPartidaCallback(Usuario jugardoreRetiradoDeSala)

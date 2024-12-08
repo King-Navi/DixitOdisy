@@ -101,6 +101,7 @@ namespace WpfCliente.GUI
             labelContraseniaMinimo.Content = Properties.Idioma.labelContraseniaMinimo;
             labelContraseniaMaximo.Content = Properties.Idioma.labelContraseniaMaximo;
             labelContraseniaSimbolos.Content = Properties.Idioma.labelContraseniaSimbolos;
+            labelContraseniasNoCoinciden.Content = Properties.Idioma.labelContraseniaNoCoincide;
             this.Title = Properties.Idioma.tituloEditarUsuario;
         }
 

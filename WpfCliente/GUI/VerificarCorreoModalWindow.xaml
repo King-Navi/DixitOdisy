@@ -64,7 +64,7 @@
             Width="360" />
         <TextBox 
             x:Name="textBoxCodigo" 
-            MaxLength="6" 
+            MaxLength="50" 
             Grid.Row="0" 
             Width="260" 
             Height="25" 

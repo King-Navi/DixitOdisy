@@ -8,6 +8,7 @@ namespace WpfCliente.GUI
     public partial class VerificarCorreoModalWindow : Window, IActualizacionUI
     {
         public string ValorIngresado { get; private set; }
+        public const int MAXIMOS_CARACTERES = 50;
         public VerificarCorreoModalWindow()
         {
             InitializeComponent();
@@ -65,7 +66,7 @@ namespace WpfCliente.GUI
             labelIngresarCodigo.Content = Properties.Idioma.labelIngresarCorreo;
             labelCodigoInvalido.Visibility = Visibility.Collapsed;
             labelInstruccionesVerificacionCorreo.Visibility = Visibility.Collapsed;
-            textBoxCodigo.MaxLength = 100;
+            textBoxCodigo.MaxLength = MAXIMOS_CARACTERES;
         }
         private void TratarCerrarVentana()
         {

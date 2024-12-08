@@ -42,7 +42,8 @@ namespace WpfCliente.GUI
             labelContraseniaSimbolos.Content = Properties.Idioma.labelContraseniaSimbolos;
             buttonEditarContrasenia.Content = Properties.Idioma.buttonCambiarContrasenia;
             buttonCancelarCambio.Content = Properties.Idioma.buttonCancelar;
-            pageCambiarContrasenia.Title = Properties.Idioma.tituloCambiarContrasenia; 
+            pageCambiarContrasenia.Title = Properties.Idioma.tituloCambiarContrasenia;
+            labelContraseniasNoCoinciden.Content = Properties.Idioma.labelContraseniaNoCoincide;
         }
 
         private void ClicButtonEditarContrasenia(object sender, RoutedEventArgs e)

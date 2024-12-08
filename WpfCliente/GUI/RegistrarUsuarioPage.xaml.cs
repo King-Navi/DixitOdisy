@@ -65,12 +65,14 @@ namespace WpfCliente.GUI
 
         private async void ClicButtonRegistrarUsuarioAsync(object sender, RoutedEventArgs e)
         {
+            buttonRegistrarUsuario.IsEnabled = false;
             bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)
             {
                 return;
             }
             await CrearCuenta();
+            buttonRegistrarUsuario.IsEnabled = true;
         }
 
 
@@ -121,12 +123,6 @@ namespace WpfCliente.GUI
                     VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloRegistroUsuario,
                         Properties.Idioma.mensajeImagenNoSelecionadaEditar, Window.GetWindow(this));
                 }
-                else
-                {
-                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloRegistroUsuario,
-                        Properties.Idioma.mensajeCamposIntroducidosInvalidos, Window.GetWindow(this));
-                }
-
             }
         }
 
@@ -225,7 +221,7 @@ namespace WpfCliente.GUI
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloCamposInvalidos,
                     Properties.Idioma.mensajeCamposInvalidos,
                     Window.GetWindow(this));
-                isValid = false;
+                return false;
             }
 
             if (!ValidacionesString.EsCorreoValido(textBoxCorreo.Text.Trim()))
@@ -233,14 +229,14 @@ namespace WpfCliente.GUI
                 textBoxCorreo.Style = (Style)FindResource(ERROR_ESTILO_TEXTO);
                 labelCorreoInvalido.Visibility = Visibility.Visible;
 
-                isValid = false;
+                return false;
             }
 
             if (!ValidacionesString.EsGamertagValido(textBoxNombreUsuario.Text.Trim()))
             {
                 textBoxNombreUsuario.Style = (Style)FindResource(ERROR_ESTILO_TEXTO);
 
-                isValid = false;
+                return false;
             }
 
             return isValid;
@@ -275,43 +271,72 @@ namespace WpfCliente.GUI
 
         private bool ValidarCaracteristicasContrasenia()
         {
-            bool isValid = false;
+            bool esValida = EsContraseniaValida();
+            ActualizarLabelsContrasenia();
+            return esValida;
+        }
 
+        private bool EsContraseniaValida()
+        {
+            bool esValida = true;
             if (passwordBoxContrasenia.Password.Contains(" "))
             {
-                isValid = false;
+                esValida = false;
             }
+            if (passwordBoxContrasenia.Password.Trim().Length < LONGITUD_MINIMA_CONTRASENIA)
+            {
+                esValida = false;
+            }
+            if (passwordBoxContrasenia.Password.Trim().Length > LONGITUD_MAXIMA_CONTRASENIA)
+            {
+                esValida = false;
+            }
+            if (!ValidacionesString.EsSimboloValido(passwordBoxContrasenia.Password))
+            {
+                esValida = false;
+            }
+            if (passwordBoxContrasenia.Password != passwordBoxRepetirContrasenia.Password)
+            {
+                esValida = false;
+            }
+            return esValida;
+        }
 
+        private void ActualizarLabelsContrasenia()
+        {
             if (passwordBoxContrasenia.Password.Trim().Length >= LONGITUD_MINIMA_CONTRASENIA)
             {
                 labelContraseniaMinimo.Foreground = Brushes.Green;
-                isValid = true;
             }
-
+            else
+            {
+                labelContraseniaMinimo.Foreground = Brushes.Red;
+            }
             if (passwordBoxContrasenia.Password.Trim().Length <= LONGITUD_MAXIMA_CONTRASENIA)
             {
                 labelContraseniaMaximo.Foreground = Brushes.Green;
-                isValid = true;
             }
-
+            else
+            {
+                labelContraseniaMaximo.Foreground = Brushes.Red;
+            }
             if (ValidacionesString.EsSimboloValido(passwordBoxContrasenia.Password))
             {
                 labelContraseniaSimbolos.Foreground = Brushes.Green;
-                isValid = true;
             }
-
+            else
+            {
+                labelContraseniaSimbolos.Foreground = Brushes.Red;
+            }
             if (passwordBoxContrasenia.Password != passwordBoxRepetirContrasenia.Password)
             {
                 labelContraseniasNoCoinciden.Visibility = Visibility.Visible;
-                isValid = false;
             }
             else
             {
                 labelContraseniasNoCoinciden.Visibility = Visibility.Collapsed;
             }
-            return isValid;
         }
-
 
         private void CargarImagen(string ruta)
         {

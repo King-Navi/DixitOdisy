@@ -68,11 +68,6 @@ namespace WcfServicioLibreria.Modelo
             return jugadoresSalaCallbacks.Count;
         }
 
-        bool EsVacia()
-        {
-            return jugadoresSalaCallbacks.IsEmpty;
-        }
-
         internal IReadOnlyCollection<string> ObtenerNombresJugadoresSala()
         {
             return jugadoresSalaCallbacks.Keys.ToList().AsReadOnly();
@@ -86,13 +81,13 @@ namespace WcfServicioLibreria.Modelo
                 if (ContarJugadores() <= CANTIDAD_MAXIMA_JUGADORES)
                 {
                     jugadoresSalaCallbacks.AddOrUpdate(nombreJugador, nuevoContexto, (key, oldValue) => nuevoContexto);
-                    if (jugadoresSalaCallbacks.TryGetValue(nombreJugador, out ISalaJugadorCallback contextoCambiado))
+                    if (jugadoresSalaCallbacks.TryGetValue(nombreJugador, out ISalaJugadorCallback contextoCambiado)
+                        && ReferenceEquals(nuevoContexto, contextoCambiado))
                     {
-                        if (ReferenceEquals(nuevoContexto, contextoCambiado))
-                        {
-                            eventosCommunication.TryAdd(nombreJugador, new DesconectorEventoManejador((ICommunicationObject)contextoCambiado, this, nombreJugador));
-                            resultado = true;
-                        }
+
+                        eventosCommunication.TryAdd(nombreJugador, new DesconectorEventoManejador((ICommunicationObject)contextoCambiado, this, nombreJugador));
+                        resultado = true;
+
                     }
                 }
             }
@@ -216,8 +211,8 @@ namespace WcfServicioLibreria.Modelo
                 return;
             }
             var jugadoresKeys = jugadoresSalaCallbacks.Keys.ToList();
-            Random random = new Random();
-            int indiceAleatorio = random.Next(jugadoresKeys.Count);
+            Random _random = new Random();
+            int indiceAleatorio = _random.Next(jugadoresKeys.Count);
             string jugadorClave = jugadoresKeys[indiceAleatorio];
             Anfitrion = jugadorClave;
             jugadoresSalaCallbacks.TryGetValue(jugadorClave, out ISalaJugadorCallback callback);
@@ -348,23 +343,21 @@ namespace WcfServicioLibreria.Modelo
             {
                 foreach (var jugadorConectado in ObtenerNombresJugadoresSala())
                 {
-                    if (jugadoresSalaCallbacks.TryGetValue(jugadorConectado, out ISalaJugadorCallback callback))
+                    if (jugadoresSalaCallbacks.TryGetValue(jugadorConectado, out ISalaJugadorCallback callback)
+                        && jugadorConectado != nombreJugador)
                     {
-                        if (jugadorConectado != nombreJugador)
-                        {
 
-                            Task.Run(() =>
+                        Task.Run(() =>
+                        {
+                            try
                             {
-                                try
-                                {
-                                    callback?.ObtenerJugadorSalaCallback(usuario);
-                                }
-                                catch (Exception excepcion)
-                                {
-                                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
-                                }
-                            });
-                        }
+                                callback?.ObtenerJugadorSalaCallback(usuario);
+                            }
+                            catch (Exception excepcion)
+                            {
+                                ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                            }
+                        });
                     }
                 }
             }

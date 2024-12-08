@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,9 +38,9 @@ namespace WcfServicioLibreria.Modelo
                 EnviarImagenHilo(lecturaTrabajo, listaImagenes);
                 return true;
             }
-            catch (Exception excecpione)
+            catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarExcepcionError(excecpione);
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             return false;
         }
@@ -81,16 +82,19 @@ namespace WcfServicioLibreria.Modelo
                     return imagenBytes;
                 }
             }
-            catch (FileNotFoundException)
+            catch (FileNotFoundException excepcion)
             {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 throw;
             }
-            catch (IOException)
+            catch (IOException excepcion)
             {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 throw;
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 throw;
             }
         }
@@ -150,7 +154,7 @@ namespace WcfServicioLibreria.Modelo
                     }
                 });
             }
-            catch (ArgumentException)
+            catch (ArgumentException excepcion)
             {
                 throw;
             }
@@ -185,12 +189,14 @@ namespace WcfServicioLibreria.Modelo
                     }
                 });
             }
-            catch (ArgumentException)
+            catch (ArgumentException excepcion)
             {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 throw;
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 throw;
             }
         }

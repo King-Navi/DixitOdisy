@@ -173,7 +173,7 @@ namespace Pruebas.Servidor
             var idPartida = manejador.CrearPartida(anfitrion.Nombre, configuracionGenerica);
 
             await manejador.UnirsePartidaAsync(anfitrion.Nombre, idPartida);
-            await manejador.EmpezarPartidaAsync(anfitrion.Nombre, idPartida);
+            await manejador.EmpezarPartidaAsync(idPartida);
             await Task.Delay(TimeSpan.FromSeconds(EsperaJugadores));
             Assert.IsFalse(manejador.ValidarPartida(idPartida), "La partida no deberia exisitir");
             if (implementacionCallback != null)
@@ -192,7 +192,7 @@ namespace Pruebas.Servidor
             var idPartida = manejador.CrearPartida(anfitrion.Nombre, configuracionGenerica);
 
             await manejador.UnirsePartidaAsync(anfitrion.Nombre, idPartida);
-            await manejador.EmpezarPartidaAsync(anfitrion.Nombre, idPartida);
+            await manejador.EmpezarPartidaAsync(idPartida);
             Assert.IsFalse(manejador.ValidarPartida(idPartida), "La partida no deberia exisitir");
             if (implementacionCallback != null)
             {
@@ -208,7 +208,7 @@ namespace Pruebas.Servidor
             var idPartida = manejador.CrearPartida(anfitrion.Nombre, configuracionGenerica);
 
             await manejador.UnirsePartidaAsync(anfitrion.Nombre, idPartida);
-            await manejador.EmpezarPartidaAsync(anfitrion.Nombre,null);
+            await manejador.EmpezarPartidaAsync(null);
             Assert.IsTrue(manejador.ValidarPartida(idPartida), "La partida deberia exisitir");
             if (implementacionCallback != null)
             {

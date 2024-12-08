@@ -8,67 +8,37 @@ on:
 
 jobs:
   build:
-    name: Build and Analyze with SonarCloud
     runs-on: windows-latest
     steps:
-      # Configuración del JDK
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: 17
-          distribution: 'zulu'
-
-      # Clonar el código del repositorio
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Se recomienda deshabilitar shallow clones
 
-      # Restaurar paquetes NuGet
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0'
+
+      - name: Install SonarQube Scanner Globally
+        run: dotnet tool install --global dotnet-sonarscanner
+
+      - name: Add .NET tools to PATH
+        shell: bash
+        run: echo "::add-path::$(dotnet --tool-path)"
+
       - name: Restore NuGet packages
         run: dotnet restore
 
-      # Cache de paquetes de SonarQube
-      - name: Cache SonarQube Cloud packages
-        uses: actions/cache@v4
-        with:
-          path: ~\sonar\cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-
-      # Cache del SonarScanner
-      - name: Cache SonarQube Cloud scanner
-        id: cache-sonar-scanner
-        uses: actions/cache@v4
-        with:
-          path: .\.sonar\scanner
-          key: ${{ runner.os }}-sonar-scanner
-          restore-keys: ${{ runner.os }}-sonar-scanner
-
-      # Instalar SonarScanner si no está en el cache
-      - name: Install SonarQube Cloud scanner
-        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
-        shell: powershell
-        run: |
-          New-Item -Path .\.sonar\scanner -ItemType Directory
-          dotnet tool install --global dotnet-sonarscanner
-
-      # Iniciar análisis con SonarCloud
       - name: Begin SonarCloud analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"King-Navi_DixitOdisy" /o:"naviking" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.scanner.skipJreProvisioning=true
+          dotnet-sonarscanner begin /k:"King-Navi_DixitOdisy" /o:"naviking" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
 
-      # Compilar el proyecto
       - name: Build the solution
-        run: dotnet build DixitOdisy.sln
+        run: dotnet build
 
-      # Finalizar análisis con SonarCloud
       - name: End SonarCloud analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"

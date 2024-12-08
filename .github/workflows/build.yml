@@ -25,21 +25,26 @@ jobs:
       - name: Restore NuGet packages
         run: dotnet restore DixitOdisy.sln
 
-      # 4. Instalar SonarScanner globalmente
+      # 4. Instalar herramientas WCF (opcional)
+      - name: Install WCF Tools
+        run: |
+          choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.Wcf.Tooling"
+
+      # 5. Instalar SonarScanner globalmente
       - name: Install SonarQube Scanner
         run: dotnet tool install --global dotnet-sonarscanner
 
-      # 5. Iniciar el análisis con SonarScanner
+      # 6. Iniciar el análisis con SonarScanner
       - name: SonarQube Begin Analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: dotnet-sonarscanner begin /k:"King-Navi_DixitOdisy" /o:"naviking" /d:sonar.host.url="https://sonarcloud.io"
 
-      # 6. Construir la solución
+      # 7. Construir la solución
       - name: Build the Solution
-        run: dotnet build DixitOdisy.sln
+        run: dotnet build DixitOdisy.sln --property:Platform=x64
 
-      # 7. Finalizar el análisis con SonarScanner
+      # 8. Finalizar el análisis con SonarScanner
       - name: SonarQube End Analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

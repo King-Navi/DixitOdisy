@@ -7,12 +7,13 @@ using WcfServicioLibreria.Contratos;
 using Pruebas.Servidor.Utilidades;
 using System;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 namespace Pruebas.Servidor
 {
     [TestClass]
     public class ServicioPartida_Prueba : ConfiguradorPruebaParaServicio
     {
-        private ConfiguracionPartida configuracionGenerica;
+        private ConfiguracionPartida configuracionGenerica = new ConfiguracionPartida(TematicaPartida.Mixta, CondicionVictoriaPartida.PorCantidadRondas, 4);
         [TestInitialize]
         public override void ConfigurarManejador()
         {
@@ -33,99 +34,69 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void CrearPartida_CuandoDatosValidosMixta_DeberiaRetornarIdPartida()
         {
-            
             string anfitrion = "Anfitrion1";
             var configuracion = new ConfiguracionPartida(
                 TematicaPartida.Mixta,
                 CondicionVictoriaPartida.PorCantidadRondas,
                 12);
-
-            
             string idPartida = manejador.CrearPartida(anfitrion, configuracion);
-
-            
             Assert.IsNotNull(idPartida, "El idPartida debería haber sido generado.");
             Assert.IsTrue(manejador.ValidarPartida(idPartida), "El idPartida generado debería existir en el diccionario de partidas.");
         }
         [TestMethod]
         public void CrearPartida_CuandoDatosValidosAnimales_DeberiaRetornarIdPartida()
         {
-            
             string anfitrion = "Anfitrion1";
             var configuracion = new ConfiguracionPartida(
                 TematicaPartida.Animales,
                 CondicionVictoriaPartida.PorCantidadRondas,
                 12);
-
-            
             string idPartida = manejador.CrearPartida(anfitrion, configuracion);
-
-            
             Assert.IsNotNull(idPartida, "El idPartida debería haber sido generado.");
             Assert.IsTrue(manejador.ValidarPartida(idPartida), "El idPartida generado debería existir en el diccionario de partidas.");
         }
         [TestMethod]
         public void CrearPartida_CuandoDatosValidosPaises_DeberiaRetornarIdPartida()
         {
-            
             string anfitrion = "Anfitrion1";
             var configuracion = new ConfiguracionPartida(
                 TematicaPartida.Paises,
                 CondicionVictoriaPartida.PorCantidadRondas,
                 12);
-
-            
             string idPartida = manejador.CrearPartida(anfitrion, configuracion);
-
-            
             Assert.IsNotNull(idPartida, "El idPartida debería haber sido generado.");
             Assert.IsTrue(manejador.ValidarPartida(idPartida), "El idPartida generado debería existir en el diccionario de partidas.");
         }
         [TestMethod]
         public void CrearPartida_CuandoDatosValidosMitologia_DeberiaRetornarIdPartida()
         {
-            
             string anfitrion = "Anfitrion1";
             var configuracion = new ConfiguracionPartida(
                 TematicaPartida.Mitologia,
                 CondicionVictoriaPartida.PorCantidadRondas,
-                12);
-
-            
-            string idPartida = manejador.CrearPartida(anfitrion, configuracion);
-
-            
+                12);            
+            string idPartida = manejador.CrearPartida(anfitrion, configuracion);            
             Assert.IsNotNull(idPartida, "El idPartida debería haber sido generado.");
             Assert.IsTrue(manejador.ValidarPartida(idPartida), "El idPartida generado debería existir en el diccionario de partidas.");
         }
         [TestMethod]
         public void CrearPartida_CuandoAnfitrionEsNulo_DeberiaRetornarNull()
         {
-            
             string anfitrion = null;
             var configuracion = new ConfiguracionPartida(
                 TematicaPartida.Mixta,
                 CondicionVictoriaPartida.PorCantidadRondas,
                 12);
-
-            
             string idPartida = manejador.CrearPartida(anfitrion, configuracion);
-
-            
             Assert.IsNull(idPartida, "El idPartida debería ser null si el anfitrión es nulo.");
         }
 
         [TestMethod]
         public void CrearPartida_CuandoConfiguracionEsNula_DeberiaRetornarNull()
         {
-            
             string anfitrion = "Anfitrion1";
             ConfiguracionPartida configuracion = null;
-
-            
             string idPartida = manejador.CrearPartida(anfitrion, configuracion);
-
-            
             Assert.IsNull(idPartida, "El idPartida debería ser null si la configuración es nula.");
         }
         [TestMethod]
@@ -155,11 +126,13 @@ namespace Pruebas.Servidor
 
         #region ValidarPartida
         [TestMethod]
-        public void ValidarPartida_PartidaCreada_ExisteEnDiccionario()
+        public async Task ValidarPartida_PartidaCreada_ExisteEnDiccionario()
         {
+            int tiempoEspera = 5;
             string anfitrion = "usuario123";
             var configuracion = configuracionGenerica;
             string idPartida = manejador.CrearPartida(anfitrion, configuracion);
+            await Task.Delay(TimeSpan.FromSeconds(tiempoEspera));
             bool resultado = manejador.ValidarPartida(idPartida);
             Assert.IsTrue(resultado, "Debería devolver true para una partida recién creada.");
         }
@@ -167,9 +140,17 @@ namespace Pruebas.Servidor
         public async Task ValidarPartida_PartidaTodosJugadoresAbandonan_NoExisteEnDiccionario()
         {
             var implementacionCallback = new PartidaCallbackImplementacion();
-            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
-            var usuarioAnfritrion = new Usuario { IdUsuario = 19, Nombre = "navi" };
-            var usuarioNuevo = new Usuario { IdUsuario = 1, Nombre = "NaviKing" };
+            imitacionContextoProvedor.Setup(contexto => contexto.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
+            var usuarioAnfritrion = new Usuario 
+            { 
+                IdUsuario = 19,
+                Nombre = "navi" 
+            };
+            var usuarioNuevo = new Usuario
+            { 
+                IdUsuario = 1, 
+                Nombre = "NaviKing" 
+            };
             var idPartida = manejador.CrearPartida(usuarioAnfritrion.Nombre, configuracionGenerica);
             await manejador.UnirsePartidaAsync(usuarioAnfritrion.Nombre, idPartida);
             await manejador.UnirsePartidaAsync(usuarioNuevo.Nombre, idPartida);
@@ -192,46 +173,52 @@ namespace Pruebas.Servidor
             bool resultado = manejador.ValidarPartida(null);
             Assert.IsFalse(resultado, "Debería devolver false cuando el identificador de la sala es null.");
         }
-
-
-
         #endregion
         
         #region EsPartidaEmpezada
         [TestMethod]
         public void EsPartidaEmpezada_IdentificadorNull_DeberiaRetornarFalse()
         {
-            
             bool resultado = manejador.EsPartidaEmpezada(null);
-
-            
             Assert.IsFalse(resultado, "Debería devolver false cuando el identificador de la sala es null.");
-
         }
         [TestMethod]
-        public void EsPartidaEmpezada_PartidaEmpezada_RetornaTrue()
+        public async Task EsPartidaEmpezada_PartidaEmpezada_RetornaTrue()
         {
-            
+            int tiempoEspera = 30;
+            var implementacionCallback = new PartidaCallbackImplementacion();
             string anfitrion = "usuario123";
             var configuracion = configuracionGenerica;
             string idPartida = manejador.CrearPartida(anfitrion, configuracion);
-
-            
+            imitacionContextoProvedor.Setup(contexto => contexto.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
+            var usuarioAnfritrion = new Usuario
+            {
+                IdUsuario = 19,
+                Nombre = "navi"
+            };
+            var usuarioNuevo = new Usuario
+            {
+                IdUsuario = 1,
+                Nombre = "NaviKing"
+            };
+            var usuarioConectandose = new Usuario
+            {
+                IdUsuario = 4,
+                Nombre = "JugadorEjemplo"
+            };
+            await manejador.UnirsePartidaAsync(usuarioConectandose.Nombre, idPartida);
+            await manejador.UnirsePartidaAsync(usuarioAnfritrion.Nombre, idPartida);
+            await manejador.UnirsePartidaAsync(usuarioNuevo.Nombre, idPartida);
+            await manejador.EmpezarPartidaAsync(idPartida);
+            await Task.Delay(TimeSpan.FromSeconds(tiempoEspera));
             bool resultado = manejador.EsPartidaEmpezada(idPartida);
-
-            
             Assert.IsTrue(resultado, "Debería devolver true para una partida emepzada.");
         }
         [TestMethod]
         public void EsPartidaEmpezada_PartidaNoCreada_NoExisteEnDiccionario()
         {
-            
             string idPartidaInexistente = "salaNoCreada";
-
-            
-            bool resultado = manejador.EsPartidaEmpezada(idPartidaInexistente);
-
-            
+            bool resultado = manejador.EsPartidaEmpezada(idPartidaInexistente);            
             Assert.IsFalse(resultado, "Debería devolver false para una partida que no existe en el diccionario.");
         }
         

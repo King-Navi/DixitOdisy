@@ -152,7 +152,7 @@ namespace WcfServicioLibreria.Manejador
                 {
                     return;
                 }
-                await partida.EmpezarPartida();
+                await partida.EmpezarPartidaAsync();
             }
             catch (ArgumentNullException excepcion)
             {

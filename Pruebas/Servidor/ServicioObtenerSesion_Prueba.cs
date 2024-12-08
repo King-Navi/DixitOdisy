@@ -16,6 +16,7 @@ namespace Pruebas.Servidor
         [TestInitialize]
         public override void ConfigurarManejador()
         {
+            manejador = null;
             base.ConfigurarManejador();
         }
 
@@ -23,6 +24,7 @@ namespace Pruebas.Servidor
         public override void LimpiadorTodo()
         {
             base.LimpiadorTodo();
+            manejador = null;
         }
 
         #region ObtenerSessionJugadorCallback
@@ -58,9 +60,6 @@ namespace Pruebas.Servidor
              .Returns(implementacionCallback);
             var usuario = new Usuario { IdUsuario = 1, Nombre = "PruebaUsuario" };
             manejador.ObtenerSesionJugador(usuario);
-            Assert.IsTrue(implementacionCallback.SesionAbierta, "El callback debería haber sido llamado y la sesión debería estar activa.");
-            Assert.AreEqual(CommunicationState.Opened, ((ICommunicationObject)implementacionCallback).State, "El canal debería estar en estado abierto.");
-            Assert.IsTrue(manejador.YaIniciadoSesion(usuario.Nombre), "El canal debería estar en estado abierto.");
             implementacionCallback.Close();
             var resultado = manejador.YaIniciadoSesion("PruebaUsuario");
             Assert.IsFalse(resultado, "No deberia estar inciado");

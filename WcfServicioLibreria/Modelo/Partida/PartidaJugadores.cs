@@ -31,11 +31,11 @@ namespace WcfServicioLibreria.Modelo
         #endregion PantallasCliente
 
         #region NumerosPartida
-        private const int CANTIDAD_MINIMA_JUGADORES = 1;
-        private const int TIEMPO_ESPERA_UNIRSE_JUGADORES = 25; //20
-        private const int TIEMPO_ESPERA_NARRADOR = 30;  //15
-        private const int TIEMPO_ESPERA_SELECCION = 25;  // 15
-        private const int TIEMPO_ESPERA_PARA_ADIVINAR = 60;  //20
+        private const int CANTIDAD_MINIMA_JUGADORES = 3;
+        private const int TIEMPO_ESPERA_UNIRSE_JUGADORES = 25; 
+        private const int TIEMPO_ESPERA_NARRADOR = 30;  
+        private const int TIEMPO_ESPERA_SELECCION = 25;  
+        private const int TIEMPO_ESPERA_PARA_ADIVINAR = 25;
         private const int TIEMPO_ESPERA = 5;
         private const int NUMERO_JUGADOR_PARTIDA_VACIA = 0;
         private const int RONDAS_MINIMA_PARA_PUNTOS = 3;

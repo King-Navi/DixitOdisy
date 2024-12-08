@@ -13,7 +13,10 @@ namespace Pruebas.Servidor
     [TestClass]
     public class ServicioPartidaSesion_Prueba : ConfiguradorPruebaParaServicio
     {
-        private ConfiguracionPartida configuracionGenerica;
+        private ConfiguracionPartida configuracionGenerica = new ConfiguracionPartida(
+            WcfServicioLibreria.Enumerador.TematicaPartida.Mixta, 
+            WcfServicioLibreria.Enumerador.CondicionVictoriaPartida.PorCantidadRondas, 
+            4);
 
         [TestInitialize]
         public override void ConfigurarManejador()
@@ -34,37 +37,24 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task UnirsePartida_PartidaValida_DeberiaInvocarCallbackAvisoNuevoJugador()
         {
-            
             var implementacionCallback = new PartidaCallbackImplementacion();
-
             imitacionContextoProvedor.Setup(contextoProveedor => contextoProveedor.GetCallbackChannel<IPartidaCallback>())
-                               .Returns(implementacionCallback);
-
+                .Returns(implementacionCallback);
             var usuario = new Usuario { IdUsuario = 19, Nombre = "navi" };
-       
-            
             var idPartida = manejador.CrearPartida(usuario.Nombre, configuracionGenerica);
             await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
-
-            
             Assert.IsTrue(implementacionCallback.JugadoresEnPartida.Any(jugador => jugador.Key == usuario.Nombre), "El callback debería haber sido llamado y la sesión debería estar activa.");
 
         }
         [TestMethod]
         public async Task UnirsePartida_PartidaNoValida_NoDeberiaAgregarJugadorNiInvocarCallback()
         {
-            
-            string gamertag = "JugadorInvalido";
+            string nombreJugador = "JugadorInvalido";
             string idPartidaInexistente = "partidaNoExistente";
-
             var implementacionCallback = new PartidaCallbackImplementacion();
-            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
-
-            
-            await manejador.UnirsePartidaAsync(gamertag, idPartidaInexistente);
-
-            
-            Assert.IsFalse(implementacionCallback.JugadoresEnPartida.Any(j => j.Key == gamertag), "El jugador no debería haberse agregado ya que la partida no es válida.");
+            imitacionContextoProvedor.Setup(contexto => contexto.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
+            await manejador.UnirsePartidaAsync(nombreJugador, idPartidaInexistente);
+            Assert.IsFalse(implementacionCallback.JugadoresEnPartida.Any(busqueda=> busqueda.Key == nombreJugador), "El jugador no debería haberse agregado ya que la partida no es válida.");
             if (implementacionCallback != null)
             {
                 implementacionCallback.Close();
@@ -73,39 +63,33 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task UnirsePartida_PartidaVacia_NoDeberiaExistirPartidaRetornaFalse()
         {
-            
+            int tiempoEsperaSegundos = 12;
             var implementacionCallback = new PartidaCallbackImplementacion();
-            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
-
-            var usuario = new Usuario { IdUsuario = 19, Nombre = "navi" };
-
-            
+            imitacionContextoProvedor.Setup(contexto => contexto.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
+            var usuario = new Usuario 
+            { 
+                IdUsuario = 19, 
+                Nombre = "navi" 
+            };
             var idPartida = manejador.CrearPartida(usuario.Nombre, configuracionGenerica);
             await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
-
-            
             if (implementacionCallback != null)
             {
                 implementacionCallback.Close();
             }
+            await Task.Delay(TimeSpan.FromSeconds(tiempoEsperaSegundos));
             Assert.IsFalse(manejador.ValidarPartida(idPartida), "No deberia existir la partida");
         }
         [TestMethod]
         public async Task UnirsePartida_PartidaConJugadorIgual_RetornaTrue()
         {
-            
             var implementacionCallback = new PartidaCallbackImplementacion();
-            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
-
+            imitacionContextoProvedor.Setup(contexto => contexto.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
             var usuarioExistente = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var usuarioNuevo = new Usuario { IdUsuario = 19, Nombre = "navi" };
-
-            
             var idPartida = manejador.CrearPartida(usuarioExistente.Nombre, configuracionGenerica);
             await manejador.UnirsePartidaAsync(usuarioExistente.Nombre, idPartida);
             await manejador.UnirsePartidaAsync(usuarioNuevo.Nombre, idPartida);
-
-            
             Assert.IsTrue(implementacionCallback.JugadoresEnPartida.Count < 2, "El jugador debería haberse agregado (total jugadores 2).");
             if (implementacionCallback != null)
             {
@@ -115,20 +99,13 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task UnirsePartida_PartidaConJugador_DeberiaExistir2Jugadores()
         {
-            
             var implementacionCallback = new PartidaCallbackImplementacion();
-            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
-
+            imitacionContextoProvedor.Setup(contexto => contexto.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
             var usuarioExistente = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var usuarioNuevo = new Usuario { IdUsuario = 1, Nombre = "NaviKing" };
-
-            
             var idPartida = manejador.CrearPartida(usuarioExistente.Nombre, configuracionGenerica);
             await manejador.UnirsePartidaAsync(usuarioExistente.Nombre, idPartida);
             await manejador.UnirsePartidaAsync(usuarioNuevo.Nombre, idPartida);
-
-            
-            Console.WriteLine(implementacionCallback.JugadoresEnPartida.Count);
             Assert.IsTrue(implementacionCallback.JugadoresEnPartida.Count == 2, "El jugador debería haberse agregado (total jugadores 2).");
             if (implementacionCallback != null)
             {
@@ -138,20 +115,17 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task UnirsePartida_JugadorInvitado_InvitadoConImagen()
         {
-            
             var implementacionCallback = new PartidaCallbackImplementacion();
-            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
-
+            imitacionContextoProvedor.Setup(contexto => contexto.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
             var usuarioExistente = new Usuario { IdUsuario = 19, Nombre = "navi" };
-            var invitado = new Usuario { IdUsuario = -1, Nombre = "GUESTNoExisteEnBD" };
-
-            
+            var invitado = new Usuario 
+            { 
+                IdUsuario = -1, 
+                Nombre = "GUESTNoExisteEnBD"
+            };
             var idPartida = manejador.CrearPartida(usuarioExistente.Nombre, configuracionGenerica);
             await manejador.UnirsePartidaAsync(usuarioExistente.Nombre, idPartida);
             await manejador.UnirsePartidaAsync(invitado.Nombre, idPartida);
-
-            
-            Console.WriteLine(implementacionCallback.JugadoresEnPartida.Count);
             Assert.IsTrue(implementacionCallback.JugadoresEnPartida.Count == 2, "Debería haberse agregado (total jugadores 2).");
             implementacionCallback.JugadoresEnPartida.TryGetValue(invitado.Nombre, out Usuario invitadoRecibido);
             Assert.IsTrue(invitadoRecibido.FotoUsuario is MemoryStream, "El invitado debería haberse agregado con MemoryStream");
@@ -167,9 +141,13 @@ namespace Pruebas.Servidor
         public async Task EmpezarPartida_NoHaySuficienteJugadores_EliminaPartida()
         {
             var implementacionCallback = new PartidaCallbackImplementacion();
-            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
-            int EsperaJugadores = 22;
-            var anfitrion = new Usuario { IdUsuario = 19, Nombre = "navi" };
+            imitacionContextoProvedor.Setup(contexto => contexto.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
+            int EsperaJugadores = 30;
+            var anfitrion = new Usuario 
+            { 
+                IdUsuario = 19, 
+                Nombre = "navi" 
+            };
             var idPartida = manejador.CrearPartida(anfitrion.Nombre, configuracionGenerica);
 
             await manejador.UnirsePartidaAsync(anfitrion.Nombre, idPartida);
@@ -187,8 +165,12 @@ namespace Pruebas.Servidor
         {
             Assert.Fail(); 
             var implementacionCallback = new PartidaCallbackImplementacion();
-            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
-            var anfitrion = new Usuario { IdUsuario = 19, Nombre = "navi" };
+            imitacionContextoProvedor.Setup(contexto => contexto.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
+            var anfitrion = new Usuario 
+            { 
+                IdUsuario = 19, 
+                Nombre = "navi"
+            };
             var idPartida = manejador.CrearPartida(anfitrion.Nombre, configuracionGenerica);
 
             await manejador.UnirsePartidaAsync(anfitrion.Nombre, idPartida);
@@ -203,7 +185,7 @@ namespace Pruebas.Servidor
         public async Task EmpezarPartida_IdNull_RetornaVoid()
         {
             var implementacionCallback = new PartidaCallbackImplementacion();
-            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
+            imitacionContextoProvedor.Setup(contexto => contexto.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
             var anfitrion = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var idPartida = manejador.CrearPartida(anfitrion.Nombre, configuracionGenerica);
 

@@ -16,7 +16,7 @@ namespace WcfServicioLibreria.Modelo
     internal partial class Partida
     {
         #region Ronda
-        public async Task EmpezarPartida()
+        public async Task EmpezarPartidaAsync()
         {
             await semaphoreEmpezarPartida.WaitAsync();
             try

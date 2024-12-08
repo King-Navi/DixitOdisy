@@ -385,21 +385,21 @@ namespace Pruebas.Servidor
         }
 
         [TestMethod]
-        public void EvaluarCondicionesGlobales_VotosCorrectosIgualNumeroJugadores_AsignarPuntosANoNarradores()
+        public void EvaluarCondicionesGlobales_VotosCorrectosIgualCero_AsignarPuntosANoNarradores()
         {
             var jugadores = new List<JugadorPuntaje>
             {
                 new JugadorPuntaje(JUGADOR_1),
                 new JugadorPuntaje(NARRADOR)
             };
-            int votosCorrectos = 2;
+            int votosCorrectos = 0;
             bool todosAdivinaron = false;
             var puntaje = new Puntaje(NARRADOR, jugadores, null, null, IMAGEN_CORRECTA);
             puntaje.EvaluarCondicionesGlobales(jugadores, votosCorrectos, todosAdivinaron);
             var narrador = jugadores.Single(busqueda => busqueda.Nombre == NARRADOR);
-            var jugador1 = jugadores.Single(busqueda => busqueda.Nombre == JUGADOR_1);
+            var jugador = jugadores.Single(busqueda => busqueda.Nombre == JUGADOR_1);
             Assert.AreEqual(0, narrador.Puntos, "El narrador no debería recibir puntos.");
-            Assert.AreEqual(Puntaje.PUNTOS_AUMNETO_NO_ESCOGIO_NARRADOR, jugador1.Puntos, $"{JUGADOR_1} debería recibir puntos de penalización al narrador.");
+            Assert.AreEqual(Puntaje.PUNTOS_AUMNETO_NO_ESCOGIO_NARRADOR, jugador.Puntos, $"{JUGADOR_1} debería recibir puntos de penalización al narrador.");
         }
         [TestMethod]
         public void EvaluarCondicionesGlobales_NingunaCondicionCumplida_NoAsignarPuntos()

@@ -3,6 +3,7 @@ using Moq;
 using Pruebas.Servidor.Utilidades;
 using System;
 using System.Threading.Tasks;
+using WcfServicioLibreria.Manejador;
 using WcfServicioLibreria.Modelo;
 
 namespace Pruebas.Servidor
@@ -13,16 +14,26 @@ namespace Pruebas.Servidor
         private const string CORREO_VALIDO = "zs22013698@estudiantes.uv.mx";
         private const string CORREO_INVALIDO = "zs220136estudiantes.uv.";
         private const string CODIGO_INVALIDO = "CodigoInvalido";
+        private int retornoObtenerIdPorNombre = 1;
+        private bool retornoVerificarVetoPorIdCuenta = true;
+        private bool retornoExisteTablaVetoPorIdCuenta = false;
+        private bool retornoCrearRegistroVeto = true;
 
         [TestInitialize]
         public override void ConfigurarManejador()
         {
             base.ConfigurarManejador();
-            imitarVetoDAO.Setup(dao => dao.ExisteTablaVetoPorIdCuenta(It.IsAny<int>())).Returns(false);
-            imitarVetoDAO.Setup(dao => dao.CrearRegistroVeto(It.IsAny<int>(), It.IsAny<DateTime?>(), It.IsAny<bool>())).Returns(true);
-            imitarVetoDAO.Setup(dao => dao.VerificarVetoPorIdCuenta(It.IsAny<int>())).Returns(true);
-            imitarUsuarioDAO.Setup(dao => dao.ObtenerIdPorNombre(It.IsAny<string>())).Returns(1);
+            imitarVetoDAO.Setup(dao => dao.ExisteTablaVetoPorIdCuenta(It.IsAny<int>()))
+                 .Returns(retornoExisteTablaVetoPorIdCuenta);
 
+            imitarVetoDAO.Setup(dao => dao.CrearRegistroVeto(It.IsAny<int>(), It.IsAny<DateTime?>(), It.IsAny<bool>()))
+                .Returns(retornoCrearRegistroVeto);
+
+            imitarVetoDAO.Setup(dao => dao.VerificarVetoPorIdCuenta(It.IsAny<int>()))
+                .Returns(retornoVerificarVetoPorIdCuenta);
+
+            imitarUsuarioDAO.Setup(dao => dao.ObtenerIdPorNombre(It.IsAny<string>()))
+                .Returns(retornoObtenerIdPorNombre);
         }
         [TestCleanup]
         public override void LimpiadorTodo()
@@ -87,14 +98,11 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task VerificarCodigo_CuandoNulo_DeberiaRetornarTrue()
         {
-            
             await manejador.VerificarCorreoAsync(new Usuario()
             {
                 Correo = CORREO_VALIDO
             });
-            
             bool resultado = manejador.VerificarCodigo(null, null);
-            
             Assert.IsFalse(resultado, "El método debería devolver true cuando el código recibido coincide con el guardado.");
         }
         
@@ -104,30 +112,23 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task EnviarCorreoAsync_CuandoDatosSonValidos_DeberiaRetornarTrue()
         {
-
             string codigoValido = "123456";
-            
-            bool resultado = await manejador.EnviarCorreoAsync(codigoValido, CORREO_VALIDO);
-            
+            bool resultado = await ManejadorPrincipal.EnviarCorreoAsync(codigoValido, CORREO_VALIDO);
             Assert.IsTrue(resultado, "El método debería devolver true cuando el correo se envía correctamente.");
         }
         [TestMethod]
         public async Task EnviarCorreoAsync_CuandoCorreoEsInvalido_DeberiaRetornarTrue()
         {
-            string codigoValido = "123456";
-
-            bool resultado = await manejador.EnviarCorreoAsync(codigoValido, CORREO_VALIDO);
-
+            string codigoValido = "1234e56";
+            bool resultado = await ManejadorPrincipal.EnviarCorreoAsync(codigoValido, CORREO_VALIDO);
             Assert.IsTrue(resultado, "El método debería devolver true cuando el correo del destinatario es inválido.");
         }
 
         [TestMethod]
         public async Task EnviarCorreoAsync_CuandoServidorNoDisponible_DeberiaRetornarFalse()
         {
-            string codigo = "123456";
-
-            bool resultado = await manejador.EnviarCorreoAsync(codigo, CORREO_VALIDO);
-
+            string codigo = "1234q56";
+            bool resultado = await ManejadorPrincipal.EnviarCorreoAsync(codigo, CORREO_VALIDO);
             Assert.IsFalse(resultado, "El método debería devolver false cuando el servidor SMTP no está disponible.");
         }
 

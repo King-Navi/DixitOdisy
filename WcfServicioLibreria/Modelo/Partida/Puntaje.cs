@@ -81,7 +81,7 @@ namespace WcfServicioLibreria.Modelo
 
                     string nombreJugador = jugadorEleccion.Key;
                     List<string> imagenesSeleccionadas = jugadorEleccion.Value;
-                    if (nombreJugador.Equals(NarradorActual, StringComparison.OrdinalIgnoreCase))
+                    if (EsNarradorActual(nombreJugador))
                     {
                         continue;
                     }
@@ -122,7 +122,7 @@ namespace WcfServicioLibreria.Modelo
             {
                 foreach (var jugador in jugadores)
                 {
-                    if (jugador.Nombre.Equals(NarradorActual, StringComparison.OrdinalIgnoreCase))
+                    if (EsNarradorActual(jugador.Nombre))
                     {
                         continue;
                     }
@@ -155,7 +155,7 @@ namespace WcfServicioLibreria.Modelo
                 {
                     foreach (var jugador in jugadores)
                     {
-                        if (jugador.Nombre.Equals(NarradorActual, StringComparison.OrdinalIgnoreCase))
+                        if (EsNarradorActual(jugador.Nombre))
                         {
                             continue;
                         }
@@ -178,10 +178,10 @@ namespace WcfServicioLibreria.Modelo
                     string nombreJugador = jugadorPusoImagen.Key;
                     List<string> imagenesPuestas = jugadorPusoImagen.Value;
                     if (EsNarradorActual(nombreJugador))
+                    {
                         continue;
-
+                    }
                     var jugador = ObtenerJugadorPorNombre(jugadores, nombreJugador);
-
                     if (jugador != null)
                     {
                         int puntosPorConfundir = CalcularPuntosPorConfundir(nombreJugador, imagenesPuestas);

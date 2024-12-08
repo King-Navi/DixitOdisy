@@ -167,7 +167,9 @@
     <Compile Include="Modelo\Vetos\ManejadorDeVetos.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilidades\ContextoOperacion.cs" />
+    <Compile Include="Utilidades\GeneradorImagen.cs" />
     <Compile Include="Utilidades\IContextoOperacion.cs" />
+    <Compile Include="Utilidades\IGeneradorImagen.cs" />
     <Compile Include="Utilidades\ILectorDisco.cs" />
     <Compile Include="Utilidades\IManejadorImagen.cs" />
     <Compile Include="Utilidades\IMediadorImagen.cs" />

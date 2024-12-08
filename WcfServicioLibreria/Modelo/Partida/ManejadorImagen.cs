@@ -28,7 +28,6 @@ namespace WcfServicioLibreria.Modelo
         private ILectorDisco lectorDisco;
         private readonly SemaphoreSlim semaphoreLectura = new SemaphoreSlim(1, 1);
         private readonly SemaphoreSlim semaphoreEnvioGrupo = new SemaphoreSlim(1, 1);
-        private static readonly HttpClient httpCliente = new HttpClient();
         private readonly string rutaImagenes;
         private List<string> listaActualElegida;
         public ManejadorImagen(IEscribirDisco _escritor, IMediadorImagen _mediadorImagen, TematicaPartida _tematica, ILectorDisco _lectorDisco , List<string> rutasImagenesElegias)
@@ -110,10 +109,8 @@ namespace WcfServicioLibreria.Modelo
 
         private async Task<ImagenRespuesta64JSON> GenerarImagenDesdeChatGPTAsync()
         {
-            var imagenPedido = new ImagenPedido64JSON($"{PRIMER_PARTE_ENTRADA} {tematica}. {SEGUNDA_PARTE_ENTRADA}");
-            var solicitarImagen = new SolicitarImagen();
-            var respuesta = await solicitarImagen.EjecutarImagenPrompt64JSON(imagenPedido, httpCliente);
-
+            var generadorImagen = new GeneradorImagen();
+            var respuesta = await generadorImagen.GenerarImagenDesdeChatGPTAsync(tematica.ToString());
             return respuesta?.ImagenDatosList != null && respuesta.ImagenDatosList.Any()
                 ? respuesta
                 : null;
@@ -123,12 +120,13 @@ namespace WcfServicioLibreria.Modelo
         {
             try
             {
+                var generadorImagen = new GeneradorImagen();
                 var imagenBytes = Convert.FromBase64String(respuesta.ImagenDatosList[0].Base64Imagen);
                 var rutaDestino = Path.Combine(rutaImagenes, $"{Guid.NewGuid()}{EXTENSION_PUNTO_JPG}");
-                using (MemoryStream memoria = new MemoryStream(imagenBytes))
+                Task.Run( async() => 
                 {
-                    escritor.EncolarEscritura(memoria, rutaDestino);
-                }
+                    await generadorImagen.GuardarImagenAsync(imagenBytes, rutaDestino);
+                });
                 return new ImagenCarta
                 {
                     ImagenStream = imagenBytes,

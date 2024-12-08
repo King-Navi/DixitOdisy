@@ -84,7 +84,8 @@ namespace Pruebas.Servidor
 
 
         #endregion ObtenerMultiplesRutasYNombres
-        #region
+
+       #region ObtenerRutasPorClave
 
         [TestMethod]
         public void ObtenerRutasPorClave_RutasExistentes_RetornaRutasCorrectas()

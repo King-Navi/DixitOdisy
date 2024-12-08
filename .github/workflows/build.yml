@@ -1,4 +1,4 @@
-name: SonarQube
+name: SonarQube 
 on:
   push:
     branches:
@@ -21,30 +21,34 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 3. Restaurar paquetes NuGet
+      # 3. Instalar NuGet
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1
+
+      # 4. Restaurar paquetes NuGet
       - name: Restore NuGet packages
-        run: dotnet restore DixitOdisy.sln
+        run: nuget restore DixitOdisy.sln
 
-      # 4. Instalar herramientas WCF (opcional)
-      - name: Install WCF Tools
+      # 5. Instalar herramientas WCF
+      - name: Install Visual Studio Build Tools with WCF
         run: |
-          choco install visualstudio2019buildtools --package-parameters "--add Microsoft.VisualStudio.Component.Wcf.Tooling"
+          choco install visualstudio2022buildtools --package-parameters "--add Microsoft.VisualStudio.Component.Wcf.Tooling --includeRecommended --passive --norestart"
 
-      # 5. Instalar SonarScanner globalmente
+      # 6. Instalar SonarScanner globalmente
       - name: Install SonarQube Scanner
         run: dotnet tool install --global dotnet-sonarscanner
 
-      # 6. Iniciar el análisis con SonarScanner
+      # 7. Iniciar el análisis con SonarScanner
       - name: SonarQube Begin Analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: dotnet-sonarscanner begin /k:"King-Navi_DixitOdisy" /o:"naviking" /d:sonar.host.url="https://sonarcloud.io"
 
-      # 7. Construir la solución
+      # 8. Construir la solución usando msbuild
       - name: Build the Solution
-        run: dotnet build DixitOdisy.sln /p:Configuration=Debug /p:Platform="Any CPU"
+        run: msbuild DixitOdisy.sln /p:Configuration=Debug /p:Platform="Any CPU"
 
-      # 8. Finalizar el análisis con SonarScanner
+      # 9. Finalizar el análisis con SonarScanner
       - name: SonarQube End Analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

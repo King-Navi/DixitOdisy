@@ -73,6 +73,24 @@ namespace WpfCliente.Utilidad
             return true;
         }
 
+        public static async Task<bool> VerificarConexionSinBaseDatosAsync(Action<bool> habilitarAcciones, Window ventana)
+        {
+            habilitarAcciones?.Invoke(false);
+            DeshabilitarVentana(ventana, false);
+            Task<bool> verificarConexion = HacerPingAsync();
+
+            if (!await verificarConexion)
+            {
+                VentanasEmergentes.CrearVentanaEmergenteConCierre(Properties.Idioma.tituloErrorServidor, Properties.Idioma.mensajeErrorServidor, ventana);
+                habilitarAcciones?.Invoke(true);
+                DeshabilitarVentana(ventana, true);
+                return false;
+            }
+            habilitarAcciones?.Invoke(true);
+            DeshabilitarVentana(ventana, true);
+            return true;
+        }
+
         public static async Task<bool> VerificarConexionConBaseDatosSinCierreAsync(Action<bool> habilitarAcciones, Window ventana)
         {
             habilitarAcciones?.Invoke(false);

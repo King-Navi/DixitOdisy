@@ -250,7 +250,7 @@ namespace WpfCliente.ImplementacionesCallbacks
         {
             try
             {
-                SingletonGestorImagenes.Instancia.PeticionImagenesHilo();
+                SingletonGestorImagenes.PeticionImagenesHilo();
                 SingletonChat.Instancia.AbrirConexionChat();
                 await SingletonChat.Instancia.ChatMotor.AgregarUsuarioChatAsync(
                     SingletonCliente.Instance.IdChat,

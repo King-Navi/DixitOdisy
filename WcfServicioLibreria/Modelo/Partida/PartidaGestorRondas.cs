@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAOLibreria.ModeloBD;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -173,7 +174,7 @@ namespace WcfServicioLibreria.Modelo
                         {
                             esAnfitrion = true;
                         }
-                        Task _ = Task.Run(() =>
+                        await Task.Run(() =>
                         {
                             try
                             {
@@ -228,7 +229,7 @@ namespace WcfServicioLibreria.Modelo
         {
             RestablecerDesicionesJugadores();
             await EscogerNarradorAsync();
-            AvisarQuienEsNarradorAsync();
+            await AvisarQuienEsNarradorAsync();
             await EsperarConfirmacionNarradorAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_NARRADOR));
             if (SelecionoCartaNarrador)
             {
@@ -681,15 +682,19 @@ namespace WcfServicioLibreria.Modelo
 
         private async Task TerminarPartidaAsync()
         {
+            var copiaDiccionario = jugadoresInformacion.ToDictionary(
+                entry => entry.Key,
+                entry => entry.Value
+            );
             CambiarPantalla(PANTALLA_FIN_PARTIDA);
             await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
-            await EnviarResultadoBaseDatos();
+            await EnviarResultadoBaseDatos(copiaDiccionario);
             AvisarPartidaTerminada();
             await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
             EliminarPartida();
         }
 
-        private async Task EnviarResultadoBaseDatos()
+        private async Task EnviarResultadoBaseDatos(Dictionary<string, DAOLibreria.ModeloBD.Usuario> jugadoresInformacion)
         {
             if (RondaActual >= RONDAS_MINIMA_PARA_PUNTOS)
             {

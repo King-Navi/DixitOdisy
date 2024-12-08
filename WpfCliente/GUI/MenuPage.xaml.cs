@@ -37,14 +37,15 @@ namespace WpfCliente.GUI
 
         private async Task InicializarEstadisticasAsync()
         {
-            var resutlado = await Conexion.VerificarConexionAsync(null, null);
+            var resutlado = await Conexion.VerificarConexionConBaseDatosSinCierreAsync(null, null);
             if (!resutlado)
             {
-                SingletonGestorVentana.Instancia.Regresar();
+                buttonAbrirEstadisticas.IsEnabled = false;
                 return;
             }
             try
             {
+                buttonAbrirEstadisticas.IsEnabled = true;
                 estadisticas = new EstadisticaUsuario(SingletonCliente.Instance.IdUsuario);
                 textBlockPartidasGanadas.Text = estadisticas.Estadistica.PartidasGanadas.ToString();
                 textBlockPartidasJugadas.Text = estadisticas.Estadistica.PartidasJugadas.ToString();

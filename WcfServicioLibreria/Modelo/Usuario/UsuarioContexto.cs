@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Utilidades;
@@ -73,9 +74,12 @@ namespace WcfServicioLibreria.Modelo
 
         }
 
-        public void DesconectarUsuarioAsync(string nombreJugador)
+        public async Task DesconectarUsuarioAsync(string nombreJugador)
         {
-            EnDesconexion();
+            await Task.Run(() =>
+            {
+                EnDesconexion();
+            });
         }
     }
 }

@@ -62,18 +62,29 @@ namespace WpfCliente.GUI
 
         private async void ClicButtonIniciarSesionAsync(object sender, RoutedEventArgs e)
         {
-            if (ValidarCampos())
+            if (sender is Button boton)
             {
-                bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
-                if (!conexionExitosa)
+                boton.IsEnabled = false;
+                try
                 {
-                    return;
+                    if (ValidarCampos())
+                    {
+                        bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
+                        if (!conexionExitosa)
+                        {
+                            return;
+                        }
+                        await IntentarIniciarSesionAsync();
+                    }
+                    else
+                    {
+                        labelCredencialesIncorrectas.Visibility = Visibility.Visible;
+                    }
                 }
-                await IntentarIniciarSesionAsync();
-            }
-            else
-            {
-                labelCredencialesIncorrectas.Visibility = Visibility.Visible;
+                finally
+                {
+                    boton.IsEnabled = true;
+                }
             }
         }
         private bool ValidarCampos()

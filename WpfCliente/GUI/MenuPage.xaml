@@ -58,6 +58,7 @@
                     Height="50" 
                     VerticalAlignment="Top" 
                     Margin="0,15,15,0" 
+                    IsEnabled="False"
                     Click="ClicButtonAbrirEstadisticas">
                     <Button.Template>
                         <ControlTemplate 

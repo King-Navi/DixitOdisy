@@ -514,7 +514,7 @@ namespace WpfCliente.GUI
                 {
                     contadorSeleccion++;
                     SingletonGestorImagenes.Instancia.imagnesMazo.ImagenesMazo.Remove(imagenEscogida);
-                    await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
+                    await Conexion.VerificarConexionSinBaseDatosAsync(HabilitarBotones, Window.GetWindow(this));
                     SingletonPartida.Instancia.Partida.ConfirmarMovimiento(SingletonCliente.Instance.NombreUsuario,
                         SingletonCliente.Instance.IdPartida,
                         imagenEscogida.IdImagen,
@@ -561,7 +561,7 @@ namespace WpfCliente.GUI
                 {
                     contadorSeleccion++;
                     SingletonGestorImagenes.Instancia.imagnesMazo.ImagenesMazo.Remove(imagenAEscoger);
-                    await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
+                    await Conexion.VerificarConexionSinBaseDatosAsync(HabilitarBotones, Window.GetWindow(this));
                     await SingletonPartida.Instancia.Partida.ConfirmarMovimientoAsync(
                         SingletonCliente.Instance.NombreUsuario,
                         SingletonCliente.Instance.IdPartida,
@@ -608,7 +608,7 @@ namespace WpfCliente.GUI
                 try
                 {
                     contadorSeleccionAdivinar++;
-                    await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
+                    await Conexion.VerificarConexionSinBaseDatosAsync(HabilitarBotones, Window.GetWindow(this));
                     await SingletonPartida.Instancia.Partida.TratarAdivinarAsync(SingletonCliente.Instance.NombreUsuario,
                         SingletonCliente.Instance.IdPartida, idImagen);
                     if (contadorSeleccionAdivinar >= ADIVINAR_MAXIMA_JUGADOR)

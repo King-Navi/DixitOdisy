@@ -81,6 +81,7 @@ C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDes
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDescribelo\service.xsd
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDescribelo\service2.xsd
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDescribelo\System.IO.xsd
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDescribelo\System.ServiceModel.xsd
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDescribelo\System.Threading.Tasks.xsd
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDescribelo\System.xsd
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\Connected Services\ServidorDescribelo\WcfServicioLibreria.Enumerador.xsd

@@ -4,7 +4,7 @@ using System.Configuration;
 
 namespace DAOLibreria
 {
-    public class EliminadorCadena
+    public static class EliminadorCadena
     {
         private const string NOMBRE = "DescribeloEntities";
         public static void EliminarConnectionStringDelArchivo()

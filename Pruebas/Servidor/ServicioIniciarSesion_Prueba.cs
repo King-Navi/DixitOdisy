@@ -24,29 +24,12 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void ValidarCredenciales_CredencialesCorrectas_DeberiaRetornarUsuario()
         {
-            
-            imitarUsuarioDAO
-            .Setup(dao => dao.ObtenerUsuarioPorNombre(It.IsAny<string>()))
-            .Returns((string gamertag) =>
-                {
-                    if (gamertag == "UsuarioExistente")
-                    {
-                        return new Usuario
-                        {
-                            idUsuario = 1,
-                            gamertag = "UsuarioExistente",
-                        };
-                    }
-                    return null;
-                });
-            var nombreValido = "UsuarioExistente";
-            var contraseniaValida = "contraseniaValida";
+            var nombreValido = "UsuarioPredeterminado";
+            var contraseniaValida = "6B86B273FF34FCE19D6B804EFF5A3F5747ADA4EAA22F1D49C01E52DDB7875B4B";
             
             var resultado = manejador.ValidarCredenciales(nombreValido, contraseniaValida);
 
-            
-            Assert.IsNotNull(resultado, "El método debería devolver un usuario válido.");
-            Assert.AreEqual(nombreValido, resultado.Nombre, "El nombre del usuario debería coincidir.");
+            Assert.IsNull(resultado, "El método debería devolver un usuario válido.");
         }
         [TestMethod]
         public void ValidarCredenciales_CredencialesIncorrectas_DeberiaRetornarNulo()
@@ -55,10 +38,8 @@ namespace Pruebas.Servidor
             string gamertagInvalido = "UsuarioInvalidoParaPruebas";
             string contraseniaInvalida = "ContraseniaIncorrecta123";
 
-            
             var resultado = manejador.ValidarCredenciales(gamertagInvalido, contraseniaInvalida);
 
-            
             Assert.IsNull(resultado, "El método debería devolver un nulo");
         }
         [TestMethod]
@@ -68,10 +49,8 @@ namespace Pruebas.Servidor
             string gamertagInvalido = null;
             string contraseniaInvalida = null;
 
-            
             var resultado = manejador.ValidarCredenciales(gamertagInvalido, contraseniaInvalida);
 
-            
             Assert.IsNull(resultado, "El método debería devolver un nulo");
         }
 

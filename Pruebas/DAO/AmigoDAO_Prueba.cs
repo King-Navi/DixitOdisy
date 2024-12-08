@@ -46,9 +46,7 @@ namespace Pruebas.DAO
                 context.SaveChanges();
             }
         }
-        #region MyRegion
-
-
+        #region EliminarAmigo
         [TestMethod]
         public void EliminarAmigo_CuandoRelacionExiste_DeberiaRetornarTrue()
         {
@@ -86,7 +84,6 @@ namespace Pruebas.DAO
             
             var resultado = amistadDAO.RecuperarListaAmigos(ID_USUARIO_MENOR);
             
-            Assert.IsNotNull(resultado, "El resultado no debería ser nulo.");
             Assert.AreEqual(2, resultado.Count, "El usuario debería tener 2 amigos.");
         }
 
@@ -95,7 +92,6 @@ namespace Pruebas.DAO
         {
             var resultado = amistadDAO.RecuperarListaAmigos(ID_INVALIDO);
             
-            Assert.IsNotNull(resultado, "El resultado no debería ser nulo.");
             Assert.AreEqual(0, resultado.Count, "El usuario no debería tener amigos asociados.");
         }
 
@@ -108,6 +104,7 @@ namespace Pruebas.DAO
         }
 
         #endregion RecuperarListaAmigos
+
         #region SonAmigos
 
         [TestMethod]

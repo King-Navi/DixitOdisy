@@ -70,9 +70,7 @@ namespace WpfCliente.GUI
         private async Task IntentarEnviarSolicitudAsync()
         {
             string gamertagSolicitud = VentanasEmergentes.AbrirVentanaModalGamertag(Window.GetWindow(this));
-
-            var resultado = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
-            if (!resultado)
+            if (gamertagSolicitud == null)
             {
                 return;
             }
@@ -86,6 +84,12 @@ namespace WpfCliente.GUI
                 return;
             }
 
+            var resultado = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
+            if (!resultado)
+            {
+                return;
+            }
+
             if (ValidacionesString.EsGamertagValido(gamertagSolicitud))
             {
                 try 
@@ -93,10 +97,6 @@ namespace WpfCliente.GUI
                     if (await EnviarSolicitudAsync(gamertagSolicitud))
                     {
                         VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadExitosa, Window.GetWindow(this));
-                    }
-                    else
-                    {
-                        VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadFallida, Window.GetWindow(this));
                     }
                 }
                 catch (Exception excepcion)

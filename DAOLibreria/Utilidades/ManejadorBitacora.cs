@@ -20,7 +20,7 @@ namespace DAOLibreria.Utilidades
 
         private static string ContruirRutaArchivo()
         {
-            DateTime fechaActual = DateTime.Today;
+            DateTime fechaActual = DateTime.Now;
             string fecha = fechaActual.ToString(FORMATO_FECHA);
             string archivoBitacoraNombre = NOMBRE_LOG + SEPARADOR_NOMBRE_FECHA + fecha + EXTENSION_LOG;
 

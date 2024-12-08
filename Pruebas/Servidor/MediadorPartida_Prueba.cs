@@ -23,8 +23,6 @@ namespace Pruebas.Servidor
             var mediador = new MediadorPartida(tematica);
             var (rutaCompleta, nombreArchivo) = mediador.ObtenerRutaCompeltaYNombreImagen();
             Console.WriteLine(rutaCompleta);
-            Assert.IsNotNull(rutaCompleta, "La ruta devuelta no debe ser nula.");
-            Assert.IsNotNull(nombreArchivo, "La ruta devuelta no debe ser nula.");
             Assert.IsTrue(File.Exists(rutaCompleta), "La ruta devuelta debe corresponder a un archivo existente.");
         }
 

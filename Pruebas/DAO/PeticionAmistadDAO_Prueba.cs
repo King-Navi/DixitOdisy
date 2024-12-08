@@ -129,7 +129,6 @@ namespace Pruebas.DAO
         {
             ConfigurarSolicitud(ID_REMITENTE, ID_DESTINATARIO);
             var result = solicitudAmistadDAO.ObtenerSolicitudesAmistad(ID_DESTINATARIO);
-            Assert.IsNotNull(result, "Debería retornar una lista de usuarios.");
             Assert.IsTrue(result.Count > 0, "Debería retornar una lista con al menos una solicitud.");
         }
 
@@ -137,7 +136,6 @@ namespace Pruebas.DAO
         public void ObtenerSolicitudesAmistad_CuandoNoHaySolicitudes_RetornaListaVacia()
         {
             var result = solicitudAmistadDAO.ObtenerSolicitudesAmistad(ID_DESTINATARIO);
-            Assert.IsNotNull(result, "Debería retornar una lista.");
             Assert.AreEqual(0, result.Count, "Debería retornar una lista vacía si no hay solicitudes.");
         }
         #endregion

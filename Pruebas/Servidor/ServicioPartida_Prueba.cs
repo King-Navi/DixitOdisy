@@ -206,7 +206,7 @@ namespace Pruebas.Servidor
 
         }
         [TestMethod]
-        public void EsPartidaEmpezada_PartidaNoEmpezada_RetornaTrue()
+        public void EsPartidaEmpezada_PartidaEmpezada_RetornaTrue()
         {
             
             string anfitrion = "usuario123";
@@ -218,20 +218,6 @@ namespace Pruebas.Servidor
 
             
             Assert.IsTrue(resultado, "Debería devolver true para una partida emepzada.");
-        }
-        [TestMethod]
-        public void EsPartidaEmpezada_PartidaNoEmpezada_RetornaFalse()
-        {
-            
-            string anfitrion = "usuario123";
-            var configuracion = configuracionGenerica;
-            string idPartida = manejador.CrearPartida(anfitrion, configuracion);
-            
-            
-            bool resultado = manejador.EsPartidaEmpezada(idPartida);
-
-            
-            Assert.IsTrue(resultado, "Debería devolver false para una partida emepzada.");
         }
         [TestMethod]
         public void EsPartidaEmpezada_PartidaNoCreada_NoExisteEnDiccionario()

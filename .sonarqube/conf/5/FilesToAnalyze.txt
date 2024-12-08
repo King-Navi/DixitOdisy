@@ -22,7 +22,6 @@ C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\ServicioInvitacionPartid
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\ServicioPartida_Prueba.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\ServicioPartidaSesion_Prueba.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\ServicioSala_Prueba.cs
-C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\ServicioSalaJugador_Prueba.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\ServicioUsuario_Prueba.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\ConfiguradorPruebaParaServicio.cs
 C:\Users\unaay\source\repos\DixitOdisy\Pruebas\Servidor\Utilidades\ImagenCallbackImplementacion.cs

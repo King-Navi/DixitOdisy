@@ -38,14 +38,25 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task VetaJugador_CuandoNombreReservado_DeberiaRetornarFalse()
         {
-            var manejadorDeVetos = new ManejadorDeVetos(imitarVetoDAO.Object, imitarUsuarioDAO.Object,imitarUsuarioCuentaDAO.Object ,imitarExpulsionDAO.Object);
+            var manejadorDeVetos = new ManejadorDeVetos(imitarVetoDAO.Object, imitarUsuarioDAO.Object, imitarUsuarioCuentaDAO.Object, imitarExpulsionDAO.Object);
             string nombreJugador = "Player" + NOMBRE_PROHIBIDO;
-            string nombreJugadorMayusculasProhido =  NOMBRE_PROHIBIDO_MAYUSCULAS + "Player" ;
+
             bool resultado = await manejadorDeVetos.VetaJugadorAsync(nombreJugador);
-            bool resultadoMayusculas = await manejadorDeVetos.VetaJugadorAsync(nombreJugadorMayusculasProhido);
+
             Assert.IsFalse(resultado, "El método debería retornar false cuando el nombre del jugador contiene palabras prohibidas.");
-            Assert.IsFalse(resultadoMayusculas, "El método debería retornar false cuando el nombre del jugador contiene palabras prohibidas.");
         }
+
+        [TestMethod]
+        public async Task VetaJugador_CuandoNombreConMayusculasReservado_DeberiaRetornarFalse()
+        {
+            var manejadorDeVetos = new ManejadorDeVetos(imitarVetoDAO.Object, imitarUsuarioDAO.Object, imitarUsuarioCuentaDAO.Object, imitarExpulsionDAO.Object);
+            string nombreJugadorMayusculasProhido = NOMBRE_PROHIBIDO_MAYUSCULAS + "Player";
+
+            bool resultadoMayusculas = await manejadorDeVetos.VetaJugadorAsync(nombreJugadorMayusculasProhido);
+
+            Assert.IsFalse(resultadoMayusculas, "El método debería retornar false cuando el nombre del jugador contiene palabras prohibidas en mayúsculas.");
+        }
+
 
         [TestMethod]
         public async Task VetaJugador_CuandoJugadorNoExiste_DeberiaRetornarFalse()

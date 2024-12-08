@@ -21,7 +21,7 @@ namespace DAOLibreria.ModeloBD
             }
             catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarErrorException(excepcion);
+                ManejadorExcepciones.ManejarFatalException(excepcion);
                 return false;
             }
         }

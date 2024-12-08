@@ -21,8 +21,7 @@ namespace Pruebas.DAO
         public void ObtenerIdEstadisticaConIdUsuario_SinConexionBD_DeberiaRetornarMenosUno()
         {
             int idUsuario = 1;
-                int resultado = estadisticasDAO.ObtenerIdEstadisticaConIdUsuario(idUsuario);
-            
+            int resultado = estadisticasDAO.ObtenerIdEstadisticaConIdUsuario(idUsuario);
             Assert.AreEqual(-1, resultado, "El método debería devolver -1 cuando no hay conexión a la base de datos.");
         }
     }

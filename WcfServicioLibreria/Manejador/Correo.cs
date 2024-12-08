@@ -33,7 +33,7 @@ namespace WcfServicioLibreria.Manejador
             return false;
         }
 
-        public static async Task<bool> EnviarCorreoAsync(string codigo, string correoUsuario)
+        public async Task<bool> EnviarCorreoAsync(string codigo, string correoUsuario)
         {
             try
             {

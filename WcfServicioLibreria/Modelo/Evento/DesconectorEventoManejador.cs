@@ -21,13 +21,13 @@ namespace WcfServicioLibreria.Evento
                 communicationObjecto.Faulted += EnFalla;
                 desechado = false;
             }
-            catch (Exception)
+            catch (Exception excepcion)
             {
-
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 throw;
             }
-        }   
-        
+        }
+
         private void Cerrado(object sender, EventArgs e)
         {
             Cerrar(sender);
@@ -43,10 +43,10 @@ namespace WcfServicioLibreria.Evento
             DesuscribirEventos((ICommunicationObject)sender);
             observador?.DesconectarUsuarioAsync(clavePropietario);
         }
-        
+
         private void DesuscribirEventos(ICommunicationObject communicationObject)
         {
-            if (!desechado && communicationObject !=null)
+            if (!desechado && communicationObject != null)
             {
                 communicationObject.Closed -= Cerrado;
                 communicationObject.Faulted -= EnFalla;
@@ -58,18 +58,10 @@ namespace WcfServicioLibreria.Evento
             try
             {
                 DesuscribirEventos(objetoComunicacion);
-                if (objetoComunicacion != null)
-                {
-                    objetoComunicacion = null;
-                }
-                if (observador != null)
-                {
-                    observador = null;
-                }
-                if (clavePropietario != null)
-                {
-                    clavePropietario = null;
-                }
+
+                objetoComunicacion = null;
+                observador = null;
+                clavePropietario = null;
             }
             catch (NullReferenceException excepcion)
             {
@@ -81,6 +73,6 @@ namespace WcfServicioLibreria.Evento
             }
 
         }
-        
+
     }
 }

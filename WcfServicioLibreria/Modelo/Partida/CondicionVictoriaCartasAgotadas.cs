@@ -12,7 +12,7 @@ namespace WcfServicioLibreria.Modelo
             if (partida.mediadorImagen.ObtenerCartasRestantes() <= CARTA_CERO)
             {
                 resultado = true;
-            };
+            }
             return resultado;
         }
     }

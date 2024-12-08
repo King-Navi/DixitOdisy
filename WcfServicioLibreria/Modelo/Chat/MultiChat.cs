@@ -3,19 +3,23 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+using System.Threading;
+using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Evento;
 using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Modelo
 {
-    public class MultiChat : Chat , IObservador
+    public class MultiChat : Chat, IObservador
     {
         #region Atributos
-        private const int cantidadMaximaJugadores = 12;
+        private const int CANTIDAD_MAXIMA_USUARIOS = 12;
         private readonly ConcurrentDictionary<string, IChatCallback> jugadores = new ConcurrentDictionary<string, IChatCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
         public EventHandler EliminarChatManejadorEvento;
+        private static readonly SemaphoreSlim semaphoreAgrearUsuario = new SemaphoreSlim(1, 1);
+
         #endregion Atributos
 
         #region Contructor
@@ -37,37 +41,36 @@ namespace WcfServicioLibreria.Modelo
             EliminarChatManejadorEvento?.Invoke(this, new MultiChatVacioEventArgs(DateTime.Now, this));
         }
 
-        public bool AgregarJugadorChat(string nombreUsuario, IChatCallback contexto)
+        public async Task<bool> AgregarJugadorChatAsync(string nombreUsuario, IChatCallback contexto)
         {
             bool resultado = false;
+
+            await semaphoreAgrearUsuario.WaitAsync();
             try
             {
-                if (ContarJugadores() < cantidadMaximaJugadores)
+                foreach (var nombreJugadorEnSala in ObtenerNombresJugadoresChat())
+                {
+                    if (nombreJugadorEnSala.Equals(nombreUsuario, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return false;
+                    }
+                }
+                if (ContarJugadores() < CANTIDAD_MAXIMA_USUARIOS)
                 {
                     jugadores.AddOrUpdate(nombreUsuario, contexto, (key, oldValue) => contexto);
-                    if (jugadores.TryGetValue(nombreUsuario, out IChatCallback contextoCambiado))
-                    {
-                        if (ReferenceEquals(contexto, contextoCambiado))
-                        {
-                            eventosCommunication.TryAdd(nombreUsuario, new DesconectorEventoManejador((ICommunicationObject)contextoCambiado, this, nombreUsuario));
-                            resultado = true;
-                        }
-                    }
+                    eventosCommunication.TryAdd(nombreUsuario, new DesconectorEventoManejador((ICommunicationObject)contexto, this, nombreUsuario));
+                    resultado = true;
                 }
             }
             catch (Exception excepcion)
             {
-                try
-                {
-                    ((ICommunicationObject)contexto).Abort();
-                }
-                catch (Exception excepcionComunicacion)
-                {
-                    ManejadorExcepciones.ManejarExcepcionError(excepcionComunicacion);
-
-                }
                 ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
+            finally
+            {
+                semaphoreAgrearUsuario.Release();
+            }
+
             return resultado;
         }
         bool RemoverJugadorChat(string nombreJugador)
@@ -96,7 +99,7 @@ namespace WcfServicioLibreria.Modelo
         }
         public void EnviarMensajeTodos(ChatMensaje mensaje)
         {
-            ICollection<string> nombresUsuarios =  jugadores.Keys;
+            ICollection<string> nombresUsuarios = jugadores.Keys;
             foreach (string nombreUsuario in nombresUsuarios)
             {
                 jugadores[nombreUsuario].RecibirMensajeClienteCallback(mensaje);

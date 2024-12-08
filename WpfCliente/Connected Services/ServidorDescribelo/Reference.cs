@@ -150,6 +150,112 @@ namespace WpfCliente.ServidorDescribelo {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SolicitudAmistad", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
+    [System.SerializableAttribute()]
+    public partial class SolicitudAmistad : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private WpfCliente.ServidorDescribelo.Usuario RemitenteField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public WpfCliente.ServidorDescribelo.Usuario Remitente {
+            get {
+                return this.RemitenteField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RemitenteField, value) != true)) {
+                    this.RemitenteField = value;
+                    this.RaisePropertyChanged("Remitente");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PartidaFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones")]
+    [System.SerializableAttribute()]
+    public partial class PartidaFalla : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ErrorAlUnirseField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool PartidaInvalidaField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ErrorAlUnirse {
+            get {
+                return this.ErrorAlUnirseField;
+            }
+            set {
+                if ((this.ErrorAlUnirseField.Equals(value) != true)) {
+                    this.ErrorAlUnirseField = value;
+                    this.RaisePropertyChanged("ErrorAlUnirse");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool PartidaInvalida {
+            get {
+                return this.PartidaInvalidaField;
+            }
+            set {
+                if ((this.PartidaInvalidaField.Equals(value) != true)) {
+                    this.PartidaInvalidaField = value;
+                    this.RaisePropertyChanged("PartidaInvalida");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Amigo", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
     [System.SerializableAttribute()]
     public partial class Amigo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -315,51 +421,6 @@ namespace WpfCliente.ServidorDescribelo {
                 if ((object.ReferenceEquals(this.MensajeField, value) != true)) {
                     this.MensajeField = value;
                     this.RaisePropertyChanged("Mensaje");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SolicitudAmistad", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
-    [System.SerializableAttribute()]
-    public partial class SolicitudAmistad : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private WpfCliente.ServidorDescribelo.Usuario RemitenteField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public WpfCliente.ServidorDescribelo.Usuario Remitente {
-            get {
-                return this.RemitenteField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RemitenteField, value) != true)) {
-                    this.RemitenteField = value;
-                    this.RaisePropertyChanged("Remitente");
                 }
             }
         }
@@ -1037,7 +1098,7 @@ namespace WpfCliente.ServidorDescribelo {
         private string IdImagenField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.IO.MemoryStream ImagenStreamField;
+        private byte[] ImagenStreamField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -1063,7 +1124,7 @@ namespace WpfCliente.ServidorDescribelo {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.IO.MemoryStream ImagenStream {
+        public byte[] ImagenStream {
             get {
                 return this.ImagenStreamField;
             }
@@ -1098,6 +1159,124 @@ namespace WpfCliente.ServidorDescribelo {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FaultException.FaultCodeData", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+    [System.SerializableAttribute()]
+    public partial class FaultExceptionFaultCodeData : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private string nameField;
+        
+        private string nsField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string name {
+            get {
+                return this.nameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.nameField, value) != true)) {
+                    this.nameField = value;
+                    this.RaisePropertyChanged("name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string ns {
+            get {
+                return this.nsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.nsField, value) != true)) {
+                    this.nsField = value;
+                    this.RaisePropertyChanged("ns");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FaultException.FaultReasonData", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
+    [System.SerializableAttribute()]
+    public partial class FaultExceptionFaultReasonData : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        private string textField;
+        
+        private string xmlLangField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string text {
+            get {
+                return this.textField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.textField, value) != true)) {
+                    this.textField = value;
+                    this.RaisePropertyChanged("text");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public string xmlLang {
+            get {
+                return this.xmlLangField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.xmlLangField, value) != true)) {
+                    this.xmlLangField = value;
+                    this.RaisePropertyChanged("xmlLang");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ServidorFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones")]
     [System.SerializableAttribute()]
     public partial class ServidorFalla : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -1127,67 +1306,6 @@ namespace WpfCliente.ServidorDescribelo {
                 if ((this.EstaRemitenteDesconectadoField.Equals(value) != true)) {
                     this.EstaRemitenteDesconectadoField = value;
                     this.RaisePropertyChanged("EstaRemitenteDesconectado");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PartidaFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones")]
-    [System.SerializableAttribute()]
-    public partial class PartidaFalla : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool ErrorAlUnirseField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool PartidaInvalidaField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool ErrorAlUnirse {
-            get {
-                return this.ErrorAlUnirseField;
-            }
-            set {
-                if ((this.ErrorAlUnirseField.Equals(value) != true)) {
-                    this.ErrorAlUnirseField = value;
-                    this.RaisePropertyChanged("ErrorAlUnirse");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool PartidaInvalida {
-            get {
-                return this.PartidaInvalidaField;
-            }
-            set {
-                if ((this.PartidaInvalidaField.Equals(value) != true)) {
-                    this.PartidaInvalidaField = value;
-                    this.RaisePropertyChanged("PartidaInvalida");
                 }
             }
         }
@@ -1366,6 +1484,8 @@ namespace WpfCliente.ServidorDescribelo {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistad", ReplyAction="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistadResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(WpfCliente.ServidorDescribelo.SolicitudAmistadFalla), Action="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistadSolicitudAmistadFallaFa" +
             "ult", Name="SolicitudAmistadFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo")]
+        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException<WpfCliente.ServidorDescribelo.SolicitudAmistad>), Action="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistadFaultExceptionOf_Solici" +
+            "tudAmistadFault", Name="FaultExceptionOfSolicitudAmistado0JYt6U2", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         bool EnviarSolicitudAmistad(WpfCliente.ServidorDescribelo.Usuario usuarioRemitente, string destinatario);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistad", ReplyAction="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistadResponse")]
@@ -1781,6 +1901,8 @@ namespace WpfCliente.ServidorDescribelo {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioPartidaSesion/UnirsePartida", ReplyAction="http://tempuri.org/IServicioPartidaSesion/UnirsePartidaResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(WpfCliente.ServidorDescribelo.PartidaFalla), Action="http://tempuri.org/IServicioPartidaSesion/UnirsePartidaPartidaFallaFault", Name="PartidaFalla", Namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones")]
+        [System.ServiceModel.FaultContractAttribute(typeof(System.ServiceModel.FaultException<WpfCliente.ServidorDescribelo.PartidaFalla>), Action="http://tempuri.org/IServicioPartidaSesion/UnirsePartidaFaultExceptionOf_PartidaFa" +
+            "llaFault", Name="FaultExceptionOfPartidaFallaE43TghSm", Namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel")]
         bool UnirsePartida(string nombreUsuario, string idPartida);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioPartidaSesion/UnirsePartida", ReplyAction="http://tempuri.org/IServicioPartidaSesion/UnirsePartidaResponse")]
@@ -1805,10 +1927,10 @@ namespace WpfCliente.ServidorDescribelo {
         System.Threading.Tasks.Task<bool> ExpulsarJugadorPartidaAsync(string anfitrion, string jugadorAExpulsar, string idPartida);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioPartidaSesion/EmpezarPartida", ReplyAction="http://tempuri.org/IServicioPartidaSesion/EmpezarPartidaResponse")]
-        void EmpezarPartida(string nombreJugador, string idPartida);
+        void EmpezarPartida(string idPartida);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioPartidaSesion/EmpezarPartida", ReplyAction="http://tempuri.org/IServicioPartidaSesion/EmpezarPartidaResponse")]
-        System.Threading.Tasks.Task EmpezarPartidaAsync(string nombreJugador, string idPartida);
+        System.Threading.Tasks.Task EmpezarPartidaAsync(string idPartida);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1840,6 +1962,12 @@ namespace WpfCliente.ServidorDescribelo {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioPartidaSesion/CambiarPantallaCallback")]
         void CambiarPantallaCallback(int numeroPantalla);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioPartidaSesion/NoSeEmpezoPartidaCallback")]
+        void NoSeEmpezoPartidaCallback();
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioPartidaSesion/MostrarTableroCartasCallback")]
+        void MostrarTableroCartasCallback();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1902,12 +2030,12 @@ namespace WpfCliente.ServidorDescribelo {
             return base.Channel.ExpulsarJugadorPartidaAsync(anfitrion, jugadorAExpulsar, idPartida);
         }
         
-        public void EmpezarPartida(string nombreJugador, string idPartida) {
-            base.Channel.EmpezarPartida(nombreJugador, idPartida);
+        public void EmpezarPartida(string idPartida) {
+            base.Channel.EmpezarPartida(idPartida);
         }
         
-        public System.Threading.Tasks.Task EmpezarPartidaAsync(string nombreJugador, string idPartida) {
-            return base.Channel.EmpezarPartidaAsync(nombreJugador, idPartida);
+        public System.Threading.Tasks.Task EmpezarPartidaAsync(string idPartida) {
+            return base.Channel.EmpezarPartidaAsync(idPartida);
         }
     }
     
@@ -2415,74 +2543,115 @@ namespace WpfCliente.ServidorDescribelo {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioImagen", CallbackContract=typeof(WpfCliente.ServidorDescribelo.IServicioImagenCallback))]
-    public interface IServicioImagen {
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioImagenMazo", CallbackContract=typeof(WpfCliente.ServidorDescribelo.IServicioImagenMazoCallback))]
+    public interface IServicioImagenMazo {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioImagen/SolicitarImagenCarta", ReplyAction="http://tempuri.org/IServicioImagen/SolicitarImagenCartaResponse")]
-        bool SolicitarImagenCarta(string idPartida);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioImagenMazo/SolicitarImagenMazo", ReplyAction="http://tempuri.org/IServicioImagenMazo/SolicitarImagenMazoResponse")]
+        bool SolicitarImagenMazo(string idPartida, int numeroImagenes);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioImagen/SolicitarImagenCarta", ReplyAction="http://tempuri.org/IServicioImagen/SolicitarImagenCartaResponse")]
-        System.Threading.Tasks.Task<bool> SolicitarImagenCartaAsync(string idPartida);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioImagen/MostrarTodasImagenes", ReplyAction="http://tempuri.org/IServicioImagen/MostrarTodasImagenesResponse")]
-        bool MostrarTodasImagenes(string idPartida);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioImagen/MostrarTodasImagenes", ReplyAction="http://tempuri.org/IServicioImagen/MostrarTodasImagenesResponse")]
-        System.Threading.Tasks.Task<bool> MostrarTodasImagenesAsync(string idPartida);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioImagenMazo/SolicitarImagenMazo", ReplyAction="http://tempuri.org/IServicioImagenMazo/SolicitarImagenMazoResponse")]
+        System.Threading.Tasks.Task<bool> SolicitarImagenMazoAsync(string idPartida, int numeroImagenes);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IServicioImagenCallback {
+    public interface IServicioImagenMazoCallback {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioImagen/RecibirImagenCallback")]
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioImagenMazo/RecibirImagenCallback")]
         void RecibirImagenCallback(WpfCliente.ServidorDescribelo.ImagenCarta imagen);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioImagen/RecibirGrupoImagenCallback")]
-        void RecibirGrupoImagenCallback(WpfCliente.ServidorDescribelo.ImagenCarta imagen);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioImagenMazo/RecibirVariasImagenCallback")]
+        void RecibirVariasImagenCallback(WpfCliente.ServidorDescribelo.ImagenCarta[] imagenes);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IServicioImagenChannel : WpfCliente.ServidorDescribelo.IServicioImagen, System.ServiceModel.IClientChannel {
+    public interface IServicioImagenMazoChannel : WpfCliente.ServidorDescribelo.IServicioImagenMazo, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ServicioImagenClient : System.ServiceModel.DuplexClientBase<WpfCliente.ServidorDescribelo.IServicioImagen>, WpfCliente.ServidorDescribelo.IServicioImagen {
+    public partial class ServicioImagenMazoClient : System.ServiceModel.DuplexClientBase<WpfCliente.ServidorDescribelo.IServicioImagenMazo>, WpfCliente.ServidorDescribelo.IServicioImagenMazo {
         
-        public ServicioImagenClient(System.ServiceModel.InstanceContext callbackInstance) : 
+        public ServicioImagenMazoClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {
         }
         
-        public ServicioImagenClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+        public ServicioImagenMazoClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
                 base(callbackInstance, endpointConfigurationName) {
         }
         
-        public ServicioImagenClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+        public ServicioImagenMazoClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
                 base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public ServicioImagenClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public ServicioImagenMazoClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
         
-        public ServicioImagenClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public ServicioImagenMazoClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(callbackInstance, binding, remoteAddress) {
         }
         
-        public bool SolicitarImagenCarta(string idPartida) {
-            return base.Channel.SolicitarImagenCarta(idPartida);
+        public bool SolicitarImagenMazo(string idPartida, int numeroImagenes) {
+            return base.Channel.SolicitarImagenMazo(idPartida, numeroImagenes);
         }
         
-        public System.Threading.Tasks.Task<bool> SolicitarImagenCartaAsync(string idPartida) {
-            return base.Channel.SolicitarImagenCartaAsync(idPartida);
+        public System.Threading.Tasks.Task<bool> SolicitarImagenMazoAsync(string idPartida, int numeroImagenes) {
+            return base.Channel.SolicitarImagenMazoAsync(idPartida, numeroImagenes);
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServidorDescribelo.IServicioImagenesTablero", CallbackContract=typeof(WpfCliente.ServidorDescribelo.IServicioImagenesTableroCallback))]
+    public interface IServicioImagenesTablero {
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioImagenesTablero/MostrarImagenesTablero", ReplyAction="http://tempuri.org/IServicioImagenesTablero/MostrarImagenesTableroResponse")]
+        bool MostrarImagenesTablero(string idPartida);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServicioImagenesTablero/MostrarImagenesTablero", ReplyAction="http://tempuri.org/IServicioImagenesTablero/MostrarImagenesTableroResponse")]
+        System.Threading.Tasks.Task<bool> MostrarImagenesTableroAsync(string idPartida);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IServicioImagenesTableroCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServicioImagenesTablero/RecibirGrupoImagenCallback")]
+        void RecibirGrupoImagenCallback(WpfCliente.ServidorDescribelo.ImagenCarta[] imagen);
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IServicioImagenesTableroChannel : WpfCliente.ServidorDescribelo.IServicioImagenesTablero, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class ServicioImagenesTableroClient : System.ServiceModel.DuplexClientBase<WpfCliente.ServidorDescribelo.IServicioImagenesTablero>, WpfCliente.ServidorDescribelo.IServicioImagenesTablero {
+        
+        public ServicioImagenesTableroClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
         }
         
-        public bool MostrarTodasImagenes(string idPartida) {
-            return base.Channel.MostrarTodasImagenes(idPartida);
+        public ServicioImagenesTableroClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
         }
         
-        public System.Threading.Tasks.Task<bool> MostrarTodasImagenesAsync(string idPartida) {
-            return base.Channel.MostrarTodasImagenesAsync(idPartida);
+        public ServicioImagenesTableroClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ServicioImagenesTableroClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+        }
+        
+        public ServicioImagenesTableroClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
+        }
+        
+        public bool MostrarImagenesTablero(string idPartida) {
+            return base.Channel.MostrarImagenesTablero(idPartida);
+        }
+        
+        public System.Threading.Tasks.Task<bool> MostrarImagenesTableroAsync(string idPartida) {
+            return base.Channel.MostrarImagenesTableroAsync(idPartida);
         }
     }
 }

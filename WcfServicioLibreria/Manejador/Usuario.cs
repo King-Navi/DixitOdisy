@@ -175,20 +175,5 @@ namespace WcfServicioLibreria.Manejador
             return jugadoresConectadosDiccionario.ContainsKey(usuario.idUsuario);
         }
 
-        public void JugadoresConectado()
-        {
-            foreach (UsuarioContexto jugador in jugadoresConectadosDiccionario.Values)
-            {
-                try
-                {
-                    Modelo.Usuario usuarioActual = jugador as Modelo.Usuario;
-                }
-                catch (Exception excepcion)
-                {
-                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
-                }
-            }
-        }
-
     }
 }

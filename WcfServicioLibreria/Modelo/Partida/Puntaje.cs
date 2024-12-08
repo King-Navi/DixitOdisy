@@ -38,9 +38,9 @@ namespace WcfServicioLibreria.Modelo
 
         private List<JugadorPuntaje> ClonarJugadores(List<JugadorPuntaje> jugadoresOriginales)
         {
-            return jugadoresOriginales.Select(j => new JugadorPuntaje(j.Nombre)
+            return jugadoresOriginales.Select(busqueda => new JugadorPuntaje(busqueda.Nombre)
             {
-                Puntos = j.Puntos
+                Puntos = busqueda.Puntos
             }).ToList();
         }
 
@@ -56,9 +56,9 @@ namespace WcfServicioLibreria.Modelo
                 {
                     AsignarPuntosPorConfundir(copiaJugadores);
                 }
-                for (int i = 0; i < Jugadores.Count; i++)
+                for (int iteracion = 0; iteracion < Jugadores.Count; iteracion++)
                 {
-                    Jugadores[i].Puntos = copiaJugadores[i].Puntos;
+                    Jugadores[iteracion].Puntos = copiaJugadores[iteracion].Puntos;
                 }
                 return true;
             }

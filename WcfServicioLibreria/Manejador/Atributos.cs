@@ -30,7 +30,6 @@ namespace WcfServicioLibreria.Manejador
         #endregion Chat
 
         #region Partida
-        private static readonly ConcurrentDictionary<string, ManejadorImagen> manejadoresImagenes= new ConcurrentDictionary<string, ManejadorImagen>();
         private static readonly ConcurrentDictionary<string, Partida> partidasDiccionario = new ConcurrentDictionary<string, Partida>();
         #endregion Partida
 

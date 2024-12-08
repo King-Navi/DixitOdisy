@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.ServiceModel;
 using System.Threading;
 using WcfServicioLibreria.Contratos;
+using WcfServicioLibreria.Enumerador;
 using WcfServicioLibreria.Modelo;
 
 [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
@@ -11,6 +12,8 @@ public class PartidaCallbackImplementacion : CommunicationObjectImplementado, IP
 {
     public int RondaActual { get; private set; }
     public bool TurnoPerdido { get; private set; }
+    public bool NoSeEmpezoPartida { get; private set; } = false;
+    public bool MostrarTablero { get; private set; } = false;
     public ImagenCarta UltimaImagenRecibida { get; private set; }
     public ConcurrentDictionary<string, ImagenCarta> Imagenes { get; private set; } = new ConcurrentDictionary<string, ImagenCarta>();
     public bool PartidaFinalizada { get; private set; }
@@ -117,5 +120,15 @@ public class PartidaCallbackImplementacion : CommunicationObjectImplementado, IP
     public void RecibirGrupoImagenCallback(ImagenCarta imagen)
     {
         this.GrupoImagenActual = imagen;
+    }
+
+    public void NoSeEmpezoPartidaCallback()
+    {
+        NoSeEmpezoPartida = true;
+    }
+
+    public void MostrarTableroCartasCallback()
+    {
+        MostrarTablero = true;
     }
 }

@@ -17,13 +17,8 @@ namespace Pruebas.DAO
         [TestMethod]
         public void RecuperarEstadisticas_IdExistente_DeberiaRetornarEstadistica()
         {
-
             int idEstadisticas = 1;
-
-
             var resultado = estadisticasDAO.RecuperarEstadisticas(idEstadisticas);
-
-
             Assert.IsNotNull(resultado, "El resultado no debería ser nulo.");
             Assert.AreEqual(idEstadisticas, resultado.idEstadisticas, "El ID de la estadística no coincide.");
         }

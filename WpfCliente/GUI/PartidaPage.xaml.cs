@@ -23,31 +23,27 @@ namespace WpfCliente.GUI
         private const int SELECCION_MAXIMA_NARRADOR = 1;
         private const int SELECCION_MAXIMA_JUGADOR = 1;
         private const int ADIVINAR_MAXIMA_JUGADOR = 1;
+        private const int UNICA_SOLICITUD = 1;
         private const int CONTADOR_SELECCION_CERO = 0;
+        private const int MAXIMO_EJECUCION_VERIFICACION = 10;
         private int contadorSeleccion = 0;
         private int contadorSeleccionAdivinar = 0;
         private const int INICIALIZAR_CONTADOR = 0;
         private const int TIEMPO_CARTA_SEGUNDOS = 6;
         private const int TIEMPO_MENSAJE_SEGUNDOS = 3;
+        private const int TIEMPO_ESPERA_VERIFICACON = 20;
         private const string NOMBRE_RESERVADO= "guest";
-        public ICommand ComandoImagenGlobal { get; set; }
-        public ICommand ComandoImagenSelecionCorrecta { get; set; }
-        private bool comandoHabilitado = true;
-        public bool ComandoHabilitado
-        {
-            get => comandoHabilitado;
-            set
-            {
-                comandoHabilitado = value;
-                OnPropertyChanged();
-                (ComandoImagenSelecionCorrecta as ComandoRele<string>)?.RaiseCanExecuteChanged();
-            }
-        }
+        private DispatcherTimer evaluadorConexionServidor;
         public event PropertyChangedEventHandler PropertyChanged;
         SeleccionCartaUserControl seleccionCartasUserControl;
         NarradorSeleccionCartaUserControl narradorSeleccionCartasUserControl;
         VerTodasCartasUserControl verTodasCartasUserControl;
         ResumenRondaUserControl resumenRondaUserControl;
+        private MostrarCartaModalWindow ventanaModalCartas;
+        private DispatcherTimer temporizador;
+        private bool primeraEjecucion = true;
+        private bool enEjecucionVerificacion = false;
+        private int contadorDeEjecuciones = 0;
         private bool esNarrador;
         public bool EsNarrador
         {
@@ -76,9 +72,19 @@ namespace WpfCliente.GUI
                 OnPropertyChanged();
             }
         }
-        private MostrarCartaModalWindow ventanaModalCartas;
-        private DispatcherTimer temporizador;
-        private bool primeraEjecucion = true;
+        private bool comandoHabilitado = true;
+        public bool ComandoHabilitado
+        {
+            get => comandoHabilitado;
+            set
+            {
+                comandoHabilitado = value;
+                OnPropertyChanged();
+                (ComandoImagenSelecionCorrecta as ComandoRele<string>)?.RaiseCanExecuteChanged();
+            }
+        }
+        public ICommand ComandoImagenGlobal { get; set; }
+        public ICommand ComandoImagenSelecionCorrecta { get; set; }
 
         public PartidaPage(string idPartida)
         {
@@ -89,21 +95,113 @@ namespace WpfCliente.GUI
             SingletonPartida.Instancia.DesbloquearChat += DesbloqueoChat;
             SingletonPartida.Instancia.PerdisteTurno += PerdisteTurno;
             SingletonPartida.Instancia.TeHanExpulsado += EnExpulsion;
+            SingletonPartida.Instancia.PartidaFaltaJugadores += FaltaJugadores;
             InitializeComponent();
             InicializarComponenetes();
             DataContext = this;
             UnirsePartidaAsync(idPartida);
             ActualizarUI();
-            textBlockPerdisteTurno.Visibility = Visibility.Collapsed;
+            textBlockAvisos.Visibility = Visibility.Collapsed;
+            ConfigurarTemporizador();
         }
 
-        private void EnExpulsion()
+        private void ConfigurarTemporizador()
         {
-            TerminoPartidaAsync();
+            evaluadorConexionServidor = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(TIEMPO_ESPERA_VERIFICACON)
+            };
+            evaluadorConexionServidor.Tick += async (emisor, evento) =>
+            {
+                try
+                {
+                    if (enEjecucionVerificacion)
+                    {
+                        contadorDeEjecuciones++;
+                        if (contadorDeEjecuciones <MAXIMO_EJECUCION_VERIFICACION)
+                        {
+                            evaluadorConexionServidor.Stop();
+
+                        }
+                        return;
+                    }
+                    contadorDeEjecuciones = 0;
+                    enEjecucionVerificacion = true;
+                    bool continuar = await VerificarConexionSinBaseDatos();
+                    if (!continuar)
+                    {
+                        evaluadorConexionServidor.Stop();
+                    }
+                }
+                catch (Exception excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+                }
+            };
+            evaluadorConexionServidor.Start();
+        }
+
+        private async Task<bool> VerificarConexionSinBaseDatos()
+        {
             try
             {
-                textBlockPerdisteTurno.Text = Idioma.labelHasSidoExpulsado;
-                textBlockPerdisteTurno.Visibility = Visibility.Visible;
+                labelEstadoConexion.Content = Idioma.labelVerificandoConexion;
+                bool conexionExitosa = await Task.Run(async () =>
+                {
+                    try
+                    {
+                        return await Conexion.VerificarExistenciaPartida();
+
+                    }
+                    catch (CommunicationException)
+                    {
+                        throw new CommunicationException();
+                    }
+                    catch (ArgumentException)
+                    {
+                        throw new ArgumentException();
+                    }
+                    catch (Exception excepcion)
+                    {
+                        ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+                    }
+                    return false;
+                });
+
+                labelEstadoConexion.Content = conexionExitosa ? Idioma.labelConectado : Idioma.labelErrorConexion;
+                labelEstadoConexion.Visibility = Visibility.Visible;
+                return true;
+            }
+            catch (CommunicationException excepcion)
+            {
+                ActualizarUI();
+                labelEstadoConexion.Content = Idioma.labelErrorAlVerificarConexion;
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+                VentanasEmergentes.CrearVentanaEmergenteConCierre(Idioma.tituloErrorServidor, Idioma.mensajeErrorServidor, Window.GetWindow(this));
+            }
+            catch (ArgumentException excepcion)
+            {
+                labelEstadoConexion.Content = Idioma.labelErrorConexion;
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloErrorServidor, Idioma.mensajePartidaExpiro, Window.GetWindow(this));
+                chatUserControl.IsEnabled = false;
+                buttonSolicitarImagen.IsEnabled = false;
+            }
+            catch (Exception excepcion)
+            {
+                labelEstadoConexion.Content = Idioma.labelErrorAlVerificarConexion;
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+            return false;
+        }
+
+        private void FaltaJugadores()
+        {
+            try
+            {
+                textBlockAvisos.Visibility = Visibility.Visible;
+                textBlockAvisos.Text = Idioma.labelFaltaJugadoresPartida;
+                TerminoPartida();
             }
             catch (NullReferenceException excepcion)
             {
@@ -119,15 +217,39 @@ namespace WpfCliente.GUI
             }
         }
 
-        private async void TerminoPartidaAsync()
+        private void EnExpulsion()
+        {
+            TerminoPartida();
+            try
+            {
+                textBlockAvisos.Text = Idioma.labelHasSidoExpulsado;
+                textBlockAvisos.Visibility = Visibility.Visible;
+            }
+            catch (NullReferenceException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+            catch (InvalidOperationException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+        }
+
+        private void TerminoPartida()
         {
             try
             {
+                enEjecucionVerificacion = true;
                 buttonSolicitarImagen.Visibility = Visibility.Hidden;
                 buttonSolicitarImagen.IsEnabled = false;
                 chatUserControl.Visibility = Visibility.Hidden;
                 chatUserControl.IsEnabled = false;
                 PantallaActual = PantallasPartida.PANTALLA_FIN_PARTIDA;
+                evaluadorConexionServidor.Stop();
             }
             catch (NullReferenceException excepcion)
             {
@@ -149,14 +271,14 @@ namespace WpfCliente.GUI
         {
             try
             {
-                textBlockPerdisteTurno.Visibility = Visibility.Visible;
+                textBlockAvisos.Visibility = Visibility.Visible;
                 temporizador = new DispatcherTimer
                 {
                     Interval = TimeSpan.FromSeconds(TIEMPO_MENSAJE_SEGUNDOS)
                 };
                 temporizador.Tick += (emisor, argumentos) =>
                 {
-                    textBlockPerdisteTurno.Visibility = Visibility.Collapsed;
+                    textBlockAvisos.Visibility = Visibility.Collapsed;
                     temporizador.Stop();
                 };
                 temporizador.Start();
@@ -207,30 +329,6 @@ namespace WpfCliente.GUI
                 ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
         }
-        private async void ComandoTratarAdivinarAsync(string idImagen)
-        {
-            ImagenCarta imagenAEscoger =
-                SingletonGestorImagenes.Instancia.imagenesDeTodos.ImagenCartasTodos
-                    .RealizarConsultaSegura(lista => lista.FirstOrDefault(busqueda => busqueda.IdImagen == idImagen));
-            if (imagenAEscoger == null)
-                return;
-            ventanaModalCartas = new MostrarCartaModalWindow(false, imagenAEscoger.BitmapImagen, () => ventanaModalCartas?.Close());
-            bool? resultado = ventanaModalCartas.ShowDialog();
-            string pista = ventanaModalCartas.Pista;
-            if ((bool)resultado)
-            {
-                contadorSeleccionAdivinar++;
-                await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
-                await SingletonPartida.Instancia.Partida.TratarAdivinarAsync(SingletonCliente.Instance.NombreUsuario,
-                    SingletonCliente.Instance.IdPartida, idImagen);
-                if (contadorSeleccionAdivinar >= ADIVINAR_MAXIMA_JUGADOR)
-                {
-                    AvanzarPantalla(PantallasPartida.PANTALLA_ESPERA);
-                    contadorSeleccionAdivinar = INICIALIZAR_CONTADOR;
-                }
-
-            }
-        }
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -241,7 +339,7 @@ namespace WpfCliente.GUI
         {
             if (numeroPantalla == PantallasPartida.PANTALLA_FIN_PARTIDA)
             {
-                TerminoPartidaAsync();
+                TerminoPartida();
                 return;
             }
             if (primeraEjecucion)
@@ -373,7 +471,6 @@ namespace WpfCliente.GUI
             }
         }
 
-
         public void ComandoImagenPorId(string claveImagen)
         {
             if (EsNarrador)
@@ -388,28 +485,45 @@ namespace WpfCliente.GUI
 
         public async void EscogerImagenPorIdAsync(string id)
         {
-            ImagenCarta imagenEscogida = SingletonGestorImagenes.Instancia.imagnesMazo.ImagenCartasMazo
+            ImagenCarta imagenEscogida = SingletonGestorImagenes.Instancia.imagnesMazo.ImagenesMazo
                 .RealizarConsultaSegura(lista => lista.FirstOrDefault(busqueda => busqueda.IdImagen == id));
             if (imagenEscogida == null)
+            {
                 return;
+            }
             string claveImagen = imagenEscogida.IdImagen;
             ventanaModalCartas = new MostrarCartaModalWindow(false, imagenEscogida.BitmapImagen , () => ventanaModalCartas?.Close());
             bool? resultado = ventanaModalCartas.ShowDialog();
             if ((bool)resultado)
             {
-                contadorSeleccion++;
-                SingletonGestorImagenes.Instancia.imagnesMazo.ImagenCartasMazo.Remove(imagenEscogida);
-                await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
-                SingletonPartida.Instancia.Partida.ConfirmarMovimiento(SingletonCliente.Instance.NombreUsuario,
-                    SingletonCliente.Instance.IdPartida,
-                    imagenEscogida.IdImagen,
-                    null);
-                await SingletonGestorImagenes.Instancia.imagnesMazo.Imagen.SolicitarImagenCartaAsync(SingletonCliente.Instance.IdPartida);
-
-                if (contadorSeleccion >= SELECCION_MAXIMA_JUGADOR)
+                try
                 {
-                    AvanzarPantalla(PantallasPartida.PANTALLA_ESPERA);
-                    contadorSeleccion = CONTADOR_SELECCION_CERO;
+                    contadorSeleccion++;
+                    SingletonGestorImagenes.Instancia.imagnesMazo.ImagenesMazo.Remove(imagenEscogida);
+                    await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
+                    SingletonPartida.Instancia.Partida.ConfirmarMovimiento(SingletonCliente.Instance.NombreUsuario,
+                        SingletonCliente.Instance.IdPartida,
+                        imagenEscogida.IdImagen,
+                        null);
+                    await SingletonGestorImagenes.Instancia.imagnesMazo.Imagen.SolicitarImagenMazoAsync(SingletonCliente.Instance.IdPartida, UNICA_SOLICITUD);
+
+                    if (contadorSeleccion >= SELECCION_MAXIMA_JUGADOR)
+                    {
+                        AvanzarPantalla(PantallasPartida.PANTALLA_ESPERA);
+                        contadorSeleccion = CONTADOR_SELECCION_CERO;
+                    }
+                }
+                catch (CommunicationException excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
+                }
+                catch (InvalidOperationException excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
+                }
+                catch (Exception excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
                 }
 
             }
@@ -418,31 +532,90 @@ namespace WpfCliente.GUI
 
         public async void EscogerImagenNarradorAsync(string id)
         {
-
-            ImagenCarta imagenAEscoger = SingletonGestorImagenes.Instancia.imagnesMazo.ImagenCartasMazo
+            ImagenCarta imagenAEscoger = SingletonGestorImagenes.Instancia.imagnesMazo.ImagenesMazo
                .RealizarConsultaSegura(lista => lista.FirstOrDefault(busqueda => busqueda.IdImagen == id));
             if (imagenAEscoger == null)
+            {
                 return;
+            }
             ventanaModalCartas = new MostrarCartaModalWindow(true, imagenAEscoger.BitmapImagen, () => ventanaModalCartas?.Close());
             bool? resultado = ventanaModalCartas.ShowDialog();
             string pista = ventanaModalCartas.Pista;
             if ((bool)resultado)
             {
-                contadorSeleccion++;
-                SingletonGestorImagenes.Instancia.imagnesMazo.ImagenCartasMazo.Remove(imagenAEscoger);
-                await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
-                await SingletonPartida.Instancia.Partida.ConfirmarMovimientoAsync(
-                    SingletonCliente.Instance.NombreUsuario, 
-                    SingletonCliente.Instance.IdPartida, 
-                    imagenAEscoger.IdImagen, 
-                    pista);
-                await SingletonGestorImagenes.Instancia.imagnesMazo.Imagen.SolicitarImagenCartaAsync(SingletonCliente.Instance.IdPartida);
-                if (contadorSeleccion >= SELECCION_MAXIMA_NARRADOR)
+                try
                 {
-                    AvanzarPantalla(PantallasPartida.PANTALLA_ESPERA);
-                    contadorSeleccion = CONTADOR_SELECCION_CERO;
+                    contadorSeleccion++;
+                    SingletonGestorImagenes.Instancia.imagnesMazo.ImagenesMazo.Remove(imagenAEscoger);
+                    await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
+                    await SingletonPartida.Instancia.Partida.ConfirmarMovimientoAsync(
+                        SingletonCliente.Instance.NombreUsuario,
+                        SingletonCliente.Instance.IdPartida,
+                        imagenAEscoger.IdImagen,
+                        pista);
+                    await SingletonGestorImagenes.Instancia.imagnesMazo.Imagen
+                        .SolicitarImagenMazoAsync(SingletonCliente.Instance.IdPartida, UNICA_SOLICITUD);
+                    if (contadorSeleccion >= SELECCION_MAXIMA_NARRADOR)
+                    {
+                        AvanzarPantalla(PantallasPartida.PANTALLA_ESPERA);
+                        contadorSeleccion = CONTADOR_SELECCION_CERO;
+                    }
+                }
+                catch (CommunicationException excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
+                }
+                catch (InvalidOperationException excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
+                }
+                catch (Exception excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
                 }
 
+            }
+        }
+
+        private async void ComandoTratarAdivinarAsync(string idImagen)
+        {
+            ImagenCarta imagenAEscoger =
+                SingletonGestorImagenes.Instancia.imagenesTablero.ImagenesTablero
+                    .RealizarConsultaSegura(lista => lista.FirstOrDefault(busqueda => busqueda.IdImagen == idImagen));
+            if (imagenAEscoger == null)
+            {
+                return;
+            }
+            ventanaModalCartas = new MostrarCartaModalWindow(false, imagenAEscoger.BitmapImagen, () => ventanaModalCartas?.Close());
+            bool? resultado = ventanaModalCartas.ShowDialog();
+            string pista = ventanaModalCartas.Pista;
+            if ((bool)resultado)
+            {
+                try
+                {
+                    contadorSeleccionAdivinar++;
+                    await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
+                    await SingletonPartida.Instancia.Partida.TratarAdivinarAsync(SingletonCliente.Instance.NombreUsuario,
+                        SingletonCliente.Instance.IdPartida, idImagen);
+                    if (contadorSeleccionAdivinar >= ADIVINAR_MAXIMA_JUGADOR)
+                    {
+                        AvanzarPantalla(PantallasPartida.PANTALLA_ESPERA);
+                        contadorSeleccionAdivinar = INICIALIZAR_CONTADOR;
+                    }
+
+                }
+                catch (CommunicationException excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
+                }
+                catch (InvalidOperationException excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
+                }
+                catch (Exception excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
+                }
             }
         }
 
@@ -457,12 +630,12 @@ namespace WpfCliente.GUI
             try
             {
                 var numeroCartasActual = 
-                    SingletonGestorImagenes.Instancia.imagnesMazo.ImagenCartasMazo.ContarSeguro();
+                    SingletonGestorImagenes.Instancia.imagnesMazo.ImagenesMazo.ContarSeguro();
 
                 if (numeroCartasActual > SingletonGestorImagenes.MAXIMO_IMAGENES_MAZO)
                 {
                     await SingletonGestorImagenes.Instancia.imagnesMazo.Imagen
-                        .SolicitarImagenCartaAsync(SingletonCliente.Instance.IdPartida);
+                        .SolicitarImagenMazoAsync(SingletonCliente.Instance.IdPartida, UNICA_SOLICITUD);
                     await Task.Delay(TimeSpan.FromSeconds(TIEMPO_CARTA_SEGUNDOS));
                 }
             }
@@ -492,7 +665,7 @@ namespace WpfCliente.GUI
         public void ActualizarUI()
         {
             buttonSolicitarImagen.Content = Idioma.buttonSolicitarImagen;
-            textBlockPerdisteTurno.Text = Idioma.labelPerdisteTurno;
+            textBlockAvisos.Text = Idioma.labelPerdisteTurno;
             labelFinPartida.Content = Idioma.labelFinPartida;
         }
 

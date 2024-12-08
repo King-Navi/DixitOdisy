@@ -142,7 +142,7 @@ namespace WcfServicioLibreria.Manejador
             return false;
         }
 
-        public async Task EmpezarPartidaAsync(string nombreJugador, string idPartida)
+        public async Task EmpezarPartidaAsync(string idPartida)
         {
             if (!ValidarPartida(idPartida))
             {
@@ -151,6 +151,10 @@ namespace WcfServicioLibreria.Manejador
             try
             {
                 partidasDiccionario.TryGetValue(idPartida, out Partida partida);
+                if (partida.SeLlamoEmpezarPartida)
+                {
+                    return;
+                }
                 await partida.EmpezarPartida();
             }
             catch (ArgumentNullException excepcion)

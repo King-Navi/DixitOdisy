@@ -120,8 +120,14 @@
   <xs:complexType name="ImagenCarta">
     <xs:sequence>
       <xs:element minOccurs="0" name="IdImagen" nillable="true" type="xs:string" />
-      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/System.IO" minOccurs="0" name="ImagenStream" nillable="true" type="q6:MemoryStream" />
+      <xs:element minOccurs="0" name="ImagenStream" nillable="true" type="xs:base64Binary" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ImagenCarta" nillable="true" type="tns:ImagenCarta" />
+  <xs:complexType name="ArrayOfImagenCarta">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ImagenCarta" nillable="true" type="tns:ImagenCarta" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfImagenCarta" nillable="true" type="tns:ArrayOfImagenCarta" />
 </xs:schema>

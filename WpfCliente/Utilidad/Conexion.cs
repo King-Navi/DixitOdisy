@@ -101,6 +101,25 @@ namespace WpfCliente.Utilidad
             return true;
         }
 
+        public static async Task<bool> VerificarExistenciaPartida()
+        {
+            Task<bool> verificarConexion = HacerPingAsync();
+            if (!await verificarConexion)
+            {
+                throw new CommunicationException();
+            }
+            var servicio = new ServicioManejador<ServicioPartidaClient>();
+            var resultado = servicio.EjecutarServicio(llamada =>
+            {
+                return llamada.ValidarPartida(SingletonCliente.Instance.IdPartida);
+            });
+            if (!resultado)
+            {
+                throw new ArgumentException();
+            }
+            return true;
+        }
+
 
         private static void DeshabilitarVentana(Window ventana, bool estado)
         {

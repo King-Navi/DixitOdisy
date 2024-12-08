@@ -12,7 +12,6 @@ using System.Threading;
 using WcfServicioLibreria.Enumerador;
 using WcfServicioLibreria.Utilidades;
 using System.ServiceModel;
-using WcfServicioLibreria.Modelo.Evento;
 
 namespace WcfServicioLibreria.Modelo
 {
@@ -20,77 +19,58 @@ namespace WcfServicioLibreria.Modelo
     {
 
         private const int LIMITE_CARTAS_MINIMO = 0;
-        private const int LECTORESDISCO = 6;
         private const string PRIMER_PARTE_ENTRADA = "Genera una imagen basada en la tematica";
         private const string SEGUNDA_PARTE_ENTRADA = "Debe ser rectangular y vertical, de alta calidad tiene que ser muy buena por que es para el profe juan carlos";
         private const string EXTENSION_PUNTO_JPG = ".jpg";
-        private const int TIEMPO_AUMENTO_ENTRADA_SEGUNDOS = 4;
-        private static int tiempoEspera = 0;
-        private static readonly int tiempoMinimo = 16;
-        private static readonly object lockTiempoEspera = new object();
-        private const int TIEMPO_ESPERA_MILISEGUNDOS = 1000;
         private IMediadorImagen mediadorImagen;
         private readonly TematicaPartida tematica;
         private IEscribirDisco escritor;
+        private ILectorDisco lectorDisco;
         private readonly SemaphoreSlim semaphoreLectura = new SemaphoreSlim(1, 1);
         private readonly SemaphoreSlim semaphoreEnvioGrupo = new SemaphoreSlim(1, 1);
         private static readonly HttpClient httpCliente = new HttpClient();
         private readonly string rutaImagenes;
         private List<string> listaActualElegida;
-        /// <summary>
-        /// Precausion: Aumentar esto ocupara significativamente mas recursos
-        /// </summary>
-        private readonly ILectorDiscoOrquestador lectorDiscoOrquetadorMazo = new LectorDiscoOrquestador(LECTORESDISCO);
-        private readonly ILectorDiscoOrquestador lectorDiscoOrquetadorGrupo = new LectorDiscoOrquestador(LECTORESDISCO);
-        public ManejadorImagen(IEscribirDisco _escritor, IMediadorImagen _mediadorImagen, TematicaPartida _tematica)
+        public ManejadorImagen(IEscribirDisco _escritor, IMediadorImagen _mediadorImagen, TematicaPartida _tematica, ILectorDisco _lectorDisco , List<string> rutasImagenesElegias)
         {
             escritor = _escritor;
             mediadorImagen = _mediadorImagen;
             tematica = _tematica;
             rutaImagenes = Rutas.CalcularRutaImagenes(tematica);
+            lectorDisco = _lectorDisco;
+            listaActualElegida = rutasImagenesElegias;
         }
 
         #region Imagenes
-        public async Task<bool> EnviarImagenAsync(IImagenCallback callback)
-        {
-            return await CalcularNuevaImagenAsync(callback);
-        }
 
-        private async Task<bool> CalcularNuevaImagenAsync(IImagenCallback callback)
+        public async Task<bool> SolicitarImagenMazoAsync(LecturaTrabajo lecturaTrabajo)
         {
-            bool resultado = false;
             int cartasRestantes = mediadorImagen.ObtenerCartasRestantes();
             try
             {
                 if (cartasRestantes <= LIMITE_CARTAS_MINIMO)
                 {
-                    resultado = await SolicitarImagenChatGPTAsync(callback);
+                     return await SolicitarImagenChatGPTAsync(lecturaTrabajo.CallbackImagenesMazo);
                 }
                 else
                 {
-                    resultado = await LeerImagenDiscoAsync( callback);
+                    return await LeerImagenMazoDiscoAsync(lecturaTrabajo);
                 }
             }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
             }
-            return true;
+            return false;
         }
 
-        private async Task<bool> LeerImagenDiscoAsync( IImagenCallback callback)
+        private async Task<bool> LeerImagenMazoDiscoAsync(LecturaTrabajo lecturaTrabajo)
         {
             await semaphoreLectura.WaitAsync();
 
             try
             {
-                var (rutaCompleta, nombreArchivo) = mediadorImagen.ObtenerRutaCompeltaYNombreImagen();
-                if (String.IsNullOrEmpty(rutaCompleta) || String.IsNullOrEmpty(nombreArchivo))
-                {
-                    return await SolicitarImagenChatGPTAsync(callback);
-                }
-                await lectorDiscoOrquetadorMazo.AsignarTrabajoRoundRobinAsync(rutaCompleta, callback);
-                return true;
+                return await lectorDisco.ProcesarColaLecturaEnvio(lecturaTrabajo);
             }
             catch (Exception excepcion)
             {
@@ -103,8 +83,7 @@ namespace WcfServicioLibreria.Modelo
             return false;
         }
 
-
-        private async Task<bool> SolicitarImagenChatGPTAsync( IImagenCallback callback)
+        private async Task<bool> SolicitarImagenChatGPTAsync(IImagenMazoCallback callback)
         {
             try
             {
@@ -119,8 +98,7 @@ namespace WcfServicioLibreria.Modelo
                 {
                     return false;
                 }
-
-                EnviarImagenCallback(callback, imagenCarta);
+                callback?.RecibirImagenCallback(imagenCarta);
                 return true;
             }
             catch (Exception excepcion)
@@ -147,17 +125,16 @@ namespace WcfServicioLibreria.Modelo
             {
                 var imagenBytes = Convert.FromBase64String(respuesta.ImagenDatosList[0].Base64Imagen);
                 var rutaDestino = Path.Combine(rutaImagenes, $"{Guid.NewGuid()}{EXTENSION_PUNTO_JPG}");
-
-                using (var memoryStream = new MemoryStream(imagenBytes))
+                using (MemoryStream memoria = new MemoryStream(imagenBytes))
                 {
-                    escritor.EncolarEscritura(memoryStream, rutaDestino);
-
-                    return new ImagenCarta
-                    {
-                        ImagenStream = memoryStream,
-                        IdImagen = Path.GetFileNameWithoutExtension(rutaDestino)
-                    };
+                    escritor.EncolarEscritura(memoria, rutaDestino);
                 }
+                return new ImagenCarta
+                {
+                    ImagenStream = imagenBytes,
+                    IdImagen = Path.GetFileNameWithoutExtension(rutaDestino)
+                };
+
             }
             catch (Exception excepcion)
             {
@@ -165,119 +142,36 @@ namespace WcfServicioLibreria.Modelo
                 return null;
             }
         }
-
-        private void EnviarImagenCallback(IImagenCallback callback, ImagenCarta imagenCarta)
+        
+        public async Task<bool> SolicitarTableroCartasAsync(IImagenesTableroCallback callback)
         {
-            if (callback == null)
-            {
-                return;
-            }
             try
             {
-                callback?.RecibirImagenCallback(imagenCarta);
-            }
-            catch (FormatException excepcion)
-            {
-                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
-            }
-            catch (ArgumentException excepcion)
-            {
-                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
-            }
-            catch (Exception excepcion)
-            {
-                ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
-            }
-        }
-
-        public void EnMostrarImagenes(object emisor, RondaEventArgs evento)
-        {
-            listaActualElegida = evento.RutaImagenes;
-        }
-
-        public async Task MostrarGrupoCartasAsync(IImagenCallback callback)
-        {
-            int esperaActual;
-            lock (lockTiempoEspera)
-            {
-                esperaActual = tiempoEspera;
-                if (tiempoEspera > tiempoMinimo)
+                if (listaActualElegida == null || listaActualElegida.Count == 0)
                 {
-                    tiempoEspera += TIEMPO_AUMENTO_ENTRADA_SEGUNDOS;
+                    return false;
                 }
+                List <String> resultadoRutasCompletas = mediadorImagen.ObtenerRutasPorNombreArchivo(listaActualElegida);
+                LecturaTrabajo lecturaTrabajo = new LecturaTrabajo(resultadoRutasCompletas, callback);
+                return await lectorDisco.ProcesarColaLecturaEnvio(lecturaTrabajo);
             }
-            await Task.Delay(esperaActual * TIEMPO_ESPERA_MILISEGUNDOS);
-            await semaphoreEnvioGrupo.WaitAsync();
-            List<string> rutasCompletas = new List<string>();
-            try
-            {
-                string[] archivosCache = mediadorImagen.ObtenerArchivosCache();
-                if (archivosCache == null)
-                {
-                    return;
-                }
-                var archivoRutaMapa = archivosCache.ToDictionary(ruta => Path.GetFileNameWithoutExtension(ruta), ruta => ruta);
-
-                foreach (var nombreArchivo in listaActualElegida)
-                {
-                    if (archivoRutaMapa.TryGetValue(nombreArchivo, out var rutaCompleta))
-                    {
-                        rutasCompletas.Add(rutaCompleta);
-                    }
-                }
-            }
-            catch (Exception excepcion)
+            catch (TimeoutException excepcion)
             {
                 ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
-
-            try
+            catch (CommunicationException excepcion)
             {
-                foreach (var rutaImagen in rutasCompletas)
-                {
-                    try
-                    {
-                        await lectorDiscoOrquetadorGrupo?.AsignarTrabajoRoundRobinAsync(rutaImagen, callback, true);
-                    }
-                    catch (TimeoutException excepcion)
-                    {
-                        ManejadorExcepciones.ManejarExcepcionError(excepcion);
-                    }
-                    catch (CommunicationException excepcion)
-                    {
-                        ManejadorExcepciones.ManejarExcepcionError(excepcion);
-                    }
-                    catch (Exception excepcion)
-                    {
-                        ManejadorExcepciones.ManejarExcepcionError(excepcion);
-                    }
-                }
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             semaphoreEnvioGrupo.Release();
+            return false;
         }
-
-
-
-
-        public void LiberarRecursos()
-        {
-            lectorDiscoOrquetadorMazo.LiberarRecursos();
-            lectorDiscoOrquetadorGrupo.LiberarRecursos();
-            mediadorImagen = null;
-        }
-
-        internal void SeTerminoLectura(object sender, EventArgs e)
-        {
-            LiberarRecursos();
-        }
-
-
 
         #endregion Imagenes
-
     }
 }
+

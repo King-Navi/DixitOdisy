@@ -17,7 +17,7 @@ namespace WpfCliente.GUI
         public SeleccionCartaUserControl()
         {
             InitializeComponent();
-            Imagenes = SingletonGestorImagenes.Instancia.imagnesMazo.ImagenCartasMazo;
+            Imagenes = SingletonGestorImagenes.Instancia.imagnesMazo.ImagenesMazo;
             SingletonPartida.Instancia.MostrarPista += ColocarPista;
             Loaded += SeleccionCartaUsercontrolLoaded;
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;

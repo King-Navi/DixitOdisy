@@ -18,7 +18,7 @@ namespace WpfCliente.GUI
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
             SingletonPartida.Instancia.MostrarPista += ColocarPista;
-            TodasImagenes = SingletonGestorImagenes.Instancia.imagenesDeTodos.ImagenCartasTodos;
+            TodasImagenes = SingletonGestorImagenes.Instancia.imagenesTablero.ImagenesTablero;
             DataContext = this;
             ActualizarUI();
         }

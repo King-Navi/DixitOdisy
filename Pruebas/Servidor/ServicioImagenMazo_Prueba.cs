@@ -12,16 +12,16 @@ using WcfServicioLibreria.Modelo;
 namespace Pruebas.Servidor
 {
     [TestClass]
-    public class ServicioImagen_Prueba : ConfiguradorPruebaParaServicio
+    public class ServicioImagenMazo_Prueba : ConfiguradorPruebaParaServicio
     {
-        private ImagenCallbackImplementacion ImagenCallbackImplementacion { get; set; } = new ImagenCallbackImplementacion();
+        private ImagenMazoCallbackImplementacion ImagenCallbackImplementacion { get; set; } = new ImagenMazoCallbackImplementacion();
         private PartidaCallbackImplementacion implementacionPartidaCallback = new PartidaCallbackImplementacion();
 
         [TestInitialize]
         public override void ConfigurarManejador()
         {
             base.ConfigurarManejador();
-            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IImagenCallback>()).Returns(ImagenCallbackImplementacion);
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IImagenMazoCallback>()).Returns(ImagenCallbackImplementacion);
 
         }
         [TestCleanup]
@@ -41,9 +41,9 @@ namespace Pruebas.Servidor
             var idPartida = manejador.CrearPartida(usuario.Nombre, configuracionGenerica);
             imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionPartidaCallback);
             await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
-            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IImagenCallback>()).Returns(ImagenCallbackImplementacion);
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IImagenMazoCallback>()).Returns(ImagenCallbackImplementacion);
 
-            await manejador.SolicitarImagenCartaAsync(idPartida);
+            await manejador.SolicitarImagenMazoAsync(idPartida);
             await Task.Delay(TimeSpan.FromSeconds(10));
             Assert.IsTrue(ImagenCallbackImplementacion.ImagenCartasMazo.Count == 1);
             if (implementacionCallback != null)
@@ -54,17 +54,14 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task SolicitarImagenCarta_SolicitarVariasImagenes_DeberiaEnviarImagenes()
         {
-
-            //Precaucion: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP 
+            int numeroImagenes = 3;
             var usuario = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var configuracionGenerica = new ConfiguracionPartida(TematicaPartida.Mixta, CondicionVictoriaPartida.PorCantidadRondas, 6);
             var idPartida = manejador.CrearPartida(usuario.Nombre, configuracionGenerica);
             imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionPartidaCallback);
             await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
-            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IImagenCallback>()).Returns(ImagenCallbackImplementacion);
-            await manejador.SolicitarImagenCartaAsync(idPartida);
-            await manejador.SolicitarImagenCartaAsync(idPartida);
-            await manejador.SolicitarImagenCartaAsync(idPartida);
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IImagenMazoCallback>()).Returns(ImagenCallbackImplementacion);
+            await manejador.SolicitarImagenMazoAsync(idPartida, numeroImagenes);
             await Task.Delay(TimeSpan.FromSeconds(10));
 
             Assert.IsTrue(ImagenCallbackImplementacion.ImagenCartasMazo.Count == 3);
@@ -77,19 +74,15 @@ namespace Pruebas.Servidor
         [TestMethod]
         public async Task SolicitarImagenCarta_SolicitarMuchasImagenes_DeberiaEnviarImagenes()
         {
-            //Precaucion: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP 
             var usuario = new Usuario { IdUsuario = 19, Nombre = "navi" };
             var configuracionGenerica = new ConfiguracionPartida(TematicaPartida.Mixta, CondicionVictoriaPartida.PorCantidadRondas, 6);
             var idPartida = manejador.CrearPartida(usuario.Nombre, configuracionGenerica);
             imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionPartidaCallback);
             await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
-            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IImagenCallback>()).Returns(ImagenCallbackImplementacion);
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IImagenMazoCallback>()).Returns(ImagenCallbackImplementacion);
             var tareasSolicitudes = new List<Task>();
             var numeroSolicitudes = 12;
-            for (int i = 0; i < numeroSolicitudes; i++)
-            {
-                tareasSolicitudes.Add(manejador.SolicitarImagenCartaAsync(idPartida));
-            }
+            await manejador.SolicitarImagenMazoAsync(idPartida, numeroSolicitudes);
 
             await Task.WhenAll(tareasSolicitudes);
             await Task.Delay(TimeSpan.FromSeconds(10));
@@ -104,9 +97,8 @@ namespace Pruebas.Servidor
         public async Task SolicitarImagenCarta_SolicitarImagenHastaDIOS_DeberiaEnviarImagenes()
         {
 
-            //Precaucion:: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP y escribir en disco
-            //Este metodo gasta credito (DINERO REAL), solo para mostrar a profe descomentar la linea de abajo
-            //Se conceta a la API de OpenIA par pedir una imagen a IA
+            //PRECAUCION: El metodo puede fallar sobretodo si necesita hacer una solicitud HTTP y escribir en disco
+            //PRECAUCION: Este metodo gasta credito (DINERO REAL), solo para mostrar a profe descomentar la linea de abajo
             string rutaCarpeta = null;
             //rutaCarpeta = Path.Combine("..", "..", "..", "WcfServicioLibreria", "Recursos", "Mitologia");
             if (!Directory.Exists(rutaCarpeta))
@@ -122,12 +114,10 @@ namespace Pruebas.Servidor
             var idPartida = manejador.CrearPartida(usuario.Nombre, configuracionGenerica);
             imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionPartidaCallback);
             await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
-            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IImagenCallback>()).Returns(ImagenCallbackImplementacion);
-            foreach (var archivo in archivosJpg)
-            {
-                await manejador.SolicitarImagenCartaAsync(idPartida);
-            }
-            await manejador.SolicitarImagenCartaAsync(idPartida);
+            imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IImagenMazoCallback>()).Returns(ImagenCallbackImplementacion);
+            await manejador.SolicitarImagenMazoAsync(idPartida, archivosJpg.Length);
+
+            await manejador.SolicitarImagenMazoAsync(idPartida);
             await Task.Delay(TimeSpan.FromSeconds(15));
 
             Assert.IsTrue(ImagenCallbackImplementacion.ImagenCartasMazo.Count == archivosJpg.Length +1);

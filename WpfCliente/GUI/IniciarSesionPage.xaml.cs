@@ -18,6 +18,7 @@ namespace WpfCliente.GUI
     {
         private const string RECURSOS_ESTILO_TEXTBOX_ERROR = "TextBoxEstiloError";
         private const int MAXIMO_CARACTERES_PERMITIDOS = 20;
+        private bool accionTecalaProgreso = false;
         public IniciarSesionPage()
         {
             KeepAlive = false;
@@ -253,7 +254,16 @@ namespace WpfCliente.GUI
         {
             if (e.Key == Key.Enter)
             {
-                buttonIniciarSesion.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                if (!accionTecalaProgreso)
+                {
+                    accionTecalaProgreso = true;
+                    buttonIniciarSesion.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    e.Handled = true;
+                }
+                else
+                {
+                    e.Handled = true;
+                }
             }
         }
 

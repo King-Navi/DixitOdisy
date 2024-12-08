@@ -11,19 +11,19 @@ namespace WpfCliente.ImplementacionesCallbacks
     {
         public const int MAXIMO_IMAGENES_MAZO = 6;
         private static readonly Lazy<SingletonGestorImagenes> instancia = new Lazy<SingletonGestorImagenes>(() => new SingletonGestorImagenes());
-        public ReceptorImagen imagnesMazo = new ReceptorImagen();
-        public ReceptorImagen imagenesDeTodos = new ReceptorImagen();
+        public ReceptorImagenMazo imagnesMazo = new ReceptorImagenMazo();
+        public ReceptorImagenesTablero imagenesTablero = new ReceptorImagenesTablero();
         public static SingletonGestorImagenes Instancia => instancia.Value;
         private SingletonGestorImagenes() { }
 
         public void AbrirConexionImagenes()
         {
-            imagenesDeTodos.AbrirConexionImagen();
+            imagenesTablero.AbrirConexionImagen();
             imagnesMazo.AbrirConexionImagen();
         }
         public void CerrarConexionImagenes()
         {
-            imagenesDeTodos.CerrarConexionImagen();
+            imagenesTablero.CerrarConexionImagen();
             imagnesMazo.CerrarConexionImagen();
         }
 
@@ -35,12 +35,7 @@ namespace WpfCliente.ImplementacionesCallbacks
                 {
                     try
                     {
-                        await SingletonGestorImagenes.Instancia.imagnesMazo.Imagen.SolicitarImagenCartaAsync(SingletonCliente.Instance.IdPartida);
-                        await SingletonGestorImagenes.Instancia.imagnesMazo.Imagen.SolicitarImagenCartaAsync(SingletonCliente.Instance.IdPartida);
-                        await SingletonGestorImagenes.Instancia.imagnesMazo.Imagen.SolicitarImagenCartaAsync(SingletonCliente.Instance.IdPartida);
-                        await SingletonGestorImagenes.Instancia.imagnesMazo.Imagen.SolicitarImagenCartaAsync(SingletonCliente.Instance.IdPartida);
-                        await SingletonGestorImagenes.Instancia.imagnesMazo.Imagen.SolicitarImagenCartaAsync(SingletonCliente.Instance.IdPartida);
-                        await SingletonGestorImagenes.Instancia.imagnesMazo.Imagen.SolicitarImagenCartaAsync(SingletonCliente.Instance.IdPartida);
+                        await SingletonGestorImagenes.Instancia.imagnesMazo.Imagen.SolicitarImagenMazoAsync(SingletonCliente.Instance.IdPartida , 6);
                     }
                     catch (Exception excepcion)
                     {

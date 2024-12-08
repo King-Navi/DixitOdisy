@@ -8,7 +8,7 @@ namespace WcfServicioLibreria.Manejador
 {
     public partial class ManejadorPrincipal : IServicioChat
     {
-        bool IServicioChat.CrearChat(string idChat)
+        public bool CrearChat(string idChat)
         {
             bool resultado = false;
             try

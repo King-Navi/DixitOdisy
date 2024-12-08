@@ -2,7 +2,7 @@
 using System;
 namespace DAOLibreria.Utilidades
 {
-    internal class ManejadorBitacora
+    public static class ManejadorBitacora
     {
         private const string FORMATO_FECHA = "dd-MM-yyyy";
         private const string NOMBRE_LOG = "Log";

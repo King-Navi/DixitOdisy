@@ -15,14 +15,6 @@ namespace WcfServidor
             this.manejadorPrincipal = _manejadorPrincipal;
 
         }
-
-        public List<string> JugadoresConectados()
-        {
-            manejadorPrincipal.JugadoresConectado();
-
-            return null;
-        }
-
         protected override void OnClosing()
         {
             manejadorPrincipal.CerrarAplicacion();

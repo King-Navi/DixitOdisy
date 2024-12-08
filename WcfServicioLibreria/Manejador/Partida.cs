@@ -24,26 +24,20 @@ namespace WcfServicioLibreria.Manejador
                 } while (salasDiccionario.ContainsKey(idPartida));
                 MediadorPartida medidador = new MediadorPartida(configuracion.Tematica);
                 Partida partidaNueva = new Partida(idPartida, anfitrion, configuracion, new EstadisticasDAO(), medidador);
-                ManejadorImagen manejadorImagen = new ManejadorImagen(Escritor ,medidador, configuracion.Tematica);
-                partidaNueva.MostrarTodasLasCartas += manejadorImagen.EnMostrarImagenes;
-                partidaNueva.PartidaVaciaManejadorEvento += manejadorImagen.SeTerminoLectura;
                 bool existeSala = partidasDiccionario.TryAdd(idPartida, partidaNueva);
-                bool existeManejador = manejadoresImagenes.TryAdd(idPartida, manejadorImagen);
-                if (existeSala && existeManejador)
+                if (existeSala)
                 {
                     partidaNueva.PartidaVaciaManejadorEvento += BorrarPartida;
                 }
                 else
                 {
                     partidasDiccionario.TryRemove(idPartida, out _);
-                    manejadoresImagenes.TryRemove(idPartida, out _);
                     throw new Exception("No se creo la Partida");
                 }
             }
             catch (Exception excepcion)
             {
                 partidasDiccionario.TryRemove(idPartida, out _);
-                manejadoresImagenes.TryRemove(idPartida, out _);
                 ManejadorExcepciones.ManejarExcepcionFatal(excepcion);
             }
             return idPartida;

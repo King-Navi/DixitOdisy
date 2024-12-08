@@ -27,17 +27,11 @@ namespace WpfCliente.ImplementacionesCallbacks
         public event Action EstadisticasEnviadas;
         public event Action DesbloquearChat;
         public event Action SeTerminoPartida;
-        public event Action InicioPartida;
         public event Action PerdisteTurno;
         public event Action TeHanExpulsado;
+        public event Action PartidaFaltaJugadores;
 
-
-        private SingletonPartida() 
-        {
-            InicioPartida += PrepararseParaRonda;
-        }
-
-
+        private SingletonPartida() { }
 
         public bool AbrirConexionPartida()
         {
@@ -116,24 +110,12 @@ namespace WpfCliente.ImplementacionesCallbacks
             }
         }
 
-        public async void CambiarPantallaCallback(int numeroPantalla)
+        public void CambiarPantallaCallback(int numeroPantalla)
         {
             if (numeroPantalla == PantallasPartida.PANTALLA_INICIO)
             {
-                SingletonGestorImagenes.Instancia.imagenesDeTodos.ImagenCartasTodos.Clear();
+                SingletonGestorImagenes.Instancia.imagenesTablero.ImagenesTablero.Clear();
                 MostrarPistaCallback(null);
-            }
-            if (numeroPantalla == PantallasPartida.PANTALLA_TODOS_CARTAS)
-            {
-                try
-                {
-                    await SingletonGestorImagenes.Instancia.imagenesDeTodos.Imagen
-                                .MostrarTodasImagenesAsync(SingletonCliente.Instance.IdPartida);
-                }
-                catch (Exception excepcion)
-                {
-                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
-                }
             }
             if (CambiarPantalla != null)
             {
@@ -150,19 +132,6 @@ namespace WpfCliente.ImplementacionesCallbacks
                 }
             }
         }
-        public async void PrepararseParaRonda()
-        {
-            try
-            {
-                await UnirseChat();
-                await Partida.EmpezarPartidaAsync(SingletonCliente.Instance.NombreUsuario,
-                    SingletonCliente.Instance.IdPartida);
-            }
-            catch (Exception excepcion)
-            {
-                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
-            }
-        }
 
         public void EliminarJugadorPartidaCallback(Usuario jugardoreRetiradoDeSala)
         {
@@ -172,11 +141,8 @@ namespace WpfCliente.ImplementacionesCallbacks
                 {
                     return;
                 }
-                var usuarioAEliminar = UsuariosEnPartida?.FirstOrDefault(busqueda => busqueda.Nombre == jugardoreRetiradoDeSala.Nombre);
-                if (usuarioAEliminar != null)
-                {
-                    UsuariosEnPartida?.Remove(usuarioAEliminar);
-                }
+                UsuariosEnPartida?.EliminarElementoPorCondicion(busqueda => busqueda.Nombre == jugardoreRetiradoDeSala.Nombre);
+                
                 if (jugardoreRetiradoDeSala.Nombre.Equals(SingletonCliente.Instance.NombreUsuario, StringComparison.OrdinalIgnoreCase))
                 {
                     TeHanExpulsado?.Invoke();
@@ -260,20 +226,33 @@ namespace WpfCliente.ImplementacionesCallbacks
         {
             try
             {
-                InicioPartida?.Invoke();
+                Task.Run(async () =>
+                {
+                    try
+                    {
+                        await UnirseChat();
+                        await Partida.EmpezarPartidaAsync(SingletonCliente.Instance.IdPartida);
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                });
             }
             catch (Exception exccepcion)
             {
                 ManejadorExcepciones.ManejarExcepcionErrorComponente(exccepcion);
             }
         }
+
         private async Task UnirseChat()
         {
             try
             {
                 SingletonGestorImagenes.Instancia.PeticionImagenesHilo();
                 SingletonChat.Instancia.AbrirConexionChat();
-                await SingletonChat.Instancia.ChatMotor.AgregarUsuarioChatAsync(SingletonCliente.Instance.IdChat,
+                await SingletonChat.Instancia.ChatMotor.AgregarUsuarioChatAsync(
+                    SingletonCliente.Instance.IdChat,
                     SingletonCliente.Instance.NombreUsuario);
                 DesbloquearChat?.Invoke();
             }
@@ -304,11 +283,58 @@ namespace WpfCliente.ImplementacionesCallbacks
                 }
             }
         }
+
         public void TurnoPerdidoCallback()
         {
             try
             {
                 PerdisteTurno?.Invoke();
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+        }
+
+        public void NoSeEmpezoPartidaCallback()
+        {
+            try
+            {
+
+                    PartidaFaltaJugadores?.Invoke();
+                
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+        }
+
+        public void MostrarTableroCartasCallback()
+        {
+            try
+            {
+                Task.Run(async() => 
+                {
+                    try
+                    {
+                        await SingletonGestorImagenes.Instancia.imagenesTablero.Imagen.MostrarImagenesTableroAsync(SingletonCliente.Instance.IdPartida);
+
+                    }
+                    catch (CommunicationException)
+                    {
+                        throw;
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                });
+                return;
+            }
+            catch (CommunicationException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
             catch (Exception excepcion)
             {

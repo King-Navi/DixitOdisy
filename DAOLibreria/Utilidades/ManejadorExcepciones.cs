@@ -3,7 +3,7 @@ using System;
 
 namespace DAOLibreria.Utilidades
 {
-    internal class ManejadorExcepciones
+    public static class ManejadorExcepciones
     {
         private static readonly ILogger logger = ManejadorBitacora.ObtenerLogger();
         private const string MENSAJE_ERROR_EXCEPTION = "Error exception:";

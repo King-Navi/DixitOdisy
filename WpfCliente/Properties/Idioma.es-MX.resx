@@ -724,4 +724,25 @@ No te has podido unir a la partida, favor de revisar tu conexion</value>
   <data name="mensajeAmigoExistente" xml:space="preserve">
     <value>No se puede enviar solicitud de amistad, ya eres su amigo.</value>
   </data>
+  <data name="mensajeErrorNoEncontroParitda" xml:space="preserve">
+    <value>Hubo un error al tratar de encontrar la partida, revisa tu conexion e intentalo mas tarde.</value>
+  </data>
+  <data name="labelFaltaJugadoresPartida" xml:space="preserve">
+    <value>No se empezo partida por falta de jugadores.</value>
+  </data>
+  <data name="labelVerificandoConexion" xml:space="preserve">
+    <value>Verificando conexión...</value>
+  </data>
+  <data name="labelErrorConexion" xml:space="preserve">
+    <value>Error en la conexión.</value>
+  </data>
+  <data name="labelErrorAlVerificarConexion" xml:space="preserve">
+    <value>Error al verificar la conexion.</value>
+  </data>
+  <data name="mensajePartidaExpiro" xml:space="preserve">
+    <value>La partida ya no esta disponible, por favor vuelve a iniciar otra.</value>
+  </data>
+  <data name="labelEmpezarRangoPartida" xml:space="preserve">
+    <value>Para empezar una partida la cantidad de jugadores necesaria es entre: </value>
+  </data>
 </root>

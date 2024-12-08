@@ -350,7 +350,6 @@
   <xs:element name="EmpezarPartida">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="nombreJugador" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="idPartida" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -418,6 +417,16 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="numeroPantalla" type="xs:int" />
       </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NoSeEmpezoPartidaCallback">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarTableroCartasCallback">
+    <xs:complexType>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="RegistrarUsuario">
@@ -671,31 +680,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="SolicitarImagenCarta">
+  <xs:element name="SolicitarImagenMazo">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="idPartida" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="numeroImagenes" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="SolicitarImagenCartaResponse">
+  <xs:element name="SolicitarImagenMazoResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="SolicitarImagenCartaResult" type="xs:boolean" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="MostrarTodasImagenes">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="idPartida" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="MostrarTodasImagenesResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="MostrarTodasImagenesResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="SolicitarImagenMazoResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -706,10 +702,31 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RecibirVariasImagenCallback">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="imagenes" nillable="true" type="q26:ArrayOfImagenCarta" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarImagenesTablero">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="idPartida" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="MostrarImagenesTableroResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MostrarImagenesTableroResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="RecibirGrupoImagenCallback">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="imagen" nillable="true" type="q26:ImagenCarta" />
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" minOccurs="0" name="imagen" nillable="true" type="q27:ArrayOfImagenCarta" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

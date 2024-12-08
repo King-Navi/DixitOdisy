@@ -260,6 +260,7 @@ namespace WpfCliente.GUI
                 radioButtonFinRondas.Content = Idioma.buttonFinRondas;
                 labelExpulsarUsuario.Content = Idioma.buttonExpulsar;
                 labelNumeroRondas.Content = Idioma.labelNumeroRondas;
+                textBlockRangoJugadores.Text = Idioma.labelEmpezarRangoPartida + MINIMO_JUGADORES + MAXIMO_JUGADORES;
             }
             catch (Exception excepcion)
             {
@@ -381,6 +382,11 @@ namespace WpfCliente.GUI
         {
             if (SingletonCliente.Instance.IdPartida == null)
             {
+                VentanasEmergentes.CrearVentanaEmergente(
+                Properties.Idioma.tituloErrorPartida,
+                Idioma.mensajeErrorUnirsePartida,
+                Window.GetWindow(this)
+            );
                 SingletonGestorVentana.Instancia.Regresar();
                 return;
             }
@@ -515,7 +521,7 @@ namespace WpfCliente.GUI
         {
             var tematicas = new Dictionary<RadioButton, TematicaPartida>
             {
-                { radioButtonMixta, TematicaPartida.Mixta },
+                {radioButtonMixta, TematicaPartida.Mixta },
                 { radioButtonAnimales, TematicaPartida.Animales },
                 { radioButtonPaises, TematicaPartida.Paises },
                 { radioButtonMitologia, TematicaPartida.Mitologia },

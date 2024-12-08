@@ -1,4 +1,5 @@
 ﻿using System.ServiceModel;
+using System.Threading.Tasks;
 using WcfServicioLibreria.Modelo;
 
 namespace WcfServicioLibreria.Contratos
@@ -14,7 +15,7 @@ namespace WcfServicioLibreria.Contratos
         /// <exception cref="UsuarioDuplicado">Se lanza si el usuario ya existe en el sistema.</exception>
         [OperationContract]
         [FaultContract(typeof(UsuarioFalla))]
-        bool AgregarUsuarioChat(string idChat, string nombreUsuario);
+        Task<bool> AgregarUsuarioChatAsync(string idChat, string nombreUsuario);
         /// <summary>
         /// Obtiene el estado actual del jugador.
         /// </summary>

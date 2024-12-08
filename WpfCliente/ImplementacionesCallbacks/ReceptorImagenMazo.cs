@@ -6,56 +6,36 @@ using WpfCliente.Utilidad;
 namespace WpfCliente.ImplementacionesCallbacks
 {
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
-    public class ReceptorImagen : IServicioImagenCallback
+    public class ReceptorImagenMazo : IServicioImagenMazoCallback
     {
         private readonly object lockImagenCartasMazo = new object();
-        private CollecionObservableSeguraHilos<ImagenCarta> imagenCartasMazo = new CollecionObservableSeguraHilos<ImagenCarta>();
-        public CollecionObservableSeguraHilos<ImagenCarta> ImagenCartasMazo
+        private CollecionObservableSeguraHilos<ImagenCarta> imagenesMazo = new CollecionObservableSeguraHilos<ImagenCarta>();
+        public CollecionObservableSeguraHilos<ImagenCarta> ImagenesMazo
         {
             get
             {
                 lock (lockImagenCartasMazo)
                 {
-                    return imagenCartasMazo;
+                    return imagenesMazo;
                 }
             }
             set
             {
                 lock (lockImagenCartasMazo)
                 {
-                    imagenCartasMazo = value;
+                    imagenesMazo = value;
                 }
             }
         }
 
-        private readonly object lockImagenCartasTodos = new object();
-        private CollecionObservableSeguraHilos<ImagenCarta> imagenCartasTodos = new CollecionObservableSeguraHilos<ImagenCarta>();
-        public CollecionObservableSeguraHilos<ImagenCarta> ImagenCartasTodos
-        {
-            get
-            {
-                lock (lockImagenCartasTodos)
-                {
-                    return imagenCartasTodos;
-                }
-            }
-            set
-            {
-                lock (lockImagenCartasTodos)
-                {
-                    imagenCartasTodos = value;
-                }
-            }
-        }
-        private readonly object bloquedoImagen = new object();
-        private readonly object lockCantidad = new object();
+        private readonly object bloqueoImagen = new object();
 
-        private ServicioImagenClient imagen;
-        public ServicioImagenClient Imagen
+        private ServicioImagenMazoClient imagen;
+        public ServicioImagenMazoClient Imagen
         {
             get
             {
-                lock (bloquedoImagen)
+                lock (bloqueoImagen)
                 {
                     if (imagen == null 
                         || (imagen.State != CommunicationState.Opened && imagen.State != CommunicationState.Opening))
@@ -79,14 +59,14 @@ namespace WpfCliente.ImplementacionesCallbacks
             }
             set
             {
-                lock (bloquedoImagen)
+                lock (bloqueoImagen)
                 {
                     imagen = value;
                 }
             }
         }
 
-        public ReceptorImagen()
+        public ReceptorImagenMazo()
         {
             AbrirConexionImagen();
         }
@@ -95,7 +75,7 @@ namespace WpfCliente.ImplementacionesCallbacks
             try
             {
                 Imagen = null;
-                Imagen = new ServicioImagenClient(new InstanceContext(this));
+                Imagen = new ServicioImagenMazoClient(new InstanceContext(this));
                 return true;
             }
             catch (Exception excepcion)
@@ -109,7 +89,7 @@ namespace WpfCliente.ImplementacionesCallbacks
 
         public bool CerrarConexionImagen()
         {
-            lock (bloquedoImagen) 
+            lock (bloqueoImagen) 
             {
                 try
                 {
@@ -130,37 +110,30 @@ namespace WpfCliente.ImplementacionesCallbacks
             }
         }
 
-        public void RecibirGrupoImagenCallback(ImagenCarta imagen)
-        {
-            if (imagen == null)
-            {
-                return;
-            }
-            ImagenCartasTodos.Add(imagen);
-        }
-
         public void RecibirImagenCallback(ImagenCarta imagen)
         {
             if (imagen == null)
             {
                 return;
             }
-            ImagenCartasMazo.Add(imagen);
+            ImagenesMazo.AgregarMemoriaEntrada(imagen);
+
         }
 
-        public int ObtenerCantidadCartasMazo()
+        public void RecibirVariasImagenCallback(ImagenCarta[] imagenes)
         {
-            lock (lockCantidad)
+            if (imagenes == null)
             {
-                return ImagenCartasMazo.Count;
+                return;
             }
-        }
-
-        public int ObtenerCantidadCartasTodos()
-        {
-            lock (lockCantidad)
+            foreach (var imagen in imagenes)
             {
-                return ImagenCartasTodos.Count;
+                if (imagen == null)
+                {
+                    continue;
+                }
+
+                ImagenesMazo.AgregarMemoriaEntrada(imagen);
             }
         }
     }

@@ -1,20 +1,26 @@
-﻿using WcfServicioLibreria.Contratos;
+﻿using System.Collections.Generic;
+using System.ServiceModel;
+using WcfServicioLibreria.Contratos;
 
 namespace WcfServicioLibreria.Modelo
 {
-    internal class LecturaTrabajo
+    public class LecturaTrabajo
     {
 
-        public string ArchivoPath { get; }
-        public IImagenCallback Callback { get; }
-        public bool UsarGrupo { get; }
+        public List<string> ArchivoRutas { get; }
+        public IImagenesTableroCallback CallbackImagenesTablero { get; } = null;
+        public IImagenMazoCallback CallbackImagenesMazo { get; } = null;
 
-        public LecturaTrabajo(string archivoPath, IImagenCallback callback, bool usarGrupo)
+        public LecturaTrabajo(List<string> rutas, IImagenesTableroCallback callbackImagenesTablero)
         {
-            ArchivoPath = archivoPath;
-            Callback = callback;
-            UsarGrupo = usarGrupo;
+            ArchivoRutas = rutas;
+            CallbackImagenesTablero = callbackImagenesTablero;
+        }
 
+        public LecturaTrabajo(List<string> rutas, IImagenMazoCallback callbackImagenesMazo)
+        {
+            ArchivoRutas = rutas;
+            CallbackImagenesMazo = callbackImagenesMazo;
         }
     }
 }

@@ -17,6 +17,7 @@ namespace WcfServicioLibreria.Contratos
         /// <param name="idPartida">El identificador único de la partida.</param>
         [OperationContract]
         [FaultContract(typeof(PartidaFalla))]
+        [FaultContract(typeof(FaultException<PartidaFalla>))]
         Task<bool> UnirsePartidaAsync(string nombreUsuario, string idPartida);
 
         /// <summary>
@@ -61,7 +62,7 @@ namespace WcfServicioLibreria.Contratos
         /// Este método notifica a todos los jugadores que la partida ha comenzado y ejecuta la lógica de inicio.
         /// </remarks>
         [OperationContract]
-        Task EmpezarPartidaAsync(string nombreJugador, string idPartida);
+        Task EmpezarPartidaAsync( string idPartida);
     }
     [ServiceContract]
     public interface IPartidaCallback
@@ -121,5 +122,23 @@ namespace WcfServicioLibreria.Contratos
         /// <param name="numeroPantalla">Número de la pantalla a la que se debe cambiar.</param>
         [OperationContract(IsOneWay = true)]
         void CambiarPantallaCallback(int numeroPantalla);
+        /// <summary>
+        /// Notifica al cliente que la partida no pudo comenzar.
+        /// </summary>
+        /// <remarks>
+        /// Este método es un contrato de operación unidireccional, lo que significa que el servidor 
+        /// envía la notificación al cliente sin esperar una respuesta.
+        /// </remarks>
+        [OperationContract(IsOneWay = true)]
+        void NoSeEmpezoPartidaCallback();
+        /// <summary>
+        /// Muestra el tablero de cartas al cliente.
+        /// </summary>
+        /// <remarks>
+        /// Este método permite al servidor notificar al cliente para que despliegue el tablero de cartas.
+        /// Es un contrato unidireccional, por lo que no espera respuesta del cliente.
+        /// </remarks>
+        [OperationContract(IsOneWay = true)]
+        void MostrarTableroCartasCallback();
     }
 }

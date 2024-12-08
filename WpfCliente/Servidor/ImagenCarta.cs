@@ -14,11 +14,13 @@ namespace WpfCliente.ServidorDescribelo
                 try
                 {
                     if (ImagenStream == null)
+                    {
                         return Imagen.CargarImagenDesdeRecursos();
+                    }
 
                     var imagen = new BitmapImage();
                     imagen.BeginInit();
-                    imagen.StreamSource = new MemoryStream(ImagenStream.ToArray());
+                    imagen.StreamSource = new MemoryStream(ImagenStream);
                     imagen.CacheOption = BitmapCacheOption.OnLoad;
                     imagen.EndInit();
                     imagen.Freeze();

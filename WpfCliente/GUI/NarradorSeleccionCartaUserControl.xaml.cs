@@ -17,10 +17,10 @@ namespace WpfCliente.GUI
         {
             InitializeComponent();
             CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento; 
-            Imagenes = SingletonGestorImagenes.Instancia.imagnesMazo.ImagenCartasMazo;
+            Imagenes = SingletonGestorImagenes.Instancia.imagnesMazo.ImagenesMazo;
             this.Loaded += LoadedNarradorSeleccionCartaUsercontrol;
             DataContext = this;
-
+            ActualizarUI();
         }
 
 

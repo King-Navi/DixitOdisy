@@ -2,12 +2,12 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Enumerador;
-using WcfServicioLibreria.Modelo.Evento;
 using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Modelo
@@ -20,34 +20,93 @@ namespace WcfServicioLibreria.Modelo
             await semaphoreEmpezarPartida.WaitAsync();
             try
             {
-                if (SeLlamoEmpezarPartida)
+                if (SeLlamoEmpezarPartidaPrimeraVez)
                 {
                     return;
                 }
-
-                DateTime inicioEspera = DateTime.Now;
-
-                while ((DateTime.Now - inicioEspera).TotalSeconds < TIEMPO_ESPERA_UNIRSE_JUGADORES)
-                {
-                    await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
-                }
-                SeTerminoEsperaUnirse = true;
-                if (!SeLlamoEmpezarPartida && jugadoresCallback.Count >= CANTIDAD_MINIMA_JUGADORES)
-                {
-                    SeLlamoEmpezarPartida = true;
-                    TodosListos?.Invoke(this, EventArgs.Empty);
-                }
-                else
-                {
-                    Console.Write("No se incio partida");
-                    await TerminarPartidaAsync();
-                }
+                SeLlamoEmpezarPartidaPrimeraVez = true;
+                ManejarInicioPartida();
             }
             finally
             {
                 semaphoreEmpezarPartida.Release();
             }
         }
+
+        private void ManejarInicioPartida()
+        {
+            try
+            {
+                Task.Run(async () =>
+                {
+                    DateTime inicioEspera = DateTime.Now;
+
+                    while ((DateTime.Now - inicioEspera).TotalSeconds < TIEMPO_ESPERA_UNIRSE_JUGADORES)
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
+                    }
+
+                    if (!SeLlamoEmpezarPartida && jugadoresCallback.Count >= CANTIDAD_MINIMA_JUGADORES)
+                    {
+                        SeLlamoEmpezarPartida = true;
+                        TodosListos?.Invoke(this, EventArgs.Empty);
+                    }
+                    else
+                    {
+                        NotifcarNoIncioPartida();
+                        await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
+                        await TerminarPartidaAsync();
+                    }
+                });                
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
+            }
+        }
+
+
+
+        private void NotifcarNoIncioPartida()
+        {
+            try
+            {
+                foreach (var nombre in ObtenerNombresJugadores())
+                {
+                    jugadoresCallback.TryGetValue(nombre.ToString(), out IPartidaCallback callback);
+
+                    Task.Run(() =>
+                    {
+                        try
+                        {
+                            callback?.NoSeEmpezoPartidaCallback();
+                        }
+                        catch (TimeoutException excepcion)
+                        {
+                            ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                        }
+                        catch (CommunicationException excepcion)
+                        {
+                            ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                        }
+                        catch (Exception excepcion)
+                        {
+                            ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                        }
+                    });
+                }
+            }
+            catch (ArgumentNullException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
+            }
+        }
+
+
         private async Task IniciarPartidaSeguroAsync(CancellationToken cancelacionToke)
         {
             try
@@ -131,10 +190,10 @@ namespace WcfServicioLibreria.Modelo
         {
             if (SelecionoCartaNarrador)
             {
-                IPuntaje puntaje = new Puntaje(NarradorActual, 
-                    estadisticasPartida.Jugadores, 
-                    ImagenElegidaPorJugador, 
-                    ImagenesTodosGrupo,
+                IPuntaje puntaje = new Puntaje(NarradorActual,
+                    estadisticasPartida.Jugadores,
+                    ImagenElegidaPorJugador,
+                    ImagenesTablero,
                     ClaveImagenCorrectaActual);
                 puntaje.CalcularPuntaje();
             }
@@ -159,13 +218,14 @@ namespace WcfServicioLibreria.Modelo
         {
             RestablecerDesicionesJugadores();
             await EscogerNarradorAsync();
-            await AvisarQuienEsNarradorAsync();
+            AvisarQuienEsNarrador();
             await EsperarConfirmacionNarradorAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_NARRADOR));
             if (SelecionoCartaNarrador)
             {
                 await EsperarEleccionesJugadoresAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_SELECCION));
-                await EnMostrarTodasCartas();
-                CambiarPantalla(PANTALLA_TODOS_CARTAS , NarradorActual);
+                await CambiarPantallaConExclusionAsync(PANTALLA_TODOS_CARTAS, NarradorActual);
+                await MostrarTableroCartasAsync();
+                await Task.Delay(TIEMPO_ESPERA);
                 JugadoresPendientes = new ConcurrentDictionary<string, bool>(
                     jugadoresCallback.ToDictionary(
                     pair => pair.Key,
@@ -178,6 +238,39 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
+        private async Task MostrarTableroCartasAsync()
+        {
+            try
+            {
+                foreach (var tuplaJugadorContexto in jugadoresCallback)
+                {
+                    if (tuplaJugadorContexto.Key.Equals(NarradorActual, StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+                    await Task.Run(() =>
+                    {
+                        try
+                        {
+                            tuplaJugadorContexto.Value?.MostrarTableroCartasCallback();
+                        }
+                        catch (TimeoutException excepcion)
+                        {
+                            ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                        }
+                        catch (CommunicationException excepcion)
+                        {
+                            ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                        }
+                    });
+                }
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
+            }
+        }
+
         private void EnviarMensajePerdidaTurno(string narradorActual)
         {
             if (String.IsNullOrEmpty(narradorActual))
@@ -186,11 +279,34 @@ namespace WcfServicioLibreria.Modelo
             };
             try
             {
-                jugadoresCallback.TryGetValue(narradorActual, out IPartidaCallback callback);
-                if (((ICommunicationObject)callback).State == CommunicationState.Opened)
+                Task.Run(() =>
                 {
-                    callback.TurnoPerdidoCallback();
-                }
+                    try
+                    {
+                        jugadoresCallback.TryGetValue(narradorActual, out IPartidaCallback callback);
+                        if (callback == null)
+                        {
+                            return;
+                        }
+                        if (((ICommunicationObject)callback).State == CommunicationState.Opened)
+                        {
+                            callback?.TurnoPerdidoCallback();
+                        }
+                    }
+                    catch (TimeoutException)
+                    {
+                        throw;
+                    }
+                    catch (CommunicationException)
+                    {
+                        throw;
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
+                });
+
             }
             catch (TimeoutException excepcion)
             {
@@ -200,15 +316,10 @@ namespace WcfServicioLibreria.Modelo
             {
                 ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
-
-        }
-
-        public async Task EnMostrarTodasCartas()
-        {
-            var todasLasImagenesGrupo = ImagenesTodosGrupo.Values.SelectMany(lista => lista).ToList();
-            RondaEventArgs evento = new RondaEventArgs(todasLasImagenesGrupo);
-            MostrarTodasLasCartas?.Invoke(this, evento);
-            await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ENVIO_SEGUNDOS));
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
+            }
         }
 
         private async Task EsperarConfirmacionAdivinarAsync(TimeSpan tiempoEspera)
@@ -229,7 +340,7 @@ namespace WcfServicioLibreria.Modelo
             if (!tareaEsperaJugadores.IsCompleted)
             {
                 cancelacion.Cancel();
-                PenalizarJugadoresSinConfirmar();
+                await EnviarMensajeJugadoresSinConfirmarAsync();
             }
 
         }
@@ -258,7 +369,7 @@ namespace WcfServicioLibreria.Modelo
             };
         }
 
-        private void CambiarPantalla(int numeroPantalla, string nombreExcluir)
+        private async Task CambiarPantallaConExclusionAsync(int numeroPantalla, string nombreExcluir)
         {
             foreach (var nombre in ObtenerNombresJugadores().ToList())
             {
@@ -269,10 +380,14 @@ namespace WcfServicioLibreria.Modelo
 
                 try
                 {
-                    if (jugadoresCallback.TryGetValue(nombre, out IPartidaCallback callback))
+                    await Task.Run(() =>
                     {
-                        callback.CambiarPantallaCallback(numeroPantalla);
-                    }
+                        if (jugadoresCallback.TryGetValue(nombre, out IPartidaCallback callback))
+                        {
+                            callback?.CambiarPantallaCallback(numeroPantalla);
+                        }
+                    });
+
                 }
                 catch (CommunicationException excepcion)
                 {
@@ -285,17 +400,32 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        private async Task AvisarQuienEsNarradorAsync()
+        private void AvisarQuienEsNarrador()
         {
             foreach (var nombre in ObtenerNombresJugadores().ToList())
             {
                 try
                 {
-                    jugadoresCallback.TryGetValue(nombre, out IPartidaCallback callback);
-                    if (!NarradorActual.Equals(nombre, StringComparison.OrdinalIgnoreCase))
+                    Task.Run(() =>
                     {
-                        callback?.NotificarNarradorCallback(false);
-                    }
+                        try
+                        {
+                            jugadoresCallback.TryGetValue(nombre, out IPartidaCallback callback);
+                            if (!NarradorActual.Equals(nombre, StringComparison.OrdinalIgnoreCase))
+                            {
+                                callback?.NotificarNarradorCallback(false);
+                            }
+                        }
+                        catch (TimeoutException excepcion)
+                        {
+                            ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                        }
+                        catch (CommunicationException excepcion)
+                        {
+                            ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                        }
+                    });
+
                 }
                 catch (TimeoutException excepcion)
                 {
@@ -307,7 +437,6 @@ namespace WcfServicioLibreria.Modelo
                 }
                 catch (Exception excepcion)
                 {
-                    await RemoverJugadorAsync(nombre);
                     ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 }
             };
@@ -353,20 +482,42 @@ namespace WcfServicioLibreria.Modelo
             if (!tareaEsperaJugadores.IsCompleted)
             {
                 cancelacion.Cancel();
-                PenalizarJugadoresSinConfirmar();
+                await EnviarMensajeJugadoresSinConfirmarAsync();
             }
         }
 
-        private void PenalizarJugadoresSinConfirmar()
+        private async Task EnviarMensajeJugadoresSinConfirmarAsync()
         {
             try
             {
                 foreach (var jugador in JugadoresPendientes.Keys)
                 {
-                    if (jugadoresCallback.TryGetValue(jugador, out var callback))
+                    await Task.Run(() =>
                     {
-                        callback.TurnoPerdidoCallback();
-                    }
+                        try
+                        {
+                            if (jugadoresCallback.TryGetValue(jugador, out var callback))
+                            {
+                                if (callback == null)
+                                {
+                                    return;
+                                }
+                                if (((ICommunicationObject)callback).State == CommunicationState.Opened
+                                    || ((ICommunicationObject)callback).State == CommunicationState.Opening)
+                                {
+                                    callback?.TurnoPerdidoCallback();
+                                }
+                            }
+                        }
+                        catch (TimeoutException excepcion)
+                        {
+                            ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                        }
+                        catch (CommunicationException excepcion)
+                        {
+                            ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                        }
+                    });
                 }
             }
             catch (TimeoutException excepcion)
@@ -394,8 +545,8 @@ namespace WcfServicioLibreria.Modelo
                 pair => pair.Key,
                 pair => true));
             ImagenElegidaPorJugador.Clear();
-            ImagenesTodosGrupo.Clear();
-            ImagenesTodosGrupo = new ConcurrentDictionary<string, List<string>>();
+            ImagenesTablero.Clear();
+            ImagenesTablero = new ConcurrentDictionary<string, List<string>>();
         }
 
         private async Task EscogerNarradorAsync()
@@ -465,7 +616,7 @@ namespace WcfServicioLibreria.Modelo
             try
             {
                 JugadoresPendientes.TryRemove(nombreJugador, out _);
-                ImagenesTodosGrupo.AddOrUpdate(
+                ImagenesTablero.AddOrUpdate(
                    nombreJugador,
                    new List<string> { claveImagen },
                    (llave, listaExistente) =>
@@ -503,7 +654,7 @@ namespace WcfServicioLibreria.Modelo
                         return existingList;
                     }
                 );
-                ImagenesTodosGrupo.AddOrUpdate(
+                ImagenesTablero.AddOrUpdate(
                    nombreJugador,
                    new List<string> { claveImagen },
                    (llave, listaExistente) =>

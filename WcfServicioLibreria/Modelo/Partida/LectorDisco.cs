@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,124 +11,101 @@ using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Modelo
 {
-    internal class LectorDisco
+    public class LectorDisco : ILectorDisco
     {
-        private readonly int idLector;
         public const long TAMANO_MAXIMO_BYTES = 5 * 1024 * 1024;
-        private readonly BlockingCollection<LecturaTrabajo> colaLectura = new BlockingCollection<LecturaTrabajo>();
-        private readonly CancellationTokenSource cancelarToken = new CancellationTokenSource(); 
-        private readonly Task tareaLectura;
-        private bool detener = false;
-        private bool lecturaYaDetenida = false; 
-        private readonly int CERO = 0; 
-        public int ColaCount => colaLectura.Count;
+        private readonly int CERO = 0;
+        private readonly int IMAGEN_UNICA = 1;
 
-        public LectorDisco()
-        {
-            tareaLectura = Task.Run( async () => await ProcesarColaLecturaEnvio(cancelarToken.Token));
-        }
-        public LectorDisco(int idLector)
-        {
-            this.idLector = idLector;
-            tareaLectura = Task.Run( async () => await ProcesarColaLecturaEnvio(cancelarToken.Token));
-        }
-
-        public void EncolarLecturaEnvio(string archivoPath, IImagenCallback callback, bool usarGrupo = false)
-        {
-            LecturaTrabajo nuevotrabajo = new LecturaTrabajo(archivoPath, callback, usarGrupo);
-            if (callback != null)
-            {
-                colaLectura.Add(nuevotrabajo);
-            }
-        }
-
-        private async Task ProcesarColaLecturaEnvio(CancellationToken cancelacion)
+        public async Task<bool> ProcesarColaLecturaEnvio(LecturaTrabajo lecturaTrabajo)
         {
             try
             {
-                while (!detener || !colaLectura.IsCompleted)
+                List<ImagenCarta> listaImagenes = new List<ImagenCarta>();
+                foreach (var ruta in lecturaTrabajo.ArchivoRutas)
                 {
-                    foreach (var lecturaTrabajo in colaLectura.GetConsumingEnumerable(cancelacion))
+                    var imagenBytes = await LeerArchivoAsync(ruta);
+                    string nombreSinExtension = Path.GetFileNameWithoutExtension(ruta);
+
+                    var imagenCarta = new ImagenCarta
                     {
-                        try
-                        {  
-                            byte[] imagenBytes;
-                            using (var fileStream = new FileStream(lecturaTrabajo.ArchivoPath, FileMode.Open, FileAccess.Read, FileShare.Read, 16384, useAsync: true))
-                            {
-                                if (fileStream.Length > TAMANO_MAXIMO_BYTES)
-                                {
-                                    throw new ArgumentException($"El archivo {lecturaTrabajo.ArchivoPath} excede el tamaño permitido de 5 MB.");
-                                }
-                                imagenBytes = new byte[fileStream.Length];
-                                int bytesTotalesLeidos = CERO;
+                        IdImagen = nombreSinExtension,
+                        ImagenStream = imagenBytes
+                    };
+                    listaImagenes.Add(imagenCarta);
+                }
+                EnviarImagenHilo(lecturaTrabajo, listaImagenes);
+                return true;
+            }
+            catch (Exception excecpione)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excecpione);
+            }
+            return false;
+        }
 
-                                while (bytesTotalesLeidos < fileStream.Length)
-                                {
-                                    int bytesLeidos = await fileStream.ReadAsync(imagenBytes, bytesTotalesLeidos, (int)(fileStream.Length - bytesTotalesLeidos), cancelacion);
-                                    if (bytesLeidos == CERO)
-                                    {
-                                        break;
-                                    }
-
-                                    bytesTotalesLeidos += bytesLeidos;
-                                }
-                                if (bytesTotalesLeidos != fileStream.Length)
-                                {
-                                    throw new IOException($"No se pudieron leer todos los bytes del archivo {lecturaTrabajo.ArchivoPath}.");
-                                }
-                            }
-                            string nombreSinExtension = Path.GetFileNameWithoutExtension(lecturaTrabajo.ArchivoPath);
-                            using (var imagenStream = new MemoryStream(imagenBytes))
-                            {
-                                var imagenCarta = new ImagenCarta
-                                {
-                                    IdImagen = nombreSinExtension,
-                                    ImagenStream = imagenStream
-                                };
-                                EnviarImagenHilo(lecturaTrabajo, imagenCarta);
-                            }
-                        }
-                        catch (Exception excecpione)
-                        {
-                            ManejadorExcepciones.ManejarExcepcionError(excecpione);
-                        }
+        public async Task<byte[]> LeerArchivoAsync(string rutaArchivo)
+        {
+            try
+            {
+                if (!File.Exists(rutaArchivo))
+                {
+                    throw new FileNotFoundException($"El archivo {rutaArchivo} no existe.");
+                }
+                using (var fileStream = new FileStream(rutaArchivo, FileMode.Open, FileAccess.Read, FileShare.Read, 16384, useAsync: true))
+                {
+                    if (fileStream.Length > TAMANO_MAXIMO_BYTES)
+                    {
+                        throw new ArgumentException($"El archivo {rutaArchivo} excede el tamaño permitido de 5 MB.");
                     }
+
+                    byte[] imagenBytes = new byte[fileStream.Length];
+                    int bytesTotalesLeidos = CERO;
+
+                    while (bytesTotalesLeidos < fileStream.Length)
+                    {
+                        int bytesLeidos = await fileStream.ReadAsync(imagenBytes, bytesTotalesLeidos, (int)(fileStream.Length - bytesTotalesLeidos));
+                        if (bytesLeidos == CERO)
+                        {
+                            break;
+                        }
+
+                        bytesTotalesLeidos += bytesLeidos;
+                    }
+
+                    if (bytesTotalesLeidos != fileStream.Length)
+                    {
+                        throw new IOException($"No se pudieron leer todos los bytes del archivo {rutaArchivo}.");
+                    }
+
+                    return imagenBytes;
                 }
             }
-            catch (Exception excecpiones)
+            catch (Exception)
             {
-                ManejadorExcepciones.ManejarExcepcionFatal( excecpiones);
+                throw;
             }
         }
 
-        private void EnviarImagenHilo(LecturaTrabajo lecturaTrabajo , ImagenCarta imagenCarta)
+        public void EnviarImagenHilo(LecturaTrabajo lecturaTrabajo, List<ImagenCarta> imagenCarta)
         {
             try
             {
-                Task.Run(() =>
+                if (lecturaTrabajo.CallbackImagenesTablero != null)
                 {
-                    try
+                    EnviarImagenesTablero(lecturaTrabajo, imagenCarta);
+                }
+                else if (lecturaTrabajo.CallbackImagenesMazo != null)
+                {
+                    if (imagenCarta.Count == IMAGEN_UNICA)
                     {
-                        EvaluarCanalValido(lecturaTrabajo.Callback);
-                        if (lecturaTrabajo.UsarGrupo)
-                        {
-                            lecturaTrabajo.Callback.RecibirGrupoImagenCallback(imagenCarta);
-                        }
-                        else
-                        {
-                            lecturaTrabajo.Callback.RecibirImagenCallback(imagenCarta);
-                        }
+                        EnviarImagenMazo(lecturaTrabajo, imagenCarta);
                     }
-                    catch (CommunicationException excecpione)
+                    else
                     {
-                        ManejadorExcepciones.ManejarExcepcionError(excecpione);
+                        EnviarImagenesMazo(lecturaTrabajo, imagenCarta);
                     }
-                    catch (Exception excecpione)
-                    {
-                        ManejadorExcepciones.ManejarExcepcionError(excecpione);
-                    }
-                });
-                
+                }
             }
             catch (ArgumentNullException excecpione)
             {
@@ -138,7 +117,96 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        private void EvaluarCanalValido(IImagenCallback callback)
+        private void EnviarImagenesMazo(LecturaTrabajo lecturaTrabajo, List<ImagenCarta> imagenCarta)
+        {
+            try
+            {
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        EvaluarCanalValido(lecturaTrabajo.CallbackImagenesMazo);
+                        lecturaTrabajo.CallbackImagenesMazo.RecibirVariasImagenCallback(imagenCarta);
+                    }
+                    catch (ArgumentOutOfRangeException excecpione)
+                    {
+                        ManejadorExcepciones.ManejarExcepcionError(excecpione);
+                    }
+                    catch (CommunicationException excecpione)
+                    {
+                        ManejadorExcepciones.ManejarExcepcionError(excecpione);
+                    }
+                    catch (Exception excecpione)
+                    {
+                        ManejadorExcepciones.ManejarExcepcionError(excecpione);
+                    }
+                });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        private void EnviarImagenMazo(LecturaTrabajo lecturaTrabajo, List<ImagenCarta> imagenCarta)
+        {
+            try
+            {
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        EvaluarCanalValido(lecturaTrabajo.CallbackImagenesMazo);
+                        lecturaTrabajo.CallbackImagenesMazo.RecibirImagenCallback(imagenCarta[0]);
+                    }
+                    catch (ArgumentOutOfRangeException excecpione)
+                    {
+                        ManejadorExcepciones.ManejarExcepcionError(excecpione);
+                    }
+                    catch (CommunicationException excecpione)
+                    {
+                        ManejadorExcepciones.ManejarExcepcionError(excecpione);
+                    }
+                    catch (Exception excecpione)
+                    {
+                        ManejadorExcepciones.ManejarExcepcionError(excecpione);
+                    }
+                });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public void EnviarImagenesTablero(LecturaTrabajo lecturaTrabajo, List<ImagenCarta> imagenCarta)
+        {
+            try
+            {
+                Task.Run(() =>
+                {
+                    try
+                    {
+                        EvaluarCanalValido(lecturaTrabajo.CallbackImagenesTablero);
+                        lecturaTrabajo.CallbackImagenesTablero.RecibirGrupoImagenCallback(imagenCarta);
+                    }
+                    catch (CommunicationException excecpione)
+                    {
+                        ManejadorExcepciones.ManejarExcepcionError(excecpione);
+                    }
+                    catch (Exception excecpione)
+                    {
+                        ManejadorExcepciones.ManejarExcepcionError(excecpione);
+                    }
+                });
+            }
+            catch (Exception)
+            {
+                throw;
+            };
+        }
+
+        private void EvaluarCanalValido(IImagenMazoCallback callback)
         {
             if (callback is ICommunicationObject canal)
             {
@@ -157,31 +225,24 @@ namespace WcfServicioLibreria.Modelo
             };
         }
 
-        public void DetenerLectura()
+        private void EvaluarCanalValido(IImagenesTableroCallback callback)
         {
-            if (lecturaYaDetenida) return; 
-            lecturaYaDetenida = true; 
-
-            detener = true;
-            cancelarToken.Cancel(); 
-            colaLectura.CompleteAdding(); 
-
-            try
+            if (callback is ICommunicationObject canal)
             {
-                tareaLectura.Wait();
+                if (canal.State == CommunicationState.Opened)
+                {
+                    return;
+                }
+                else
+                {
+                    throw new CommunicationException();
+                }
             }
-            catch (AggregateException excepcion)
+            else
             {
-                ManejadorExcepciones.ManejarExcepcionError(excepcion);
-            }
-            catch (Exception excecpione)
-            {
-                ManejadorExcepciones.ManejarExcepcionError(excecpione);
-            }
-            finally
-            {
-                cancelarToken.Dispose(); 
-            }
+                throw new CommunicationException();
+            };
         }
+
     }
 }

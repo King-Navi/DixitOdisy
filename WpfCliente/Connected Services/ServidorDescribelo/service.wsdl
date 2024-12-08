@@ -130,7 +130,17 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-  <wsp:Policy wsu:Id="NetTcpBinding_IServicioImagen_policy">
+  <wsp:Policy wsu:Id="NetTcpBinding_IServicioImagenMazo_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
+        </msb:BinaryEncoding>
+        <wsaw:UsingAddressing>
+        </wsaw:UsingAddressing>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_IServicioImagenesTablero_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1">
@@ -148,6 +158,7 @@
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Enumerador" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.ServiceModel" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/System.Threading.Tasks" />
     </xsd:schema>
@@ -167,6 +178,9 @@
   <wsdl:message name="IServicioAmistad_EnviarSolicitudAmistad_SolicitudAmistadFallaFault_FaultMessage">
     <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q1:SolicitudAmistadFalla" />
   </wsdl:message>
+  <wsdl:message name="IServicioAmistad_EnviarSolicitudAmistad_FaultExceptionOf_SolicitudAmistadFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q2:FaultExceptionOfSolicitudAmistado0JYt6U2" />
+  </wsdl:message>
   <wsdl:message name="IServicioAmistad_ObtenerSolicitudesAmistad_InputMessage">
     <wsdl:part name="parameters" element="tns:ObtenerSolicitudesAmistad" />
   </wsdl:message>
@@ -180,7 +194,7 @@
     <wsdl:part name="parameters" element="tns:AceptarSolicitudAmistadResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioAmistad_AceptarSolicitudAmistad_ServidorFallaFault_FaultMessage">
-    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q2:ServidorFalla" />
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q3:ServidorFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioAmistad_RechazarSolicitudAmistad_InputMessage">
     <wsdl:part name="parameters" element="tns:RechazarSolicitudAmistad" />
@@ -201,7 +215,7 @@
     <wsdl:part name="parameters" element="tns:EliminarAmigoResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioAmistad_EliminarAmigo_ServidorFallaFault_FaultMessage">
-    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q3:ServidorFalla" />
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q4:ServidorFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioAmistad_RecibirInvitacionCallback_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:RecibirInvitacionCallback" />
@@ -243,7 +257,7 @@
     <wsdl:part name="parameters" element="tns:AgregarUsuarioChatResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioChatMotor_AgregarUsuarioChat_UsuarioFallaFault_FaultMessage">
-    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q4:UsuarioFalla" />
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q5:UsuarioFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioChatMotor_EnviarMensaje_InputMessage">
     <wsdl:part name="parameters" element="tns:EnviarMensaje" />
@@ -297,7 +311,10 @@
     <wsdl:part name="parameters" element="tns:UnirsePartidaResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioPartidaSesion_UnirsePartida_PartidaFallaFault_FaultMessage">
-    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q5:PartidaFalla" />
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q6:PartidaFalla" />
+  </wsdl:message>
+  <wsdl:message name="IServicioPartidaSesion_UnirsePartida_FaultExceptionOf_PartidaFallaFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/System.ServiceModel" name="detail" element="q7:FaultExceptionOfPartidaFallaE43TghSm" />
   </wsdl:message>
   <wsdl:message name="IServicioPartidaSesion_ConfirmarMovimiento_InputMessage">
     <wsdl:part name="parameters" element="tns:ConfirmarMovimiento" />
@@ -347,6 +364,12 @@
   <wsdl:message name="IServicioPartidaSesion_CambiarPantallaCallback_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:CambiarPantallaCallback" />
   </wsdl:message>
+  <wsdl:message name="IServicioPartidaSesion_NoSeEmpezoPartidaCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:NoSeEmpezoPartidaCallback" />
+  </wsdl:message>
+  <wsdl:message name="IServicioPartidaSesion_MostrarTableroCartasCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:MostrarTableroCartasCallback" />
+  </wsdl:message>
   <wsdl:message name="IServicioRegistro_RegistrarUsuario_InputMessage">
     <wsdl:part name="parameters" element="tns:RegistrarUsuario" />
   </wsdl:message>
@@ -354,7 +377,7 @@
     <wsdl:part name="parameters" element="tns:RegistrarUsuarioResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioRegistro_RegistrarUsuario_BaseDatosFallaFault_FaultMessage">
-    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q6:BaseDatosFalla" />
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q8:BaseDatosFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioSala_CrearSala_InputMessage">
     <wsdl:part name="parameters" element="tns:CrearSala" />
@@ -375,7 +398,7 @@
     <wsdl:part name="parameters" element="tns:AgregarJugadorSalaResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioSalaJugador_AgregarJugadorSala_SalaFallaFault_FaultMessage">
-    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q7:SalaFalla" />
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q9:SalaFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioSalaJugador_ComenzarPartidaAnfrition_InputMessage">
     <wsdl:part name="parameters" element="tns:ComenzarPartidaAnfrition" />
@@ -420,7 +443,7 @@
     <wsdl:part name="parameters" element="tns:YaIniciadoSesionResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioUsuario_YaIniciadoSesion_UsuarioFallaFault_FaultMessage">
-    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q8:UsuarioFalla" />
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo" name="detail" element="q10:UsuarioFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioUsuario_Ping_InputMessage">
     <wsdl:part name="parameters" element="tns:Ping" />
@@ -441,7 +464,7 @@
     <wsdl:part name="parameters" element="tns:ValidarCredencialesResponse" />
   </wsdl:message>
   <wsdl:message name="IServicioUsuario_ValidarCredenciales_VetoFallaFault_FaultMessage">
-    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q9:VetoFalla" />
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/WcfServicioLibreria.Modelo.Excepciones" name="detail" element="q11:VetoFalla" />
   </wsdl:message>
   <wsdl:message name="IServicioUsuario_EditarContraseniaUsuario_InputMessage">
     <wsdl:part name="parameters" element="tns:EditarContraseniaUsuario" />
@@ -521,22 +544,25 @@
   <wsdl:message name="IServicioEstadisticas_ObtenerEstadisticas_OutputMessage">
     <wsdl:part name="parameters" element="tns:ObtenerEstadisticasResponse" />
   </wsdl:message>
-  <wsdl:message name="IServicioImagen_SolicitarImagenCarta_InputMessage">
-    <wsdl:part name="parameters" element="tns:SolicitarImagenCarta" />
+  <wsdl:message name="IServicioImagenMazo_SolicitarImagenMazo_InputMessage">
+    <wsdl:part name="parameters" element="tns:SolicitarImagenMazo" />
   </wsdl:message>
-  <wsdl:message name="IServicioImagen_SolicitarImagenCarta_OutputMessage">
-    <wsdl:part name="parameters" element="tns:SolicitarImagenCartaResponse" />
+  <wsdl:message name="IServicioImagenMazo_SolicitarImagenMazo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SolicitarImagenMazoResponse" />
   </wsdl:message>
-  <wsdl:message name="IServicioImagen_MostrarTodasImagenes_InputMessage">
-    <wsdl:part name="parameters" element="tns:MostrarTodasImagenes" />
-  </wsdl:message>
-  <wsdl:message name="IServicioImagen_MostrarTodasImagenes_OutputMessage">
-    <wsdl:part name="parameters" element="tns:MostrarTodasImagenesResponse" />
-  </wsdl:message>
-  <wsdl:message name="IServicioImagen_RecibirImagenCallback_OutputCallbackMessage">
+  <wsdl:message name="IServicioImagenMazo_RecibirImagenCallback_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:RecibirImagenCallback" />
   </wsdl:message>
-  <wsdl:message name="IServicioImagen_RecibirGrupoImagenCallback_OutputCallbackMessage">
+  <wsdl:message name="IServicioImagenMazo_RecibirVariasImagenCallback_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:RecibirVariasImagenCallback" />
+  </wsdl:message>
+  <wsdl:message name="IServicioImagenesTablero_MostrarImagenesTablero_InputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarImagenesTablero" />
+  </wsdl:message>
+  <wsdl:message name="IServicioImagenesTablero_MostrarImagenesTablero_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MostrarImagenesTableroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServicioImagenesTablero_RecibirGrupoImagenCallback_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:RecibirGrupoImagenCallback" />
   </wsdl:message>
   <wsdl:portType name="IServicioAmistad">
@@ -548,6 +574,7 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistad" message="tns:IServicioAmistad_EnviarSolicitudAmistad_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistadResponse" message="tns:IServicioAmistad_EnviarSolicitudAmistad_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistadSolicitudAmistadFallaFault" name="SolicitudAmistadFallaFault" message="tns:IServicioAmistad_EnviarSolicitudAmistad_SolicitudAmistadFallaFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioAmistad/EnviarSolicitudAmistadFaultExceptionOf_SolicitudAmistadFault" name="FaultExceptionOf_SolicitudAmistadFault" message="tns:IServicioAmistad_EnviarSolicitudAmistad_FaultExceptionOf_SolicitudAmistadFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="ObtenerSolicitudesAmistad">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioAmistad/ObtenerSolicitudesAmistad" message="tns:IServicioAmistad_ObtenerSolicitudesAmistad_InputMessage" />
@@ -644,6 +671,7 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioPartidaSesion/UnirsePartida" message="tns:IServicioPartidaSesion_UnirsePartida_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/UnirsePartidaResponse" message="tns:IServicioPartidaSesion_UnirsePartida_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IServicioPartidaSesion/UnirsePartidaPartidaFallaFault" name="PartidaFallaFault" message="tns:IServicioPartidaSesion_UnirsePartida_PartidaFallaFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IServicioPartidaSesion/UnirsePartidaFaultExceptionOf_PartidaFallaFault" name="FaultExceptionOf_PartidaFallaFault" message="tns:IServicioPartidaSesion_UnirsePartida_FaultExceptionOf_PartidaFallaFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="ConfirmarMovimiento">
       <wsdl:input wsaw:Action="http://tempuri.org/IServicioPartidaSesion/ConfirmarMovimiento" message="tns:IServicioPartidaSesion_ConfirmarMovimiento_InputMessage" />
@@ -686,6 +714,12 @@
     </wsdl:operation>
     <wsdl:operation name="CambiarPantallaCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/CambiarPantallaCallback" message="tns:IServicioPartidaSesion_CambiarPantallaCallback_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NoSeEmpezoPartidaCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/NoSeEmpezoPartidaCallback" message="tns:IServicioPartidaSesion_NoSeEmpezoPartidaCallback_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTableroCartasCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioPartidaSesion/MostrarTableroCartasCallback" message="tns:IServicioPartidaSesion_MostrarTableroCartasCallback_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="IServicioRegistro">
@@ -818,20 +852,25 @@
       <wsdl:output wsaw:Action="http://tempuri.org/IServicioEstadisticas/ObtenerEstadisticasResponse" message="tns:IServicioEstadisticas_ObtenerEstadisticas_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:portType name="IServicioImagen">
-    <wsdl:operation name="SolicitarImagenCarta">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioImagen/SolicitarImagenCarta" message="tns:IServicioImagen_SolicitarImagenCarta_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioImagen/SolicitarImagenCartaResponse" message="tns:IServicioImagen_SolicitarImagenCarta_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="MostrarTodasImagenes">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServicioImagen/MostrarTodasImagenes" message="tns:IServicioImagen_MostrarTodasImagenes_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioImagen/MostrarTodasImagenesResponse" message="tns:IServicioImagen_MostrarTodasImagenes_OutputMessage" />
+  <wsdl:portType name="IServicioImagenMazo">
+    <wsdl:operation name="SolicitarImagenMazo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioImagenMazo/SolicitarImagenMazo" message="tns:IServicioImagenMazo_SolicitarImagenMazo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioImagenMazo/SolicitarImagenMazoResponse" message="tns:IServicioImagenMazo_SolicitarImagenMazo_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="RecibirImagenCallback">
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioImagen/RecibirImagenCallback" message="tns:IServicioImagen_RecibirImagenCallback_OutputCallbackMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioImagenMazo/RecibirImagenCallback" message="tns:IServicioImagenMazo_RecibirImagenCallback_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RecibirVariasImagenCallback">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioImagenMazo/RecibirVariasImagenCallback" message="tns:IServicioImagenMazo_RecibirVariasImagenCallback_OutputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IServicioImagenesTablero">
+    <wsdl:operation name="MostrarImagenesTablero">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServicioImagenesTablero/MostrarImagenesTablero" message="tns:IServicioImagenesTablero_MostrarImagenesTablero_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioImagenesTablero/MostrarImagenesTableroResponse" message="tns:IServicioImagenesTablero_MostrarImagenesTablero_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="RecibirGrupoImagenCallback">
-      <wsdl:output wsaw:Action="http://tempuri.org/IServicioImagen/RecibirGrupoImagenCallback" message="tns:IServicioImagen_RecibirGrupoImagenCallback_OutputCallbackMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServicioImagenesTablero/RecibirGrupoImagenCallback" message="tns:IServicioImagenesTablero_RecibirGrupoImagenCallback_OutputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="NetTcpBinding_IServicioAmistad" type="tns:IServicioAmistad">
@@ -857,6 +896,9 @@
       </wsdl:output>
       <wsdl:fault name="SolicitudAmistadFallaFault">
         <soap12:fault use="literal" name="SolicitudAmistadFallaFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FaultExceptionOf_SolicitudAmistadFault">
+        <soap12:fault use="literal" name="FaultExceptionOf_SolicitudAmistadFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="ObtenerSolicitudesAmistad">
@@ -1078,6 +1120,9 @@
       <wsdl:fault name="PartidaFallaFault">
         <soap12:fault use="literal" name="PartidaFallaFault" namespace="" />
       </wsdl:fault>
+      <wsdl:fault name="FaultExceptionOf_PartidaFallaFault">
+        <soap12:fault use="literal" name="FaultExceptionOf_PartidaFallaFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="ConfirmarMovimiento">
       <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/ConfirmarMovimiento" style="document" />
@@ -1162,6 +1207,18 @@
     </wsdl:operation>
     <wsdl:operation name="CambiarPantallaCallback">
       <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/CambiarPantallaCallback" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NoSeEmpezoPartidaCallback">
+      <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/NoSeEmpezoPartidaCallback" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MostrarTableroCartasCallback">
+      <soap12:operation soapAction="http://tempuri.org/IServicioPartidaSesion/MostrarTableroCartasCallback" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
@@ -1463,21 +1520,12 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:binding name="NetTcpBinding_IServicioImagen" type="tns:IServicioImagen">
-    <wsp:PolicyReference URI="#NetTcpBinding_IServicioImagen_policy">
+  <wsdl:binding name="NetTcpBinding_IServicioImagenMazo" type="tns:IServicioImagenMazo">
+    <wsp:PolicyReference URI="#NetTcpBinding_IServicioImagenMazo_policy">
     </wsp:PolicyReference>
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
-    <wsdl:operation name="SolicitarImagenCarta">
-      <soap12:operation soapAction="http://tempuri.org/IServicioImagen/SolicitarImagenCarta" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="MostrarTodasImagenes">
-      <soap12:operation soapAction="http://tempuri.org/IServicioImagen/MostrarTodasImagenes" style="document" />
+    <wsdl:operation name="SolicitarImagenMazo">
+      <soap12:operation soapAction="http://tempuri.org/IServicioImagenMazo/SolicitarImagenMazo" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -1486,13 +1534,33 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="RecibirImagenCallback">
-      <soap12:operation soapAction="http://tempuri.org/IServicioImagen/RecibirImagenCallback" style="document" />
+      <soap12:operation soapAction="http://tempuri.org/IServicioImagenMazo/RecibirImagenCallback" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RecibirVariasImagenCallback">
+      <soap12:operation soapAction="http://tempuri.org/IServicioImagenMazo/RecibirVariasImagenCallback" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="NetTcpBinding_IServicioImagenesTablero" type="tns:IServicioImagenesTablero">
+    <wsp:PolicyReference URI="#NetTcpBinding_IServicioImagenesTablero_policy">
+    </wsp:PolicyReference>
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="MostrarImagenesTablero">
+      <soap12:operation soapAction="http://tempuri.org/IServicioImagenesTablero/MostrarImagenesTablero" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="RecibirGrupoImagenCallback">
-      <soap12:operation soapAction="http://tempuri.org/IServicioImagen/RecibirGrupoImagenCallback" style="document" />
+      <soap12:operation soapAction="http://tempuri.org/IServicioImagenesTablero/RecibirGrupoImagenCallback" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
@@ -1616,7 +1684,16 @@
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
-    <wsdl:port name="NetTcpBinding_IServicioImagen" binding="tns:NetTcpBinding_IServicioImagen">
+    <wsdl:port name="NetTcpBinding_IServicioImagenMazo" binding="tns:NetTcpBinding_IServicioImagenMazo">
+      <soap12:address location="net.tcp://localhost:6969/" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <Dns>localhost</Dns>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_IServicioImagenesTablero" binding="tns:NetTcpBinding_IServicioImagenesTablero">
       <soap12:address location="net.tcp://localhost:6969/" />
       <wsa10:EndpointReference>
         <wsa10:Address>net.tcp://localhost:6969/</wsa10:Address>

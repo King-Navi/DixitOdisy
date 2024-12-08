@@ -724,4 +724,25 @@
   <data name="mensajeAmigoExistente" xml:space="preserve">
     <value>No se puede enviar solicitud de amistad, ya eres su amigo.</value>
   </data>
+  <data name="mensajeErrorNoEncontroParitda" xml:space="preserve">
+    <value>There was an error trying to find the game, check your connection and try again later.</value>
+  </data>
+  <data name="labelFaltaJugadoresPartida" xml:space="preserve">
+    <value>The game was not started due to lack of players.</value>
+  </data>
+  <data name="labelVerificandoConexion" xml:space="preserve">
+    <value>Verifying connection...</value>
+  </data>
+  <data name="labelErrorConexion" xml:space="preserve">
+    <value>Connection error.</value>
+  </data>
+  <data name="labelErrorAlVerificarConexion" xml:space="preserve">
+    <value>Error verifying connection.</value>
+  </data>
+  <data name="mensajePartidaExpiro" xml:space="preserve">
+    <value>The game is no longer available, please start another one.</value>
+  </data>
+  <data name="labelEmpezarRangoPartida" xml:space="preserve">
+    <value>To start a game the number of players required is between:</value>
+  </data>
 </root>

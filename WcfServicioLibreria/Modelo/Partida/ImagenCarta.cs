@@ -4,13 +4,12 @@ using System.Runtime.Serialization;
 namespace WcfServicioLibreria.Modelo
 {
     [DataContract]
-    [KnownType(typeof(Stream))]
-    [KnownType(typeof(MemoryStream))]
+    [KnownType(typeof(byte[]))]
     public class ImagenCarta
     {
         [DataMember]
         public string IdImagen { get; set; }
         [DataMember]
-        public MemoryStream ImagenStream { get; set; }
+        public byte[] ImagenStream { get; set; }
     }
 }

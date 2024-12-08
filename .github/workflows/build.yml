@@ -42,7 +42,7 @@ jobs:
 
       # 7. Construir la solución
       - name: Build the Solution
-        run: dotnet build DixitOdisy.sln --property:Platform=x64
+        run: dotnet build DixitOdisy.sln /p:Configuration=Debug /p:Platform="Any CPU"
 
       # 8. Finalizar el análisis con SonarScanner
       - name: SonarQube End Analysis

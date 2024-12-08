@@ -299,7 +299,21 @@ namespace WpfCliente.GUI
 
         public void DesbloqueoChat()
         {
-            chatUserControl.IsEnabled = true;
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                try
+                {
+                    chatUserControl.IsEnabled = true;
+                }
+                catch (InvalidOperationException excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+                }
+                catch (Exception excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+                }
+            });
         }
 
         private void InicializarComponenetes()

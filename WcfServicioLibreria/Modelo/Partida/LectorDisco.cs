@@ -81,6 +81,14 @@ namespace WcfServicioLibreria.Modelo
                     return imagenBytes;
                 }
             }
+            catch (FileNotFoundException)
+            {
+                throw;
+            }
+            catch (IOException)
+            {
+                throw;
+            }
             catch (Exception)
             {
                 throw;
@@ -142,6 +150,10 @@ namespace WcfServicioLibreria.Modelo
                     }
                 });
             }
+            catch (ArgumentException)
+            {
+                throw;
+            }
             catch (Exception)
             {
                 throw;
@@ -173,6 +185,10 @@ namespace WcfServicioLibreria.Modelo
                     }
                 });
             }
+            catch (ArgumentException)
+            {
+                throw;
+            }
             catch (Exception)
             {
                 throw;
@@ -200,10 +216,14 @@ namespace WcfServicioLibreria.Modelo
                     }
                 });
             }
+            catch (ArgumentException)
+            {
+                throw;
+            }
             catch (Exception)
             {
                 throw;
-            };
+            }
         }
 
         private void EvaluarCanalValido(IImagenMazoCallback callback)
@@ -214,15 +234,9 @@ namespace WcfServicioLibreria.Modelo
                 {
                     return;
                 }
-                else
-                {
-                    throw new CommunicationException();
-                }
             }
-            else
-            {
-                throw new CommunicationException();
-            };
+            throw new CommunicationException();
+
         }
 
         private void EvaluarCanalValido(IImagenesTableroCallback callback)
@@ -233,15 +247,8 @@ namespace WcfServicioLibreria.Modelo
                 {
                     return;
                 }
-                else
-                {
-                    throw new CommunicationException();
-                }
             }
-            else
-            {
-                throw new CommunicationException();
-            };
+            throw new CommunicationException();
         }
 
     }

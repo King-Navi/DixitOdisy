@@ -128,10 +128,7 @@ namespace WcfServicioLibreria.Manejador
                 {
                     ManejadorDeVetos veto = new ManejadorDeVetos();
                     var resultado = await veto.RegistrarExpulsionJugadorAsync(jugadorAExpulsar, MOTIVO_EXPULSION_SALA, false);
-                    lock (partida)
-                    {
-                        partida.DesconectarUsuario(jugadorAExpulsar);
-                    }
+                    await partida.DesconectarUsuarioAsync(jugadorAExpulsar);
                     return true;
                 }
             }

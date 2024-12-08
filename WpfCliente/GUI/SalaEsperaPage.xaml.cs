@@ -21,8 +21,9 @@ namespace WpfCliente.GUI
         private bool visibleConfigurarPartida = false;
         private const int NUMERO_RONDAS_PORDEFECTO = 3;
         private const int TIEMPO_CLIC_EXPULSION_SEGUNDOS = 5;
-        private const int MINIMO_JUGADORES = 3;
+        private const int MINIMO_JUGADORES = 1;
         private const int MAXIMO_JUGADORES = 4;
+        private const string SEPARADOR_RANGO = " - ";
         private ConfiguracionPartida ConfiguracionPartida { get; set; }
 
         public SalaEsperaPage(string idSala)
@@ -260,7 +261,7 @@ namespace WpfCliente.GUI
                 radioButtonFinRondas.Content = Idioma.buttonFinRondas;
                 labelExpulsarUsuario.Content = Idioma.buttonExpulsar;
                 labelNumeroRondas.Content = Idioma.labelNumeroRondas;
-                textBlockRangoJugadores.Text = Idioma.labelEmpezarRangoPartida + MINIMO_JUGADORES + MAXIMO_JUGADORES;
+                textBlockRangoJugadores.Text = Idioma.labelEmpezarRangoPartida + " " + MINIMO_JUGADORES + SEPARADOR_RANGO + MAXIMO_JUGADORES;
             }
             catch (Exception excepcion)
             {

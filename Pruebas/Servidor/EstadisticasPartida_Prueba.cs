@@ -52,11 +52,7 @@ namespace Pruebas.Servidor
                 new Tuple<string, int>(NOMBRE_JUGADOR_GANADOR, ID_JUGADOR_GANADOR),
                 new Tuple<string, int>(NOMBRE_JUGADOR, ID_JUGADOR)
             };
-
-            
             await estadisticasPartida.GuardarPuntajeAsync(listaTuplaNombreIdEstadistica);
-
-            
             imitarEstadisticasDAO.Verify(dao =>
                 dao.AgregarEstadiscaPartidaAsync(1, EstadisticasAcciones.IncrementarPartidaAnimales, 1), Times.Once, "Debería guardar la victoria para el jugador ganador.");
             imitarEstadisticasDAO.Verify(dao =>

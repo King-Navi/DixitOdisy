@@ -230,7 +230,7 @@ namespace WpfCliente.ImplementacionesCallbacks
                 {
                     try
                     {
-                        await UnirseChat();
+                        await UnirseChatAsync();
                         await Partida.EmpezarPartidaAsync(SingletonCliente.Instance.IdPartida);
                     }
                     catch (Exception)
@@ -245,7 +245,7 @@ namespace WpfCliente.ImplementacionesCallbacks
             }
         }
 
-        private async Task UnirseChat()
+        private async Task UnirseChatAsync()
         {
             try
             {
@@ -300,9 +300,7 @@ namespace WpfCliente.ImplementacionesCallbacks
         {
             try
             {
-
-                    PartidaFaltaJugadores?.Invoke();
-                
+                PartidaFaltaJugadores?.Invoke();
             }
             catch (Exception excepcion)
             {
@@ -330,7 +328,6 @@ namespace WpfCliente.ImplementacionesCallbacks
                         throw;
                     }
                 });
-                return;
             }
             catch (CommunicationException excepcion)
             {

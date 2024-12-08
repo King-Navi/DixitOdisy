@@ -120,7 +120,7 @@ namespace WcfServicioLibreria.Modelo
 
                 if (nombreJugador.Equals(Anfitrion, StringComparison.OrdinalIgnoreCase) && !(SALA_VACIA == ObtenerNombresJugadoresSala().Count))
                 {
-                    DelegarRolAnfitrion();
+                    await DelegarRolAnfitrionAsync();
                 }
 
                 if (eventosJugador != null)
@@ -207,7 +207,7 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        void DelegarRolAnfitrion()
+        private async Task DelegarRolAnfitrionAsync()
         {
             if (jugadoresSalaCallbacks == null || !jugadoresSalaCallbacks.Any())
             {
@@ -225,14 +225,11 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (Exception)
             {
-                if (this is IObservador observador)
-                {
-                    observador.DesconectarUsuario(jugadorClave);
-                }
+                await DesconectarUsuarioAsync(jugadorClave);
             }
         }
 
-        public async void DesconectarUsuario(string nombreJugador)
+        public async Task DesconectarUsuarioAsync(string nombreJugador)
         {
             AvisarRetiroJugador(nombreJugador);
             await RemoverJugadorSalaAsync(nombreJugador);

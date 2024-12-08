@@ -204,7 +204,11 @@
             <local:EsperaRestoJugadoresUserControl></local:EsperaRestoJugadoresUserControl>
 
         </Grid>
-        <local:ChatUserControl x:Name="chatUserControl"></local:ChatUserControl>
+        <local:ChatUserControl 
+            x:Name="chatUserControl" 
+            HorizontalAlignment="Right" 
+            VerticalAlignment="Bottom" 
+            Margin="0,0,15,15"/>
 
 
         <Button 

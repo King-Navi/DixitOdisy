@@ -10,14 +10,14 @@ namespace WpfCliente.GUI
     public partial class MostrarCartaModalWindow : Window, IActualizacionUI
     {
         public string Pista {  get; set; }
-        private readonly Action enCierreAccion;
+        private readonly Action EnCierreAccion;
         private readonly bool soyNarrador;
         public MostrarCartaModalWindow(bool esNarrador, BitmapImage imagen, Action cerrarVenana)
         {
             InitializeComponent();
             ActualizarUI();
             DataContext = this;
-            cerrarVenana = enCierreAccion;
+            EnCierreAccion = cerrarVenana;
             imagenElegida.Source = imagen;
             soyNarrador = esNarrador;
             if (!esNarrador)
@@ -30,7 +30,7 @@ namespace WpfCliente.GUI
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-            enCierreAccion?.Invoke();
+            EnCierreAccion?.Invoke();
         }
 
         private void ClicButtonSelecionar(object sender, RoutedEventArgs e)

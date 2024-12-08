@@ -57,7 +57,7 @@ namespace WcfServicioLibreria.Modelo
                         await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
                         await TerminarPartidaAsync();
                     }
-                });                
+                });
             }
             catch (Exception excepcion)
             {
@@ -107,12 +107,12 @@ namespace WcfServicioLibreria.Modelo
         }
 
 
-        private async Task IniciarPartidaSeguroAsync(CancellationToken cancelacionToke)
+        private async Task IniciarPartidaSeguroAsync()
         {
             try
             {
                 estadisticasPartida.AgregarDesdeOtraLista(ObtenerNombresJugadores());
-                await EjecutarRondasAsync(cancelacionToke);
+                await EjecutarRondasAsync();
             }
             catch (ArgumentNullException excepcion)
             {
@@ -124,30 +124,40 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        private async Task EjecutarRondasAsync(CancellationToken cancelacionToke)
+        private async Task EjecutarRondasAsync()
         {
-            try
+            using (var cancelacion = new CancellationTokenSource())
             {
-                while (!VerificarCondicionVictoria() && ContarJugadores() >= CANTIDAD_MINIMA_JUGADORES && !cancelacionToke.IsCancellationRequested)
+                try
                 {
-                    await EjecutarRondaAsync();
-                    await EvaluarPuntosRondaAsync();
-                    CambiarPantalla(PANTALLA_INICIO);
-                    await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
-                    ++RondaActual;
+                    if (DebeCancelarRondas)
+                    {
+                        cancelacion.Cancel();
+                    }
+
+                    while (!VerificarCondicionVictoria() && ContarJugadores() >= CANTIDAD_MINIMA_JUGADORES && !cancelacion.Token.IsCancellationRequested)
+                    {
+                        await EjecutarRondaAsync();
+                        await EvaluarPuntosRondaAsync();
+                        CambiarPantalla(PANTALLA_INICIO);
+                        await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA), cancelacion.Token);
+                        ++RondaActual;
+                    }
+                }
+                catch (OperationCanceledException excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                }
+                catch (Exception excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                }
+                finally
+                {
+                    await TerminarPartidaAsync();
                 }
             }
-            catch (OperationCanceledException excepcion)
-            {
-                ManejadorExcepciones.ManejarExcepcionError(excepcion);
-            }
-            catch (Exception excepcion)
-            {
-                ManejadorExcepciones.ManejarExcepcionError(excepcion);
-            }
-            await TerminarPartidaAsync();
         }
-
         private async Task EvaluarPuntosRondaAsync()
         {
             CalculoPuntosEnSituaciones();
@@ -218,7 +228,7 @@ namespace WcfServicioLibreria.Modelo
         {
             RestablecerDesicionesJugadores();
             await EscogerNarradorAsync();
-            AvisarQuienEsNarrador();
+            AvisarQuienEsNarradorAsync();
             await EsperarConfirmacionNarradorAsync(TimeSpan.FromSeconds(TIEMPO_ESPERA_NARRADOR));
             if (SelecionoCartaNarrador)
             {
@@ -324,25 +334,26 @@ namespace WcfServicioLibreria.Modelo
 
         private async Task EsperarConfirmacionAdivinarAsync(TimeSpan tiempoEspera)
         {
-            var cancelacion = new CancellationTokenSource();
-            var tareaEsperaJugadores = Task.Delay(tiempoEspera, cancelacion.Token);
-
-            while (JugadoresPendientes.Any())
+            using (var cancelacion = new CancellationTokenSource())
             {
-                if (tareaEsperaJugadores.IsCompleted)
+                var tareaEsperaJugadores = Task.Delay(tiempoEspera, cancelacion.Token);
+
+                while (JugadoresPendientes.Any())
                 {
-                    break;
+                    if (tareaEsperaJugadores.IsCompleted)
+                    {
+                        break;
+                    }
+
+                    await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
                 }
 
-                await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
+                if (!tareaEsperaJugadores.IsCompleted)
+                {
+                    cancelacion.Cancel();
+                    await EnviarMensajeJugadoresSinConfirmarAsync();
+                }
             }
-
-            if (!tareaEsperaJugadores.IsCompleted)
-            {
-                cancelacion.Cancel();
-                await EnviarMensajeJugadoresSinConfirmarAsync();
-            }
-
         }
 
         private void CambiarPantalla(int numeroPantalla)
@@ -400,89 +411,78 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
-        private void AvisarQuienEsNarrador()
+        private async Task AvisarQuienEsNarradorAsync()
         {
             foreach (var nombre in ObtenerNombresJugadores().ToList())
             {
-                try
+                await Task.Run(() =>
                 {
-                    Task.Run(() =>
+                    try
                     {
-                        try
+                        jugadoresCallback.TryGetValue(nombre, out IPartidaCallback callback);
+                        if (!NarradorActual.Equals(nombre, StringComparison.OrdinalIgnoreCase))
                         {
-                            jugadoresCallback.TryGetValue(nombre, out IPartidaCallback callback);
-                            if (!NarradorActual.Equals(nombre, StringComparison.OrdinalIgnoreCase))
-                            {
-                                callback?.NotificarNarradorCallback(false);
-                            }
+                            callback?.NotificarNarradorCallback(false);
                         }
-                        catch (TimeoutException excepcion)
-                        {
-                            ManejadorExcepciones.ManejarExcepcionError(excepcion);
-                        }
-                        catch (CommunicationException excepcion)
-                        {
-                            ManejadorExcepciones.ManejarExcepcionError(excepcion);
-                        }
-                    });
-
-                }
-                catch (TimeoutException excepcion)
-                {
-                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
-                }
-                catch (CommunicationException excepcion)
-                {
-                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
-                }
-                catch (Exception excepcion)
-                {
-                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
-                }
+                    }
+                    catch (CommunicationException excepcion)
+                    {
+                        ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                    }
+                    catch (Exception excepcion)
+                    {
+                        ManejadorExcepciones.ManejarExcepcionError(excepcion);
+                    }
+                });
             };
         }
 
         private async Task EsperarConfirmacionNarradorAsync(TimeSpan tiempoEspera)
         {
-            var tiempoParaNarrador = new CancellationTokenSource();
-            var tareaEsperaNarrador = Task.Delay(tiempoEspera, tiempoParaNarrador.Token);
-
-            while (NarradorActual == null || (ClaveImagenCorrectaActual == null && PistaActual == null))
+            using (var tiempoParaNarrador = new CancellationTokenSource())
             {
-                if (tareaEsperaNarrador.IsCompleted)
+                var tareaEsperaNarrador = Task.Delay(tiempoEspera, tiempoParaNarrador.Token);
+
+                while (NarradorActual == null || (ClaveImagenCorrectaActual == null && PistaActual == null))
                 {
-                    break;
+                    if (tareaEsperaNarrador.IsCompleted)
+                    {
+                        break;
+                    }
+
+                    await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
                 }
 
-                await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
+                if (ClaveImagenCorrectaActual == null || PistaActual == null || NarradorActual == null)
+                {
+                    SelecionoCartaNarrador = false;
+                    return;
+                }
+                SelecionoCartaNarrador = true;
             }
-            if (ClaveImagenCorrectaActual == null || PistaActual == null || NarradorActual == null)
-            {
-                SelecionoCartaNarrador = false;
-                return;
-            }
-            SelecionoCartaNarrador = true;
         }
 
         private async Task EsperarEleccionesJugadoresAsync(TimeSpan tiempoEspera)
         {
-            var cancelacion = new CancellationTokenSource();
-            var tareaEsperaJugadores = Task.Delay(tiempoEspera, cancelacion.Token);
-
-            while (JugadoresPendientes.Any())
+            using (var cancelacion = new CancellationTokenSource())
             {
-                if (tareaEsperaJugadores.IsCompleted)
+                var tareaEsperaJugadores = Task.Delay(tiempoEspera, cancelacion.Token);
+
+                while (JugadoresPendientes.Any())
                 {
-                    break;
+                    if (tareaEsperaJugadores.IsCompleted)
+                    {
+                        break;
+                    }
+
+                    await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
                 }
 
-                await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA));
-            }
-
-            if (!tareaEsperaJugadores.IsCompleted)
-            {
-                cancelacion.Cancel();
-                await EnviarMensajeJugadoresSinConfirmarAsync();
+                if (!tareaEsperaJugadores.IsCompleted)
+                {
+                    cancelacion.Cancel();
+                    await EnviarMensajeJugadoresSinConfirmarAsync();
+                }
             }
         }
 
@@ -573,7 +573,7 @@ namespace WcfServicioLibreria.Modelo
             }
             catch (Exception excepcion)
             {
-                DesconectarUsuario(narrador);
+                await DesconectarUsuarioAsync(narrador);
                 ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
             finally
@@ -691,7 +691,7 @@ namespace WcfServicioLibreria.Modelo
 
         private async Task EnviarResultadoBaseDatos()
         {
-            if (RondaActual > RONDAS_MINIMA_PARA_PUNTOS)
+            if (RondaActual >= RONDAS_MINIMA_PARA_PUNTOS)
             {
                 var listaNoInvitado = jugadoresInformacion.Values
                     .Where(jugador => jugador.idUsuario > ID_INVALIDO)

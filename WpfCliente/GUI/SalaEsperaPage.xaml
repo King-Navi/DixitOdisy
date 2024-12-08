@@ -167,13 +167,14 @@
         <TextBlock 
             x:Name="textBlockRangoJugadores" 
             Text="El rango de jugadores para empezar es entre 3 - 4"
+            TextWrapping="Wrap"
             Foreground="Black" 
             FontSize="16" 
-            VerticalAlignment="Center" 
-            HorizontalAlignment="Right" 
+            VerticalAlignment="Top" 
+            HorizontalAlignment="Left" 
             TextAlignment="Center"
-            Height="51" 
-            Margin="0,0,30,20">
+            Height="72" 
+            Margin="877,323,0,0" Width="223">
             <TextBlock.Effect>
                 <DropShadowEffect 
                             BlurRadius="2"  

@@ -42,11 +42,40 @@ namespace WpfCliente.GUI
 
         private async void ClicButtonEnviarAsync(object sender, RoutedEventArgs e)
         {
-            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
+            bool conexionExitosa = await Conexion.VerificarConexionConBaseDatosSinCierreAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)
             {
-                SingletonGestorVentana.Instancia.NavegarA(new IniciarSesionPage());
+                if (sender is Button boton)
+                {
+                    try
+                    {
+                        boton.IsEnabled = false;
+                    }
+                    catch (InvalidOperationException excepcion)
+                    {
+                        ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
+                    }
+                    catch (Exception excepcion)
+                    {
+                        ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
+                    }
+                }
                 return;
+            }
+            if (sender is Button botonEnviar)
+            {
+                try
+                {
+                    botonEnviar.IsEnabled = true;
+                }
+                catch (InvalidOperationException excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
+                }
+                catch (Exception excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
+                }
             }
             if (SingletonChat.Instancia.ChatMotor == null)
             {
@@ -95,7 +124,21 @@ namespace WpfCliente.GUI
 
         public void RecibirMensaje(ChatMensaje mensaje)
         {
-            textBoxReceptorMensaje.Text += $"{Environment.NewLine} {mensaje}";
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                try
+                {
+                    textBoxReceptorMensaje.Text += $"{Environment.NewLine} {mensaje}";
+                }
+                catch (InvalidOperationException excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
+                }
+                catch (Exception excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
+                }
+            });
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)

@@ -111,7 +111,7 @@ namespace WcfServicioLibreria.Manejador
                     var resultado = await veto.RegistrarExpulsionJugadorAsync(jugadorAExpulsar, MOTIVO_EXPULSION_SALA, false);
                     lock (sala)
                     {
-                        sala.DesconectarUsuario(jugadorAExpulsar);
+                        sala.DesconectarUsuarioAsync(jugadorAExpulsar);
                     }
                     return true;
                 }

@@ -15,6 +15,7 @@ namespace WcfServicioLibreria.Modelo
     {
         #region Atributos
         private const int CANTIDAD_MAXIMA_USUARIOS = 12;
+        private const int CHAT_VACIO = 0;
         private readonly ConcurrentDictionary<string, IChatCallback> jugadores = new ConcurrentDictionary<string, IChatCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
         public EventHandler EliminarChatManejadorEvento;
@@ -48,12 +49,11 @@ namespace WcfServicioLibreria.Modelo
             await semaphoreAgrearUsuario.WaitAsync();
             try
             {
-                foreach (var nombreJugadorEnSala in ObtenerNombresJugadoresChat())
+                bool ExisteJugadorEnSala = ObtenerNombresJugadoresChat()
+                    .Any(nombreJugadorEnSala => nombreJugadorEnSala.Equals(nombreUsuario, StringComparison.OrdinalIgnoreCase));
+                if (ExisteJugadorEnSala)
                 {
-                    if (nombreJugadorEnSala.Equals(nombreUsuario, StringComparison.OrdinalIgnoreCase))
-                    {
-                        return false;
-                    }
+                    return false;
                 }
                 if (ContarJugadores() < CANTIDAD_MAXIMA_USUARIOS)
                 {
@@ -78,7 +78,7 @@ namespace WcfServicioLibreria.Modelo
             bool seElimino = jugadores.TryRemove(nombreJugador, out IChatCallback jugadorEliminado);
             eventosCommunication.TryRemove(nombreJugador, out DesconectorEventoManejador eventosJugador);
             eventosJugador?.Desechar();
-            if (ContarJugadores() == 0)
+            if (ContarJugadores() == CHAT_VACIO)
             {
                 EliminarChat();
             }
@@ -110,9 +110,13 @@ namespace WcfServicioLibreria.Modelo
             return jugadores.Keys.ToList().AsReadOnly();
         }
 
-        void IObservador.DesconectarUsuario(string clave)
+        public async Task DesconectarUsuarioAsync(string clave)
         {
-            RemoverJugadorChat(clave);
+            await Task.Run(() => 
+            {
+                RemoverJugadorChat(clave);
+
+            });
         }
         #endregion Metodos
 

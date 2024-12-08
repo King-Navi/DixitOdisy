@@ -6,6 +6,7 @@ using WcfServicioLibreria.Enumerador;
 using WcfServicioLibreria.Contratos;
 using Pruebas.Servidor.Utilidades;
 using System;
+using System.Threading.Tasks;
 namespace Pruebas.Servidor
 {
     [TestClass]
@@ -163,7 +164,7 @@ namespace Pruebas.Servidor
             Assert.IsTrue(resultado, "Debería devolver true para una partida recién creada.");
         }
         [TestMethod]
-        public async void ValidarPartida_PartidaTodosJugadoresAbandonan_NoExisteEnDiccionario()
+        public async Task ValidarPartida_PartidaTodosJugadoresAbandonan_NoExisteEnDiccionario()
         {
             var implementacionCallback = new PartidaCallbackImplementacion();
             imitacionContextoProvedor.Setup(c => c.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
@@ -191,6 +192,8 @@ namespace Pruebas.Servidor
             bool resultado = manejador.ValidarPartida(null);
             Assert.IsFalse(resultado, "Debería devolver false cuando el identificador de la sala es null.");
         }
+
+
 
         #endregion
         

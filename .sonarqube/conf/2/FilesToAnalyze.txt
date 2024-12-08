@@ -1,5 +1,0 @@
-﻿C:\Users\unaay\source\repos\DixitOdisy\WcfServidor\DescribeloServiceHost.cs
-C:\Users\unaay\source\repos\DixitOdisy\WcfServidor\Program.cs
-C:\Users\unaay\source\repos\DixitOdisy\WcfServidor\Properties\AssemblyInfo.cs
-C:\Users\unaay\source\repos\DixitOdisy\WcfServidor\App.config
-C:\Users\unaay\source\repos\DixitOdisy\WcfServidor\packages.config

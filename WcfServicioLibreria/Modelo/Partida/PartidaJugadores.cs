@@ -1,4 +1,4 @@
-﻿ using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System;
 using WcfServicioLibreria.Contratos;
 using WcfServicioLibreria.Evento;
@@ -31,22 +31,18 @@ namespace WcfServicioLibreria.Modelo
         #endregion PantallasCliente
 
         #region NumerosPartida
-        private const int CANTIDAD_MINIMA_JUGADORES = 1; 
+        private const int CANTIDAD_MINIMA_JUGADORES = 1;
         private const int TIEMPO_ESPERA_UNIRSE_JUGADORES = 25; //20
         private const int TIEMPO_ESPERA_NARRADOR = 30;  //15
         private const int TIEMPO_ESPERA_SELECCION = 25;  // 15
         private const int TIEMPO_ESPERA_PARA_ADIVINAR = 60;  //20
         private const int TIEMPO_ESPERA = 5;
-        private const int TIEMPO_ENVIO_SEGUNDOS = 5;
-        private const int NUMERO_JUGADOR_PARTIDA_VACIA = 0; 
-        private const int NUM_JUGADOR_NADIE_ACERTO = 0;
+        private const int NUMERO_JUGADOR_PARTIDA_VACIA = 0;
         private const int RONDAS_MINIMA_PARA_PUNTOS = 3;
         private const int NUMERO_MINIMO_RONDAS = 3;
         private const int TIEMPO_MOSTRAR_ESTADISTICAS = 15;
         private const int ID_INVALIDO = 0;
         private const int ID_INVALIDO_ESTADISTICAS = 0;
-        private const int TIEMPO_ESPERA_MILISEGUNDOS = 1000;
-        private const int TIEMPO_AUMENTO_ENTRADA_SEGUNDOS = 1;
 
         private const int RONDA_INICIAL = 0;
         #endregion NumerosPartida
@@ -59,7 +55,6 @@ namespace WcfServicioLibreria.Modelo
         private readonly ICondicionVictoria condicionVictoria;
         public ConfiguracionPartida Configuracion { get; private set; }
         private readonly EstadisticasPartida estadisticasPartida;
-        private CancellationTokenSource cancelacionEjecucionRonda;
         private static readonly Random aleatorio = new Random();
         private static readonly SemaphoreSlim semaphoreEscogerNarrador = new SemaphoreSlim(1, 1);
         private readonly SemaphoreSlim semaphoreEmpezarPartida = new SemaphoreSlim(1, 1);
@@ -85,6 +80,7 @@ namespace WcfServicioLibreria.Modelo
         public bool SeLlamoEmpezarPartidaPrimeraVez { get; private set; } = false;
         public bool SelecionoCartaNarrador { get; private set; } = false;
         public bool TiempoUnirse { get; private set; } = true;
+        public bool DebeCancelarRondas { get; private set; } = false;
         public ConcurrentDictionary<string, bool> JugadoresPendientes { get; private set; } = new ConcurrentDictionary<string, bool>();
         public ConcurrentDictionary<string, List<string>> ImagenesTablero { get; private set; } = new ConcurrentDictionary<string, List<string>>();
         private ConcurrentDictionary<string, List<string>> ImagenElegidaPorJugador { get; set; } = new ConcurrentDictionary<string, List<string>>();
@@ -93,10 +89,10 @@ namespace WcfServicioLibreria.Modelo
 
         #region Contructor
         public Partida(
-            string _idPartida, 
-            string _anfitrion, 
-            ConfiguracionPartida _configuracion, 
-            IEstadisticasDAO _estadisticasDAO, 
+            string _idPartida,
+            string _anfitrion,
+            ConfiguracionPartida _configuracion,
+            IEstadisticasDAO _estadisticasDAO,
             IMediadorImagen _mediadorImagen)
         {
             IdPartida = _idPartida;
@@ -109,8 +105,7 @@ namespace WcfServicioLibreria.Modelo
             TodosListos += (emisor, evento) =>
             {
                 TiempoUnirse = false;
-                cancelacionEjecucionRonda = new CancellationTokenSource();
-                Task.Run(async () => await IniciarPartidaSeguroAsync(cancelacionEjecucionRonda.Token));
+                Task.Run(async () => await IniciarPartidaSeguroAsync());
             };
             estadisticasDAO = _estadisticasDAO;
             mediadorImagen = _mediadorImagen;
@@ -345,7 +340,7 @@ namespace WcfServicioLibreria.Modelo
         {
             try
             {
-                await Task.Run(() => 
+                await Task.Run(() =>
                 {
                     try
                     {
@@ -366,46 +361,63 @@ namespace WcfServicioLibreria.Modelo
 
         private async Task AvisarRetiroJugadorAsync(string nombreUsuarioEliminado)
         {
-            jugadoresInformacion.TryRemove(nombreUsuarioEliminado, out DAOLibreria.ModeloBD.Usuario usuarioEliminado);
-
-            if (usuarioEliminado != null)
+            if (jugadoresInformacion.TryRemove(nombreUsuarioEliminado, out DAOLibreria.ModeloBD.Usuario usuarioEliminado) && usuarioEliminado != null)
             {
                 Usuario usuario = new Usuario
                 {
                     Nombre = usuarioEliminado.gamertag
                 };
+                await NotificarRetiroJugadorAsync(usuario);
+            }
+        }
 
-                foreach (var nombreJugador in ObtenerNombresJugadores())
+        private async Task NotificarRetiroJugadorAsync(Usuario usuario)
+        {
+            var nombresJugadores = ObtenerNombresJugadores();
+
+            foreach (var nombreJugador in nombresJugadores)
+            {
+                if (jugadoresCallback.TryGetValue(nombreJugador, out IPartidaCallback callback) && callback != null)
                 {
-                    if (jugadoresCallback.TryGetValue(nombreJugador, out IPartidaCallback callback) && callback != null)
-                    {
-                        try
-                        {
-                            await Task.Run(() =>
-                            {
-                                try
-                                {
-                                    if (((ICommunicationObject)callback).State == CommunicationState.Opened)
-                                    {
-                                        callback?.EliminarJugadorPartidaCallback(usuario);
-                                    }
-                                }
-                                catch (Exception)
-                                {
-                                    throw;
-                                }
-                            });
-                        }
-                        catch (Exception excepcion)
-                        {
-                            ManejadorExcepciones.ManejarExcepcionError(excepcion);
-                        }
-                    }
+                    await EnviarEliminacionJugadorCallbackAsync(callback, usuario);
                 }
             }
         }
 
-        public async void DesconectarUsuario(string nombreJugador)
+        private async Task EnviarEliminacionJugadorCallbackAsync(IPartidaCallback callback, Usuario usuario)
+        {
+            try
+            {
+                await Task.Run(() =>
+                {
+                    try
+                    {
+                        if (((ICommunicationObject)callback).State == CommunicationState.Opened)
+                        {
+                            callback.EliminarJugadorPartidaCallback(usuario);
+                        }
+                    }
+                    catch (CommunicationException)
+                    {
+                        throw ;
+                    }
+                    catch (Exception )
+                    {
+                        throw ;
+                    }
+                });
+            }
+            catch (CommunicationException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionError(excepcion);
+            }
+        }
+
+        public async Task DesconectarUsuarioAsync(string nombreJugador)
         {
             await AvisarRetiroJugadorAsync(nombreJugador);
             await RemoverJugadorAsync(nombreJugador);
@@ -422,14 +434,7 @@ namespace WcfServicioLibreria.Modelo
                 eventosJugador?.Desechar();
                 if (ContarJugadores() == NUMERO_JUGADOR_PARTIDA_VACIA)
                 {
-                    try
-                    {
-                        cancelacionEjecucionRonda?.Cancel();
-                    }
-                    catch (Exception excepcion)
-                    {
-                        ManejadorExcepciones.ManejarExcepcionError(excepcion);
-                    }
+                    DebeCancelarRondas = true;
                     EliminarPartida();
                 }
             }
@@ -448,7 +453,7 @@ namespace WcfServicioLibreria.Modelo
             return jugadoresCallback.Count;
         }
 
-        
+
         #endregion ManejoJugadores
 
         #endregion Metodos

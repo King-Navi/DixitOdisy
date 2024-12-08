@@ -16,7 +16,6 @@ namespace WpfCliente.GUI
 {
     public partial class ListaAmigosUserControl : UserControl, IActualizacionUI
     {
-        private bool desechado = false;
         private Timer timer;
         private DateTime ultimaActualizacion;
         private const string FORMATO_HORA = "HH:mm:ss";

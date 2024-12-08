@@ -73,7 +73,7 @@ namespace WcfServicioLibreria.Modelo
 
         }
 
-        public void DesconectarUsuario(string nombreJugador)
+        public void DesconectarUsuarioAsync(string nombreJugador)
         {
             EnDesconexion();
         }

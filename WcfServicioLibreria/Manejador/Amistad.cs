@@ -422,7 +422,7 @@ namespace WcfServicioLibreria.Manejador
                         jugadoresConectadosDiccionario.ContainsKey(idRemitente))
                     {
                         jugadoresConectadosDiccionario.TryGetValue(idRemitente, out UsuarioContexto remitente);
-                        jugadoresConectadosDiccionario.TryGetValue(idRemitente, out UsuarioContexto destinatario);
+                        jugadoresConectadosDiccionario.TryGetValue(idDestinatario, out UsuarioContexto destinatario);
                         remitente.UsuarioSesionCallback?.EliminarAmigoCallback(new Amigo()
                         {
                             Nombre = usuarioDestinatarioNombre

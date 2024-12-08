@@ -14,8 +14,6 @@ namespace Pruebas.DAO
         private const int RETORNO_USUARIO_NO_ENCONTRADO = -2;
         private UsuarioCuentaDAO usuarioCuentaDAO = new UsuarioCuentaDAO();
 
-
-
         [TestInitialize]
         public void BuscarUsuarioInicial()
         {
@@ -44,8 +42,7 @@ namespace Pruebas.DAO
         {
             int idUsuarioCuentaEsperado = IDUSUARIO;
             var resultado = usuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(IDUSUARIO);
-            Assert.IsNotNull(resultado, "El método debería retornar un valor no nulo.");
-            Assert.AreEqual(idUsuarioCuentaEsperado, resultado, "El ID de la cuenta retornado no coincide con el esperado.");
+            Assert.AreEqual(idUsuarioCuentaEsperado, resultado, "El ID de la cuenta retornado coincide con el esperado.");
         }
 
         [TestMethod]

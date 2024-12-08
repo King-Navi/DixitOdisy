@@ -32,7 +32,6 @@ namespace WpfCliente.ImplementacionesCallbacks
             }
         }
         private readonly object bloquedoImagen = new object();
-        private readonly object lockCantidad = new object();
 
         private ServicioImagenesTableroClient imagen;
         public ServicioImagenesTableroClient Imagen
@@ -123,14 +122,14 @@ namespace WpfCliente.ImplementacionesCallbacks
             }
             try
             {
-                foreach (var imagen in imagenes)
+                foreach (var _imagen in imagenes)
                 {
-                    if (imagen == null)
+                    if (_imagen == null)
                     {
                         continue;
                     }
 
-                    ImagenesTablero.AgregarMemoriaEntrada(imagen);
+                    ImagenesTablero.AgregarMemoriaEntrada(_imagen);
                 }
             }
             catch (Exception excepcion)

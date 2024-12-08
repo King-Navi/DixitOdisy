@@ -16,7 +16,7 @@ namespace Pruebas.DAO
         [ExpectedException(typeof(SolicitudAmistadExcepcion))]
         public void GuardarSolicitudAmistad_CuandoNoHayConexion_DeberiaLanzarExcepcion()
         {
-             solicitudAmistadDAO.GuardarSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
+            solicitudAmistadDAO.GuardarSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
         }
 
 
@@ -31,7 +31,6 @@ namespace Pruebas.DAO
         public void ObtenerSolicitudesAmistad_CuandoNoHayConexion_DeberiaRetornarListaVacia()
         {
             var resultado = solicitudAmistadDAO.ObtenerSolicitudesAmistad(ID_REMITENTE);
-            Assert.IsNotNull(resultado, "El método debería retornar una lista, aunque sea vacía.");
             Assert.AreEqual(0, resultado.Count, "El método debería retornar una lista vacía cuando no hay conexión a la base de datos.");
         }
 
@@ -39,7 +38,7 @@ namespace Pruebas.DAO
         public void AceptarSolicitudAmistad_CuandoNoHayConexion_DeberiaRetornarFalse()
         {
             bool resultado = solicitudAmistadDAO.AceptarSolicitudAmistad(ID_REMITENTE, ID_DESTINATARIO);
-             Assert.IsFalse(resultado, "El método debería retornar false cuando no hay conexión a la base de datos.");
+            Assert.IsFalse(resultado, "El método debería retornar false cuando no hay conexión a la base de datos.");
         }
 
         [TestMethod]

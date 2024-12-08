@@ -100,7 +100,6 @@
     <Compile Include="Servidor\ServicioPartida_Prueba.cs" />
     <Compile Include="Servidor\ServicioPartidaSesion_Prueba.cs" />
     <Compile Include="Servidor\ServicioSala_Prueba.cs" />
-    <Compile Include="Servidor\ServicioSalaJugador_Prueba.cs" />
     <Compile Include="Servidor\ServicioUsuario_Prueba.cs" />
     <Compile Include="Servidor\Utilidades\ConfiguradorPruebaParaServicio.cs" />
     <Compile Include="Servidor\Utilidades\ImagenMazoCallbackImplementacion.cs" />

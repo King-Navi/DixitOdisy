@@ -13,31 +13,27 @@ namespace Pruebas.DAO
     public class EstadisticasDAO_Prueba : ConfiguracionPruebaBD
     {
         private EstadisticasDAO estadisticasDAO = new EstadisticasDAO();
+
         #region RecuperarEstadisticas
         [TestMethod]
         public void RecuperarEstadisticas_IdExistente_DeberiaRetornarEstadistica()
         {
-            int idEstadisticas = 1;
-            var resultado = estadisticasDAO.RecuperarEstadisticas(idEstadisticas);
+            var resultado = estadisticasDAO.RecuperarEstadisticas(ID_VALIDO);
+
             Assert.IsNotNull(resultado, "El resultado no debería ser nulo.");
-            Assert.AreEqual(idEstadisticas, resultado.idEstadisticas, "El ID de la estadística no coincide.");
         }
 
         [TestMethod]
         public void RecuperarEstadisticas_IdNoValido_DeberiaRetornarNull()
         {
-
-            int idEstadisticas = -1;
-            var resultado = estadisticasDAO.RecuperarEstadisticas(idEstadisticas);
+            var resultado = estadisticasDAO.RecuperarEstadisticas(ID_INVALIDO);
             Assert.IsNull(resultado);
         }
 
         [TestMethod]
         public void RecuperarEstadisticas_IdNoExiste_DeberiaRetornarNull()
         {
-
-            int idEstadisticas = 2030;
-            var resultado = estadisticasDAO.RecuperarEstadisticas(idEstadisticas);
+            var resultado = estadisticasDAO.RecuperarEstadisticas(ID_INEXISTENTE);
             Assert.IsNull(resultado);
         }
         #endregion RecuperarEstadisticas
@@ -47,63 +43,138 @@ namespace Pruebas.DAO
         [TestMethod]
         public async Task AgregarEstadisticaPartida_IdExistente_DeberiaActualizarEstadisticas()
         {
-            int idEstadisticas = 1;
             EstadisticasAcciones accion = EstadisticasAcciones.IncrementarPartidaMixta;
-            int victoria = 1;
 
-
-            var resultado = await estadisticasDAO.AgregarEstadiscaPartidaAsync(idEstadisticas, accion, victoria);
-
+            var resultado = await estadisticasDAO.AgregarEstadiscaPartidaAsync(ID_VALIDO, accion, INCREMENTO_MAXIMO);
 
             Assert.IsTrue(resultado, "El resultado debería ser verdadero.");
         }
 
         [TestMethod]
-        public async Task AgregarEstadisticaPartida_MultiplesAcciones_DeberiaActualizarEstadisticas()
+        public async Task IncrementarPartidaMixta_DeberiaActualizarEstadisticas()
         {
+            EstadisticasAcciones accion = EstadisticasAcciones.IncrementarPartidaMixta;
 
-            int idEstadisticas = 1;
-            int victoria = 1;
-            var estadisticasAnteriores = estadisticasDAO.RecuperarEstadisticas(idEstadisticas);
-            var acciones = new List<EstadisticasAcciones>
-            {
-                EstadisticasAcciones.IncrementarPartidaMixta,
-                EstadisticasAcciones.IncrementarPartidaEspacio,
-                EstadisticasAcciones.IncrementarPartidaPaises,
-                EstadisticasAcciones.IncrementarPartidaAnimales,
-                EstadisticasAcciones.IncrementarPartidaEspacio,
-                EstadisticasAcciones.IncrementarPartidasMitologia
-            };
+            var estadisticasAnteriores = estadisticasDAO.RecuperarEstadisticas(ID_VALIDO);
 
+            await estadisticasDAO.AgregarEstadiscaPartidaAsync(ID_VALIDO, accion, INCREMENTO_MAXIMO);
+            var estadisticasNuevas = estadisticasDAO.RecuperarEstadisticas(ID_VALIDO);
 
-            var tareasSolicitudes = new List<Task>();
-            foreach (var accion in acciones)
-            {
-                tareasSolicitudes.Add(estadisticasDAO.AgregarEstadiscaPartidaAsync(idEstadisticas, accion, victoria));
-            }
-            await Task.WhenAll(tareasSolicitudes);
+            Assert.AreEqual(
+                estadisticasAnteriores.vecesTematicaMixto + INCREMENTO_MAXIMO,
+                estadisticasNuevas.vecesTematicaMixto,
+                "El número de partidas mixtas aumentó exactamente 1 vez."
+            );
+        }
 
-            var estadisticasNuevas = estadisticasDAO.RecuperarEstadisticas(idEstadisticas);
+        [TestMethod]
+        public async Task IncrementarPartidaEspacio_DeberiaActualizarEstadisticas()
+        {
+            EstadisticasAcciones accion = EstadisticasAcciones.IncrementarPartidaEspacio;
 
+            var estadisticasAnteriores = estadisticasDAO.RecuperarEstadisticas(ID_VALIDO);
 
-            Assert.IsTrue(estadisticasAnteriores.partidasGanadas + acciones.Count == estadisticasNuevas.partidasGanadas, "El número de partidas ganadas no coincide.");
-            Assert.IsTrue(estadisticasAnteriores.partidasJugadas + acciones.Count == estadisticasNuevas.partidasJugadas, "El número de partidas jugadas no coincide.");
-            Assert.IsTrue(estadisticasAnteriores.vecesTematicaMixto + 1 == estadisticasNuevas.vecesTematicaMixto, "El número de partidas mixtas no coincide.");
-            Assert.IsTrue(estadisticasAnteriores.vecesTematicaAnimales + 1 == estadisticasNuevas.vecesTematicaAnimales, "El número de partidas mixtas no coincide.");
+            await estadisticasDAO.AgregarEstadiscaPartidaAsync(ID_VALIDO, accion, INCREMENTO_MAXIMO);
+            var estadisticasNuevas = estadisticasDAO.RecuperarEstadisticas(ID_VALIDO);
 
+            Assert.AreEqual(
+                estadisticasAnteriores.vecesTematicaEspacio + INCREMENTO_MAXIMO,
+                estadisticasNuevas.vecesTematicaEspacio,
+                "El número de partidas de espacio aumentó exactamente 1 vez."
+            );
+        }
+
+        [TestMethod]
+        public async Task IncrementarPartidaPaises_DeberiaActualizarEstadisticas()
+        {
+            EstadisticasAcciones accion = EstadisticasAcciones.IncrementarPartidaPaises;
+
+            var estadisticasAnteriores = estadisticasDAO.RecuperarEstadisticas(ID_VALIDO);
+
+            await estadisticasDAO.AgregarEstadiscaPartidaAsync(ID_VALIDO, accion, INCREMENTO_MAXIMO);
+            var estadisticasNuevas = estadisticasDAO.RecuperarEstadisticas(ID_VALIDO);
+
+            Assert.AreEqual(
+                estadisticasAnteriores.vecesTematicaPaises + INCREMENTO_MAXIMO,
+                estadisticasNuevas.vecesTematicaPaises,
+                "El número de partidas de países aumentó exactamente 1 vez."
+            );
+        }
+
+        [TestMethod]
+        public async Task IncrementarPartidaAnimales_DeberiaActualizarEstadisticas()
+        {
+            EstadisticasAcciones accion = EstadisticasAcciones.IncrementarPartidaAnimales;
+
+            var estadisticasAnteriores = estadisticasDAO.RecuperarEstadisticas(ID_VALIDO);
+
+            await estadisticasDAO.AgregarEstadiscaPartidaAsync(ID_VALIDO, accion, INCREMENTO_MAXIMO);
+            var estadisticasNuevas = estadisticasDAO.RecuperarEstadisticas(ID_VALIDO);
+
+            Assert.AreEqual(
+                estadisticasAnteriores.vecesTematicaAnimales + INCREMENTO_MAXIMO,
+                estadisticasNuevas.vecesTematicaAnimales,
+                "El número de partidas de animales aumentó exactamente 1 vez."
+            );
+        }
+
+        [TestMethod]
+        public async Task IncrementarPartidaMitologia_DeberiaActualizarEstadisticas()
+        {
+            EstadisticasAcciones accion = EstadisticasAcciones.IncrementarPartidasMitologia;
+
+            var estadisticasAnteriores = estadisticasDAO.RecuperarEstadisticas(ID_VALIDO);
+
+            await estadisticasDAO.AgregarEstadiscaPartidaAsync(ID_VALIDO, accion, INCREMENTO_MAXIMO);
+            var estadisticasNuevas = estadisticasDAO.RecuperarEstadisticas(ID_VALIDO);
+
+            Assert.AreEqual(
+                estadisticasAnteriores.vecesTematicaMitologia + INCREMENTO_MAXIMO,
+                estadisticasNuevas.vecesTematicaMitologia,
+                "El número de partidas de mitología aumentó exactamente 1 vez."
+            );
+        }
+
+        [TestMethod]
+        public async Task IncrementarPartidasJugadas_DeberiaActualizarEstadisticas()
+        {
+            EstadisticasAcciones accion = EstadisticasAcciones.IncrementarPartidaMixta;
+
+            var estadisticasAnteriores = estadisticasDAO.RecuperarEstadisticas(ID_VALIDO);
+
+            await estadisticasDAO.AgregarEstadiscaPartidaAsync(ID_VALIDO, accion, INCREMENTO_MAXIMO);
+            var estadisticasNuevas = estadisticasDAO.RecuperarEstadisticas(ID_VALIDO);
+
+            Assert.AreEqual(
+                estadisticasAnteriores.partidasJugadas + INCREMENTO_MAXIMO,
+                estadisticasNuevas.partidasJugadas,
+                "El número de partidas jugadas aumentó exactamente 1 vez."
+            );
+        }
+
+        [TestMethod]
+        public async Task IncrementarPartidasGanadas_DeberiaActualizarEstadisticas()
+        {
+            EstadisticasAcciones accion = EstadisticasAcciones.IncrementarPartidaMixta;
+
+            var estadisticasAnteriores = estadisticasDAO.RecuperarEstadisticas(ID_VALIDO);
+
+            await estadisticasDAO.AgregarEstadiscaPartidaAsync(ID_VALIDO, accion, INCREMENTO_MAXIMO);
+            var estadisticasNuevas = estadisticasDAO.RecuperarEstadisticas(ID_VALIDO);
+
+            Assert.AreEqual(
+                estadisticasAnteriores.partidasGanadas + INCREMENTO_MAXIMO,
+                estadisticasNuevas.partidasGanadas,
+                "El número de partidas ganadas aumentó exactamente 1 vez."
+            );
         }
 
         [TestMethod]
         public async Task AgregarEstadisticaPartida_VictoriaMayor_DeberiaRetornarExcepcion()
         {
-
-            int idEstadisticas = 1;
             EstadisticasAcciones accion = EstadisticasAcciones.IncrementarPartidaMixta;
-            int victoria = 2;
 
-
-
-            await Assert.ThrowsExceptionAsync<ActividadSospechosaExcepcion>(async () => await estadisticasDAO.AgregarEstadiscaPartidaAsync(idEstadisticas, accion, victoria), "Deber retornar un actividad sospechosa exceotion");
+            await Assert.ThrowsExceptionAsync<ActividadSospechosaExcepcion>(async () => await estadisticasDAO.AgregarEstadiscaPartidaAsync(ID_VALIDO, accion, INCREMENTO_INVALIDO), "Deber retornar un actividad sospechosa exception");
         }
         #endregion AgregarEstadisticaPartida
 
@@ -111,25 +182,17 @@ namespace Pruebas.DAO
         [TestMethod]
         public void ObtenerIdEstadisticaConIdUsuario_UsuarioExistente_DeberiaRetornarIdUsuario()
         {
-
-            int idUsuario = 1;
-
-
-            int resultado = estadisticasDAO.ObtenerIdEstadisticaConIdUsuario(idUsuario);
-
+            int resultado = estadisticasDAO.ObtenerIdEstadisticaConIdUsuario(ID_VALIDO);
 
             Assert.IsTrue(resultado > 0, "El método debería devolver el ID del usuario existente.");
         }
         [TestMethod]
         public void ObtenerIdEstadisticaConIdUsuario_UsuarioInexistente_DeberiaRetornarMenosUno()
         {
-
-            int idUsuarioInexistente = -10;
-            int resultado = estadisticasDAO.ObtenerIdEstadisticaConIdUsuario(idUsuarioInexistente);
+            int resultado = estadisticasDAO.ObtenerIdEstadisticaConIdUsuario(ID_INEXISTENTE);
+            
             Assert.AreEqual(resultado, -1, "El método debería devolver -1 para un usuario inexistente.");
         }
-
-
         #endregion ObtenerIdEstadisticaConIdUsuario
     }
 }

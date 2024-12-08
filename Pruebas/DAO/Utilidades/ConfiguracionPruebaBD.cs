@@ -12,6 +12,8 @@ namespace Pruebas.DAO.Utilidades
         public const int ID_INVALIDO = -1;
         public const int ID_INEXISTENTE = 9999;
         public const int ID_VALIDO = 1;
+        public const int INCREMENTO_MAXIMO = 1;
+        public const int INCREMENTO_INVALIDO= 2;
         public const string NOMBRE_USUARIO_INEXISTENTE = "UsuarioInexistenteEnBasaDatos";
         public const string NUEVA_CONTRASENIA = "NuevaContraseña";
         public Usuario usuarioInicial;

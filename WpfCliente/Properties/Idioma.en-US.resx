@@ -719,7 +719,7 @@
     <value>You cannot send friend request to yourself.</value>
   </data>
   <data name="mensajeSolicitudAmigoYaexistente" xml:space="preserve">
-    <value>You can't send friend requests, you already have one of yours.</value>
+    <value>Unable to send friend request, there is already a pending request</value>
   </data>
   <data name="mensajeAmigoExistente" xml:space="preserve">
     <value>No se puede enviar solicitud de amistad, ya eres su amigo.</value>

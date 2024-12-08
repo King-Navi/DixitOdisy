@@ -161,44 +161,6 @@ namespace WpfCliente.Utilidad
             return resultado;
         }
 
-        public static string ObtenerRutaImagenAleatoria()
-        {
-            Random random = new Random();
-            int numeroImagen = random.Next(RANGO_MINIMO_IMAGENES, RANGO_MAXIMO_IMAGENES);
-            return $"{RUTA_BASE_IMAGEN}{numeroImagen}{EXTENSION_IMAGEN_PNG}";
-        }
-
-        public static BitmapImage CargarImagenDesdeRecursos()
-        {
-            try
-            {
-                string uri = ObtenerRutaImagenAleatoria();
-                return new BitmapImage(new Uri(uri));
-            }
-            catch (FileFormatException excepcion)
-            {
-                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
-            }
-            catch (NotSupportedException excepcion)
-            {
-                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
-            }
-            return null;
-        }
-
-        public static MemoryStream ConvertirBitmapImageAMemoryStream(BitmapImage imageControl)
-        {
-            if (imageControl == null)
-                return null;
-            MemoryStream memoryStream = new MemoryStream();
-            PngBitmapEncoder encoder = new PngBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create(imageControl));
-            encoder.Save(memoryStream);
-            memoryStream.Position = 0;
-            return memoryStream;
-        }
-
-
         public static bool EsImagenValida(Stream imagen, Window ventana)
         {
             bool resultado = false;
@@ -238,6 +200,43 @@ namespace WpfCliente.Utilidad
                 ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
             return resultado;
+        }
+
+        public static string ObtenerRutaImagenAleatoria()
+        {
+            Random random = new Random();
+            int numeroImagen = random.Next(RANGO_MINIMO_IMAGENES, RANGO_MAXIMO_IMAGENES);
+            return $"{RUTA_BASE_IMAGEN}{numeroImagen}{EXTENSION_IMAGEN_PNG}";
+        }
+
+        public static BitmapImage CargarImagenDesdeRecursos()
+        {
+            try
+            {
+                string uri = ObtenerRutaImagenAleatoria();
+                return new BitmapImage(new Uri(uri));
+            }
+            catch (FileFormatException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
+            }
+            catch (NotSupportedException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
+            }
+            return null;
+        }
+
+        public static MemoryStream ConvertirBitmapImageAMemoryStream(BitmapImage imageControl)
+        {
+            if (imageControl == null)
+                return null;
+            MemoryStream memoryStream = new MemoryStream();
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(imageControl));
+            encoder.Save(memoryStream);
+            memoryStream.Position = 0;
+            return memoryStream;
         }
 
         public static string SelecionarRutaImagen()

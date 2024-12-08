@@ -27,7 +27,7 @@ namespace WpfCliente.ImplementacionesCallbacks
             imagnesMazo.CerrarConexionImagen();
         }
 
-        public void PeticionImagenesHilo()
+        public static void PeticionImagenesHilo()
         {
             try
             {

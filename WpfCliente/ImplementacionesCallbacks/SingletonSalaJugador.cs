@@ -11,7 +11,7 @@ namespace WpfCliente.ImplementacionesCallbacks
     public class SingletonSalaJugador : IServicioSalaJugadorCallback
     {
         public event Action<bool> DelegacionRolAnfitrion;
-        public event Action<string> EmepzarPartida;
+        public event Action<string> EmpezarPartida;
         private static readonly Lazy<SingletonSalaJugador> instancia =
             new Lazy<SingletonSalaJugador>(() => new SingletonSalaJugador());
         public static SingletonSalaJugador Instancia => instancia.Value;
@@ -113,7 +113,7 @@ namespace WpfCliente.ImplementacionesCallbacks
         {
             if (String.IsNullOrEmpty(idPartida))
                 return;
-            EmepzarPartida?.Invoke(idPartida);
+            EmpezarPartida?.Invoke(idPartida);
         }
 
         public void DelegacionRolCallback(bool esAnfitrion)

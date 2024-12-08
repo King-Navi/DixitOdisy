@@ -126,14 +126,14 @@ namespace WpfCliente.ImplementacionesCallbacks
             {
                 return;
             }
-            foreach (var imagen in imagenes)
+            foreach (var _imagen in imagenes)
             {
-                if (imagen == null)
+                if (_imagen == null)
                 {
                     continue;
                 }
 
-                ImagenesMazo.AgregarMemoriaEntrada(imagen);
+                ImagenesMazo.AgregarMemoriaEntrada(_imagen);
             }
         }
     }

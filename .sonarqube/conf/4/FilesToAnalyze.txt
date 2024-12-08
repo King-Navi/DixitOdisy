@@ -1,8 +1,9 @@
 ﻿C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\App.xaml
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\App.xaml.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\GUI\PrincipalWindow.xaml.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\ImplementacionesCallbacks\ReceptorImagenesTablero.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\ImplementacionesCallbacks\SingletonGestorImagenes.cs
-C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\ImplementacionesCallbacks\ReceptorImagen.cs
+C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\ImplementacionesCallbacks\ReceptorImagenMazo.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\ImplementacionesCallbacks\SingletonChat.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\ImplementacionesCallbacks\SingletonConexion.cs
 C:\Users\unaay\source\repos\DixitOdisy\WpfCliente\ImplementacionesCallbacks\SingletonPartida.cs

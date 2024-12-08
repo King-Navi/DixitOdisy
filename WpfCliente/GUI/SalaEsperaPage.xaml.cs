@@ -33,7 +33,7 @@ namespace WpfCliente.GUI
                 CambiarIdioma.LenguajeCambiado += LenguajeCambiadoManejadorEvento;
                 InitializeComponent();
                 SingletonSalaJugador.Instancia.DelegacionRolAnfitrion += DelegacionRol;
-                SingletonSalaJugador.Instancia.EmepzarPartida += EmpezarPartidaCallback;
+                SingletonSalaJugador.Instancia.EmpezarPartida += EmpezarPartidaCallback;
                 JugadoresSala = SingletonSalaJugador.Instancia.JugadoresSala;
                 EsconderOpciones();
                 _ = VerificarConexionAsync();
@@ -391,10 +391,8 @@ namespace WpfCliente.GUI
                 return;
             }
             PartidaPage partida = new PartidaPage(SingletonCliente.Instance.IdPartida);
-            if (partida != null)
-            {
-                SingletonGestorVentana.Instancia.NavegarA(partida);
-            }
+
+            SingletonGestorVentana.Instancia.NavegarA(partida);
         }
 
         private void ClicButtonCopiar(object sender, MouseButtonEventArgs e)
@@ -423,8 +421,8 @@ namespace WpfCliente.GUI
         private async void ClicButtonInvitarAmigosAsync(object sender, RoutedEventArgs e)
         {
             string gamertagInvitado = AbrirVentanaModalGamertag();
-            
-            if(gamertagInvitado == SingletonCliente.Instance.NombreUsuario)
+
+            if (gamertagInvitado == SingletonCliente.Instance.NombreUsuario)
             {
                 VentanasEmergentes.CrearVentanaEmergente(
                     Properties.Idioma.tituloInvitacionPartida,
@@ -591,7 +589,7 @@ namespace WpfCliente.GUI
                         usuario.Nombre,
                         SingletonCliente.Instance.IdSala);
                 }
-                catch(ArgumentException)
+                catch (ArgumentException)
                 {
                     VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloExpulsionInvalida, Idioma.mensajeNoAutoExpulsion, Window.GetWindow(this));
                 }
@@ -640,11 +638,11 @@ namespace WpfCliente.GUI
             {
                 try
                 {
-                    
+
                     listaUsuarioSalaUserControl = null;
                     JugadoresSala = new ObservableCollection<Usuario>();
                 }
-                catch(Exception excepcion)
+                catch (Exception excepcion)
                 {
                     ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
                 }

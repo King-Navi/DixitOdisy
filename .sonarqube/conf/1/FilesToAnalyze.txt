@@ -1,6 +1,7 @@
-﻿C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Contratos\IServicioCorreo.cs
+﻿C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Contratos\IServicioImagenesTablero.cs
+C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Contratos\IServicioCorreo.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Contratos\IServicioEstadisticas.cs
-C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Contratos\IServicioImagen.cs
+C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Contratos\IServicioImagenMazo.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Contratos\IServicioInvitacionPartida.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Contratos\IServicioPartida.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Contratos\IServicioAmistad.cs
@@ -15,7 +16,8 @@ C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Contratos\IServicioSa
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Manejador\Chat.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Manejador\Correo.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Manejador\Estadisticas.cs
-C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Manejador\Imagen.cs
+C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Manejador\ImagenMazo.cs
+C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Manejador\ImgenesTablero.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Manejador\InvitacionPartida.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Manejador\Partida.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Manejador\PartidaSesion.cs
@@ -24,7 +26,6 @@ C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Modelo\Evento\Actuali
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Enumerador\Enumerador.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Modelo\Evento\MultiChatVacioEventArgs.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Modelo\Evento\PartidaVaciaEventArgs.cs
-C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Modelo\Evento\RondaEventArgs.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Modelo\Evento\SalaVaciaEventArgs.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Modelo\Evento\UsuarioDesconectadoEventArgs.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\InicializadorConfiguracion.cs
@@ -53,7 +54,6 @@ C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Modelo\Partida\Condic
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Modelo\Partida\ConfiguracionPartida.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Modelo\Partida\EstadisticasPartida.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Modelo\Partida\JugadorPuntaje.cs
-C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Modelo\Partida\LectorDiscoOrquestador.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Modelo\Partida\LecturaTrabajo.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Modelo\Partida\ManejadorImagen.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Modelo\Partida\MediadorPartida.cs
@@ -73,7 +73,7 @@ C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Modelo\Vetos\Manejado
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Properties\AssemblyInfo.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\ContextoOperacion.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\IContextoOperacion.cs
-C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\ILectorDiscoOrquestador.cs
+C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\ILectorDisco.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\IManejadorImagen.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\IMediadorImagen.cs
 C:\Users\unaay\source\repos\DixitOdisy\WcfServicioLibreria\Utilidades\IObservador.cs

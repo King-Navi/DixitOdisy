@@ -7,7 +7,7 @@ using WpfCliente.Properties;
 
 namespace WpfCliente.Utilidad
 {
-    public class JugadorPuntajeConvertidor
+    public static class JugadorPuntajeConvertidor
     {
         public static List<JugadorTablaPuntaje> ConvertirAListaJugadorTablaPuntaje(List<ServidorDescribelo.JugadorPuntaje> listaOriginal, bool sePuedeVer)
         {

@@ -17,7 +17,6 @@ namespace WpfCliente.GUI
     public partial class IniciarSesionPage : Page,  IActualizacionUI, IHabilitadorBotones
     {
         private const string RECURSOS_ESTILO_TEXTBOX_ERROR = "TextBoxEstiloError";
-        private const int MAXIMO_CARACTERES_PERMITIDOS = 20;
         private bool accionTecalaProgreso = false;
         public IniciarSesionPage()
         {

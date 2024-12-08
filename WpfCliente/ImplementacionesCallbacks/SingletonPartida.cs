@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using WpfCliente.Contexto;
@@ -233,15 +234,15 @@ namespace WpfCliente.ImplementacionesCallbacks
                         await UnirseChat();
                         await Partida.EmpezarPartidaAsync(SingletonCliente.Instance.IdPartida);
                     }
-                    catch (Exception)
+                    catch (Exception excepcion)
                     {
-                        throw;
+                        ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
                     }
                 });
             }
-            catch (Exception exccepcion)
+            catch (Exception excepcion)
             {
-                ManejadorExcepciones.ManejarExcepcionErrorComponente(exccepcion);
+                ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
         }
 
@@ -321,13 +322,13 @@ namespace WpfCliente.ImplementacionesCallbacks
                         await SingletonGestorImagenes.Instancia.imagenesTablero.Imagen.MostrarImagenesTableroAsync(SingletonCliente.Instance.IdPartida);
 
                     }
-                    catch (CommunicationException)
+                    catch (CommunicationException excepcion)
                     {
-                        throw;
+                        ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                     }
-                    catch (Exception)
+                    catch (Exception excepcion)
                     {
-                        throw;
+                        ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
                     }
                 });
                 return;

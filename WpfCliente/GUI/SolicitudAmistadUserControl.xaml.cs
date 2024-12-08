@@ -32,7 +32,7 @@ namespace WpfCliente.GUI
 
         private void SolicitudAmistadUserControlCambioDataContext(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (DataContext is SolicitudAmistad solicitud && solicitud != null)
+            if (DataContext is SolicitudAmistad solicitud)
             {
                 labelNombreAmigo.Content = solicitud.Remitente.Nombre;
                 solicitudAmistadActual = solicitud;
@@ -47,11 +47,11 @@ namespace WpfCliente.GUI
         private async void ClicButtonAceptarAsync(object sender, RoutedEventArgs e)
         {
             this.IsEnabled = false;
-            await AceptarSolicitudAsync(solicitudAmistadActual);
+            await AceptarSolicitudAsync();
             EsconderSolicitud();
         }
 
-        private async Task<bool> AceptarSolicitudAsync(SolicitudAmistad solicitud)
+        private async Task<bool> AceptarSolicitudAsync()
         {
             Window window = Window.GetWindow(this);
             bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, window);

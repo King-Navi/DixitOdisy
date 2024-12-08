@@ -107,7 +107,7 @@ namespace WpfCliente.Contexto
                 EvaluarMarcoNulo(nuevoMarco);
                 var ventana = VentanaPrincipal as INavegacion;
                 var marco = ventana?.MarcoNavegacion;
-               
+
                 if (marco != null)
                 {
                     marco.Navigated -= MarcoNavigacion;
@@ -240,11 +240,8 @@ namespace WpfCliente.Contexto
             {
                 return;
             }
-            if (marco != null)
-            {
-                marco.ContentRendered += MarcoLectorContenido;
-                marco.Navigated -= MarcoNavigacion;
-            }
+            marco.ContentRendered += MarcoLectorContenido;
+            marco.Navigated -= MarcoNavigacion;
         }
         private void MarcoLectorContenido(object sender, EventArgs e)
         {
@@ -262,10 +259,7 @@ namespace WpfCliente.Contexto
                     EvaluarSiEsInicio(paginaActual);
                     EvaluarSiEsMenu(paginaActual);
                     EvaluarSiEsSala(paginaActual);
-                    if (marcoViejo != null)
-                    {
-                        marcoViejo.ContentRendered -= MarcoLectorContenido;
-                    }
+                    marcoViejo.ContentRendered -= MarcoLectorContenido;
                     return;
                 }
             }
@@ -308,10 +302,10 @@ namespace WpfCliente.Contexto
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
-            };
+            }
         }
 
-        private void EvaluarMarcoNulo(Page pagina)
+        private static void EvaluarMarcoNulo(Page pagina)
         {
             if (pagina == null)
             {
@@ -319,7 +313,7 @@ namespace WpfCliente.Contexto
             }
         }
 
-        public void RegresarSiNoEsInicio(Window ventana)
+        public static void RegresarSiNoEsInicio(Window ventana)
         {
             try
             {
@@ -352,32 +346,28 @@ namespace WpfCliente.Contexto
         }
 
 
-        private void CerrarTodaConexion()
+        private static void CerrarTodaConexion()
         {
             SingletonCanal.Instancia.CerrarTodaConexion();
             SingletonPartida.Instancia.CerrarConexionPartida();
             SingletonChat.Instancia.CerrarConexionChat();
             SingletonSalaJugador.Instancia.CerrarConexion();
         }
-        private void CerrarConexionSalaPartida()
+        private static void CerrarConexionSalaPartida()
         {
             SingletonPartida.Instancia.CerrarConexionPartida();
             SingletonChat.Instancia.CerrarConexionChat();
             SingletonSalaJugador.Instancia.CerrarConexion();
         }
-        private void CerrarConexionSala()
+        private static void CerrarConexionSala()
         {
             SingletonChat.Instancia.CerrarConexionChat();
             SingletonSalaJugador.Instancia.CerrarConexion();
         }
-        private void CerrarConexionPartida()
+        private static void CerrarConexionPartida()
         {
             SingletonChat.Instancia.CerrarConexionChat();
             SingletonPartida.Instancia.CerrarConexionPartida();
         }
     }
-
-
 }
-
-

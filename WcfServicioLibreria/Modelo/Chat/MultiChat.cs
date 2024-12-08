@@ -73,16 +73,15 @@ namespace WcfServicioLibreria.Modelo
 
             return resultado;
         }
-        bool RemoverJugadorChat(string nombreJugador)
+        void RemoverJugadorChat(string nombreJugador)
         {
-            bool seElimino = jugadores.TryRemove(nombreJugador, out IChatCallback jugadorEliminado);
+            jugadores.TryRemove(nombreJugador, out IChatCallback jugadorEliminado);
             eventosCommunication.TryRemove(nombreJugador, out DesconectorEventoManejador eventosJugador);
             eventosJugador?.Desechar();
             if (ContarJugadores() == CHAT_VACIO)
             {
                 EliminarChat();
             }
-            return seElimino;
         }
         protected override void EliminarChat()
         {
@@ -93,7 +92,7 @@ namespace WcfServicioLibreria.Modelo
                 {
                     ((ICommunicationObject)jugadores[clave]).Close();
                 }
-            };
+            }
             jugadores.Clear();
             BorrarChatEvent();
         }

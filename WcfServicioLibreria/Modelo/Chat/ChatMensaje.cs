@@ -13,11 +13,11 @@ namespace WcfServicioLibreria.Modelo
         #endregion Atributos
         #region Propiedades
         [DataMember]
-        public string Nombre { get => nombre; set => nombre = value; }
+        public string Nombre { get; set; }
         [DataMember]
-        public string Mensaje { get => mensaje; set => mensaje = value; }
+        public string Mensaje { get; set; }
         [DataMember]
-        public DateTime HoraFecha { get => horaFecha; set => horaFecha = value; }
+        public DateTime HoraFecha { get; set; }
         #endregion Propiedades
         #region Constructores
         public ChatMensaje(string _nombre, string _mensaje, DateTime _horaFecha)

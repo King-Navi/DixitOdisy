@@ -237,28 +237,26 @@ namespace WcfServicioLibreria.Manejador
                 if (jugadoresConectadosDiccionario.TryGetValue(_remitente.idUsuario, out UsuarioContexto remitente)
                     && jugadoresConectadosDiccionario.TryGetValue(_destinatario.idUsuario, out UsuarioContexto destinatario))
                 {
+
+                    EventHandler desconexionHandlerRemitente = null;
+                    EventHandler desconexionHandlerDestinatario = null;
+                    desconexionHandlerRemitente = (emisor, evento) =>
                     {
+                        destinatario.AmigoDesconectado(_remitente, new UsuarioDesconectadoEventArgs(((Modelo.Usuario)remitente).Nombre, DateTime.Now));
+                        remitente.DesconexionEvento -= desconexionHandlerRemitente;
+                    };
 
-                        EventHandler desconexionHandlerRemitente = null;
-                        EventHandler desconexionHandlerDestinatario = null;
-                        desconexionHandlerRemitente = (emisor, evento) =>
-                        {
-                            destinatario.AmigoDesconectado(_remitente, new UsuarioDesconectadoEventArgs(((Modelo.Usuario)remitente).Nombre, DateTime.Now));
-                            remitente.DesconexionEvento -= desconexionHandlerRemitente;
-                        };
+                    desconexionHandlerDestinatario = (emisor, evento) =>
+                    {
+                        remitente.AmigoDesconectado(_destinatario, new UsuarioDesconectadoEventArgs(((Modelo.Usuario)destinatario).Nombre, DateTime.Now));
+                        destinatario.DesconexionEvento -= desconexionHandlerDestinatario;
+                    };
 
-                        desconexionHandlerDestinatario = (emisor, evento) =>
-                        {
-                            remitente.AmigoDesconectado(_destinatario, new UsuarioDesconectadoEventArgs(((Modelo.Usuario)destinatario).Nombre, DateTime.Now));
-                            destinatario.DesconexionEvento -= desconexionHandlerDestinatario;
-                        };
+                    remitente.DesconexionEvento += desconexionHandlerRemitente;
+                    destinatario.DesconexionEvento += desconexionHandlerDestinatario;
 
-                        remitente.DesconexionEvento += desconexionHandlerRemitente;
-                        destinatario.DesconexionEvento += desconexionHandlerDestinatario;
-
-                        Task.Run(() => ActualizarAmigo(remitente, _destinatario, EstadoAmigo.Conectado));
-                        Task.Run(() => ActualizarAmigo(destinatario, _remitente, EstadoAmigo.Conectado));
-                    }
+                    Task.Run(() => ActualizarAmigo(remitente, _destinatario, EstadoAmigo.Conectado));
+                    Task.Run(() => ActualizarAmigo(destinatario, _remitente, EstadoAmigo.Conectado));
                 }
             }
             catch (ArgumentNullException excepcion)
@@ -388,7 +386,7 @@ namespace WcfServicioLibreria.Manejador
             {
                 EvaluarIdValido(idRemitente);
                 EvaluarIdValido(idDestinatario);
-                return peticionAmistadDAO.RechazarSolicitudAmistad(idRemitente, idDestinatario); ;
+                return peticionAmistadDAO.RechazarSolicitudAmistad(idRemitente, idDestinatario);
             }
             catch (FaultException<ServidorFalla> excepcion)
             {

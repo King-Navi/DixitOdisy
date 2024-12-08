@@ -33,7 +33,7 @@ namespace WcfServicioLibreria.Manejador
             return false;
         }
 
-        public async Task<bool> EnviarCorreoAsync(string codigo, string correoUsuario)
+        public static async Task<bool> EnviarCorreoAsync(string codigo, string correoUsuario)
         {
             try
             {
@@ -103,7 +103,7 @@ namespace WcfServicioLibreria.Manejador
             }
         }
 
-        private void VerificarUsuarioCorreoNoNulo(Usuario usuario)
+        private static void VerificarUsuarioCorreoNoNulo(Usuario usuario)
         {
             if (usuario == null || String.IsNullOrEmpty(usuario.Correo))
             {
@@ -111,7 +111,7 @@ namespace WcfServicioLibreria.Manejador
             }
         }
 
-        private string GenerarCodigo()
+        private static string GenerarCodigo()
         {
             string codigo = Utilidad.Generar6Caracteres();
             return codigo;

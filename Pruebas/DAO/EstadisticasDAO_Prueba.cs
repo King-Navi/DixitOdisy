@@ -191,7 +191,7 @@ namespace Pruebas.DAO
         {
             int resultado = estadisticasDAO.ObtenerIdEstadisticaConIdUsuario(ID_INEXISTENTE);
             
-            Assert.AreEqual(resultado, -1, "El método debería devolver -1 para un usuario inexistente.");
+            Assert.AreEqual(-1, resultado, "El método debería devolver -1 para un usuario inexistente.");
         }
         #endregion ObtenerIdEstadisticaConIdUsuario
     }

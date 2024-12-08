@@ -50,7 +50,7 @@ namespace WcfServicioLibreria.Manejador
                 PartidaVaciaEventArgs evento = e as PartidaVaciaEventArgs;
                 partida.PartidaVaciaManejadorEvento -= BorrarSala;
                 partidasDiccionario.TryRemove(evento.Partida.IdPartida, out _);
-            };
+            }
         }
 
         public bool ValidarPartida(string idPartida)

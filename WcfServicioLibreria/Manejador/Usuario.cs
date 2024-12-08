@@ -29,7 +29,7 @@ namespace WcfServicioLibreria.Manejador
                             {
                                 usuarioARemover.EnDesconexion();
                                 usuarioARemover.Desechar();
-                                ((UsuarioContexto)usuarioARemover).DesconexionEvento += DesconectarUsuario;
+                                usuarioARemover.DesconexionEvento += DesconectarUsuario;
                             }
                         }
                         usuarioDAO.ColocarUltimaConexion(eventoDesconexion.IdUsuario);

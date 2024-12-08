@@ -103,7 +103,6 @@ namespace WpfCliente.GUI
             if (!conexionExitosa)
             {
                 SingletonGestorVentana.Instancia.Regresar();
-                return;
             }
         }
 
@@ -217,12 +216,12 @@ namespace WpfCliente.GUI
 
         }
 
-        private bool CrearChat(string idPartidaParaChat)
+        private void CrearChat(string idPartidaParaChat)
         {
             try
             {
                 var manajadorServicio = new ServicioManejador<ServicioChatClient>();
-                return manajadorServicio.EjecutarServicio(proxy =>
+                var resultado = manajadorServicio.EjecutarServicio(proxy =>
                 {
                     return proxy.CrearChat(idPartidaParaChat);
                 });
@@ -232,7 +231,6 @@ namespace WpfCliente.GUI
                 SingletonGestorVentana.Instancia.Regresar();
                 ManejadorExcepciones.ManejarExcepcionFatal(excepcion, Window.GetWindow(this));
             }
-            return false;
         }
 
         public void LenguajeCambiadoManejadorEvento(object sender, EventArgs e)

@@ -13,7 +13,7 @@ namespace Pruebas.DAO
         {
             int id = 1;
             int resultado = estadisticasDAO.ObtenerIdEstadisticaConIdUsuario(id);
-            Assert.AreEqual(resultado , -1, "Debe ser -1");
+            Assert.AreEqual(-1, resultado, "Debe ser -1");
         }
 
 

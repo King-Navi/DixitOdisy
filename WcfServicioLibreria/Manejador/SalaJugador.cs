@@ -43,7 +43,7 @@ namespace WcfServicioLibreria.Manejador
                 salasDiccionario.TryGetValue(idSala, out Modelo.Sala sala);
                 var cantidadJugadores = sala.ObtenerNombresJugadoresSala().Count;
                 int disponible = sala.sePuedeUnir;
-                EvaluarDisponibilidad(cantidadJugadores , disponible );
+                EvaluarDisponibilidad(cantidadJugadores, disponible);
                 foreach (var nombreJugadorEnSala in sala.ObtenerNombresJugadoresSala())
                 {
                     if (nombreJugadorEnSala.Equals(gamertag, StringComparison.OrdinalIgnoreCase))
@@ -101,7 +101,7 @@ namespace WcfServicioLibreria.Manejador
             try
             {
                 salasDiccionario.TryGetValue(idSala, out Modelo.Sala sala);
-                if (String.IsNullOrEmpty(anfitrion))
+                if (string.IsNullOrEmpty(anfitrion))
                 {
                     return false;
                 }
@@ -109,10 +109,9 @@ namespace WcfServicioLibreria.Manejador
                 {
                     ManejadorDeVetos veto = new ManejadorDeVetos();
                     var resultado = await veto.RegistrarExpulsionJugadorAsync(jugadorAExpulsar, MOTIVO_EXPULSION_SALA, false);
-                    lock (sala)
-                    {
-                        sala.DesconectarUsuarioAsync(jugadorAExpulsar);
-                    }
+
+                    await sala.DesconectarUsuarioAsync(jugadorAExpulsar);
+
                     return true;
                 }
 

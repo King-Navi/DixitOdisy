@@ -165,15 +165,17 @@ namespace WcfServicioLibreria.Modelo
 
         private string[] ObtenerArchivosCache()
         {
+            string[] archivos = new string[0];
             try
             {
-                return archivosCache.Value;
+                archivos = archivosCache.Value;
+                return archivos;
             }
             catch (Exception excepcion)
             {
                 ManejadorExcepciones.ManejarExcepcionError(excepcion);
             }
-            return null;
+            return archivos;
         }
     }
 }

@@ -55,7 +55,7 @@ namespace WcfServicioLibreria.Manejador
             return resultado;
         }
 
-        private bool ValidarUsuarioRegistro(Modelo.Usuario usuarioNuevo)
+        private static bool ValidarUsuarioRegistro(Modelo.Usuario usuarioNuevo)
         {
             if (String.IsNullOrEmpty(usuarioNuevo.Nombre))
             {
@@ -76,7 +76,7 @@ namespace WcfServicioLibreria.Manejador
             return true;
         }
 
-        public bool EsSha256Valido(string hash)
+        public static bool EsSha256Valido(string hash)
         {
             if (hash.Length != 64) return false;
 

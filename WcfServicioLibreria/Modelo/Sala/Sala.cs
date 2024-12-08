@@ -22,6 +22,7 @@ namespace WcfServicioLibreria.Modelo
         private const string RUTA_RECURSOS = "Recursos";
         private const string CARPETA_FOTOS_INVITADOS = "FotosInvitados";
         #endregion
+
         #region Campos
         public const int NO_UNISER = 0;
         public const int UNISER = 1;
@@ -40,6 +41,7 @@ namespace WcfServicioLibreria.Modelo
         private IUsuarioDAO usuarioDAO;
         public int sePuedeUnir = UNISER;
         #endregion Campos
+
         #region Propiedades
         public string IdCodigoSala { get => idCodigoSala; internal set => idCodigoSala = value; }
         public string Anfitrion { get; private set; }

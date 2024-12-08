@@ -99,7 +99,7 @@ namespace WpfCliente.GUI
             InitializeComponent();
             InicializarComponenetes();
             DataContext = this;
-            UnirsePartidaAsync(idPartida);
+            _ = UnirsePartidaAsync(idPartida);
             ActualizarUI();
             textBlockAvisos.Visibility = Visibility.Collapsed;
             ConfigurarTemporizador();
@@ -403,7 +403,7 @@ namespace WpfCliente.GUI
             PantallaActual = numeroPantallla;
         }
 
-        private async void UnirsePartidaAsync(string idPartida)
+        private async Task UnirsePartidaAsync(string idPartida)
         {
             try
             {
@@ -489,15 +489,15 @@ namespace WpfCliente.GUI
         {
             if (EsNarrador)
             {
-                EscogerImagenNarradorAsync(claveImagen);
+                _ = EscogerImagenNarradorAsync(claveImagen);
             }
             else
             {
-                EscogerImagenPorIdAsync(claveImagen);
+                _ = EscogerImagenPorIdAsync(claveImagen);
             }
         }
 
-        public async void EscogerImagenPorIdAsync(string id)
+        public async Task EscogerImagenPorIdAsync(string id)
         {
             ImagenCarta imagenEscogida = SingletonGestorImagenes.Instancia.imagnesMazo.ImagenesMazo
                 .RealizarConsultaSegura(lista => lista.FirstOrDefault(busqueda => busqueda.IdImagen == id));
@@ -515,7 +515,7 @@ namespace WpfCliente.GUI
                     contadorSeleccion++;
                     SingletonGestorImagenes.Instancia.imagnesMazo.ImagenesMazo.Remove(imagenEscogida);
                     await Conexion.VerificarConexionSinBaseDatosAsync(HabilitarBotones, Window.GetWindow(this));
-                    SingletonPartida.Instancia.Partida.ConfirmarMovimiento(SingletonCliente.Instance.NombreUsuario,
+                    await SingletonPartida.Instancia.Partida.ConfirmarMovimientoAsync(SingletonCliente.Instance.NombreUsuario,
                         SingletonCliente.Instance.IdPartida,
                         imagenEscogida.IdImagen,
                         null);
@@ -544,7 +544,7 @@ namespace WpfCliente.GUI
 
         }
 
-        public async void EscogerImagenNarradorAsync(string id)
+        public async Task EscogerImagenNarradorAsync(string id)
         {
             ImagenCarta imagenAEscoger = SingletonGestorImagenes.Instancia.imagnesMazo.ImagenesMazo
                .RealizarConsultaSegura(lista => lista.FirstOrDefault(busqueda => busqueda.IdImagen == id));

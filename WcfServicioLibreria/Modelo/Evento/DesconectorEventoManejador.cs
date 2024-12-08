@@ -30,11 +30,15 @@ namespace WcfServicioLibreria.Evento
         
         private void Cerrado(object sender, EventArgs e)
         {
-            DesuscribirEventos((ICommunicationObject)sender);
-            observador?.DesconectarUsuarioAsync(clavePropietario);
+            Cerrar(sender);
         }
 
         private void EnFalla(object sender, EventArgs e)
+        {
+            Cerrar(sender);
+        }
+
+        private void Cerrar(object sender)
         {
             DesuscribirEventos((ICommunicationObject)sender);
             observador?.DesconectarUsuarioAsync(clavePropietario);

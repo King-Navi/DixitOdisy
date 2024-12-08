@@ -191,7 +191,7 @@ namespace WpfCliente.GUI
             if (textBoxNombreUsuario.Text?.ToLower().Contains(PALABRA_RESERVADA_GUEST) == true)
             {
                 throw new FaultException<BaseDatosFalla>(new BaseDatosFalla());
-            };
+            }
         }
 
         public void HabilitarBotones(bool esHabilitado)

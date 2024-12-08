@@ -9,6 +9,7 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using WcfServicioLibreria.Enumerador;
 using WcfServicioLibreria.Modelo.Vetos;
+using WcfServicioLibreria.Utilidades;
 
 namespace WcfServicioLibreria.Modelo
 {
@@ -88,12 +89,15 @@ namespace WcfServicioLibreria.Modelo
                         tareasSolicitudes.Add(estadisticasDAO.AgregarEstadiscaPartidaAsync(tupla.Item2, accion, DERROTA));
                     }
                 }
-                catch (ActividadSospechosaExcepcion)
+                catch (ActividadSospechosaExcepcion excepcion)
                 {
                     await ManejadorVetos.VetaJugadorAsync(tupla.Item1);
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
+
                 }
-                catch (Exception)
+                catch (Exception excepcion)
                 {
+                    ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 }
             }
             await Task.WhenAll(tareasSolicitudes);

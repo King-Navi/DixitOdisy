@@ -199,7 +199,6 @@ namespace WpfCliente.GUI
                 if (ValidacionExistenciaJuego.ExisteSala(codigoSala))
                 {
                     await AbrirVentanaSalaAsync(codigoSala);
-                    return;
                 }
                 else
                 {

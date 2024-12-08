@@ -49,13 +49,13 @@ namespace Pruebas.DAO
         public void ObtenerIdUsuarioCuentaPorIdUsuario_IdUsuarioInexistenteNegativo_DeberiaRetornarNull()
         {
             var resultado = usuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(IDUSUARIO_INEXISTENTE);
-             Assert.AreEqual(resultado, RETORNO_USUARIO_NO_ENCONTRADO);
+             Assert.AreEqual(RETORNO_USUARIO_NO_ENCONTRADO, resultado);
         }
         [TestMethod]
         public void ObtenerIdUsuarioCuentaPorIdUsuario_IdUsuarioInexistentePositvo_DeberiaRetornarNull()
         {
            var resultado = usuarioCuentaDAO.ObtenerIdUsuarioCuentaPorIdUsuario(IDUSUARIO_INEXISTENTE);
-            Assert.AreEqual(resultado, RETORNO_USUARIO_NO_ENCONTRADO);
+            Assert.AreEqual(RETORNO_USUARIO_NO_ENCONTRADO, resultado);
         } 
         #endregion
 

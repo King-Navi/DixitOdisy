@@ -50,7 +50,7 @@ namespace WpfCliente.Utilidad
             lock (sincronizarBloqueo)
             {
                 var elemento = this.FirstOrDefault(condicion);
-                if (elemento != null)
+                if (!EqualityComparer<T>.Default.Equals(elemento, default(T)))
                 {
                     return this.Remove(elemento);
                 }

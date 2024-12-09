@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,66 +46,65 @@ namespace WpfCliente.GUI
             bool conexionExitosa = await Conexion.VerificarConexionConBaseDatosSinCierreAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)
             {
-                if (sender is Button boton)
-                {
-                    try
-                    {
-                        boton.IsEnabled = false;
-                    }
-                    catch (InvalidOperationException excepcion)
-                    {
-                        ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
-                    }
-                    catch (Exception excepcion)
-                    {
-                        ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
-                    }
-                }
+                DeshabilitarBotonSiEsValido(sender);
                 return;
             }
-            if (sender is Button botonEnviar)
+
+            HabilitarBotonSiEsValido(sender);
+
+            if (!await VerificarChatMotorAsync())
             {
-                try
-                {
-                    botonEnviar.IsEnabled = true;
-                }
-                catch (InvalidOperationException excepcion)
-                {
-                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
-                }
-                catch (Exception excepcion)
-                {
-                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
-                }
+                return;
             }
+
+            if (!TextoValido(textBoxEnviarMensaje.Text))
+            {
+                RecibirMensaje(MensajeInvalido());
+                return;
+            }
+
+            await EnviarMensajeAsync(textBoxEnviarMensaje.Text);
+            textBoxEnviarMensaje.Text = "";
+        }
+
+        private async Task<bool> VerificarChatMotorAsync()
+        {
             if (SingletonChat.Instancia.ChatMotor == null)
             {
                 await Task.Delay(TimeSpan.FromSeconds(TIEMPO_ESPERA_SEGUNDOS));
                 if (SingletonChat.Instancia.ChatMotor == null)
                 {
-                    return;
+                    return false;
                 }
             }
+            return true;
+        }
 
-            if (textBoxEnviarMensaje.Text.Length > MAXIMO_CARACTERES_PERMITIDOS || string.IsNullOrWhiteSpace(textBoxEnviarMensaje.Text))
+        private bool TextoValido(string texto)
+        {
+            return texto.Length <= MAXIMO_CARACTERES_PERMITIDOS && !string.IsNullOrWhiteSpace(texto);
+        }
+
+        private ChatMensaje MensajeInvalido()
+        {
+            return new ChatMensaje
             {
-                RecibirMensaje(new ChatMensaje
-                {
-                    Mensaje = Properties.Idioma.mensajeProfe,
-                    HoraFecha = DateTime.Now,
-                    Nombre = NOMBRE_DESCRIBELO
-                });
-                return;
-            }
+                Mensaje = Properties.Idioma.mensajeProfe,
+                HoraFecha = DateTime.Now,
+                Nombre = NOMBRE_DESCRIBELO
+            };
+        }
+
+        private async Task EnviarMensajeAsync(string mensaje)
+        {
             try
             {
                 await SingletonChat.Instancia.ChatMotor.EnviarMensajeAsync(SingletonCliente.Instance.IdChat, new ChatMensaje
                 {
-                    Mensaje = textBoxEnviarMensaje.Text,
+                    Mensaje = mensaje,
                     HoraFecha = DateTime.Now,
                     Nombre = SingletonCliente.Instance.NombreUsuario
                 });
-                textBoxEnviarMensaje.Text = "";
             }
             catch (TimeoutException excepcion)
             {
@@ -115,6 +115,37 @@ namespace WpfCliente.GUI
                 ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
             }
         }
+
+        private void DeshabilitarBotonSiEsValido(object sender)
+        {
+            if (sender is Button boton)
+            {
+                try
+                {
+                    boton.IsEnabled = false;
+                }
+                catch (Exception excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
+                }
+            }
+        }
+
+        private void HabilitarBotonSiEsValido(object sender)
+        {
+            if (sender is Button boton)
+            {
+                try
+                {
+                    boton.IsEnabled = true;
+                }
+                catch (Exception excepcion)
+                {
+                    ManejadorExcepciones.ManejarExcepcionErrorComponente(excepcion);
+                }
+            }
+        }
+
 
         private void ClicButtonCerrarChat(object sender, RoutedEventArgs e)
         {

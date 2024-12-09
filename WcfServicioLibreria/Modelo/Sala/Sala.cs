@@ -34,7 +34,7 @@ namespace WcfServicioLibreria.Modelo
         private readonly ConcurrentDictionary<string, ISalaJugadorCallback> jugadoresSalaCallbacks = new ConcurrentDictionary<string, ISalaJugadorCallback>();
         private readonly ConcurrentDictionary<string, DesconectorEventoManejador> eventosCommunication = new ConcurrentDictionary<string, DesconectorEventoManejador>();
         private ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario> jugadoresInformacion = new ConcurrentDictionary<string, DAOLibreria.ModeloBD.Usuario>();
-        private static ThreadLocal<Random> random = new ThreadLocal<Random>(() => new Random());
+        private static ThreadLocal<Random> aleatorio = new ThreadLocal<Random>(() => new Random());
         public EventHandler salaVaciaManejadorEvento;
         private readonly SemaphoreSlim semaphoreLeerFotoInvitado = new SemaphoreSlim(1, 1);
         private static readonly SemaphoreSlim semaphoreRemoverJugador = new SemaphoreSlim(1, 1);
@@ -115,7 +115,7 @@ namespace WcfServicioLibreria.Modelo
                 eventosCommunication.TryRemove(nombreJugador, out DesconectorEventoManejador eventosJugador);
                 jugadoresInformacion.TryRemove(nombreJugador, out _);
 
-                if (nombreJugador.Equals(Anfitrion, StringComparison.OrdinalIgnoreCase) && !(SALA_VACIA == ObtenerNombresJugadoresSala().Count))
+                if (nombreJugador.Equals(Anfitrion, StringComparison.OrdinalIgnoreCase) && (ObtenerNombresJugadoresSala().Count !=  SALA_VACIA))
                 {
                     await DelegarRolAnfitrionAsync();
                 }
@@ -166,12 +166,7 @@ namespace WcfServicioLibreria.Modelo
                 {
                     if (jugadoresSalaCallbacks.ContainsKey(clave))
                     {
-                        var callback = ((ICommunicationObject)jugadoresSalaCallbacks[clave]);
-                        if (callback.State == CommunicationState.Opening
-                            || callback.State == CommunicationState.Opened)
-                        {
-                            callback.Close();
-                        }
+                        CerrarCallbackSiAbierto(jugadoresSalaCallbacks[clave]);
                     }
                 }
                 jugadoresSalaCallbacks.Clear();
@@ -181,12 +176,7 @@ namespace WcfServicioLibreria.Modelo
                 {
                     if (eventosCommunication.ContainsKey(clave))
                     {
-                        var callback = ((ICommunicationObject)eventosCommunication[clave]);
-                        if (callback.State == CommunicationState.Opening
-                            || callback.State == CommunicationState.Opened)
-                        {
-                            callback.Close();
-                        }
+                        CerrarCallbackSiAbierto(eventosCommunication[clave]);
                     }
                 }
                 eventosCommunication.Clear();
@@ -204,6 +194,17 @@ namespace WcfServicioLibreria.Modelo
             }
         }
 
+        private void CerrarCallbackSiAbierto(object callbackObj)
+        {
+            var callback = (ICommunicationObject)callbackObj;
+            if (callback.State == CommunicationState.Opening
+                || callback.State == CommunicationState.Opened)
+            {
+                callback.Close();
+            }
+        }
+
+
         private async Task DelegarRolAnfitrionAsync()
         {
             if (jugadoresSalaCallbacks == null || !jugadoresSalaCallbacks.Any())
@@ -211,8 +212,8 @@ namespace WcfServicioLibreria.Modelo
                 return;
             }
             var jugadoresKeys = jugadoresSalaCallbacks.Keys.ToList();
-            Random _random = new Random();
-            int indiceAleatorio = _random.Next(jugadoresKeys.Count);
+            Random _aleatorio = new Random();
+            int indiceAleatorio = _aleatorio.Next(jugadoresKeys.Count);
             string jugadorClave = jugadoresKeys[indiceAleatorio];
             Anfitrion = jugadorClave;
             jugadoresSalaCallbacks.TryGetValue(jugadorClave, out ISalaJugadorCallback callback);
@@ -267,7 +268,7 @@ namespace WcfServicioLibreria.Modelo
         {
             string ruta = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, RUTA_RECURSOS, CARPETA_FOTOS_INVITADOS);
             var archivos = Directory.GetFiles(ruta, TODOS_ARCHIVOS_EXTENSION_PNG);
-            string archivoAleatorio = archivos[random.Value.Next(archivos.Length)];
+            string archivoAleatorio = archivos[aleatorio.Value.Next(archivos.Length)];
             return new DAOLibreria.ModeloBD.Usuario
             {
                 gamertag = nombreJugador,

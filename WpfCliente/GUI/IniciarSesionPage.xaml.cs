@@ -155,7 +155,6 @@ namespace WpfCliente.GUI
             catch (FaultException<VetoFalla> veto)
             {
                 EvaluarExcepcion(veto);
-                return ;
             }
             catch (ArgumentException excepcion)
             {
@@ -163,7 +162,6 @@ namespace WpfCliente.GUI
                                 Properties.Idioma.mensajeImagenInvalida,
                                 Window.GetWindow(this));
                 ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
-                return;
             }
             catch (Exception excepcion)
             {
@@ -220,17 +218,12 @@ namespace WpfCliente.GUI
                 {
                     SingletonCliente.Instance.NombreUsuario = Utilidades.GenerarGamertagInvitado();
                     await AbrirVentanaSalaAsync(codigoSala);
-                    return;
                 }
                 else
                 {
                     VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloLobbyNoEncontrado, Properties.Idioma.mensajeLobbyNoEncontrado, Window.GetWindow(this));
                 }
 
-            }
-            else
-            {
-                return;
             }
         }
 

@@ -80,7 +80,7 @@ namespace WcfServicioLibreria.Modelo
         public bool SeLlamoEmpezarPartidaPrimeraVez { get; private set; } = false;
         public bool SelecionoCartaNarrador { get; private set; } = false;
         public bool TiempoUnirse { get; private set; } = true;
-        public bool DebeCancelarRondas { get; private set; } = false;
+        public bool DebeCancelarRondas { get; set; } = false;
         public ConcurrentDictionary<string, bool> JugadoresPendientes { get; private set; } = new ConcurrentDictionary<string, bool>();
         public ConcurrentDictionary<string, List<string>> ImagenesTablero { get; private set; } = new ConcurrentDictionary<string, List<string>>();
         private ConcurrentDictionary<string, List<string>> ImagenElegidaPorJugador { get; set; } = new ConcurrentDictionary<string, List<string>>();

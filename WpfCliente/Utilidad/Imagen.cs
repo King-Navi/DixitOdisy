@@ -204,8 +204,8 @@ namespace WpfCliente.Utilidad
 
         public static string ObtenerRutaImagenAleatoria()
         {
-            Random random = new Random();
-            int numeroImagen = random.Next(RANGO_MINIMO_IMAGENES, RANGO_MAXIMO_IMAGENES);
+            Random aleatorio = new Random();
+            int numeroImagen = aleatorio.Next(RANGO_MINIMO_IMAGENES, RANGO_MAXIMO_IMAGENES);
             return $"{RUTA_BASE_IMAGEN}{numeroImagen}{EXTENSION_IMAGEN_PNG}";
         }
 

@@ -287,7 +287,7 @@ namespace WcfServicioLibreria.Modelo
             if (String.IsNullOrEmpty(narradorActual))
             {
                 return;
-            };
+            }
             try
             {
                 Task.Run(() =>
@@ -304,16 +304,19 @@ namespace WcfServicioLibreria.Modelo
                             callback?.TurnoPerdidoCallback();
                         }
                     }
-                    catch (TimeoutException)
+                    catch (TimeoutException excepcion)
                     {
+                        ManejadorExcepciones.ManejarExcepcionError(excepcion);
                         throw;
                     }
-                    catch (CommunicationException)
+                    catch (CommunicationException excepcion)
                     {
+                        ManejadorExcepciones.ManejarExcepcionError(excepcion);
                         throw;
                     }
-                    catch (Exception)
+                    catch (Exception excepcion)
                     {
+                        ManejadorExcepciones.ManejarExcepcionError(excepcion);
                         throw;
                     }
                 });
@@ -378,7 +381,7 @@ namespace WcfServicioLibreria.Modelo
                 {
                     ManejadorExcepciones.ManejarExcepcionError(excepcion);
                 }
-            };
+            }
         }
 
         private async Task CambiarPantallaConExclusionAsync(int numeroPantalla, string nombreExcluir)
@@ -435,7 +438,7 @@ namespace WcfServicioLibreria.Modelo
                         ManejadorExcepciones.ManejarExcepcionError(excepcion);
                     }
                 });
-            };
+            }
         }
 
         private async Task EsperarConfirmacionNarradorAsync(TimeSpan tiempoEspera)

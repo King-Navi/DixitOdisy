@@ -14,10 +14,8 @@ namespace WpfCliente.Utilidad
             {
                 return;
             }
-            VentanaEmergenteModalWindow ventanaEmergente = new VentanaEmergenteModalWindow
-            (
-                tituloVentanaEmergente,
-                descripcionVentanaEmergente);
+            VentanaEmergenteModalWindow ventanaEmergente = 
+                new VentanaEmergenteModalWindow ( tituloVentanaEmergente, descripcionVentanaEmergente);
             try
             {
                 ventanaEmergente.Owner = ventana;
@@ -44,10 +42,8 @@ namespace WpfCliente.Utilidad
             {
                 return;
             }
-            VentanaEmergenteModalWindow ventanaEmergente = new VentanaEmergenteModalWindow(
-                tituloVentanaEmergente,
-                descripcionVentanaEmergente
-            );
+            VentanaEmergenteModalWindow ventanaEmergente = 
+                new VentanaEmergenteModalWindow(tituloVentanaEmergente, descripcionVentanaEmergente);
             try
             {
                 var ownerWindow = Window.GetWindow(userControl);

@@ -65,6 +65,17 @@ namespace WpfCliente.GUI
 
         private async void ClicButtonRegistrarUsuarioAsync(object sender, RoutedEventArgs e)
         {
+            if (textBoxCorreo.Text.Contains(" ")
+                || textBoxNombreUsuario.Text.Contains(" ")
+                || passwordBoxContrasenia.Password.Contains(" ")
+                || passwordBoxRepetirContrasenia.Password.Contains(" "))
+            {
+                VentanasEmergentes.CrearVentanaEmergente(
+                    Idioma.tituloCamposInvalidos, 
+                    Idioma.mensajeCaracteresInvalidoEspacio, 
+                    Window.GetWindow(this));
+                return;
+            }
             buttonRegistrarUsuario.IsEnabled = false;
             bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)

@@ -745,4 +745,7 @@ No te has podido unir a la partida, favor de revisar tu conexion</value>
   <data name="labelEmpezarRangoPartida" xml:space="preserve">
     <value>Para empezar una partida la cantidad de jugadores necesaria es entre: </value>
   </data>
+  <data name="mensajeCaracteresInvalidoEspacio" xml:space="preserve">
+    <value>No puedes colocar espacios en el formulario.</value>
+  </data>
 </root>

@@ -745,4 +745,7 @@
   <data name="labelEmpezarRangoPartida" xml:space="preserve">
     <value>To start a game the number of players required is between:</value>
   </data>
+  <data name="mensajeCaracteresInvalidoEspacio" xml:space="preserve">
+    <value>You can't place spaces on the form.</value>
+  </data>
 </root>

@@ -101,6 +101,7 @@ namespace WpfCliente.GUI
             {
                 return;
             }
+
             await EvaluarAperturaDeCanalesAsync();
         }
 
@@ -121,6 +122,7 @@ namespace WpfCliente.GUI
                         Window.GetWindow(this));
                     Application.Current.Shutdown();
                 }
+                SingletonCanal.Instancia.LimpiarRecursos();
                 var resultado = await SingletonCanal.Instancia.Amigos.ConectarYBuscarAmigosAsync(user);
                 if (!resultado)
                 {

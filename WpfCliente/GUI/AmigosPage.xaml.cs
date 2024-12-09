@@ -84,7 +84,7 @@ namespace WpfCliente.GUI
                 return;
             }
 
-            var resultado = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
+            var resultado = await Conexion.VerificarConexionConBaseDatosSinCierreAsync(HabilitarBotones, Window.GetWindow(this));
             if (!resultado)
             {
                 return;

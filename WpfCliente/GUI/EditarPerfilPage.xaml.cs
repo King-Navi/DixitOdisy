@@ -12,7 +12,7 @@ using WpfCliente.Utilidad;
 
 namespace WpfCliente.GUI
 {
-    public partial class EditarPerfilPage : Page, IActualizacionUI
+    public partial class EditarPerfilPage : Page, IActualizacionUI, IHabilitadorBotones
     {
         private bool cambioImagen = false;
         private const string RECURSO_ESTILO_CORREO = "TextBoxEstiloNormal";
@@ -128,7 +128,7 @@ namespace WpfCliente.GUI
 
             if (ValidarCampos())
             {
-                GuardarCambiosUsuario(usuarioEditado);
+                GuardarCambiosUsuarioAsync(usuarioEditado);
             }
         }
 
@@ -201,17 +201,22 @@ namespace WpfCliente.GUI
             return false;
         }
 
-        private void GuardarCambiosUsuario(Usuario usuarioEditado)
+        private async void GuardarCambiosUsuarioAsync(Usuario usuarioEditado)
         {
+            var resultado = await Conexion.VerificarConexionConBaseDatosSinCierreAsync(HabilitarBotones, Window.GetWindow(this));
+            if (!resultado)
+            {
+                return;
+            }
             usuarioEditado.IdUsuario = SingletonCliente.Instance.IdUsuario;
             usuarioEditado.Nombre = SingletonCliente.Instance.NombreUsuario;
             var manejadorServicio = new ServicioManejador<ServicioUsuarioClient>();
-            bool resultado = manejadorServicio.EjecutarServicio(proxy =>
+            bool _resultado = manejadorServicio.EjecutarServicio(proxy =>
             {
                 return proxy.EditarUsuario(usuarioEditado);
             });
 
-            if (resultado)
+            if (_resultado)
             {
                 VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloEditarUsuario, 
                     Properties.Idioma.mensajeUsuarioEditadoConExito, 
@@ -325,5 +330,11 @@ namespace WpfCliente.GUI
             SingletonGestorVentana.Instancia.Regresar();
         }
 
+        public void HabilitarBotones(bool esHabilitado)
+        {
+            buttonCambiarFoto.IsEnabled = esHabilitado;
+            buttonCancelarCambio.IsEnabled = esHabilitado;
+            buttonEditarUsuario.IsEnabled = esHabilitado;
+        }
     }
 }

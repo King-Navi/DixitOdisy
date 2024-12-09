@@ -147,7 +147,7 @@ namespace WpfCliente.GUI
 
         private async Task AbrirVentanaSalaAsync(string idSala)
         {
-            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
+            bool conexionExitosa = await Conexion.VerificarConexionConBaseDatosSinCierreAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)
             {
                 return;

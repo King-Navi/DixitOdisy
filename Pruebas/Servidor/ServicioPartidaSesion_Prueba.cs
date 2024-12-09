@@ -145,8 +145,8 @@ namespace Pruebas.Servidor
             int EsperaJugadores = 30;
             var anfitrion = new Usuario 
             { 
-                IdUsuario = 19, 
-                Nombre = "navi" 
+                IdUsuario = ID_VALIDO,
+                Nombre = "UsuarioPredeterminado"
             };
             var idPartida = manejador.CrearPartida(anfitrion.Nombre, configuracionGenerica);
 
@@ -167,9 +167,9 @@ namespace Pruebas.Servidor
             var implementacionCallback = new PartidaCallbackImplementacion();
             imitacionContextoProvedor.Setup(contexto => contexto.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionCallback);
             var anfitrion = new Usuario 
-            { 
-                IdUsuario = 19, 
-                Nombre = "navi"
+            {
+                IdUsuario = ID_VALIDO,
+                Nombre = "UsuarioPredeterminado"
             };
             var idPartida = manejador.CrearPartida(anfitrion.Nombre, configuracionGenerica);
 

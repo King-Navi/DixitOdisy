@@ -143,7 +143,7 @@ namespace WpfCliente.GUI
 
         private async Task GuardarCambiosUsuarioAsync(Usuario usuarioEditado)
         {
-            var resultadoConexion = await Conexion.VerificarConexionAsync(HabilitarBotones,Window.GetWindow(this));
+            var resultadoConexion = await Conexion.VerificarConexionConBaseDatosSinCierreAsync(HabilitarBotones,Window.GetWindow(this));
             if (!resultadoConexion)
             {
                 return;

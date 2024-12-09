@@ -147,13 +147,13 @@ namespace WpfCliente.GUI
 
         private async Task AbrirVentanaSalaAsync(string idSala)
         {
-            bool conexionExitosa = await Conexion.VerificarConexionConBaseDatosSinCierreAsync(HabilitarBotones, Window.GetWindow(this));
-            if (!conexionExitosa)
-            {
-                return;
-            }
             try
             {
+                bool conexionExitosa = await Conexion.VerificarConexionSinBaseDatosAsync(HabilitarBotones, Window.GetWindow(this));
+                if (!conexionExitosa)
+                {
+                    return;
+                }
                 SalaEsperaPage ventanaSala = new SalaEsperaPage(idSala);
                 if (!SingletonGestorVentana.Instancia.NavegarA(ventanaSala))
                 {
@@ -164,9 +164,12 @@ namespace WpfCliente.GUI
                     return;
                 }
             }
+            catch (CommunicationException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
             catch (Exception excepcion)
             {
-
                 ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
         }
@@ -189,24 +192,34 @@ namespace WpfCliente.GUI
             {
                 codigoSala = VentanasEmergentes.AbrirVentanaModalSala(Window.GetWindow(this));
             }
-            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
-            if (!conexionExitosa)
+            try
             {
-                return;
+                bool conexionExitosa = await Conexion.VerificarConexionSinBaseDatosAsync(HabilitarBotones, Window.GetWindow(this));
+                if (!conexionExitosa)
+                {
+                    return;
+                }
+                if (codigoSala != null)
+                {
+                    if (ValidacionExistenciaJuego.ExisteSala(codigoSala))
+                    {
+                        await AbrirVentanaSalaAsync(codigoSala);
+                    }
+                    else
+                    {
+                        VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloLobbyNoEncontrado,
+                            Properties.Idioma.mensajeLobbyNoEncontrado,
+                            Window.GetWindow(this));
+                    }
+                }
             }
-            if (codigoSala != null)
+            catch (CommunicationException excepcion)
             {
-                if (ValidacionExistenciaJuego.ExisteSala(codigoSala))
-                {
-                    await AbrirVentanaSalaAsync(codigoSala);
-                }
-                else
-                {
-                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloLobbyNoEncontrado,
-                        Properties.Idioma.mensajeLobbyNoEncontrado,
-                        Window.GetWindow(this));
-                }
-
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
         }
 

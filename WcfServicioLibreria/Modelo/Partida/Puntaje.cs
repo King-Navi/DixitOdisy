@@ -85,9 +85,9 @@ namespace WcfServicioLibreria.Modelo
                     {
                         continue;
                     }
-                    var jugador = jugadores.SingleOrDefault(busqueda => busqueda.Nombre == nombreJugador);
+                    JugadorPuntaje puntaje = jugadores.SingleOrDefault(busqueda => busqueda.Nombre == nombreJugador);
 
-                    if (jugador != null)
+                    if (puntaje != null)
                     {
                         bool jugadorAdivinoCorrectamente = false;
 
@@ -95,7 +95,7 @@ namespace WcfServicioLibreria.Modelo
                         {
                             if (imagenId.Equals(ClaveImagenCorrectaActual, StringComparison.OrdinalIgnoreCase))
                             {
-                                jugador.Puntos += PUNTOS_ACIERTO;
+                                puntaje.Puntos += PUNTOS_ACIERTO;
                                 votosTotalesCorrectos++;
                                 AlguienAdivino = true;
                                 jugadorAdivinoCorrectamente = true;

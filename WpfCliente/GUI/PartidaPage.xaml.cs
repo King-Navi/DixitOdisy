@@ -127,7 +127,7 @@ namespace WpfCliente.GUI
                     }
                     contadorDeEjecuciones = 0;
                     enEjecucionVerificacion = true;
-                    bool continuar = await VerificarConexionSinBaseDatos();
+                    bool continuar = await VerificarConexionPartida();
                     if (!continuar)
                     {
                         evaluadorConexionServidor.Stop();
@@ -141,7 +141,7 @@ namespace WpfCliente.GUI
             evaluadorConexionServidor.Start();
         }
 
-        private async Task<bool> VerificarConexionSinBaseDatos()
+        private async Task<bool> VerificarConexionPartida()
         {
             try
             {

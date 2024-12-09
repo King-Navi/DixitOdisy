@@ -32,13 +32,17 @@ namespace WpfCliente.ImplementacionesCallbacks
                 LimpiarRecursos();
                 return true;
             }
+            catch (CommunicationException excepcion)
+            {
+                CerrarConexionUsuarioSesion();
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
             catch (Exception excepcion)
             {
                 CerrarConexionUsuarioSesion();
                 ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
-                return false;
             }
-
+            return false;
         }
 
         public bool CerrarConexionUsuarioSesion()

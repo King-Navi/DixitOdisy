@@ -99,7 +99,7 @@ namespace WpfCliente.GUI
 
         private async Task VerificarConexionAsync()
         {
-            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
+            bool conexionExitosa = await Conexion.VerificarConexionSinBaseDatosAsync(HabilitarBotones, Window.GetWindow(this));
             if (!conexionExitosa)
             {
                 SingletonGestorVentana.Instancia.Regresar();
@@ -110,7 +110,7 @@ namespace WpfCliente.GUI
         {
             try
             {
-                bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, Window.GetWindow(this));
+                bool conexionExitosa = await Conexion.VerificarConexionSinBaseDatosAsync(HabilitarBotones, Window.GetWindow(this));
                 if (!conexionExitosa)
                 {
                     return;
@@ -167,12 +167,23 @@ namespace WpfCliente.GUI
 
         private void UnirseChat()
         {
-            SingletonChat.Instancia.AbrirConexionChat();
-            var resultado = SingletonChat.Instancia.ChatMotor.AgregarUsuarioChat(SingletonCliente.Instance.IdChat, SingletonCliente.Instance.NombreUsuario);
-            if (!resultado)
+            try
             {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorInesperado, Properties.Idioma.mensajeErrorInesperado, Window.GetWindow(this));
-                SingletonGestorVentana.Instancia.Regresar();
+                SingletonChat.Instancia.AbrirConexionChat();
+                var resultado = SingletonChat.Instancia.ChatMotor.AgregarUsuarioChat(SingletonCliente.Instance.IdChat, SingletonCliente.Instance.NombreUsuario);
+                if (!resultado)
+                {
+                    VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorInesperado, Properties.Idioma.mensajeErrorInesperado, Window.GetWindow(this));
+                    SingletonGestorVentana.Instancia.Regresar();
+                }
+            }
+            catch (CommunicationException excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
+            }
+            catch (Exception excepcion)
+            {
+                ManejadorExcepciones.ManejarExcepcionFatalComponente(excepcion);
             }
         }
 

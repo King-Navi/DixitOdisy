@@ -5,7 +5,7 @@ using System.Windows.Controls;
 namespace WpfCliente.Estilos
 {
     /// <summary>
-    /// 
+    /// Este codigo fue tomado de un autor externo
     /// </summary>
     /// <ref>https://github.com/madhawapolkotuwa/WPF.LoadingAnimations/blob/master/MpCoding.WPF.LoadingAnimations/Controls/DonutSpinner.cs</ref>
     public class DotsRingSpinner : Control

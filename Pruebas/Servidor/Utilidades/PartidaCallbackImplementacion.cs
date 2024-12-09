@@ -47,14 +47,12 @@ public class PartidaCallbackImplementacion : CommunicationObjectImplementado, IP
     {
         RondaActual = rondaActual;
         OnAvanzarRonda?.Invoke(RondaActual);
-        Console.WriteLine($"Ronda actualizada a {RondaActual}");
     }
 
     public void TurnoPerdidoCallback()
     {
         TurnoPerdido = true;
         OnTurnoPerdido?.Invoke();
-        Console.WriteLine("Turno perdido");
     }
 
     public void RecibirImagenCallback(ImagenCarta imagen)
@@ -66,7 +64,6 @@ public class PartidaCallbackImplementacion : CommunicationObjectImplementado, IP
         }
         Imagenes.TryAdd(imagen.IdImagen, imagen);
         OnRecibirImagen?.Invoke(imagen);
-        Console.WriteLine("Imagen recibida en callback");
         semaphoreRecibirImagenCallback.Release();
     }
 
@@ -74,21 +71,18 @@ public class PartidaCallbackImplementacion : CommunicationObjectImplementado, IP
     {
         PartidaFinalizada = true;
         OnFinalizarPartida?.Invoke();
-        Console.WriteLine("Partida finalizada");
     }
 
     public void ObtenerJugadorPartidaCallback(Usuario jugadorNuevoEnSala)
     {
         JugadoresEnPartida.AddOrUpdate(jugadorNuevoEnSala.Nombre, jugadorNuevoEnSala , (key , oldValue) => jugadorNuevoEnSala);
         OnObtenerJugadorSala?.Invoke(jugadorNuevoEnSala);
-        Console.WriteLine($"Jugador añadido a la sala: {jugadorNuevoEnSala.Nombre}");
     }
 
     public void EliminarJugadorPartidaCallback(Usuario jugadorRetiradoDeSala)
     {
         JugadoresEnPartida.TryRemove(jugadorRetiradoDeSala.Nombre, out _);
         OnEliminarJugadorSala?.Invoke(jugadorRetiradoDeSala);
-        Console.WriteLine($"Jugador eliminado de la sala: {jugadorRetiradoDeSala.Nombre}");
     }
 
     public void NotificarNarradorCallback(bool esNarrador)

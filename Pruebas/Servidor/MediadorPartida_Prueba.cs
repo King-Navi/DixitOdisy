@@ -22,7 +22,6 @@ namespace Pruebas.Servidor
             var tematica = TematicaPartida.Animales;
             var mediador = new MediadorPartida(tematica);
             var (rutaCompleta, nombreArchivo) = mediador.ObtenerRutaCompeltaYNombreImagen();
-            Console.WriteLine(rutaCompleta);
             Assert.IsTrue(File.Exists(rutaCompleta), "La ruta devuelta debe corresponder a un archivo existente.");
         }
 

@@ -24,7 +24,6 @@ namespace Pruebas.Servidor
         {
             ruta = Rutas.CalcularRutaImagenes(TematicaPartida.Mixta);
             mediador= new MediadorPartida(TematicaPartida.Mixta);
-            Console.WriteLine("Se esta probando la ruta de " + ruta);
         }
 
         [TestCleanup]

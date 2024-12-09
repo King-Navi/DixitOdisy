@@ -159,13 +159,6 @@ namespace Pruebas.DAO
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException excepcion)
             {
-                foreach (var validationError in excepcion.EntityValidationErrors)
-                {
-                    foreach (var error in validationError.ValidationErrors)
-                    {
-                        Console.WriteLine($"Propiedad: {error.PropertyName}, Error: {error.ErrorMessage}");
-                    }
-                }
                 throw;
             }
         }

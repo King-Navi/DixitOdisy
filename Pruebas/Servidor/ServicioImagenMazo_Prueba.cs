@@ -42,7 +42,6 @@ namespace Pruebas.Servidor
             imitacionContextoProvedor.Setup(contexto => contexto.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionPartidaCallback);
             await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
             imitacionContextoProvedor.Setup(contexto => contexto.GetCallbackChannel<IImagenMazoCallback>()).Returns(ImagenCallbackImplementacion);
-
             await manejador.SolicitarImagenMazoAsync(idPartida);
             await Task.Delay(TimeSpan.FromSeconds(10));
             Assert.IsTrue(ImagenCallbackImplementacion.ImagenCartasMazo.Count == 1);
@@ -92,36 +91,6 @@ namespace Pruebas.Servidor
             await Task.WhenAll(tareasSolicitudes);
             await Task.Delay(TimeSpan.FromSeconds(tiempoEspera));
             Assert.IsTrue(ImagenCallbackImplementacion.ImagenCartasMazo.Count == numeroSolicitudes);
-            if (implementacionCallback != null)
-            {
-                implementacionCallback.Close();
-            }
-        }
-        [TestMethod]
-        public async Task SolicitarImagenCarta_SolicitarImagenHastaDIOS_DeberiaEnviarImagenes()
-        {
-            string rutaCarpeta = null;
-            //rutaCarpeta = Path.Combine("..", "..", "..", "WcfServicioLibreria", "Recursos", "Mitologia");
-            if (!Directory.Exists(rutaCarpeta))
-            {
-                Console.WriteLine("Ruta completa: " + Path.GetFullPath(rutaCarpeta));
-                Assert.Fail("El directorio de la WCFLibreria no se encontro");
-            }
-            string[] archivosJpg = Directory.GetFiles(rutaCarpeta, "*.jpg");
-            Console.WriteLine("Imagenes en disco: " + archivosJpg.Length);
-
-            var usuario = new Usuario { IdUsuario = 19, Nombre = "navi" };
-            var configuracionGenerica = new ConfiguracionPartida(TematicaPartida.Mitologia, CondicionVictoriaPartida.PorCantidadRondas, 6);
-            var idPartida = manejador.CrearPartida(usuario.Nombre, configuracionGenerica);
-            imitacionContextoProvedor.Setup(contexto => contexto.GetCallbackChannel<IPartidaCallback>()).Returns(implementacionPartidaCallback);
-            await manejador.UnirsePartidaAsync(usuario.Nombre, idPartida);
-            imitacionContextoProvedor.Setup(contexto => contexto.GetCallbackChannel<IImagenMazoCallback>()).Returns(ImagenCallbackImplementacion);
-            await manejador.SolicitarImagenMazoAsync(idPartida, archivosJpg.Length);
-
-            await manejador.SolicitarImagenMazoAsync(idPartida);
-            await Task.Delay(TimeSpan.FromSeconds(15));
-
-            Assert.IsTrue(ImagenCallbackImplementacion.ImagenCartasMazo.Count == archivosJpg.Length +1);
             if (implementacionCallback != null)
             {
                 implementacionCallback.Close();

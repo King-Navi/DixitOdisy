@@ -30,15 +30,6 @@ namespace Pruebas.Servidor
         private const string IMAGEN_Z = "ImagenZ";
 
 
-        private void ImprimirPuntajes(List<JugadorPuntaje> jugadores)
-        {
-            Console.WriteLine("-----Puntajes de los jugadores-----");
-            foreach (var jugador in jugadores)
-            {
-                Console.WriteLine($"Jugador: {jugador.Nombre}, Puntos: {jugador.Puntos}");
-            }
-            Console.WriteLine("--------------------------------------------");
-        }
         #region CalcularPuntaje
 
         [TestMethod]
@@ -50,9 +41,7 @@ namespace Pruebas.Servidor
                 new JugadorPuntaje(JUGADOR_2) { Puntos = 3 }
             };
             var puntaje = new Puntaje(JUGADOR_2, jugadores, null, null, null);
-            ImprimirPuntajes(jugadores);
             bool exito = puntaje.CalcularPuntaje();
-            ImprimirPuntajes(jugadores);
             Assert.IsFalse(exito, "El cálculo debería fallar debido a la excepción.");
             Assert.AreEqual(5, jugadores[0].Puntos, "El puntaje del jugador1 no debería cambiar.");
             Assert.AreEqual(3, jugadores[1].Puntos, "El puntaje del jugador2 no debería cambiar.");
@@ -67,9 +56,7 @@ namespace Pruebas.Servidor
                 new JugadorPuntaje(JUGADOR_2) { Puntos = 3 }
             };
             var puntaje = new Puntaje(JUGADOR_2, jugadores, new ConcurrentDictionary<string, List<string>>(), null, null);
-            ImprimirPuntajes(jugadores);
             bool exito = puntaje.CalcularPuntaje();
-            ImprimirPuntajes(jugadores);
             Assert.IsFalse(exito, "El cálculo debería fallar debido a la excepción.");
             Assert.AreEqual(5, jugadores[0].Puntos, "El puntaje del jugador1 no debería cambiar.");
             Assert.AreEqual(3, jugadores[1].Puntos, "El puntaje del jugador2 no debería cambiar.");
@@ -96,9 +83,7 @@ namespace Pruebas.Servidor
             };
 
             var puntaje = new Puntaje(NARRADOR, jugadores, imagenesPorJugador, null, IMAGEN_CORRECTA);
-            ImprimirPuntajes(puntaje.Jugadores);
             puntaje.VerificarAciertos(jugadores,out var todosAdivinaron, out var votosCorrectos);
-            ImprimirPuntajes(puntaje.Jugadores);
             Assert.IsTrue(puntaje.AlguienAdivino, "Debería registrarse que alguien adivinó.");
             Assert.AreEqual(1, votosCorrectos, "Debería contar un voto correcto.");
             Assert.AreEqual(Puntaje.PUNTOS_ACIERTO, jugadores[0].Puntos, "Debería asignar puntos al jugador que adivinó.");
@@ -508,7 +493,6 @@ namespace Pruebas.Servidor
 
             var puntaje = new Puntaje(null, jugadores, imagenElegidaPorJugador, imagenesTodosGrupo, IMAGEN_CORRECTA);
             puntaje.AsignarPuntosPorConfundir(jugadores);
-            ImprimirPuntajes(puntaje.Jugadores);
             var jugadorQueConfundio = jugadores.Single(busqueda => busqueda.Nombre == JUGADOR_1);
             var puntosEsperados = Puntaje.MAXIMO_VECES_RECIBIR_PUNTOS_CONFUNDIR * Puntaje.PUNTOS_RECIBIDOS_CONFUNDIR;
             Assert.AreEqual(puntosEsperados, jugadorQueConfundio.Puntos, $"{JUGADOR_1} debería tener {puntosEsperados} puntos por confundir a más de tres jugadores (máximo permitido).");
@@ -542,7 +526,6 @@ namespace Pruebas.Servidor
 
             var puntaje = new Puntaje(NARRADOR, jugadores, imagenElegidaPorJugador, imagenesTodosGrupo, IMAGEN_A);
             puntaje.AsignarPuntosPorConfundir(jugadores);
-            ImprimirPuntajes(puntaje.Jugadores);
             var narrador = jugadores.Single(busqueda => busqueda.Nombre == NARRADOR);
             Assert.AreEqual(0, narrador.Puntos, "El narrador no debería recibir puntos por confundir.");
         }
@@ -571,7 +554,6 @@ namespace Pruebas.Servidor
 
             var puntaje = new Puntaje(NarradorActual, jugadores, imagenElegidaPorJugador, imagenesTodosGrupo, IMAGEN_CORRECTA);
             puntaje.AsignarPuntosPorConfundir(jugadores);
-            ImprimirPuntajes(puntaje.Jugadores);
             var jugadorEvaluacion = jugadores.Single(busqueda => busqueda.Nombre == JUGADOR_1);
             Assert.AreEqual(0, jugadorEvaluacion.Puntos, $"{JUGADOR_1} no debería recibir puntos por confundirse a sí mismo.");
         }
@@ -603,7 +585,6 @@ namespace Pruebas.Servidor
 
             var puntaje = new Puntaje(NarradorActual, jugadores, imagenElegidaPorJugador, imagenesTodosGrupo, IMAGEN_CORRECTA);
             puntaje.AsignarPuntosPorConfundir(jugadores);
-            ImprimirPuntajes(puntaje.Jugadores);
             var jugador1 = jugadores.Single(busqueda => busqueda.Nombre == JUGADOR_1);
             var jugador2 = jugadores.Single(busqueda => busqueda.Nombre == JUGADOR_2);
 
@@ -637,7 +618,6 @@ namespace Pruebas.Servidor
 
             var puntaje = new Puntaje(NarradorActual, jugadores, imagenElegidaPorJugador, imagenesTodosGrupo, IMAGEN_CORRECTA);
             puntaje.AsignarPuntosPorConfundir(jugadores);
-            ImprimirPuntajes(puntaje.Jugadores);
             var jugador2 = jugadores.Single(j => j.Nombre == JUGADOR_2);
             Assert.AreEqual(0, jugador2.Puntos, $"{JUGADOR_2} no debería recibir puntos al no poner ninguna imagen.");
 

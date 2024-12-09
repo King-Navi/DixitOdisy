@@ -215,7 +215,6 @@ namespace WcfServicioLibreria.Modelo
             }
             finally
             {
-                Console.WriteLine("Entranding!!!");
                 semaphoreAgregarJugador.Release();
             }
 

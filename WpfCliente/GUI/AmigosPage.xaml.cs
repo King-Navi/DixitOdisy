@@ -70,57 +70,113 @@ namespace WpfCliente.GUI
 
         private async Task IntentarEnviarSolicitudAsync()
         {
-            string gamertagSolicitud = VentanasEmergentes.AbrirVentanaModalGamertag(Window.GetWindow(this));
+            string gamertagSolicitud = ObtenerGamertagSolicitud();
             if (gamertagSolicitud == null)
             {
                 return;
             }
 
-            if (gamertagSolicitud.Equals(SingletonCliente.Instance.NombreUsuario))
+            if (EsAutoSolicitud(gamertagSolicitud))
             {
-                VentanasEmergentes.CrearVentanaEmergente(
-                    Properties.Idioma.tituloSolicitudAmistad,
-                    Properties.Idioma.mensajeNoAutoSolicitud, 
-                    Window.GetWindow(this));
+                MostrarMensajeAutoSolicitud();
                 return;
             }
 
-            var resultado = await Conexion.VerificarConexionConBaseDatosSinCierreAsync(HabilitarBotones, Window.GetWindow(this));
-            if (!resultado)
+            if (!await VerificarConexionAsync())
             {
                 return;
             }
 
-            var servicio = new ServicioManejador<ServicioUsuarioClient>();
-            var yaInicioSesion = servicio.EjecutarServicio(llamada => 
+            if (!VerificarInicioSesion())
             {
-                return llamada.YaIniciadoSesion(SingletonCliente.Instance.NombreUsuario);
-            });
-
-            if (!yaInicioSesion)
-            {
-                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorInesperado, Properties.Idioma.mensajeVulevaAIniciarSesion,Window.GetWindow(this));
+                MostrarMensajeReiniciarSesion();
+                return;
             }
 
             if (ValidacionesString.EsGamertagValido(gamertagSolicitud))
             {
-                try 
-                {
-                    if (await EnviarSolicitudAsync(gamertagSolicitud))
-                    {
-                        VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeSolicitudAmistadExitosa, Window.GetWindow(this));
-                    }
-                }
-                catch (Exception excepcion)
-                {
-                    ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
-                }
+                await ProcesarSolicitudAmistadAsync(gamertagSolicitud);
             }
             else
             {
-                VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloSolicitudAmistad, Properties.Idioma.mensajeCamposInvalidos, Window.GetWindow(this));
+                MostrarMensajeCamposInvalidos();
             }
         }
+
+        private string ObtenerGamertagSolicitud()
+        {
+            return VentanasEmergentes.AbrirVentanaModalGamertag(Window.GetWindow(this));
+        }
+
+        private bool EsAutoSolicitud(string gamertagSolicitud)
+        {
+            return gamertagSolicitud.Equals(SingletonCliente.Instance.NombreUsuario);
+        }
+
+        private void MostrarMensajeAutoSolicitud()
+        {
+            VentanasEmergentes.CrearVentanaEmergente(
+                Properties.Idioma.tituloSolicitudAmistad,
+                Properties.Idioma.mensajeNoAutoSolicitud,
+                Window.GetWindow(this));
+        }
+
+        private async Task<bool> VerificarConexionAsync()
+        {
+            return await Conexion.VerificarConexionConBaseDatosSinCierreAsync(HabilitarBotones, Window.GetWindow(this));
+        }
+
+        private bool VerificarInicioSesion()
+        {
+            var servicio = new ServicioManejador<ServicioUsuarioClient>();
+            return servicio.EjecutarServicio(llamada =>
+                llamada.YaIniciadoSesion(SingletonCliente.Instance.NombreUsuario));
+        }
+
+        private void MostrarMensajeReiniciarSesion()
+        {
+            VentanasEmergentes.CrearVentanaEmergente(
+                Properties.Idioma.tituloErrorInesperado,
+                Properties.Idioma.mensajeVulevaAIniciarSesion,
+                Window.GetWindow(this));
+        }
+
+        private async Task ProcesarSolicitudAmistadAsync(string gamertagSolicitud)
+        {
+            try
+            {
+                if (await EnviarSolicitudAsync(gamertagSolicitud))
+                {
+                    MostrarMensajeSolicitudExitosa();
+                }
+            }
+            catch (Exception excepcion)
+            {
+                ManejarExcepcion(excepcion);
+            }
+        }
+
+        private void MostrarMensajeSolicitudExitosa()
+        {
+            VentanasEmergentes.CrearVentanaEmergente(
+                Properties.Idioma.tituloSolicitudAmistad,
+                Properties.Idioma.mensajeSolicitudAmistadExitosa,
+                Window.GetWindow(this));
+        }
+
+        private void ManejarExcepcion(Exception excepcion)
+        {
+            ManejadorExcepciones.ManejarExcepcionError(excepcion, Window.GetWindow(this));
+        }
+
+        private void MostrarMensajeCamposInvalidos()
+        {
+            VentanasEmergentes.CrearVentanaEmergente(
+                Properties.Idioma.tituloSolicitudAmistad,
+                Properties.Idioma.mensajeCamposInvalidos,
+                Window.GetWindow(this));
+        }
+
 
         private async Task<bool> EnviarSolicitudAsync(string gamertagReceptor)
         {

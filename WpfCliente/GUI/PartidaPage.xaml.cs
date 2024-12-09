@@ -454,7 +454,7 @@ namespace WpfCliente.GUI
             BindingOperations.ClearAllBindings(this);
             SingletonPartida.Instancia.CerrarConexionPartida();
             SingletonChat.Instancia.CerrarConexionChat();
-            bool resultado = await Conexion.VerificarConexionAsync(HabilitarBotones,Window.GetWindow(this));
+            bool resultado = await Conexion.VerificarConexionSinBaseDatosAsync(HabilitarBotones,Window.GetWindow(this));
             if (!resultado)
             {
                 SingletonGestorVentana.Instancia.NavegarA(new IniciarSesionPage());

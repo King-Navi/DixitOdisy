@@ -1519,6 +1519,15 @@ namespace WpfCliente.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Hubo problemas al recuperar sus datos, por favor vuelva a iniciar sesión.
+        /// </summary>
+        public static string mensajeVulevaAIniciarSesion {
+            get {
+                return ResourceManager.GetString("mensajeVulevaAIniciarSesion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Editar perfil.
         /// </summary>
         public static string menuItemEditarperfil {

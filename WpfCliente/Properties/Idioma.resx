@@ -747,4 +747,7 @@
   <data name="mensajeCaracteresInvalidoEspacio" xml:space="preserve">
     <value>No puedes colocar espacios en el formulario.</value>
   </data>
+  <data name="mensajeVulevaAIniciarSesion" xml:space="preserve">
+    <value>Hubo problemas al recuperar sus datos, por favor vuelva a iniciar sesión</value>
+  </data>
 </root>

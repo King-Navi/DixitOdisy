@@ -456,7 +456,7 @@ namespace WpfCliente.GUI
             BindingOperations.ClearAllBindings(this);
             SingletonPartida.Instancia.CerrarConexionPartida();
             SingletonChat.Instancia.CerrarConexionChat();
-            bool resultado = await Conexion.VerificarConexionAsync(HabilitarBotones,Window.GetWindow(this));
+            bool resultado = await Conexion.VerificarConexionSinBaseDatosAsync(HabilitarBotones,Window.GetWindow(this));
             if (!resultado)
             {
                 SingletonGestorVentana.Instancia.NavegarA(new IniciarSesionPage());
@@ -514,7 +514,13 @@ namespace WpfCliente.GUI
                 {
                     contadorSeleccion++;
                     SingletonGestorImagenes.Instancia.imagnesMazo.ImagenesMazo.Remove(imagenEscogida);
-                    await Conexion.VerificarConexionSinBaseDatosAsync(HabilitarBotones, Window.GetWindow(this));
+                    var _resultado = await Conexion.VerificarConexionSinBaseDatosAsync(HabilitarBotones, Window.GetWindow(this));
+                    if (!_resultado)
+                    {
+                        VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloErrorServidor, Idioma.mensajePartidaExpiro, Window.GetWindow(this));
+                        await SalirDePartidaAsync();
+                        return;
+                    }
                     await SingletonPartida.Instancia.Partida.ConfirmarMovimientoAsync(SingletonCliente.Instance.NombreUsuario,
                         SingletonCliente.Instance.IdPartida,
                         imagenEscogida.IdImagen,
@@ -561,7 +567,13 @@ namespace WpfCliente.GUI
                 {
                     contadorSeleccion++;
                     SingletonGestorImagenes.Instancia.imagnesMazo.ImagenesMazo.Remove(imagenAEscoger);
-                    await Conexion.VerificarConexionSinBaseDatosAsync(HabilitarBotones, Window.GetWindow(this));
+                    var _resultado = await Conexion.VerificarConexionSinBaseDatosAsync(HabilitarBotones, Window.GetWindow(this));
+                    if (!_resultado)
+                    {
+                        VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloErrorServidor, Idioma.mensajePartidaExpiro, Window.GetWindow(this));
+                        await SalirDePartidaAsync();
+                        return;
+                    }
                     await SingletonPartida.Instancia.Partida.ConfirmarMovimientoAsync(
                         SingletonCliente.Instance.NombreUsuario,
                         SingletonCliente.Instance.IdPartida,
@@ -608,7 +620,13 @@ namespace WpfCliente.GUI
                 try
                 {
                     contadorSeleccionAdivinar++;
-                    await Conexion.VerificarConexionSinBaseDatosAsync(HabilitarBotones, Window.GetWindow(this));
+                    var _resultado = await Conexion.VerificarConexionSinBaseDatosAsync(HabilitarBotones, Window.GetWindow(this));
+                    if (!_resultado)
+                    {
+                        VentanasEmergentes.CrearVentanaEmergente(Idioma.tituloErrorServidor, Idioma.mensajePartidaExpiro, Window.GetWindow(this));
+                        await SalirDePartidaAsync();
+                        return;
+                    }
                     await SingletonPartida.Instancia.Partida.TratarAdivinarAsync(SingletonCliente.Instance.NombreUsuario,
                         SingletonCliente.Instance.IdPartida, idImagen);
                     if (contadorSeleccionAdivinar >= ADIVINAR_MAXIMA_JUGADOR)

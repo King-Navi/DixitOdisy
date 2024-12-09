@@ -744,4 +744,7 @@
   <data name="labelEmpezarRangoPartida" xml:space="preserve">
     <value>Para empezar una partida la cantidad de jugadores necesaria es entre: </value>
   </data>
+  <data name="mensajeVulevaAIniciarSesion" xml:space="preserve">
+    <value>Hubo problemas al recuperar sus datos, por favor vuelva a iniciar sesión</value>
+  </data>
 </root>

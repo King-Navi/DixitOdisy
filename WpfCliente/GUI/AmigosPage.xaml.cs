@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using WpfCliente.Contexto;
 using WpfCliente.ImplementacionesCallbacks;
 using WpfCliente.Interfaz;
@@ -88,6 +89,17 @@ namespace WpfCliente.GUI
             if (!resultado)
             {
                 return;
+            }
+
+            var servicio = new ServicioManejador<ServicioUsuarioClient>();
+            var yaInicioSesion = servicio.EjecutarServicio(llamada => 
+            {
+                return llamada.YaIniciadoSesion(SingletonCliente.Instance.NombreUsuario);
+            });
+
+            if (!yaInicioSesion)
+            {
+                VentanasEmergentes.CrearVentanaEmergente(Properties.Idioma.tituloErrorInesperado, Properties.Idioma.mensajeVulevaAIniciarSesion,Window.GetWindow(this));
             }
 
             if (ValidacionesString.EsGamertagValido(gamertagSolicitud))

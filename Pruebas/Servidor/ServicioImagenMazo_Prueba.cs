@@ -32,7 +32,7 @@ namespace Pruebas.Servidor
             ImagenCallbackImplementacion = null;
         }
 
-        #region SolicitarImagen
+        #region SolicitarImagenCarta
         [TestMethod]
         public async Task SolicitarImagenCarta_PartidaValida_DeberiaEnviarImagen()
         {

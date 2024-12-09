@@ -115,7 +115,7 @@ namespace Pruebas.Servidor
         }
         #endregion ObtenerSessionJugadorCallback
 
-        #region
+        # region ConectarUsuario
         [TestMethod]
         public void ConectarUsuario_UsuarioNuevo_DeberiaRetornarTrue()
         {

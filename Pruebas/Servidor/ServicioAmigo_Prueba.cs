@@ -54,15 +54,9 @@ namespace Pruebas.Servidor
                 Nombre = NOMBRE_ID_MAYOR,
                 ContraseniaHASH = CONTRASNIAHASH_ID_MAYOR
             });
-
-
-            
             bool resultado = manejador.AceptarSolicitudAmistad(ID_USUARIO_MAYOR,ID_USUARIO_MENOR);
-
-            
             Assert.IsTrue(implementacionCallbackUsarioSesion.SesionAbierta , "La sesion deberia estar abierta");
             Assert.IsTrue(resultado, "El método debería devolver true cuando ambos usuarios están conectados y la solicitud de amistad se acepta.");
-
         }
 
 

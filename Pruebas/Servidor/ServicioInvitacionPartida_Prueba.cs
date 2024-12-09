@@ -27,6 +27,7 @@ namespace Pruebas.Servidor
             base.LimpiadorTodo();
         }
 
+        #region EnviarInvitacion
         [TestMethod]
         public void EnviarInvitacion_UsuarioConectado_DeberiaEnviarExitosamente()
         {
@@ -61,6 +62,7 @@ namespace Pruebas.Servidor
 
             Assert.IsFalse(resultado, "La invitación debería haber fallado al enviarse.");
             Assert.IsFalse(implementacionCallback.InvitacionEnviada, "El callback debería haber sido llamado exactamente cero veces.");
-        }
+        } 
+        #endregion
     }
 }

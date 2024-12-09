@@ -24,6 +24,7 @@ namespace Pruebas.Servidor
         {
             base.LimpiadorTodo();
         }
+        #region RegistrarUsuario
         [TestMethod]
         public void RegistrarUsuario_FaltanCampos_RetornaFalse()
         {
@@ -54,5 +55,6 @@ namespace Pruebas.Servidor
             Assert.IsTrue(resultado, "El usuario no deberia ser registrado");
         }
 
+        #endregion
     }
 }

@@ -55,6 +55,7 @@ namespace Pruebas.Servidor
         }
 
         #endregion ObtenerRutaCompeltaImagen
+
         #region ObtenerMultiplesRutasYNombres
         [TestMethod]
         public void ObtenerMultiplesRutasYNombres_ImagnesDisponibles_DevuelveRutaValidaEspacio()

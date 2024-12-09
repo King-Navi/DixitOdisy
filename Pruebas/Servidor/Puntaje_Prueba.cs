@@ -44,7 +44,6 @@ namespace Pruebas.Servidor
         [TestMethod]
         public void CalcularPuntaje_SiOcurreExcepcionTodoNulo_NoModificaPuntajes()
         {
-            // Arrange
             var jugadores = new List<JugadorPuntaje>
             {
                 new JugadorPuntaje(JUGADOR_1) { Puntos = 5 },
@@ -422,7 +421,6 @@ namespace Pruebas.Servidor
 
 
         #endregion EvaluarCondicionesGlobales
-
 
         #region AsignarPuntosPorConfundir
         [TestMethod]

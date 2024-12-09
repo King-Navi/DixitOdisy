@@ -33,7 +33,7 @@ namespace Pruebas.Servidor
         }
 
         [TestMethod]
-        public async Task SolicitarImagenCarta_PartidaValida_DeberiaEnviarImagen()
+        public async Task SolicitarImagenMazoAsync_PartidaValida_DeberiaEnviarImagen()
         {
             var usuario = new Usuario 
             { 

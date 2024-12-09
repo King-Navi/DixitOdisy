@@ -54,7 +54,7 @@ namespace WpfCliente.GUI
         private async Task<bool> AceptarSolicitudAsync()
         {
             Window window = Window.GetWindow(this);
-            bool conexionExitosa = await Conexion.VerificarConexionAsync(HabilitarBotones, window);
+            bool conexionExitosa = await Conexion.VerificarConexionConBaseDatosSinCierreAsync(HabilitarBotones, window);
             if (!conexionExitosa)
             {
                 return false;

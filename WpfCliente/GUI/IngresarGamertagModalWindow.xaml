@@ -16,6 +16,7 @@
             ImageSource="pack://application:,,,/WpfCliente;component/Recursos/cajaLogin.png" 
             Stretch="UniformToFill" />
     </Window.Background>
+    
     <Window.Resources>
         <Style 
             TargetType="{x:Type TextBox}">
